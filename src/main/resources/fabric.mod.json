@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "duck",
+	"version": "${version}",
+	"name": "Duck Mod",
+	"description": "Adds a cute duck into your game to follow you around! /duck on or /duck off to toggle.",
+	"authors": [
+		"The Pets Team",
+        "downloadableduck"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/duck/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+          "com.jeff.duck.DuckInitializer"
+		],
+		"client": [
+          "com.jeff.duck.DuckClient",
+          "com.jeff.duck.DuckPet"
+		]
+	},
+	"mixins": [
+		"duck.mixins.json",
+		{
+			"config": "duck.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~1.21.11",
+		"java": ">=21",
+        "cloth-config": "*",
+		"fabric-api": "*"
+	}
+}

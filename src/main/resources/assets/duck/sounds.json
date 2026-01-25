@@ -1,0 +1,6 @@
+{
+  "duck_ambient": {
+    "subtitle": "sound.duck.duck_ambient",
+    "sounds": ["duck:duck_ambient"]
+  }
+}
