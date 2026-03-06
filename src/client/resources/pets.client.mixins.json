@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "com.jeff.pets.mixin.client",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "ChatAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}

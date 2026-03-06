@@ -1,41 +1,55 @@
 {
 	"schemaVersion": 1,
-	"id": "duck",
+	"id": "pets",
 	"version": "${version}",
-	"name": "Duck Mod",
-	"description": "Adds a cute duck into your game to follow you around! /duck on or /duck off to toggle.",
+	"name": "Pets Mod",
+    "accessWidener": "pets.accesswidener",
+	"description": "Adds pets into your game. Completely client-sided.",
 	"authors": [
 		"The Pets Team",
         "downloadableduck"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://modrinth.com/mod/duck--mod",
+		"sources": "https://github.com/downloadableduck/duckmod"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/duck/icon.png",
+	"icon": "assets/pets/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-          "com.jeff.duck.DuckInitializer"
+          "com.jeff.pets.PetsInitializer"
 		],
 		"client": [
-          "com.jeff.duck.DuckClient",
-          "com.jeff.duck.DuckPet"
-		]
+          "com.jeff.pets.PetsClientInitializer",
+          "com.jeff.pets.Pet"
+		],
+        "modmenu": [
+          "com.jeff.pets.PetsConfigScreen"
+        ]
 	},
 	"mixins": [
-		"duck.mixins.json",
+      "pets.mixins.json",
 		{
-			"config": "duck.client.mixins.json",
+			"config": "pets.client.mixins.json",
 			"environment": "client"
 		}
 	],
 	"depends": {
 		"fabricloader": ">=0.18.4",
-		"minecraft": "~1.21.11",
+		"minecraft": "~1.21",
 		"java": ">=21",
         "cloth-config": "*",
-		"fabric-api": "*"
-	}
+		"fabric-api": "*",
+        "yet_another_config_lib_v3": "*",
+        "modmenu": "*"
+	},
+  "custom": {
+    "modmenu": {
+      "name": "Pets Mod",
+      "description": "A mod that adds client-sided pets in your game to follow you around.",
+      "icon": "assets/pets/icon.png",
+      "environment": "client"
+    }
+  }
 }

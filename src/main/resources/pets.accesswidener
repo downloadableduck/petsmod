@@ -1,0 +1,9 @@
+accessWidener v2 named
+accessible field net/minecraft/world/entity/player/Player DATA_SHOULDER_PARROT_LEFT Lnet/minecraft/network/syncher/EntityDataAccessor;
+accessible method net/minecraft/server/level/ServerPlayer setShoulderEntityLeft (Lnet/minecraft/nbt/CompoundTag;)V
+accessible field net/minecraft/server/level/ServerPlayer timeEntitySatOnShoulder J
+accessible method net/minecraft/server/level/ServerPlayer setShoulderEntityRight (Lnet/minecraft/nbt/CompoundTag;)V
+accessible method net/minecraft/world/entity/Entity addPassenger (Lnet/minecraft/world/entity/Entity;)V
+accessible method net/minecraft/network/protocol/game/ClientboundCommandsPacket <init> (Lnet/minecraft/network/FriendlyByteBuf;)V
+accessible field net/minecraft/client/gui/screens/ChatScreen commandSuggestions Lnet/minecraft/client/gui/components/CommandSuggestions;
+accessible method net/minecraft/client/model/Model renderToBuffer (Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;II)V

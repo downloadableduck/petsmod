@@ -1,0 +1,10 @@
+{
+  "duck_ambient": {
+    "subtitle": "sound.pets.duck_ambient",
+    "sounds": ["pets:duck_ambient"]
+  },
+  "penguin_ambient": {
+    "subtitle": "sound.pets.penguin_ambient",
+    "sounds": ["pets:penguin_ambient"]
+  }
+}
