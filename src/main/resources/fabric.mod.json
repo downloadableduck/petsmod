@@ -10,8 +10,8 @@
         "downloadableduck"
 	],
 	"contact": {
-		"homepage": "https://modrinth.com/mod/duck--mod",
-		"sources": "https://github.com/downloadableduck/duckmod"
+		"homepage": "https://modrinth.com/mod/pets-mod",
+		"sources": "https://github.com/downloadableduck/petsmod"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/pets/icon.png",
