@@ -27,8 +27,6 @@ public class ClientBatRenderer extends MobRenderer<@NotNull ClientBat, @NotNull 
 
     public void extractRenderState(ClientBat bat, BatRenderState batRenderState, float f) {
         super.extractRenderState(bat, batRenderState, f);
-        /*batRenderState.isResting = bat.isResting();
-        batRenderState.flyAnimationState.copyFrom(bat.flyAnimationState);
-        batRenderState.restAnimationState.copyFrom(bat.restAnimationState);*/
+        batRenderState.flyAnimationState.start(500);
     }
 }

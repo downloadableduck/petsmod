@@ -156,9 +156,9 @@ public class ClientHappyGhast extends TamableAnimal {
 
             this.move(MoverType.SELF, this.getDeltaMovement());
 
-            if (!this.onGround()) {
+            /*if (!this.onGround()) {
                 this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
-            }
+            }*/
         }
         if (owner != null) {
             if (distanceTo(owner) >= 10) {
