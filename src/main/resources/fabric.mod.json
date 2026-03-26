@@ -1,0 +1,55 @@
+{
+	"schemaVersion": 1,
+	"id": "pets",
+	"version": "${version}",
+	"name": "Pets Mod",
+    "accessWidener": "pets.accesswidener",
+	"description": "Adds pets into your game. Completely client-sided.",
+	"authors": [
+		"The Pets Team",
+        "downloadableduck"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/pets-mod",
+		"sources": "https://github.com/downloadableduck/petsmod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/pets/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+          "com.jeff.pets.PetsInitializer"
+		],
+		"client": [
+          "com.jeff.pets.PetsClientInitializer",
+          "com.jeff.pets.Pet"
+		],
+        "modmenu": [
+          "com.jeff.pets.PetsConfigScreen"
+        ]
+	},
+	"mixins": [
+      "pets.mixins.json",
+		{
+			"config": "pets.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~26.1",
+		"java": ">=25",
+        "cloth-config": "*",
+		"fabric-api": "*",
+        "yet_another_config_lib_v3": "*",
+        "modmenu": "*"
+	},
+  "custom": {
+    "modmenu": {
+      "name": "Pets Mod",
+      "description": "A mod that adds client-sided pets in your game to follow you around.",
+      "icon": "assets/pets/icon.png",
+      "environment": "client"
+    }
+  }
+}
