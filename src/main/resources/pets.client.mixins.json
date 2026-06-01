@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "com.jeff.pets.client.mixin.client",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "ChatAccessor",
+    "SplashManagerMixin",
+    "TitleScreenRenderingMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
