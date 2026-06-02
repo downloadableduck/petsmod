@@ -328,7 +328,9 @@ This mod uses the **vanilla texture system**, so yes, it will use custom texture
 Simply play the mod! If you wish to join our team, please create a new discussion thread on our GitHub. If you simply have an issue, please report it there - we look forwards to making this mod the best - and clearest of bugs - that it can be!
 
 **Is a Forge/Neoforge port ever coming?**
-This project depends heavily on the Fabric API. If a working Fabric API ever releases for Neoforge, then yes, I will try my best to make this available on Neoforge. For Forge, a port will never come due to the amount of issues and slow updates it has had in the past.
+~~This project depends heavily on the Fabric API. If a working Fabric API ever releases for Neoforge, then yes, I will try my best to make this available on Neoforge. For Forge, a port will never come due to the amount of issues and slow updates it has had in the past.~~
+
+Neoforge has been ported!
 
 **May I use this in my modpack?**
 Yep, go ahead! Just give credit where it's due :)
