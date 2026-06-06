@@ -1,5 +1,17 @@
-> Note: As of 0.7.4, PetsMod officially supports **add-ons**, both in the forms of resourcepacks that re-design the mobs as well as coded projects that add new mobs. An example template repository as well as a full guide is available [here](https://github.com/downloadableduck/example-petsmod-addon).
+<p align="center" style="text-align: center;">
+<a href = "https://cdn.modrinth.com/data/cached_images/974ac9621141c80a67cbc3e1e7df49fa28c28647.png"><img src="https://cdn.modrinth.com/data/cached_images/974ac9621141c80a67cbc3e1e7df49fa28c28647.png" alt="Hi there"></a>
 
+<p align="center" style="text-align: center;">
+  <a href="https://cdn.modrinth.com/data/WwqTyEtB/versions/9VB6Osx9/pets-mod-0.7.7-26.1.x.jar?mr_download_reason=standalone&mr_game_version=26.1.2&mr_loader=fabric"><img src="https://cdn.modrinth.com/data/cached_images/513035d1231a86dff137c74e04a5e64633593f10.png" alt="Fabric" style="margin: 5px 10px;"></a>
+  <a href="https://cdn.modrinth.com/data/WwqTyEtB/versions/m1sIEARZ/pets-mod-0.7.7-26.1-neo.jar?mr_download_reason=standalone&mr_game_version=26.1.2&mr_loader=neoforge"><img src="https://cdn.modrinth.com/data/cached_images/b9ae07fbc26c08220b4856cb244f86904d0c172c.png" alt="Neoforge" style="margin: 5px 10px;"></a>
+  <a href="https://cdn.modrinth.com/data/WwqTyEtB/versions/9VB6Osx9/pets-mod-0.7.7-26.1.x.jar?mr_download_reason=standalone&mr_game_version=26.1.2&mr_loader=fabric"><img src="https://cdn.modrinth.com/data/cached_images/a9ee492fd1a5fcbcc14d4105aa27be63f2518529.png" alt="Quilt" style="margin: 5px 10px;"></a>
+  </p>
+
+<p align="center" style="text-align: center;">
+  <a href="https://github.com/downloadableduck/petsmod"><img src="https://tr7zw.github.io/uikit/social_buttons_icon/Github-Button-64.png" alt="GitHub" style="margin: 5px 10px;"></a>
+  <a href="https://www.curseforge.com/minecraft/mc-mods/pets-mod/preview"><img src="https://tr7zw.github.io/uikit/social_buttons_icon/Curseforge-Button-64.png" alt="GitHub" style="margin: 5px 10px;"></a>
+  <a href="https://modrinth.com/mod/pets-mod"><img src="https://tr7zw.github.io/uikit/social_buttons_icon/Modrinth-Button-64.png" alt="GitHub" style="margin: 5px 10px;"></a>
+  
 # The Pets Project
 The pets project is bringing you your own client-sided pets into your game! From squids to iron golems to even penguins, PetsMod offers nearly every mob from vanilla Minecraft, and more! And it will work no matter whether you are on a multiplayer server or your own singleplayer world. Simply use /pet on to spawn the pet, and use /petspecies <species> to change what mob your pet is!
 
@@ -15,7 +27,7 @@ The pets project is bringing you your own client-sided pets into your game! From
 
 </details>
 
-PetsMod comes with its own configuration screen **and** custom commands to easily toggle between pets, change whether the mod is enabled at all, and switch up the appearance of your pets with **skins** and **names**.
+PetsMod comes with its own configuration screen **and** custom commands to easily toggle between pets, change whether the mod is enabled at all, and switch up the appearance of your pets with **skins** and **names**. 
 
 **Showcase video:**
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/mlud8R7Cq7M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -40,7 +52,7 @@ To switch between pets, simply run `/petspecies <pet>`.
 > **TIP:** Pet names are stored for each individual pet - if you have both a blaze and a duck, you can name them each individually!
 
 ## Our Roots
-This is an updated and upgraded version of [DuckMod](https://modrinth.com/mod/duck--mod). Following this release, DuckMod will recieve a bump to the latest version and thus be archived, continued by this project. If you are migrating from DuckMod to PetsMod, simply use
+This is an updated and upgraded version of [DuckMod](https://modrinth.com/mod/duck--mod). Following this release, DuckMod will recieve a bump to the latest version and thus be archived, continued by this project. If you are migrating from DuckMod to PetsMod, simply use 
 `/pet on` and then `/petspecies duck`, or use our easily configurable configuration menu powered by Mod Menu and YetAnotherConfigLib to switch to a duck.
 
 ## Updates and Improvements
@@ -60,13 +72,13 @@ This section is dedicated to the latest updates and improvements of this mod. Ch
 
 <details>
   <summary>0.5.1</summary>
-
+  
 -   Fixed the link in the fabric.mod.json redirecting to the legacy (DuckMod) project and source code.
 </details>
 
 <details>
   <summary>0.5.3</summary>
-
+  
 - Fixed the ghasts going back down to the ground when stopped rather than staying in the air
 - Fixed the bat doing the same thing
 - Fixed the bat's animation not playing
@@ -80,33 +92,33 @@ This section is dedicated to the latest updates and improvements of this mod. Ch
 - When first installing the mod, pets are now on instead of off
 - Fixed using the happy ghast not allowing users to use the configuration screen
 - Fixed the magma cube casting a 500 block wide shadow
-    - Dont ask.
+  - Dont ask.
 - Fixed the breeze idle animation not playing
 - Pets are now much faster and can keep up with players much more easily.
 - Pets now will flip upside down if they are named “Grumm” or “Dinnerbone”
 - Added an English translation key
-    - If you want support in your native language, please open a discussion or issue on my github.
+  - If you want support in your native language, please open a discussion or issue on my github.
 - Cleaned up code
 - Added creeper skins (normal/charged)
 - **Added support for baby mobs**
-    - The toggle for baby mobs is universal, meaning that every pet will become a baby until toggled off.
-    - Toggleable through /petskin baby or /petskin adult, or through the config screen.
-      We may or may not switch to the newer, baby mob models in the future but may not. It hasn't been decided yet.
+  - The toggle for baby mobs is universal, meaning that every pet will become a baby until toggled off.
+  - Toggleable through /petskin baby or /petskin adult, or through the config screen.
+We may or may not switch to the newer, baby mob models in the future but may not. It hasn't been decided yet.
 - Added the head pet. You can switch its skin to that of any existing Minecraft player.
-    - This pet requires a custom resource pack to work. You do not need to do anything on your end; it is automatically installed by the mod. However, the resources will reload when you change skins or equip the pet.
+  - This pet requires a custom resource pack to work. You do not need to do anything on your end; it is automatically installed by the mod. However, the resources will reload when you change skins or equip the pet.
 - **Added support for every past april fools mob** that does not resemble another. (Does not include mobs like the ‘pet fox’ or ‘boss warden’ since those resemble existing mobs.)
-    - A patch will be coming soon to add the mobs included in this april fools update.
+  - A patch will be coming soon to add the mobs included in this april fools update.
 - Pets will now actually sit on your head when riding you, not stand up. This includes custom poses for the custom mobs.
 
 </details>
 
 <details>
   <summary>0.7.1</summary>
-
-- Added the Aquatic Mob Pack
-    - Features the Dumbo Octopus, Koi Fish, and Stingray
-- Added our own custom title and splash text
-    - This is toggleable through the config screen
+  
+- Added the Aquatic Mob Pack 
+  - Features the Dumbo Octopus, Koi Fish, and Stingray
+- Added our own custom title and splash text 
+  - This is toggleable through the config screen
 - Flying pets no longer drop to the ground when they get close to you, instead staying in the air
 - The code is now **much more compact** and easier for me to update
 - Added a keybind to the config screen (by default, this is P)
@@ -116,19 +128,19 @@ This section is dedicated to the latest updates and improvements of this mod. Ch
 
 <details>
   <summary>0.7.2</summary>
-
+  
 - Make the moon cows helmet render correctly
 - Skin suggestions now work without having to switch your pet
   </details>
 
 <details> <summary>0.7.4 (I accidentally skipped ahead a version cuz im smart</summary>
-
-- Added code documentation and massively cleaned up the code.
-- Added the Utils class, which contains a lot of helper methods that keep the jar much smaller.
+  
+  - Added code documentation and massively cleaned up the code.
+  - Added the Utils class, which contains a lot of helper methods that keep the jar much smaller.
 - Added official addon support, including a guide which can be found [here](https://github.com/downloadableduck/petsmod/blob/26.1.x/CREATING%20A%20CUSTOM%20PET.md).
-    - These addons add more pets into PetsMod. This was made out of:
-        - A. Feeling that the mod would get too bloated if we kept adding a large amount of mods into the main mod.
-        - B. Enabling users to create their own pets.
+  - These addons add more pets into PetsMod. This was made out of:
+    - A. Feeling that the mod would get too bloated if we kept adding a large amount of mods into the main mod.
+    - B. Enabling users to create their own pets.
 </details>
 
 <details><summary>0.7.5</summary>
@@ -137,7 +149,7 @@ This section is dedicated to the latest updates and improvements of this mod. Ch
 
 <details><summary>0.7.6</summary>
 
-- fix namespace so that developers can easily access the javadoc and sources
+  - fix namespace so that developers can easily access the javadoc and sources
  </details>
 
 Current release: **0.7.7**
@@ -146,21 +158,21 @@ Current release: **0.7.7**
 - Fixed missing wandering trader & turtle textures
 - Update metadata
 - Update icon
-    - Sorry it took so long
+  - Sorry it took so long
 - Update addons guide
 - Added an option to the config screen for viewing installed addons & browsing them
-    - Currently, this redirects you to petsmod.com. This website is not up yet; please do not report this on my GitHub until at least a week has passed since 0.7.7 and it is still broken.
+  - Currently, this redirects you to petsmod.com. This website is not up yet; please do not report this on my GitHub until at least a week has passed since 0.7.7 and it is still broken.
 - Fixed version.png (the version subtitle text) showing the incorrect version
-    - This was caused because 0.7.4 was initially planned to be 0.8.0 but ultimately it was decided it was not big enough of an update.
+  - This was caused because 0.7.4 was initially planned to be 0.8.0 but ultimately it was decided it was not big enough of an update.
 - Added the Bronze duck skin in celebration of 1,000 downloads!
-    - Silver will be unlocked at 10,000, and gold at 100,000.
+  - Silver will be unlocked at 10,000, and gold at 100,000.
 - Added some new splash text
 - Fixed a bug where, when using ViaFabricPlus and connecting to a server on 1.8.9, the pets would sit inside your head instead of on.
-    - This does **not** mean the mod requires ViaFabricPlus, it just executes a check.
+  - This does **not** mean the mod requires ViaFabricPlus, it just executes a check.
 - Pets will now wander when the owner is not moving, and come back when the owner starts moving again.
 
 ## Mob Packs
-Mob Packs are our way of introducing custom mobs into the game.
+Mob Packs are our way of introducing custom mobs into the game. 
 
 <details>
   <summary>The First Mob Pack</summary>The standard for custom mob packs is three mobs, but the full release came out so quickly we were only able to fit two in! Introducing the penguin and the racoon.
@@ -172,7 +184,7 @@ Mob Packs are our way of introducing custom mobs into the game.
 In addition, the racoon has an extra skin - albino!
 ![The racoon (albino)](https://cdn.modrinth.com/data/cached_images/29535c39b4ed7b980f7bd2fa15dda1a6a11c48ab_0.webp)
 
-The racoon and duck models are available and free to use on my [GitHub](https://github.com/downloadableduck/petsmod).
+The racoon and duck models are available and free to use on my [GitHub](https://github.com/downloadableduck/petsmod). 
 
 </details>
 
@@ -188,102 +200,102 @@ This mob pack introduces every April Fools mob into Minecraft, plus our own cust
 Full list of mobs included, with images:
 
 <details><summary>The Head (our own custom mob!) </summary>
-
-![The Head](https://cdn.modrinth.com/data/cached_images/68e83a35beee8d8bf633ba7c7bac44aca0b567a8_0.webp)
-- You can switch the head's skin to that of any player using /petskin. However, the resources will reload every time to process the change. To combat this, we recommend [Remove Resource Loading Screen](https://modrinth.com/mod/rrls)
+  
+  ![The Head](https://cdn.modrinth.com/data/cached_images/68e83a35beee8d8bf633ba7c7bac44aca0b567a8_0.webp)
+  - You can switch the head's skin to that of any player using /petskin. However, the resources will reload every time to process the change. To combat this, we recommend [Remove Resource Loading Screen](https://modrinth.com/mod/rrls)
 </details>
 
 <details><summary>Angry Ghast</summary>
-
-![Angry Ghast](https://cdn.modrinth.com/data/cached_images/4e63e2cf857a1c68e4935325b5043724be7b3b36_0.webp)
+  
+  ![Angry Ghast](https://cdn.modrinth.com/data/cached_images/4e63e2cf857a1c68e4935325b5043724be7b3b36_0.webp)
 </details>
 
 <details><summary>Batato</summary>
 
-![Batato](https://cdn.modrinth.com/data/cached_images/474b36e45202c7f16e959b15557446ce70fd686e_0.webp)
+  ![Batato](https://cdn.modrinth.com/data/cached_images/474b36e45202c7f16e959b15557446ce70fd686e_0.webp)
 </details>
 
 <details><summary>Diamond Chicken</summary>
 
-![Diamond Chicken](https://cdn.modrinth.com/data/cached_images/c766407c4bff09d604f27cf407c0481fdb7badc4_0.webp)
+  ![Diamond Chicken](https://cdn.modrinth.com/data/cached_images/c766407c4bff09d604f27cf407c0481fdb7badc4_0.webp)
 </details>
 
 <details><summary>Love Golem</summary>
 
-![Love Golem](https://cdn.modrinth.com/data/cached_images/cb1903f5f4aeb36dc66e72b4780c42da4c2e0ee8_0.webp)</details>
+  ![Love Golem](https://cdn.modrinth.com/data/cached_images/cb1903f5f4aeb36dc66e72b4780c42da4c2e0ee8_0.webp)</details>
 
 <details>
   <summary>Mega Spud</summary>
-
-![Mega Spud](https://cdn.modrinth.com/data/cached_images/903afad2213bff4a1bae9b4c704f8838f279db80_0.webp)
+  
+  ![Mega Spud](https://cdn.modrinth.com/data/cached_images/903afad2213bff4a1bae9b4c704f8838f279db80_0.webp)
 </details>
 
 <details>
   <summary>Moon Cow</summary>
+  
+  ![Moon Cow](https://cdn.modrinth.com/data/cached_images/6314031e099415b4f98a69f82786d66e382f04cc_0.webp)
 
-![Moon Cow](https://cdn.modrinth.com/data/cached_images/6314031e099415b4f98a69f82786d66e382f04cc_0.webp)
-
-- Yes, I know it's missing its helmet. I hope to fix this soon, but Mojang broke the system of using blocks on heads in 26.1.
+  - Yes, I know it's missing its helmet. I hope to fix this soon, but Mojang broke the system of using blocks on heads in 26.1.
 </details>
 
 <details>
   <summary>Nerd Creeper</summary>
 
-![Nerd Creeper](https://cdn.modrinth.com/data/cached_images/6ff2213e009e2158b198c689dbdac5cdc79e8424_0.webp)
+  ![Nerd Creeper](https://cdn.modrinth.com/data/cached_images/6ff2213e009e2158b198c689dbdac5cdc79e8424_0.webp)
 </details>
 
 <details>
   <summary>Pink Wither/Friendly Wither</summary>
 
-![Pink Wither](https://cdn.modrinth.com/data/cached_images/d005c3813f8b7b49f8a55dbc0ebdf17c4e26a52a_0.webp)
+  ![Pink Wither](https://cdn.modrinth.com/data/cached_images/d005c3813f8b7b49f8a55dbc0ebdf17c4e26a52a_0.webp)
 </details>
 
 <details>
   <summary>Plaguewhale Slab</summary>
 
-![Plaguewhale Slab](https://cdn.modrinth.com/data/cached_images/1d169f460acefce5a680b3389ba5ff9a0dbd1f43_0.webp)
+  ![Plaguewhale Slab](https://cdn.modrinth.com/data/cached_images/1d169f460acefce5a680b3389ba5ff9a0dbd1f43_0.webp)
 </details>
 
 <details>
   <summary>Poisonous Potato Zombie</summary>
 
-![Poisonous Potato Zombie](https://cdn.modrinth.com/data/cached_images/54e698a997683ce62baaed9897b2a8bc8e2865ad_0.webp)
+  ![Poisonous Potato Zombie](https://cdn.modrinth.com/data/cached_images/54e698a997683ce62baaed9897b2a8bc8e2865ad_0.webp)
 </details>
 
 <details>
   <summary>Potato Husk</summary>
 
-![Potato Husk](https://cdn.modrinth.com/data/cached_images/bd0085380b1f33d8213cc711d1f702913f5e71e2_0.webp)
+  ![Potato Husk](https://cdn.modrinth.com/data/cached_images/bd0085380b1f33d8213cc711d1f702913f5e71e2_0.webp)
 </details>
 
 <details>
   <summary>Ray Tracing</summary>
 
-![Ray Tracing](https://cdn.modrinth.com/data/cached_images/23ac67d0e9b580792f3ad919e60a4d1aff18c542_0.webp)
+  ![Ray Tracing](https://cdn.modrinth.com/data/cached_images/23ac67d0e9b580792f3ad919e60a4d1aff18c542_0.webp)
 </details>
 
 <details>
   <summary>Redstone Bug</summary>
 
-![Redstone Bug](https://cdn.modrinth.com/data/cached_images/49a5f13a408e53ee33e7ad1e93b7b6468b456291_0.webp)
+  ![Redstone Bug](https://cdn.modrinth.com/data/cached_images/49a5f13a408e53ee33e7ad1e93b7b6468b456291_0.webp)
 </details>
 
 <details>
   <summary>Smiling Creeper</summary>
 
-![Smiling Creeper](https://cdn.modrinth.com/data/cached_images/ac2b32c4fc986564657fcf9ff7ab1fe5976bcedc_0.webp)
+  ![Smiling Creeper](https://cdn.modrinth.com/data/cached_images/ac2b32c4fc986564657fcf9ff7ab1fe5976bcedc_0.webp)
 </details>
 
 <details>
   <summary>Toxifin Slab</summary>
 
-![Toxifin Slab](https://cdn.modrinth.com/data/cached_images/1cddcb2636313b87964f35e5a36f642e51e4a337_0.webp)
+  ![Toxifin Slab](https://cdn.modrinth.com/data/cached_images/1cddcb2636313b87964f35e5a36f642e51e4a337_0.webp)
 </details>
 
 <details>
   <summary>Traitor</summary>
 
-![Traitor](https://cdn.modrinth.com/data/cached_images/a9b5136673d40c49426e91b1c2625804edd2ad69_0.webp)
+  ![Traitor](https://cdn.modrinth.com/data/cached_images/a9b5136673d40c49426e91b1c2625804edd2ad69_0.webp)
 </details>
 
 </details>
@@ -305,9 +317,9 @@ Simply shift and right click on a mob with an **empty hand** to pick it up, and 
 ![The penguin being picked up.](https://cdn.modrinth.com/data/cached_images/b9a065361a75ea117c311c05e0d3a563bb2fb4a8_0.webp)
 
 ## Requirements
-On Fabric, this mod requires [Fabric API](https://modrinth.com/mod/fabric-api), [Cloth Config API](https://modrinth.com/mod/cloth-config), [YACL](https://modrinth.com/mod/yacl) (YetAnotherConfigLib) and [Mod Menu](https://modrinth.com/mod/modmenu).
+On Fabric, this mod requires [Fabric API](https://modrinth.com/mod/fabric-api), [Cloth Config API](https://modrinth.com/mod/cloth-config), [YACL](https://modrinth.com/mod/yacl) (YetAnotherConfigLib) and [Mod Menu](https://modrinth.com/mod/modmenu). 
 
-On Neoforge, this mod requires [Cloth Config API](https://modrinth.com/mod/cloth-config) and [YACL](https://modrinth.com/mod/yacl).
+On Neoforge, this mod requires [Cloth Config API](https://modrinth.com/mod/cloth-config) and [YACL](https://modrinth.com/mod/yacl). 
 
 It's a lot, I know, but hopefully you already have most of them installed!
 
