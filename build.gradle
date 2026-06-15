@@ -35,7 +35,7 @@ repositories {
 }
 
 base {
-    archivesName = "pets-mod" + project.minecraft_version + "-" + "neo"
+    archivesName = "pets-mod" + "-" + project.minecraft_version + "-" + "neo"
 }
 
 // Mojang ships Java 25 to end users in 26.1, so mods should target Java 25.
@@ -193,4 +193,9 @@ idea {
         downloadSources = true
         downloadJavadoc = true
     }
+}
+tasks.named('jar') {
+    archiveBaseName = "pets-mod"
+    archiveVersion = project.mod_version
+    archiveClassifier = project.minecraft_version + "-neo"
 }
