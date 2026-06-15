@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.vanilla.axolotl;
 import com.jeff.pets.mob.vanilla.passive.ClientAxolotl;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.animal.axolotl.AdultAxolotlModel;
+import net.minecraft.client.model.animal.axolotl.AxolotlModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -13,13 +13,13 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientAxolotlRenderer extends PetRenderer<@NotNull ClientAxolotl, @NotNull AxolotlRenderState, @NotNull AdultAxolotlModel> {
+public class ClientAxolotlRenderer extends PetRenderer<@NotNull ClientAxolotl, @NotNull AxolotlRenderState, @NotNull AxolotlModel> {
     public static final ModelLayerLocation AXOLOTL_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientaxolotl"), "main");
 
     String axolotlTextureLocation;
 
     public ClientAxolotlRenderer(EntityRendererProvider.Context context) {
-        super(context, new AdultAxolotlModel(context.bakeLayer(ModelLayers.AXOLOTL)), 0.5F);
+        super(context, new AxolotlModel(context.bakeLayer(ModelLayers.AXOLOTL)), 0.5F);
     }
 
     @Override

@@ -40,11 +40,11 @@ public class ClientLlamaRenderer extends PetRenderer<@NotNull ClientLlama, @NotN
     @Override
     public @NotNull Identifier getTextureLocation(LlamaRenderState livingEntityRenderState) {
         switch (CONFIG.llamaSkin) {
-            case "brown" -> llamaTexturePath = "textures/entity/llama/llama_brown.png";
-            case "creamy" -> llamaTexturePath = "textures/entity/llama/llama_creamy.png";
-            case "gray" -> llamaTexturePath = "textures/entity/llama/llama_gray.png";
-            case "white" -> llamaTexturePath = "textures/entity/llama/llama_white.png";
-            case null, default -> llamaTexturePath = "textures/entity/llama/llama_brown.png";
+            case "brown" -> llamaTexturePath = "textures/entity/llama/brown.png";
+            case "creamy" -> llamaTexturePath = "textures/entity/llama/creamy.png";
+            case "gray" -> llamaTexturePath = "textures/entity/llama/gray.png";
+            case "white" -> llamaTexturePath = "textures/entity/llama/white.png";
+            case null, default -> llamaTexturePath = "textures/entity/llama/brown.png";
         }
         return Identifier.withDefaultNamespace(llamaTexturePath);
     }

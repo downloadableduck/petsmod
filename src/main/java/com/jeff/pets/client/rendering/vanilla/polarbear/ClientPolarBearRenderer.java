@@ -24,7 +24,7 @@ public class ClientPolarBearRenderer extends PetRenderer<@NotNull ClientPolarBea
     }
 
     public static LayerDefinition createBodyLayer() {
-        PolarBearModel.createBodyLayer();
+        PolarBearModel.createBodyLayer(false);
         return LayerDefinition.create(new MeshDefinition(), 128, 64);
     }
 

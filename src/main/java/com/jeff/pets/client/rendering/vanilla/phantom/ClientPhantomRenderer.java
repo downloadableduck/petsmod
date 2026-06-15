@@ -22,7 +22,7 @@ public class ClientPhantomRenderer extends PetRenderer<@NotNull ClientPhantom, @
 
     @Override
     public @NotNull Identifier getTextureLocation(PhantomRenderState livingEntityRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/phantom/phantom.png");
+        return Identifier.withDefaultNamespace("textures/entity/phantom.png");
     }
 
     @Override

@@ -10,6 +10,7 @@ license="${mod_license}"
 
 # A URL to refer people to when problems occur with this mod
 issueTrackerURL="https://github.com/downloadableduck/petsmod/issues" #optional
+displayURL="https://petsmod.com"
 
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
@@ -78,7 +79,7 @@ file="META-INF/accesstransformer.cfg"
     modId="minecraft"
     type="required"
     # This version range declares a minimum of the current minecraft version up to but not including the next major version
-    versionRange="[26.1,)"
+    versionRange="1.21.11"
     ordering="NONE"
     side="BOTH"
 

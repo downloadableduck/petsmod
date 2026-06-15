@@ -21,7 +21,7 @@ public class ClientWanderingTraderRenderer extends PetRenderer<@NotNull ClientWa
 
     @Override
     public @NotNull Identifier getTextureLocation(VillagerRenderState villagerRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/wandering_trader/wandering_trader.png");
+        return Identifier.withDefaultNamespace("textures/entity/wandering_trader.png");
     }
 
     @Override

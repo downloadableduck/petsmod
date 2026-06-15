@@ -1,6 +1,6 @@
 package com.jeff.pets.client;
 
-import com.jeff.pets.PetsInitializer;
+import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayerLocation;

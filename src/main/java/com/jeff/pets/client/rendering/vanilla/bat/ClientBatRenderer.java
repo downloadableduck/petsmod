@@ -19,7 +19,7 @@ public class ClientBatRenderer extends PetRenderer<@NotNull ClientBat, @NotNull 
 
     @Override
     public @NotNull Identifier getTextureLocation(BatRenderState batRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/bat/bat.png");
+        return Identifier.withDefaultNamespace("textures/entity/bat.png");
     }
 
     @Override

@@ -10,6 +10,8 @@ import net.minecraft.client.renderer.entity.state.GoatRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
+import static com.jeff.pets.client.Central.CONFIG;
+
 public class ClientGoatRenderer extends PetRenderer<@NotNull ClientGoat, @NotNull GoatRenderState, @NotNull ClientGoatModel> {
 
     public static final ModelLayerLocation GOAT_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientgoat"), "main");
@@ -20,7 +22,9 @@ public class ClientGoatRenderer extends PetRenderer<@NotNull ClientGoat, @NotNul
 
     @Override
     protected void scale(@NotNull GoatRenderState livingEntityRenderState, @NotNull PoseStack poseStack) {
-        poseStack.scale(0.5F, 0.5F, 0.5F);
+        if (CONFIG.isBaby) {
+            poseStack.scale(0.5F, 0.5F, 0.5F);
+        }
     }
 
     @Override

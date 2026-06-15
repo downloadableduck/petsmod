@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.vanilla.camel;
 import com.jeff.pets.mob.vanilla.passive.ClientCamel;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.animal.camel.AdultCamelModel;
+import net.minecraft.client.model.animal.camel.CamelModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -15,12 +15,12 @@ import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientCamelRenderer extends PetRenderer<@NotNull ClientCamel, @NotNull CamelRenderState, @NotNull AdultCamelModel> {
+public class ClientCamelRenderer extends PetRenderer<@NotNull ClientCamel, @NotNull CamelRenderState, @NotNull CamelModel> {
     public static final ModelLayerLocation CAMEL_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientcamel"), "main");
     public String camelTexturePath;
 
     public ClientCamelRenderer(EntityRendererProvider.Context context) {
-        super(context, new AdultCamelModel(context.bakeLayer(ModelLayers.CAMEL)), 0.7F);
+        super(context, new CamelModel(context.bakeLayer(ModelLayers.CAMEL)), 0.7F);
     }
 
     @Override

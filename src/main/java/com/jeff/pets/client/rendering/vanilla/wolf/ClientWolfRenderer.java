@@ -24,7 +24,7 @@ public class ClientWolfRenderer extends PetRenderer<@NotNull ClientWolf, @NotNul
     }
 
     public static LayerDefinition createBodyLayer() {
-        ClientWolfModel.createBodyLayer(CubeDeformation.NONE);
+        ClientWolfModel.createMeshDefinition(CubeDeformation.NONE);
         return LayerDefinition.create(new MeshDefinition(), 64, 32);
     }
 

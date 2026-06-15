@@ -23,7 +23,7 @@ public class ClientRabbitRenderer extends PetRenderer<@NotNull ClientRabbit, @No
     }
 
     public static LayerDefinition createBaseRabbitLayer() {
-        ClientRabbitModel.createBodyLayer();
+        ClientRabbitModel.createBodyLayer(false);
         return LayerDefinition.create(new MeshDefinition(), 64, 32);
     }
 
@@ -59,6 +59,5 @@ public class ClientRabbitRenderer extends PetRenderer<@NotNull ClientRabbit, @No
     @Override
     public void extractRenderState(ClientRabbit rabbit, RabbitRenderState state, float f) {
         super.extractRenderState(rabbit, state, f);
-        state.hopAnimationState.start(0);
     }
 }

@@ -9,6 +9,8 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.layers.MushroomCowMushroomLayer;
+import net.minecraft.client.renderer.entity.state.CowRenderState;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.renderer.entity.state.MushroomCowRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
@@ -24,7 +26,7 @@ public class ClientMooshroomRenderer extends PetRenderer<@NotNull ClientMooshroo
 
     public ClientMooshroomRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientCowModel(context.bakeLayer(ModelLayers.COW)), 0.7F);
-        this.addLayer(new MushroomCowMushroomLayer(this));
+        this.addLayer(new MushroomCowMushroomLayer(this, context.getBlockRenderDispatcher()));
     }
 
     @Override
@@ -37,11 +39,11 @@ public class ClientMooshroomRenderer extends PetRenderer<@NotNull ClientMooshroo
     @Override
     public @NotNull Identifier getTextureLocation(MushroomCowRenderState cowRenderState) {
         if (Objects.equals(CONFIG.mooshroomSkin, "red")) {
-            mooshroomTexturePath = "textures/entity/cow/mooshroom_red.png";
+            mooshroomTexturePath = "textures/entity/cow/red_mooshroom.png";
         } else if (Objects.equals(CONFIG.mooshroomSkin, "brown")) {
-            mooshroomTexturePath = "textures/entity/cow/mooshroom_brown.png";
+            mooshroomTexturePath = "textures/entity/cow/brown_mooshroom.png";
         } else {
-            mooshroomTexturePath = "textures/entity/cow/mooshroom_red.png";
+            mooshroomTexturePath = "textures/entity/cow/red_mooshroom.png";
         }
         return Identifier.withDefaultNamespace(mooshroomTexturePath);
     }

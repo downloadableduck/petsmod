@@ -7,6 +7,7 @@
 package com.jeff.pets.client;
 
 import com.jeff.pets.PetsInitializer;
+import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.client.mixin.client.ChatAccessor;
 import com.jeff.pets.client.mixin.client.SplashManagerMixin;
 import com.jeff.pets.client.mixin.client.TitleScreenRenderingMixin;
@@ -1554,9 +1555,9 @@ public class Central {
                     }
 
                     if (isValid) {
-                        Minecraft.getInstance().player.sendSystemMessage(Component.literal("§b[PetsMod] §aYour pet's skin has been updated."));
+                        Minecraft.getInstance().player.displayClientMessage(Component.literal("§b[PetsMod] §aYour pet's skin has been updated."), false);
                     } else {
-                        Minecraft.getInstance().player.sendSystemMessage(Component.literal("§b[PetsMod] §cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else."));
+                        Minecraft.getInstance().player.displayClientMessage(Component.literal("§b[PetsMod] §cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else."), false);
                     }
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
 
@@ -2034,7 +2035,7 @@ public class Central {
     @SubscribeEvent
     static void createPetHelpCommand(RegisterClientCommandsEvent event) {
          event.getDispatcher().register(LiteralArgumentBuilder.<CommandSourceStack>literal("pethelp").executes(context -> {
-            Minecraft.getInstance().player.sendSystemMessage(Component.literal("""
+            Minecraft.getInstance().player.displayClientMessage(Component.literal("""
                     §b[PetsMod] §aPossible commands:\
                     
                     §a/pethelp: §rdisplays a list of commands\
@@ -2049,7 +2050,7 @@ public class Central {
                     
                     §a/petname: §rchanges the name of your currently selected pet\
                     
-                    """));
+                    """), false);
             return 1;
         }));
     }
@@ -2179,14 +2180,14 @@ public class Central {
             String preference = StringArgumentType.getString(context, "preference");
             if (Objects.equals(preference, "off")) {
                 CONFIG.petOn = false;
-                Minecraft.getInstance().player.sendSystemMessage(Component.literal("§b[PetsMod] §7Pet §coff."));
+                Minecraft.getInstance().player.displayClientMessage(Component.literal("§b[PetsMod] §7Pet §coff."), false);
                 AutoConfig.getConfigHolder(PetsConfig.class).save();
             } else if (Objects.equals(preference, "on")) {
                 CONFIG.petOn = true;
                 AutoConfig.getConfigHolder(PetsConfig.class).save();
-                Minecraft.getInstance().player.sendSystemMessage(Component.literal("§b[PetsMod] §7Pet §aon."));
+                Minecraft.getInstance().player.displayClientMessage(Component.literal("§b[PetsMod] §7Pet §aon."), false);
             } else {
-                Minecraft.getInstance().player.sendSystemMessage(Component.literal("§b[PetsMod] §c§lUnknown value " + preference + "! Possible values: §r§aon, §6off"));
+                Minecraft.getInstance().player.displayClientMessage(Component.literal("§b[PetsMod] §c§lUnknown value " + preference + "! Possible values: §r§aon, §6off"), false);
             }
 
             return 1;
@@ -2241,13 +2242,13 @@ public class Central {
 
     public static void checkValidPet(boolean isValid, CommandContext<CommandSourceStack> context, String species) {
         if (!isValid) {
-            Minecraft.getInstance().player.sendSystemMessage(Component.literal("§b[PetsMod] §cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")"));
+            Minecraft.getInstance().player.displayClientMessage(Component.literal("§b[PetsMod] §cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")"), false);
         } else if (isValid && CONFIG.petOn) {
             despawnPet();
-            Minecraft.getInstance().player.sendSystemMessage(Component.literal("§b[PetsMod] §aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + "."));
+            Minecraft.getInstance().player.displayClientMessage(Component.literal("§b[PetsMod] §aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + "."), false);
             summonPet();
         } else if (isValid && !CONFIG.petOn) {
-            Minecraft.getInstance().player.sendSystemMessage(Component.literal("§b[PetsMod] §cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet enabled. Run §l/pet on§r§c to change this."));
+            Minecraft.getInstance().player.displayClientMessage(Component.literal("§b[PetsMod] §cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet enabled. Run §l/pet on§r§c to change this."), false);
         }
     }
 

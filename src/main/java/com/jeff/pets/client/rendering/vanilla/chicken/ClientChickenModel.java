@@ -1,13 +1,13 @@
 package com.jeff.pets.client.rendering.vanilla.chicken;
 
-import net.minecraft.client.model.animal.chicken.AdultChickenModel;
+import net.minecraft.client.model.animal.chicken.ChickenModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.ChickenRenderState;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientChickenModel extends AdultChickenModel {
+public class ClientChickenModel extends ChickenModel {
 
     private final ModelPart head;
 

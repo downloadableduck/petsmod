@@ -26,7 +26,7 @@ public class ClientElderGuardianRenderer extends PetRenderer<@NotNull ClientElde
     @Override
     public @NotNull Identifier getTextureLocation(GuardianRenderState livingEntityRenderState) {
         livingEntityRenderState.spikesAnimation = 1;
-        return Identifier.withDefaultNamespace("textures/entity/guardian/guardian_elder.png");
+        return Identifier.withDefaultNamespace("textures/entity/guardian_elder.png");
     }
 
     @Override

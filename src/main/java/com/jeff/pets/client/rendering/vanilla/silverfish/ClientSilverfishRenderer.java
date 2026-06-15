@@ -20,7 +20,7 @@ public class ClientSilverfishRenderer extends PetRenderer<@NotNull ClientSilverf
 
     @Override
     public @NotNull Identifier getTextureLocation(LivingEntityRenderState livingEntityRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/silverfish/silverfish.png");
+        return Identifier.withDefaultNamespace("textures/entity/silverfish.png");
     }
 
     @Override

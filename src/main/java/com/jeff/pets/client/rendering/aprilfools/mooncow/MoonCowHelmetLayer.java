@@ -2,15 +2,24 @@ package com.jeff.pets.client.rendering.aprilfools.mooncow;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.layers.SnowGolemHeadLayer;
+import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 
+
 public class MoonCowHelmetLayer extends RenderLayer<@NotNull MoonCowRenderState, @NotNull LegacyCowModel> {
-    public MoonCowHelmetLayer(final RenderLayerParent<@NotNull MoonCowRenderState, @NotNull LegacyCowModel> renderer) {
+
+    private final BlockRenderDispatcher dispatcher;
+
+    public MoonCowHelmetLayer(final RenderLayerParent<@NotNull MoonCowRenderState, @NotNull LegacyCowModel> renderer, BlockRenderDispatcher dispatcher) {
         super(renderer);
+        this.dispatcher = dispatcher;
     }
 
     @Override
@@ -22,7 +31,7 @@ public class MoonCowHelmetLayer extends RenderLayer<@NotNull MoonCowRenderState,
         poseStack.scale(0.625F, -0.625F, -0.625F);
         int overlayCoords = LivingEntityRenderer.getOverlayCoords(state, 0.0F);
         poseStack.translate(-0.5F, -0.5F, -0.5F);
-        state.blockOnHead.submit(poseStack, submitNodeCollector, lightCoords, overlayCoords, state.outlineColor);
+        submitNodeCollector.submitBlockModel(poseStack, ItemBlockRenderTypes.getRenderType(Blocks.GLASS.defaultBlockState()), this.dispatcher.getBlockModel(Blocks.GLASS.defaultBlockState()), 0, 0, 0, lightCoords, overlayCoords, state.outlineColor);
         poseStack.popPose();
     }
 }

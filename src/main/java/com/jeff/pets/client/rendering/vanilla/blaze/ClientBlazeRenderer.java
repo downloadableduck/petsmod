@@ -19,7 +19,7 @@ public class ClientBlazeRenderer extends PetRenderer<@NotNull ClientBlaze, @NotN
 
     @Override
     public @NotNull Identifier getTextureLocation(LivingEntityRenderState livingEntityRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/blaze/blaze.png");
+        return Identifier.withDefaultNamespace("textures/entity/blaze.png");
     }
 
     @Override

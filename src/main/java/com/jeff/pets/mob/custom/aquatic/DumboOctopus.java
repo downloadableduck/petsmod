@@ -99,7 +99,7 @@ public class DumboOctopus extends FlyingPet {
     }
 
     protected void playStepSound(final @NotNull BlockPos pos, final @NotNull BlockState blockState) {
-        this.playSound(SoundEvents.CHICKEN_STEP.value(), 0.15F, 1.0F);
+        this.playSound(SoundEvents.CHICKEN_STEP, 0.15F, 1.0F);
     }
 
     public @Nullable DumboOctopus getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgeableMob partner) {

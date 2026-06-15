@@ -1,6 +1,7 @@
 package com.jeff.pets.client.rendering.custom.aprilfools.head;
 
 import com.jeff.pets.PetsInitializer;
+import com.jeff.pets.client.PetsClientInitializer;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;

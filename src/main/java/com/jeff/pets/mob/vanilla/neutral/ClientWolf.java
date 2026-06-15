@@ -27,6 +27,6 @@ public class ClientWolf extends GroundPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.WOLF_SOUNDS.get(WolfSoundVariants.SoundSet.CLASSIC).adultSounds().ambientSound().value();
+        return SoundEvents.WOLF_SOUNDS.get(WolfSoundVariants.SoundSet.CLASSIC).ambientSound().value();
     }
 }
