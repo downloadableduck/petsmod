@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.wolf;
 
-import com.jeff.pets.mob.vanilla.neutral.ClientWolf;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.neutral.ClientWolf;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -24,7 +24,7 @@ public class ClientWolfRenderer extends PetRenderer<@NotNull ClientWolf, @NotNul
     }
 
     public static LayerDefinition createBodyLayer() {
-        ClientWolfModel.createBodyLayer(CubeDeformation.NONE);
+        ClientWolfModel.createMeshDefinition(CubeDeformation.NONE);
         return LayerDefinition.create(new MeshDefinition(), 64, 32);
     }
 

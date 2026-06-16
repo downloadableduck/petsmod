@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.creaking;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientCreaking;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientCreaking;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.monster.creaking.CreakingModel;

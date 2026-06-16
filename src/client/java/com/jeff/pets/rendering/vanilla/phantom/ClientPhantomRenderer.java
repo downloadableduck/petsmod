@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.phantom;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientPhantom;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientPhantom;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.monster.phantom.PhantomModel;
@@ -22,7 +22,7 @@ public class ClientPhantomRenderer extends PetRenderer<@NotNull ClientPhantom, @
 
     @Override
     public @NotNull Identifier getTextureLocation(PhantomRenderState livingEntityRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/phantom/phantom.png");
+        return Identifier.withDefaultNamespace("textures/entity/phantom.png");
     }
 
     @Override

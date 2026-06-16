@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.pig;
 
-import com.jeff.pets.mob.vanilla.passive.ClientPig;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientPig;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -35,13 +35,12 @@ public class ClientPigRenderer extends PetRenderer<@NotNull ClientPig, @NotNull 
         }
     }
 
-    @Override
     public @NotNull Identifier getTextureLocation(LivingEntityRenderState pigRenderState) {
         switch (CONFIG.pigSkin) {
-            case "temperate" -> pigTexturePath = "textures/entity/pig/pig_temperate.png";
-            case "warm" -> pigTexturePath = "textures/entity/pig/pig_warm.png";
-            case "cold" -> pigTexturePath = "textures/entity/pig/pig_cold.png";
-            case null, default -> pigTexturePath = "textures/entity/pig/pig_temperate.png";
+            case "temperate" -> pigTexturePath = "textures/entity/pig/temperate_pig.png";
+            case "warm" -> pigTexturePath = "textures/entity/pig/warm_pig.png";
+            case "cold" -> pigTexturePath = "textures/entity/pig/cold_pig.png";
+            case null, default -> pigTexturePath = "textures/entity/pig/temperate_pig.png";
         }
         return Identifier.withDefaultNamespace(pigTexturePath);
     }

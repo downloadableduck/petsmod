@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.elderguardian;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientElderGuardian;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientElderGuardian;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -26,7 +26,7 @@ public class ClientElderGuardianRenderer extends PetRenderer<@NotNull ClientElde
     @Override
     public @NotNull Identifier getTextureLocation(GuardianRenderState livingEntityRenderState) {
         livingEntityRenderState.spikesAnimation = 1;
-        return Identifier.withDefaultNamespace("textures/entity/guardian/guardian_elder.png");
+        return Identifier.withDefaultNamespace("textures/entity/guardian_elder.png");
     }
 
     @Override

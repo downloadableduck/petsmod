@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.salmon;
 
-import com.jeff.pets.mob.vanilla.passive.ClientSalmon;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientSalmon;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.model.geom.ModelLayerLocation;

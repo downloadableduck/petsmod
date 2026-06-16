@@ -25,6 +25,6 @@ public class NerdCreeper extends GroundPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.CHICKEN_STEP.value();
+        return SoundEvents.CREEPER_PRIMED;
     }
 }

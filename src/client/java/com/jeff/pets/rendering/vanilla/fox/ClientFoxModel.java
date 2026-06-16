@@ -1,13 +1,13 @@
 package com.jeff.pets.rendering.vanilla.fox;
 
-import net.minecraft.client.model.animal.fox.AdultFoxModel;
+import net.minecraft.client.model.animal.fox.FoxModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.FoxRenderState;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.Central.CONFIG;
 
-public class ClientFoxModel extends AdultFoxModel {
+public class ClientFoxModel extends FoxModel {
 
     private final ModelPart head;
 

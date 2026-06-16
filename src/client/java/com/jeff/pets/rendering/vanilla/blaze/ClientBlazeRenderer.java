@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.blaze;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientBlaze;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientBlaze;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.monster.blaze.BlazeModel;
@@ -19,7 +19,7 @@ public class ClientBlazeRenderer extends PetRenderer<@NotNull ClientBlaze, @NotN
 
     @Override
     public @NotNull Identifier getTextureLocation(LivingEntityRenderState livingEntityRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/blaze/blaze.png");
+        return Identifier.withDefaultNamespace("textures/entity/blaze.png");
     }
 
     @Override

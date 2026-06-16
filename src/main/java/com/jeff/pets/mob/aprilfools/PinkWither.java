@@ -27,6 +27,6 @@ public class PinkWither extends FlyingPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.CHICKEN_STEP.value();
+        return SoundEvents.CHICKEN_STEP;
     }
 }

@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.nautilus;
 
-import com.jeff.pets.mob.vanilla.neutral.ClientNautilus;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.neutral.ClientNautilus;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.animal.nautilus.NautilusModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;

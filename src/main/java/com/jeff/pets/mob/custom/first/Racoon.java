@@ -54,7 +54,7 @@ public class Racoon extends AbstractPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.CHICKEN_STEP.value();
+        return SoundEvents.CHICKEN_STEP;
     }
 
     @Override

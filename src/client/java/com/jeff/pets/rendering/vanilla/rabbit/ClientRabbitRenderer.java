@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.rabbit;
 
-import com.jeff.pets.mob.vanilla.passive.ClientRabbit;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientRabbit;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -23,7 +23,7 @@ public class ClientRabbitRenderer extends PetRenderer<@NotNull ClientRabbit, @No
     }
 
     public static LayerDefinition createBaseRabbitLayer() {
-        ClientRabbitModel.createBodyLayer();
+        ClientRabbitModel.createBodyLayer(false);
         return LayerDefinition.create(new MeshDefinition(), 64, 32);
     }
 
@@ -59,6 +59,5 @@ public class ClientRabbitRenderer extends PetRenderer<@NotNull ClientRabbit, @No
     @Override
     public void extractRenderState(ClientRabbit rabbit, RabbitRenderState state, float f) {
         super.extractRenderState(rabbit, state, f);
-        state.hopAnimationState.start(0);
     }
 }

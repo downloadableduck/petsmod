@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.ravager;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientRavager;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientRavager;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.monster.ravager.RavagerModel;

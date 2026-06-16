@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.wither;
 
-import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.builders.CubeDeformation;

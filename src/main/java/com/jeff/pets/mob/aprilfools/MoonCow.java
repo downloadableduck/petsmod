@@ -13,7 +13,6 @@ import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.cow.CowSoundVariants;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -39,7 +38,7 @@ public class MoonCow extends AbstractPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.COW_SOUNDS.get(CowSoundVariants.SoundSet.CLASSIC).ambientSound().value();
+        return SoundEvents.COW_AMBIENT;
     }
 
     @Override
@@ -129,7 +128,7 @@ public class MoonCow extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level().playLocalSound(this, SoundEvents.COW_SOUNDS.get(CowSoundVariants.SoundSet.CLASSIC).ambientSound().value(), SoundSource.AMBIENT, 1.0f, 1.0f);
+            level().playLocalSound(this, SoundEvents.COW_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f);
         }
     }
 }

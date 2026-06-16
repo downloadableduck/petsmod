@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.endermite;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientEndermite;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientEndermite;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.monster.endermite.EndermiteModel;
@@ -20,7 +20,7 @@ public class ClientEndermiteRenderer extends PetRenderer<@NotNull ClientEndermit
 
     @Override
     public @NotNull Identifier getTextureLocation(LivingEntityRenderState livingEntityRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/endermite/endermite.png");
+        return Identifier.withDefaultNamespace("textures/entity/endermite.png");
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.pillager;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientPillager;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientPillager;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

@@ -1,13 +1,13 @@
 package com.jeff.pets.rendering.vanilla.rabbit;
 
-import net.minecraft.client.model.animal.rabbit.AdultRabbitModel;
+import net.minecraft.client.model.animal.rabbit.RabbitModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.RabbitRenderState;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.Central.CONFIG;
 
-public class ClientRabbitModel extends AdultRabbitModel {
+public class ClientRabbitModel extends RabbitModel {
 
     public ClientRabbitModel(ModelPart modelPart) {
         super(modelPart);

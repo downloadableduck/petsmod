@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.creeper;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientCreeper;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientCreeper;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.builders.CubeDeformation;

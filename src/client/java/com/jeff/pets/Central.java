@@ -30,8 +30,8 @@ import com.mojang.brigadier.tree.RootCommandNode;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommands;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
@@ -43,8 +43,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.multiplayer.ClientSuggestionProvider;
-import net.minecraft.client.renderer.Panorama;
-import net.minecraft.client.renderer.state.gui.PanoramaRenderState;
 import net.minecraft.client.resources.SplashManager;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.synchronization.SuggestionProviders;
@@ -872,7 +870,7 @@ public class Central implements ClientModInitializer {
             commandRoot.getExamples().clear();
         }
 
-        ClientCommandRegistrationCallback.EVENT.register((dispatcher2, registryAccess) -> dispatcher2.register(ClientCommands.literal("petskin").then(ClientCommands.argument("skin", StringArgumentType.greedyString())
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher2, registryAccess) -> dispatcher2.register(ClientCommandManager.literal("petskin").then(ClientCommandManager.argument("skin", StringArgumentType.greedyString())
                 .suggests(this.SKINS)
                 .executes((context) -> {
                     boolean isValid = true;
@@ -1760,7 +1758,7 @@ public class Central implements ClientModInitializer {
      * Creates the command that allows the user to use {@code /teleportpet}.
      */
     void createPetTeleportCommand() {
-        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(ClientCommands.literal("teleportpet").executes((context) -> {
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("teleportpet").executes((context) -> {
             despawnPet();
             summonPet();
             return 1;
@@ -1771,7 +1769,7 @@ public class Central implements ClientModInitializer {
      * Creates the command that allows the user to use {@code /petspecies}.
      */
     void createPetSpeciesCommand() {
-        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryaccess) -> dispatcher.register(ClientCommands.literal("petspecies").then(ClientCommands.argument("species", StringArgumentType.greedyString()).suggests(PETS).executes((context) -> {
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryaccess) -> dispatcher.register(ClientCommandManager.literal("petspecies").then(ClientCommandManager.argument("species", StringArgumentType.greedyString()).suggests(PETS).executes((context) -> {
             boolean isValid = true;
             String species = StringArgumentType.getString(context, "species");
 
@@ -2015,8 +2013,8 @@ public class Central implements ClientModInitializer {
      * Creates a help command to let the user easily view the commands at their disposal.
      */
     void createPetHelpCommand() {
-        ClientCommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess) -> dispatcher.register(ClientCommands.literal("pethelp").executes(context -> {
-            context.getSource().getPlayer().sendSystemMessage(Component.literal("""
+        ClientCommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("pethelp").executes(context -> {
+            context.getSource().getPlayer().displayClientMessage(Component.literal("""
                     §b[PetsMod] §aPossible commands:\
                     
                     §a/pethelp: §rdisplays a list of commands\
@@ -2031,7 +2029,7 @@ public class Central implements ClientModInitializer {
                     
                     §a/petname: §rchanges the name of your currently selected pet\
                     
-                    """));
+                    """), false);
             return 1;
         }))));
     }
@@ -2040,7 +2038,7 @@ public class Central implements ClientModInitializer {
      * Creates the command that allows the user to change their pet's name.
      */
     void createPetNameCommand() {
-        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(ClientCommands.literal("petname").then(ClientCommands.argument("name", StringArgumentType.greedyString()).executes((context) -> {
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("petname").then(ClientCommandManager.argument("name", StringArgumentType.greedyString()).executes((context) -> {
             String name = StringArgumentType.getString(context, "name");
             if (!summonedEntity.isEmpty()) {
                 switch (CONFIG.activePet) {
@@ -2155,7 +2153,7 @@ public class Central implements ClientModInitializer {
      * Creates the command that allows the user to toggle their pet on and off.
      */
     void createToggleCommand() {
-        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(ClientCommands.literal("pet").then(ClientCommands.argument("preference", StringArgumentType.string()).suggests(SuggestionProviders.cast(ON_OFF)).executes((context) -> {
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("pet").then(ClientCommandManager.argument("preference", StringArgumentType.string()).suggests(SuggestionProviders.cast(ON_OFF)).executes((context) -> {
             String preference = StringArgumentType.getString(context, "preference");
             if (Objects.equals(preference, "off")) {
                 CONFIG.petOn = false;

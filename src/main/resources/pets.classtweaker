@@ -1,9 +1,9 @@
-accessWidener v2 official
+classTweaker v1 named
 accessible field net/minecraft/client/gui/screens/ChatScreen commandSuggestions Lnet/minecraft/client/gui/components/CommandSuggestions;
 mutable field net/minecraft/client/renderer/entity/state/WitherRenderState yHeadRots [F
 accessible field net/minecraft/client/model/animal/rabbit/RabbitModel head Lnet/minecraft/client/model/geom/ModelPart;
 mutable field net/minecraft/client/gui/components/LogoRenderer MINECRAFT_LOGO Lnet/minecraft/resources/Identifier;
 mutable field net/minecraft/client/gui/components/LogoRenderer MINECRAFT_EDITION Lnet/minecraft/resources/Identifier;
 mutable field net/minecraft/client/gui/components/LogoRenderer EASTER_EGG_LOGO Lnet/minecraft/resources/Identifier;
-accessible field net/minecraft/client/resources/SplashManager SPLASHES_LOCATION Lnet/minecraft/resources/Identifier;
 mutable field net/minecraft/client/resources/SplashManager SPLASHES_LOCATION Lnet/minecraft/resources/Identifier;
+accessible field net/minecraft/client/resources/SplashManager SPLASHES_LOCATION Lnet/minecraft/resources/Identifier;

@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.bat;
 
-import com.jeff.pets.mob.vanilla.passive.ClientBat;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientBat;
 import net.minecraft.client.model.ambient.BatModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -19,7 +19,7 @@ public class ClientBatRenderer extends PetRenderer<@NotNull ClientBat, @NotNull 
 
     @Override
     public @NotNull Identifier getTextureLocation(BatRenderState batRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/bat/bat.png");
+        return Identifier.withDefaultNamespace("textures/entity/bat.png");
     }
 
     @Override

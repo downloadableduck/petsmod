@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.witherskeleton;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientWitherSkeleton;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientWitherSkeleton;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.monster.skeleton.SkeletonModel;

@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.dolphin;
 
-import com.jeff.pets.mob.vanilla.neutral.ClientDolphin;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.neutral.ClientDolphin;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.animal.dolphin.DolphinModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -20,7 +20,7 @@ public class ClientDolphinRenderer extends PetRenderer<@NotNull ClientDolphin, @
 
     @Override
     public @NotNull Identifier getTextureLocation(DolphinRenderState dolphinRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/dolphin/dolphin.png");
+        return Identifier.withDefaultNamespace("textures/entity/dolphin.png");
     }
 
     @Override

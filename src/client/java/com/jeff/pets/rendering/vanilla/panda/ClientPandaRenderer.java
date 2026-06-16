@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.panda;
 
-import com.jeff.pets.mob.vanilla.neutral.ClientPanda;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.neutral.ClientPanda;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.animal.panda.PandaModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -32,12 +32,12 @@ public class ClientPandaRenderer extends PetRenderer<@NotNull ClientPanda, @NotN
         String pandaTexturePath;
         switch (CONFIG.pandaSkin) {
             case "normal" -> pandaTexturePath = "textures/entity/panda/panda.png";
-            case "lazy" -> pandaTexturePath = "textures/entity/panda/panda_lazy.png";
-            case "agressive" -> pandaTexturePath = "textures/entity/panda/panda_aggressive.png";
-            case "worried" -> pandaTexturePath = "textures/entity/panda/panda_worried.png";
-            case "playful" -> pandaTexturePath = "textures/entity/panda/panda_playful.png";
-            case "weak" -> pandaTexturePath = "textures/entity/panda/panda_weak.png";
-            case "brown" -> pandaTexturePath = "textures/entity/panda/panda_brown.png";
+            case "lazy" -> pandaTexturePath = "textures/entity/panda/lazy_panda.png";
+            case "agressive" -> pandaTexturePath = "textures/entity/panda/aggressive_panda.png";
+            case "worried" -> pandaTexturePath = "textures/entity/panda/worried_panda.png";
+            case "playful" -> pandaTexturePath = "textures/entity/panda/playful_panda.png";
+            case "weak" -> pandaTexturePath = "textures/entity/panda/weak_panda.png";
+            case "brown" -> pandaTexturePath = "textures/entity/panda/brown_panda.png";
             case null, default -> pandaTexturePath = "textures/entity/panda/panda.png";
         }
         return Identifier.withDefaultNamespace(pandaTexturePath);

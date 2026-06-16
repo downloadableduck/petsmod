@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.evoker;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientEvoker;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientEvoker;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

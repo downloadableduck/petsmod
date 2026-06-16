@@ -112,9 +112,9 @@ public class PetsConfigScreen implements ModMenuApi {
                                                         } catch (IllegalArgumentException e) {
                                                             assert Minecraft.getInstance().player != null;
                                                             if (!hasPrintedMessage) {
-                                                                Minecraft.getInstance().player.sendSystemMessage(Component.literal("§b[PetsMod] §cWe ran into an error and couldn't generate your config screen. Please report this stacktrace on my GitHub§r: " + e.getMessage() + ". §cThis is usually caused by tampering with the config JSON or a logic error in the code. §aIn the" +
-                                                                        " meantime, try using the /pet commands."));
-                                                                Minecraft.getInstance().player.sendSystemMessage(Component.literal("§aRecommended course of action: run /petspecies and choose a valid option from the suggestions."));
+                                                                Minecraft.getInstance().player.displayClientMessage(Component.literal("§b[PetsMod] §cWe ran into an error and couldn't generate your config screen. Please report this stacktrace on my GitHub§r: " + e.getMessage() + ". §cThis is usually caused by tampering with the config JSON or a logic error in the code. §aIn the" +
+                                                                        " meantime, try using the /pet commands."), false);
+                                                                Minecraft.getInstance().player.displayClientMessage(Component.literal("§aRecommended course of action: run /petspecies and choose a valid option from the suggestions."), false);
                                                                 hasPrintedMessage = true;
                                                             }
                                                             e.printStackTrace();
@@ -412,9 +412,9 @@ public class PetsConfigScreen implements ModMenuApi {
                                                 } catch (IllegalArgumentException e) {
                                                     assert Minecraft.getInstance().player != null;
                                                     if (!hasPrintedMessage) {
-                                                        Minecraft.getInstance().player.sendSystemMessage(Component.literal("§b[PetsMod] §cWe ran into an error and couldn't generate your config screen. Please report this stacktrace on my GitHub§r: " + e.getMessage() + ". §cThis is usually caused by tampering with the config JSON or a logic error in the code. §aIn the" +
-                                                                " meantime, try using the /pet commands."));
-                                                        Minecraft.getInstance().player.sendSystemMessage(Component.literal("§aRecommended course of action: run /petskin and choose a valid option from the suggestions."));
+                                                        Minecraft.getInstance().player.displayClientMessage(Component.literal("§b[PetsMod] §cWe ran into an error and couldn't generate your config screen. Please report this stacktrace on my GitHub§r: " + e.getMessage() + ". §cThis is usually caused by tampering with the config JSON or a logic error in the code. §aIn the" +
+                                                                " meantime, try using the /pet commands."), false);
+                                                        Minecraft.getInstance().player.displayClientMessage(Component.literal("§aRecommended course of action: run /petskin and choose a valid option from the suggestions."), false);
                                                         hasPrintedMessage = true;
                                                     }
                                                     e.printStackTrace();
@@ -993,14 +993,14 @@ public class PetsConfigScreen implements ModMenuApi {
                                     .name(Component.literal("Addons installed: "))
                                     .description(OptionDescription.of(Component.literal("Installed addons: \n" + getInstalledAddons())))
                                     .text(Component.literal(String.valueOf(PetsClientInitializer.ADDONS.size())))
-                                    .action((_, _) -> {
+                                    .action((screen, button) -> {
 
                                     })
                                     .build())
                             .option(ButtonOption.createBuilder()
                                     .name(Component.literal("Browse Addons"))
                                     .description(OptionDescription.of(Component.literal("Click to view our website, which houses a list of addons to browse.")))
-                                    .action((_, _) -> Util.getPlatform().openUri("https://petsmod.com/addons"))
+                                    .action((screen, button) -> Util.getPlatform().openUri("https://petsmod.com/addons"))
                                     .text(Component.literal("www.petsmod.com/addons"))
                                     .build())
                             .build())

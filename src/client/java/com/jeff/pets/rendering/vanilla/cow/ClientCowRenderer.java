@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.cow;
 
-import com.jeff.pets.mob.vanilla.passive.ClientCow;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientCow;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -20,13 +20,14 @@ public class ClientCowRenderer extends PetRenderer<@NotNull ClientCow, @NotNull 
         super(context, new ClientCowModel(context.bakeLayer(ModelLayers.COW)), 0.7F);
     }
 
-    @Override
     public @NotNull Identifier getTextureLocation(CowRenderState cowRenderState) {
         switch (CONFIG.cowSkin) {
-            case "temperate" -> cowTexturePath = "textures/entity/cow/cow_temperate.png";
-            case "warm" -> cowTexturePath = "textures/entity/cow/cow_warm.png";
-            case "cold" -> cowTexturePath = "textures/entity/cow/cow_cold.png";
-            case null, default -> cowTexturePath = "textures/entity/cow/cow_temperate.png";
+            case "temperate" -> cowTexturePath = "textures/entity/cow/temperate_cow.png";
+            case "warm" -> cowTexturePath = "textures/entity/cow/warm_cow.png";
+            case "cold" -> cowTexturePath = "textures/entity/cow/cold_cow.png";
+            case null, default -> {
+                cowTexturePath = "textures/entity/cow/temperate_cow.png";
+            }
         }
         return Identifier.withDefaultNamespace(cowTexturePath);
     }

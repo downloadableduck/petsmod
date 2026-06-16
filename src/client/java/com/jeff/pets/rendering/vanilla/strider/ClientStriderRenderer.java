@@ -1,11 +1,11 @@
 package com.jeff.pets.rendering.vanilla.strider;
 
-import com.jeff.pets.mob.vanilla.passive.ClientStrider;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientStrider;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.model.monster.strider.AdultStriderModel;
+import net.minecraft.client.model.monster.strider.StriderModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.StriderRenderState;
 import net.minecraft.resources.Identifier;
@@ -15,13 +15,13 @@ import java.util.Objects;
 
 import static com.jeff.pets.Central.CONFIG;
 
-public class ClientStriderRenderer extends PetRenderer<@NotNull ClientStrider, @NotNull StriderRenderState, @NotNull AdultStriderModel> {
+public class ClientStriderRenderer extends PetRenderer<@NotNull ClientStrider, @NotNull StriderRenderState, @NotNull StriderModel> {
     public static ModelLayerLocation STRIDER_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientstrider"), "main");
 
     public String striderTexturePath;
 
     public ClientStriderRenderer(EntityRendererProvider.Context context) {
-        super(context, new AdultStriderModel(context.bakeLayer(ModelLayers.STRIDER)), 0.5F);
+        super(context, new StriderModel(context.bakeLayer(ModelLayers.STRIDER)), 0.5F);
     }
 
     @Override

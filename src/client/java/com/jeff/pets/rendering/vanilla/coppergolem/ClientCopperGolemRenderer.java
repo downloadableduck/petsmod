@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.coppergolem;
 
-import com.jeff.pets.mob.vanilla.passive.ClientCopperGolem;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientCopperGolem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.animal.golem.CopperGolemModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;

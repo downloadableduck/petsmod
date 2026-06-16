@@ -3,7 +3,7 @@
   "id": "pets-mod",
   "version": "${version}",
   "name": "Pets Mod",
-  "accessWidener": "pets.accesswidener",
+  "accessWidener": "pets.classtweaker",
   "description": "Adds completely client-sided pets to your game. Supports every vanilla mob and will work on any server, including in singleplayer!",
   "authors": [
     "The Pets Team",
@@ -37,9 +37,9 @@
     }
   ],
   "depends": {
-    "fabricloader": ">=0.18.4",
-    "minecraft": "~26.1",
-    "java": ">=25",
+    "fabricloader": ">=0.18",
+    "minecraft": "1.21.9, 1.21.10",
+    "java": "*",
     "cloth-config": "*",
     "fabric-api": "*",
     "yet_another_config_lib_v3": "*",

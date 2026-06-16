@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.parrot;
 
-import com.jeff.pets.mob.vanilla.passive.ClientParrot;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientParrot;
 import net.minecraft.client.model.animal.parrot.ParrotModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

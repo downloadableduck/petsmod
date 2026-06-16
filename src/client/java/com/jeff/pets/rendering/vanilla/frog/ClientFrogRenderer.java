@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.frog;
 
-import com.jeff.pets.mob.vanilla.passive.ClientFrog;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientFrog;
 import net.minecraft.client.model.animal.frog.FrogModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -23,10 +23,10 @@ public class ClientFrogRenderer extends PetRenderer<@NotNull ClientFrog, @NotNul
 
     public @NotNull Identifier getTextureLocation(FrogRenderState frogRenderState) {
         switch (CONFIG.frogSkin) {
-            case "temperate" -> frogTexturePath = "textures/entity/frog/frog_temperate.png";
-            case "warm" -> frogTexturePath = "textures/entity/frog/frog_warm.png";
-            case "cold" -> frogTexturePath = "textures/entity/frog/frog_cold.png";
-            case null, default -> frogTexturePath = "textures/entity/frog/frog_temperate.png";
+            case "temperate" -> frogTexturePath = "textures/entity/frog/temperate_frog.png";
+            case "warm" -> frogTexturePath = "textures/entity/frog/warm_frog.png";
+            case "cold" -> frogTexturePath = "textures/entity/frog/cold_frog.png";
+            case null, default -> frogTexturePath = "textures/entity/frog/temperate_frog.png";
         }
         return Identifier.withDefaultNamespace(frogTexturePath);
     }
