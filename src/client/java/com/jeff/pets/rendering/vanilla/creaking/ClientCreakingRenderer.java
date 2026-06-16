@@ -2,25 +2,25 @@ package com.jeff.pets.rendering.vanilla.creaking;
 
 import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientCreaking;
+import net.minecraft.client.model.CreakingModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.model.monster.creaking.CreakingModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.CreakingRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientCreakingRenderer extends PetRenderer<@NotNull ClientCreaking, @NotNull CreakingRenderState, @NotNull CreakingModel> {
 
-    public static final ModelLayerLocation CREAKING_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientcreaking"), "main");
+    public static final ModelLayerLocation CREAKING_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientcreaking"), "main");
 
     public ClientCreakingRenderer(EntityRendererProvider.Context context) {
         super(context, new CreakingModel(context.bakeLayer(ModelLayers.CREAKING)), 0.75f);
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(CreakingRenderState livingEntityRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/creaking/creaking.png");
+    public @NotNull ResourceLocation getTextureLocation(CreakingRenderState livingEntityRenderState) {
+        return ResourceLocation.withDefaultNamespace("textures/entity/creaking/creaking.png");
     }
 
     @Override

@@ -6,12 +6,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.SlimeRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class MegaSpudRenderer extends PetRenderer<@NotNull MegaSpud, @NotNull SlimeRenderState, @NotNull MegaSpudModel> {
 
-    public static final ModelLayerLocation MEGA_SPUD_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("megaspoud"), "main");
+    public static final ModelLayerLocation MEGA_SPUD_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("megaspoud"), "main");
 
     public MegaSpudRenderer(EntityRendererProvider.Context context) {
         super(context, new MegaSpudModel(context.bakeLayer(MEGA_SPUD_LOCATION)), 0.75f);
@@ -25,8 +25,8 @@ public class MegaSpudRenderer extends PetRenderer<@NotNull MegaSpud, @NotNull Sl
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(SlimeRenderState livingEntityRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/slime/mega_spud.png");
+    public @NotNull ResourceLocation getTextureLocation(SlimeRenderState livingEntityRenderState) {
+        return ResourceLocation.withDefaultNamespace("textures/entity/slime/mega_spud.png");
     }
 
     @Override

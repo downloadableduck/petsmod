@@ -3,18 +3,18 @@ package com.jeff.pets.rendering.vanilla.axolotl;
 import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientAxolotl;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.animal.axolotl.AxolotlModel;
+import net.minecraft.client.model.AxolotlModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.AxolotlRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.Central.CONFIG;
 
 public class ClientAxolotlRenderer extends PetRenderer<@NotNull ClientAxolotl, @NotNull AxolotlRenderState, @NotNull AxolotlModel> {
-    public static final ModelLayerLocation AXOLOTL_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientaxolotl"), "main");
+    public static final ModelLayerLocation AXOLOTL_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientaxolotl"), "main");
 
     String axolotlTextureLocation;
 
@@ -23,7 +23,7 @@ public class ClientAxolotlRenderer extends PetRenderer<@NotNull ClientAxolotl, @
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(AxolotlRenderState axolotlRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(AxolotlRenderState axolotlRenderState) {
         switch (CONFIG.axolotlSkin) {
             case "pink" -> axolotlTextureLocation = "textures/entity/axolotl/axolotl_lucy.png";
             case "brown" -> axolotlTextureLocation = "textures/entity/axolotl/axolotl_wild.png";
@@ -35,7 +35,7 @@ public class ClientAxolotlRenderer extends PetRenderer<@NotNull ClientAxolotl, @
                 axolotlTextureLocation = "textures/entity/axolotl/axolotl_lucy.png";
             }
         }
-        return Identifier.withDefaultNamespace(axolotlTextureLocation);
+        return ResourceLocation.withDefaultNamespace(axolotlTextureLocation);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.jeff.pets.rendering.vanilla.llama;
 
-import net.minecraft.client.model.animal.llama.LlamaModel;
+import net.minecraft.client.model.LlamaModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.LlamaRenderState;
 import org.jetbrains.annotations.NotNull;

@@ -6,7 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.Central.CONFIG;
@@ -14,7 +14,7 @@ import static com.jeff.pets.Central.CONFIG;
 
 public class ClientEnderDragonRenderer extends PetRenderer<@NotNull ClientEnderDragon, @NotNull ClientEnderDragonRenderState, @NotNull ClientEnderDragonModel> {
 
-    public static final ModelLayerLocation ENDER_DRAGON_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientenderdragon"), "main");
+    public static final ModelLayerLocation ENDER_DRAGON_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientenderdragon"), "main");
 
     public ClientEnderDragonRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientEnderDragonModel(context.bakeLayer(ModelLayers.ENDER_DRAGON)), 0.75f);
@@ -28,8 +28,8 @@ public class ClientEnderDragonRenderer extends PetRenderer<@NotNull ClientEnderD
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(ClientEnderDragonRenderState livingEntityRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/enderdragon/dragon.png");
+    public @NotNull ResourceLocation getTextureLocation(ClientEnderDragonRenderState livingEntityRenderState) {
+        return ResourceLocation.withDefaultNamespace("textures/entity/enderdragon/dragon.png");
     }
 
     @Override

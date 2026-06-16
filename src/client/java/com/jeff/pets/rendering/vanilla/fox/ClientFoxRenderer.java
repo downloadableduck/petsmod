@@ -7,7 +7,7 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.FoxRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -15,7 +15,7 @@ import java.util.Objects;
 import static com.jeff.pets.Central.CONFIG;
 
 public class ClientFoxRenderer extends PetRenderer<@NotNull ClientFox, @NotNull FoxRenderState, @NotNull ClientFoxModel> {
-    public static final ModelLayerLocation FOX_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientfox"), "main");
+    public static final ModelLayerLocation FOX_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientfox"), "main");
     public String foxTexturePath;
 
     public ClientFoxRenderer(EntityRendererProvider.Context context) {
@@ -30,7 +30,7 @@ public class ClientFoxRenderer extends PetRenderer<@NotNull ClientFox, @NotNull 
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(FoxRenderState livingEntityRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(FoxRenderState livingEntityRenderState) {
         if (Objects.equals(CONFIG.foxSkin, "red")) {
             foxTexturePath = "textures/entity/fox/fox.png";
         } else if (Objects.equals(CONFIG.foxSkin, "snow")) {
@@ -38,7 +38,7 @@ public class ClientFoxRenderer extends PetRenderer<@NotNull ClientFox, @NotNull 
         } else {
             foxTexturePath = "textures/entity/fox/fox.png";
         }
-        return Identifier.withDefaultNamespace(foxTexturePath);
+        return ResourceLocation.withDefaultNamespace(foxTexturePath);
     }
 
     @Override

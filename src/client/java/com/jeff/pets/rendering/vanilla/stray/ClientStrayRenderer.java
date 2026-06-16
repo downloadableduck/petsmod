@@ -3,28 +3,28 @@ package com.jeff.pets.rendering.vanilla.stray;
 import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientStray;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.model.SkeletonModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.model.monster.skeleton.SkeletonModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.layers.SkeletonClothingLayer;
 import net.minecraft.client.renderer.entity.state.SkeletonRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientStrayRenderer extends PetRenderer<@NotNull ClientStray, @NotNull SkeletonRenderState, @NotNull SkeletonModel<@NotNull SkeletonRenderState>> {
 
-    public static final ModelLayerLocation STRAY_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientstray"), "main");
+    public static final ModelLayerLocation STRAY_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientstray"), "main");
 
     public ClientStrayRenderer(EntityRendererProvider.Context context) {
         super(context, new SkeletonModel<>(context.bakeLayer(ModelLayers.STRAY)), 0.75f);
-        this.addLayer(new SkeletonClothingLayer<>(this, EntityModelSet.vanilla(), ModelLayers.STRAY_OUTER_LAYER, Identifier.withDefaultNamespace("textures/entity/skeleton/stray_overlay.png")));
+        this.addLayer(new SkeletonClothingLayer<>(this, EntityModelSet.vanilla(), ModelLayers.STRAY_OUTER_LAYER, ResourceLocation.withDefaultNamespace("textures/entity/skeleton/stray_overlay.png")));
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(SkeletonRenderState livingEntityRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/skeleton/stray.png");
+    public @NotNull ResourceLocation getTextureLocation(SkeletonRenderState livingEntityRenderState) {
+        return ResourceLocation.withDefaultNamespace("textures/entity/skeleton/stray.png");
     }
 
     @Override

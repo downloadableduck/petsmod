@@ -113,15 +113,15 @@ There, it now has custom logic and will function on any server. Let's dive over 
 ```java
 public class CustomEntityRenderer extends MobRenderer<CustomEntity, GhastRenderState, GhastModel> {
 
-    public static final ModelLayerLocation CUSTOM_ENTITY_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(MOD_ID, "custom_entity"), "main");
+    public static final ModelLayerLocation CUSTOM_ENTITY_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(MOD_ID, "custom_entity"), "main");
 
     public CustomEntityRenderer(EntityRendererProvider.Context context) {
         super(context, new GhastModel(context.bakeLayer(CUSTOM_ENTITY_LOCATION)), 0.75f);
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(@NotNull GhastRenderState state) {
-        return Identifier.withDefaultNamespace("textures/entity/ghast/ghast.png");
+    public @NotNull ResourceLocation getTextureLocation(@NotNull GhastRenderState state) {
+        return ResourceLocation.withDefaultNamespace("textures/entity/ghast/ghast.png");
     }
 
     @Override
@@ -137,15 +137,15 @@ Real quick, go ahead and change `extends MobRenderer` to `extends PetRenderer`. 
 ```java
 public class CustomEntityRenderer extends PetRenderer<CustomEntity, GhastRenderState, GhastModel> {
 
-    public static final ModelLayerLocation CUSTOM_ENTITY_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(MOD_ID, "custom_entity"), "main");
+    public static final ModelLayerLocation CUSTOM_ENTITY_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(MOD_ID, "custom_entity"), "main");
 
     public CustomEntityRenderer(EntityRendererProvider.Context context) {
         super(context, new GhastModel(context.bakeLayer(CUSTOM_ENTITY_LOCATION)), 0.75f);
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(@NotNull GhastRenderState state) {
-        return Identifier.withDefaultNamespace("textures/entity/ghast/ghast.png");
+    public @NotNull ResourceLocation getTextureLocation(@NotNull GhastRenderState state) {
+        return ResourceLocation.withDefaultNamespace("textures/entity/ghast/ghast.png");
     }
 
     @Override
@@ -545,9 +545,9 @@ public class CustomEntityRenderer extends PetRenderer<CustomEntity, GhastRenderS
     @Override
     public void getTextureLocation(GhastRenderState state) {
         if (CUSTOM_CONFIG.customEntitySkin.equals("normal")) {
-            return Identifier.withDefaultNamespace("textures/entity/ghast/ghast.png");
+            return ResourceLocation.withDefaultNamespace("textures/entity/ghast/ghast.png");
         } else {
-            return Identifier.withDefaultNamespace("textures/entity/ghast/ghast_shooting.png");
+            return ResourceLocation.withDefaultNamespace("textures/entity/ghast/ghast_shooting.png");
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.jeff.pets.rendering.vanilla.chicken;
 
-import net.minecraft.client.model.animal.chicken.ChickenModel;
+import net.minecraft.client.model.ChickenModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.ChickenRenderState;
 import org.jetbrains.annotations.NotNull;

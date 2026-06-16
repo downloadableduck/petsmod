@@ -185,7 +185,7 @@ public class ExampleEntityInitializer {
 
     /**A key for our EntityType DUCK initialized below.*/ 
     public static final ResourceKey<EntityType<?>> EXAMPLE_ENTITY_KEY =
-            ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(MOD_ID, "exampleentity"));
+            ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(MOD_ID, "exampleentity"));
 
     @Override
     public void onInitialize() {
@@ -205,7 +205,7 @@ public class ExampleEntityInitializer {
         /**This creates the entity so that it will exist in-game.*/
     public static final EntityType<ExampleEntity> EXAMPLE_ENTITY = Registry.register(
             BuiltInRegistries.ENTITY_TYPE,
-            Identifier.fromNamespaceAndPath(MOD_ID, "exampleentity"),
+            ResourceLocation.fromNamespaceAndPath(MOD_ID, "exampleentity"),
             EntityType.Builder.of(ExampleEntity::new, MobCategory.CREATURE)
                     .sized(1f, 1f)
                     /*This is how tall the hitbox will be - so where other entities will be able
@@ -225,9 +225,9 @@ public class ExampleEntityInitializer {
 }
 ```
 
-> TIP: If you are on version 1.21.10 or **below**, replace `Identifier` with `ResourceLocation`.
+> TIP: If you are on version 1.21.10 or **below**, replace `ResourceLocation` with `ResourceLocation`.
 
-This makes the entity actually exist in game, and you can summon it using /summon [Your mod ID:your entity ID (defined above in our `Identifier.fromNamespaceAndPath()`)
+This makes the entity actually exist in game, and you can summon it using /summon [Your mod ID:your entity ID (defined above in our `ResourceLocation.fromNamespaceAndPath()`)
 
 Now that our entity exists in-game, we can switch to our `ExampleEntity.java` and add the method getBreedOffspring, which will create a new entity of the same type when it breeds.
 
@@ -280,7 +280,7 @@ The first thing we will do is create a new file in our `client` package called `
 public class ExampleEntityModel extends EntityModel<ExampleEntityRenderState> {
     /**Sets up the layer, which is where the game will place the texture. Main is the module it is in.*/
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
-            Identifier.fromNamespaceAndPath(ExampleEntityInitializer.MOD_ID, "exampleentity"), "main"
+            ResourceLocation.fromNamespaceAndPath(ExampleEntityInitializer.MOD_ID, "exampleentity"), "main"
     );
     public ExampleEntityModel(final ModelPart root) {
         super(root);
@@ -372,13 +372,13 @@ Now, the last thing we will need to do is add a **texture** or the color and des
 public class ExampleEntityRenderer extends MobRenderer<ExampleEntity, ExampleEntityRenderState, ExampleEntityModel> {
 	    /**This method gets the texture and 'slaps' it onto the model in-game.
     @Override
-    public @NotNull Identifier getTextureLocation(final ExampleEntityRenderState state) {
-        return Identifier.fromNamespaceAndPath(ExampleEntityInitializer.MOD_ID, "textures/entity/exampleentity.png");
+    public @NotNull ResourceLocation getTextureLocation(final ExampleEntityRenderState state) {
+        return ResourceLocation.fromNamespaceAndPath(ExampleEntityInitializer.MOD_ID, "textures/entity/exampleentity.png");
     }
 }
 ```
 
-> TIP: You might have noticed that we used the filepath from the module root (our **main** folder) rather than what we usually do with Identifier.fromNamespaceAndPath(), which usually automatically appends `textures` and the `.png` extension. This is because of the way Minecraft handles entity registries, so using the path from the module root will work just fine.
+> TIP: You might have noticed that we used the filepath from the module root (our **main** folder) rather than what we usually do with ResourceLocation.fromNamespaceAndPath(), which usually automatically appends `textures` and the `.png` extension. This is because of the way Minecraft handles entity registries, so using the path from the module root will work just fine.
 
 Now that we have everything we need for the entity to function visually, let's hop over to our `client` initializer. For me, it is `ExampleEntityClient.java`.
 

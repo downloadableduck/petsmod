@@ -2,26 +2,26 @@ package com.jeff.pets.rendering.vanilla.shulker;
 
 import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientShulker;
+import net.minecraft.client.model.ShulkerModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.model.monster.shulker.ShulkerModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.ShulkerRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.Central.CONFIG;
 
 public class ClientShulkerRenderer extends PetRenderer<@NotNull ClientShulker, @NotNull ShulkerRenderState, @NotNull ShulkerModel> {
 
-    public static final ModelLayerLocation SHULKER_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientshulker"), "main");
+    public static final ModelLayerLocation SHULKER_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientshulker"), "main");
 
     public ClientShulkerRenderer(EntityRendererProvider.Context context) {
         super(context, new ShulkerModel(context.bakeLayer(ModelLayers.SHULKER)), 0.75f);
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(ShulkerRenderState state) {
+    public @NotNull ResourceLocation getTextureLocation(ShulkerRenderState state) {
         String shulkerFile;
         String folderPath = "textures/entity/shulker/";
         switch (CONFIG.shulkerSkin) {
@@ -41,7 +41,7 @@ public class ClientShulkerRenderer extends PetRenderer<@NotNull ClientShulker, @
             case "yellow" -> shulkerFile = "shulker_yellow.png";
             case null, default -> shulkerFile = "shulker.png";
         }
-        return Identifier.withDefaultNamespace(folderPath + shulkerFile);
+        return ResourceLocation.withDefaultNamespace(folderPath + shulkerFile);
     }
 
     @Override

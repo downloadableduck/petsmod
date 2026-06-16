@@ -30,7 +30,6 @@ public enum PetList implements NameableEnum {
     dumbo_octopus,
     elder_guardian,
     bogged,
-
     ender_dragon,
     enderman,
     endermite,
@@ -53,7 +52,6 @@ public enum PetList implements NameableEnum {
     mega_spud,
     moon_cow,
     mooshroom,
-    nautilus,
     nerd_creeper,
     panda,
     parrot,

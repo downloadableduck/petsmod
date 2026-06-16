@@ -7,13 +7,13 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.SheepRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.Central.CONFIG;
 
 public class ClientSheepRenderer extends PetRenderer<@NotNull ClientSheep, @NotNull SheepRenderState, @NotNull ClientSheepModel> {
-    public static final ModelLayerLocation SHEEP_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientsheep"), "main");
+    public static final ModelLayerLocation SHEEP_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientsheep"), "main");
 
     public ClientSheepRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientSheepModel(context.bakeLayer(ModelLayers.SHEEP)), 0.7F);
@@ -33,8 +33,8 @@ public class ClientSheepRenderer extends PetRenderer<@NotNull ClientSheep, @NotN
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(@NotNull SheepRenderState livingEntityRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/sheep/sheep.png");
+    public @NotNull ResourceLocation getTextureLocation(@NotNull SheepRenderState livingEntityRenderState) {
+        return ResourceLocation.withDefaultNamespace("textures/entity/sheep/sheep.png");
     }
 
     @Override

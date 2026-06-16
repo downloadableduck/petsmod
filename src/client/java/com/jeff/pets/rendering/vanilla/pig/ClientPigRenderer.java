@@ -10,13 +10,13 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.Central.CONFIG;
 
 public class ClientPigRenderer extends PetRenderer<@NotNull ClientPig, @NotNull LivingEntityRenderState, @NotNull ClientPigModel> {
-    public static final ModelLayerLocation PIG_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientpig"), "main");
+    public static final ModelLayerLocation PIG_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientpig"), "main");
     public String pigTexturePath;
 
     public ClientPigRenderer(EntityRendererProvider.Context context) {
@@ -35,14 +35,14 @@ public class ClientPigRenderer extends PetRenderer<@NotNull ClientPig, @NotNull 
         }
     }
 
-    public @NotNull Identifier getTextureLocation(LivingEntityRenderState pigRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(LivingEntityRenderState pigRenderState) {
         switch (CONFIG.pigSkin) {
             case "temperate" -> pigTexturePath = "textures/entity/pig/temperate_pig.png";
             case "warm" -> pigTexturePath = "textures/entity/pig/warm_pig.png";
             case "cold" -> pigTexturePath = "textures/entity/pig/cold_pig.png";
             case null, default -> pigTexturePath = "textures/entity/pig/temperate_pig.png";
         }
-        return Identifier.withDefaultNamespace(pigTexturePath);
+        return ResourceLocation.withDefaultNamespace(pigTexturePath);
     }
 
     @Override

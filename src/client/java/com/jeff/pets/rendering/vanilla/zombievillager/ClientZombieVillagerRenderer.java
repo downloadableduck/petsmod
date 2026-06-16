@@ -3,19 +3,19 @@ package com.jeff.pets.rendering.vanilla.zombievillager;
 import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.model.ZombieVillagerModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.model.monster.zombie.ZombieVillagerModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.ZombieVillagerRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.Central.CONFIG;
 
 public class ClientZombieVillagerRenderer extends PetRenderer<@NotNull ClientZombieVillager, @NotNull ZombieVillagerRenderState, @NotNull ZombieVillagerModel<@NotNull ZombieVillagerRenderState>> {
 
-    public static final ModelLayerLocation ZOMBIE_VILLAGER_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientzombievillager"), "main");
+    public static final ModelLayerLocation ZOMBIE_VILLAGER_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientzombievillager"), "main");
 
     public ClientZombieVillagerRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientZombieVillagerModel(context.bakeLayer(ModelLayers.ZOMBIE_VILLAGER)), 0.75f);
@@ -30,8 +30,8 @@ public class ClientZombieVillagerRenderer extends PetRenderer<@NotNull ClientZom
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(ZombieVillagerRenderState livingEntityRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/zombie_villager/zombie_villager.png");
+    public @NotNull ResourceLocation getTextureLocation(ZombieVillagerRenderState livingEntityRenderState) {
+        return ResourceLocation.withDefaultNamespace("textures/entity/zombie_villager/zombie_villager.png");
     }
 
     @Override

@@ -7,12 +7,12 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.EvokerRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class TraitorRenderer extends PetRenderer<@NotNull Traitor, @NotNull EvokerRenderState, @NotNull ClientEvokerModel> {
 
-    public static final ModelLayerLocation TRAITOR_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("traitor"), "main");
+    public static final ModelLayerLocation TRAITOR_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("traitor"), "main");
 
     public TraitorRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientEvokerModel(context.bakeLayer(ModelLayers.PILLAGER)), 0.75f);
@@ -20,8 +20,8 @@ public class TraitorRenderer extends PetRenderer<@NotNull Traitor, @NotNull Evok
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(EvokerRenderState livingEntityRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/illager/pillager.png");
+    public @NotNull ResourceLocation getTextureLocation(EvokerRenderState livingEntityRenderState) {
+        return ResourceLocation.withDefaultNamespace("textures/entity/illager/pillager.png");
     }
 
     @Override

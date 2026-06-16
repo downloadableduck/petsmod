@@ -10,14 +10,14 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.LlamaRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.Central.CONFIG;
 
 public class ClientLlamaRenderer extends PetRenderer<@NotNull ClientLlama, @NotNull LlamaRenderState, @NotNull ClientLlamaModel> {
 
-    public static final ModelLayerLocation LLAMA_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientllama"), "main");
+    public static final ModelLayerLocation LLAMA_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientllama"), "main");
     public String llamaTexturePath;
 
     public ClientLlamaRenderer(EntityRendererProvider.Context context) {
@@ -38,7 +38,7 @@ public class ClientLlamaRenderer extends PetRenderer<@NotNull ClientLlama, @NotN
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(LlamaRenderState livingEntityRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(LlamaRenderState livingEntityRenderState) {
         switch (CONFIG.llamaSkin) {
             case "brown" -> llamaTexturePath = "textures/entity/llama/brown.png";
             case "creamy" -> llamaTexturePath = "textures/entity/llama/creamy.png";
@@ -46,7 +46,7 @@ public class ClientLlamaRenderer extends PetRenderer<@NotNull ClientLlama, @NotN
             case "white" -> llamaTexturePath = "textures/entity/llama/white.png";
             case null, default -> llamaTexturePath = "textures/entity/llama/brown.png";
         }
-        return Identifier.withDefaultNamespace(llamaTexturePath);
+        return ResourceLocation.withDefaultNamespace(llamaTexturePath);
     }
 
     @Override

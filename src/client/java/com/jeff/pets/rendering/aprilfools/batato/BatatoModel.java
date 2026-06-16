@@ -9,8 +9,8 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.state.BatRenderState;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.core.Direction;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,7 +28,7 @@ public class BatatoModel extends EntityModel<@NotNull BatRenderState> {
     private final KeyframeAnimation flyingAnimation;
 
     public BatatoModel(ModelPart modelPart) {
-        super(modelPart, RenderTypes::entityCutout);
+        super(modelPart, RenderType::entityCutout);
         this.root = modelPart;
         this.body = modelPart.getChild("body");
         this.head = modelPart.getChild("head");

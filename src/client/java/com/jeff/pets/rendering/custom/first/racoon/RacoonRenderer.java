@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -14,7 +14,7 @@ import static com.jeff.pets.Central.CONFIG;
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 
 public class RacoonRenderer extends MobRenderer<@NotNull Racoon, @NotNull RacoonRenderState, @NotNull RacoonModel> {
-    public static final ModelLayerLocation RACOON_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(MOD_ID, "racoon"), "main");
+    public static final ModelLayerLocation RACOON_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(MOD_ID, "racoon"), "main");
 
     public RacoonRenderer(EntityRendererProvider.Context context) {
         super(context, new RacoonModel(context.bakeLayer(RACOON_LOCATION)), 0.75f);
@@ -28,7 +28,7 @@ public class RacoonRenderer extends MobRenderer<@NotNull Racoon, @NotNull Racoon
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(RacoonRenderState state) {
+    public @NotNull ResourceLocation getTextureLocation(RacoonRenderState state) {
         String racoonTexturePath;
         if (!state.isServerEntity) {
             if (Objects.equals(CONFIG.racoonSkin, "normal")) {
@@ -41,7 +41,7 @@ public class RacoonRenderer extends MobRenderer<@NotNull Racoon, @NotNull Racoon
         } else {
             racoonTexturePath = "textures/entity/racoon/racoon.png";
         }
-        return Identifier.fromNamespaceAndPath(MOD_ID, racoonTexturePath);
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, racoonTexturePath);
     }
 
     @Override

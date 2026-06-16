@@ -3,22 +3,22 @@ package com.jeff.pets.rendering.vanilla.magmacube;
 import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientMagmaCube;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.model.SlimeModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.model.monster.slime.MagmaCubeModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.SlimeRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.Central.CONFIG;
 
-public class ClientMagmaCubeRenderer extends PetRenderer<@NotNull ClientMagmaCube, @NotNull SlimeRenderState, @NotNull MagmaCubeModel> {
+public class ClientMagmaCubeRenderer extends PetRenderer<@NotNull ClientMagmaCube, @NotNull SlimeRenderState, @NotNull SlimeModel> {
 
-    public static final ModelLayerLocation MAGMA_CUBE_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientmagmacube"), "main");
+    public static final ModelLayerLocation MAGMA_CUBE_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientmagmacube"), "main");
 
     public ClientMagmaCubeRenderer(EntityRendererProvider.Context context) {
-        super(context, new MagmaCubeModel(context.bakeLayer(ModelLayers.MAGMA_CUBE)), 0.75f);
+        super(context, new SlimeModel(context.bakeLayer(ModelLayers.MAGMA_CUBE)), 0.75f);
     }
 
     @Override
@@ -35,8 +35,8 @@ public class ClientMagmaCubeRenderer extends PetRenderer<@NotNull ClientMagmaCub
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(SlimeRenderState livingEntityRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/slime/magmacube.png");
+    public @NotNull ResourceLocation getTextureLocation(SlimeRenderState livingEntityRenderState) {
+        return ResourceLocation.withDefaultNamespace("textures/entity/slime/magmacube.png");
     }
 
     @Override

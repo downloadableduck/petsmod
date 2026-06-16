@@ -3,12 +3,12 @@ package com.jeff.pets.rendering.vanilla.squid;
 import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientSquid;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.animal.squid.SquidModel;
+import net.minecraft.client.model.SquidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.SquidRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -16,7 +16,7 @@ import java.util.Objects;
 import static com.jeff.pets.Central.CONFIG;
 
 public class ClientSquidRenderer extends PetRenderer<@NotNull ClientSquid, @NotNull SquidRenderState, @NotNull SquidModel> {
-    public static final ModelLayerLocation SQUID_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientsquid"), "main");
+    public static final ModelLayerLocation SQUID_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientsquid"), "main");
     String squidTexturePath;
 
     public ClientSquidRenderer(EntityRendererProvider.Context context) {
@@ -24,13 +24,13 @@ public class ClientSquidRenderer extends PetRenderer<@NotNull ClientSquid, @NotN
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(SquidRenderState squidRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(SquidRenderState squidRenderState) {
         if (Objects.equals(CONFIG.squidSkin, "squid")) {
             squidTexturePath = "textures/entity/squid/squid.png";
         } else if (Objects.equals(CONFIG.squidSkin, "glow_squid")) {
             squidTexturePath = "textures/entity/squid/glow_squid.png";
         }
-        return Identifier.withDefaultNamespace(squidTexturePath);
+        return ResourceLocation.withDefaultNamespace(squidTexturePath);
     }
 
     @Override

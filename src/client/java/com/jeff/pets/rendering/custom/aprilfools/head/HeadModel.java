@@ -7,12 +7,12 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class HeadModel extends EntityModel<@NotNull LivingEntityRenderState> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
-            Identifier.fromNamespaceAndPath(PetsInitializer.MOD_ID, "head"), "main"
+            ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, "head"), "main"
     );
 
     public HeadModel(final ModelPart root) {

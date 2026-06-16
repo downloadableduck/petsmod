@@ -3,22 +3,22 @@ package com.jeff.pets.rendering.vanilla.piglin;
 import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientPiglin;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.model.PiglinModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.monster.piglin.PiglinModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.PiglinRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.Central.CONFIG;
 
 public class ClientPiglinRenderer extends PetRenderer<@NotNull ClientPiglin, @NotNull PiglinRenderState, @NotNull ClientPiglinModel> {
 
-    public static ModelLayerLocation PIGLIN_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientpiglin"), "main");
+    public static ModelLayerLocation PIGLIN_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientpiglin"), "main");
     private String piglinTexturePath;
 
     public ClientPiglinRenderer(EntityRendererProvider.Context context) {
@@ -39,7 +39,7 @@ public class ClientPiglinRenderer extends PetRenderer<@NotNull ClientPiglin, @No
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(PiglinRenderState livingEntityRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(PiglinRenderState livingEntityRenderState) {
         switch (CONFIG.piglinSkin) {
             case "piglin" -> piglinTexturePath = "textures/entity/piglin/piglin.png";
             case "zombified_piglin" -> {
@@ -51,7 +51,7 @@ public class ClientPiglinRenderer extends PetRenderer<@NotNull ClientPiglin, @No
                 livingEntityRenderState.isBrute = true;
             }
         }
-        return Identifier.withDefaultNamespace(piglinTexturePath);
+        return ResourceLocation.withDefaultNamespace(piglinTexturePath);
     }
 
     @Override

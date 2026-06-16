@@ -5,22 +5,22 @@ import com.jeff.pets.rendering.PetRenderer;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.BatRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 
 public class BatatoRenderer extends PetRenderer<@NotNull Batato, @NotNull BatRenderState, @NotNull BatatoModel> {
 
-    public static final ModelLayerLocation BATATO_LOCAITON = new ModelLayerLocation(Identifier.fromNamespaceAndPath(MOD_ID, "batato"), "main");
+    public static final ModelLayerLocation BATATO_LOCAITON = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(MOD_ID, "batato"), "main");
 
     public BatatoRenderer(EntityRendererProvider.Context context) {
         super(context, new BatatoModel(context.bakeLayer(BATATO_LOCAITON)), 0.25f);
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(BatRenderState livingEntityRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/batato.png");
+    public @NotNull ResourceLocation getTextureLocation(BatRenderState livingEntityRenderState) {
+        return ResourceLocation.withDefaultNamespace("textures/entity/batato.png");
     }
 
     @Override

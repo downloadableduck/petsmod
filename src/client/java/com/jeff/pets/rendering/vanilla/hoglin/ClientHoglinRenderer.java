@@ -7,7 +7,7 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.HoglinRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -16,7 +16,7 @@ import static com.jeff.pets.Central.CONFIG;
 
 public class ClientHoglinRenderer extends PetRenderer<@NotNull ClientHoglin, @NotNull HoglinRenderState, @NotNull ClientHoglinModel> {
 
-    public static final ModelLayerLocation HOGLIN_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clienthoglin"), "main");
+    public static final ModelLayerLocation HOGLIN_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clienthoglin"), "main");
 
     public ClientHoglinRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientHoglinModel(context.bakeLayer(ModelLayers.HOGLIN)), 0.75f);
@@ -30,7 +30,7 @@ public class ClientHoglinRenderer extends PetRenderer<@NotNull ClientHoglin, @No
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(HoglinRenderState livingEntityRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(HoglinRenderState livingEntityRenderState) {
         String hoglinTexturePath;
         if (Objects.equals(CONFIG.hoglinSkin, "hoglin")) {
             hoglinTexturePath = "textures/entity/hoglin/hoglin.png";
@@ -39,7 +39,7 @@ public class ClientHoglinRenderer extends PetRenderer<@NotNull ClientHoglin, @No
         } else {
             hoglinTexturePath = "textures/entity/hoglin/hoglin.png";
         }
-        return Identifier.withDefaultNamespace(hoglinTexturePath);
+        return ResourceLocation.withDefaultNamespace(hoglinTexturePath);
     }
 
     @Override

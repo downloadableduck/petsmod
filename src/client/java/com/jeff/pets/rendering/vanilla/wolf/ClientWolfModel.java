@@ -1,6 +1,6 @@
 package com.jeff.pets.rendering.vanilla.wolf;
 
-import net.minecraft.client.model.animal.wolf.WolfModel;
+import net.minecraft.client.model.WolfModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.WolfRenderState;
 import org.jetbrains.annotations.NotNull;

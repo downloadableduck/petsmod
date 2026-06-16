@@ -10,14 +10,14 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.ZombieRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.Central.CONFIG;
 
 public class ClientDrownedRenderer extends PetRenderer<@NotNull ClientDrowned, @NotNull ZombieRenderState, @NotNull ClientDrownedModel> {
 
-    public static final ModelLayerLocation DROWNED_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientdrowned"), "main");
+    public static final ModelLayerLocation DROWNED_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientdrowned"), "main");
 
     public ClientDrownedRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientDrownedModel(context.bakeLayer(ModelLayers.DROWNED)), 0.75f);
@@ -37,8 +37,8 @@ public class ClientDrownedRenderer extends PetRenderer<@NotNull ClientDrowned, @
 
 
     @Override
-    public @NotNull Identifier getTextureLocation(ZombieRenderState livingEntityRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/zombie/drowned.png");
+    public @NotNull ResourceLocation getTextureLocation(ZombieRenderState livingEntityRenderState) {
+        return ResourceLocation.withDefaultNamespace("textures/entity/zombie/drowned.png");
     }
 
     @Override

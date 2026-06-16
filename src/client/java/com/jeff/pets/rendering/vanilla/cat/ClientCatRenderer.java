@@ -11,14 +11,14 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.CatRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.Central.CONFIG;
 
 public class ClientCatRenderer extends PetRenderer<@NotNull ClientCat, @NotNull CatRenderState, @NotNull ClientCatModel> {
     public static final ModelLayerLocation CAT_LOCATION = new ModelLayerLocation(
-            Identifier.fromNamespaceAndPath(PetsInitializer.MOD_ID, "clientcat"), "main"
+            ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, "clientcat"), "main"
     );
 
     public ClientCatRenderer(EntityRendererProvider.Context context) {
@@ -38,21 +38,21 @@ public class ClientCatRenderer extends PetRenderer<@NotNull ClientCat, @NotNull 
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(CatRenderState livingEntityRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(CatRenderState livingEntityRenderState) {
         return switch (CONFIG.catSkin) {
-            case "black" -> Identifier.withDefaultNamespace("textures/entity/cat/all_black.png");
-            case "tuxedo" -> Identifier.withDefaultNamespace("textures/entity/cat/black.png");
-            case "british_shorthair" -> Identifier.withDefaultNamespace("textures/entity/cat/british_shorthair.png");
-            case "calico" -> Identifier.withDefaultNamespace("textures/entity/cat/calico.png");
-            case "jellie" -> Identifier.withDefaultNamespace("textures/entity/cat/jellie.png");
-            case "ocelot" -> Identifier.withDefaultNamespace("textures/entity/cat/ocelot.png");
-            case "persian" -> Identifier.withDefaultNamespace("textures/entity/cat/persian.png");
-            case "ragdoll" -> Identifier.withDefaultNamespace("textures/entity/cat/ragdoll.png");
-            case "red" -> Identifier.withDefaultNamespace("textures/entity/cat/red.png");
-            case "siamese" -> Identifier.withDefaultNamespace("textures/entity/cat/siamese.png");
-            case "tabby" -> Identifier.withDefaultNamespace("textures/entity/cat/tabby.png");
-            case "white" -> Identifier.withDefaultNamespace("textures/entity/cat/white.png");
-            case null, default -> Identifier.withDefaultNamespace("textures/entity/cat/black.png");
+            case "black" -> ResourceLocation.withDefaultNamespace("textures/entity/cat/all_black.png");
+            case "tuxedo" -> ResourceLocation.withDefaultNamespace("textures/entity/cat/black.png");
+            case "british_shorthair" -> ResourceLocation.withDefaultNamespace("textures/entity/cat/british_shorthair.png");
+            case "calico" -> ResourceLocation.withDefaultNamespace("textures/entity/cat/calico.png");
+            case "jellie" -> ResourceLocation.withDefaultNamespace("textures/entity/cat/jellie.png");
+            case "ocelot" -> ResourceLocation.withDefaultNamespace("textures/entity/cat/ocelot.png");
+            case "persian" -> ResourceLocation.withDefaultNamespace("textures/entity/cat/persian.png");
+            case "ragdoll" -> ResourceLocation.withDefaultNamespace("textures/entity/cat/ragdoll.png");
+            case "red" -> ResourceLocation.withDefaultNamespace("textures/entity/cat/red.png");
+            case "siamese" -> ResourceLocation.withDefaultNamespace("textures/entity/cat/siamese.png");
+            case "tabby" -> ResourceLocation.withDefaultNamespace("textures/entity/cat/tabby.png");
+            case "white" -> ResourceLocation.withDefaultNamespace("textures/entity/cat/white.png");
+            case null, default -> ResourceLocation.withDefaultNamespace("textures/entity/cat/black.png");
         };
     }
 

@@ -10,14 +10,14 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.WolfRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.Central.CONFIG;
 
 public class ClientWolfRenderer extends PetRenderer<@NotNull ClientWolf, @NotNull WolfRenderState, @NotNull ClientWolfModel> {
 
-    public static final ModelLayerLocation WOLF_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientwolf"), "main");
+    public static final ModelLayerLocation WOLF_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientwolf"), "main");
 
     public ClientWolfRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientWolfModel(context.bakeLayer(ModelLayers.WOLF)), 0.75f);
@@ -36,7 +36,7 @@ public class ClientWolfRenderer extends PetRenderer<@NotNull ClientWolf, @NotNul
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(WolfRenderState livingEntityRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(WolfRenderState livingEntityRenderState) {
         String wolfTexturePath;
 
         switch (CONFIG.wolfSkin) {
@@ -52,7 +52,7 @@ public class ClientWolfRenderer extends PetRenderer<@NotNull ClientWolf, @NotNul
             case null, default -> wolfTexturePath = "textures/entity/wolf/wolf.png";
         }
 
-        return Identifier.withDefaultNamespace(wolfTexturePath);
+        return ResourceLocation.withDefaultNamespace(wolfTexturePath);
     }
 
     @Override

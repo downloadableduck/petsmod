@@ -80,9 +80,7 @@ import com.jeff.pets.rendering.vanilla.irongolem.ClientIronGolemRenderer;
 import com.jeff.pets.rendering.vanilla.llama.ClientLlamaRenderer;
 import com.jeff.pets.rendering.vanilla.magmacube.ClientMagmaCubeRenderer;
 import com.jeff.pets.rendering.vanilla.mooshroom.ClientMooshroomRenderer;
-import com.jeff.pets.rendering.vanilla.nautilus.ClientNautilusRenderer;
 import com.jeff.pets.rendering.vanilla.panda.ClientPandaRenderer;
-import com.jeff.pets.rendering.vanilla.parched.ClientParchedRenderer;
 import com.jeff.pets.rendering.vanilla.parrot.ClientParrotRenderer;
 import com.jeff.pets.rendering.vanilla.phantom.ClientPhantomRenderer;
 import com.jeff.pets.rendering.vanilla.pig.ClientPigRenderer;
@@ -130,49 +128,10 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.model.Model;
-import net.minecraft.client.model.ambient.BatModel;
-import net.minecraft.client.model.animal.allay.AllayModel;
-import net.minecraft.client.model.animal.armadillo.ArmadilloModel;
-import net.minecraft.client.model.animal.axolotl.AxolotlModel;
-import net.minecraft.client.model.animal.bee.BeeModel;
-import net.minecraft.client.model.animal.camel.CamelModel;
-import net.minecraft.client.model.animal.dolphin.DolphinModel;
-import net.minecraft.client.model.animal.fish.CodModel;
-import net.minecraft.client.model.animal.fish.PufferfishBigModel;
-import net.minecraft.client.model.animal.frog.FrogModel;
-import net.minecraft.client.model.animal.frog.TadpoleModel;
-import net.minecraft.client.model.animal.golem.CopperGolemModel;
-import net.minecraft.client.model.animal.golem.IronGolemModel;
-import net.minecraft.client.model.animal.golem.SnowGolemModel;
-import net.minecraft.client.model.animal.nautilus.NautilusModel;
-import net.minecraft.client.model.animal.panda.PandaModel;
-import net.minecraft.client.model.animal.parrot.ParrotModel;
-import net.minecraft.client.model.animal.sniffer.SnifferModel;
-import net.minecraft.client.model.animal.squid.SquidModel;
-import net.minecraft.client.model.animal.turtle.TurtleModel;
-import net.minecraft.client.model.monster.blaze.BlazeModel;
-import net.minecraft.client.model.monster.breeze.BreezeModel;
-import net.minecraft.client.model.monster.creaking.CreakingModel;
-import net.minecraft.client.model.monster.dragon.EnderDragonModel;
-import net.minecraft.client.model.monster.enderman.EndermanModel;
-import net.minecraft.client.model.monster.endermite.EndermiteModel;
-import net.minecraft.client.model.monster.ghast.GhastModel;
-import net.minecraft.client.model.monster.guardian.GuardianModel;
-import net.minecraft.client.model.monster.phantom.PhantomModel;
-import net.minecraft.client.model.monster.ravager.RavagerModel;
-import net.minecraft.client.model.monster.shulker.ShulkerModel;
-import net.minecraft.client.model.monster.silverfish.SilverfishModel;
-import net.minecraft.client.model.monster.skeleton.BoggedModel;
-import net.minecraft.client.model.monster.skeleton.SkeletonModel;
-import net.minecraft.client.model.monster.slime.MagmaCubeModel;
-import net.minecraft.client.model.monster.slime.SlimeModel;
-import net.minecraft.client.model.monster.spider.SpiderModel;
-import net.minecraft.client.model.monster.strider.StriderModel;
-import net.minecraft.client.model.monster.vex.VexModel;
-import net.minecraft.client.model.monster.warden.WardenModel;
-import net.minecraft.client.model.monster.witch.WitchModel;
+import net.minecraft.client.model.*;
+import net.minecraft.client.model.dragon.EnderDragonModel;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -243,7 +202,6 @@ public class PetsClientInitializer implements ClientModInitializer {
         EntityRenderers.register(PetsInitializer.GOAT, ClientGoatRenderer::new);
         EntityRenderers.register(PetsInitializer.IRON_GOLEM, ClientIronGolemRenderer::new);
         EntityRenderers.register(PetsInitializer.LLAMA, ClientLlamaRenderer::new);
-        EntityRenderers.register(PetsInitializer.NAUTILUS, ClientNautilusRenderer::new);
         EntityRenderers.register(PetsInitializer.PANDA, ClientPandaRenderer::new);
         EntityRenderers.register(PetsInitializer.PIGLIN, ClientPiglinRenderer::new);
         EntityRenderers.register(PetsInitializer.POLAR_BEAR, ClientPolarBearRenderer::new);
@@ -265,7 +223,6 @@ public class PetsClientInitializer implements ClientModInitializer {
         EntityRenderers.register(PetsInitializer.HOGLIN, ClientHoglinRenderer::new);
         EntityRenderers.register(PetsInitializer.HUSK, ClientHuskRenderer::new);
         EntityRenderers.register(PetsInitializer.MAGMA_CUBE, ClientMagmaCubeRenderer::new);
-        EntityRenderers.register(PetsInitializer.PARCHED, ClientParchedRenderer::new);
         EntityRenderers.register(PetsInitializer.PHANTOM, ClientPhantomRenderer::new);
         EntityRenderers.register(PetsInitializer.PILLAGER, ClientPillagerRenderer::new);
         EntityRenderers.register(PetsInitializer.RAVAGER, ClientRavagerRenderer::new);
@@ -344,7 +301,6 @@ public class PetsClientInitializer implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(ClientGoatRenderer.GOAT_LOCATION, ClientGoatModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientIronGolemRenderer.IRON_GOLEM_LOCATION, IronGolemModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientLlamaRenderer.LLAMA_LOCATION, ClientLlamaRenderer::createLlamaLayer);
-        EntityModelLayerRegistry.registerModelLayer(ClientNautilusRenderer.NAUTILUS_LOCATION, NautilusModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientPandaRenderer.PANDA_LOCAITON, PandaModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientPiglinRenderer.PIGLIN_LOCATION, ClientPiglinRenderer::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientPolarBearRenderer.POLAR_BEAR_LOCATION, ClientPolarBearRenderer::createBodyLayer);
@@ -365,8 +321,7 @@ public class PetsClientInitializer implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(ClientGuardianRenderer.GUARDIAN_LOCATION, GuardianModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientHoglinRenderer.HOGLIN_LOCATION, ClientHoglinModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientHuskRenderer.HUSK_LOCATION, ClientZombieRenderer::createBaseZombieLayer);
-        EntityModelLayerRegistry.registerModelLayer(ClientMagmaCubeRenderer.MAGMA_CUBE_LOCATION, MagmaCubeModel::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(ClientParchedRenderer.PARCHED_LOCATION, SkeletonModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(ClientMagmaCubeRenderer.MAGMA_CUBE_LOCATION, SlimeModel::createInnerBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientPhantomRenderer.PHANTOM_LOCATION, PhantomModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientPillagerRenderer.PILLAGER_LOCATION, ClientPillagerModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientRavagerRenderer.RAVAGER_LOCATION, RavagerModel::createBodyLayer);
@@ -415,7 +370,7 @@ public class PetsClientInitializer implements ClientModInitializer {
      * is pressed
      */
     void createKeyBinding() {
-        KeyMapping keyMapping = KeyBindingHelper.registerKeyBinding(new KeyMapping("Open Pets Menu", GLFW.GLFW_KEY_P, new KeyMapping.Category(Identifier.fromNamespaceAndPath(PetsInitializer.MOD_ID, "petsmod.keymapping"))));
+        KeyMapping keyMapping = KeyBindingHelper.registerKeyBinding(new KeyMapping("Open Pets Menu", GLFW.GLFW_KEY_P, new KeyMapping.Category(ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, "petsmod.keymapping"))));
 
         ClientTickEvents.END_CLIENT_TICK.register((client) -> {
             if (keyMapping.consumeClick()) {

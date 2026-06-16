@@ -1,6 +1,6 @@
 package com.jeff.pets.rendering.vanilla.cat;
 
-import net.minecraft.client.model.animal.feline.CatModel;
+import net.minecraft.client.model.CatModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.CatRenderState;
 

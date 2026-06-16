@@ -47,7 +47,7 @@ import net.minecraft.client.resources.SplashManager;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.synchronization.SuggestionProviders;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 
 import java.io.IOException;
@@ -148,7 +148,6 @@ public class Central implements ClientModInitializer {
     public static ClientGoat goat;
     public static ClientIronGolem ironGolem;
     public static ClientLlama llama;
-    public static ClientNautilus nautilus;
     public static ClientPanda panda;
     public static ClientPiglin piglin;
     public static ClientPolarBear polarBear;
@@ -182,7 +181,6 @@ public class Central implements ClientModInitializer {
     public static ClientHusk husk;
     public static ClientDrowned drowned;
     public static ClientBogged bogged;
-    public static ClientParched parched;
     public static ClientStray stray;
     public static ClientWitherSkeleton witherSkeleton;
     public static ClientEnderDragon enderDragon;
@@ -265,7 +263,6 @@ public class Central implements ClientModInitializer {
         Utils.despawnEntity(goat);
         Utils.despawnEntity(ironGolem);
         Utils.despawnEntity(llama);
-        Utils.despawnEntity(nautilus);
         Utils.despawnEntity(panda);
         Utils.despawnEntity(piglin);
         Utils.despawnEntity(polarBear);
@@ -299,7 +296,6 @@ public class Central implements ClientModInitializer {
         Utils.despawnEntity(husk);
         Utils.despawnEntity(drowned);
         Utils.despawnEntity(bogged);
-        Utils.despawnEntity(parched);
         Utils.despawnEntity(stray);
         Utils.despawnEntity(witherSkeleton);
         Utils.despawnEntity(enderDragon);
@@ -371,7 +367,6 @@ public class Central implements ClientModInitializer {
         goat = new ClientGoat(PetsInitializer.GOAT, world);
         ironGolem = new ClientIronGolem(PetsInitializer.IRON_GOLEM, world);
         llama = new ClientLlama(PetsInitializer.LLAMA, world);
-        nautilus = new ClientNautilus(PetsInitializer.NAUTILUS, world);
         panda = new ClientPanda(PetsInitializer.PANDA, world);
         piglin = new ClientPiglin(PetsInitializer.PIGLIN, world);
         polarBear = new ClientPolarBear(PetsInitializer.POLAR_BEAR, world);
@@ -406,7 +401,6 @@ public class Central implements ClientModInitializer {
         husk = new ClientHusk(PetsInitializer.HUSK, world);
         drowned = new ClientDrowned(PetsInitializer.DROWNED, world);
         bogged = new ClientBogged(PetsInitializer.BOGGED, world);
-        parched = new ClientParched(PetsInitializer.PARCHED, world);
         stray = new ClientStray(PetsInitializer.STRAY, world);
         witherSkeleton = new ClientWitherSkeleton(PetsInitializer.WITHER_SKELETON, world);
         enderDragon = new ClientEnderDragon(PetsInitializer.ENDER_DRAGON, world);
@@ -509,8 +503,6 @@ public class Central implements ClientModInitializer {
                 Utils.summonPet(ironGolem, CONFIG.ironGolemName);
             } else if (Objects.equals(CONFIG.activePet, "llama")) {
                 Utils.summonPet(llama, CONFIG.llamaName);
-            } else if (Objects.equals(CONFIG.activePet, "nautilus")) {
-                Utils.summonPet(nautilus, CONFIG.nautilusName);
             } else if (Objects.equals(CONFIG.activePet, "panda")) {
                 Utils.summonPet(panda, CONFIG.pandaName);
             } else if (Objects.equals(CONFIG.activePet, "piglin")) {
@@ -579,8 +571,6 @@ public class Central implements ClientModInitializer {
                 Utils.summonPet(drowned, CONFIG.drownedName);
             } else if (Objects.equals(CONFIG.activePet, "bogged")) {
                 Utils.summonPet(bogged, CONFIG.boggedName);
-            } else if (Objects.equals(CONFIG.activePet, "parched")) {
-                Utils.summonPet(parched, CONFIG.parchedName);
             } else if (Objects.equals(CONFIG.activePet, "stray")) {
                 Utils.summonPet(stray, CONFIG.strayName);
             } else if (Objects.equals(CONFIG.activePet, "wither_skeleton")) {
@@ -677,7 +667,6 @@ public class Central implements ClientModInitializer {
         Utils.checkName("goat", goat, CONFIG.goatName);
         Utils.checkName("iron_golem", ironGolem, CONFIG.ironGolemName);
         Utils.checkName("llama", llama, CONFIG.llamaName);
-        Utils.checkName("nautilus", nautilus, CONFIG.nautilusName);
         Utils.checkName("panda", panda, CONFIG.pandaName);
         Utils.checkName("piglin", piglin, CONFIG.piglinName);
         Utils.checkName("polar_bear", polarBear, CONFIG.polarBearName);
@@ -708,7 +697,6 @@ public class Central implements ClientModInitializer {
         Utils.checkName("husk", husk, CONFIG.huskName);
         Utils.checkName("drowned", drowned, CONFIG.drownedName);
         Utils.checkName("bogged", bogged, CONFIG.boggedName);
-        Utils.checkName("parched", parched, CONFIG.parchedName);
         Utils.checkName("stray", stray, CONFIG.strayName);
         Utils.checkName("wither_skeleton", witherSkeleton, CONFIG.witherSkeletonName);
         Utils.checkName("ender_dragon", enderDragon, CONFIG.enderDragonName);
@@ -821,15 +809,15 @@ public class Central implements ClientModInitializer {
      */
     public static void reassignLogo(Boolean bl) {
         if (bl) {
-            LogoRenderer.MINECRAFT_LOGO = Identifier.fromNamespaceAndPath(MOD_ID, "textures/title/petsmod.png");
-            LogoRenderer.EASTER_EGG_LOGO = Identifier.fromNamespaceAndPath(MOD_ID, "textures/title/modpets.png");
-            LogoRenderer.MINECRAFT_EDITION = Identifier.fromNamespaceAndPath(MOD_ID, "textures/title/version.png");
-            SplashManager.SPLASHES_LOCATION = Identifier.fromNamespaceAndPath(MOD_ID, "texts/splashes.txt");
+            LogoRenderer.MINECRAFT_LOGO = ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/title/petsmod.png");
+            LogoRenderer.EASTER_EGG_LOGO = ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/title/modpets.png");
+            LogoRenderer.MINECRAFT_EDITION = ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/title/version.png");
+            SplashManager.SPLASHES_LOCATION = ResourceLocation.fromNamespaceAndPath(MOD_ID, "texts/splashes.txt");
         } else {
-            LogoRenderer.MINECRAFT_LOGO = Identifier.withDefaultNamespace("textures/gui/title/minecraft.png");
-            LogoRenderer.EASTER_EGG_LOGO = Identifier.withDefaultNamespace("textures/gui/title/minceraft.png");
-            LogoRenderer.MINECRAFT_EDITION = Identifier.withDefaultNamespace("textures/gui/title/edition.png");
-            SplashManager.SPLASHES_LOCATION = Identifier.withDefaultNamespace("texts/splashes.txt");
+            LogoRenderer.MINECRAFT_LOGO = ResourceLocation.withDefaultNamespace("textures/gui/title/minecraft.png");
+            LogoRenderer.EASTER_EGG_LOGO = ResourceLocation.withDefaultNamespace("textures/gui/title/minceraft.png");
+            LogoRenderer.MINECRAFT_EDITION = ResourceLocation.withDefaultNamespace("textures/gui/title/edition.png");
+            SplashManager.SPLASHES_LOCATION = ResourceLocation.withDefaultNamespace("texts/splashes.txt");
         }
     }
 
@@ -1849,8 +1837,6 @@ public class Central implements ClientModInitializer {
                 Utils.setActivePet(ironGolem, "iron_golem");
             } else if (Objects.equals(species, "llama")) {
                 Utils.setActivePet(llama, "llama");
-            } else if (Objects.equals(species, "nautilus")) {
-                Utils.setActivePet(nautilus, "nautilus");
             } else if (Objects.equals(species, "panda")) {
                 Utils.setActivePet(panda, "panda");
             } else if (Objects.equals(species, "piglin")) {
@@ -1919,8 +1905,6 @@ public class Central implements ClientModInitializer {
                 Utils.setActivePet(drowned, "drowned");
             } else if (Objects.equals(species, "bogged")) {
                 Utils.setActivePet(bogged, "bogged");
-            } else if (Objects.equals(species, "parched")) {
-                Utils.setActivePet(parched, "parched");
             } else if (Objects.equals(species, "stray")) {
                 Utils.setActivePet(stray, "stray");
             } else if (Objects.equals(species, "wither_skeleton") || Objects.equals(species, "wither skeleton")) {
@@ -2197,8 +2181,8 @@ public class Central implements ClientModInitializer {
                 "koi", "llama",
                  "love golem", "magma cube", "mega spud",
                 "moon cow", "mooshroom",
-                 "nautilus", "nerd creeper",
-                "panda", "parched", "parrot",  "penguin", "phantom",
+                  "nerd creeper",
+                "panda", "parrot",  "penguin", "phantom",
                "pig", "piglin", "pillager",
                 "pink wither", "plaguewhale slab", "poisonous potato zombie", "polar bear",
                 "potato husk", "pufferfish", "rabbit",

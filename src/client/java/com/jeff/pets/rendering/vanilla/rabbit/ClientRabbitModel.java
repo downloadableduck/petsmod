@@ -1,6 +1,6 @@
 package com.jeff.pets.rendering.vanilla.rabbit;
 
-import net.minecraft.client.model.animal.rabbit.RabbitModel;
+import net.minecraft.client.model.RabbitModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.RabbitRenderState;
 import org.jetbrains.annotations.NotNull;

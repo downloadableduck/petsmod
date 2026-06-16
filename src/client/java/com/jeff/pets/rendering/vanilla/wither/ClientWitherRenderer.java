@@ -2,15 +2,15 @@ package com.jeff.pets.rendering.vanilla.wither;
 
 import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.boss.ClientWither;
+import net.minecraft.client.model.WitherBossModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.monster.wither.WitherBossModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.WitherRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -19,7 +19,7 @@ import static com.jeff.pets.Central.CONFIG;
 
 public class ClientWitherRenderer extends PetRenderer<@NotNull ClientWither, @NotNull WitherRenderState, @NotNull WitherBossModel> {
 
-    public static final ModelLayerLocation WITHER_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientwither"), "main");
+    public static final ModelLayerLocation WITHER_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientwither"), "main");
 
     public ClientWitherRenderer(EntityRendererProvider.Context context) {
         super(context, new WitherBossModel(context.bakeLayer(ModelLayers.WITHER)), 0.75f);
@@ -32,7 +32,7 @@ public class ClientWitherRenderer extends PetRenderer<@NotNull ClientWither, @No
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(WitherRenderState livingEntityRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(WitherRenderState livingEntityRenderState) {
         String witherTexturePath;
         if (Objects.equals(CONFIG.witherSkin, "normal")) {
             witherTexturePath = "textures/entity/wither/wither.png";
@@ -41,7 +41,7 @@ public class ClientWitherRenderer extends PetRenderer<@NotNull ClientWither, @No
         } else {
             witherTexturePath = "textures/entity/wither/wither.png";
         }
-        return Identifier.withDefaultNamespace(witherTexturePath);
+        return ResourceLocation.withDefaultNamespace(witherTexturePath);
     }
 
     @Override

@@ -1,16 +1,16 @@
 package com.jeff.pets.rendering.vanilla.mooshroom;
 
 import com.jeff.pets.rendering.PetRenderer;
-import com.jeff.pets.rendering.vanilla.cow.ClientCowModel;
 import com.jeff.pets.mob.vanilla.passive.ClientMooshroom;
+import com.jeff.pets.rendering.vanilla.cow.ClientCowModel;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.animal.cow.CowModel;
+import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.layers.MushroomCowMushroomLayer;
 import net.minecraft.client.renderer.entity.state.MushroomCowRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -18,7 +18,7 @@ import java.util.Objects;
 import static com.jeff.pets.Central.CONFIG;
 
 public class ClientMooshroomRenderer extends PetRenderer<@NotNull ClientMooshroom, @NotNull MushroomCowRenderState, @NotNull CowModel> {
-    public static final ModelLayerLocation MOOSHROOM_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientmooshroom"), "main");
+    public static final ModelLayerLocation MOOSHROOM_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientmooshroom"), "main");
 
     String mooshroomTexturePath;
 
@@ -35,7 +35,7 @@ public class ClientMooshroomRenderer extends PetRenderer<@NotNull ClientMooshroo
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(MushroomCowRenderState cowRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(MushroomCowRenderState cowRenderState) {
         if (Objects.equals(CONFIG.mooshroomSkin, "red")) {
             mooshroomTexturePath = "textures/entity/cow/red_mooshroom.png";
         } else if (Objects.equals(CONFIG.mooshroomSkin, "brown")) {
@@ -43,7 +43,7 @@ public class ClientMooshroomRenderer extends PetRenderer<@NotNull ClientMooshroo
         } else {
             mooshroomTexturePath = "textures/entity/cow/red_mooshroom.png";
         }
-        return Identifier.withDefaultNamespace(mooshroomTexturePath);
+        return ResourceLocation.withDefaultNamespace(mooshroomTexturePath);
     }
 
     @Override

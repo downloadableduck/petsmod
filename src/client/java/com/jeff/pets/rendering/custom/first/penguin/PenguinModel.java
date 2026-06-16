@@ -6,7 +6,7 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,7 +14,7 @@ import static com.jeff.pets.Central.CONFIG;
 
 public class PenguinModel extends EntityModel<@NotNull PenguinRenderState> {
 
-    public static final ModelLayerLocation PENGUIN_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(PetsInitializer.MOD_ID, "penguin"), "main");
+    public static final ModelLayerLocation PENGUIN_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, "penguin"), "main");
 
     private final ModelPart body;
     private final ModelPart right_foot;

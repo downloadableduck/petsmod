@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.piglin;
 
+import net.minecraft.client.model.PiglinModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.monster.piglin.PiglinModel;
 import net.minecraft.client.renderer.entity.state.PiglinRenderState;
 import org.jetbrains.annotations.NotNull;
 
