@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.drowned;
 
+import net.minecraft.client.model.DrownedModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.monster.zombie.DrownedModel;
 import net.minecraft.client.renderer.entity.state.ZombieRenderState;
 import org.jetbrains.annotations.NotNull;
 

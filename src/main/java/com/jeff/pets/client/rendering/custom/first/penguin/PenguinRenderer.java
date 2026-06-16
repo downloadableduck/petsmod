@@ -6,7 +6,7 @@ import com.jeff.pets.mob.custom.first.Penguin;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,8 +19,8 @@ public class PenguinRenderer extends PetRenderer<@NotNull Penguin, @NotNull Peng
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(PenguinRenderState livingEntityRenderState) {
-        return Identifier.fromNamespaceAndPath(PetsInitializer.MOD_ID, "textures/entity/penguin/penguin.png");
+    public @NotNull ResourceLocation getTextureLocation(PenguinRenderState livingEntityRenderState) {
+        return ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, "textures/entity/penguin/penguin.png");
     }
 
     @Override

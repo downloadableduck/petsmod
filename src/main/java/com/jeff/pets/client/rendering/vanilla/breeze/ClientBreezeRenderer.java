@@ -2,19 +2,19 @@ package com.jeff.pets.client.rendering.vanilla.breeze;
 
 import com.jeff.pets.mob.vanilla.hostile.ClientBreeze;
 import com.jeff.pets.client.rendering.PetRenderer;
+import net.minecraft.client.model.BreezeModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.model.monster.breeze.BreezeModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.layers.BreezeWindLayer;
 import net.minecraft.client.renderer.entity.state.BreezeRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientBreezeRenderer extends PetRenderer<@NotNull ClientBreeze, @NotNull BreezeRenderState, @NotNull BreezeModel> {
 
-    public static final ModelLayerLocation BREEZE_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientbreeze"), "main");
+    public static final ModelLayerLocation BREEZE_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientbreeze"), "main");
 
     public ClientBreezeRenderer(EntityRendererProvider.Context context) {
         super(context, new BreezeModel(context.bakeLayer(ModelLayers.BREEZE)), 0.75f);
@@ -22,8 +22,8 @@ public class ClientBreezeRenderer extends PetRenderer<@NotNull ClientBreeze, @No
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(BreezeRenderState livingEntityRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/breeze/breeze.png");
+    public @NotNull ResourceLocation getTextureLocation(BreezeRenderState livingEntityRenderState) {
+        return ResourceLocation.withDefaultNamespace("textures/entity/breeze/breeze.png");
     }
 
     @Override

@@ -5,7 +5,7 @@ import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.component.ResolvableProfile;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,7 +22,7 @@ public class HeadRenderer extends PetRenderer<@NotNull Head, @NotNull LivingEnti
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(final LivingEntityRenderState state) {
+    public @NotNull ResourceLocation getTextureLocation(final LivingEntityRenderState state) {
         return Minecraft.getInstance().playerSkinRenderCache().getOrDefault(ResolvableProfile.createUnresolved(CONFIG.headSkin)).playerSkin().body().texturePath();
     }
 }

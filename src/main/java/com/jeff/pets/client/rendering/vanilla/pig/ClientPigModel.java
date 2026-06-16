@@ -1,6 +1,6 @@
 package com.jeff.pets.client.rendering.vanilla.pig;
 
-import net.minecraft.client.model.animal.pig.PigModel;
+import net.minecraft.client.model.PigModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 

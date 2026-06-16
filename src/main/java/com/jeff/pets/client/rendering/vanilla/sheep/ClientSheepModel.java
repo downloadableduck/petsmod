@@ -1,6 +1,6 @@
 package com.jeff.pets.client.rendering.vanilla.sheep;
 
-import net.minecraft.client.model.animal.sheep.SheepModel;
+import net.minecraft.client.model.SheepModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.SheepRenderState;
 import org.jetbrains.annotations.NotNull;

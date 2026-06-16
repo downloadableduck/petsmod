@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.hoglin;
 
+import net.minecraft.client.model.HoglinModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.monster.hoglin.HoglinModel;
 import net.minecraft.client.renderer.entity.state.HoglinRenderState;
 import org.jetbrains.annotations.NotNull;
 

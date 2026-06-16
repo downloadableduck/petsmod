@@ -4,7 +4,7 @@ import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
 import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -12,7 +12,7 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
 
 public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopusRenderState, DumboOctopusModel> {
 
-    public static final ModelLayerLocation DUMBO_OCTOPUS_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(MOD_ID, "dumbo_octopus"), "main");
+    public static final ModelLayerLocation DUMBO_OCTOPUS_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(MOD_ID, "dumbo_octopus"), "main");
     double i = 45;
     float direction = 1;
     float speed = 0.5f;
@@ -22,7 +22,7 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(@NotNull DumboOctopusRenderState state) {
+    public @NotNull ResourceLocation getTextureLocation(@NotNull DumboOctopusRenderState state) {
         String path;
         String yellow = "textures/entity/dumbo_octopus/yellow.png";
         String red = "textures/entity/dumbo_octopus/red.png";
@@ -51,7 +51,7 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
                 default -> path = yellow;
             }
         }
-        return Identifier.fromNamespaceAndPath(MOD_ID, path);
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
     }
 
     @Override

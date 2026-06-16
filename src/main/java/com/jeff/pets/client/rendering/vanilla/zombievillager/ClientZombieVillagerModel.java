@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.zombievillager;
 
+import net.minecraft.client.model.ZombieVillagerModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.monster.zombie.ZombieVillagerModel;
 import net.minecraft.client.renderer.entity.state.ZombieVillagerRenderState;
 import org.jetbrains.annotations.NotNull;
 

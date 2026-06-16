@@ -53,7 +53,6 @@ public enum PetList implements NameableEnum {
     mega_spud,
     moon_cow,
     mooshroom,
-    nautilus,
     nerd_creeper,
     panda,
     parrot,

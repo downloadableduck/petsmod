@@ -1,6 +1,6 @@
 package com.jeff.pets.client.rendering.vanilla.cow;
 
-import net.minecraft.client.model.animal.cow.CowModel;
+import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 

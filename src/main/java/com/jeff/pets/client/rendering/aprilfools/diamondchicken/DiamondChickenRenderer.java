@@ -7,14 +7,14 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.ChickenRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class DiamondChickenRenderer extends PetRenderer<@NotNull DiamondChicken, @NotNull ChickenRenderState, @NotNull ClientChickenModel> {
 
-    public static final ModelLayerLocation DIAMOND_CHICKEN_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("diamondchicken"), "main");
+    public static final ModelLayerLocation DIAMOND_CHICKEN_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("diamondchicken"), "main");
 
     public DiamondChickenRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientChickenModel(context.bakeLayer(DIAMOND_CHICKEN_LOCATION)), 0.75f);
@@ -28,8 +28,8 @@ public class DiamondChickenRenderer extends PetRenderer<@NotNull DiamondChicken,
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(ChickenRenderState livingEntityRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/diamond_chicken.png");
+    public @NotNull ResourceLocation getTextureLocation(ChickenRenderState livingEntityRenderState) {
+        return ResourceLocation.withDefaultNamespace("textures/entity/diamond_chicken.png");
     }
 
     @Override

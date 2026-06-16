@@ -5,7 +5,7 @@ import com.jeff.pets.mob.custom.first.Duck;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
@@ -49,7 +49,7 @@ public class DuckRenderer extends PetRenderer<@NotNull Duck, @NotNull DuckRender
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(final DuckRenderState state) {
+    public @NotNull ResourceLocation getTextureLocation(final DuckRenderState state) {
         if (!state.isServerEntity) {
             if (Objects.equals(CONFIG.duckSkin, "pekin")) {
                 duckTexturePath = "textures/entity/duck/pekin.png";
@@ -60,14 +60,14 @@ public class DuckRenderer extends PetRenderer<@NotNull Duck, @NotNull DuckRender
             } else if (CONFIG.duckSkin.equals("bronze")) {
                 duckTexturePath = "textures/entity/duck/bronze.png";
             }
-            return Identifier.fromNamespaceAndPath(PetsInitializer.MOD_ID, duckTexturePath);
+            return ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, duckTexturePath);
         } else {
             if (state.duckSpecies == 0) {
-                return Identifier.fromNamespaceAndPath(PetsInitializer.MOD_ID, "textures/entity/duck/mallard_male.png");
+                return ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, "textures/entity/duck/mallard_male.png");
             } else if (state.duckSpecies == 1) {
-                return Identifier.fromNamespaceAndPath(PetsInitializer.MOD_ID, "textures/entity/duck/pekin.png");
+                return ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, "textures/entity/duck/pekin.png");
             } else {
-                return Identifier.fromNamespaceAndPath(PetsInitializer.MOD_ID, "textures/entity/duck/yeahitdidntwork");
+                return ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, "textures/entity/duck/yeahitdidntwork");
             }
         }
     }

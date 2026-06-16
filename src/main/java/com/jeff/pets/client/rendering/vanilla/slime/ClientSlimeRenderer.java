@@ -3,21 +3,21 @@ package com.jeff.pets.client.rendering.vanilla.slime;
 import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.model.SlimeModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.model.monster.slime.SlimeModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.layers.SlimeOuterLayer;
 import net.minecraft.client.renderer.entity.state.SlimeRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientSlimeRenderer extends PetRenderer<@NotNull ClientSlime, @NotNull SlimeRenderState, @NotNull SlimeModel> {
 
-    public static final ModelLayerLocation SLIME_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientslime"), "main");
+    public static final ModelLayerLocation SLIME_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientslime"), "main");
 
     public ClientSlimeRenderer(EntityRendererProvider.Context context) {
         super(context, new SlimeModel(context.bakeLayer(ModelLayers.SLIME)), 0.75f);
@@ -39,8 +39,8 @@ public class ClientSlimeRenderer extends PetRenderer<@NotNull ClientSlime, @NotN
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(SlimeRenderState livingEntityRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/slime/slime.png");
+    public @NotNull ResourceLocation getTextureLocation(SlimeRenderState livingEntityRenderState) {
+        return ResourceLocation.withDefaultNamespace("textures/entity/slime/slime.png");
     }
 
     @Override

@@ -3,12 +3,12 @@ package com.jeff.pets.client.rendering.vanilla.camel;
 import com.jeff.pets.mob.vanilla.passive.ClientCamel;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.animal.camel.CamelModel;
+import net.minecraft.client.model.CamelModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.CamelRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -16,7 +16,7 @@ import java.util.Objects;
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientCamelRenderer extends PetRenderer<@NotNull ClientCamel, @NotNull CamelRenderState, @NotNull CamelModel> {
-    public static final ModelLayerLocation CAMEL_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientcamel"), "main");
+    public static final ModelLayerLocation CAMEL_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientcamel"), "main");
     public String camelTexturePath;
 
     public ClientCamelRenderer(EntityRendererProvider.Context context) {
@@ -31,7 +31,7 @@ public class ClientCamelRenderer extends PetRenderer<@NotNull ClientCamel, @NotN
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(CamelRenderState camelRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(CamelRenderState camelRenderState) {
         if (Objects.equals(CONFIG.camelSkin, "camel")) {
             camelTexturePath = "textures/entity/camel/camel.png";
         } else if (Objects.equals(CONFIG.camelSkin, "husk")) {
@@ -39,7 +39,7 @@ public class ClientCamelRenderer extends PetRenderer<@NotNull ClientCamel, @NotN
         } else {
             camelTexturePath = "textures/entity/camel/camel.png";
         }
-        return Identifier.withDefaultNamespace(camelTexturePath);
+        return ResourceLocation.withDefaultNamespace(camelTexturePath);
     }
 
     @Override

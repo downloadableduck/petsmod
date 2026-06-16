@@ -8,14 +8,14 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.ZombieRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class PotatoHuskRenderer extends PetRenderer<@NotNull PotatoHusk, @NotNull ZombieRenderState, @NotNull ClientZombieModel> {
 
-    public static final ModelLayerLocation POTATO_HUSK_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("potatohusk"), "main");
+    public static final ModelLayerLocation POTATO_HUSK_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("potatohusk"), "main");
 
     public PotatoHuskRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientZombieModel(context.bakeLayer(ModelLayers.HUSK)), 0.75f);
@@ -28,8 +28,8 @@ public class PotatoHuskRenderer extends PetRenderer<@NotNull PotatoHusk, @NotNul
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(ZombieRenderState livingEntityRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/zombie/husk_potato.png");
+    public @NotNull ResourceLocation getTextureLocation(ZombieRenderState livingEntityRenderState) {
+        return ResourceLocation.withDefaultNamespace("textures/entity/zombie/husk_potato.png");
     }
 
     @Override

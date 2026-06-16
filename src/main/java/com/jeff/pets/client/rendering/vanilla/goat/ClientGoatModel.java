@@ -1,6 +1,6 @@
 package com.jeff.pets.client.rendering.vanilla.goat;
 
-import net.minecraft.client.model.animal.goat.GoatModel;
+import net.minecraft.client.model.GoatModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.GoatRenderState;
 import org.jetbrains.annotations.NotNull;

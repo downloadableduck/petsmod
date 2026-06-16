@@ -18,7 +18,7 @@ import com.jeff.pets.mob.vanilla.passive.*;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -55,7 +55,7 @@ public class PetsInitializer {
                 DeferredRegister.create(Registries.ENTITY_TYPE, PetsInitializer.MOD_ID);
 
     private static ResourceKey<@NotNull EntityType<?>> createResourceKey(String path) {
-        return ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(PetsInitializer.MOD_ID, path));
+        return ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, path));
     }
 
     public PetsInitializer(IEventBus bus) {
@@ -106,7 +106,6 @@ public class PetsInitializer {
         event.put(Entities.GOAT.get(), ClientGoat.createAttributes().build());
         event.put(Entities.IRON_GOLEM.get(), ClientIronGolem.createAttributes().build());
         event.put(Entities.LLAMA.get(), ClientLlama.createAttributes().build());
-        event.put(Entities.NAUTILUS.get(), ClientNautilus.createAttributes().build());
         event.put(Entities.PANDA.get(), ClientPanda.createAttributes().build());
         event.put(Entities.PIGLIN.get(), ClientPiglin.createAttributes().build()); // Fixed matching target type
         event.put(Entities.POLAR_BEAR.get(), ClientPolarBear.createAttributes().build());
@@ -141,7 +140,6 @@ public class PetsInitializer {
         event.put(Entities.HUSK.get(), ClientHusk.createAttributes().build());
         event.put(Entities.DROWNED.get(), ClientDrowned.createAttributes().build());
         event.put(Entities.BOGGED.get(), ClientBogged.createAttributes().build());
-        event.put(Entities.PARCHED.get(), ClientParched.createAttributes().build());
         event.put(Entities.STRAY.get(), ClientStray.createAttributes().build());
         event.put(Entities.WITHER_SKELETON.get(), ClientWitherSkeleton.createAttributes().build());
         event.put(Entities.ENDER_DRAGON.get(), ClientEnderDragon.createAttributes().build());
@@ -541,15 +539,6 @@ public class PetsInitializer {
                                 .build(LLAMA_KEY)
                 );
 
-        public static final ResourceKey<@NotNull EntityType<?>> NAUTILUS_KEY = createResourceKey("clientnautilus");
-        public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientNautilus>> NAUTILUS =
-                ENTITY_TYPES.register("clientnautilus", () ->
-                        EntityType.Builder.of(ClientNautilus::new, MobCategory.AMBIENT)
-                                .noSummon()
-                                .sized(0.875f, 0.95f)
-                                .eyeHeight(0.95f)
-                                .build(NAUTILUS_KEY)
-                );
 
         public static final ResourceKey<@NotNull EntityType<?>> PANDA_KEY = createResourceKey("clientpanda");
         public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientPanda>> PANDA =
@@ -888,16 +877,6 @@ public class PetsInitializer {
                                 .sized(0.6f, 1.95f)
                                 .eyeHeight(2.0f)
                                 .build(BOGGED_KEY)
-                );
-
-        public static final ResourceKey<@NotNull EntityType<?>> PARCHED_KEY = createResourceKey("clientparched");
-        public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientParched>> PARCHED =
-                ENTITY_TYPES.register("clientparched", () ->
-                        EntityType.Builder.of(ClientParched::new, MobCategory.AMBIENT)
-                                .noSummon()
-                                .sized(0.6f, 1.95f)
-                                .eyeHeight(1.95f)
-                                .build(PARCHED_KEY)
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> STRAY_KEY = createResourceKey("clientstray");

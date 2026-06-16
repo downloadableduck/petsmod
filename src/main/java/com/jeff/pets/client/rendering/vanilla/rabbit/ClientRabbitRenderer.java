@@ -9,13 +9,13 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.RabbitRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientRabbitRenderer extends PetRenderer<@NotNull ClientRabbit, @NotNull RabbitRenderState, @NotNull ClientRabbitModel> {
-    public static final ModelLayerLocation RABBIT_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientrabbit"), "main");
+    public static final ModelLayerLocation RABBIT_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientrabbit"), "main");
     public String rabbitTextureLocation;
 
     public ClientRabbitRenderer(EntityRendererProvider.Context context) {
@@ -35,7 +35,7 @@ public class ClientRabbitRenderer extends PetRenderer<@NotNull ClientRabbit, @No
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(RabbitRenderState rabbitRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(RabbitRenderState rabbitRenderState) {
         switch (CONFIG.activePet) {
             case "brown" -> rabbitTextureLocation = "textures/entity/rabbit/brown.png";
             case "white" -> rabbitTextureLocation = "textures/entity/rabbit/rabbit_white.png";
@@ -48,7 +48,7 @@ public class ClientRabbitRenderer extends PetRenderer<@NotNull ClientRabbit, @No
             case null, default -> rabbitTextureLocation = "textures/entity/rabbit/rabbit_brown.png";
         }
 
-        return Identifier.withDefaultNamespace(rabbitTextureLocation);
+        return ResourceLocation.withDefaultNamespace(rabbitTextureLocation);
     }
 
     @Override

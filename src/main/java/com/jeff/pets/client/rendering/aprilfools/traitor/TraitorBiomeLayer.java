@@ -8,20 +8,20 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.EvokerRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class TraitorBiomeLayer extends RenderLayer<@NotNull EvokerRenderState, @NotNull ClientEvokerModel> {
 
-    public static final ModelLayerLocation DESERT_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/villager/type/desert.png"), "main");
-    public static final ModelLayerLocation JUNGLE_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/villager/type/jungle.png"), "main");
-    public static final ModelLayerLocation PLAINS_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/villager/type/plains.png"), "main");
-    public static final ModelLayerLocation SAVANNA_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/villager/type/savanna.png"), "main");
-    public static final ModelLayerLocation SNOW_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/villager/type/snow.png"), "main");
-    public static final ModelLayerLocation SWAMP_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/villager/type/swamp.png"), "main");
-    public static final ModelLayerLocation TAIGA_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/villager/type/taiga.png"), "main");
+    public static final ModelLayerLocation DESERT_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("textures/entity/villager/type/desert.png"), "main");
+    public static final ModelLayerLocation JUNGLE_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("textures/entity/villager/type/jungle.png"), "main");
+    public static final ModelLayerLocation PLAINS_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("textures/entity/villager/type/plains.png"), "main");
+    public static final ModelLayerLocation SAVANNA_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("textures/entity/villager/type/savanna.png"), "main");
+    public static final ModelLayerLocation SNOW_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("textures/entity/villager/type/snow.png"), "main");
+    public static final ModelLayerLocation SWAMP_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("textures/entity/villager/type/swamp.png"), "main");
+    public static final ModelLayerLocation TAIGA_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("textures/entity/villager/type/taiga.png"), "main");
 
     public TraitorBiomeLayer(RenderLayerParent<@NotNull EvokerRenderState, @NotNull ClientEvokerModel> renderLayerParent) {
         super(renderLayerParent);

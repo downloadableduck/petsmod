@@ -3,31 +3,31 @@ package com.jeff.pets.client.rendering.aprilfools.raytracing;
 import com.jeff.pets.mob.aprilfools.RayTracing;
 import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.core.ClientAsset;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.PlayerModelType;
 import net.minecraft.world.entity.player.PlayerSkin;
 import org.jetbrains.annotations.NotNull;
 
 public class RayTracingRenderer extends PetRenderer<@NotNull RayTracing, @NotNull AvatarRenderState, @NotNull HumanoidModel<@NotNull AvatarRenderState>> {
 
-    public static final ModelLayerLocation RAY_TRACING_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("raytracing"), "main");
+    public static final ModelLayerLocation RAY_TRACING_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("raytracing"), "main");
 
     private final ClientAsset.Texture playerSkinTexture = new ClientAsset.Texture() {
         @Override
-        public @NotNull Identifier texturePath() {
-            return Identifier.withDefaultNamespace("textures/entity/ray_tracing.png");
+        public @NotNull ResourceLocation texturePath() {
+            return ResourceLocation.withDefaultNamespace("textures/entity/ray_tracing.png");
         }
 
         @Override
-        public @NotNull Identifier id() {
-            return Identifier.withDefaultNamespace("textures/entity/ray_tracing.png");
+        public @NotNull ResourceLocation id() {
+            return ResourceLocation.withDefaultNamespace("textures/entity/ray_tracing.png");
         }
     };
 
@@ -45,8 +45,8 @@ public class RayTracingRenderer extends PetRenderer<@NotNull RayTracing, @NotNul
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(AvatarRenderState livingEntityRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/ray_tracing.png");
+    public @NotNull ResourceLocation getTextureLocation(AvatarRenderState livingEntityRenderState) {
+        return ResourceLocation.withDefaultNamespace("textures/entity/ray_tracing.png");
     }
 
 

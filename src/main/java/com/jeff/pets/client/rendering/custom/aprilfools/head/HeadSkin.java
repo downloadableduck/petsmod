@@ -1,6 +1,6 @@
 package com.jeff.pets.client.rendering.custom.aprilfools.head;
 
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 import java.io.*;
 import java.net.URL;
@@ -9,7 +9,7 @@ import java.nio.file.Files;
 
 public class HeadSkin {
 
-    public static Identifier getHeadSkinFromMinotar(String ign) throws IOException {
+    public static ResourceLocation getHeadSkinFromMinotar(String ign) throws IOException {
 
         String url = "https://minotar.net/skin/" + ign;
 
@@ -36,7 +36,7 @@ public class HeadSkin {
                     "}");
         }
 
-        Identifier identifier = Identifier.withDefaultNamespace("playerskin.png");
+        ResourceLocation identifier = ResourceLocation.withDefaultNamespace("playerskin.png");
 
         try (BufferedInputStream inputStream = new BufferedInputStream(new URL(url).openStream())) {
 

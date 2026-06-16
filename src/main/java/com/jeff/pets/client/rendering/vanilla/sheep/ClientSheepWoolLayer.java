@@ -5,13 +5,13 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.SheepRenderState;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -19,7 +19,7 @@ import java.util.Objects;
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientSheepWoolLayer extends RenderLayer<@NotNull SheepRenderState, @NotNull ClientSheepModel> {
-    public static final ModelLayerLocation SHEEP_WOOL_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/sheep/sheep_wool.png"), "main");
+    public static final ModelLayerLocation SHEEP_WOOL_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("textures/entity/sheep/sheep_wool.png"), "main");
     private final EntityModel<@NotNull SheepRenderState> adultModel;
     private final EntityModel<@NotNull SheepRenderState> babyModel;
     int woolColor;
@@ -71,7 +71,7 @@ public class ClientSheepWoolLayer extends RenderLayer<@NotNull SheepRenderState,
                 adultModel,
                 sheepRenderState,
                 poseStack,
-                RenderTypes.entityCutout(SHEEP_WOOL_LOCATION.model()),
+                RenderType.entityCutout(SHEEP_WOOL_LOCATION.model()),
                 i,
                 LivingEntityRenderer.getOverlayCoords(sheepRenderState, 0.0F),
                 woolColor,

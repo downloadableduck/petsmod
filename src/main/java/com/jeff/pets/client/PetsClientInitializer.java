@@ -82,9 +82,7 @@ import com.jeff.pets.client.rendering.vanilla.irongolem.ClientIronGolemRenderer;
 import com.jeff.pets.client.rendering.vanilla.llama.ClientLlamaRenderer;
 import com.jeff.pets.client.rendering.vanilla.magmacube.ClientMagmaCubeRenderer;
 import com.jeff.pets.client.rendering.vanilla.mooshroom.ClientMooshroomRenderer;
-import com.jeff.pets.client.rendering.vanilla.nautilus.ClientNautilusRenderer;
 import com.jeff.pets.client.rendering.vanilla.panda.ClientPandaRenderer;
-import com.jeff.pets.client.rendering.vanilla.parched.ClientParchedRenderer;
 import com.jeff.pets.client.rendering.vanilla.parrot.ClientParrotRenderer;
 import com.jeff.pets.client.rendering.vanilla.phantom.ClientPhantomRenderer;
 import com.jeff.pets.client.rendering.vanilla.pig.ClientPigRenderer;
@@ -125,49 +123,10 @@ import com.jeff.pets.client.rendering.vanilla.zombie.ClientZombieRenderer;
 import com.jeff.pets.client.rendering.vanilla.zombievillager.ClientZombieVillagerModel;
 import com.jeff.pets.client.rendering.vanilla.zombievillager.ClientZombieVillagerRenderer;
 import net.minecraft.client.KeyMapping;
-import net.minecraft.client.model.ambient.BatModel;
-import net.minecraft.client.model.animal.allay.AllayModel;
-import net.minecraft.client.model.animal.armadillo.ArmadilloModel;
-import net.minecraft.client.model.animal.axolotl.AxolotlModel;
-import net.minecraft.client.model.animal.bee.BeeModel;
-import net.minecraft.client.model.animal.camel.CamelModel;
-import net.minecraft.client.model.animal.dolphin.DolphinModel;
-import net.minecraft.client.model.animal.fish.CodModel;
-import net.minecraft.client.model.animal.fish.PufferfishBigModel;
-import net.minecraft.client.model.animal.frog.FrogModel;
-import net.minecraft.client.model.animal.frog.TadpoleModel;
-import net.minecraft.client.model.animal.golem.CopperGolemModel;
-import net.minecraft.client.model.animal.golem.IronGolemModel;
-import net.minecraft.client.model.animal.golem.SnowGolemModel;
-import net.minecraft.client.model.animal.nautilus.NautilusModel;
-import net.minecraft.client.model.animal.panda.PandaModel;
-import net.minecraft.client.model.animal.parrot.ParrotModel;
-import net.minecraft.client.model.animal.sniffer.SnifferModel;
-import net.minecraft.client.model.animal.squid.SquidModel;
-import net.minecraft.client.model.animal.turtle.TurtleModel;
-import net.minecraft.client.model.monster.blaze.BlazeModel;
-import net.minecraft.client.model.monster.breeze.BreezeModel;
-import net.minecraft.client.model.monster.creaking.CreakingModel;
-import net.minecraft.client.model.monster.dragon.EnderDragonModel;
-import net.minecraft.client.model.monster.enderman.EndermanModel;
-import net.minecraft.client.model.monster.endermite.EndermiteModel;
-import net.minecraft.client.model.monster.ghast.GhastModel;
-import net.minecraft.client.model.monster.guardian.GuardianModel;
-import net.minecraft.client.model.monster.phantom.PhantomModel;
-import net.minecraft.client.model.monster.ravager.RavagerModel;
-import net.minecraft.client.model.monster.shulker.ShulkerModel;
-import net.minecraft.client.model.monster.silverfish.SilverfishModel;
-import net.minecraft.client.model.monster.skeleton.BoggedModel;
-import net.minecraft.client.model.monster.skeleton.SkeletonModel;
-import net.minecraft.client.model.monster.slime.MagmaCubeModel;
-import net.minecraft.client.model.monster.slime.SlimeModel;
-import net.minecraft.client.model.monster.spider.SpiderModel;
-import net.minecraft.client.model.monster.strider.StriderModel;
-import net.minecraft.client.model.monster.vex.VexModel;
-import net.minecraft.client.model.monster.warden.WardenModel;
-import net.minecraft.client.model.monster.witch.WitchModel;
+import net.minecraft.client.model.*;
+import net.minecraft.client.model.dragon.EnderDragonModel;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -252,7 +211,6 @@ public class PetsClientInitializer {
         event.registerLayerDefinition(ClientGoatRenderer.GOAT_LOCATION, ClientGoatModel::createBodyLayer);
         event.registerLayerDefinition(ClientIronGolemRenderer.IRON_GOLEM_LOCATION, IronGolemModel::createBodyLayer);
         event.registerLayerDefinition(ClientLlamaRenderer.LLAMA_LOCATION, ClientLlamaRenderer::createLlamaLayer);
-        event.registerLayerDefinition(ClientNautilusRenderer.NAUTILUS_LOCATION, NautilusModel::createBodyLayer);
         event.registerLayerDefinition(ClientPandaRenderer.PANDA_LOCAITON, PandaModel::createBodyLayer);
         event.registerLayerDefinition(ClientPiglinRenderer.PIGLIN_LOCATION, ClientPiglinRenderer::createBodyLayer);
         event.registerLayerDefinition(ClientPolarBearRenderer.POLAR_BEAR_LOCATION, ClientPolarBearRenderer::createBodyLayer);
@@ -273,8 +231,6 @@ public class PetsClientInitializer {
         event.registerLayerDefinition(ClientGuardianRenderer.GUARDIAN_LOCATION, GuardianModel::createBodyLayer);
         event.registerLayerDefinition(ClientHoglinRenderer.HOGLIN_LOCATION, ClientHoglinModel::createBodyLayer);
         event.registerLayerDefinition(ClientHuskRenderer.HUSK_LOCATION, ClientZombieRenderer::createBaseZombieLayer);
-        event.registerLayerDefinition(ClientMagmaCubeRenderer.MAGMA_CUBE_LOCATION, MagmaCubeModel::createBodyLayer);
-        event.registerLayerDefinition(ClientParchedRenderer.PARCHED_LOCATION, SkeletonModel::createBodyLayer);
         event.registerLayerDefinition(ClientPhantomRenderer.PHANTOM_LOCATION, PhantomModel::createBodyLayer);
         event.registerLayerDefinition(ClientPillagerRenderer.PILLAGER_LOCATION, ClientPillagerModel::createBodyLayer);
         event.registerLayerDefinition(ClientRavagerRenderer.RAVAGER_LOCATION, RavagerModel::createBodyLayer);
@@ -289,7 +245,6 @@ public class PetsClientInitializer {
         event.registerLayerDefinition(ClientWitchRenderer.WITCH_LOCATION, WitchModel::createBodyLayer);
         event.registerLayerDefinition(ClientWitherSkeletonRenderer.WITHER_SKELETON_LOCATION, SkeletonModel::createBodyLayer);
         event.registerLayerDefinition(ClientZombieRenderer.ZOMBIE_LOCATION, ClientZombieRenderer::createBaseZombieLayer);
-        event.registerLayerDefinition(ClientZombieVillagerRenderer.ZOMBIE_VILLAGER_LOCATION, ClientZombieVillagerModel::createBodyLayer);
         event.registerLayerDefinition(ClientEnderDragonRenderer.ENDER_DRAGON_LOCATION, EnderDragonModel::createBodyLayer);
         event.registerLayerDefinition(ClientWitherRenderer.WITHER_LOCATION, ClientWitherRenderer::createBaseWitherLayer);
         event.registerLayerDefinition(AngryGhastRenderer.ANGRY_GHAST_LOCATION, GhastModel::createBodyLayer);
@@ -354,7 +309,6 @@ public class PetsClientInitializer {
         event.registerEntityRenderer(PetsInitializer.Entities.GOAT.get(), ClientGoatRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.IRON_GOLEM.get(), ClientIronGolemRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.LLAMA.get(), ClientLlamaRenderer::new);
-        event.registerEntityRenderer(PetsInitializer.Entities.NAUTILUS.get(), ClientNautilusRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.PANDA.get(), ClientPandaRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.PIGLIN.get(), ClientPiglinRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.POLAR_BEAR.get(), ClientPolarBearRenderer::new);
@@ -376,7 +330,6 @@ public class PetsClientInitializer {
         event.registerEntityRenderer(PetsInitializer.Entities.HOGLIN.get(), ClientHoglinRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.HUSK.get(), ClientHuskRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.MAGMA_CUBE.get(), ClientMagmaCubeRenderer::new);
-        event.registerEntityRenderer(PetsInitializer.Entities.PARCHED.get(), ClientParchedRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.PHANTOM.get(), ClientPhantomRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.PILLAGER.get(), ClientPillagerRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.RAVAGER.get(), ClientRavagerRenderer::new);
@@ -421,7 +374,7 @@ public class PetsClientInitializer {
      */
 
      void createKeyBinding(RegisterKeyMappingsEvent event) {
-        openConfigScreen = new KeyMapping("Open Pets Menu", GLFW.GLFW_KEY_P, new KeyMapping.Category(Identifier.fromNamespaceAndPath(MOD_ID, "petsmod.keymapping")));
+        openConfigScreen = new KeyMapping("Open Pets Menu", GLFW.GLFW_KEY_P, new KeyMapping.Category(ResourceLocation.fromNamespaceAndPath(MOD_ID, "petsmod.keymapping")));
 
         event.register(openConfigScreen);
     }

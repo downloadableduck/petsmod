@@ -9,21 +9,21 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.renderer.entity.state.SalmonRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientSalmonRenderer extends PetRenderer<@NotNull ClientSalmon, @NotNull LivingEntityRenderState, @NotNull ClientSalmonModel> {
 
-    public static final ModelLayerLocation SALMON_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientsalmon"), "main");
+    public static final ModelLayerLocation SALMON_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientsalmon"), "main");
 
     public ClientSalmonRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientSalmonModel(context.bakeLayer(ModelLayers.SALMON)), 0.4F);
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(LivingEntityRenderState salmonRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/fish/salmon.png");
+    public @NotNull ResourceLocation getTextureLocation(LivingEntityRenderState salmonRenderState) {
+        return ResourceLocation.withDefaultNamespace("textures/entity/fish/salmon.png");
     }
 
     public SalmonRenderState createRenderState() {

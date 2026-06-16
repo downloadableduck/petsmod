@@ -6,7 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
@@ -19,7 +19,7 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
 /**
  * A utility class used mainly in {@link Central} and misc rendering classes. Contains various
  * shortcuts and utilities for spawning, despawning, and avoiding {@code NullPointerExceptions},
- * as well as a shortcut to {@link Identifier#fromNamespaceAndPath}.
+ * as well as a shortcut to {@link ResourceLocation#fromNamespaceAndPath}.
  *
  * @author downloadableduck
  * @see Central
@@ -110,15 +110,15 @@ public class Utils {
     }
 
     /**
-     * Used as a shortcut to {@link Identifier#fromNamespaceAndPath}, and sets the parameter
+     * Used as a shortcut to {@link ResourceLocation#fromNamespaceAndPath}, and sets the parameter
      * {@code namespace} with {@link PetsInitializer#MOD_ID}.
      *
      * @param path The String that goes in the {@code path} parameter.
-     * @return {@link Identifier#fromNamespaceAndPath}, with the parameter {@code namespace} set to
+     * @return {@link ResourceLocation#fromNamespaceAndPath}, with the parameter {@code namespace} set to
      * {@link PetsInitializer#MOD_ID} and the parameter {@code path} set to the user's input
      */
-    public static Identifier withModNamespace(String path) {
-        return Identifier.fromNamespaceAndPath(MOD_ID, path);
+    public static ResourceLocation withModNamespace(String path) {
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
     }
 
     /**

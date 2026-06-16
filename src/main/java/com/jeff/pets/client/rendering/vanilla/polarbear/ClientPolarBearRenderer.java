@@ -3,21 +3,21 @@ package com.jeff.pets.client.rendering.vanilla.polarbear;
 import com.jeff.pets.mob.vanilla.neutral.ClientPolarBear;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.animal.polarbear.PolarBearModel;
+import net.minecraft.client.model.PolarBearModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.PolarBearRenderState;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientPolarBearRenderer extends PetRenderer<@NotNull ClientPolarBear, @NotNull PolarBearRenderState, @NotNull PolarBearModel> {
 
-    public static final ModelLayerLocation POLAR_BEAR_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientpolarbear"), "main");
+    public static final ModelLayerLocation POLAR_BEAR_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientpolarbear"), "main");
 
     public ClientPolarBearRenderer(EntityRendererProvider.Context context) {
         super(context, new PolarBearModel(context.bakeLayer(ModelLayers.POLAR_BEAR)), 0.75f);
@@ -36,8 +36,8 @@ public class ClientPolarBearRenderer extends PetRenderer<@NotNull ClientPolarBea
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(PolarBearRenderState livingEntityRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/bear/polarbear.png");
+    public @NotNull ResourceLocation getTextureLocation(PolarBearRenderState livingEntityRenderState) {
+        return ResourceLocation.withDefaultNamespace("textures/entity/bear/polarbear.png");
     }
 
     @Override

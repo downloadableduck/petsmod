@@ -1,6 +1,6 @@
 package com.jeff.pets.client.rendering.vanilla.fox;
 
-import net.minecraft.client.model.animal.fox.FoxModel;
+import net.minecraft.client.model.FoxModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.FoxRenderState;
 import org.jetbrains.annotations.NotNull;
