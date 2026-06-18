@@ -9,8 +9,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -146,5 +151,36 @@ public class Utils {
 
     public static ModelLayerLocation createModelLayer(String string) {
         return new ModelLayerLocation(withModNamespace(string), "main");
+    }
+
+    public static Block getBlockFromString(String string) {
+        try {
+            Field[] fields = Blocks.class.getDeclaredFields();
+
+            for (Field field : fields) {
+                if (!Block.class.isAssignableFrom(field.getType())) continue;
+                if (Objects.equals(string, field.getName().toLowerCase())) {
+                    return (Block) field.get(null);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Blocks.AIR;
+    }
+
+    public static List<String> getAllBlocks() {
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            Field[] fields = Blocks.class.getDeclaredFields();
+
+            for (Field field : fields) {
+                if (!Block.class.isAssignableFrom(field.getType())) continue;
+                list.add(field.getName().replace("_", " ").toLowerCase());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

@@ -60,7 +60,6 @@ import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
-import net.neoforged.neoforge.client.loading.NeoForgeLoadingOverlay;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -223,6 +222,7 @@ public class Central {
     public static DumboOctopus dumboOctopus;
     public static Koi koi;
     public static Stingray stingray;
+    public static ClientSulfurCube sulfurCube;
 
     private static final SuggestionProvider<CommandSourceStack> SKINS = (context, builder) -> {
         String remaining = builder.getRemainingLowerCase();
@@ -340,6 +340,7 @@ public class Central {
         Utils.despawnEntity(dumboOctopus);
         Utils.despawnEntity(koi);
         Utils.despawnEntity(stingray);
+        Utils.despawnEntity(sulfurCube);
     }
 
     /**
@@ -447,6 +448,7 @@ public class Central {
         dumboOctopus = new DumboOctopus(PetsInitializer.Entities.DUMBO_OCTOPUS.get(), world);
         koi = new Koi(PetsInitializer.Entities.KOI.get(), world);
         stingray = new Stingray(PetsInitializer.Entities.STINGRAY.get(), world);
+        sulfurCube = new ClientSulfurCube(PetsInitializer.Entities.SULFUR_CUBE.get(), world);
 
         if (world != null) {
             if (Objects.equals(CONFIG.activePet, "duck")) {
@@ -646,6 +648,8 @@ public class Central {
                 Utils.summonPet(koi, CONFIG.koiName);
             } else if (Objects.equals(CONFIG.activePet, "stingray")) {
                 Utils.summonPet(stingray, CONFIG.stingrayName);
+            } else if (Objects.equals(CONFIG.activePet, "sulfur_cube")) {
+                Utils.summonPet(sulfurCube, CONFIG.sulfurCubeName);
             }
         }
     }
@@ -750,6 +754,7 @@ public class Central {
         Utils.checkName("dumbo_octopus", dumboOctopus, CONFIG.dumboOctopusName);
         Utils.checkName("koi", koi, CONFIG.koiName);
         Utils.checkName("stingray", stingray, CONFIG.stingrayName);
+        Utils.checkName("sulfur_cube", sulfurCube, CONFIG.sulfurCubeName);
     }
 
     /**
@@ -790,6 +795,7 @@ public class Central {
             case "head" -> HEAD_SKINS;
             case "traitor" -> TRAITOR_SKINS;
             case "dumbo_octopus" -> DUMBO_OCTOPUS_SKINS;
+            case "sulfur_cube" -> Utils.getAllBlocks();
             case null, default -> EMPTY_LIST;
         };
 
@@ -807,7 +813,7 @@ public class Central {
      * @see ChatAccessor
      */
     public static void refreshChatSuggestor(Minecraft client) {
-        Screen screen = client.screen;
+        Screen screen = client.gui.screen();
         if ((screen instanceof ChatScreen chatScreen)) {
             ((ChatAccessor) chatScreen).getChatInputSuggestor().updateCommandInfo();
         }
@@ -1550,6 +1556,8 @@ public class Central {
                                 case "pink" -> CONFIG.dumboOctopusSkin = "pink";
                                 case null, default -> isValid = false;
                             }
+                        } else if (Objects.equals("sulfur_cube", CONFIG.activePet)) {
+                            CONFIG.sulfurCubeSkin = skin.replace(" ", "_").toLowerCase();
                         }
                     }
 
@@ -1763,6 +1771,9 @@ public class Central {
         CONFIG.stingrayName = Utils.checkNullString(CONFIG.stingrayName);
 
         CONFIG.headSkin = Utils.checkNullString(CONFIG.headSkin, "downloadableduck");
+
+        CONFIG.sulfurCubeName = Utils.checkNullString(CONFIG.sulfurCubeName);
+        CONFIG.sulfurCubeSkin = Utils.checkNullString(CONFIG.sulfurCubeSkin, "air");
     }
 
     /**
@@ -1982,7 +1993,11 @@ public class Central {
                 Utils.setActivePet(koi, "koi");
             } else if (Objects.equals(species, "stingray")) {
                 Utils.setActivePet(stingray, "stingray");
-            } else {
+            } else if (Objects.equals(species, "sulfur_cube") || Objects.equals(species, "sulfur cube")) {
+                Utils.setActivePet(sulfurCube, "sulfur_cube");
+            }
+
+            else {
                 isValid = false;
             }
 
@@ -2024,7 +2039,7 @@ public class Central {
 
         });
             if (PetsClientInitializer.openConfigScreen.consumeClick()) {
-                client.setScreen(container.getCustomExtension(IConfigScreenFactory.class).get().createScreen(container, client.screen));
+                client.gui.setScreen(container.getCustomExtension(IConfigScreenFactory.class).get().createScreen(container, client.gui.screen()));
             }
     }
 
@@ -2162,6 +2177,7 @@ public class Central {
                     case "dumbo_octopus" -> CONFIG.dumboOctopusName = name;
                     case "koi" -> CONFIG.koiName = name;
                     case "stingray" -> CONFIG.stingrayName = name;
+                    case "sulfur_cube" -> CONFIG.sulfurCubeName = name;
                 }
                 AutoConfig.getConfigHolder(PetsConfig.class).save();
             }
@@ -2235,7 +2251,7 @@ public class Central {
                  "spider", "squid", "stingray",  "stray", "strider",  "tadpole", "toxifin slab",
                 "traitor", "turtle",
                  "vex", "villager", "vindicator", "wandering trader", "warden", "witch", "wither",
-                "wither skeleton", "wolf", "zombie", "zombie villager"};
+                "wither skeleton", "wolf", "zombie", "zombie villager", "sulfur cube"};
         PETS_LIST.addAll(List.of(stuffs));
     }
 
@@ -2249,21 +2265,5 @@ public class Central {
         } else if (isValid && !CONFIG.petOn) {
             Minecraft.getInstance().player.sendSystemMessage(Component.literal("§b[PetsMod] §cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet enabled. Run §l/pet on§r§c to change this."));
         }
-    }
-
-    public static Block getBlockFromString(String string) {
-        try {
-            Field[] fields = Blocks.class.getDeclaredFields();
-
-            for (Field field : fields) {
-                if (!Block.class.isAssignableFrom(field.getType())) continue;
-                if (Objects.equals(string, field.getName())) {
-                    return (Block) field.get(null);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return Blocks.AIR;
     }
 }

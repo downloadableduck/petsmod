@@ -5,7 +5,8 @@
   "client": [
     "ChatAccessor",
     "SplashManagerMixin",
-    "TitleScreenRenderingMixin"
+    "TitleScreenRenderingMixin",
+    "ShutUpEntityClientLevelMixin"
   ],
   "injectors": {
     "defaultRequire": 1

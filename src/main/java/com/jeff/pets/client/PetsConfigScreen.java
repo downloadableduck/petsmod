@@ -70,7 +70,8 @@ public class PetsConfigScreen {
                     .title(Component.literal("Config"))
                     .save(() -> {
                         AutoConfig.getConfigHolder(PetsConfig.class).save();
-                        Minecraft.getInstance().setScreen(null);
+                        Minecraft.getInstance().gui.setScreen(null);
+                        Central.refreshChatSuggestor(Minecraft.getInstance());
                     })
                     .category(ConfigCategory.createBuilder()
                             .name(Component.literal("Config"))

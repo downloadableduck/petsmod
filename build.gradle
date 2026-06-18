@@ -118,10 +118,8 @@ configurations {
 }
 
 dependencies {
-    implementation "me.shedaniel.cloth:cloth-config-neoforge:26.1.154"
+    implementation "me.shedaniel.cloth:cloth-config-neoforge:26.2.155"
     // Fabric API. This is technically optional, but you probably want it anyway.
-    implementation "maven.modrinth:mod-menu-for-neoforge:17.0.1"
-    implementation "maven.modrinth:tpan:3.0.0+26.1"
     implementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
