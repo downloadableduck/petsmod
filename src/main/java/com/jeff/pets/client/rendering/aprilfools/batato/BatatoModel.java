@@ -1,6 +1,5 @@
 package com.jeff.pets.client.rendering.aprilfools.batato;
 
-import net.minecraft.client.animation.KeyframeAnimation;
 import net.minecraft.client.animation.definitions.BatAnimation;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -25,7 +24,6 @@ public class BatatoModel extends EntityModel<@NotNull BatRenderState> {
     private final ModelPart leftWingTip;
     private final ModelPart feet;
     private final ModelPart head;
-    private final KeyframeAnimation flyingAnimation;
 
     public BatatoModel(ModelPart modelPart) {
         super(modelPart, RenderType::entityCutout);
@@ -37,7 +35,6 @@ public class BatatoModel extends EntityModel<@NotNull BatRenderState> {
         this.leftWing = this.body.getChild("left_wing");
         this.leftWingTip = this.leftWing.getChild("left_wing_tip");
         this.feet = this.body.getChild("feet");
-        this.flyingAnimation = BatAnimation.BAT_FLYING.bake(modelPart);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -56,6 +53,5 @@ public class BatatoModel extends EntityModel<@NotNull BatRenderState> {
     @Override
     public void setupAnim(BatRenderState batato) {
         super.setupAnim(batato);
-        this.flyingAnimation.apply(batato.flyAnimationState, batato.ageInTicks);
     }
 }

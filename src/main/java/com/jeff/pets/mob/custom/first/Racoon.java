@@ -24,8 +24,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import static com.jeff.pets.PetsInitializer.Entities.RACOON;
 
@@ -104,7 +103,7 @@ public class Racoon extends AbstractPet {
 
 
             if (owner.hasPassenger(this)) {
-                if (owner.isCrouching() && owner.isJumping()) {
+                if (owner.isCrouching() && owner.jumping) {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
                     this.isOnHead = false;

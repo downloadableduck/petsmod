@@ -107,7 +107,6 @@ public class PetsInitializer {
         event.put(Entities.ENDERMITE.get(), ClientEndermite.createAttributes().build());
         event.put(Entities.EVOKER.get(), ClientEvoker.createAttributes().build());
         event.put(Entities.GHAST.get(), ClientGhast.createAttributes().build());
-        event.put(Entities.HAPPY_GHAST.get(), ClientHappyGhast.createAttributes().build());
         event.put(Entities.GUARDIAN.get(), ClientGuardian.createAttributes().build());
         event.put(Entities.HOGLIN.get(), ClientHoglin.createAttributes().build());
         event.put(Entities.MAGMA_CUBE.get(), ClientMagmaCube.createAttributes().build());
@@ -657,18 +656,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(4.0f, 4.0f)
                                 .eyeHeight(4.0f)
-                                .build(GHAST_KEY)
-                );
-
-        public static final ResourceKey<@NotNull EntityType<?>> HAPPY_GHAST_KEY = createResourceKey("clienthappyghast");
-        public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientHappyGhast>> HAPPY_GHAST =
-                ENTITY_TYPES.register("clienthappyghast", () ->
-                        EntityType.Builder.of(ClientHappyGhast::new, MobCategory.AMBIENT)
-                                .noSummon()
-                                .sized(4.0f, 4.0f)
-                                .eyeHeight(4.0f)
-                                .build(HAPPY_GHAST_KEY)
-                );
+                                .build(GHAST_KEY));
 
         public static final ResourceKey<@NotNull EntityType<?>> GUARDIAN_KEY = createResourceKey("clientguardian");
         public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientGuardian>> GUARDIAN =
