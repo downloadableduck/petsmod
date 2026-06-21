@@ -18,19 +18,13 @@ import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRe
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.function.Function;
 
 /**
  * Registers all of the blocks and entities used in this mod, as well as providing the {@link #MOD_ID}.
@@ -166,17 +160,7 @@ public class PetsInitializer implements ModInitializer {
                     .eyeHeight(0.3f)
                     .build(COD_KEY)
     );
-    private static final ResourceKey<@NotNull EntityType<?>> COPPER_GOLEM_KEY =
-            ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(MOD_ID, "clientcoppergolem"));
-    public static final EntityType<@NotNull ClientCopperGolem> COPPER_GOLEM = Registry.register(
-            BuiltInRegistries.ENTITY_TYPE,
-            ResourceLocation.fromNamespaceAndPath(MOD_ID, "clientcoppergolem"),
-            EntityType.Builder.of(ClientCopperGolem::new, MobCategory.AMBIENT)
-                    .noSummon()
-                    .sized(0.49f, 0.98f)
-                    .eyeHeight(0.98f)
-                    .build(COPPER_GOLEM_KEY)
-    );
+
     private static final ResourceKey<@NotNull EntityType<?>> COW_KEY =
             ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(MOD_ID, "clientcow"));
     public static final EntityType<@NotNull ClientCow> COW = Registry.register(
@@ -1121,7 +1105,6 @@ public class PetsInitializer implements ModInitializer {
         FabricDefaultAttributeRegistry.register(CAMEL, ClientCamel.createAttributes().build());
         FabricDefaultAttributeRegistry.register(CHICKEN, ClientChicken.createAttributes().build());
         FabricDefaultAttributeRegistry.register(COD, ClientCod.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(COPPER_GOLEM, ClientCopperGolem.createAttributes().build());
         FabricDefaultAttributeRegistry.register(COW, ClientCow.createAttributes().build());
         FabricDefaultAttributeRegistry.register(DONKEY, ClientDonkey.createAttributes().build());
         FabricDefaultAttributeRegistry.register(FROG, ClientFrog.createAttributes().build());

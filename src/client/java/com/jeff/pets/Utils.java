@@ -67,9 +67,10 @@ public class Utils {
      * @param activePet The {@code activePet} value that matches {@code entity}
      * @param entity    The pet of which the name is checked.
      * @param petName   The {@code CONFIG.x} name that matches {@code entity} that the entities'
-     *                  current name is checked off of. */
+     *                  current name is checked off of.
+     */
     public static void checkName(String activePet, AbstractPet entity, String petName) {
-        if (Objects.equals(CONFIG.activePet, activePet) && entity != null && !entity.getPlainTextName().equals(petName)) {
+        if (Objects.equals(CONFIG.activePet, activePet) && entity != null && !entity.getName().getString().equals(petName)) {
             entity.setName(petName);
         }
     }

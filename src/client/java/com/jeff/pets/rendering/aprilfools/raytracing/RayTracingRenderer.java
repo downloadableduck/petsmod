@@ -8,28 +8,17 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.state.AvatarRenderState;
+import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.core.ClientAsset;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.PlayerModelType;
-import net.minecraft.world.entity.player.PlayerSkin;
 import org.jetbrains.annotations.NotNull;
 
-public class RayTracingRenderer extends PetRenderer<@NotNull RayTracing, @NotNull AvatarRenderState, @NotNull HumanoidModel<@NotNull AvatarRenderState>> {
+public class RayTracingRenderer extends PetRenderer<@NotNull RayTracing, @NotNull PlayerRenderState, @NotNull HumanoidModel<@NotNull PlayerRenderState>> {
 
     public static final ModelLayerLocation RAY_TRACING_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("raytracing"), "main");
 
-    private final ClientAsset.Texture playerSkinTexture = new ClientAsset.Texture() {
-        @Override
-        public @NotNull ResourceLocation texturePath() {
-            return ResourceLocation.withDefaultNamespace("textures/entity/ray_tracing.png");
-        }
-
-        @Override
-        public @NotNull ResourceLocation id() {
-            return ResourceLocation.withDefaultNamespace("textures/entity/ray_tracing.png");
-        }
-    };
+    private final ClientAsset playerSkinTexture = new ClientAsset(ResourceLocation.withDefaultNamespace("textures/entity/ray_tracing.png"));
 
     public RayTracingRenderer(EntityRendererProvider.Context context) {
         super(context, new PlayerModel(context.bakeLayer(RAY_TRACING_LOCATION), true), 0.75f);
@@ -41,22 +30,22 @@ public class RayTracingRenderer extends PetRenderer<@NotNull RayTracing, @NotNul
     }
 
     protected PlayerSkin getSkinFromRayTracingTexture() {
-        return PlayerSkin.insecure(playerSkinTexture, playerSkinTexture, playerSkinTexture, PlayerModelType.WIDE);
+        return new PlayerSkin(playerSkinTexture.texturePath(), playerSkinTexture.texturePath().getPath(), playerSkinTexture.texturePath(), playerSkinTexture.texturePath(), PlayerSkin.Model.WIDE, false);
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(AvatarRenderState livingEntityRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(PlayerRenderState livingEntityRenderState) {
         return ResourceLocation.withDefaultNamespace("textures/entity/ray_tracing.png");
     }
 
 
     @Override
-    public AvatarRenderState createRenderState() {
-        return new AvatarRenderState();
+    public PlayerRenderState createRenderState() {
+        return new PlayerRenderState();
     }
 
     @Override
-    public void extractRenderState(RayTracing rayTracing, AvatarRenderState state, float f) {
+    public void extractRenderState(RayTracing rayTracing, PlayerRenderState state, float f) {
         super.extractRenderState(rayTracing, state, f);
         state.skin = this.getSkinFromRayTracingTexture();
         state.showCape = false;

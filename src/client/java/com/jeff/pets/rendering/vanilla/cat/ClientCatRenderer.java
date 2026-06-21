@@ -1,8 +1,8 @@
 package com.jeff.pets.rendering.vanilla.cat;
 
 import com.jeff.pets.PetsInitializer;
-import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientCat;
+import com.jeff.pets.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -42,7 +42,8 @@ public class ClientCatRenderer extends PetRenderer<@NotNull ClientCat, @NotNull 
         return switch (CONFIG.catSkin) {
             case "black" -> ResourceLocation.withDefaultNamespace("textures/entity/cat/all_black.png");
             case "tuxedo" -> ResourceLocation.withDefaultNamespace("textures/entity/cat/black.png");
-            case "british_shorthair" -> ResourceLocation.withDefaultNamespace("textures/entity/cat/british_shorthair.png");
+            case "british_shorthair" ->
+                    ResourceLocation.withDefaultNamespace("textures/entity/cat/british_shorthair.png");
             case "calico" -> ResourceLocation.withDefaultNamespace("textures/entity/cat/calico.png");
             case "jellie" -> ResourceLocation.withDefaultNamespace("textures/entity/cat/jellie.png");
             case "ocelot" -> ResourceLocation.withDefaultNamespace("textures/entity/cat/ocelot.png");

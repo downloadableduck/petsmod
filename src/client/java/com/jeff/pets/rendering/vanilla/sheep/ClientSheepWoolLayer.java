@@ -5,9 +5,7 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.SheepRenderState;
@@ -30,7 +28,7 @@ public class ClientSheepWoolLayer extends RenderLayer<@NotNull SheepRenderState,
         this.babyModel = new ClientSheepFurModel(entityModelSet.bakeLayer(ModelLayers.SHEEP_BABY_WOOL));
     }
 
-    public void submit(@NotNull PoseStack poseStack, @NotNull SubmitNodeCollector submitNodeCollector, int i, SheepRenderState sheepRenderState, float f, float g) {
+    public void render(@NotNull PoseStack poseStack, MultiBufferSource source, int i, SheepRenderState sheepRenderState, float f, float g) {
         if (Objects.equals(CONFIG.sheepSkin, "white")) {
             woolColor = 15132390;
         } else if (Objects.equals(CONFIG.sheepSkin, "orange")) {
@@ -67,17 +65,6 @@ public class ClientSheepWoolLayer extends RenderLayer<@NotNull SheepRenderState,
             woolColor = 1381656;
         }
 
-        submitNodeCollector.submitModel(
-                adultModel,
-                sheepRenderState,
-                poseStack,
-                RenderType.entityCutout(SHEEP_WOOL_LOCATION.model()),
-                i,
-                LivingEntityRenderer.getOverlayCoords(sheepRenderState, 0.0F),
-                woolColor,
-                null,
-                sheepRenderState.outlineColor,
-                null
-        );
+        coloredCutoutModelCopyLayerRender(this.adultModel, SHEEP_WOOL_LOCATION.model(), poseStack, source, i, sheepRenderState, woolColor);
     }
 }

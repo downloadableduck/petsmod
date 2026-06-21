@@ -50,7 +50,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -70,8 +69,7 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
 public class Central implements ClientModInitializer {
 
     public static final List<Entity> summonedEntity = new ArrayList();
-    public static final CopyOnWriteArrayList<String> currentSuggestions = new CopyOnWriteArrayList()
-            ;
+    public static final CopyOnWriteArrayList<String> currentSuggestions = new CopyOnWriteArrayList();
     public static final List<String> BEE_SKINS = List.of("happy", "angry");
     public static final List<String> FOX_SKINS = List.of("red", "snow");
     public static final List<String> LLAMA_SKINS = List.of("brown", "creamy", "gray", "white");
@@ -121,7 +119,6 @@ public class Central implements ClientModInitializer {
     public static ClientCamel camel;
     public static ClientChicken chicken;
     public static ClientCod cod;
-    public static ClientCopperGolem copperGolem;
     public static ClientCow cow;
     public static ClientDonkey donkey;
     public static ClientFrog frog;
@@ -237,7 +234,6 @@ public class Central implements ClientModInitializer {
         Utils.despawnEntity(camel);
         Utils.despawnEntity(chicken);
         Utils.despawnEntity(cod);
-        Utils.despawnEntity(copperGolem);
         Utils.despawnEntity(cow);
         Utils.despawnEntity(donkey);
         Utils.despawnEntity(frog);
@@ -341,7 +337,6 @@ public class Central implements ClientModInitializer {
         camel = new ClientCamel(PetsInitializer.CAMEL, world);
         chicken = new ClientChicken(PetsInitializer.CHICKEN, world);
         cod = new ClientCod(PetsInitializer.COD, world);
-        copperGolem = new ClientCopperGolem(PetsInitializer.COPPER_GOLEM, world);
         cow = new ClientCow(PetsInitializer.COW, world);
         donkey = new ClientDonkey(PetsInitializer.DONKEY, world);
         frog = new ClientFrog(PetsInitializer.FROG, world);
@@ -451,8 +446,6 @@ public class Central implements ClientModInitializer {
                 Utils.summonPet(chicken, CONFIG.chickenName);
             } else if (Objects.equals(CONFIG.activePet, "cod")) {
                 Utils.summonPet(cod, CONFIG.codName);
-            } else if (Objects.equals(CONFIG.activePet, "copper_golem")) {
-                Utils.summonPet(copperGolem, CONFIG.copperGolemName);
             } else if (Objects.equals(CONFIG.activePet, "cow")) {
                 Utils.summonPet(cow, CONFIG.cowName);
             } else if (Objects.equals(CONFIG.activePet, "donkey")) {
@@ -641,7 +634,6 @@ public class Central implements ClientModInitializer {
         Utils.checkName("camel", camel, CONFIG.camelName);
         Utils.checkName("chicken", chicken, CONFIG.chickenName);
         Utils.checkName("cod", cod, CONFIG.codName);
-        Utils.checkName("copper_golem", copperGolem, CONFIG.copperGolemName);
         Utils.checkName("cow", cow, CONFIG.cowName);
         Utils.checkName("donkey", donkey, CONFIG.donkeyName);
         Utils.checkName("frog", frog, CONFIG.frogName);
@@ -880,8 +872,9 @@ public class Central implements ClientModInitializer {
                                 case "rubber":
                                     CONFIG.duckSkin = "rubber";
                                     break;
-                                case "bronze": CONFIG.duckSkin = "bronze";
-                                break;
+                                case "bronze":
+                                    CONFIG.duckSkin = "bronze";
+                                    break;
                                 case null:
                                 default:
                                     isValid = false;
@@ -1785,8 +1778,6 @@ public class Central implements ClientModInitializer {
                 Utils.setActivePet(chicken, "chicken");
             } else if (Objects.equals(species, "cod")) {
                 Utils.setActivePet(cod, "cod");
-            } else if (Objects.equals(species, "copper_golem") || Objects.equals(species, "copper golem")) {
-                Utils.setActivePet(copperGolem, "copper_golem");
             } else if (Objects.equals(species, "cow")) {
                 Utils.setActivePet(cow, "cow");
             } else if (Objects.equals(species, "donkey")) {
@@ -2170,20 +2161,20 @@ public class Central implements ClientModInitializer {
         String[] stuffs = new String[]{"allay", "angry ghast", "armadillo",
                 "axolotl", "bat", "batato", "bee", "blaze", "bogged",
                 "breeze", "camel", "cat", "cave spider", "chicken",
-                 "cod",  "copper golem", "cow",
+                "cod", "copper golem", "cow",
                 "creaking", "creeper", "diamond chicken",
                 "dolphin", "donkey", "drowned", "duck", "dumbo octopus",
                 "elder guardian", "ender dragon", "enderman", "endermite", "evoker",
-                "fox",  "frog",
-                 "ghast", "goat", "guardian",
-                "happy ghast", "head", "hoglin",  "horse",
-                "husk",  "iron golem",
+                "fox", "frog",
+                "ghast", "goat", "guardian",
+                "happy ghast", "head", "hoglin", "horse",
+                "husk", "iron golem",
                 "koi", "llama",
-                 "love golem", "magma cube", "mega spud",
+                "love golem", "magma cube", "mega spud",
                 "moon cow", "mooshroom",
-                  "nerd creeper",
-                "panda", "parrot",  "penguin", "phantom",
-               "pig", "piglin", "pillager",
+                "nerd creeper",
+                "panda", "parrot", "penguin", "phantom",
+                "pig", "piglin", "pillager",
                 "pink wither", "plaguewhale slab", "poisonous potato zombie", "polar bear",
                 "potato husk", "pufferfish", "rabbit",
                 "racoon",
@@ -2194,9 +2185,9 @@ public class Central implements ClientModInitializer {
                 "sheep",
                 "shulker",
                 "silverfish", "skeleton", "slime", "smiling creeper", "sniffer", "snow golem",
-                 "spider", "squid", "stingray",  "stray", "strider",  "tadpole", "toxifin slab",
+                "spider", "squid", "stingray", "stray", "strider", "tadpole", "toxifin slab",
                 "traitor", "turtle",
-                 "vex", "villager", "vindicator", "wandering trader", "warden", "witch", "wither",
+                "vex", "villager", "vindicator", "wandering trader", "warden", "witch", "wither",
                 "wither skeleton", "wolf", "zombie", "zombie villager"};
         PETS_LIST.addAll(List.of(stuffs));
     }

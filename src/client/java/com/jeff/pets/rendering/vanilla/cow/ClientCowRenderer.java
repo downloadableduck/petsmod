@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.cow;
 
-import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientCow;
+import com.jeff.pets.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

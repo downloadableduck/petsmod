@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.bat;
 
-import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientBat;
+import com.jeff.pets.rendering.PetRenderer;
 import net.minecraft.client.model.BatModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

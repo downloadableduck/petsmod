@@ -18,7 +18,6 @@ public enum PetList implements NameableEnum {
     cave_spider,
     chicken,
     cod,
-    copper_golem,
     cow,
     creaking,
     creeper,

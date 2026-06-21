@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.panda;
 
-import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientPanda;
+import com.jeff.pets.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.PandaModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;

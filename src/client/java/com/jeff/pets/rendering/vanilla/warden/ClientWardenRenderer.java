@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.warden;
 
-import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientWarden;
+import com.jeff.pets.rendering.PetRenderer;
 import net.minecraft.client.model.WardenModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

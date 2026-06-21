@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.wanderingtrader;
 
-import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientWanderingTrader;
+import com.jeff.pets.rendering.PetRenderer;
 import net.minecraft.client.model.VillagerModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -16,7 +16,7 @@ public class ClientWanderingTraderRenderer extends PetRenderer<@NotNull ClientWa
 
     public ClientWanderingTraderRenderer(EntityRendererProvider.Context context) {
         super(context, new VillagerModel(context.bakeLayer(ModelLayers.WANDERING_TRADER)), 0.5F);
-        this.addLayer(new CustomHeadLayer<>(this, context.getModelSet(), context.getPlayerSkinRenderCache()));
+        this.addLayer(new CustomHeadLayer<>(this, context.getModelSet()));
     }
 
     @Override

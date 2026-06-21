@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.spider;
 
-import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientSpider;
+import com.jeff.pets.rendering.PetRenderer;
 import net.minecraft.client.model.SpiderModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

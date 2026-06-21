@@ -3,11 +3,10 @@ package com.jeff.pets.rendering.aprilfools.traitor;
 import com.jeff.pets.rendering.vanilla.evoker.ClientEvokerModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.EvokerRenderState;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,27 +27,27 @@ public class TraitorBiomeLayer extends RenderLayer<@NotNull EvokerRenderState, @
     }
 
     @Override
-    public void submit(@NotNull PoseStack poseStack, @NotNull SubmitNodeCollector submitNodeCollector, int i, EvokerRenderState entityRenderState, float f, float g) {
+    public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int i, EvokerRenderState entityRenderState, float f, float g) {
         poseStack.pushPose();
         poseStack.scale(1.001f, 1.001f, 1.001f);
         switch (CONFIG.traitorSkin) {
             case "desert" ->
-                    renderColoredCutoutModel(this.getParentModel(), DESERT_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
+                    renderColoredCutoutModel(this.getParentModel(), DESERT_LOCATION.model(), poseStack, bufferSource, i, entityRenderState, -1);
             case "jungle" ->
-                    renderColoredCutoutModel(this.getParentModel(), JUNGLE_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
+                    renderColoredCutoutModel(this.getParentModel(), JUNGLE_LOCATION.model(), poseStack, bufferSource, i, entityRenderState, -1);
             case "savanna" ->
-                    renderColoredCutoutModel(this.getParentModel(), SAVANNA_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
+                    renderColoredCutoutModel(this.getParentModel(), SAVANNA_LOCATION.model(), poseStack, bufferSource, i, entityRenderState, -1);
             case "snow" ->
-                    renderColoredCutoutModel(this.getParentModel(), SNOW_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
+                    renderColoredCutoutModel(this.getParentModel(), SNOW_LOCATION.model(), poseStack, bufferSource, i, entityRenderState, -1);
             case "swamp" ->
-                    renderColoredCutoutModel(this.getParentModel(), SWAMP_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
+                    renderColoredCutoutModel(this.getParentModel(), SWAMP_LOCATION.model(), poseStack, bufferSource, i, entityRenderState, -1);
             case "taiga" ->
-                    renderColoredCutoutModel(this.getParentModel(), TAIGA_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
+                    renderColoredCutoutModel(this.getParentModel(), TAIGA_LOCATION.model(), poseStack, bufferSource, i, entityRenderState, -1);
             case "plains" ->
-                    renderColoredCutoutModel(this.getParentModel(), PLAINS_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
+                    renderColoredCutoutModel(this.getParentModel(), PLAINS_LOCATION.model(), poseStack, bufferSource, i, entityRenderState, -1);
 
             case null, default ->
-                    renderColoredCutoutModel(this.getParentModel(), PLAINS_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
+                    renderColoredCutoutModel(this.getParentModel(), PLAINS_LOCATION.model(), poseStack, bufferSource, i, entityRenderState, -1);
         }
         poseStack.popPose();
     }

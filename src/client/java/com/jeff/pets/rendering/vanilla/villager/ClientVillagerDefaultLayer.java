@@ -3,11 +3,10 @@ package com.jeff.pets.rendering.vanilla.villager;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.VillagerModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.VillagerRenderState;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,7 +18,7 @@ public class ClientVillagerDefaultLayer extends RenderLayer<@NotNull VillagerRen
     }
 
     @Override
-    public void submit(@NotNull PoseStack poseStack, @NotNull SubmitNodeCollector submitNodeCollector, int i, VillagerRenderState entityRenderState, float f, float g) {
-        renderColoredCutoutModel(this.getParentModel(), DEFAULT_VILLAGER_LAYER_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
+    public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource source, int i, VillagerRenderState entityRenderState, float f, float g) {
+        renderColoredCutoutModel(this.getParentModel(), DEFAULT_VILLAGER_LAYER_LOCATION.model(), poseStack, source, i, entityRenderState, -1);
     }
 }

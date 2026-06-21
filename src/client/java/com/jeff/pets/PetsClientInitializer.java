@@ -50,7 +50,6 @@ import com.jeff.pets.rendering.vanilla.cavespider.ClientCaveSpiderRenderer;
 import com.jeff.pets.rendering.vanilla.chicken.ClientChickenModel;
 import com.jeff.pets.rendering.vanilla.chicken.ClientChickenRenderer;
 import com.jeff.pets.rendering.vanilla.cod.ClientCodRenderer;
-import com.jeff.pets.rendering.vanilla.coppergolem.ClientCopperGolemRenderer;
 import com.jeff.pets.rendering.vanilla.cow.ClientCowModel;
 import com.jeff.pets.rendering.vanilla.cow.ClientCowRenderer;
 import com.jeff.pets.rendering.vanilla.creaking.ClientCreakingRenderer;
@@ -89,7 +88,6 @@ import com.jeff.pets.rendering.vanilla.pillager.ClientPillagerModel;
 import com.jeff.pets.rendering.vanilla.pillager.ClientPillagerRenderer;
 import com.jeff.pets.rendering.vanilla.polarbear.ClientPolarBearRenderer;
 import com.jeff.pets.rendering.vanilla.pufferfish.ClientPufferFishRenderer;
-import com.jeff.pets.rendering.vanilla.rabbit.ClientRabbitModel;
 import com.jeff.pets.rendering.vanilla.rabbit.ClientRabbitRenderer;
 import com.jeff.pets.rendering.vanilla.ravager.ClientRavagerRenderer;
 import com.jeff.pets.rendering.vanilla.salmon.ClientSalmonModel;
@@ -127,11 +125,9 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.minecraft.client.KeyMapping;
-import net.minecraft.client.model.Model;
 import net.minecraft.client.model.*;
 import net.minecraft.client.model.dragon.EnderDragonModel;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -151,6 +147,7 @@ import static com.jeff.pets.PetsInitializer.LOGGER;
  * @see PetsInitializer
  * @see Central
  */
+
 public class PetsClientInitializer implements ClientModInitializer {
 
     public static List<String> ADDONS = new ArrayList<>();
@@ -176,7 +173,6 @@ public class PetsClientInitializer implements ClientModInitializer {
         EntityRenderers.register(PetsInitializer.CAMEL, ClientCamelRenderer::new);
         EntityRenderers.register(PetsInitializer.CHICKEN, ClientChickenRenderer::new);
         EntityRenderers.register(PetsInitializer.COD, ClientCodRenderer::new);
-        EntityRenderers.register(PetsInitializer.COPPER_GOLEM, ClientCopperGolemRenderer::new);
         EntityRenderers.register(PetsInitializer.COW, ClientCowRenderer::new);
         EntityRenderers.register(PetsInitializer.DONKEY, ClientDonkeyRenderer::new);
         EntityRenderers.register(PetsInitializer.FROG, ClientFrogRenderer::new);
@@ -275,7 +271,6 @@ public class PetsClientInitializer implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(ClientCamelRenderer.CAMEL_LOCATION, CamelModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientChickenRenderer.CHICKEN_LOCATION, ClientChickenModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientCodRenderer.COD_LOCATION, CodModel::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(ClientCopperGolemRenderer.COPPER_GOLEM_LOCATION, CopperGolemModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientCowRenderer.COW_LOCATION, ClientCowModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientDonkeyRenderer.DONKEY_LOCATION, ClientDonkeyRenderer::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientFrogRenderer.FROG_LOCATION, FrogModel::createBodyLayer);
@@ -311,7 +306,7 @@ public class PetsClientInitializer implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(ClientHappyGhastRenderer.GHAST_LOCATION, ClientHappyGhastRenderer::createGhastBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientBlazeRenderer.BLAZE_LOCATION, BlazeModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientBoggedRenderer.BOGGED_LOCATION, BoggedModel::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(ClientBreezeRenderer.BREEZE_LOCATION, BreezeModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(ClientBreezeRenderer.BREEZE_LOCATION, () -> BreezeModel.createBodyLayer(32, 32));
         EntityModelLayerRegistry.registerModelLayer(ClientCreakingRenderer.CREAKING_LOCATION, CreakingModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientCreeperRenderer.CREEPER_LOCATION, ClientCreeperRenderer::createBaseCreeperLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientDrownedRenderer.DROWNED_LOCATION, ClientDrownedRenderer::createBaseDrownedLayer);
@@ -370,7 +365,7 @@ public class PetsClientInitializer implements ClientModInitializer {
      * is pressed
      */
     void createKeyBinding() {
-        KeyMapping keyMapping = KeyBindingHelper.registerKeyBinding(new KeyMapping("Open Pets Menu", GLFW.GLFW_KEY_P, new KeyMapping.Category(ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, "petsmod.keymapping"))));
+        KeyMapping keyMapping = KeyBindingHelper.registerKeyBinding(new KeyMapping("Open Pets Menu", GLFW.GLFW_KEY_P, "petsmod.keymapping"));
 
         ClientTickEvents.END_CLIENT_TICK.register((client) -> {
             if (keyMapping.consumeClick()) {

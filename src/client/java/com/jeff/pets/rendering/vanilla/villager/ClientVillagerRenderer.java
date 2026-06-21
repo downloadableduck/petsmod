@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.villager;
 
-import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientVillager;
+import com.jeff.pets.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.VillagerModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -23,7 +23,7 @@ public class ClientVillagerRenderer extends PetRenderer<@NotNull ClientVillager,
 
     public ClientVillagerRenderer(EntityRendererProvider.Context context) {
         super(context, new VillagerModel(context.bakeLayer(ModelLayers.VILLAGER)), 0.5F);
-        this.addLayer(new CustomHeadLayer(this, context.getModelSet(), context.getPlayerSkinRenderCache(), CUSTOM_HEAD_TRANSFORMS));
+        this.addLayer(new CustomHeadLayer(this, context.getModelSet(), CUSTOM_HEAD_TRANSFORMS));
         this.addLayer(new CrossedArmsItemLayer(this));
         this.addLayer(new ClientVillagerDefaultLayer(this));
         this.addLayer(new ClientVillagerProfessionLayer(this));

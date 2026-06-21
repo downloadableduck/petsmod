@@ -12,13 +12,14 @@ version = project.mod_version
 group = project.maven_group
 
 base {
-    archivesName = project.archives_base_name + "-" + project.mod_version + "-" + project.minecraft_version}
+    archivesName = project.archives_base_name + "-" + project.mod_version + "-" + project.minecraft_version
+}
 
 repositories {
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/" }
     maven { url "https://maven.isxander.dev/releases" }
-    maven { url "https://api.modrinth.com/maven"}
+    maven { url "https://api.modrinth.com/maven" }
     // Add repositories to retrieve artifacts from in here.
     // You should only use this when depending on other mods because
     // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
@@ -80,7 +81,7 @@ jar {
     from sourceSets.main.allSource
 
     from("LICENSE") {
-        rename { "${it}_${inputs.properties.archivesName}"}
+        rename { "${it}_${inputs.properties.archivesName}" }
     }
     tasks.withType(AbstractCopyTask).configureEach {
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE

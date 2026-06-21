@@ -8,9 +8,9 @@ import com.terraformersmc.modmenu.api.ModMenuApi;
 import dev.isxander.yacl3.api.*;
 import dev.isxander.yacl3.api.controller.*;
 import me.shedaniel.autoconfig.AutoConfig;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.Util;
 
 import java.util.Objects;
 
@@ -36,6 +36,13 @@ public class PetsConfigScreen implements ModMenuApi {
      */
     public static PetsConfigScreen getInstance() {
         return INSTANCE;
+    }
+
+    private static String getInstalledAddons() {
+        if (PetsClientInitializer.ADDONS.isEmpty()) {
+            return "none";
+        }
+        return String.join(", \n", PetsClientInitializer.ADDONS);
     }
 
     /**
@@ -1007,11 +1014,5 @@ public class PetsConfigScreen implements ModMenuApi {
                     .build()
                     .generateScreen(parentScreen);
         };
-    }
-    private static String getInstalledAddons() {
-        if (PetsClientInitializer.ADDONS.isEmpty()) {
-            return "none";
-        }
-        return String.join(", \n", PetsClientInitializer.ADDONS);
     }
 }

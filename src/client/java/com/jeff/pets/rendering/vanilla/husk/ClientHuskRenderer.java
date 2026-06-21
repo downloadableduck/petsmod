@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.husk;
 
-import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientHusk;
+import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.rendering.vanilla.zombie.ClientZombieModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;

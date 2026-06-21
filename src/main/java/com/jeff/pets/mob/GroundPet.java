@@ -21,6 +21,7 @@ import java.util.Objects;
  */
 public abstract class GroundPet extends AbstractPet {
     private int waitingTime;
+
     public GroundPet(EntityType<? extends @NotNull TamableAnimal> type, Level level) {
         super(type, level);
     }
