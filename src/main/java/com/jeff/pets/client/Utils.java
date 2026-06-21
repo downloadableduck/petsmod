@@ -1,6 +1,5 @@
 package com.jeff.pets.client;
 
-import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -13,8 +12,8 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.Objects;
 
-import static com.jeff.pets.client.Central.CONFIG;
 import static com.jeff.pets.PetsInitializer.MOD_ID;
+import static com.jeff.pets.client.Central.CONFIG;
 
 /**
  * A utility class used mainly in {@link Central} and misc rendering classes. Contains various
@@ -65,9 +64,10 @@ public class Utils {
      * @param activePet The {@code activePet} value that matches {@code entity}
      * @param entity    The pet of which the name is checked.
      * @param petName   The {@code CONFIG.x} name that matches {@code entity} that the entities'
-     *                  current name is checked off of. */
+     *                  current name is checked off of.
+     */
     public static void checkName(String activePet, AbstractPet entity, String petName) {
-        if (Objects.equals(CONFIG.activePet, activePet) && entity != null && !entity.getPlainTextName().equals(petName)) {
+        if (Objects.equals(CONFIG.activePet, activePet) && entity != null && !entity.getName().getString().equals(petName)) {
             entity.setName(petName);
         }
     }

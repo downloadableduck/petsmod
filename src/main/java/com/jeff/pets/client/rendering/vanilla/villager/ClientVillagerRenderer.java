@@ -23,7 +23,7 @@ public class ClientVillagerRenderer extends PetRenderer<@NotNull ClientVillager,
 
     public ClientVillagerRenderer(EntityRendererProvider.Context context) {
         super(context, new VillagerModel(context.bakeLayer(ModelLayers.VILLAGER)), 0.5F);
-        this.addLayer(new CustomHeadLayer(this, context.getModelSet(), context.getPlayerSkinRenderCache(), CUSTOM_HEAD_TRANSFORMS));
+        this.addLayer(new CustomHeadLayer(this, context.getModelSet(), CUSTOM_HEAD_TRANSFORMS));
         this.addLayer(new CrossedArmsItemLayer(this));
         this.addLayer(new ClientVillagerDefaultLayer(this));
         this.addLayer(new ClientVillagerProfessionLayer(this));

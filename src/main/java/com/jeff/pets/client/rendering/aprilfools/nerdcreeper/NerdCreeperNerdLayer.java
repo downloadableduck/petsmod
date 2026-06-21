@@ -1,10 +1,11 @@
 package com.jeff.pets.client.rendering.aprilfools.nerdcreeper;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.CreeperModel;
 import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -23,11 +24,12 @@ public class NerdCreeperNerdLayer extends RenderLayer<@NotNull CreeperRenderStat
     }
 
     @Override
-    public void submit(@NotNull PoseStack poseStack, @NotNull SubmitNodeCollector submitNodeCollector, int i, CreeperRenderState entityRenderState, float f, float g) {
+    public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int i, CreeperRenderState entityRenderState, float f, float g) {
         int overlayCoords = LivingEntityRenderer.getOverlayCoords(entityRenderState, 0.0f);
         poseStack.pushPose();
         poseStack.scale(1.1f, 1.0f, 1.1f);
-        submitNodeCollector.order(1).submitModel(this.nerdCreeperLayer, entityRenderState, poseStack, RenderType.entityTranslucent(ResourceLocation.withDefaultNamespace("textures/entity/creeper/nerd_creeper_overlay.png")), i, overlayCoords, -1, null, entityRenderState.outlineColor, null);
+        VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityTranslucent(ResourceLocation.withDefaultNamespace("textures/entity/creeper/nerd_creeper_overlay.png")));
+        this.getParentModel().renderToBuffer(poseStack, consumer, i, overlayCoords);
         poseStack.popPose();
     }
 }

@@ -1,23 +1,18 @@
 package com.jeff.pets.mob;
 
-import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -29,7 +24,6 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.Objects;
 
 /**
  * Abstract class that extends {@link TamableAnimal}, providing multiple utilities
@@ -45,10 +39,10 @@ import java.util.Objects;
  */
 public abstract class AbstractPet extends TamableAnimal {
 
+    protected int waitingTime = 0;
     private boolean isReturningToOwner = false;
     private float randomX = (float) (Math.random() - 1f);
     private float randomZ = (float) (Math.random() - 1);
-    protected int waitingTime = 0;
 
     protected AbstractPet(EntityType<? extends @NotNull TamableAnimal> type, Level level) {
         super(type, level);
@@ -238,7 +232,8 @@ public abstract class AbstractPet extends TamableAnimal {
 
         if (this.horizontalCollision && this.onGround()) {
             this.jumpFromGround();
-        } if (!this.onGround()) {
+        }
+        if (!this.onGround()) {
             this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
         }
         double dx = lookDir.x - this.getX();

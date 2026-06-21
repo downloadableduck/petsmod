@@ -30,7 +30,7 @@ repositories {
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/" }
     maven { url "https://maven.isxander.dev/releases" }
-    maven { url "https://api.modrinth.com/maven"}
+    maven { url "https://api.modrinth.com/maven" }
     // Add here additional repositories if required by some of the dependencies below.
 }
 
@@ -46,7 +46,7 @@ neoForge {
     version = project.neo_version
 
     // This line is optional. Access Transformers are automatically detected
-     accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
+    accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
 
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.

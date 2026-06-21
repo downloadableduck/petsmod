@@ -1,7 +1,6 @@
 package com.jeff.pets.client;
 
 import com.jeff.pets.PetsInitializer;
-import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.client.rendering.aprilfools.angryghast.AngryGhastRenderer;
 import com.jeff.pets.client.rendering.aprilfools.batato.BatatoModel;
 import com.jeff.pets.client.rendering.aprilfools.batato.BatatoRenderer;
@@ -52,7 +51,6 @@ import com.jeff.pets.client.rendering.vanilla.cavespider.ClientCaveSpiderRendere
 import com.jeff.pets.client.rendering.vanilla.chicken.ClientChickenModel;
 import com.jeff.pets.client.rendering.vanilla.chicken.ClientChickenRenderer;
 import com.jeff.pets.client.rendering.vanilla.cod.ClientCodRenderer;
-import com.jeff.pets.client.rendering.vanilla.coppergolem.ClientCopperGolemRenderer;
 import com.jeff.pets.client.rendering.vanilla.cow.ClientCowModel;
 import com.jeff.pets.client.rendering.vanilla.cow.ClientCowRenderer;
 import com.jeff.pets.client.rendering.vanilla.creaking.ClientCreakingRenderer;
@@ -120,7 +118,6 @@ import com.jeff.pets.client.rendering.vanilla.wither.ClientWitherRenderer;
 import com.jeff.pets.client.rendering.vanilla.witherskeleton.ClientWitherSkeletonRenderer;
 import com.jeff.pets.client.rendering.vanilla.wolf.ClientWolfRenderer;
 import com.jeff.pets.client.rendering.vanilla.zombie.ClientZombieRenderer;
-import com.jeff.pets.client.rendering.vanilla.zombievillager.ClientZombieVillagerModel;
 import com.jeff.pets.client.rendering.vanilla.zombievillager.ClientZombieVillagerRenderer;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.model.*;
@@ -130,7 +127,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
@@ -154,7 +150,7 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
  * @see PetsInitializer
  * @see Central
  */
-@Mod(value=MOD_ID, dist = Dist.CLIENT)
+@Mod(value = MOD_ID, dist = Dist.CLIENT)
 public class PetsClientInitializer {
 
     public static List<String> ADDONS = new ArrayList<>();
@@ -168,6 +164,13 @@ public class PetsClientInitializer {
         bus.addListener(this::registerModelLayers);
         bus.addListener(this::register);
         bus.addListener(this::createKeyBinding);
+    }
+
+    @SubscribeEvent
+    public static void printAddons(FMLClientSetupEvent event) {
+        event.enqueueWork(() -> {
+            PetsInitializer.LOGGER.info("PetsMod addons loaded:{}", ADDONS);
+        });
     }
 
     void registerModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
@@ -185,7 +188,6 @@ public class PetsClientInitializer {
         event.registerLayerDefinition(ClientCamelRenderer.CAMEL_LOCATION, CamelModel::createBodyLayer);
         event.registerLayerDefinition(ClientChickenRenderer.CHICKEN_LOCATION, ClientChickenModel::createBodyLayer);
         event.registerLayerDefinition(ClientCodRenderer.COD_LOCATION, CodModel::createBodyLayer);
-        event.registerLayerDefinition(ClientCopperGolemRenderer.COPPER_GOLEM_LOCATION, CopperGolemModel::createBodyLayer);
         event.registerLayerDefinition(ClientCowRenderer.COW_LOCATION, ClientCowModel::createBodyLayer);
         event.registerLayerDefinition(ClientDonkeyRenderer.DONKEY_LOCATION, ClientDonkeyRenderer::createBodyLayer);
         event.registerLayerDefinition(ClientFrogRenderer.FROG_LOCATION, FrogModel::createBodyLayer);
@@ -221,7 +223,7 @@ public class PetsClientInitializer {
         event.registerLayerDefinition(ClientHappyGhastRenderer.GHAST_LOCATION, ClientHappyGhastRenderer::createGhastBodyLayer);
         event.registerLayerDefinition(ClientBlazeRenderer.BLAZE_LOCATION, BlazeModel::createBodyLayer);
         event.registerLayerDefinition(ClientBoggedRenderer.BOGGED_LOCATION, BoggedModel::createBodyLayer);
-        event.registerLayerDefinition(ClientBreezeRenderer.BREEZE_LOCATION, BreezeModel::createBodyLayer);
+        event.registerLayerDefinition(ClientBreezeRenderer.BREEZE_LOCATION, () -> BreezeModel.createBodyLayer(32, 32));
         event.registerLayerDefinition(ClientCreakingRenderer.CREAKING_LOCATION, CreakingModel::createBodyLayer);
         event.registerLayerDefinition(ClientCreeperRenderer.CREEPER_LOCATION, ClientCreeperRenderer::createBaseCreeperLayer);
         event.registerLayerDefinition(ClientDrownedRenderer.DROWNED_LOCATION, ClientDrownedRenderer::createBaseDrownedLayer);
@@ -283,7 +285,6 @@ public class PetsClientInitializer {
         event.registerEntityRenderer(PetsInitializer.Entities.CAMEL.get(), ClientCamelRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.CHICKEN.get(), ClientChickenRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.COD.get(), ClientCodRenderer::new);
-        event.registerEntityRenderer(PetsInitializer.Entities.COPPER_GOLEM.get(), ClientCopperGolemRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.COW.get(), ClientCowRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.DONKEY.get(), ClientDonkeyRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.FROG.get(), ClientFrogRenderer::new);
@@ -373,16 +374,9 @@ public class PetsClientInitializer {
      * is pressed
      */
 
-     void createKeyBinding(RegisterKeyMappingsEvent event) {
-        openConfigScreen = new KeyMapping("Open Pets Menu", GLFW.GLFW_KEY_P, new KeyMapping.Category(ResourceLocation.fromNamespaceAndPath(MOD_ID, "petsmod.keymapping")));
+    void createKeyBinding(RegisterKeyMappingsEvent event) {
+        openConfigScreen = new KeyMapping("Open Pets Menu", GLFW.GLFW_KEY_P, "petsmod.keymapping");
 
         event.register(openConfigScreen);
-    }
-
-    @SubscribeEvent
-    public static void printAddons(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> {
-            PetsInitializer.LOGGER.info("PetsMod addons loaded:{}", ADDONS);
-        });
     }
 }

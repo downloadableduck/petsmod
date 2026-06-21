@@ -20,7 +20,7 @@ public abstract class PetRenderer<D extends Mob, U extends LivingEntityRenderSta
     @Override
     public void extractRenderState(D entity, U state, float f) {
         super.extractRenderState(entity, state, f);
-        state.isUpsideDown = entity.getPlainTextName().equals("Grumm") || entity.getPlainTextName().equals("Dinnerbone");
+        state.isUpsideDown = entity.getCustomName().getString().equals("Grumm") || entity.getCustomName().getString().equals("Dinnerbone");
         if (state.passengerOffset == null) {
             state.passengerOffset = new Vec3(0, 0, 0);
         }

@@ -1,7 +1,5 @@
 package com.jeff.pets;
 
-import com.jeff.pets.client.Central;
-import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.mob.aprilfools.*;
 import com.jeff.pets.mob.custom.aprilfools.Head;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
@@ -15,21 +13,13 @@ import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import com.jeff.pets.mob.vanilla.hostile.*;
 import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -37,9 +27,7 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.function.Function;
-
-import static com.jeff.pets.PetsInitializer.Entities.*;
+import static com.jeff.pets.PetsInitializer.Entities.ALLAY;
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 
 /**
@@ -51,18 +39,18 @@ public class PetsInitializer {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-        public static final DeferredRegister<@NotNull EntityType<?>> ENTITY_TYPES =
-                DeferredRegister.create(Registries.ENTITY_TYPE, PetsInitializer.MOD_ID);
-
-    private static ResourceKey<@NotNull EntityType<?>> createResourceKey(String path) {
-        return ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, path));
-    }
+    public static final DeferredRegister<@NotNull EntityType<?>> ENTITY_TYPES =
+            DeferredRegister.create(Registries.ENTITY_TYPE, PetsInitializer.MOD_ID);
 
     public PetsInitializer(IEventBus bus) {
         DeferredHolder<?, ?> ignored = ALLAY;
         ENTITY_TYPES.register(bus);
         bus.addListener(this::onInitialize);
 
+    }
+
+    private static ResourceKey<@NotNull EntityType<?>> createResourceKey(String path) {
+        return ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, path));
     }
 
     public void onInitialize(EntityAttributeCreationEvent event) {
@@ -79,7 +67,6 @@ public class PetsInitializer {
         event.put(Entities.CAMEL.get(), ClientCamel.createAttributes().build());
         event.put(Entities.CHICKEN.get(), ClientChicken.createAttributes().build());
         event.put(Entities.COD.get(), ClientCod.createAttributes().build());
-        event.put(Entities.COPPER_GOLEM.get(), ClientCopperGolem.createAttributes().build());
         event.put(Entities.COW.get(), ClientCow.createAttributes().build());
         event.put(Entities.DONKEY.get(), ClientDonkey.createAttributes().build());
         event.put(Entities.FROG.get(), ClientFrog.createAttributes().build());
@@ -163,7 +150,8 @@ public class PetsInitializer {
         event.put(Entities.TRAITOR.get(), Traitor.createAttributes().build());
         event.put(Entities.DUMBO_OCTOPUS.get(), DumboOctopus.createAttributes().build());
         event.put(Entities.KOI.get(), Koi.createAttributes().build());
-        event.put(Entities.STINGRAY.get(), Stingray.createAttributes().build());;
+        event.put(Entities.STINGRAY.get(), Stingray.createAttributes().build());
+        ;
 
         PetsSounds.initialize();
 
@@ -171,6 +159,7 @@ public class PetsInitializer {
 
         LOGGER.info("quack");
     }
+
     public static class Entities {
         public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<Racoon>> RACOON =
                 ENTITY_TYPES.register("racoon", () ->
@@ -275,15 +264,6 @@ public class PetsInitializer {
                                 .sized(0.5f, 0.3f)
                                 .eyeHeight(0.3f)
                                 .build(createResourceKey("clientcod"))
-                );
-
-        public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientCopperGolem>> COPPER_GOLEM =
-                ENTITY_TYPES.register("clientcoppergolem", () ->
-                        EntityType.Builder.of(ClientCopperGolem::new, MobCategory.AMBIENT)
-                                .noSummon()
-                                .sized(0.49f, 0.98f)
-                                .eyeHeight(0.98f)
-                                .build(createResourceKey("clientcoppergolem"))
                 );
 
         public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientCow>> COW =

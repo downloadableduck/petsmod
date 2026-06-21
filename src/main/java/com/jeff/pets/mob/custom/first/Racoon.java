@@ -24,6 +24,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+
 import javax.annotation.Nullable;
 
 import static com.jeff.pets.PetsInitializer.Entities.RACOON;

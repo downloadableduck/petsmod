@@ -6,9 +6,9 @@ import com.jeff.pets.client.mixin.client.TitleScreenRenderingMixin;
 import dev.isxander.yacl3.api.*;
 import dev.isxander.yacl3.api.controller.*;
 import me.shedaniel.autoconfig.AutoConfig;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.Util;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -24,7 +24,7 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
  *
  * @see Central
  */
-@Mod(value=MOD_ID, dist = Dist.CLIENT)
+@Mod(value = MOD_ID, dist = Dist.CLIENT)
 public class PetsConfigScreen {
 
     /**
@@ -63,7 +63,7 @@ public class PetsConfigScreen {
      * @see TitleScreenRenderingMixin
      */
     public PetsConfigScreen(ModContainer modContainer) {
-         modContainer.registerExtensionPoint(IConfigScreenFactory.class, (parentScreen, s) -> {
+        modContainer.registerExtensionPoint(IConfigScreenFactory.class, (parentScreen, s) -> {
             PetsConfig CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
             String activePet = CONFIG.activePet;
             return YetAnotherConfigLib.createBuilder()
@@ -1003,6 +1003,7 @@ public class PetsConfigScreen {
                     .generateScreen(s);
         });
     }
+
     private static String getInstalledAddons() {
         if (PetsClientInitializer.ADDONS.isEmpty()) {
             return "none";
