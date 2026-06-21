@@ -4,6 +4,7 @@ import com.jeff.pets.PetsSounds;
 import com.jeff.pets.mob.FlyingPet;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
@@ -31,8 +32,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathType;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -143,7 +142,7 @@ public class DumboOctopus extends FlyingPet {
         if (owner != null) {
 
             if (owner.hasPassenger(this)) {
-                if (owner.isCrouching() && owner.isJumping()) {
+                if (owner.isCrouching() && owner.jumping) {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, 0.1, 0));
                 } else {
@@ -228,14 +227,14 @@ public class DumboOctopus extends FlyingPet {
     }
 
     @Override
-    public void addAdditionalSaveData(@NotNull ValueOutput output) {
+    public void addAdditionalSaveData(@NotNull CompoundTag output) {
         super.addAdditionalSaveData(output);
         output.putBoolean("isServerEntity", true);
         output.putInt("variant", this.entityData.get(OCTOPUS_SKIN));
     }
 
     @Override
-    public void readAdditionalSaveData(@NotNull ValueInput input) {
+    public void readAdditionalSaveData(@NotNull CompoundTag input) {
         super.readAdditionalSaveData(input);
         this.setServerEntity(input.getBooleanOr("isServerEntity", true));
         this.entityData.set(OCTOPUS_SKIN, input.getIntOr("variant", 1));

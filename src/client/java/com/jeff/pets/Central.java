@@ -26,6 +26,7 @@ import com.jeff.pets.rendering.custom.aprilfools.head.HeadSkin;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
+import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import com.mojang.brigadier.tree.RootCommandNode;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
@@ -125,7 +126,6 @@ public class Central implements ClientModInitializer {
     public static ClientHorse horse;
     public static ClientMooshroom mooshroom;
     public static ClientParrot parrot;
-    public static ClientHappyGhast happyGhast;
     public static ClientPig pig;
     public static ClientRabbit rabbit;
     public static ClientSalmon salmon;
@@ -227,7 +227,6 @@ public class Central implements ClientModInitializer {
         Utils.despawnEntity(sheep);
         Utils.despawnEntity(cat);
         Utils.despawnEntity(allay);
-        Utils.despawnEntity(happyGhast);
         Utils.despawnEntity(armadillo);
         Utils.despawnEntity(axolotl);
         Utils.despawnEntity(bat);
@@ -376,7 +375,6 @@ public class Central implements ClientModInitializer {
         endermite = new ClientEndermite(PetsInitializer.ENDERMITE, world);
         evoker = new ClientEvoker(PetsInitializer.EVOKER, world);
         ghast = new ClientGhast(PetsInitializer.GHAST, world);
-        happyGhast = new ClientHappyGhast(PetsInitializer.HAPPY_GHAST, world);
         guardian = new ClientGuardian(PetsInitializer.GUARDIAN, world);
         hoglin = new ClientHoglin(PetsInitializer.HOGLIN, world);
         magmaCube = new ClientMagmaCube(PetsInitializer.MAGMA_CUBE, world);
@@ -522,8 +520,6 @@ public class Central implements ClientModInitializer {
                 Utils.summonPet(endermite, CONFIG.endermiteName);
             } else if (Objects.equals(CONFIG.activePet, "evoker")) {
                 Utils.summonPet(evoker, CONFIG.evokerName);
-            } else if (Objects.equals(CONFIG.activePet, "happy_ghast")) {
-                Utils.summonPet(happyGhast, CONFIG.happyGhastName);
             } else if (Objects.equals(CONFIG.activePet, "ghast")) {
                 Utils.summonPet(ghast, CONFIG.ghastName);
             } else if (Objects.equals(CONFIG.activePet, "guardian")) {
@@ -672,7 +668,6 @@ public class Central implements ClientModInitializer {
         Utils.checkName("elder_guardian", elderGuardian, CONFIG.elderGuardianName);
         Utils.checkName("endermite", endermite, CONFIG.endermiteName);
         Utils.checkName("evoker", evoker, CONFIG.evokerName);
-        Utils.checkName("happy_ghast", happyGhast, CONFIG.happyGhastName);
         Utils.checkName("ghast", ghast, CONFIG.ghastName);
         Utils.checkName("guardian", guardian, CONFIG.guardianName);
         Utils.checkName("hoglin", hoglin, CONFIG.hoglinName);
@@ -846,7 +841,7 @@ public class Central implements ClientModInitializer {
     public void createPetSkinCommand() {
         if (Minecraft.getInstance().getConnection() != null) {
             ClientPacketListener connection = Minecraft.getInstance().getConnection();
-            RootCommandNode<ClientSuggestionProvider> commandRoot = connection.getCommands().getRoot();
+            RootCommandNode<SharedSuggestionProvider> commandRoot = connection.getCommands().getRoot();
             commandRoot.getExamples().clear();
         }
 
@@ -1856,8 +1851,6 @@ public class Central implements ClientModInitializer {
                 Utils.setActivePet(evoker, "evoker");
             } else if (Objects.equals(species, "ghast")) {
                 Utils.setActivePet(ghast, "ghast");
-            } else if (Objects.equals(species, "happy_ghast") || Objects.equals(species, "happy ghast")) {
-                Utils.setActivePet(happyGhast, "happy_ghast");
             } else if (Objects.equals(species, "guardian")) {
                 Utils.setActivePet(guardian, "guardian");
             } else if (Objects.equals(species, "hoglin")) {
@@ -2128,7 +2121,7 @@ public class Central implements ClientModInitializer {
      * Creates the command that allows the user to toggle their pet on and off.
      */
     void createToggleCommand() {
-        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("pet").then(ClientCommandManager.argument("preference", StringArgumentType.string()).suggests(SuggestionProviders.cast(ON_OFF)).executes((context) -> {
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("pet").then(ClientCommandManager.argument("preference", StringArgumentType.string()).suggests((context, builder) -> ON_OFF.getSuggestions((CommandContext<SharedSuggestionProvider>) (CommandContext) context, builder)).executes((context) -> {
             String preference = StringArgumentType.getString(context, "preference");
             if (Objects.equals(preference, "off")) {
                 CONFIG.petOn = false;
@@ -2161,13 +2154,13 @@ public class Central implements ClientModInitializer {
         String[] stuffs = new String[]{"allay", "angry ghast", "armadillo",
                 "axolotl", "bat", "batato", "bee", "blaze", "bogged",
                 "breeze", "camel", "cat", "cave spider", "chicken",
-                "cod", "copper golem", "cow",
+                "cod", "cow",
                 "creaking", "creeper", "diamond chicken",
                 "dolphin", "donkey", "drowned", "duck", "dumbo octopus",
                 "elder guardian", "ender dragon", "enderman", "endermite", "evoker",
                 "fox", "frog",
                 "ghast", "goat", "guardian",
-                "happy ghast", "head", "hoglin", "horse",
+                 "head", "hoglin", "horse",
                 "husk", "iron golem",
                 "koi", "llama",
                 "love golem", "magma cube", "mega spud",

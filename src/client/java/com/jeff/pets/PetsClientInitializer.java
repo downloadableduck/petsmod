@@ -70,7 +70,6 @@ import com.jeff.pets.rendering.vanilla.ghast.ClientGhastRenderer;
 import com.jeff.pets.rendering.vanilla.goat.ClientGoatModel;
 import com.jeff.pets.rendering.vanilla.goat.ClientGoatRenderer;
 import com.jeff.pets.rendering.vanilla.guardian.ClientGuardianRenderer;
-import com.jeff.pets.rendering.vanilla.happyghast.ClientHappyGhastRenderer;
 import com.jeff.pets.rendering.vanilla.hoglin.ClientHoglinModel;
 import com.jeff.pets.rendering.vanilla.hoglin.ClientHoglinRenderer;
 import com.jeff.pets.rendering.vanilla.horse.ClientHorseRenderer;
@@ -205,7 +204,6 @@ public class PetsClientInitializer implements ClientModInitializer {
         EntityRenderers.register(PetsInitializer.SPIDER, ClientSpiderRenderer::new);
         EntityRenderers.register(PetsInitializer.WOLF, ClientWolfRenderer::new);
         EntityRenderers.register(PetsInitializer.ELDER_GUARDIAN_COOKIE, ClientElderGuardianRenderer::new);
-        EntityRenderers.register(PetsInitializer.HAPPY_GHAST, ClientHappyGhastRenderer::new);
         EntityRenderers.register(PetsInitializer.BLAZE, ClientBlazeRenderer::new);
         EntityRenderers.register(PetsInitializer.BOGGED, ClientBoggedRenderer::new);
         EntityRenderers.register(PetsInitializer.BREEZE, ClientBreezeRenderer::new);
@@ -303,7 +301,6 @@ public class PetsClientInitializer implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(ClientSpiderRenderer.SPIDER_LOCATION, SpiderModel::createSpiderBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientWolfRenderer.WOLF_LOCATION, ClientWolfRenderer::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientElderGuardianRenderer.ELDER_GUARDIAN_LOCATION, GuardianModel::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(ClientHappyGhastRenderer.GHAST_LOCATION, ClientHappyGhastRenderer::createGhastBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientBlazeRenderer.BLAZE_LOCATION, BlazeModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientBoggedRenderer.BOGGED_LOCATION, BoggedModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientBreezeRenderer.BREEZE_LOCATION, () -> BreezeModel.createBodyLayer(32, 32));

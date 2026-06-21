@@ -38,7 +38,7 @@ public abstract class FlyingPet extends AbstractPet {
         if (owner != null) {
 
             if (owner.hasPassenger(this)) {
-                if (owner.isCrouching() && owner.isJumping()) {
+                if (owner.isCrouching() && owner.jumping) {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, 0.1, 0));
                 } else {

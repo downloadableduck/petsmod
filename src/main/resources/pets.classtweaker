@@ -8,3 +8,5 @@ mutable field net/minecraft/client/gui/components/LogoRenderer EASTER_EGG_LOGO L
 mutable field net/minecraft/client/resources/SplashManager SPLASHES_LOCATION Lnet/minecraft/resources/ResourceLocation;
 accessible field net/minecraft/client/resources/SplashManager SPLASHES_LOCATION Lnet/minecraft/resources/ResourceLocation;
 accessible method net/minecraft/client/renderer/entity/EntityRenderers register (Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+accessible field net/minecraft/world/entity/LivingEntity jumping Z
+extendable method net/minecraft/world/entity/LivingEntity canBreatheUnderwater ()Z

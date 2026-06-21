@@ -3,6 +3,7 @@ package com.jeff.pets.mob.custom.aprilfools;
 import com.jeff.pets.mob.AbstractPet;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -23,8 +24,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -161,7 +160,7 @@ public class Head extends AbstractPet {
         if (owner != null) {
 
             if (owner.hasPassenger(this)) {
-                if (owner.isCrouching() && owner.isJumping()) {
+                if (owner.isCrouching() && owner.jumping) {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
                 } else {
@@ -255,13 +254,13 @@ public class Head extends AbstractPet {
     }
 
     @Override
-    public void addAdditionalSaveData(@NotNull ValueOutput output) {
+    public void addAdditionalSaveData(@NotNull CompoundTag output) {
         super.addAdditionalSaveData(output);
         output.putBoolean("isServerEntity", true);
     }
 
     @Override
-    public void readAdditionalSaveData(@NotNull ValueInput input) {
+    public void readAdditionalSaveData(@NotNull CompoundTag input) {
         super.readAdditionalSaveData(input);
         this.setServerEntity(input.getBooleanOr("isServerEntity", true));
     }

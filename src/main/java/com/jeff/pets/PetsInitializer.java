@@ -602,17 +602,6 @@ public class PetsInitializer implements ModInitializer {
                     .eyeHeight(4f)
                     .build(GHAST_KEY)
     );
-    private static final ResourceKey<@NotNull EntityType<?>> HAPPY_GHAST_KEY =
-            ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(MOD_ID, "clienthappyghast"));
-    public static final EntityType<@NotNull ClientHappyGhast> HAPPY_GHAST = Registry.register(
-            BuiltInRegistries.ENTITY_TYPE,
-            ResourceLocation.fromNamespaceAndPath(MOD_ID, "clienthappyghast"),
-            EntityType.Builder.of(ClientHappyGhast::new, MobCategory.AMBIENT)
-                    .noSummon()
-                    .sized(4f, 4f)
-                    .eyeHeight(4f)
-                    .build(HAPPY_GHAST_KEY)
-    );
     private static final ResourceKey<@NotNull EntityType<?>> GUARDIAN_KEY =
             ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(MOD_ID, "clientguardian"));
     public static final EntityType<@NotNull ClientGuardian> GUARDIAN = Registry.register(
@@ -1145,7 +1134,6 @@ public class PetsInitializer implements ModInitializer {
         FabricDefaultAttributeRegistry.register(ENDERMITE, ClientEndermite.createAttributes().build());
         FabricDefaultAttributeRegistry.register(EVOKER, ClientEvoker.createAttributes().build());
         FabricDefaultAttributeRegistry.register(GHAST, ClientGhast.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(HAPPY_GHAST, ClientHappyGhast.createAttributes().build());
         FabricDefaultAttributeRegistry.register(GUARDIAN, ClientGuardian.createAttributes().build());
         FabricDefaultAttributeRegistry.register(HOGLIN, ClientHoglin.createAttributes().build());
         FabricDefaultAttributeRegistry.register(MAGMA_CUBE, ClientMagmaCube.createAttributes().build());
