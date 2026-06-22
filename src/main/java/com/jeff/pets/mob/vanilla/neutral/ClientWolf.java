@@ -5,7 +5,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.entity.animal.wolf.WolfSoundVariants;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,6 +26,6 @@ public class ClientWolf extends GroundPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.WOLF_SOUNDS.get(WolfSoundVariants.SoundSet.CLASSIC).ambientSound().value();
+        return SoundEvents.WOLF_AMBIENT;
     }
 }

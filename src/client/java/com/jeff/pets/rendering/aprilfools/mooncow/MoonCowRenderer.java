@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.aprilfools.mooncow;
 
-import com.jeff.pets.mob.aprilfools.MoonCow;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.aprilfools.MoonCow;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;

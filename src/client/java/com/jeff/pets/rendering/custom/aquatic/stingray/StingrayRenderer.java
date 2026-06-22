@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.custom.aquatic.stingray;
 
-import com.jeff.pets.mob.custom.aquatic.Stingray;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.custom.aquatic.Stingray;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;

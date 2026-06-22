@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.shulker;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientShulker;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientShulker;
 import net.minecraft.client.model.ShulkerModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

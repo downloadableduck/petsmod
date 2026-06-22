@@ -10,8 +10,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static com.jeff.pets.Central.CONFIG;
 import static com.jeff.pets.PetsInitializer.MOD_ID;
+import static com.jeff.pets.Central.CONFIG;
 
 public class RacoonRenderer extends MobRenderer<@NotNull Racoon, @NotNull RacoonRenderState, @NotNull RacoonModel> {
     public static final ModelLayerLocation RACOON_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(MOD_ID, "racoon"), "main");

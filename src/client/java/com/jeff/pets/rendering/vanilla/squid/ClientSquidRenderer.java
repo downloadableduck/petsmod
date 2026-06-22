@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.squid;
 
-import com.jeff.pets.mob.vanilla.passive.ClientSquid;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientSquid;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.SquidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;

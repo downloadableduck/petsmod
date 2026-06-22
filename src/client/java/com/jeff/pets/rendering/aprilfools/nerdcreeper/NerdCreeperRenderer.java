@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.aprilfools.nerdcreeper;
 
-import com.jeff.pets.mob.aprilfools.NerdCreeper;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.aprilfools.NerdCreeper;
 import net.minecraft.client.model.CreeperModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;

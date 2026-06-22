@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.guardian;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientGuardian;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientGuardian;
 import net.minecraft.client.model.GuardianModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

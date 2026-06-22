@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.endermite;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientEndermite;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientEndermite;
 import net.minecraft.client.model.EndermiteModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

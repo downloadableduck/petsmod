@@ -1,8 +1,8 @@
 package com.jeff.pets.rendering.custom.aquatic.koi;
 
-import com.jeff.pets.mob.custom.aquatic.Koi;
 import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.rendering.custom.PetRenderState;
+import com.jeff.pets.mob.custom.aquatic.Koi;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;

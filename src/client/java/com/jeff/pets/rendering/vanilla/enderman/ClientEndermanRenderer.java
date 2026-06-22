@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.enderman;
 
-import com.jeff.pets.mob.vanilla.neutral.ClientEnderman;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.neutral.ClientEnderman;
 import net.minecraft.client.model.EndermanModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.strider;
 
-import com.jeff.pets.mob.vanilla.passive.ClientStrider;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientStrider;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.StriderModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;

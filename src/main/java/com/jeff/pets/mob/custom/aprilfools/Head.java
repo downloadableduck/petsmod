@@ -262,6 +262,6 @@ public class Head extends AbstractPet {
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag input) {
         super.readAdditionalSaveData(input);
-        this.setServerEntity(input.getBooleanOr("isServerEntity", true));
+        this.setServerEntity(input.getBoolean("isServerEntity"));
     }
 }

@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.bee;
 
-import com.jeff.pets.mob.vanilla.neutral.ClientBee;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.neutral.ClientBee;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.BeeModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;

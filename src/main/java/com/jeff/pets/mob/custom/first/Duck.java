@@ -277,8 +277,8 @@ public class Duck extends AbstractPet {
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag input) {
         super.readAdditionalSaveData(input);
-        this.setServerEntity(input.getBooleanOr("isServerEntity", true));
-        this.entityData.set(DUCK_SKIN, input.getIntOr("variant", 1));
+        this.setServerEntity(input.getBoolean("isServerEntity"));
+        this.entityData.set(DUCK_SKIN, input.getInt("variant"));
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.aprilfools.batato;
 
-import com.jeff.pets.mob.aprilfools.Batato;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.aprilfools.Batato;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.BatRenderState;

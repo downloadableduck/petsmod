@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.zombievillager;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.ZombieVillagerModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;

@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.sniffer;
 
-import com.jeff.pets.mob.vanilla.passive.ClientSniffer;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientSniffer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.SnifferModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;

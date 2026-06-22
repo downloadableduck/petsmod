@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.polarbear;
 
-import com.jeff.pets.mob.vanilla.neutral.ClientPolarBear;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.neutral.ClientPolarBear;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.PolarBearModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -24,7 +24,7 @@ public class ClientPolarBearRenderer extends PetRenderer<@NotNull ClientPolarBea
     }
 
     public static LayerDefinition createBodyLayer() {
-        PolarBearModel.createBodyLayer(false);
+        PolarBearModel.createBodyLayer();
         return LayerDefinition.create(new MeshDefinition(), 128, 64);
     }
 

@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.frog;
 
-import com.jeff.pets.mob.vanilla.passive.ClientFrog;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientFrog;
 import net.minecraft.client.model.FrogModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.camel;
 
-import com.jeff.pets.mob.vanilla.passive.ClientCamel;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientCamel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.CamelModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;

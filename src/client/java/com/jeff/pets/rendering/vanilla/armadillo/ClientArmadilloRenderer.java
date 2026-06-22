@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.armadillo;
 
-import com.jeff.pets.mob.vanilla.passive.ClientArmadillo;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientArmadillo;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.ArmadilloModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;

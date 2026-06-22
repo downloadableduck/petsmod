@@ -1,8 +1,8 @@
 package com.jeff.pets.rendering.vanilla.mooshroom;
 
-import com.jeff.pets.mob.vanilla.passive.ClientMooshroom;
 import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.rendering.vanilla.cow.ClientCowModel;
+import com.jeff.pets.mob.vanilla.passive.ClientMooshroom;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;

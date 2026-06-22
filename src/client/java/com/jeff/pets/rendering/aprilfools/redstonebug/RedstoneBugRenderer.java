@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.aprilfools.redstonebug;
 
-import com.jeff.pets.mob.aprilfools.RedstoneBug;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.aprilfools.RedstoneBug;
 import net.minecraft.client.model.SilverfishModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

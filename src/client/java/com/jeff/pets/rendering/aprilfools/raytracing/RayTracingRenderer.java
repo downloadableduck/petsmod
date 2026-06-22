@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.aprilfools.raytracing;
 
-import com.jeff.pets.mob.aprilfools.RayTracing;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.aprilfools.RayTracing;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -10,15 +10,12 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 import net.minecraft.client.resources.PlayerSkin;
-import net.minecraft.core.ClientAsset;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class RayTracingRenderer extends PetRenderer<@NotNull RayTracing, @NotNull PlayerRenderState, @NotNull HumanoidModel<@NotNull PlayerRenderState>> {
 
     public static final ModelLayerLocation RAY_TRACING_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("raytracing"), "main");
-
-    private final ClientAsset playerSkinTexture = new ClientAsset(ResourceLocation.withDefaultNamespace("textures/entity/ray_tracing.png"));
 
     public RayTracingRenderer(EntityRendererProvider.Context context) {
         super(context, new PlayerModel(context.bakeLayer(RAY_TRACING_LOCATION), true), 0.75f);
@@ -30,7 +27,7 @@ public class RayTracingRenderer extends PetRenderer<@NotNull RayTracing, @NotNul
     }
 
     protected PlayerSkin getSkinFromRayTracingTexture() {
-        return new PlayerSkin(playerSkinTexture.texturePath(), playerSkinTexture.texturePath().getPath(), playerSkinTexture.texturePath(), playerSkinTexture.texturePath(), PlayerSkin.Model.WIDE, false);
+        return new PlayerSkin(ResourceLocation.withDefaultNamespace("textures/entity/ray_tracing.png"), "https://petsmod.com", ResourceLocation.withDefaultNamespace("textures/entity/ray_tracing.png"), ResourceLocation.withDefaultNamespace("textures/entity/ray_tracing.png"), PlayerSkin.Model.WIDE, false);
     }
 
     @Override

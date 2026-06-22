@@ -135,7 +135,7 @@ public class Stingray extends FlyingPet {
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag input) {
         super.readAdditionalSaveData(input);
-        this.setServerEntity(input.getBooleanOr("isServerEntity", true));
+        this.setServerEntity(input.getBoolean("isServerEntity"));
     }
 
     @Override

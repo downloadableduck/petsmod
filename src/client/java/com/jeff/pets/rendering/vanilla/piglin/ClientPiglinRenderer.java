@@ -1,7 +1,7 @@
 package com.jeff.pets.rendering.vanilla.piglin;
 
-import com.jeff.pets.mob.vanilla.neutral.ClientPiglin;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.neutral.ClientPiglin;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.PiglinModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;

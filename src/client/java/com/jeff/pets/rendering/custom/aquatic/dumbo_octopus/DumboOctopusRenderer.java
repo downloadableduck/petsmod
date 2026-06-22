@@ -1,14 +1,14 @@
 package com.jeff.pets.rendering.custom.aquatic.dumbo_octopus;
 
-import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
 import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.Central.CONFIG;
 import static com.jeff.pets.PetsInitializer.MOD_ID;
+import static com.jeff.pets.Central.CONFIG;
 
 public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopusRenderState, DumboOctopusModel> {
 
