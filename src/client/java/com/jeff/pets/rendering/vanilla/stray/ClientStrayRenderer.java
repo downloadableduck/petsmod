@@ -19,7 +19,7 @@ public class ClientStrayRenderer extends PetRenderer<@NotNull ClientStray, @NotN
 
     public ClientStrayRenderer(EntityRendererProvider.Context context) {
         super(context, new SkeletonModel<>(context.bakeLayer(ModelLayers.STRAY)), 0.75f);
-        this.addLayer(new SkeletonClothingLayer<>(this, EntityModelSet.vanilla(), ModelLayers.STRAY_OUTER_LAYER, ResourceLocation.withDefaultNamespace("textures/entity/skeleton/stray_overlay.png")));
+        this.addLayer(new SkeletonClothingLayer<>(this, context.getModelSet(), ModelLayers.STRAY_OUTER_LAYER, ResourceLocation.withDefaultNamespace("textures/entity/skeleton/stray_overlay.png")));
     }
 
     @Override

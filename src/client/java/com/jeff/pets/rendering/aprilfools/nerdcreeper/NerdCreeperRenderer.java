@@ -23,7 +23,7 @@ public class NerdCreeperRenderer extends PetRenderer<@NotNull NerdCreeper, @NotN
     public NerdCreeperRenderer(EntityRendererProvider.Context context) {
         super(context, new CreeperModel(context.bakeLayer(ModelLayers.CREEPER)), 0.75f);
         this.addLayer(new NerdCreeperNerdLayer(this, context));
-        this.addLayer(new CreeperPowerLayer(this, EntityModelSet.vanilla()));
+        this.addLayer(new CreeperPowerLayer(this, context.getModelSet()));
     }
 
     @Override

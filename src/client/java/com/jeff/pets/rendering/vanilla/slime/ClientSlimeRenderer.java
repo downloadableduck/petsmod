@@ -21,7 +21,7 @@ public class ClientSlimeRenderer extends PetRenderer<@NotNull ClientSlime, @NotN
 
     public ClientSlimeRenderer(EntityRendererProvider.Context context) {
         super(context, new SlimeModel(context.bakeLayer(ModelLayers.SLIME)), 0.75f);
-        this.addLayer(new SlimeOuterLayer(this, EntityModelSet.vanilla()));
+        this.addLayer(new SlimeOuterLayer(this, context.getModelSet()));
         this.scale(new SlimeRenderState(), new PoseStack());
     }
 
