@@ -7,6 +7,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.SkullBlock;
+import net.minecraft.world.level.block.entity.SkullBlockEntity;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -24,6 +26,11 @@ public class HeadRenderer extends PetRenderer<@NotNull Head, @NotNull LivingEnti
     @Override
     public @NotNull ResourceLocation getTextureLocation(final LivingEntityRenderState state) {
         Minecraft minecraft = Minecraft.getInstance();
-        return minecraft.getSkinManager().getInsecureSkin(new GameProfile(minecraft.getPlayerSocialManager().getDiscoveredUUID(CONFIG.headSkin), CONFIG.headSkin)).texture();
+        try {
+            GameProfile gameProfile = SkullBlockEntity.fetchGameProfile(CONFIG.headSkin).get().get();
+            return minecraft.getSkinManager().getInsecureSkin(gameProfile).texture();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

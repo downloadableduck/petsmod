@@ -236,8 +236,8 @@ public class DumboOctopus extends FlyingPet {
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag input) {
         super.readAdditionalSaveData(input);
-        this.setServerEntity(input.getBooleanOr("isServerEntity", true));
-        this.entityData.set(OCTOPUS_SKIN, input.getIntOr("variant", 1));
+        this.setServerEntity(input.getBoolean("isServerEntity"));
+        this.entityData.set(OCTOPUS_SKIN, input.getInt("variant"));
     }
 
     @Override

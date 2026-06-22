@@ -7,6 +7,8 @@
 # The license for you mod. This is mandatory metadata and allows for easier comprehension of your redistributive properties.
 # Review your options at https://choosealicense.com/. All rights reserved is the default copyright stance, and is thus the default here.
 license = "${mod_license}"
+modLoader="javafml"
+loaderVersion = "[0,)"
 
 # A URL to refer people to when problems occur with this mod
 issueTrackerURL = "https://github.com/downloadableduck/petsmod/issues" #optional
@@ -66,7 +68,7 @@ type = "required" #mandatory
 # Optional field describing why the dependency is required or why it is incompatible
 # reason="..."
 # The version range of the dependency
-versionRange = "[${neo_version},)" #mandatory
+versionRange = "[0,)" #mandatory
 # An ordering relationship for the dependency.
 # BEFORE - This mod is loaded BEFORE the dependency
 # AFTER - This mod is loaded AFTER the dependency
@@ -79,7 +81,7 @@ side = "BOTH"
 modId = "minecraft"
 type = "required"
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
-versionRange = "[1.21.5]"
+versionRange = "[1.21.4]"
 ordering = "NONE"
 side = "BOTH"
 

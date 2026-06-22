@@ -30,14 +30,7 @@ public class ClientChickenRenderer extends PetRenderer<@NotNull ClientChicken, @
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ChickenRenderState livingEntityRenderState) {
-        if (Objects.equals(CONFIG.chickenSkin, "temperate")) {
-            chickenTexturePath = "textures/entity/chicken/temperate_chicken.png";
-        } else if (Objects.equals(CONFIG.chickenSkin, "cold")) {
-            chickenTexturePath = "textures/entity/chicken/cold_chicken.png";
-        } else if (Objects.equals(CONFIG.chickenSkin, "warm")) {
-            chickenTexturePath = "textures/entity/chicken/warm_chicken.png";
-        }
-        return ResourceLocation.withDefaultNamespace(chickenTexturePath);
+        return ResourceLocation.withDefaultNamespace("textures/entity/chicken.png");
     }
 
     @Override
