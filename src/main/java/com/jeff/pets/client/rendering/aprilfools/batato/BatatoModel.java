@@ -1,6 +1,5 @@
 package com.jeff.pets.client.rendering.aprilfools.batato;
 
-import net.minecraft.client.animation.definitions.BatAnimation;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;

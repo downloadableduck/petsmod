@@ -4,7 +4,6 @@ import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.SlimeModel;
-import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -21,7 +20,7 @@ public class ClientSlimeRenderer extends PetRenderer<@NotNull ClientSlime, @NotN
 
     public ClientSlimeRenderer(EntityRendererProvider.Context context) {
         super(context, new SlimeModel(context.bakeLayer(ModelLayers.SLIME)), 0.75f);
-        this.addLayer(new SlimeOuterLayer(this, EntityModelSet.vanilla()));
+        this.addLayer(new SlimeOuterLayer(this, context.getModelSet()));
         this.scale(new SlimeRenderState(), new PoseStack());
     }
 

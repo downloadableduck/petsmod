@@ -4,7 +4,6 @@ import com.jeff.pets.mob.vanilla.hostile.ClientBogged;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.BoggedModel;
-import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -19,7 +18,7 @@ public class ClientBoggedRenderer extends PetRenderer<@NotNull ClientBogged, @No
 
     public ClientBoggedRenderer(EntityRendererProvider.Context context) {
         super(context, new BoggedModel(context.bakeLayer(ModelLayers.BOGGED)), 0.75f);
-        this.addLayer(new SkeletonClothingLayer<>(this, EntityModelSet.vanilla(), ModelLayers.BOGGED_OUTER_LAYER, ResourceLocation.withDefaultNamespace("textures/entity/skeleton/bogged_overlay.png")));
+        this.addLayer(new SkeletonClothingLayer<>(this, context.getModelSet(), ModelLayers.BOGGED_OUTER_LAYER, ResourceLocation.withDefaultNamespace("textures/entity/skeleton/bogged_overlay.png")));
     }
 
     @Override

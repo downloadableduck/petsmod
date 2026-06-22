@@ -16,7 +16,7 @@ public class ClientWanderingTraderRenderer extends PetRenderer<@NotNull ClientWa
 
     public ClientWanderingTraderRenderer(EntityRendererProvider.Context context) {
         super(context, new VillagerModel(context.bakeLayer(ModelLayers.WANDERING_TRADER)), 0.5F);
-        this.addLayer(new CustomHeadLayer<>(this, context.getModelSet()));
+        this.addLayer(new CustomHeadLayer<>(this, context.getModelSet(), this.itemRenderer));
     }
 
     @Override

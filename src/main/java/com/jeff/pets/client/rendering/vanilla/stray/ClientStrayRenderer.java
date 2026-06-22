@@ -4,7 +4,6 @@ import com.jeff.pets.mob.vanilla.hostile.ClientStray;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.SkeletonModel;
-import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -19,7 +18,7 @@ public class ClientStrayRenderer extends PetRenderer<@NotNull ClientStray, @NotN
 
     public ClientStrayRenderer(EntityRendererProvider.Context context) {
         super(context, new SkeletonModel<>(context.bakeLayer(ModelLayers.STRAY)), 0.75f);
-        this.addLayer(new SkeletonClothingLayer<>(this, EntityModelSet.vanilla(), ModelLayers.STRAY_OUTER_LAYER, ResourceLocation.withDefaultNamespace("textures/entity/skeleton/stray_overlay.png")));
+        this.addLayer(new SkeletonClothingLayer<>(this, context.getModelSet(), ModelLayers.STRAY_OUTER_LAYER, ResourceLocation.withDefaultNamespace("textures/entity/skeleton/stray_overlay.png")));
     }
 
     @Override
