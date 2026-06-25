@@ -1,0 +1,5 @@
+{
+  "net/minecraft/client/gui/screen/ChatScreen": [
+    "com/jeff/pets/client/mixin/client/ChatAccessor"
+  ]
+}
