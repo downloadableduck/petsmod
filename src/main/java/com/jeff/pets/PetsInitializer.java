@@ -13,45 +13,57 @@ import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import com.jeff.pets.mob.vanilla.hostile.*;
 import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
-import net.minecraft.client.renderer.entity.layers.EquipmentLayerRenderer;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.jeff.pets.PetsInitializer.Entities.ALLAY;
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 
 /**
  * Registers all of the blocks and entities used in this mod, as well as providing the {@link #MOD_ID}.
  */
-@Mod(MOD_ID)
+@Mod("pets_mod")
+@Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class PetsInitializer {
     public static final String MOD_ID = "pets_mod";
 
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-    public PetsInitializer() {
+    static {
+        MinecraftForge.EVENT_BUS.register(PetsInitializer.class);
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        bus.register(this);
+        bus.register(PetsInitializer.class);
         Entities.ENTITY_TYPES.register(bus);
-        RegistryObject<?> ignored = ALLAY;
+        RegistryObject<?> ignored = Entities.ALLAY;
+        PetsSounds.initialize(bus);
+    }
+
+    public PetsInitializer() {
+        MinecraftForge.EVENT_BUS.register(this);
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        bus.register(PetsInitializer.class);
+        Entities.ENTITY_TYPES.register(bus);
+        RegistryObject<?> ignored = Entities.ALLAY;
     }
 
     private static ResourceKey<@NotNull EntityType<?>> createResourceKey(String path) {
-        return ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, path));
+        return ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(MOD_ID, path));
     }
 
     @SubscribeEvent
@@ -152,9 +164,6 @@ public class PetsInitializer {
         event.put(Entities.DUMBO_OCTOPUS.get(), DumboOctopus.createAttributes().build());
         event.put(Entities.KOI.get(), Koi.createAttributes().build());
         event.put(Entities.STINGRAY.get(), Stingray.createAttributes().build());
-        ;
-
-        PetsSounds.initialize();
 
         //DuckSpawns.addDuckSpawn();
 
@@ -164,7 +173,7 @@ public class PetsInitializer {
     public static class Entities {
 
         public static final DeferredRegister<@NotNull EntityType<?>> ENTITY_TYPES =
-                DeferredRegister.create(Registries.ENTITY_TYPE, PetsInitializer.MOD_ID);
+                DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MOD_ID);
 
         public static final RegistryObject<@NotNull EntityType<Racoon>> RACOON =
                 ENTITY_TYPES.register("racoon", () ->

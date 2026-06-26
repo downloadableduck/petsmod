@@ -119,15 +119,15 @@ public class Duck extends AbstractPet {
     }
 
     protected SoundEvent getAmbientSound() {
-        return PetsSounds.DUCK_AMBIENT;
+        return PetsSounds.DUCK_AMBIENT.get();
     }
 
     protected SoundEvent getHurtSound(final @NotNull DamageSource source) {
-        return PetsSounds.DUCK_AMBIENT;
+        return PetsSounds.DUCK_AMBIENT.get();
     }
 
     protected SoundEvent getDeathSound() {
-        return PetsSounds.DUCK_AMBIENT;
+        return PetsSounds.DUCK_AMBIENT.get();
     }
 
     protected void playStepSound(final @NotNull BlockPos pos, final @NotNull BlockState blockState) {
@@ -263,7 +263,7 @@ public class Duck extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level().playLocalSound(this, PetsSounds.DUCK_AMBIENT, SoundSource.NEUTRAL, 1.0f, 1.0f);
+            level().playLocalSound(this, PetsSounds.DUCK_AMBIENT.get(), SoundSource.NEUTRAL, 1.0f, 1.0f);
         }
     }
 

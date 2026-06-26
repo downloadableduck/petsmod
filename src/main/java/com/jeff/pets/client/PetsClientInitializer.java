@@ -162,10 +162,11 @@ public class PetsClientInitializer {
     /**
      * Misc rendering stuff
      */
-    public PetsClientInitializer(IEventBus bus) {
+    public PetsClientInitializer(FMLJavaModLoadingContext context) {
+        IEventBus bus = context.getModEventBus();
         bus.register(this);
-        bus.addListener(this::registerModelLayers);
-        bus.addListener(this::register);
+        bus.addListener(PetsClientInitializer::registerModelLayers);
+        bus.addListener(PetsClientInitializer::register);
         bus.addListener(this::createKeyBinding);
     }
 
@@ -177,7 +178,7 @@ public class PetsClientInitializer {
     }
 
     @SubscribeEvent
-    void registerModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+    static void registerModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(HeadModel.LAYER_LOCATION, HeadModel::getTexturedModelData);
         event.registerLayerDefinition(RacoonRenderer.RACOON_LOCATION, RacoonModel::getTexturedModelData);
         event.registerLayerDefinition(DuckModel.LAYER_LOCATION, DuckModel::getTexturedModelData);
@@ -275,7 +276,7 @@ public class PetsClientInitializer {
     }
 
     @SubscribeEvent
-    void register(EntityRenderersEvent.RegisterRenderers event) {
+    static void register(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(PetsInitializer.Entities.HEAD.get(), HeadRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.DUCK.get(), DuckRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.RACOON.get(), RacoonRenderer::new);

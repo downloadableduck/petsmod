@@ -82,8 +82,7 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
  * @see Utils
  */
 @SuppressWarnings("unchecked")
-@Mod(MOD_ID)
-@Mod.EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT)
+@Mod.EventBusSubscriber
 public class Central {
 
     public static final List<Entity> summonedEntity = new ArrayList();
@@ -95,7 +94,37 @@ public class Central {
     public static final List<String> PANDA_SKINS = List.of("normal", "lazy", "agressive", "worried", "playful", "weak", "brown");
     public static final List<String> PIGLIN_SKINS = List.of("piglin", "zombified", "brute");
     public static final List<String> WOLF_SKINS = List.of("pale", "ashen", "black", "chestnut", "rusty", "snowy", "spotted", "striped", "woods");
-    public static final List<String> PETS_LIST = new ArrayList<>();
+    public static final List<String> PETS_LIST = List.of("allay", "angry ghast", "armadillo",
+            "axolotl", "bat", "batato", "bee", "blaze", "bogged",
+            "breeze", "camel", "cat", "cave spider", "chicken",
+            "cod", "cow",
+            "creaking", "creeper", "diamond chicken",
+            "dolphin", "donkey", "drowned", "duck", "dumbo octopus",
+            "elder guardian", "ender dragon", "enderman", "endermite", "evoker",
+            "fox", "frog",
+            "ghast", "goat", "guardian",
+            "head", "hoglin", "horse",
+            "husk", "iron golem",
+            "koi", "llama",
+            "love golem", "magma cube", "mega spud",
+            "moon cow", "mooshroom",
+            "nerd creeper",
+            "panda", "parrot", "penguin", "phantom",
+            "pig", "piglin", "pillager",
+            "pink wither", "plaguewhale slab", "poisonous potato zombie", "polar bear",
+            "potato husk", "pufferfish", "rabbit",
+            "racoon",
+            "ravager",
+            "ray tracing",
+            "redstone bug",
+            "salmon",
+            "sheep",
+            "shulker",
+            "silverfish", "skeleton", "slime", "smiling creeper", "sniffer", "snow golem",
+            "spider", "squid", "stingray", "stray", "strider", "tadpole", "toxifin slab",
+            "traitor", "turtle",
+            "vex", "villager", "vindicator", "wandering trader", "warden", "witch", "wither",
+            "wither skeleton", "wolf", "zombie", "zombie villager");
     public static final SuggestionProvider<CommandSourceStack> PETS = (context, builder) ->
             SharedSuggestionProvider.suggest(PETS_LIST, builder);
     private static final SuggestionProvider<SharedSuggestionProvider> ON_OFF = (context, builder) -> SharedSuggestionProvider.suggest(new String[]{"off", "on"}, builder);
@@ -240,43 +269,12 @@ public class Central {
      * <p>Do NOT ever call CONFIG before it is called here or in any other {@link ClientModInitializer#onInitializeClient()}
      * implementation, as it will cause a {@code RuntimeException}.
      */
-    public Central() {
+    public Central(FMLJavaModLoadingContext context) {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         bus.register(this);
         CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
         checkForNullObjects();
         this.createPetsList();
-        PETS_LIST.addAll(List.of("allay", "angry ghast", "armadillo",
-                "axolotl", "bat", "batato", "bee", "blaze", "bogged",
-                "breeze", "camel", "cat", "cave spider", "chicken",
-                "cod", "cow",
-                "creaking", "creeper", "diamond chicken",
-                "dolphin", "donkey", "drowned", "duck", "dumbo octopus",
-                "elder guardian", "ender dragon", "enderman", "endermite", "evoker",
-                "fox", "frog",
-                "ghast", "goat", "guardian",
-                "head", "hoglin", "horse",
-                "husk", "iron golem",
-                "koi", "llama",
-                "love golem", "magma cube", "mega spud",
-                "moon cow", "mooshroom",
-                "nerd creeper",
-                "panda", "parrot", "penguin", "phantom",
-                "pig", "piglin", "pillager",
-                "pink wither", "plaguewhale slab", "poisonous potato zombie", "polar bear",
-                "potato husk", "pufferfish", "rabbit",
-                "racoon",
-                "ravager",
-                "ray tracing",
-                "redstone bug",
-                "salmon",
-                "sheep",
-                "shulker",
-                "silverfish", "skeleton", "slime", "smiling creeper", "sniffer", "snow golem",
-                "spider", "squid", "stingray", "stray", "strider", "tadpole", "toxifin slab",
-                "traitor", "turtle",
-                "vex", "villager", "vindicator", "wandering trader", "warden", "witch", "wither",
-                "wither skeleton", "wolf", "zombie", "zombie villager"));
         if (Minecraft.getInstance() != null) {
             updateSuggestions(Minecraft.getInstance());
         }

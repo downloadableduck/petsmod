@@ -90,11 +90,11 @@ public class DumboOctopus extends FlyingPet {
     }
 
     protected SoundEvent getHurtSound(final @NotNull DamageSource source) {
-        return PetsSounds.DUCK_AMBIENT;
+        return PetsSounds.DUCK_AMBIENT.get();
     }
 
     protected SoundEvent getDeathSound() {
-        return PetsSounds.DUCK_AMBIENT;
+        return PetsSounds.DUCK_AMBIENT.get();
     }
 
     protected void playStepSound(final @NotNull BlockPos pos, final @NotNull BlockState blockState) {
