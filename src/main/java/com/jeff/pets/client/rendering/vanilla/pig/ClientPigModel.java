@@ -1,12 +1,12 @@
 package com.jeff.pets.client.rendering.vanilla.pig;
 
+import com.jeff.pets.mob.vanilla.passive.ClientPig;
 import net.minecraft.client.model.PigModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientPigModel extends PigModel {
+public class ClientPigModel extends PigModel<ClientPig> {
 
     private final ModelPart head;
 
@@ -15,8 +15,9 @@ public class ClientPigModel extends PigModel {
         this.head = modelPart.getChild("head");
     }
 
-    public void setupAnim(LivingEntityRenderState state) {
-        super.setupAnim(state);
+    @Override
+    public void setupAnim(ClientPig state, float f, float g, float h, float i, float k) {
+        super.setupAnim(state, f, g, h, i, k);
         if (CONFIG.isBaby) {
             head.xScale = 1.5f;
             head.yScale = 1.5f;

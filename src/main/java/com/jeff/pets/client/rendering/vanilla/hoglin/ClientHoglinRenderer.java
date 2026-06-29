@@ -6,7 +6,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.state.HoglinRenderState;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,7 +13,7 @@ import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientHoglinRenderer extends PetRenderer<@NotNull ClientHoglin, @NotNull HoglinRenderState, @NotNull ClientHoglinModel> {
+public class ClientHoglinRenderer extends PetRenderer<@NotNull ClientHoglin, @NotNull ClientHoglinModel> {
 
     public static final ModelLayerLocation HOGLIN_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clienthoglin"), "main");
 
@@ -23,14 +22,14 @@ public class ClientHoglinRenderer extends PetRenderer<@NotNull ClientHoglin, @No
     }
 
     @Override
-    protected void scale(HoglinRenderState state, @NotNull PoseStack poseStack) {
+    protected void scale(ClientHoglin state, @NotNull PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(HoglinRenderState livingEntityRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(ClientHoglin livingEntityRenderState) {
         String hoglinTexturePath;
         if (Objects.equals(CONFIG.hoglinSkin, "hoglin")) {
             hoglinTexturePath = "textures/entity/hoglin/hoglin.png";
@@ -40,10 +39,5 @@ public class ClientHoglinRenderer extends PetRenderer<@NotNull ClientHoglin, @No
             hoglinTexturePath = "textures/entity/hoglin/hoglin.png";
         }
         return ResourceLocation.withDefaultNamespace(hoglinTexturePath);
-    }
-
-    @Override
-    public HoglinRenderState createRenderState() {
-        return new HoglinRenderState();
     }
 }

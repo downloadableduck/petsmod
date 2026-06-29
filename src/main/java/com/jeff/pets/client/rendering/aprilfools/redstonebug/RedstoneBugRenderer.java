@@ -6,11 +6,10 @@ import net.minecraft.client.model.SilverfishModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-public class RedstoneBugRenderer extends PetRenderer<@NotNull RedstoneBug, @NotNull LivingEntityRenderState, @NotNull SilverfishModel> {
+public class RedstoneBugRenderer extends PetRenderer<@NotNull RedstoneBug, @NotNull SilverfishModel<RedstoneBug>> {
 
     public static final ModelLayerLocation REDSTONE_BUG_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("redstone_bug"), "main");
 
@@ -19,12 +18,7 @@ public class RedstoneBugRenderer extends PetRenderer<@NotNull RedstoneBug, @NotN
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(LivingEntityRenderState livingEntityRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(RedstoneBug livingEntityRenderState) {
         return ResourceLocation.withDefaultNamespace("textures/entity/redstone_bug.png");
-    }
-
-    @Override
-    public LivingEntityRenderState createRenderState() {
-        return new LivingEntityRenderState();
     }
 }

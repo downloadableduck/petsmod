@@ -7,11 +7,12 @@ import net.minecraft.client.model.DolphinModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.state.DolphinRenderState;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientDolphinRenderer extends PetRenderer<@NotNull ClientDolphin, @NotNull DolphinRenderState, @NotNull DolphinModel> {
+import static com.jeff.pets.client.Central.CONFIG;
+
+public class ClientDolphinRenderer extends PetRenderer<@NotNull ClientDolphin, @NotNull DolphinModel<ClientDolphin>> {
     public static final ModelLayerLocation DOLPHIN_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientdolphin"), "main");
 
     public ClientDolphinRenderer(EntityRendererProvider.Context context) {
@@ -19,17 +20,14 @@ public class ClientDolphinRenderer extends PetRenderer<@NotNull ClientDolphin, @
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(DolphinRenderState dolphinRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(ClientDolphin dolphinRenderState) {
         return ResourceLocation.withDefaultNamespace("textures/entity/dolphin.png");
     }
 
     @Override
-    protected void scale(DolphinRenderState state, @NotNull PoseStack poseStack) {
-        poseStack.scale(0.5f, 0.5f, 0.5f);
-    }
-
-    @Override
-    public DolphinRenderState createRenderState() {
-        return new DolphinRenderState();
+    protected void scale(ClientDolphin state, @NotNull PoseStack poseStack, float i) {
+        if (CONFIG.isBaby) {
+            poseStack.scale(0.5f, 0.5f, 0.5f);
+        }
     }
 }

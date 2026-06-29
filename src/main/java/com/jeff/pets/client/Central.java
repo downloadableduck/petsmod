@@ -178,7 +178,6 @@ public class Central {
     public static ClientWolf wolf;
     public static ClientBlaze blaze;
     public static ClientBreeze breeze;
-    public static ClientCreaking creaking;
     public static ClientCreeper creeper;
     public static ClientElderGuardian elderGuardian;
     public static ClientEndermite endermite;
@@ -297,7 +296,6 @@ public class Central {
         Utils.despawnEntity(wolf);
         Utils.despawnEntity(blaze);
         Utils.despawnEntity(breeze);
-        Utils.despawnEntity(creaking);
         Utils.despawnEntity(creeper);
         Utils.despawnEntity(elderGuardian);
         Utils.despawnEntity(endermite);
@@ -400,7 +398,6 @@ public class Central {
         wolf = new ClientWolf(PetsInitializer.Entities.WOLF.get(), world);
         blaze = new ClientBlaze(PetsInitializer.Entities.BLAZE.get(), world);
         breeze = new ClientBreeze(PetsInitializer.Entities.BREEZE.get(), world);
-        creaking = new ClientCreaking(PetsInitializer.Entities.CREAKING.get(), world);
         creeper = new ClientCreeper(PetsInitializer.Entities.CREEPER.get(), world);
         elderGuardian = new ClientElderGuardian(PetsInitializer.Entities.ELDER_GUARDIAN_COOKIE.get(), world);
         endermite = new ClientEndermite(PetsInitializer.Entities.ENDERMITE.get(), world);
@@ -541,9 +538,7 @@ public class Central {
                 Utils.summonPet(blaze, CONFIG.blazeName);
             } else if (Objects.equals(CONFIG.activePet, "breeze")) {
                 Utils.summonPet(breeze, CONFIG.breezeName);
-            } else if (Objects.equals(CONFIG.activePet, "creaking")) {
-                Utils.summonPet(creaking, CONFIG.creakingName);
-            } else if (Objects.equals(CONFIG.activePet, "creeper")) {
+            }  else if (Objects.equals(CONFIG.activePet, "creeper")) {
                 Utils.summonPet(creeper, CONFIG.creeperName);
             } else if (Objects.equals(CONFIG.activePet, "elder_guardian")) {
                 Utils.summonPet(elderGuardian, CONFIG.elderGuardianName);
@@ -695,7 +690,6 @@ public class Central {
         Utils.checkName("wolf", wolf, CONFIG.wolfName);
         Utils.checkName("blaze", blaze, CONFIG.blazeName);
         Utils.checkName("breeze", breeze, CONFIG.breezeName);
-        Utils.checkName("creaking", creaking, CONFIG.creakingName);
         Utils.checkName("creeper", creeper, CONFIG.creeperName);
         Utils.checkName("elder_guardian", elderGuardian, CONFIG.elderGuardianName);
         Utils.checkName("endermite", endermite, CONFIG.endermiteName);
@@ -1648,8 +1642,6 @@ public class Central {
                 Utils.setActivePet(blaze, "blaze");
             } else if (Objects.equals(species, "breeze")) {
                 Utils.setActivePet(breeze, "breeze");
-            } else if (Objects.equals(species, "creaking")) {
-                Utils.setActivePet(creaking, "creaking");
             } else if (Objects.equals(species, "creeper")) {
                 Utils.setActivePet(creeper, "creeper");
             } else if (Objects.equals(species, "elder_guardian") || Objects.equals(species, "elder guardian")) {

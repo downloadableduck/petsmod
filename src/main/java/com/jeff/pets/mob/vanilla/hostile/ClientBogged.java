@@ -4,11 +4,13 @@ import com.jeff.pets.mob.GroundPet;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientBogged extends GroundPet {
+public class ClientBogged extends GroundPet implements RangedAttackMob {
 
     public ClientBogged(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
         super(entityType, level);
@@ -27,5 +29,10 @@ public class ClientBogged extends GroundPet {
     @Override
     protected SoundEvent getAmbientSound() {
         return SoundEvents.BOGGED_AMBIENT;
+    }
+
+    @Override
+    public void performRangedAttack(LivingEntity livingEntity, float v) {
+
     }
 }

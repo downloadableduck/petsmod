@@ -1,13 +1,15 @@
 package com.jeff.pets.client.rendering.custom.aquatic.stingray;
 
-import net.minecraft.client.model.EntityModel;
+import com.jeff.pets.mob.custom.aquatic.Stingray;
+import com.jeff.pets.client.rendering.PetModel;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
-public class StingrayModel extends EntityModel<@NotNull StingrayRenderState> {
+public class StingrayModel extends PetModel<@NotNull Stingray> {
     private final ModelPart body;
     private final ModelPart tail;
     private final ModelPart right_fin;
@@ -37,10 +39,11 @@ public class StingrayModel extends EntityModel<@NotNull StingrayRenderState> {
     }
 
     @Override
-    public void setupAnim(StingrayRenderState state) {
-        super.setupAnim(state);
-        if (state.walkAnimationSpeed > 0) {
-            float anim = state.flapTime * 7.448451F * ((float) Math.PI / 180F);
+    public void setupAnim(Stingray state, float f, float g, float m, float k, float p) {
+        float partialTick = Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(true);
+        float flapTime = Mth.lerp(partialTick, state.oFlap, state.flap);
+        if (state.walkAnimation.speed() > 0) {
+            float anim = flapTime * 7.448451F * ((float) Math.PI / 180F);
             this.left_fin.zRot = Mth.cos(anim) * 16.0F * ((float) Math.PI / 180F);
             this.right_fin.zRot = -this.left_fin.zRot;
             this.tail.yRot = this.left_fin.zRot;

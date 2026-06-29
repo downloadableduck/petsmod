@@ -9,18 +9,17 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.state.PolarBearRenderState;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientPolarBearRenderer extends PetRenderer<@NotNull ClientPolarBear, @NotNull PolarBearRenderState, @NotNull PolarBearModel> {
+public class ClientPolarBearRenderer extends PetRenderer<@NotNull ClientPolarBear, @NotNull ClientPolarBearModel> {
 
     public static final ModelLayerLocation POLAR_BEAR_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientpolarbear"), "main");
 
     public ClientPolarBearRenderer(EntityRendererProvider.Context context) {
-        super(context, new PolarBearModel(context.bakeLayer(ModelLayers.POLAR_BEAR)), 0.75f);
+        super(context, new ClientPolarBearModel(context.bakeLayer(ModelLayers.POLAR_BEAR)), 0.75f);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -29,19 +28,14 @@ public class ClientPolarBearRenderer extends PetRenderer<@NotNull ClientPolarBea
     }
 
     @Override
-    protected void scale(@NotNull PolarBearRenderState livingEntityRenderState, @NotNull PoseStack poseStack) {
+    protected void scale(@NotNull ClientPolarBear livingEntityRenderState, @NotNull PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(PolarBearRenderState livingEntityRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(ClientPolarBear livingEntityRenderState) {
         return ResourceLocation.withDefaultNamespace("textures/entity/bear/polarbear.png");
-    }
-
-    @Override
-    public PolarBearRenderState createRenderState() {
-        return new PolarBearRenderState();
     }
 }

@@ -8,13 +8,12 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.state.RabbitRenderState;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientRabbitRenderer extends PetRenderer<@NotNull ClientRabbit, @NotNull RabbitRenderState, @NotNull ClientRabbitModel> {
+public class ClientRabbitRenderer extends PetRenderer<@NotNull ClientRabbit, @NotNull ClientRabbitModel> {
     public static final ModelLayerLocation RABBIT_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientrabbit"), "main");
     public String rabbitTextureLocation;
 
@@ -23,41 +22,31 @@ public class ClientRabbitRenderer extends PetRenderer<@NotNull ClientRabbit, @No
     }
 
     public static LayerDefinition createBaseRabbitLayer() {
-        ClientRabbitModel.createBodyLayer(false);
+        ClientRabbitModel.createBodyLayer();
         return LayerDefinition.create(new MeshDefinition(), 64, 32);
     }
 
     @Override
-    protected void scale(@NotNull RabbitRenderState livingEntityRenderState, @NotNull PoseStack poseStack) {
+    protected void scale(@NotNull ClientRabbit livingEntityRenderState, @NotNull PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(RabbitRenderState rabbitRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(ClientRabbit rabbitRenderState) {
         switch (CONFIG.activePet) {
             case "brown" -> rabbitTextureLocation = "textures/entity/rabbit/brown.png";
-            case "white" -> rabbitTextureLocation = "textures/entity/rabbit/rabbit_white.png";
-            case "black" -> rabbitTextureLocation = "textures/entity/rabbit/rabbit_black.png";
-            case "gold" -> rabbitTextureLocation = "textures/entity/rabbit/rabbit_gold.png";
-            case "salt" -> rabbitTextureLocation = "textures/entity/rabbit/rabbit_salt.png";
-            case "splotched" -> rabbitTextureLocation = "textures/entity/rabbit/rabbit_white_splotched.png";
-            case "killer" -> rabbitTextureLocation = "textures/entity/rabbit/rabbit_caerbannog.png";
-            case "toast" -> rabbitTextureLocation = "textures/entity/rabbit/rabbit_toast.png";
-            case null, default -> rabbitTextureLocation = "textures/entity/rabbit/rabbit_brown.png";
+            case "white" -> rabbitTextureLocation = "textures/entity/rabbit/white.png";
+            case "black" -> rabbitTextureLocation = "textures/entity/rabbit/black.png";
+            case "gold" -> rabbitTextureLocation = "textures/entity/rabbit/gold.png";
+            case "salt" -> rabbitTextureLocation = "textures/entity/rabbit/salt.png";
+            case "splotched" -> rabbitTextureLocation = "textures/entity/rabbit/white_splotched.png";
+            case "killer" -> rabbitTextureLocation = "textures/entity/rabbit/caerbannog.png";
+            case "toast" -> rabbitTextureLocation = "textures/entity/rabbit/toast.png";
+            case null, default -> rabbitTextureLocation = "textures/entity/rabbit/brown.png";
         }
 
         return ResourceLocation.withDefaultNamespace(rabbitTextureLocation);
-    }
-
-    @Override
-    public RabbitRenderState createRenderState() {
-        return new RabbitRenderState();
-    }
-
-    @Override
-    public void extractRenderState(ClientRabbit rabbit, RabbitRenderState state, float f) {
-        super.extractRenderState(rabbit, state, f);
     }
 }

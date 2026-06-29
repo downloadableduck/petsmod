@@ -42,7 +42,7 @@ public class Koi extends FlyingPet {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createAnimalAttributes().add(Attributes.MAX_HEALTH, 6.0).add(Attributes.MOVEMENT_SPEED, 1.0f);
+        return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 6.0).add(Attributes.MOVEMENT_SPEED, 1.0f);
     }
 
     @Override
@@ -80,12 +80,12 @@ public class Koi extends FlyingPet {
     }
 
     public @Nullable Koi getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgeableMob partner) {
-        Koi koi = KOI.get().create(level, EntitySpawnReason.BREEDING);
+        Koi koi = KOI.get().create(level);
         koi.setServerEntity(true);
         return koi;
     }
 
-    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull EntitySpawnReason spawnReason, final @Nullable SpawnGroupData groupData) {
+    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull MobSpawnType spawnReason, final @Nullable SpawnGroupData groupData) {
         this.setServerEntity(true);
         return super.finalizeSpawn(level, difficulty, spawnReason, groupData);
     }

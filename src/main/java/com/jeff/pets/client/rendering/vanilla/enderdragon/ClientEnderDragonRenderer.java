@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.jeff.pets.client.Central.CONFIG;
 
 
-public class ClientEnderDragonRenderer extends PetRenderer<@NotNull ClientEnderDragon, @NotNull ClientEnderDragonRenderState, @NotNull ClientEnderDragonModel> {
+public class ClientEnderDragonRenderer extends PetRenderer<@NotNull ClientEnderDragon, ClientEnderDragonModel> {
 
     public static final ModelLayerLocation ENDER_DRAGON_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientenderdragon"), "main");
 
@@ -21,25 +21,14 @@ public class ClientEnderDragonRenderer extends PetRenderer<@NotNull ClientEnderD
     }
 
     @Override
-    protected void scale(@NotNull ClientEnderDragonRenderState livingEntityRenderState, @NotNull PoseStack poseStack) {
+    protected void scale(@NotNull ClientEnderDragon livingEntityRenderState, @NotNull PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.25f, 0.25f, 0.25f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientEnderDragonRenderState livingEntityRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(ClientEnderDragon livingEntityRenderState) {
         return ResourceLocation.withDefaultNamespace("textures/entity/enderdragon/dragon.png");
-    }
-
-    @Override
-    public ClientEnderDragonRenderState createRenderState() {
-        return new ClientEnderDragonRenderState();
-    }
-
-    @Override
-    public void extractRenderState(ClientEnderDragon dragon, ClientEnderDragonRenderState state, float f) {
-        super.extractRenderState(dragon, state, f);
-        state.flapTime = dragon.getId() + state.ageInTicks / 8;
     }
 }

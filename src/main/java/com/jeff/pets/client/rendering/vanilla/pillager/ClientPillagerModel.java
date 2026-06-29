@@ -1,13 +1,13 @@
 package com.jeff.pets.client.rendering.vanilla.pillager;
 
-import net.minecraft.client.model.EntityModel;
+import com.jeff.pets.mob.vanilla.hostile.ClientPillager;
+import com.jeff.pets.client.rendering.PetModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.renderer.entity.state.IllagerRenderState;
 import net.minecraft.util.Mth;
 
-public class ClientPillagerModel extends EntityModel<IllagerRenderState> {
+public class ClientPillagerModel extends PetModel<ClientPillager> {
     private final ModelPart head;
     private final ModelPart body;
     private final ModelPart leftArm;
@@ -50,9 +50,9 @@ public class ClientPillagerModel extends EntityModel<IllagerRenderState> {
     }
 
     @Override
-    public void setupAnim(IllagerRenderState illagerRenderState) {
-        float f = illagerRenderState.walkAnimationSpeed;
-        float g = illagerRenderState.walkAnimationPos;
+    public void setupAnim(ClientPillager illagerRenderState, float a, float c, float h, float b, float k) {
+        float f = illagerRenderState.walkAnimation.speed();
+        float g = illagerRenderState.walkAnimation.position();
         this.rightArm.xRot = Mth.cos(g * 0.6662F + (float) Math.PI) * 2.0F * f * 0.5F;
         this.rightArm.yRot = 0.0F;
         this.rightArm.zRot = 0.0F;
