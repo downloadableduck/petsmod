@@ -2194,7 +2194,7 @@ public class Central {
                 "axolotl", "bat", "batato", "bee", "blaze", "bogged",
                 "breeze", "camel", "cat", "cave spider", "chicken",
                 "cod", "cow",
-                "creaking", "creeper", "diamond chicken",
+                "creeper", "diamond chicken",
                 "dolphin", "donkey", "drowned", "duck", "dumbo octopus",
                 "elder guardian", "ender dragon", "enderman", "endermite", "evoker",
                 "fox", "frog",
