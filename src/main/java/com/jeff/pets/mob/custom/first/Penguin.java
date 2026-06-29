@@ -49,7 +49,7 @@ public class Penguin extends AbstractPet {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createAnimalAttributes().add(Attributes.MAX_HEALTH, 8.0F).add(Attributes.MOVEMENT_SPEED, 0.25F);
+        return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0F).add(Attributes.MOVEMENT_SPEED, 0.25F);
     }
 
     @Override
@@ -120,12 +120,12 @@ public class Penguin extends AbstractPet {
     }
 
     public @Nullable Penguin getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgeableMob partner) {
-        Penguin penguin = PENGUIN.create(level, EntitySpawnReason.BREEDING);
+        Penguin penguin = PENGUIN.create(level);
         penguin.setServerEntity(true);
         return penguin;
     }
 
-    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull EntitySpawnReason spawnReason, final @Nullable SpawnGroupData groupData) {
+    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull MobSpawnType spawnReason, final @Nullable SpawnGroupData groupData) {
         this.setServerEntity(true);
         return super.finalizeSpawn(level, difficulty, spawnReason, groupData);
     }

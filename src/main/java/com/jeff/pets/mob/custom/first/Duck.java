@@ -56,7 +56,7 @@ public class Duck extends AbstractPet {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createAnimalAttributes().add(Attributes.MAX_HEALTH, 8.0).add(Attributes.MOVEMENT_SPEED, 0.25F);
+        return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0).add(Attributes.MOVEMENT_SPEED, 0.25F);
     }
 
     public static float rotlerp(float start, float end) {
@@ -135,12 +135,12 @@ public class Duck extends AbstractPet {
     }
 
     public @Nullable Duck getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgeableMob partner) {
-        Duck duck = DUCK.create(level, EntitySpawnReason.BREEDING);
+        Duck duck = DUCK.create(level);
         duck.setServerEntity(true);
         return duck;
     }
 
-    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull EntitySpawnReason spawnReason, final @Nullable SpawnGroupData groupData) {
+    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull MobSpawnType spawnReason, final @Nullable SpawnGroupData groupData) {
         this.setServerEntity(true);
         this.entityData.set(DUCK_SKIN, this.random.nextInt(2));
         return super.finalizeSpawn(level, difficulty, spawnReason, groupData);
@@ -208,7 +208,7 @@ public class Duck extends AbstractPet {
                 this.setYHeadRot(this.getYRot());
                 this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.yHeadRot, 50.0f);
 
-                double speed = owner.getSpeed() * 2.0;
+                double speed = owner.getSpeed() * 2;
                 this.setDeltaMovement(dir.x * speed, this.getDeltaMovement().y, dir.z * speed);
             } else {
                 this.lookAt(owner, 5, 0);
@@ -217,12 +217,14 @@ public class Duck extends AbstractPet {
 
             int yHeightToOwner = (int) (owner.getY() - this.getY());
 
-            if ((yHeightToOwner > 1 || (this.horizontalCollision && this.onGround())) && !this.isServerEntity()) {
+            if (this.horizontalCollision && this.onGround()) {
                 this.jumpFromGround();
+                this.processFlappingMovement();
             }
 
-            if (yHeightToOwner > -1 && !this.isServerEntity()) {
+            if (yHeightToOwner > -1) {
                 this.setDeltaMovement(this.getDeltaMovement().add(0, -0.01, 0));
+                this.processFlappingMovement();
             }
 
             if (!this.onGround()) {
@@ -252,14 +254,10 @@ public class Duck extends AbstractPet {
             }
         }
         if (owner != null) {
-            if (distanceTo(owner) >= 10 && !this.isServerEntity()) {
+            if (distanceTo(owner) >= 10) {
                 this.tryToTeleportToOwner();
             }
         }
-
-        /*if (this.walkAnimation.isMoving()) {
-            level().playLocalSound(this, SoundEvents.CHICKEN_STEP, SoundSource.NEUTRAL, 1.0f, 1.0f);
-        }*/
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {

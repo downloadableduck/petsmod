@@ -1,14 +1,15 @@
 package com.jeff.pets.rendering.vanilla.evoker;
 
-import net.minecraft.client.model.EntityModel;
+import com.jeff.pets.rendering.PetModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.renderer.entity.state.EvokerRenderState;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientEvokerModel extends EntityModel<@NotNull EvokerRenderState> {
+
+public class ClientEvokerModel<T extends LivingEntity> extends PetModel<@NotNull T> {
     private final ModelPart head;
     private final ModelPart body;
     private final ModelPart arms;
@@ -55,10 +56,9 @@ public class ClientEvokerModel extends EntityModel<@NotNull EvokerRenderState> {
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
 
-    public void setupAnim(EvokerRenderState illagerRenderState) {
-        super.setupAnim(illagerRenderState);
-        float f = illagerRenderState.walkAnimationSpeed;
-        float g = illagerRenderState.walkAnimationPos;
+    public void setupAnim(T illagerRenderState, float x, float z, float h, float m, float i) {
+        float f = illagerRenderState.walkAnimation.speed();
+        float g = illagerRenderState.walkAnimation.position();
         this.rightLeg.xRot = Mth.cos(g * 0.6662F) * 1.4F * f * 0.5F;
         this.rightLeg.yRot = 0.0F;
         this.rightLeg.zRot = 0.0F;

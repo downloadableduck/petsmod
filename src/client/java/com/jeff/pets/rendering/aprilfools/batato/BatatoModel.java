@@ -1,6 +1,10 @@
 package com.jeff.pets.rendering.aprilfools.batato;
 
-import net.minecraft.client.model.EntityModel;
+import com.jeff.pets.mob.aprilfools.Batato;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.animation.definitions.BatAnimation;
+import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
@@ -8,13 +12,12 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.state.BatRenderState;
 import net.minecraft.core.Direction;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.world.entity.AnimationState;
 
 import java.util.Set;
 
-public class BatatoModel extends EntityModel<@NotNull BatRenderState> {
+public class BatatoModel extends HierarchicalModel<Batato> {
     private final ModelPart root;
     private final ModelPart body;
     private final ModelPart rightWing;
@@ -23,9 +26,10 @@ public class BatatoModel extends EntityModel<@NotNull BatRenderState> {
     private final ModelPart leftWingTip;
     private final ModelPart feet;
     private final ModelPart head;
+    AnimationState flyAnimationState = new AnimationState();
 
     public BatatoModel(ModelPart modelPart) {
-        super(modelPart, RenderType::entityCutout);
+        super(RenderType::entityCutout);
         this.root = modelPart;
         this.body = modelPart.getChild("body");
         this.head = modelPart.getChild("head");
@@ -50,7 +54,20 @@ public class BatatoModel extends EntityModel<@NotNull BatRenderState> {
     }
 
     @Override
-    public void setupAnim(BatRenderState batato) {
-        super.setupAnim(batato);
+    public void setupAnim(Batato bat, float f, float g, float h, float i, float j) {
+        this.root.getAllParts().forEach(ModelPart::resetPose);
+        flyAnimationState.start(0);
+
+        this.animate(flyAnimationState, BatAnimation.BAT_FLYING, h, 1.0F);
+    }
+
+    @Override
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int j, int k) {
+        this.root.render(poseStack, vertexConsumer, i, j);
+    }
+
+    @Override
+    public ModelPart root() {
+        return this.root;
     }
 }

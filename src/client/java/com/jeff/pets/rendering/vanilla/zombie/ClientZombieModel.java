@@ -1,13 +1,14 @@
 package com.jeff.pets.rendering.vanilla.zombie;
 
-import net.minecraft.client.model.ZombieModel;
+import com.jeff.pets.mob.AbstractPet;
+import net.minecraft.client.model.AnimationUtils;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.entity.state.ZombieRenderState;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.Central.CONFIG;
 
-public class ClientZombieModel extends ZombieModel<@NotNull ZombieRenderState> {
+public class ClientZombieModel<T extends AbstractPet> extends HumanoidModel<@NotNull T> {
 
     private final ModelPart head;
 
@@ -17,12 +18,13 @@ public class ClientZombieModel extends ZombieModel<@NotNull ZombieRenderState> {
     }
 
     @Override
-    public void setupAnim(ZombieRenderState state) {
-        super.setupAnim(state);
+    public void setupAnim(T state, float f, float g, float h, float i, float j) {
+        super.setupAnim(state, f, g, h, i, j);
         if (CONFIG.isBaby) {
             this.head.zScale = 1.5f;
             this.head.xScale = 1.5f;
             this.head.yScale = 1.5f;
         }
+        AnimationUtils.animateZombieArms(this.leftArm, this.rightArm, true, this.attackTime, h);
     }
 }

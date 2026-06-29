@@ -1,16 +1,15 @@
 package com.jeff.pets.rendering.aprilfools.batato;
 
-import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.mob.aprilfools.Batato;
+import com.jeff.pets.rendering.PetRenderer;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.state.BatRenderState;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 
-public class BatatoRenderer extends PetRenderer<@NotNull Batato, @NotNull BatRenderState, @NotNull BatatoModel> {
+public class BatatoRenderer extends PetRenderer<@NotNull Batato, @NotNull BatatoModel> {
 
     public static final ModelLayerLocation BATATO_LOCAITON = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(MOD_ID, "batato"), "main");
 
@@ -19,18 +18,7 @@ public class BatatoRenderer extends PetRenderer<@NotNull Batato, @NotNull BatRen
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(BatRenderState livingEntityRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(Batato livingEntityRenderState) {
         return ResourceLocation.withDefaultNamespace("textures/entity/batato.png");
-    }
-
-    @Override
-    public BatRenderState createRenderState() {
-        return new BatRenderState();
-    }
-
-    @Override
-    public void extractRenderState(Batato batato, BatRenderState state, float f) {
-        super.extractRenderState(batato, state, f);
-        state.flyAnimationState.start(0);
     }
 }

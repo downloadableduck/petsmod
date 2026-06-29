@@ -4,11 +4,15 @@ import com.jeff.pets.mob.GroundPet;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.PowerableMob;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class SmilingCreeper extends GroundPet {
+public class SmilingCreeper extends GroundPet implements PowerableMob {
+
+    public boolean isPowered = false;
+
     public SmilingCreeper(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
         super(entityType, level);
     }
@@ -26,5 +30,10 @@ public class SmilingCreeper extends GroundPet {
     @Override
     protected SoundEvent getAmbientSound() {
         return SoundEvents.CREEPER_PRIMED;
+    }
+
+    @Override
+    public boolean isPowered() {
+        return isPowered;
     }
 }

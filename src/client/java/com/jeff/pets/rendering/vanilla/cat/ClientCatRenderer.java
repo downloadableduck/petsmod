@@ -1,22 +1,22 @@
 package com.jeff.pets.rendering.vanilla.cat;
 
 import com.jeff.pets.PetsInitializer;
-import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientCat;
+import com.jeff.pets.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.state.CatRenderState;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.Central.CONFIG;
 
-public class ClientCatRenderer extends PetRenderer<@NotNull ClientCat, @NotNull CatRenderState, @NotNull ClientCatModel> {
+public class ClientCatRenderer extends PetRenderer<@NotNull ClientCat, @NotNull ClientCatModel> {
     public static final ModelLayerLocation CAT_LOCATION = new ModelLayerLocation(
             ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, "clientcat"), "main"
     );
@@ -31,14 +31,14 @@ public class ClientCatRenderer extends PetRenderer<@NotNull ClientCat, @NotNull 
     }
 
     @Override
-    protected void scale(CatRenderState state, @NotNull PoseStack poseStack) {
+    protected void scale(ClientCat state, @NotNull PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(CatRenderState livingEntityRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(ClientCat livingEntityRenderState) {
         return switch (CONFIG.catSkin) {
             case "black" -> ResourceLocation.withDefaultNamespace("textures/entity/cat/all_black.png");
             case "tuxedo" -> ResourceLocation.withDefaultNamespace("textures/entity/cat/black.png");
@@ -58,13 +58,8 @@ public class ClientCatRenderer extends PetRenderer<@NotNull ClientCat, @NotNull 
     }
 
     @Override
-    public CatRenderState createRenderState() {
-        return new CatRenderState();
-    }
-
-    @Override
-    public void extractRenderState(ClientCat cat, CatRenderState state, float f) {
-        super.extractRenderState(cat, state, f);
-        state.isSitting = cat.isPassenger();
+    public void render(ClientCat cat, float f, float g, PoseStack poseStack, MultiBufferSource source, int i) {
+        super.render(cat, f, g, poseStack, source, i);
+        cat.setInSittingPose(cat.isPassenger());
     }
 }

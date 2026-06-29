@@ -36,6 +36,7 @@ public class Stingray extends FlyingPet {
     public static final EntityDataAccessor<@NotNull Boolean> IS_SERVER_ENTITY =
             SynchedEntityData.defineId(Stingray.class, EntityDataSerializers.BOOLEAN);
     private final float nextFlap = 1.0F;
+    public float oFlap;
     public float flap;
     public float flapping = 1.0F;
 
@@ -45,7 +46,7 @@ public class Stingray extends FlyingPet {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createAnimalAttributes().add(Attributes.MAX_HEALTH, 10.0).add(Attributes.MOVEMENT_SPEED, 0.25F);
+        return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 10.0).add(Attributes.MOVEMENT_SPEED, 0.25F);
     }
 
     @Override
@@ -94,12 +95,12 @@ public class Stingray extends FlyingPet {
     }
 
     public @Nullable Stingray getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgeableMob partner) {
-        Stingray stringray = STINGRAY.create(level, EntitySpawnReason.BREEDING);
+        Stingray stringray = STINGRAY.create(level);
         stringray.setServerEntity(true);
         return stringray;
     }
 
-    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull EntitySpawnReason spawnReason, final @Nullable SpawnGroupData groupData) {
+    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull MobSpawnType spawnReason, final @Nullable SpawnGroupData groupData) {
         this.setServerEntity(true);
         return super.finalizeSpawn(level, difficulty, spawnReason, groupData);
     }
@@ -156,6 +157,14 @@ public class Stingray extends FlyingPet {
     @Override
     public void tick() {
         super.tick();
+        this.oFlap = this.flap;
+        if (!this.onGround() && this.flapping < 1.0F) {
+            this.flapping = 1.0F;
+        }
+
+        this.flapping *= 0.9F;
+
+        this.flap += this.flapping * 2.0F;
         LivingEntity owner = this.getOwner();
         if (owner != null) {
 

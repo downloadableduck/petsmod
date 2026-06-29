@@ -1,18 +1,20 @@
 package com.jeff.pets.rendering.aprilfools.toxifin;
 
-import net.minecraft.client.model.EntityModel;
+import com.jeff.pets.rendering.PetModel;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.entity.state.GuardianRenderState;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
-public class ToxifinSlabModel extends EntityModel<@NotNull GuardianRenderState> {
+public class ToxifinSlabModel<T extends LivingEntity> extends PetModel<@NotNull T> {
     private static final float A2;
     private static final float A12;
     private static final float[] SPIKE_X_ROT_SLAB;
@@ -107,35 +109,64 @@ public class ToxifinSlabModel extends EntityModel<@NotNull GuardianRenderState> 
         return LayerDefinition.create(meshDefinition, 64, 64);
     }
 
+    private static float getSpikeX(int i, float f, float g) {
+        return SPIKE_X_SLAB[i] * getSpikeOffset(i, f, g);
+    }
+
+    private static float getSpikeY(int i, float f, float g) {
+        return 16.0F + SPIKE_Y_SLAB[i] * getSpikeOffset(i, f, g);
+    }
+
+    private static float getSpikeZ(int i, float f, float g) {
+        return SPIKE_Z_SLAB[i] * getSpikeOffset(i, f, g);
+    }
+
+    private static float getSpikeOffset(int i, float f, float g) {
+        return 1.0F + Mth.cos(f * 1.5F + (float) i) * 0.01F - g;
+    }
+
     public ModelPart getRoot() {
         return this.root;
     }
 
     @Override
-    public void setupAnim(GuardianRenderState guardianRenderState) {
-        super.setupAnim(guardianRenderState);
-        this.head.yRot = guardianRenderState.yRot * ((float) Math.PI / 180F);
-        this.head.xRot = guardianRenderState.xRot * ((float) Math.PI / 180F);
-        if (guardianRenderState.lookAtPosition != null && guardianRenderState.lookDirection != null) {
-            double d = guardianRenderState.lookAtPosition.y - guardianRenderState.eyePosition.y;
+    public void setupAnim(T guardian, float f, float g, float h, float i, float j) {
+        float k = h - (float) guardian.tickCount;
+        this.head.yRot = i * ((float) Math.PI / 180F);
+        this.head.xRot = j * ((float) Math.PI / 180F);
+        float l = 0F;
+        this.setupSpikes(h, l);
+        Entity entity = Minecraft.getInstance().getCameraEntity();
+
+        if (entity != null) {
+            Vec3 vec3 = entity.getEyePosition(0.0F);
+            Vec3 vec32 = guardian.getEyePosition(0.0F);
+            double d = vec3.y - vec32.y;
             if (d > (double) 0.0F) {
                 this.eye.y = 0.0F;
             } else {
                 this.eye.y = 1.0F;
             }
 
-            Vec3 vec3 = guardianRenderState.lookDirection;
-            vec3 = new Vec3(vec3.x, 0.0F, vec3.z);
-            Vec3 vec32 = (new Vec3(guardianRenderState.eyePosition.x - guardianRenderState.lookAtPosition.x, 0.0F, guardianRenderState.eyePosition.z - guardianRenderState.lookAtPosition.z)).normalize().yRot(((float) Math.PI / 2F));
-            double e = vec3.dot(vec32);
+            Vec3 vec33 = guardian.getViewVector(0.0F);
+            vec33 = new Vec3(vec33.x, (double) 0.0F, vec33.z);
+            Vec3 vec34 = (new Vec3(vec32.x - vec3.x, (double) 0.0F, vec32.z - vec3.z)).normalize().yRot(((float) Math.PI / 2F));
+            double e = vec33.dot(vec34);
             this.eye.x = Mth.sqrt((float) Math.abs(e)) * 2.0F * (float) Math.signum(e);
         }
 
         this.eye.visible = true;
-        float g = guardianRenderState.tailAnimation;
-        this.tailParts[0].yRot = Mth.sin(g) * (float) Math.PI * 0.05F;
-        this.tailParts[1].yRot = Mth.sin(g) * (float) Math.PI * 0.1F;
-        this.tailParts[2].yRot = Mth.sin(g) * (float) Math.PI * 0.15F;
+        float m = h;
+        this.tailParts[0].yRot = Mth.sin(m) * (float) Math.PI * 0.05F;
+        this.tailParts[1].yRot = Mth.sin(m) * (float) Math.PI * 0.1F;
+        this.tailParts[2].yRot = Mth.sin(m) * (float) Math.PI * 0.15F;
     }
 
+    private void setupSpikes(float f, float g) {
+        for (int i = 0; i < 12; ++i) {
+            this.spikeParts[i].x = getSpikeX(i, f, g);
+            this.spikeParts[i].y = getSpikeY(i, f, g);
+            this.spikeParts[i].z = getSpikeZ(i, f, g);
+        }
+    }
 }

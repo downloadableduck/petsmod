@@ -1,12 +1,13 @@
 package com.jeff.pets.rendering.custom.aquatic.dumbo_octopus;
 
-import net.minecraft.client.model.EntityModel;
+import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
+import com.jeff.pets.rendering.PetModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import org.jetbrains.annotations.NotNull;
 
-public class DumboOctopusModel extends EntityModel<@NotNull DumboOctopusRenderState> {
+public class DumboOctopusModel extends PetModel<@NotNull DumboOctopus> {
     private final ModelPart body;
     private final ModelPart left_ear;
     private final ModelPart right_ear;
@@ -69,9 +70,9 @@ public class DumboOctopusModel extends EntityModel<@NotNull DumboOctopusRenderSt
 
 
     @Override
-    public void setupAnim(DumboOctopusRenderState state) {
-        super.setupAnim(state);
-        if (state.walkAnimationSpeed > 0) {
+    public void setupAnim(DumboOctopus state, float f, float g, float h, float i, float k) {
+        super.setupAnim(state, f, g, h, i, k);
+        if (state.walkAnimation.speed() > 0) {
             leg1.zRot = -state.tentacleAngle / 10;
             float rot = leg1.zRot;
             leg2.zRot = rot;

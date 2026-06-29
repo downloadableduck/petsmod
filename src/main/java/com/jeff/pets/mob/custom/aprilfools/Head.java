@@ -39,12 +39,12 @@ public class Head extends AbstractPet {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createAnimalAttributes().add(Attributes.MAX_HEALTH, 12.0F).add(Attributes.MOVEMENT_SPEED, 0.25F);
+        return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 12.0F).add(Attributes.MOVEMENT_SPEED, 0.25F);
     }
 
     @Override
     public @Nullable AgeableMob getBreedOffspring(@NotNull ServerLevel serverLevel, @NotNull AgeableMob ageableMob) {
-        return HEAD.create(serverLevel, EntitySpawnReason.BREEDING);
+        return HEAD.create(serverLevel);
     }
 
     @Override
@@ -76,9 +76,9 @@ public class Head extends AbstractPet {
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull EntitySpawnReason spawnReason, final @Nullable SpawnGroupData groupData) {
+    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, MobSpawnType mobSpawnType, final @Nullable SpawnGroupData groupData) {
         this.setServerEntity(true);
-        return super.finalizeSpawn(level, difficulty, spawnReason, groupData);
+        return super.finalizeSpawn(level, difficulty, mobSpawnType, groupData);
     }
 
     @Override

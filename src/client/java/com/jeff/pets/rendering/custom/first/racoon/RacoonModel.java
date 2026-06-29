@@ -1,6 +1,7 @@
 package com.jeff.pets.rendering.custom.first.racoon;
 
-import net.minecraft.client.model.EntityModel;
+import com.jeff.pets.mob.custom.first.Racoon;
+import com.jeff.pets.rendering.PetModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
@@ -9,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.Central.CONFIG;
 
-public class RacoonModel extends EntityModel<@NotNull RacoonRenderState> {
+public class RacoonModel extends PetModel<@NotNull Racoon> {
     private final ModelPart head;
     private final ModelPart body;
     private final ModelPart leftHindLeg;
@@ -55,10 +56,11 @@ public class RacoonModel extends EntityModel<@NotNull RacoonRenderState> {
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
 
-    public void setupAnim(RacoonRenderState state) {
-        super.setupAnim(state);
-        float animSpeed = state.walkAnimationSpeed;
-        float animPos = state.walkAnimationPos;
+    @Override
+    public void setupAnim(Racoon state, float f, float g, float h, float i, float k) {
+        super.setupAnim(state, f, g, h, i, k);
+        float animSpeed = state.walkAnimation.speed();
+        float animPos = state.walkAnimation.position();
         this.rightFrontLeg.xRot = Mth.cos(animPos * 0.6662F + (float) Math.PI) * 1.4F * animSpeed;
         this.leftFrontLeg.xRot = Mth.cos(animPos * 0.6662F) * 1.4F * animSpeed;
         this.rightHindLeg.xRot = Mth.cos(animPos * 0.6662F + (float) Math.PI) * 1.4F * animSpeed;
@@ -67,12 +69,12 @@ public class RacoonModel extends EntityModel<@NotNull RacoonRenderState> {
         this.leftHindLeg.visible = true;
         this.rightFrontLeg.visible = true;
         this.leftFrontLeg.visible = true;
-        if (state.isPassenger) {
+        if (state.isPassenger()) {
             this.root.z -= 2f;
             this.body.xRot = ((float) Math.PI / 2.4F);
             ModelPart modelPart = this.body;
-            modelPart.y -= 7.0F * animPos;
-            modelPart.z += 3.0F * animPos;
+            //modelPart.y -= 7.0F * animPos;
+            //modelPart.xRot -= 5;
             this.tail.xRot = ((float) Math.PI / 4F);
             modelPart = this.tail;
             modelPart.z -= animPos + 1;
@@ -92,7 +94,7 @@ public class RacoonModel extends EntityModel<@NotNull RacoonRenderState> {
             this.rightFrontLeg.xRot = -0.2617994F;
             this.leftFrontLeg.xRot = -0.2617994F;
         }
-        if ((CONFIG.isBaby && !state.isServerEntity) || (state.isBaby && state.isServerEntity)) {
+        if ((CONFIG.isBaby)) {
             this.head.xScale = 1.5f;
             this.head.yScale = 1.5f;
             this.head.zScale = 1.5f;

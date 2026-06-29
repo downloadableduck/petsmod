@@ -5,10 +5,11 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.monster.hoglin.HoglinBase;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientHoglin extends GroundPet {
+public class ClientHoglin extends GroundPet implements HoglinBase {
     public ClientHoglin(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
         super(entityType, level);
     }
@@ -26,5 +27,10 @@ public class ClientHoglin extends GroundPet {
     @Override
     protected SoundEvent getAmbientSound() {
         return SoundEvents.HOGLIN_AMBIENT;
+    }
+
+    @Override
+    public int getAttackAnimationRemainingTicks() {
+        return 0;
     }
 }

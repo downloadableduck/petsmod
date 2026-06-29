@@ -1,13 +1,13 @@
 package com.jeff.pets.rendering.vanilla.piglin;
 
+import com.jeff.pets.mob.vanilla.neutral.ClientPiglin;
 import net.minecraft.client.model.PiglinModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.entity.state.PiglinRenderState;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.Central.CONFIG;
 
-public class ClientPiglinModel extends PiglinModel {
+public class ClientPiglinModel extends PiglinModel<ClientPiglin> {
 
     private final ModelPart head;
 
@@ -16,8 +16,9 @@ public class ClientPiglinModel extends PiglinModel {
         this.head = modelPart.getChild("head");
     }
 
-    public void setupAnim(@NotNull PiglinRenderState state) {
-        super.setupAnim(state);
+    @Override
+    public void setupAnim(@NotNull ClientPiglin state, float f, float g, float h, float i, float k) {
+        super.setupAnim(state, f, g, h, i, k);
         if (CONFIG.isBaby) {
             head.xScale = 1.5f;
             head.yScale = 1.5f;

@@ -1,14 +1,14 @@
 package com.jeff.pets.rendering.custom.aquatic.koi;
 
-import com.jeff.pets.rendering.custom.PetRenderState;
-import net.minecraft.client.model.EntityModel;
+import com.jeff.pets.mob.custom.aquatic.Koi;
+import com.jeff.pets.rendering.PetModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
-public class KoiModel extends EntityModel<@NotNull PetRenderState> {
+public class KoiModel extends PetModel<@NotNull Koi> {
     private final ModelPart body;
     private final ModelPart tail_fin;
     private final ModelPart left_fin;
@@ -58,9 +58,8 @@ public class KoiModel extends EntityModel<@NotNull PetRenderState> {
     }
 
     @Override
-    public void setupAnim(PetRenderState state) {
-        super.setupAnim(state);
-        this.body.yRot = -1.0f * 0.25F * Mth.sin(1.0f * 0.6F * state.ageInTicks);
+    public void setupAnim(Koi state, float f, float g, float ageInTicks, float m, float k) {
+        this.body.yRot = -1.0f * 0.25F * Mth.sin(1.0f * 0.6F * ageInTicks);
         this.tail_fin.yRot = -this.body.yRot * 1.75f;
     }
 }

@@ -26,7 +26,6 @@ import com.jeff.pets.rendering.custom.aprilfools.head.HeadSkin;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
-import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import com.mojang.brigadier.tree.RootCommandNode;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
@@ -43,10 +42,8 @@ import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
-import net.minecraft.client.multiplayer.ClientSuggestionProvider;
 import net.minecraft.client.resources.SplashManager;
 import net.minecraft.commands.SharedSuggestionProvider;
-import net.minecraft.commands.synchronization.SuggestionProviders;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -153,7 +150,6 @@ public class Central implements ClientModInitializer {
     public static ClientWolf wolf;
     public static ClientBlaze blaze;
     public static ClientBreeze breeze;
-    public static ClientCreaking creaking;
     public static ClientCreeper creeper;
     public static ClientElderGuardian elderGuardian;
     public static ClientEndermite endermite;
@@ -266,7 +262,6 @@ public class Central implements ClientModInitializer {
         Utils.despawnEntity(wolf);
         Utils.despawnEntity(blaze);
         Utils.despawnEntity(breeze);
-        Utils.despawnEntity(creaking);
         Utils.despawnEntity(creeper);
         Utils.despawnEntity(elderGuardian);
         Utils.despawnEntity(endermite);
@@ -369,7 +364,6 @@ public class Central implements ClientModInitializer {
         wolf = new ClientWolf(PetsInitializer.WOLF, world);
         blaze = new ClientBlaze(PetsInitializer.BLAZE, world);
         breeze = new ClientBreeze(PetsInitializer.BREEZE, world);
-        creaking = new ClientCreaking(PetsInitializer.CREAKING, world);
         creeper = new ClientCreeper(PetsInitializer.CREEPER, world);
         elderGuardian = new ClientElderGuardian(PetsInitializer.ELDER_GUARDIAN_COOKIE, world);
         endermite = new ClientEndermite(PetsInitializer.ENDERMITE, world);
@@ -510,8 +504,6 @@ public class Central implements ClientModInitializer {
                 Utils.summonPet(blaze, CONFIG.blazeName);
             } else if (Objects.equals(CONFIG.activePet, "breeze")) {
                 Utils.summonPet(breeze, CONFIG.breezeName);
-            } else if (Objects.equals(CONFIG.activePet, "creaking")) {
-                Utils.summonPet(creaking, CONFIG.creakingName);
             } else if (Objects.equals(CONFIG.activePet, "creeper")) {
                 Utils.summonPet(creeper, CONFIG.creeperName);
             } else if (Objects.equals(CONFIG.activePet, "elder_guardian")) {
@@ -663,7 +655,6 @@ public class Central implements ClientModInitializer {
         Utils.checkName("wolf", wolf, CONFIG.wolfName);
         Utils.checkName("blaze", blaze, CONFIG.blazeName);
         Utils.checkName("breeze", breeze, CONFIG.breezeName);
-        Utils.checkName("creaking", creaking, CONFIG.creakingName);
         Utils.checkName("creeper", creeper, CONFIG.creeperName);
         Utils.checkName("elder_guardian", elderGuardian, CONFIG.elderGuardianName);
         Utils.checkName("endermite", endermite, CONFIG.endermiteName);
@@ -722,7 +713,7 @@ public class Central implements ClientModInitializer {
             case "cat" -> CAT_SKINS;
             case "axolotl" -> AXOLOTL_SKINS;
             case "camel" -> CAMEL_SKINS;
-            case "chicken", "cow", "frog", "pig" -> TEMPERATE_COLD_WARM;
+            case "frog" -> TEMPERATE_COLD_WARM;
             case "creeper", "nerd_creeper", "smiling_creeper" -> CREEPER_SKINS;
             case "copper_golem" -> COPPER_GOLEM_SKINS;
             case "horse" -> HORSE_SKINS;
@@ -1839,8 +1830,6 @@ public class Central implements ClientModInitializer {
                 Utils.setActivePet(blaze, "blaze");
             } else if (Objects.equals(species, "breeze")) {
                 Utils.setActivePet(breeze, "breeze");
-            } else if (Objects.equals(species, "creaking")) {
-                Utils.setActivePet(creaking, "creaking");
             } else if (Objects.equals(species, "creeper")) {
                 Utils.setActivePet(creeper, "creeper");
             } else if (Objects.equals(species, "elder_guardian") || Objects.equals(species, "elder guardian")) {
@@ -2155,12 +2144,12 @@ public class Central implements ClientModInitializer {
                 "axolotl", "bat", "batato", "bee", "blaze", "bogged",
                 "breeze", "camel", "cat", "cave spider", "chicken",
                 "cod", "cow",
-                "creaking", "creeper", "diamond chicken",
+                "creeper", "diamond chicken",
                 "dolphin", "donkey", "drowned", "duck", "dumbo octopus",
                 "elder guardian", "ender dragon", "enderman", "endermite", "evoker",
                 "fox", "frog",
                 "ghast", "goat", "guardian",
-                 "head", "hoglin", "horse",
+                "head", "hoglin", "horse",
                 "husk", "iron golem",
                 "koi", "llama",
                 "love golem", "magma cube", "mega spud",

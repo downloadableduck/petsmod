@@ -19,7 +19,6 @@ public enum PetList implements NameableEnum {
     chicken,
     cod,
     cow,
-    creaking,
     creeper,
     diamond_chicken,
     dolphin,

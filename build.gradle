@@ -139,3 +139,7 @@ tasks.named('jar') {
     archiveVersion = project.mod_version
     archiveClassifier = project.minecraft_version
 }
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs << "-Xmaxerrs" << "2000"
+}

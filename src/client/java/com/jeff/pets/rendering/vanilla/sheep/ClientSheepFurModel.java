@@ -1,24 +1,39 @@
 package com.jeff.pets.rendering.vanilla.sheep;
 
-import net.minecraft.client.model.SheepFurModel;
+import com.jeff.pets.mob.vanilla.passive.ClientSheep;
+import net.minecraft.client.model.QuadrupedModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.entity.state.SheepRenderState;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.*;
 
 import static com.jeff.pets.Central.CONFIG;
 
-public class ClientSheepFurModel extends SheepFurModel {
-
-    private final ModelPart head;
+public class ClientSheepFurModel extends QuadrupedModel<ClientSheep> {
+    private float headXRot;
 
     public ClientSheepFurModel(ModelPart modelPart) {
-        super(modelPart);
-        this.head = modelPart.getChild("head");
+        super(modelPart, false, 8.0F, 4.0F, 2.0F, 2.0F, 24);
     }
 
-    @Override
-    public void setupAnim(@NotNull SheepRenderState state) {
-        super.setupAnim(state);
+    public static LayerDefinition createFurLayer() {
+        MeshDefinition meshDefinition = new MeshDefinition();
+        PartDefinition partDefinition = meshDefinition.getRoot();
+        partDefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -4.0F, -4.0F, 6.0F, 6.0F, 6.0F, new CubeDeformation(0.6F)), PartPose.offset(0.0F, 6.0F, -8.0F));
+        partDefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(28, 8).addBox(-4.0F, -10.0F, -7.0F, 8.0F, 16.0F, 6.0F, new CubeDeformation(1.75F)), PartPose.offsetAndRotation(0.0F, 5.0F, 2.0F, ((float) Math.PI / 2F), 0.0F, 0.0F));
+        CubeListBuilder cubeListBuilder = CubeListBuilder.create().texOffs(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 6.0F, 4.0F, new CubeDeformation(0.5F));
+        partDefinition.addOrReplaceChild("right_hind_leg", cubeListBuilder, PartPose.offset(-3.0F, 12.0F, 7.0F));
+        partDefinition.addOrReplaceChild("left_hind_leg", cubeListBuilder, PartPose.offset(3.0F, 12.0F, 7.0F));
+        partDefinition.addOrReplaceChild("right_front_leg", cubeListBuilder, PartPose.offset(-3.0F, 12.0F, -5.0F));
+        partDefinition.addOrReplaceChild("left_front_leg", cubeListBuilder, PartPose.offset(3.0F, 12.0F, -5.0F));
+        return LayerDefinition.create(meshDefinition, 64, 32);
+    }
+
+    public void prepareMobModel(ClientSheep sheep, float f, float g, float h) {
+        super.prepareMobModel(sheep, f, g, h);
+    }
+
+    public void setupAnim(ClientSheep sheep, float f, float g, float h, float i, float j) {
+        super.setupAnim(sheep, f, g, h, i, j);
         if (CONFIG.isBaby) {
             head.xScale = 2.0f;
             head.yScale = 2.0f;

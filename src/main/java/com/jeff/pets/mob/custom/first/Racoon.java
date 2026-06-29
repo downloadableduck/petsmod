@@ -39,7 +39,7 @@ public class Racoon extends AbstractPet {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createAnimalAttributes().add(Attributes.MAX_HEALTH, 8.0F).add(Attributes.MOVEMENT_SPEED, 0.23F);
+        return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0F).add(Attributes.MOVEMENT_SPEED, 0.23F);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class Racoon extends AbstractPet {
     }
 
     @Override
-    public @Nullable SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason spawnReason, @Nullable SpawnGroupData groupData) {
+    public @Nullable SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData groupData) {
         this.setServerEntity(true);
         return super.finalizeSpawn(level, difficulty, spawnReason, groupData);
     }
@@ -193,7 +193,7 @@ public class Racoon extends AbstractPet {
 
     @Override
     public @Nullable AgeableMob getBreedOffspring(@NotNull ServerLevel serverLevel, @NotNull AgeableMob ageableMob) {
-        Racoon racoon = RACOON.create(serverLevel, EntitySpawnReason.BREEDING);
+        Racoon racoon = RACOON.create(serverLevel);
         racoon.setServerEntity(false);
         return racoon;
     }
