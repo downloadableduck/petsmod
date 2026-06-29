@@ -1,6 +1,5 @@
 classTweaker v1 named
 accessible field net/minecraft/client/gui/screens/ChatScreen commandSuggestions Lnet/minecraft/client/gui/components/CommandSuggestions;
-mutable field net/minecraft/client/renderer/entity/state/WitherRenderState yHeadRots [F
 accessible field net/minecraft/client/model/RabbitModel head Lnet/minecraft/client/model/geom/ModelPart;
 mutable field net/minecraft/client/gui/components/LogoRenderer MINECRAFT_LOGO Lnet/minecraft/resources/ResourceLocation;
 mutable field net/minecraft/client/gui/components/LogoRenderer MINECRAFT_EDITION Lnet/minecraft/resources/ResourceLocation;
