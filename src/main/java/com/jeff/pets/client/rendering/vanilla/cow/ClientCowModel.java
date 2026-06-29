@@ -2,11 +2,11 @@ package com.jeff.pets.client.rendering.vanilla.cow;
 
 import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.world.entity.Entity;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientCowModel extends CowModel {
+public class ClientCowModel<T extends Entity> extends CowModel<T> {
 
     private final ModelPart head;
 
@@ -16,12 +16,16 @@ public class ClientCowModel extends CowModel {
     }
 
     @Override
-    public void setupAnim(LivingEntityRenderState state) {
-        super.setupAnim(state);
+    public void setupAnim(T state, float f, float g, float h, float i, float k) {
+        super.setupAnim(state, f, g, h, i, k);
         if (CONFIG.isBaby) {
             head.xScale = 2.0f;
             head.yScale = 2.0f;
             head.zScale = 2.0f;
+        } else {
+            head.xScale = 1.0f;
+            head.yScale = 1.0f;
+            head.zScale = 1.0f;
         }
     }
 }

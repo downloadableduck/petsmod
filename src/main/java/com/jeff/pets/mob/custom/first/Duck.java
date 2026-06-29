@@ -56,7 +56,7 @@ public class Duck extends AbstractPet {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createAnimalAttributes().add(Attributes.MAX_HEALTH, 8.0).add(Attributes.MOVEMENT_SPEED, 0.25F);
+        return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0).add(Attributes.MOVEMENT_SPEED, 0.25F);
     }
 
     public static float rotlerp(float start, float end) {
@@ -135,12 +135,12 @@ public class Duck extends AbstractPet {
     }
 
     public @Nullable Duck getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgeableMob partner) {
-        Duck duck = DUCK.get().create(level, EntitySpawnReason.BREEDING);
+        Duck duck = DUCK.get().create(level);
         duck.setServerEntity(true);
         return duck;
     }
 
-    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull EntitySpawnReason spawnReason, final @Nullable SpawnGroupData groupData) {
+    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull MobSpawnType spawnReason, final @Nullable SpawnGroupData groupData) {
         this.setServerEntity(true);
         this.entityData.set(DUCK_SKIN, this.random.nextInt(2));
         return super.finalizeSpawn(level, difficulty, spawnReason, groupData);

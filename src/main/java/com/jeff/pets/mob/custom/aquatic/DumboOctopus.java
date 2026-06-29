@@ -45,6 +45,7 @@ public class DumboOctopus extends FlyingPet {
     public static final EntityDataAccessor<@NotNull Integer> OCTOPUS_SKIN =
             SynchedEntityData.defineId(DumboOctopus.class, EntityDataSerializers.INT);
     private final float nextFlap = 1.0F;
+    public float tentacleAngle = 0;
     public ServerPlayer owner = (ServerPlayer) this.getOwner();
 
     public DumboOctopus(final EntityType<? extends @NotNull DumboOctopus> type, final Level level) {
@@ -53,7 +54,7 @@ public class DumboOctopus extends FlyingPet {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createAnimalAttributes().add(Attributes.MAX_HEALTH, 8.0).add(Attributes.MOVEMENT_SPEED, 0.25F);
+        return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0).add(Attributes.MOVEMENT_SPEED, 0.25F);
     }
 
     @Override
@@ -102,12 +103,12 @@ public class DumboOctopus extends FlyingPet {
     }
 
     public @Nullable DumboOctopus getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgeableMob partner) {
-        DumboOctopus octopus = DUMBO_OCTOPUS.get().create(level, EntitySpawnReason.BREEDING);
+        DumboOctopus octopus = DUMBO_OCTOPUS.get().create(level);
         octopus.setServerEntity(true);
         return octopus;
     }
 
-    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull EntitySpawnReason spawnReason, final @Nullable SpawnGroupData groupData) {
+    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull MobSpawnType spawnReason, final @Nullable SpawnGroupData groupData) {
         this.setServerEntity(true);
         this.entityData.set(OCTOPUS_SKIN, this.random.nextInt(6));
         return super.finalizeSpawn(level, difficulty, spawnReason, groupData);

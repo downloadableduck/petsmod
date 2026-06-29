@@ -1,16 +1,16 @@
 package com.jeff.pets.client.rendering.aprilfools.megaspud;
 
-import net.minecraft.client.model.EntityModel;
+import com.jeff.pets.client.rendering.PetModel;
+import com.jeff.pets.mob.aprilfools.MegaSpud;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.entity.state.SlimeRenderState;
 import org.jetbrains.annotations.NotNull;
 
-public class MegaSpudModel extends EntityModel<@NotNull SlimeRenderState> {
+public class MegaSpudModel extends PetModel<@NotNull MegaSpud> {
     private final ModelPart root;
 
     public MegaSpudModel(ModelPart modelPart) {
@@ -33,5 +33,10 @@ public class MegaSpudModel extends EntityModel<@NotNull SlimeRenderState> {
         partDefinition.addOrReplaceChild("left_eye", CubeListBuilder.create().texOffs(32, 4).addBox(1.25F, 18.0F, -3.5F, 2.0F, 2.0F, 2.0F), PartPose.ZERO);
         partDefinition.addOrReplaceChild("mouth", CubeListBuilder.create().texOffs(32, 8).addBox(0.0F, 21.0F, -3.5F, 1.0F, 1.0F, 1.0F), PartPose.ZERO);
         return LayerDefinition.create(meshDefinition, 64, 32);
+    }
+
+    @Override
+    public void setupAnim(@NotNull MegaSpud entity, float f, float g, float h, float i, float j) {
+
     }
 }

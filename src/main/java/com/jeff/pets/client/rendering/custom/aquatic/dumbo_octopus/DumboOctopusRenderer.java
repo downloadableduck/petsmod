@@ -1,16 +1,18 @@
 package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 
-import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.client.Central.CONFIG;
 import static com.jeff.pets.PetsInitializer.MOD_ID;
+import static com.jeff.pets.client.Central.CONFIG;
 
-public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopusRenderState, DumboOctopusModel> {
+public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopusModel> {
 
     public static final ModelLayerLocation DUMBO_OCTOPUS_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(MOD_ID, "dumbo_octopus"), "main");
     double i = 45;
@@ -22,7 +24,7 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(@NotNull DumboOctopusRenderState state) {
+    public @NotNull ResourceLocation getTextureLocation(@NotNull DumboOctopus state) {
         String path;
         String yellow = "textures/entity/dumbo_octopus/yellow.png";
         String red = "textures/entity/dumbo_octopus/red.png";
@@ -30,50 +32,31 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
         String green = "textures/entity/dumbo_octopus/green.png";
         String orange = "textures/entity/dumbo_octopus/orange.png";
         String pink = "textures/entity/dumbo_octopus/pink.png";
-        if (!state.isServerEntity) {
-            switch (CONFIG.dumboOctopusSkin) {
-                case "yellow" -> path = yellow;
-                case "red" -> path = red;
-                case "blue" -> path = blue;
-                case "green" -> path = green;
-                case "orange" -> path = orange;
-                case "pink" -> path = pink;
-                case null, default -> path = yellow;
-            }
-        } else {
-            switch (state.dumboOctopusSkin) {
-                case 1 -> path = yellow;
-                case 2 -> path = red;
-                case 3 -> path = blue;
-                case 4 -> path = green;
-                case 5 -> path = orange;
-                case 6 -> path = pink;
-                default -> path = yellow;
-            }
+        switch (CONFIG.dumboOctopusSkin) {
+            case "yellow" -> path = yellow;
+            case "red" -> path = red;
+            case "blue" -> path = blue;
+            case "green" -> path = green;
+            case "orange" -> path = orange;
+            case "pink" -> path = pink;
+            case null, default -> path = yellow;
         }
         return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
     }
 
     @Override
-    public @NotNull DumboOctopusRenderState createRenderState() {
-        return new DumboOctopusRenderState();
-    }
-
-    @Override
-    public void extractRenderState(DumboOctopus octopus, DumboOctopusRenderState state, float f) {
-        super.extractRenderState(octopus, state, f);
-        state.isServerEntity = octopus.isServerEntity();
-        state.dumboOctopusSkin = octopus.getEntityData().get(DumboOctopus.OCTOPUS_SKIN);
+    public void render(DumboOctopus octopus, float f, float g, PoseStack poseStack, MultiBufferSource source, int i) {
+        super.render(octopus, f, g, poseStack, source, i);
         float currentSpeed;
         if (i > 67.5f) {
             currentSpeed = speed;
         } else {
             currentSpeed = 1.0f;
         }
-        i += (direction * currentSpeed);
+        i += (int) (direction * currentSpeed);
         if (i >= 90 || i <= 45) {
             direction *= -1;
         }
-        state.tentacleAngle = (float) (i % 360);
+        octopus.tentacleAngle = (float) (i % 360);
     }
 }

@@ -1,15 +1,14 @@
 package com.jeff.pets.client.rendering.vanilla.evoker;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientEvoker;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientEvoker;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.state.EvokerRenderState;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientEvokerRenderer extends PetRenderer<@NotNull ClientEvoker, @NotNull EvokerRenderState, @NotNull ClientEvokerModel> {
+public class ClientEvokerRenderer extends PetRenderer<@NotNull ClientEvoker, @NotNull ClientEvokerModel<ClientEvoker>> {
     public static final ModelLayerLocation EVOKER_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientevoker"), "main");
 
     public ClientEvokerRenderer(EntityRendererProvider.Context context) {
@@ -17,12 +16,7 @@ public class ClientEvokerRenderer extends PetRenderer<@NotNull ClientEvoker, @No
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(EvokerRenderState livingEntityRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(ClientEvoker livingEntityRenderState) {
         return ResourceLocation.withDefaultNamespace("textures/entity/illager/evoker.png");
-    }
-
-    @Override
-    public EvokerRenderState createRenderState() {
-        return new EvokerRenderState();
     }
 }

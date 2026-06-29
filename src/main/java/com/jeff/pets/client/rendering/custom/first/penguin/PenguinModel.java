@@ -1,7 +1,8 @@
 package com.jeff.pets.client.rendering.custom.first.penguin;
 
 import com.jeff.pets.PetsInitializer;
-import net.minecraft.client.model.EntityModel;
+import com.jeff.pets.client.rendering.PetModel;
+import com.jeff.pets.mob.custom.first.Penguin;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -12,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class PenguinModel extends EntityModel<@NotNull PenguinRenderState> {
+public class PenguinModel extends PetModel<@NotNull Penguin> {
 
     public static final ModelLayerLocation PENGUIN_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, "penguin"), "main");
 
@@ -65,19 +66,20 @@ public class PenguinModel extends EntityModel<@NotNull PenguinRenderState> {
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
 
-    public void setupAnim(PenguinRenderState state) {
-        super.setupAnim(state);
+    @Override
+    public void setupAnim(Penguin state, float f, float g, float h, float i, float k) {
+        this.root.getAllParts().forEach(ModelPart::resetPose);
         float flapAngle = (Mth.sin(state.flap) + 1.0F) * state.flapSpeed;
-        this.head.xRot = state.xRot * ((float) Math.PI / 180F);
-        float animationSpeed = state.walkAnimationSpeed;
-        float animationPos = state.walkAnimationPos;
+        this.head.xRot = state.getXRot() * ((float) Math.PI / 180F);
+        float animationSpeed = state.walkAnimation.speed();
+        float animationPos = state.walkAnimation.position();
         this.right_foot.xRot = Mth.cos(animationPos * 0.6662F) * 1.4F * animationSpeed;
         this.left_foot.xRot = Mth.cos(animationPos * 0.6662F + (float) Math.PI) * 1.4F * animationSpeed;
         this.right_wing.xRot = flapAngle * 0.75f;
         this.left_wing.xRot = -flapAngle * 0.75f;
         this.body.zRot = Mth.cos(animationPos * 0.6662F) * 0.1F * animationSpeed;
         this.head.zRot = Mth.cos(animationPos * 0.6662F) * 0.1F * animationSpeed;
-        if (state.isPassenger) {
+        if (state.isPassenger()) {
             this.root.y += 3;
             this.right_foot.z -= 3;
             this.right_foot.y -= 4;
@@ -86,7 +88,7 @@ public class PenguinModel extends EntityModel<@NotNull PenguinRenderState> {
             this.left_foot.y -= 4;
             this.left_foot.xRot = -1.6f;
         }
-        if ((CONFIG.isBaby && !state.isServerEntity) || (state.isBaby && state.isServerEntity)) {
+        if (CONFIG.isBaby) {
             this.head.xScale = 1.5f;
             this.head.yScale = 1.5f;
             this.head.zScale = 1.5f;

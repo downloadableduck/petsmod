@@ -8,7 +8,7 @@
 # Review your options at https://choosealicense.com/. All rights reserved is the default copyright stance, and is thus the default here.
 license = "MIT"
 modLoader="javafml"
-loaderVersion = "[53,)"
+loaderVersion = "[0,)"
 # A URL to refer people to when problems occur with this mod
 issueTrackerURL = "https://github.com/downloadableduck/petsmod/issues" #optional
 displayURL = "https://petsmod.com"
@@ -80,7 +80,7 @@ mandatory = true
 modId = "minecraft"
 mandatory = true
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
-versionRange = "[1.21.2, 1.21.3]"
+versionRange = "[1.21, 1.21.1]"
 ordering = "NONE"
 side = "BOTH"
 

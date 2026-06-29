@@ -115,7 +115,6 @@ public class PetsInitializer {
         event.put(Entities.WOLF.get(), ClientWolf.createAttributes().build());
         event.put(Entities.BLAZE.get(), ClientBlaze.createAttributes().build());
         event.put(Entities.BREEZE.get(), ClientBreeze.createAttributes().build());
-        event.put(Entities.CREAKING.get(), ClientCreaking.createAttributes().build());
         event.put(Entities.CREEPER.get(), ClientCreeper.createAttributes().build());
         event.put(Entities.ELDER_GUARDIAN_COOKIE.get(), ClientElderGuardian.createAttributes().build());
         event.put(Entities.ENDERMITE.get(), ClientEndermite.createAttributes().build());
@@ -180,7 +179,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(Racoon::new, MobCategory.CREATURE)
                                 .sized(1.0f, 1.0f)
                                 .eyeHeight(1.0f)
-                                .build(createResourceKey("racoon"))
+                                .build(("racoon"))
                 );
 
         public static final RegistryObject< @NotNull EntityType<ClientAllay>> ALLAY =
@@ -189,7 +188,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.35f, 0.6f)
                                 .eyeHeight(0.6f)
-                                .build(createResourceKey("clientallay"))
+                                .build(("clientallay"))
                 );
 
         public static final RegistryObject< @NotNull EntityType<ClientArmadillo>> ARMADILLO =
@@ -198,7 +197,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.7f, 0.65f)
                                 .eyeHeight(0.65f)
-                                .build(createResourceKey("clientarmadillo"))
+                                .build(("clientarmadillo"))
                 );
 
         public static final RegistryObject< @NotNull EntityType<ClientAxolotl>> AXOLOTL =
@@ -207,7 +206,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(1.0f, 1.0f)
                                 .eyeHeight(1.0f)
-                                .build(createResourceKey("clientaxolotl"))
+                                .build(("clientaxolotl"))
                 );
 
         public static final RegistryObject< @NotNull EntityType<ClientBat>> BAT =
@@ -216,7 +215,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.5f, 0.9f)
                                 .eyeHeight(0.9f)
-                                .build(createResourceKey("clientbat"))
+                                .build(("clientbat"))
                 );
 
         public static final RegistryObject< @NotNull EntityType<ClientCamel>> CAMEL =
@@ -225,7 +224,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(1.7f, 2.375f)
                                 .eyeHeight(2.375f)
-                                .build(createResourceKey("clientcamel"))
+                                .build(("clientcamel"))
                 );
 
         public static final RegistryObject< @NotNull EntityType<Duck>> DUCK =
@@ -233,7 +232,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(Duck::new, MobCategory.CREATURE)
                                 .sized(0.4f, 0.7f)
                                 .eyeHeight(1.0f)
-                                .build(createResourceKey("duck"))
+                                .build(("duck"))
                 );
 
         public static final RegistryObject< @NotNull EntityType<Penguin>> PENGUIN =
@@ -241,7 +240,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(Penguin::new, MobCategory.AMBIENT)
                                 .sized(1.0f, 1.5f)
                                 .eyeHeight(1.0f)
-                                .build(createResourceKey("penguin"))
+                                .build(("penguin"))
                 );
 
         public static final RegistryObject< @NotNull EntityType<ClientSheep>> SHEEP =
@@ -250,7 +249,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.9f, 1.3f)
                                 .eyeHeight(1.3f)
-                                .build(createResourceKey("clientsheep"))
+                                .build(("clientsheep"))
                 );
 
         public static final RegistryObject< @NotNull EntityType<ClientCat>> CAT =
@@ -259,7 +258,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 0.7f)
                                 .eyeHeight(1.0f)
-                                .build(createResourceKey("clientcat"))
+                                .build(("clientcat"))
                 );
 
         public static final RegistryObject< @NotNull EntityType<ClientChicken>> CHICKEN =
@@ -268,7 +267,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.4f, 0.7f)
                                 .eyeHeight(0.7f)
-                                .build(createResourceKey("clientchicken"))
+                                .build(("clientchicken"))
                 );
 
         public static final RegistryObject< @NotNull EntityType<ClientCod>> COD =
@@ -277,7 +276,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.5f, 0.3f)
                                 .eyeHeight(0.3f)
-                                .build(createResourceKey("clientcod"))
+                                .build(("clientcod"))
                 );
 
         public static final RegistryObject< @NotNull EntityType<ClientCow>> COW =
@@ -286,7 +285,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.9f, 1.4f)
                                 .eyeHeight(1.4f)
-                                .build(createResourceKey("clientcow"))
+                                .build(("clientcow"))
                 );
 
         public static final RegistryObject< @NotNull EntityType<ClientDonkey>> DONKEY =
@@ -295,7 +294,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(1.3965f, 1.5f)
                                 .eyeHeight(1.5f)
-                                .build(createResourceKey("clientdonkey"))
+                                .build(("clientdonkey"))
                 );
 
         public static final RegistryObject< @NotNull EntityType<ClientFrog>> FROG =
@@ -304,7 +303,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.5f, 0.5f)
                                 .eyeHeight(0.5f)
-                                .build(createResourceKey("clientfrog"))
+                                .build(("clientfrog"))
                 );
 
         public static final RegistryObject< @NotNull EntityType<ClientHorse>> HORSE =
@@ -313,7 +312,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(1.3965f, 1.6f)
                                 .eyeHeight(1.6f)
-                                .build(createResourceKey("clienthorse"))
+                                .build(("clienthorse"))
                 );
 
         public static final RegistryObject< @NotNull EntityType<ClientMooshroom>> MOOSHROOM =
@@ -322,7 +321,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.9f, 1.4f)
                                 .eyeHeight(1.4f)
-                                .build(createResourceKey("clientmooshroom"))
+                                .build(("clientmooshroom"))
                 );
 
         public static final RegistryObject< @NotNull EntityType<ClientParrot>> PARROT =
@@ -331,7 +330,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.5f, 0.9f)
                                 .eyeHeight(0.9f)
-                                .build(createResourceKey("clientparrot")));
+                                .build(("clientparrot")));
 
         public static final ResourceKey<@NotNull EntityType<?>> PIG_KEY = createResourceKey("clientpig");
         public static final RegistryObject< @NotNull EntityType<ClientPig>> PIG =
@@ -340,7 +339,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.9f, 0.9f)
                                 .eyeHeight(0.9f)
-                                .build(PIG_KEY)
+                                .build(PIG_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> RABBIT_KEY = createResourceKey("clientrabbit");
@@ -350,7 +349,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.4f, 0.5f)
                                 .eyeHeight(0.5f)
-                                .build(RABBIT_KEY)
+                                .build(RABBIT_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> SALMON_KEY = createResourceKey("clientsalmon");
@@ -360,7 +359,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.35f, 0.2f)
                                 .eyeHeight(0.2f)
-                                .build(SALMON_KEY)
+                                .build(SALMON_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> SNIFFER_KEY = createResourceKey("clientsniffer");
@@ -370,7 +369,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(1.9f, 1.75f)
                                 .eyeHeight(1.75f)
-                                .build(SNIFFER_KEY)
+                                .build(SNIFFER_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> SNOW_GOLEM_KEY = createResourceKey("clientsnowgolem");
@@ -380,7 +379,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.7f, 1.9f)
                                 .eyeHeight(1.9f)
-                                .build(SNOW_GOLEM_KEY)
+                                .build(SNOW_GOLEM_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> SQUID_KEY = createResourceKey("clientsquid");
@@ -390,7 +389,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.8f, -0.8f)
                                 .eyeHeight(0.8f)
-                                .build(SQUID_KEY)
+                                .build(SQUID_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> STRIDER_KEY = createResourceKey("clientstrider");
@@ -400,7 +399,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.9f, 1.7f)
                                 .eyeHeight(1.7f)
-                                .build(STRIDER_KEY)
+                                .build(STRIDER_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> TADPOLE_KEY = createResourceKey("clienttadpole");
@@ -410,7 +409,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.4f, 0.3f)
                                 .eyeHeight(0.3f)
-                                .build(TADPOLE_KEY)
+                                .build(TADPOLE_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> TROPICAL_FISH_KEY = createResourceKey("clienttropicalfish");
@@ -420,7 +419,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(1.0f, 1.0f)
                                 .eyeHeight(1.0f)
-                                .build(TROPICAL_FISH_KEY)
+                                .build(TROPICAL_FISH_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> TURTLE_KEY = createResourceKey("clientturtle");
@@ -430,7 +429,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(1.2f, 0.4f)
                                 .eyeHeight(0.4f)
-                                .build(TURTLE_KEY)
+                                .build(TURTLE_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> VILLAGER_KEY = createResourceKey("clientvillager");
@@ -440,7 +439,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
                                 .eyeHeight(1.95f)
-                                .build(VILLAGER_KEY)
+                                .build(VILLAGER_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> WANDERING_TRADER_KEY = createResourceKey("clientwanderingtrader");
@@ -450,7 +449,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
                                 .eyeHeight(1.95f)
-                                .build(WANDERING_TRADER_KEY)
+                                .build(WANDERING_TRADER_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> BEE_KEY = createResourceKey("clientbee");
@@ -460,7 +459,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.7f, 0.6f)
                                 .eyeHeight(0.6f)
-                                .build(BEE_KEY)
+                                .build(BEE_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> CAVE_SPIDER_KEY = createResourceKey("clientcavespider");
@@ -470,7 +469,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.7f, 0.5f)
                                 .eyeHeight(0.5f)
-                                .build(CAVE_SPIDER_KEY)
+                                .build(CAVE_SPIDER_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> DOLPHIN_KEY = createResourceKey("clientdolphin");
@@ -480,7 +479,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.9f, 0.6f)
                                 .eyeHeight(0.6f)
-                                .build(DOLPHIN_KEY)
+                                .build(DOLPHIN_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> ENDERMAN_KEY = createResourceKey("clientenderman");
@@ -490,7 +489,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 2.9f)
                                 .eyeHeight(2.9f)
-                                .build(ENDERMAN_KEY)
+                                .build(ENDERMAN_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> FOX_KEY = createResourceKey("clientfox");
@@ -500,7 +499,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 0.7f)
                                 .eyeHeight(0.7f)
-                                .build(FOX_KEY)
+                                .build(FOX_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> GOAT_KEY = createResourceKey("clientgoat");
@@ -510,7 +509,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.9f, 1.3f)
                                 .eyeHeight(1.3f)
-                                .build(GOAT_KEY)
+                                .build(GOAT_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> IRON_GOLEM_KEY = createResourceKey("clientirongolem");
@@ -520,7 +519,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(1.4f, 2.7f)
                                 .eyeHeight(2.7f)
-                                .build(IRON_GOLEM_KEY)
+                                .build(IRON_GOLEM_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> LLAMA_KEY = createResourceKey("clientllama");
@@ -530,7 +529,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.9f, 1.87f)
                                 .eyeHeight(1.87f)
-                                .build(LLAMA_KEY)
+                                .build(LLAMA_KEY.location().getPath())
                 );
 
 
@@ -541,7 +540,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(1.3f, 1.25f)
                                 .eyeHeight(1.25f)
-                                .build(PANDA_KEY)
+                                .build(PANDA_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> PIGLIN_KEY = createResourceKey("clientpiglin");
@@ -551,7 +550,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
                                 .eyeHeight(1.95f)
-                                .build(PIGLIN_KEY)
+                                .build(PIGLIN_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> POLAR_BEAR_KEY = createResourceKey("clientpolarbear");
@@ -561,7 +560,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(1.4f, 1.4f)
                                 .eyeHeight(1.4f)
-                                .build(POLAR_BEAR_KEY)
+                                .build(POLAR_BEAR_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> PUFFERFISH_KEY = createResourceKey("clientpufferfish");
@@ -571,7 +570,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.7f, 0.7f)
                                 .eyeHeight(0.7f)
-                                .build(PUFFERFISH_KEY)
+                                .build(PUFFERFISH_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> SPIDER_KEY = createResourceKey("clientspider");
@@ -581,7 +580,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(1.4f, 0.9f)
                                 .eyeHeight(0.9f)
-                                .build(SPIDER_KEY)
+                                .build(SPIDER_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> WOLF_KEY = createResourceKey("clientwolf");
@@ -591,7 +590,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 0.85f)
                                 .eyeHeight(0.85f)
-                                .build(WOLF_KEY)
+                                .build(WOLF_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> BLAZE_KEY = createResourceKey("clientblaze");
@@ -601,7 +600,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.8f)
                                 .eyeHeight(1.8f)
-                                .build(BLAZE_KEY)
+                                .build(BLAZE_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> BREEZE_KEY = createResourceKey("clientbreeze");
@@ -611,17 +610,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.77f)
                                 .eyeHeight(1.77f)
-                                .build(BREEZE_KEY)
-                );
-
-        public static final ResourceKey<@NotNull EntityType<?>> CREAKING_KEY = createResourceKey("clientcreaking");
-        public static final RegistryObject< @NotNull EntityType<ClientCreaking>> CREAKING =
-                ENTITY_TYPES.register("clientcreaking", () ->
-                        EntityType.Builder.of(ClientCreaking::new, MobCategory.AMBIENT)
-                                .noSummon()
-                                .sized(0.9f, 2.7f)
-                                .eyeHeight(2.7f)
-                                .build(CREAKING_KEY)
+                                .build(BREEZE_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> CREEPER_KEY = createResourceKey("clientcreeper");
@@ -631,7 +620,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.7f)
                                 .eyeHeight(1.7f)
-                                .build(CREEPER_KEY)
+                                .build(CREEPER_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> ELDER_GUARDIAN_KEY = createResourceKey("clientelderguardian");
@@ -641,7 +630,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(1.9975f, 1.9975f)
                                 .eyeHeight(1.9975f)
-                                .build(ELDER_GUARDIAN_KEY)
+                                .build(ELDER_GUARDIAN_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> ENDERMITE_KEY = createResourceKey("clientendermite");
@@ -651,7 +640,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.4f, 0.3f)
                                 .eyeHeight(0.3f)
-                                .build(ENDERMITE_KEY)
+                                .build(ENDERMITE_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> EVOKER_KEY = createResourceKey("clientevoker");
@@ -661,7 +650,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
                                 .eyeHeight(1.95f)
-                                .build(EVOKER_KEY)
+                                .build(EVOKER_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> GHAST_KEY = createResourceKey("clientghast");
@@ -671,7 +660,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(4.0f, 4.0f)
                                 .eyeHeight(4.0f)
-                                .build(GHAST_KEY));
+                                .build(GHAST_KEY.location().getPath()));
 
         public static final ResourceKey<@NotNull EntityType<?>> GUARDIAN_KEY = createResourceKey("clientguardian");
         public static final RegistryObject< @NotNull EntityType<ClientGuardian>> GUARDIAN =
@@ -680,7 +669,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.85f, 0.85f)
                                 .eyeHeight(0.85f)
-                                .build(GUARDIAN_KEY)
+                                .build(GUARDIAN_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> HOGLIN_KEY = createResourceKey("clienthoglin");
@@ -690,7 +679,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(1.3965f, 1.4f)
                                 .eyeHeight(1.4f)
-                                .build(HOGLIN_KEY)
+                                .build(HOGLIN_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> MAGMA_CUBE_KEY = createResourceKey("clientmagmacube");
@@ -700,7 +689,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(2.0f, 2.0f)
                                 .eyeHeight(2.0f)
-                                .build(MAGMA_CUBE_KEY)
+                                .build(MAGMA_CUBE_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> PHANTOM_KEY = createResourceKey("clientphantom");
@@ -710,7 +699,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.9f, 0.5f)
                                 .eyeHeight(0.5f)
-                                .build(PHANTOM_KEY)
+                                .build(PHANTOM_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> PILLAGER_KEY = createResourceKey("clientpillager");
@@ -720,7 +709,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
                                 .eyeHeight(1.95f)
-                                .build(PILLAGER_KEY)
+                                .build(PILLAGER_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> RAVAGER_KEY = createResourceKey("clientravager");
@@ -730,7 +719,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(1.95f, 2.2f)
                                 .eyeHeight(2.2f)
-                                .build(RAVAGER_KEY)
+                                .build(RAVAGER_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> SHULKER_KEY = createResourceKey("clientshulker");
@@ -740,7 +729,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(1.0f, 2.0f)
                                 .eyeHeight(2.0f)
-                                .build(SHULKER_KEY)
+                                .build(SHULKER_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> SILVERFISH_KEY = createResourceKey("clientsilverfish");
@@ -750,7 +739,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.4f, 0.3f)
                                 .eyeHeight(0.3f)
-                                .build(SILVERFISH_KEY)
+                                .build(SILVERFISH_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> SKELETON_KEY = createResourceKey("clientskeleton");
@@ -760,7 +749,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
                                 .eyeHeight(1.95f)
-                                .build(SKELETON_KEY)
+                                .build(SKELETON_KEY.location().getPath())
                 );
         public static final ResourceKey<@NotNull EntityType<?>> SLIME_KEY = createResourceKey("clientslime");
         public static final RegistryObject< @NotNull EntityType<ClientSlime>> SLIME =
@@ -769,7 +758,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(2.0f, 2.0f)
                                 .eyeHeight(2.0f)
-                                .build(SLIME_KEY)
+                                .build(SLIME_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> VEX_KEY = createResourceKey("clientvex");
@@ -779,7 +768,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.4f, 0.8f)
                                 .eyeHeight(1.0f)
-                                .build(VEX_KEY)
+                                .build(VEX_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> VINDICATOR_KEY = createResourceKey("clientvindicator");
@@ -789,7 +778,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
                                 .eyeHeight(1.95f)
-                                .build(VINDICATOR_KEY)
+                                .build(VINDICATOR_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> WARDEN_KEY = createResourceKey("clientwarden");
@@ -799,7 +788,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.9f, 2.9f)
                                 .eyeHeight(2.9f)
-                                .build(WARDEN_KEY)
+                                .build(WARDEN_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> WITCH_KEY = createResourceKey("clientwitch");
@@ -809,7 +798,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
                                 .eyeHeight(1.95f)
-                                .build(WITCH_KEY)
+                                .build(WITCH_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> ZOMBIE_KEY = createResourceKey("clientzombie");
@@ -819,7 +808,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
                                 .eyeHeight(1.95f)
-                                .build(ZOMBIE_KEY)
+                                .build(ZOMBIE_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> ZOMBIE_VILLAGER_KEY = createResourceKey("clientzombievillager");
@@ -829,7 +818,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
                                 .eyeHeight(2.0f)
-                                .build(ZOMBIE_VILLAGER_KEY)
+                                .build(ZOMBIE_VILLAGER_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> HUSK_KEY = createResourceKey("clienthusk");
@@ -839,7 +828,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
                                 .eyeHeight(2.0f)
-                                .build(HUSK_KEY)
+                                .build(HUSK_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> DROWNED_KEY = createResourceKey("clientdrowned");
@@ -849,7 +838,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
                                 .eyeHeight(2.0f)
-                                .build(DROWNED_KEY)
+                                .build(DROWNED_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> BOGGED_KEY = createResourceKey("clientbogged");
@@ -859,7 +848,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
                                 .eyeHeight(2.0f)
-                                .build(BOGGED_KEY)
+                                .build(BOGGED_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> STRAY_KEY = createResourceKey("clientstray");
@@ -869,7 +858,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
                                 .eyeHeight(1.95f)
-                                .build(STRAY_KEY)
+                                .build(STRAY_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> WITHER_SKELETON_KEY = createResourceKey("clientwitherskeleton");
@@ -879,7 +868,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
                                 .eyeHeight(1.95f)
-                                .build(WITHER_SKELETON_KEY)
+                                .build(WITHER_SKELETON_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> ENDER_DRAGON_KEY = createResourceKey("clientenderdragon");
@@ -889,7 +878,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(16.0f, 8.0f)
                                 .eyeHeight(1.0f)
-                                .build(ENDER_DRAGON_KEY)
+                                .build(ENDER_DRAGON_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> WITHER_KEY = createResourceKey("clientwither");
@@ -899,7 +888,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(2.0f, 3.0f)
                                 .eyeHeight(3.0f)
-                                .build(WITHER_KEY)
+                                .build(WITHER_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> ANGRY_GHAST_KEY = createResourceKey("clientangryghast");
@@ -909,7 +898,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(4.0f, 4.0f)
                                 .eyeHeight(4.0f)
-                                .build(ANGRY_GHAST_KEY)
+                                .build(ANGRY_GHAST_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> BATATO_KEY = createResourceKey("batato");
@@ -919,7 +908,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.5f, 0.9f)
                                 .eyeHeight(0.9f)
-                                .build(BATATO_KEY)
+                                .build(BATATO_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> DIAMOND_CHICKEN_KEY = createResourceKey("diamond_chicken");
@@ -929,7 +918,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.4f, 0.7f)
                                 .eyeHeight(0.7f)
-                                .build(DIAMOND_CHICKEN_KEY)
+                                .build(DIAMOND_CHICKEN_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> LOVE_GOLEM_KEY = createResourceKey("love_golem");
@@ -939,7 +928,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(1.4f, 2.7f)
                                 .eyeHeight(3.0f)
-                                .build(LOVE_GOLEM_KEY)
+                                .build(LOVE_GOLEM_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> MEGA_SPUD_KEY = createResourceKey("mega_spud");
@@ -949,7 +938,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(9.0f, 12.0f)
                                 .eyeHeight(12.0f)
-                                .build(MEGA_SPUD_KEY)
+                                .build(MEGA_SPUD_KEY.location().getPath())
                 );
         public static final ResourceKey<@NotNull EntityType<?>> MOON_COW_KEY = createResourceKey("moon_cow");
         public static final RegistryObject< @NotNull EntityType<MoonCow>> MOON_COW =
@@ -958,7 +947,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.9f, 1.4f)
                                 .eyeHeight(1.4f)
-                                .build(MOON_COW_KEY)
+                                .build(MOON_COW_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> NERD_CREEPER_KEY = createResourceKey("nerd_creeper");
@@ -968,7 +957,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.7f)
                                 .eyeHeight(1.7f)
-                                .build(NERD_CREEPER_KEY)
+                                .build(NERD_CREEPER_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> PINK_WITHER_KEY = createResourceKey("pink_wither");
@@ -978,7 +967,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(2.0f, 3.0f)
                                 .eyeHeight(3.0f)
-                                .build(PINK_WITHER_KEY)
+                                .build(PINK_WITHER_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> PLAGUEWHALE_SLAB_KEY = createResourceKey("plaguewhale_slab");
@@ -988,7 +977,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(1.9975f, 1.9975f)
                                 .eyeHeight(2.0f)
-                                .build(PLAGUEWHALE_SLAB_KEY)
+                                .build(PLAGUEWHALE_SLAB_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> POISONOUS_POTATO_ZOMBIE_KEY = createResourceKey("poisonous_potato_zombie");
@@ -998,7 +987,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
                                 .eyeHeight(1.95f)
-                                .build(POISONOUS_POTATO_ZOMBIE_KEY)
+                                .build(POISONOUS_POTATO_ZOMBIE_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> RAY_TRACING_KEY = createResourceKey("ray_tracing");
@@ -1008,7 +997,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
                                 .eyeHeight(1.95f)
-                                .build(RAY_TRACING_KEY)
+                                .build(RAY_TRACING_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> REDSTONE_BUG_KEY = createResourceKey("redstone_bug");
@@ -1018,7 +1007,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.4f, 0.3f)
                                 .eyeHeight(0.3f)
-                                .build(REDSTONE_BUG_KEY)
+                                .build(REDSTONE_BUG_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> SMILING_CREEPER_KEY = createResourceKey("smiling_creeper");
@@ -1028,7 +1017,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.7f)
                                 .eyeHeight(1.7f)
-                                .build(SMILING_CREEPER_KEY)
+                                .build(SMILING_CREEPER_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> TOXIFIN_SLAB_KEY = createResourceKey("toxifin_slab");
@@ -1038,7 +1027,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.85f, 0.85f)
                                 .eyeHeight(0.85f)
-                                .build(TOXIFIN_SLAB_KEY)
+                                .build(TOXIFIN_SLAB_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> POTATO_HUSK_KEY = createResourceKey("potatohusk");
@@ -1048,7 +1037,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
                                 .eyeHeight(1.95f)
-                                .build(POTATO_HUSK_KEY)
+                                .build(POTATO_HUSK_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> HEAD_KEY = createResourceKey("head");
@@ -1057,7 +1046,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(Head::new, MobCategory.CREATURE)
                                 .sized(0.5f, 0.5f)
                                 .eyeHeight(0.5f)
-                                .build(HEAD_KEY)
+                                .build(HEAD_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> TRAITOR_KEY = createResourceKey("traitor");
@@ -1067,7 +1056,7 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
                                 .eyeHeight(1.95f)
-                                .build(TRAITOR_KEY)
+                                .build(TRAITOR_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> DUMBO_OCTOPUS_KEY = createResourceKey("dumbo_octopus");
@@ -1076,7 +1065,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(DumboOctopus::new, MobCategory.WATER_AMBIENT)
                                 .sized(0.5f, 0.5f)
                                 .eyeHeight(0.5f)
-                                .build(DUMBO_OCTOPUS_KEY)
+                                .build(DUMBO_OCTOPUS_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> KOI_KEY = createResourceKey("koi");
@@ -1085,7 +1074,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(Koi::new, MobCategory.WATER_AMBIENT)
                                 .sized(0.6f, 0.6f)
                                 .eyeHeight(0.6f)
-                                .build(KOI_KEY)
+                                .build(KOI_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> STINGRAY_KEY = createResourceKey("stingray");
@@ -1094,7 +1083,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(Stingray::new, MobCategory.WATER_AMBIENT)
                                 .sized(1.0f, 0.4f)
                                 .eyeHeight(0.4f)
-                                .build(STINGRAY_KEY)
+                                .build(STINGRAY_KEY.location().getPath())
                 );
     }
 }

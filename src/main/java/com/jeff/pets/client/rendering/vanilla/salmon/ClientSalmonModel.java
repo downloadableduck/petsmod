@@ -1,21 +1,19 @@
 package com.jeff.pets.client.rendering.vanilla.salmon;
 
-import net.minecraft.client.model.EntityModel;
+import com.jeff.pets.client.rendering.PetModel;
+import com.jeff.pets.mob.vanilla.passive.ClientSalmon;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.client.renderer.entity.state.SalmonRenderState;
 import net.minecraft.util.Mth;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * DO NOT DELETE, the cat requires a custom model to work properly
  */
-public class ClientSalmonModel extends EntityModel<@NotNull LivingEntityRenderState> {
+public class ClientSalmonModel extends PetModel<ClientSalmon> {
     private final ModelPart bodyBack;
 
     public ClientSalmonModel(ModelPart modelPart) {
@@ -38,15 +36,16 @@ public class ClientSalmonModel extends EntityModel<@NotNull LivingEntityRenderSt
         return LayerDefinition.create(meshDefinition, 32, 32);
     }
 
-    public void setupAnim(SalmonRenderState salmonRenderState) {
-        super.setupAnim(salmonRenderState);
+    @Override
+    public void setupAnim(ClientSalmon salmonRenderState, float a, float b, float ageInTicks, float i, float k) {
+        super.setupAnim(salmonRenderState, a, b, ageInTicks, i, k);
         float f = 1.0F;
         float g = 1.0F;
-        if (!salmonRenderState.isInWater) {
+        if (!salmonRenderState.isInWater()) {
             f = 1.3F;
             g = 1.7F;
         }
 
-        this.bodyBack.yRot = -f * 0.25F * Mth.sin(g * 0.6F * salmonRenderState.ageInTicks);
+        this.bodyBack.yRot = -f * 0.25F * Mth.sin(g * 0.6F * ageInTicks);
     }
 }

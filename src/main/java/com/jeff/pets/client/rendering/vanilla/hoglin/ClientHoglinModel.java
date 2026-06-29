@@ -1,13 +1,13 @@
 package com.jeff.pets.client.rendering.vanilla.hoglin;
 
+import com.jeff.pets.mob.vanilla.hostile.ClientHoglin;
 import net.minecraft.client.model.HoglinModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.entity.state.HoglinRenderState;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientHoglinModel extends HoglinModel {
+public class ClientHoglinModel extends HoglinModel<ClientHoglin> {
 
     private final ModelPart head;
 
@@ -17,8 +17,8 @@ public class ClientHoglinModel extends HoglinModel {
     }
 
     @Override
-    public void setupAnim(@NotNull HoglinRenderState state) {
-        super.setupAnim(state);
+    public void setupAnim(@NotNull ClientHoglin state, float f, float g, float h, float i, float j) {
+        super.setupAnim(state, f, g, h, i, j);
         if (CONFIG.isBaby) {
             this.head.zScale = 1.5f;
             this.head.xScale = 1.5f;

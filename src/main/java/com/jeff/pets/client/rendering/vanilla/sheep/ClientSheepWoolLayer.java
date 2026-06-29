@@ -1,5 +1,6 @@
 package com.jeff.pets.client.rendering.vanilla.sheep;
 
+import com.jeff.pets.mob.vanilla.passive.ClientSheep;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.EntityModelSet;
@@ -8,7 +9,6 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.client.renderer.entity.state.SheepRenderState;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,19 +16,20 @@ import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSheepWoolLayer extends RenderLayer<@NotNull SheepRenderState, @NotNull ClientSheepModel> {
-    public static final ModelLayerLocation SHEEP_WOOL_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("textures/entity/sheep/sheep_wool.png"), "main");
-    private final EntityModel<@NotNull SheepRenderState> adultModel;
-    private final EntityModel<@NotNull SheepRenderState> babyModel;
+
+public class ClientSheepWoolLayer extends RenderLayer<@NotNull ClientSheep, @NotNull ClientSheepModel> {
+    public static final ModelLayerLocation SHEEP_WOOL_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("sheep_wool"), "outer");
+    public static final ModelLayerLocation SHEEP_WOOL_BABY_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("sheep_wool_baby"), "outer");
+    private final EntityModel<@NotNull ClientSheep> model;
     int woolColor;
 
-    public ClientSheepWoolLayer(RenderLayerParent<@NotNull SheepRenderState, @NotNull ClientSheepModel> renderLayerParent, EntityModelSet entityModelSet) {
+    public ClientSheepWoolLayer(RenderLayerParent<@NotNull ClientSheep, @NotNull ClientSheepModel> renderLayerParent, EntityModelSet entityModelSet) {
         super(renderLayerParent);
-        this.adultModel = new ClientSheepFurModel(entityModelSet.bakeLayer(ModelLayers.SHEEP_WOOL));
-        this.babyModel = new ClientSheepFurModel(entityModelSet.bakeLayer(ModelLayers.SHEEP_BABY_WOOL));
+        this.model = new ClientSheepFurModel(entityModelSet.bakeLayer(ModelLayers.SHEEP_FUR));
     }
 
-    public void render(@NotNull PoseStack poseStack, MultiBufferSource source, int i, SheepRenderState sheepRenderState, float f, float g) {
+    @Override
+    public void render(PoseStack poseStack, MultiBufferSource source, int i, ClientSheep sheepRenderState, float f, float g, float h, float j, float k, float l) {
         if (Objects.equals(CONFIG.sheepSkin, "white")) {
             woolColor = 15132390;
         } else if (Objects.equals(CONFIG.sheepSkin, "orange")) {
@@ -65,6 +66,6 @@ public class ClientSheepWoolLayer extends RenderLayer<@NotNull SheepRenderState,
             woolColor = 1381656;
         }
 
-        coloredCutoutModelCopyLayerRender(this.adultModel, SHEEP_WOOL_LOCATION.model(), poseStack, source, i, sheepRenderState, woolColor);
+        coloredCutoutModelCopyLayerRender(this.getParentModel(), this.model, ResourceLocation.withDefaultNamespace("textures/entity/sheep/sheep_fur.png"), poseStack, source, i, sheepRenderState, f, g, j, k, l, h, woolColor);
     }
 }

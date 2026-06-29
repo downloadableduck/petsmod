@@ -1,21 +1,21 @@
 package com.jeff.pets.client.rendering.vanilla.wolf;
 
-import com.jeff.pets.mob.vanilla.neutral.ClientWolf;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.neutral.ClientWolf;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.state.WolfRenderState;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientWolfRenderer extends PetRenderer<@NotNull ClientWolf, @NotNull WolfRenderState, @NotNull ClientWolfModel> {
+public class ClientWolfRenderer extends PetRenderer<@NotNull ClientWolf, @NotNull ClientWolfModel> {
 
     public static final ModelLayerLocation WOLF_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientwolf"), "main");
 
@@ -29,14 +29,14 @@ public class ClientWolfRenderer extends PetRenderer<@NotNull ClientWolf, @NotNul
     }
 
     @Override
-    protected void scale(@NotNull WolfRenderState livingEntityRenderState, @NotNull PoseStack poseStack) {
+    protected void scale(@NotNull ClientWolf livingEntityRenderState, @NotNull PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(WolfRenderState livingEntityRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(ClientWolf livingEntityRenderState) {
         String wolfTexturePath;
 
         switch (CONFIG.wolfSkin) {
@@ -56,13 +56,8 @@ public class ClientWolfRenderer extends PetRenderer<@NotNull ClientWolf, @NotNul
     }
 
     @Override
-    public WolfRenderState createRenderState() {
-        return new WolfRenderState();
-    }
-
-    @Override
-    public void extractRenderState(ClientWolf wolf, WolfRenderState state, float f) {
-        super.extractRenderState(wolf, state, f);
-        state.isSitting = wolf.isPassenger();
+    public void render(ClientWolf wolf, float f, float g, PoseStack poseStack, MultiBufferSource source, int i) {
+        super.render(wolf, f, g, poseStack, source, i);
+        wolf.setInSittingPose(wolf.isPassenger());
     }
 }

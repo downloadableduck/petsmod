@@ -1,11 +1,12 @@
 package com.jeff.pets.client.rendering.aprilfools.mooncow;
 
 import com.jeff.pets.client.rendering.vanilla.cow.ClientCowModel;
+import com.jeff.pets.mob.aprilfools.MoonCow;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 
-public class LegacyCowModel extends ClientCowModel {
+public class LegacyCowModel extends ClientCowModel<MoonCow> {
     private final ModelPart body;
     private final ModelPart head;
     private final ModelPart left_hind_leg;

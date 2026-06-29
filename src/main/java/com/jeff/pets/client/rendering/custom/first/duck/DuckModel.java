@@ -1,7 +1,8 @@
 package com.jeff.pets.client.rendering.custom.first.duck;
 
 import com.jeff.pets.PetsInitializer;
-import net.minecraft.client.model.EntityModel;
+import com.jeff.pets.client.rendering.PetModel;
+import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -12,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class DuckModel extends EntityModel<@NotNull DuckRenderState> {
+public class DuckModel extends PetModel<@NotNull Duck> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
             ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, "duck"), "main"
     );
@@ -61,18 +62,19 @@ public class DuckModel extends EntityModel<@NotNull DuckRenderState> {
         return LayerDefinition.create(meshdefinition, 64, 32);
     }
 
-    public void setupAnim(final DuckRenderState state) {
-        super.setupAnim(state);
-        float flapAngle = (Mth.sin(state.flap) + 1.0F) * state.flapSpeed;
-        this.head.xRot = state.xRot * ((float) Math.PI / 180F);
-        this.head.yRot = state.yRot * ((float) Math.PI / 180F);
-        float animationSpeed = state.walkAnimationSpeed;
-        float animationPos = state.walkAnimationPos;
+    @Override
+    public void setupAnim(final Duck state, float f, float g, float h, float i, float j) {
+        this.root.getAllParts().forEach(ModelPart::resetPose);
+        float flapAngle = state.onGround() ? 0 : (Mth.sin(h) + 1.0F) * state.flapSpeed;
+        this.head.xRot = j * ((float) Math.PI / 180F);
+        this.head.yRot = i * ((float) Math.PI / 180F);
+        float animationSpeed = state.walkAnimation.speed();
+        float animationPos = state.walkAnimation.position();
         this.rightLeg.xRot = Mth.cos(animationPos * 0.6662F) * 1.4F * animationSpeed;
         this.leftLeg.xRot = Mth.cos(animationPos * 0.6662F + (float) Math.PI) * 1.4F * animationSpeed;
         this.rightWing.zRot = flapAngle;
         this.leftWing.zRot = -flapAngle;
-        if (state.isPassenger) {
+        if (state.isPassenger()) {
             this.root.x += 0.4F;
             this.root.y += 2.5f;
             this.rightLeg.visible = false;
@@ -81,7 +83,7 @@ public class DuckModel extends EntityModel<@NotNull DuckRenderState> {
             this.rightLeg.visible = true;
             this.leftLeg.visible = true;
         }
-        if ((CONFIG.isBaby && !state.isServerEntity) || (state.isBaby && !state.isServerEntity)) {
+        if (CONFIG.isBaby) {
             this.head.xScale = 1.5f;
             this.head.yScale = 1.5f;
             this.head.zScale = 1.5f;

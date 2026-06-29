@@ -1,34 +1,32 @@
 package com.jeff.pets.client.rendering.vanilla.panda;
 
-import com.jeff.pets.mob.vanilla.neutral.ClientPanda;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.neutral.ClientPanda;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.PandaModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.state.PandaRenderState;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientPandaRenderer extends PetRenderer<@NotNull ClientPanda, @NotNull PandaRenderState, @NotNull PandaModel> {
+public class ClientPandaRenderer extends PetRenderer<@NotNull ClientPanda, @NotNull ClientPandaModel> {
     public static final ModelLayerLocation PANDA_LOCAITON = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientpanda"), "main");
 
     public ClientPandaRenderer(EntityRendererProvider.Context context) {
-        super(context, new PandaModel(context.bakeLayer(ModelLayers.PANDA)), 0.75f);
+        super(context, new ClientPandaModel(context.bakeLayer(ModelLayers.PANDA)), 0.75f);
     }
 
     @Override
-    protected void scale(PandaRenderState state, @NotNull PoseStack poseStack) {
+    protected void scale(ClientPanda state, @NotNull PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(PandaRenderState livingEntityRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(ClientPanda livingEntityRenderState) {
         String pandaTexturePath;
         switch (CONFIG.pandaSkin) {
             case "normal" -> pandaTexturePath = "textures/entity/panda/panda.png";
@@ -41,10 +39,5 @@ public class ClientPandaRenderer extends PetRenderer<@NotNull ClientPanda, @NotN
             case null, default -> pandaTexturePath = "textures/entity/panda/panda.png";
         }
         return ResourceLocation.withDefaultNamespace(pandaTexturePath);
-    }
-
-    @Override
-    public PandaRenderState createRenderState() {
-        return new PandaRenderState();
     }
 }

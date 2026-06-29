@@ -64,8 +64,9 @@ repositories {
 }
 
 dependencies {
-    implementation minecraft.dependency("net.minecraftforge:forge:${project.minecraft_version}-53.1.10")
+    implementation minecraft.dependency("net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}")
     implementation "me.shedaniel.cloth:cloth-config-forge:${project.cloth_config_version}"
+    implementation "net.sf.jopt-simple:jopt-simple:5.0.4"
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -96,4 +97,9 @@ tasks.named('jar') {
     archiveBaseName = "pets-mod"
     archiveVersion = project.mod_version
     archiveClassifier = project.minecraft_version + "-forge"
+}
+configurations.all {
+    resolutionStrategy {
+        force 'net.sf.jopt-simple:jopt-simple:5.0.4'
+    }
 }
