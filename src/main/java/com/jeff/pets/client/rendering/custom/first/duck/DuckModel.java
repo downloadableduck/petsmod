@@ -15,7 +15,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class DuckModel extends PetModel<@NotNull Duck> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
-            ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, "duck"), "main"
+            new ResourceLocation(PetsInitializer.MOD_ID, "duck"), "main"
     );
 
     private final ModelPart root;

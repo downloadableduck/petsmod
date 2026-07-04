@@ -118,7 +118,7 @@ public class Stingray extends FlyingPet {
         this.goalSelector.addGoal(1, new RandomSwimmingGoal(this, 1, 1));
         this.goalSelector.addGoal(2, new TryFindWaterGoal(this));
 
-        this.goalSelector.addGoal(0, new FollowOwnerGoal(this, 1, 2, 10));
+        this.goalSelector.addGoal(0, new FollowOwnerGoal(this, 1, 2, 10, false));
         this.goalSelector.addGoal(9, new BreedGoal(this, 1));
         this.goalSelector.addGoal(3, new PanicGoal(this, 1.4d));
         // this.goalSelector.addGoal(4, new TemptGoal(this, 1.0f, stack -> stack.is(ItemTags.FISHES), false));
@@ -243,7 +243,7 @@ public class Stingray extends FlyingPet {
         }
         if (owner != null) {
             if (distanceTo(owner) >= 10) {
-                this.tryToTeleportToOwner();
+                this.teleportTo(owner.getX(), owner.getY(), owner.getZ());
             }
         }
 

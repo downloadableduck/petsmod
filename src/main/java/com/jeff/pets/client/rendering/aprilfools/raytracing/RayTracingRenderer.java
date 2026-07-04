@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class RayTracingRenderer extends PetRenderer<@NotNull RayTracing, @NotNull HumanoidModel<@NotNull RayTracing>> {
 
-    public static final ModelLayerLocation RAY_TRACING_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("raytracing"), "main");
+    public static final ModelLayerLocation RAY_TRACING_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "raytracing"), "main");
 
     public RayTracingRenderer(EntityRendererProvider.Context context) {
         super(context, new PlayerModel(context.bakeLayer(RAY_TRACING_LOCATION), true), 0.75f);
@@ -28,12 +28,12 @@ public class RayTracingRenderer extends PetRenderer<@NotNull RayTracing, @NotNul
     }
 
     protected PlayerSkin getSkinFromRayTracingTexture() {
-        return new PlayerSkin(ResourceLocation.withDefaultNamespace("textures/entity/ray_tracing.png"), "https://petsmod.com", ResourceLocation.withDefaultNamespace("textures/entity/ray_tracing.png"), ResourceLocation.withDefaultNamespace("textures/entity/ray_tracing.png"), PlayerSkin.Model.WIDE, false);
+        return new PlayerSkin(new ResourceLocation("minecraft", "textures/entity/ray_tracing.png"), "https://petsmod.com", new ResourceLocation("minecraft", "textures/entity/ray_tracing.png"), new ResourceLocation("minecraft", "textures/entity/ray_tracing.png"), PlayerSkin.Model.WIDE, false);
     }
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(RayTracing livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/ray_tracing.png");
+        return new ResourceLocation("minecraft", "textures/entity/ray_tracing.png");
     }
 
     @Override

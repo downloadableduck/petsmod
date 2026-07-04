@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class MegaSpudRenderer extends PetRenderer<@NotNull MegaSpud, @NotNull MegaSpudModel> {
 
-    public static final ModelLayerLocation MEGA_SPUD_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("megaspoud"), "main");
+    public static final ModelLayerLocation MEGA_SPUD_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "megaspoud"), "main");
 
     public MegaSpudRenderer(EntityRendererProvider.Context context) {
         super(context, new MegaSpudModel(context.bakeLayer(MEGA_SPUD_LOCATION)), 0.75f);
@@ -26,6 +26,6 @@ public class MegaSpudRenderer extends PetRenderer<@NotNull MegaSpud, @NotNull Me
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(MegaSpud livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/slime/mega_spud.png");
+        return new ResourceLocation("minecraft", "textures/entity/slime/mega_spud.png");
     }
 }

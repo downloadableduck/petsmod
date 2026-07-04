@@ -17,7 +17,7 @@ import java.util.Objects;
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientSquidRenderer extends PetRenderer<@NotNull ClientSquid, @NotNull SquidModel<ClientSquid>> {
-    public static final ModelLayerLocation SQUID_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientsquid"), "main");
+    public static final ModelLayerLocation SQUID_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientsquid"), "main");
     String squidTexturePath;
 
     public ClientSquidRenderer(EntityRendererProvider.Context context) {
@@ -31,7 +31,7 @@ public class ClientSquidRenderer extends PetRenderer<@NotNull ClientSquid, @NotN
         } else if (Objects.equals(CONFIG.squidSkin, "glow_squid")) {
             squidTexturePath = "textures/entity/squid/glow_squid.png";
         }
-        return ResourceLocation.withDefaultNamespace(squidTexturePath);
+        return new ResourceLocation("minecraft", squidTexturePath);
     }
 
     @Override

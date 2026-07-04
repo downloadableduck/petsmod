@@ -89,10 +89,10 @@ public class ClientCamelModel extends HierarchicalModel<ClientCamel> {
             poseStack.pushPose();
             poseStack.scale(0.45F, 0.45F, 0.45F);
             poseStack.translate(0.0F, 1.834375F, 0.0F);
-            this.root().render(poseStack, vertexConsumer, i, j, k);
+            this.root().render(poseStack, vertexConsumer, i, j, k, 1, 1, 1);
             poseStack.popPose();
         } else {
-            this.root().render(poseStack, vertexConsumer, i, j, k);
+            this.root().render(poseStack, vertexConsumer, i, j, k, 1, 1, 1);
         }
 
     }

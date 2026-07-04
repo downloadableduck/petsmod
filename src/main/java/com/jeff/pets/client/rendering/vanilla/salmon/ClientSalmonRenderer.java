@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientSalmonRenderer extends PetRenderer<@NotNull ClientSalmon, @NotNull ClientSalmonModel> {
 
-    public static final ModelLayerLocation SALMON_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientsalmon"), "main");
+    public static final ModelLayerLocation SALMON_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientsalmon"), "main");
 
     public ClientSalmonRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientSalmonModel(context.bakeLayer(ModelLayers.SALMON)), 0.4F);
@@ -21,7 +21,7 @@ public class ClientSalmonRenderer extends PetRenderer<@NotNull ClientSalmon, @No
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientSalmon salmonRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/fish/salmon.png");
+        return new ResourceLocation("minecraft", "textures/entity/fish/salmon.png");
     }
 
     @Override

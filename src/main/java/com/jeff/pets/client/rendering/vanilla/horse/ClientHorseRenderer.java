@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientHorseRenderer extends PetRenderer<@NotNull ClientHorse, @NotNull ClientHorseModel<ClientHorse>> {
-    public static final ModelLayerLocation HORSE_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clienthorse"), "main");
+    public static final ModelLayerLocation HORSE_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clienthorse"), "main");
     public String horseTextureLocation;
 
     public ClientHorseRenderer(EntityRendererProvider.Context context) {
@@ -49,6 +49,6 @@ public class ClientHorseRenderer extends PetRenderer<@NotNull ClientHorse, @NotN
             case "zombie" -> horseTextureLocation = "textures/entity/horse/horse_zombie.png";
             case null, default -> horseTextureLocation = "textures/entity/horse/horse_black.png";
         }
-        return ResourceLocation.withDefaultNamespace(horseTextureLocation);
+        return new ResourceLocation("minecraft", horseTextureLocation);
     }
 }

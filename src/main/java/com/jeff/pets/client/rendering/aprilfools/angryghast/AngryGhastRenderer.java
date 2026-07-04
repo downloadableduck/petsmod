@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class AngryGhastRenderer extends PetRenderer<@NotNull AngryGhast, @NotNull GhastModel<AngryGhast>> {
 
-    public static final ModelLayerLocation ANGRY_GHAST_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("angryghast"), "main");
+    public static final ModelLayerLocation ANGRY_GHAST_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "angryghast"), "main");
 
     public AngryGhastRenderer(EntityRendererProvider.Context context) {
         super(context, new GhastModel<>(context.bakeLayer(ANGRY_GHAST_LOCATION)), 0.75f);
@@ -25,6 +25,6 @@ public class AngryGhastRenderer extends PetRenderer<@NotNull AngryGhast, @NotNul
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(AngryGhast livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/angry_ghast/ghast_angry.png");
+        return new ResourceLocation("minecraft", "textures/entity/angry_ghast/ghast_angry.png");
     }
 }

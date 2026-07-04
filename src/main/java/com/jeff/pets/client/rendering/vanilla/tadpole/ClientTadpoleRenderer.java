@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientTadpoleRenderer extends PetRenderer<@NotNull ClientTadpole, @NotNull ClientTadpoleModel> {
-    public static final ModelLayerLocation TADPOLE_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clienttadpole"), "main");
+    public static final ModelLayerLocation TADPOLE_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clienttadpole"), "main");
 
     public ClientTadpoleRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientTadpoleModel(context.bakeLayer(ModelLayers.TADPOLE)), 0.75F);
@@ -17,6 +17,6 @@ public class ClientTadpoleRenderer extends PetRenderer<@NotNull ClientTadpole, @
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientTadpole livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/tadpole/tadpole.png");
+        return new ResourceLocation("minecraft", "textures/entity/tadpole/tadpole.png");
     }
 }

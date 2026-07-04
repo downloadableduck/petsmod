@@ -15,7 +15,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class PenguinModel extends PetModel<@NotNull Penguin> {
 
-    public static final ModelLayerLocation PENGUIN_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, "penguin"), "main");
+    public static final ModelLayerLocation PENGUIN_LOCATION = new ModelLayerLocation(new ResourceLocation(PetsInitializer.MOD_ID, "penguin"), "main");
 
     private final ModelPart body;
     private final ModelPart right_foot;

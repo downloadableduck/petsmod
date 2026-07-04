@@ -25,7 +25,7 @@ public class SplashManagerMixin {
     @Redirect(method = "<clinit>", at = @At(value = "FIELD", opcode = Opcodes.PUTSTATIC, target = "Lnet/minecraft/client/resources/SplashManager;SPLASHES_LOCATION:Lnet/minecraft/resources/ResourceLocation;"))
     private static void redirect(ResourceLocation ResourceLocation) {
         SplashManager.SPLASHES_LOCATION = CONFIG.customTitleEnabled
-                ? ResourceLocation.fromNamespaceAndPath(MOD_ID, "texts/splashes.txt")
-                : ResourceLocation.withDefaultNamespace("texts/splashes.txt");
+                ? new ResourceLocation(MOD_ID, "texts/splashes.txt")
+                : new ResourceLocation("minecraft", "texts/splashes.txt");
     }
 }

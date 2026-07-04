@@ -13,7 +13,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientGoatRenderer extends PetRenderer<@NotNull ClientGoat, @NotNull ClientGoatModel> {
 
-    public static final ModelLayerLocation GOAT_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientgoat"), "main");
+    public static final ModelLayerLocation GOAT_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientgoat"), "main");
 
     public ClientGoatRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientGoatModel(context.bakeLayer(ModelLayers.GOAT)), 0.75f);
@@ -28,6 +28,6 @@ public class ClientGoatRenderer extends PetRenderer<@NotNull ClientGoat, @NotNul
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientGoat livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/goat/goat.png");
+        return new ResourceLocation("minecraft", "textures/entity/goat/goat.png");
     }
 }

@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientSkeletonRenderer extends PetRenderer<@NotNull ClientSkeleton, @NotNull SkeletonModel<@NotNull ClientSkeleton>> {
 
-    public static final ModelLayerLocation SKELETON_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientskeleton"), "main");
+    public static final ModelLayerLocation SKELETON_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientskeleton"), "main");
 
     public ClientSkeletonRenderer(EntityRendererProvider.Context context) {
         super(context, new SkeletonModel<>(context.bakeLayer(ModelLayers.SKELETON)), 0.75f);
@@ -20,7 +20,7 @@ public class ClientSkeletonRenderer extends PetRenderer<@NotNull ClientSkeleton,
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientSkeleton livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/skeleton/skeleton.png");
+        return new ResourceLocation("minecraft", "textures/entity/skeleton/skeleton.png");
     }
 
     @Override

@@ -15,7 +15,7 @@ import java.util.Objects;
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientFoxRenderer extends PetRenderer<@NotNull ClientFox, @NotNull ClientFoxModel> {
-    public static final ModelLayerLocation FOX_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientfox"), "main");
+    public static final ModelLayerLocation FOX_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientfox"), "main");
     public String foxTexturePath;
 
     public ClientFoxRenderer(EntityRendererProvider.Context context) {
@@ -38,7 +38,7 @@ public class ClientFoxRenderer extends PetRenderer<@NotNull ClientFox, @NotNull 
         } else {
             foxTexturePath = "textures/entity/fox/fox.png";
         }
-        return ResourceLocation.withDefaultNamespace(foxTexturePath);
+        return new ResourceLocation("minecraft", foxTexturePath);
     }
 
     @Override

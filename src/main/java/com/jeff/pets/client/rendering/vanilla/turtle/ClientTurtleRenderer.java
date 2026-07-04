@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientTurtleRenderer extends PetRenderer<@NotNull ClientTurtle, @NotNull ClientTurtleModel> {
-    public static final ModelLayerLocation TURTLE_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientturtle"), "main");
+    public static final ModelLayerLocation TURTLE_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientturtle"), "main");
 
     public ClientTurtleRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientTurtleModel(context.bakeLayer(ModelLayers.TURTLE)), 0.7F);
@@ -17,7 +17,7 @@ public class ClientTurtleRenderer extends PetRenderer<@NotNull ClientTurtle, @No
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientTurtle turtleRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/turtle/big_sea_turtle.png");
+        return new ResourceLocation("minecraft", "textures/entity/turtle/big_sea_turtle.png");
     }
 }
 

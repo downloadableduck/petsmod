@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientSpiderRenderer extends PetRenderer<@NotNull ClientSpider, @NotNull SpiderModel<ClientSpider>> {
 
-    public static final ModelLayerLocation SPIDER_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientspider"), "main");
+    public static final ModelLayerLocation SPIDER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientspider"), "main");
 
     public ClientSpiderRenderer(EntityRendererProvider.Context context) {
         super(context, new SpiderModel<>(context.bakeLayer(ModelLayers.SPIDER)), 0.75f);
@@ -19,6 +19,6 @@ public class ClientSpiderRenderer extends PetRenderer<@NotNull ClientSpider, @No
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientSpider livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/spider/spider.png");
+        return new ResourceLocation("minecraft", "textures/entity/spider/spider.png");
     }
 }

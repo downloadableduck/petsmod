@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class PlaguewhaleRenderer extends PetRenderer<@NotNull PlaguewhaleSlab, @NotNull ToxifinSlabModel<PlaguewhaleSlab>> {
 
-    public static final ModelLayerLocation PLAGUEWHALE_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("plaguewhale_slab"), "main");
+    public static final ModelLayerLocation PLAGUEWHALE_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "plaguewhale_slab"), "main");
 
     public PlaguewhaleRenderer(EntityRendererProvider.Context context) {
         super(context, new ToxifinSlabModel<>(context.bakeLayer(PLAGUEWHALE_LOCATION)), 0.75f);
@@ -24,6 +24,6 @@ public class PlaguewhaleRenderer extends PetRenderer<@NotNull PlaguewhaleSlab, @
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(PlaguewhaleSlab livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/plaguewhale.png");
+        return new ResourceLocation("minecraft", "textures/entity/plaguewhale.png");
     }
 }

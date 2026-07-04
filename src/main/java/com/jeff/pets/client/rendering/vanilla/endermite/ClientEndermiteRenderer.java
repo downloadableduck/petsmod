@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientEndermiteRenderer extends PetRenderer<@NotNull ClientEndermite, @NotNull EndermiteModel<ClientEndermite>> {
 
-    public static final ModelLayerLocation ENDERMITE_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientendermite"), "main");
+    public static final ModelLayerLocation ENDERMITE_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientendermite"), "main");
 
     public ClientEndermiteRenderer(EntityRendererProvider.Context context) {
         super(context, new EndermiteModel<>(context.bakeLayer(ModelLayers.ENDERMITE)), 0.75f);
@@ -19,6 +19,6 @@ public class ClientEndermiteRenderer extends PetRenderer<@NotNull ClientEndermit
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientEndermite livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/endermite.png");
+        return new ResourceLocation("minecraft", "textures/entity/endermite.png");
     }
 }

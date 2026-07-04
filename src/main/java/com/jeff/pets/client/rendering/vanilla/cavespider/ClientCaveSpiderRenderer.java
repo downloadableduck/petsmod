@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientCaveSpiderRenderer extends PetRenderer<@NotNull ClientCaveSpider, @NotNull SpiderModel<ClientCaveSpider>> {
-    public static final ModelLayerLocation CAVE_SPIDER_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientcavespider"), "main");
+    public static final ModelLayerLocation CAVE_SPIDER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientcavespider"), "main");
 
     public ClientCaveSpiderRenderer(EntityRendererProvider.Context context) {
         super(context, new SpiderModel<>(context.bakeLayer(ModelLayers.CAVE_SPIDER)), 0.75f);
@@ -24,6 +24,6 @@ public class ClientCaveSpiderRenderer extends PetRenderer<@NotNull ClientCaveSpi
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientCaveSpider livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/spider/cave_spider.png");
+        return new ResourceLocation("minecraft", "textures/entity/spider/cave_spider.png");
     }
 }

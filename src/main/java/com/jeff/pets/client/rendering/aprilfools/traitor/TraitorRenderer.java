@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class TraitorRenderer extends PetRenderer<@NotNull Traitor, @NotNull ClientEvokerModel<Traitor>> {
 
-    public static final ModelLayerLocation TRAITOR_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("traitor"), "main");
+    public static final ModelLayerLocation TRAITOR_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "traitor"), "main");
 
     public TraitorRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientEvokerModel(context.bakeLayer(ModelLayers.PILLAGER)), 0.75f);
@@ -22,6 +22,6 @@ public class TraitorRenderer extends PetRenderer<@NotNull Traitor, @NotNull Clie
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(Traitor livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/illager/pillager.png");
+        return new ResourceLocation("minecraft", "textures/entity/illager/pillager.png");
     }
 }

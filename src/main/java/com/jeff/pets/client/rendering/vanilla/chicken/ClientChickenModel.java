@@ -46,7 +46,7 @@ public class ClientChickenModel<T extends ClientChicken> extends ChickenModel<T>
         }
     }
 
-    protected float getBob(T chicken, float f) {
+    protected float getBob(ClientChicken chicken, float f) {
         float g = Mth.lerp(f, chicken.oFlap, chicken.flap);
         float h = Mth.lerp(f, chicken.oFlapSpeed, chicken.flapSpeed);
         return (Mth.sin(g) + 1.0F) * h;

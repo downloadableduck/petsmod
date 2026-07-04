@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientElderGuardianRenderer extends PetRenderer<@NotNull ClientElderGuardian, @NotNull ClientGuardianModel<ClientElderGuardian>> {
-    public static final ModelLayerLocation ELDER_GUARDIAN_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientelderguardian"), "main");
+    public static final ModelLayerLocation ELDER_GUARDIAN_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientelderguardian"), "main");
 
     public ClientElderGuardianRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientGuardianModel<>(context.bakeLayer(ModelLayers.ELDER_GUARDIAN)), 0.75f);
@@ -25,6 +25,6 @@ public class ClientElderGuardianRenderer extends PetRenderer<@NotNull ClientElde
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientElderGuardian livingEntityRenderState) {
         //livingEntityRenderState.spike = 1;
-        return ResourceLocation.withDefaultNamespace("textures/entity/guardian_elder.png");
+        return new ResourceLocation("minecraft", "textures/entity/guardian_elder.png");
     }
 }

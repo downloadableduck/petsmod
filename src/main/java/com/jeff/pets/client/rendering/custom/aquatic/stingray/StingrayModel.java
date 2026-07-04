@@ -2,7 +2,6 @@ package com.jeff.pets.client.rendering.custom.aquatic.stingray;
 
 import com.jeff.pets.mob.custom.aquatic.Stingray;
 import com.jeff.pets.client.rendering.PetModel;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
@@ -40,7 +39,7 @@ public class StingrayModel extends PetModel<@NotNull Stingray> {
 
     @Override
     public void setupAnim(Stingray state, float f, float g, float m, float k, float p) {
-        float partialTick = Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(true);
+        float partialTick = m;
         float flapTime = Mth.lerp(partialTick, state.oFlap, state.flap);
         if (state.walkAnimation.speed() > 0) {
             float anim = flapTime * 7.448451F * ((float) Math.PI / 180F);

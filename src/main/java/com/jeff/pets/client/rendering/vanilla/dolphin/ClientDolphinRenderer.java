@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientDolphinRenderer extends PetRenderer<@NotNull ClientDolphin, @NotNull DolphinModel<ClientDolphin>> {
-    public static final ModelLayerLocation DOLPHIN_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientdolphin"), "main");
+    public static final ModelLayerLocation DOLPHIN_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientdolphin"), "main");
 
     public ClientDolphinRenderer(EntityRendererProvider.Context context) {
         super(context, new DolphinModel(context.bakeLayer(ModelLayers.DOLPHIN)), 0.7f);
@@ -21,7 +21,7 @@ public class ClientDolphinRenderer extends PetRenderer<@NotNull ClientDolphin, @
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientDolphin dolphinRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/dolphin.png");
+        return new ResourceLocation("minecraft", "textures/entity/dolphin.png");
     }
 
     @Override

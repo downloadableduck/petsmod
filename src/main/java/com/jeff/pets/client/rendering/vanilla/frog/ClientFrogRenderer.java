@@ -12,7 +12,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientFrogRenderer extends PetRenderer<@NotNull ClientFrog, @NotNull ClientFrogModel> {
 
-    public static ModelLayerLocation FROG_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientfrog"), "main");
+    public static ModelLayerLocation FROG_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientfrog"), "main");
     public String frogTexturePath;
 
     public ClientFrogRenderer(EntityRendererProvider.Context context) {
@@ -26,6 +26,6 @@ public class ClientFrogRenderer extends PetRenderer<@NotNull ClientFrog, @NotNul
             case "cold" -> frogTexturePath = "textures/entity/frog/cold_frog.png";
             case null, default -> frogTexturePath = "textures/entity/frog/temperate_frog.png";
         }
-        return ResourceLocation.withDefaultNamespace(frogTexturePath);
+        return new ResourceLocation("minecraft", frogTexturePath);
     }
 }

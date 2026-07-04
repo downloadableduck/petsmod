@@ -15,7 +15,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientSlimeRenderer extends PetRenderer<@NotNull ClientSlime, @NotNull SlimeModel<ClientSlime>> {
 
-    public static final ModelLayerLocation SLIME_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientslime"), "main");
+    public static final ModelLayerLocation SLIME_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientslime"), "main");
 
     public ClientSlimeRenderer(EntityRendererProvider.Context context) {
         super(context, new SlimeModel<>(context.bakeLayer(ModelLayers.SLIME)), 0.75f);
@@ -35,6 +35,6 @@ public class ClientSlimeRenderer extends PetRenderer<@NotNull ClientSlime, @NotN
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientSlime livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/slime/slime.png");
+        return new ResourceLocation("minecraft", "textures/entity/slime/slime.png");
     }
 }

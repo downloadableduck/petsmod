@@ -14,12 +14,12 @@ public class PetsSounds {
     public static final SoundEvent PENGUIN_AMBIENT = registerPenguinSound();
 
     private static SoundEvent registerSound() {
-        ResourceLocation identifier = ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, "duck_ambient");
+        ResourceLocation identifier = new ResourceLocation(PetsInitializer.MOD_ID, "duck_ambient");
         return Registry.register(BuiltInRegistries.SOUND_EVENT, identifier, SoundEvent.createVariableRangeEvent(identifier));
     }
 
     private static SoundEvent registerPenguinSound() {
-        ResourceLocation identifier = ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, "penguin_ambient");
+        ResourceLocation identifier = new ResourceLocation(PetsInitializer.MOD_ID, "penguin_ambient");
         return Registry.register(BuiltInRegistries.SOUND_EVENT, identifier, SoundEvent.createVariableRangeEvent(identifier));
     }
 
