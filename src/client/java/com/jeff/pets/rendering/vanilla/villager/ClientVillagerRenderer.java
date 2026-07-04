@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.jeff.pets.Central.CONFIG;
 
 public class ClientVillagerRenderer extends PetRenderer<@NotNull ClientVillager, VillagerModel<ClientVillager>> {
-    public static final ModelLayerLocation VILLAGER_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientvillager"), "main");
+    public static final ModelLayerLocation VILLAGER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientvillager"), "main");
 
     public ClientVillagerRenderer(EntityRendererProvider.Context context) {
         super(context, new VillagerModel<>(context.bakeLayer(ModelLayers.VILLAGER)), 0.5F);
@@ -39,6 +39,6 @@ public class ClientVillagerRenderer extends PetRenderer<@NotNull ClientVillager,
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientVillager villagerRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/villager/villager.png");
+        return new ResourceLocation("minecraft", "textures/entity/villager/villager.png");
     }
 }

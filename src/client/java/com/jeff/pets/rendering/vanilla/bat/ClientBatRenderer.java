@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientBatRenderer extends PetRenderer<@NotNull ClientBat, @NotNull ClientBatModel> {
-    public static final ModelLayerLocation BAT_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("textures/entity/bat.png"), "main");
+    public static final ModelLayerLocation BAT_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "textures/entity/bat.png"), "main");
 
     public ClientBatRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientBatModel(context.bakeLayer(ModelLayers.BAT)), 0.25F);
@@ -17,6 +17,6 @@ public class ClientBatRenderer extends PetRenderer<@NotNull ClientBat, @NotNull 
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientBat batRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/bat.png");
+        return new ResourceLocation("minecraft", "textures/entity/bat.png");
     }
 }

@@ -14,7 +14,7 @@ import java.util.Objects;
 import static com.jeff.pets.Central.CONFIG;
 
 public class ClientStriderRenderer extends PetRenderer<@NotNull ClientStrider, @NotNull ClientStriderMOdel> {
-    public static ModelLayerLocation STRIDER_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientstrider"), "main");
+    public static ModelLayerLocation STRIDER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientstrider"), "main");
 
     public String striderTexturePath;
 
@@ -35,6 +35,6 @@ public class ClientStriderRenderer extends PetRenderer<@NotNull ClientStrider, @
         } else if (Objects.equals(CONFIG.striderSkin, "cold")) {
             striderTexturePath = "textures/entity/strider/strider_cold.png";
         }
-        return ResourceLocation.withDefaultNamespace(striderTexturePath);
+        return new ResourceLocation("minecraft", striderTexturePath);
     }
 }

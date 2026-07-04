@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientWitherSkeletonRenderer extends PetRenderer<@NotNull ClientWitherSkeleton, @NotNull SkeletonModel<@NotNull ClientWitherSkeleton>> {
 
-    public static final ModelLayerLocation WITHER_SKELETON_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientwitherskeleton"), "main");
+    public static final ModelLayerLocation WITHER_SKELETON_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientwitherskeleton"), "main");
 
     public ClientWitherSkeletonRenderer(EntityRendererProvider.Context context) {
         super(context, new SkeletonModel<>(context.bakeLayer(ModelLayers.WITHER_SKELETON)), 0.75f);
@@ -19,6 +19,6 @@ public class ClientWitherSkeletonRenderer extends PetRenderer<@NotNull ClientWit
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientWitherSkeleton livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/skeleton/wither_skeleton.png");
+        return new ResourceLocation("minecraft", "textures/entity/skeleton/wither_skeleton.png");
     }
 }

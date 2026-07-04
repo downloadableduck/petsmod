@@ -14,7 +14,7 @@ import java.util.Objects;
 import static com.jeff.pets.Central.CONFIG;
 
 public class ClientCamelRenderer extends PetRenderer<@NotNull ClientCamel, @NotNull ClientCamelModel> {
-    public static final ModelLayerLocation CAMEL_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientcamel"), "main");
+    public static final ModelLayerLocation CAMEL_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientcamel"), "main");
     public String camelTexturePath;
 
     public ClientCamelRenderer(EntityRendererProvider.Context context) {
@@ -37,6 +37,6 @@ public class ClientCamelRenderer extends PetRenderer<@NotNull ClientCamel, @NotN
         } else {
             camelTexturePath = "textures/entity/camel/camel.png";
         }
-        return ResourceLocation.withDefaultNamespace(camelTexturePath);
+        return new ResourceLocation("minecraft", camelTexturePath);
     }
 }

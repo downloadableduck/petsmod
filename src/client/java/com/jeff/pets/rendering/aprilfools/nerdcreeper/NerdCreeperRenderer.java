@@ -20,7 +20,7 @@ import static com.jeff.pets.Central.CONFIG;
 
 public class NerdCreeperRenderer extends PetRenderer<@NotNull NerdCreeper, @NotNull CreeperModel<NerdCreeper>> {
 
-    public static final ModelLayerLocation NERD_CREEPER_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("nerdcreeper"), "main");
+    public static final ModelLayerLocation NERD_CREEPER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "nerdcreeper"), "main");
 
     public NerdCreeperRenderer(EntityRendererProvider.Context context) {
         super(context, new CreeperModel<>(context.bakeLayer(ModelLayers.CREEPER)), 0.75f);
@@ -30,7 +30,7 @@ public class NerdCreeperRenderer extends PetRenderer<@NotNull NerdCreeper, @NotN
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(NerdCreeper livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/creeper/creeper.png");
+        return new ResourceLocation("minecraft", "textures/entity/creeper/creeper.png");
     }
 
     @Override

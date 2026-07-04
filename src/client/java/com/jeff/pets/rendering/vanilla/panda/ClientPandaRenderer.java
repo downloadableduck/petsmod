@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.jeff.pets.Central.CONFIG;
 
 public class ClientPandaRenderer extends PetRenderer<@NotNull ClientPanda, @NotNull ClientPandaModel> {
-    public static final ModelLayerLocation PANDA_LOCAITON = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientpanda"), "main");
+    public static final ModelLayerLocation PANDA_LOCAITON = new ModelLayerLocation(new ResourceLocation("minecraft", "clientpanda"), "main");
 
     public ClientPandaRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientPandaModel(context.bakeLayer(ModelLayers.PANDA)), 0.75f);
@@ -38,6 +38,6 @@ public class ClientPandaRenderer extends PetRenderer<@NotNull ClientPanda, @NotN
             case "brown" -> pandaTexturePath = "textures/entity/panda/brown_panda.png";
             case null, default -> pandaTexturePath = "textures/entity/panda/panda.png";
         }
-        return ResourceLocation.withDefaultNamespace(pandaTexturePath);
+        return new ResourceLocation("minecraft", pandaTexturePath);
     }
 }

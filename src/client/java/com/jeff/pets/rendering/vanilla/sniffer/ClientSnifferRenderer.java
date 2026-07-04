@@ -12,8 +12,8 @@ import org.jetbrains.annotations.NotNull;
 import static com.jeff.pets.Central.CONFIG;
 
 public class ClientSnifferRenderer extends PetRenderer<@NotNull ClientSniffer, @NotNull ClientSnifferModel> {
-    public static final ModelLayerLocation SNIFFER_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientsniffer"), "main");
-    private static final ResourceLocation snifferTexturePath = ResourceLocation.withDefaultNamespace("textures/entity/sniffer/sniffer.png");
+    public static final ModelLayerLocation SNIFFER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientsniffer"), "main");
+    private static final ResourceLocation snifferTexturePath = new ResourceLocation("minecraft", "textures/entity/sniffer/sniffer.png");
 
     public ClientSnifferRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientSnifferModel(context.bakeLayer(ModelLayers.SNIFFER)), 1.1F);

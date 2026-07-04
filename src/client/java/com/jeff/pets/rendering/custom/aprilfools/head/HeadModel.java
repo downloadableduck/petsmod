@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class HeadModel extends PetModel<@NotNull Head> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
-            ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, "head"), "main"
+            new ResourceLocation(PetsInitializer.MOD_ID, "head"), "main"
     );
 
     public HeadModel(final ModelPart root) {

@@ -16,7 +16,7 @@ import static com.jeff.pets.Central.CONFIG;
 
 public class ClientLlamaRenderer extends PetRenderer<@NotNull ClientLlama, @NotNull ClientLlamaModel> {
 
-    public static final ModelLayerLocation LLAMA_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientllama"), "main");
+    public static final ModelLayerLocation LLAMA_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientllama"), "main");
     public String llamaTexturePath;
 
     public ClientLlamaRenderer(EntityRendererProvider.Context context) {
@@ -45,6 +45,6 @@ public class ClientLlamaRenderer extends PetRenderer<@NotNull ClientLlama, @NotN
             case "white" -> llamaTexturePath = "textures/entity/llama/white.png";
             case null, default -> llamaTexturePath = "textures/entity/llama/brown.png";
         }
-        return ResourceLocation.withDefaultNamespace(llamaTexturePath);
+        return new ResourceLocation("minecraft", llamaTexturePath);
     }
 }

@@ -14,7 +14,7 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
 
 public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopusModel> {
 
-    public static final ModelLayerLocation DUMBO_OCTOPUS_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(MOD_ID, "dumbo_octopus"), "main");
+    public static final ModelLayerLocation DUMBO_OCTOPUS_LOCATION = new ModelLayerLocation(new ResourceLocation(MOD_ID, "dumbo_octopus"), "main");
     double i = 45;
     float direction = 1;
     float speed = 0.5f;
@@ -41,7 +41,7 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
             case "pink" -> path = pink;
             case null, default -> path = yellow;
         }
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+        return new ResourceLocation(MOD_ID, path);
     }
 
     @Override

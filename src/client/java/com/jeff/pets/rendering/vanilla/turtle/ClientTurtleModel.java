@@ -70,14 +70,14 @@ public class ClientTurtleModel extends QuadrupedModel<ClientTurtle> {
         this.eggBelly.visible = false;
     }
 
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int j, int k) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int j, float f, float g, float h, float k) {
         boolean bl = this.eggBelly.visible;
         if (bl) {
             poseStack.pushPose();
             poseStack.translate(0.0F, -0.08F, 0.0F);
         }
 
-        super.renderToBuffer(poseStack, vertexConsumer, i, j, k);
+        super.renderToBuffer(poseStack, vertexConsumer, i, j, f, g, h, k);
         if (bl) {
             poseStack.popPose();
         }

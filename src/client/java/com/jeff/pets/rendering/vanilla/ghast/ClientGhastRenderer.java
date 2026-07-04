@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientGhastRenderer extends PetRenderer<@NotNull ClientGhast, @NotNull GhastModel<ClientGhast>> {
 
-    public static final ModelLayerLocation GHAST_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientghast"), "main");
+    public static final ModelLayerLocation GHAST_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientghast"), "main");
 
     public ClientGhastRenderer(EntityRendererProvider.Context context) {
         super(context, new GhastModel<>(context.bakeLayer(ModelLayers.GHAST)), 0.75f);
@@ -20,7 +20,7 @@ public class ClientGhastRenderer extends PetRenderer<@NotNull ClientGhast, @NotN
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientGhast livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/ghast/ghast.png");
+        return new ResourceLocation("minecraft", "textures/entity/ghast/ghast.png");
     }
 
     @Override

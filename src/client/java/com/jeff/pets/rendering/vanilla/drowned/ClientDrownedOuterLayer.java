@@ -27,7 +27,7 @@ public class ClientDrownedOuterLayer extends RenderLayer {
     public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource source, int i, Entity entityRenderState, float f, float g, float h, float b, float k, float t) {
         int overlayCoords = ClientDrownedRenderer.getOverlayCoords((LivingEntity) entityRenderState, 0.0f);
         poseStack.scale(1f, 1f, 1f);
-        VertexConsumer consumer = source.getBuffer(RenderType.entityTranslucent(ResourceLocation.withDefaultNamespace("textures/entity/zombie/drowned_outer_layer.png")));
-        this.getParentModel().renderToBuffer(poseStack, consumer, i, overlayCoords);
+        VertexConsumer consumer = source.getBuffer(RenderType.entityTranslucent(new ResourceLocation("minecraft", "textures/entity/zombie/drowned_outer_layer.png")));
+        this.getParentModel().renderToBuffer(poseStack, consumer, i, overlayCoords, 1, 1, 1, 1);
     }
 }

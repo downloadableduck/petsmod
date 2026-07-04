@@ -13,7 +13,7 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
 
 public class StingrayRenderer extends PetRenderer<Stingray, StingrayModel> {
 
-    public static final ModelLayerLocation STINGRAY_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(MOD_ID, "stingray"), "main");
+    public static final ModelLayerLocation STINGRAY_LOCATION = new ModelLayerLocation(new ResourceLocation(MOD_ID, "stingray"), "main");
 
     public StingrayRenderer(EntityRendererProvider.Context context) {
         super(context, new StingrayModel(context.bakeLayer(STINGRAY_LOCATION)), 0.75f);
@@ -21,7 +21,7 @@ public class StingrayRenderer extends PetRenderer<Stingray, StingrayModel> {
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull Stingray state) {
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/entity/stingray/stingray.png");
+        return new ResourceLocation(MOD_ID, "textures/entity/stingray/stingray.png");
     }
 
     @Override

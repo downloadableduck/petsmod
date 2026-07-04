@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class RedstoneBugRenderer extends PetRenderer<@NotNull RedstoneBug, @NotNull SilverfishModel<RedstoneBug>> {
 
-    public static final ModelLayerLocation REDSTONE_BUG_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("redstone_bug"), "main");
+    public static final ModelLayerLocation REDSTONE_BUG_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "redstone_bug"), "main");
 
     public RedstoneBugRenderer(EntityRendererProvider.Context context) {
         super(context, new SilverfishModel(context.bakeLayer(ModelLayers.SILVERFISH)), 0.75f);
@@ -19,6 +19,6 @@ public class RedstoneBugRenderer extends PetRenderer<@NotNull RedstoneBug, @NotN
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(RedstoneBug livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/redstone_bug.png");
+        return new ResourceLocation("minecraft", "textures/entity/redstone_bug.png");
     }
 }

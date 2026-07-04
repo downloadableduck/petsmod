@@ -15,7 +15,7 @@ import static com.jeff.pets.Central.CONFIG;
 
 public class ClientZombieVillagerRenderer extends PetRenderer<@NotNull ClientZombieVillager, @NotNull ClientZombieVillagerModel> {
 
-    public static final ModelLayerLocation ZOMBIE_VILLAGER_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientzombievillager"), "main");
+    public static final ModelLayerLocation ZOMBIE_VILLAGER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientzombievillager"), "main");
 
     public ClientZombieVillagerRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientZombieVillagerModel(context.bakeLayer(ModelLayers.ZOMBIE_VILLAGER)), 0.75f);
@@ -31,7 +31,7 @@ public class ClientZombieVillagerRenderer extends PetRenderer<@NotNull ClientZom
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientZombieVillager livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/zombie_villager/zombie_villager.png");
+        return new ResourceLocation("minecraft", "textures/entity/zombie_villager/zombie_villager.png");
     }
 
     @Override

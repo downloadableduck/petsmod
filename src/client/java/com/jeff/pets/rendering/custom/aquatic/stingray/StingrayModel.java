@@ -40,7 +40,7 @@ public class StingrayModel extends PetModel<@NotNull Stingray> {
 
     @Override
     public void setupAnim(Stingray state, float f, float g, float m, float k, float p) {
-        float partialTick = Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(true);
+        float partialTick = m;
         float flapTime = Mth.lerp(partialTick, state.oFlap, state.flap);
         if (state.walkAnimation.speed() > 0) {
             float anim = flapTime * 7.448451F * ((float) Math.PI / 180F);

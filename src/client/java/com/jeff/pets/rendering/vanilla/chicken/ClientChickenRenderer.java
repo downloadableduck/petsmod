@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.jeff.pets.Central.CONFIG;
 
 public class ClientChickenRenderer extends PetRenderer<@NotNull ClientChicken, @NotNull ClientChickenModel<ClientChicken>> {
-    public static final ModelLayerLocation CHICKEN_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientchicken"), "main");
+    public static final ModelLayerLocation CHICKEN_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientchicken"), "main");
 
     public ClientChickenRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientChickenModel<>(context.bakeLayer(ModelLayers.CHICKEN)), 0.3F);
@@ -20,7 +20,7 @@ public class ClientChickenRenderer extends PetRenderer<@NotNull ClientChicken, @
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientChicken livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/chicken.png");
+        return new ResourceLocation("minecraft", "textures/entity/chicken.png");
     }
 
     @Override

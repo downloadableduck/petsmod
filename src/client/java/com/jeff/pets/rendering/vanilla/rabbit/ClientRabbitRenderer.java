@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.jeff.pets.Central.CONFIG;
 
 public class ClientRabbitRenderer extends PetRenderer<@NotNull ClientRabbit, @NotNull ClientRabbitModel> {
-    public static final ModelLayerLocation RABBIT_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientrabbit"), "main");
+    public static final ModelLayerLocation RABBIT_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientrabbit"), "main");
     public String rabbitTextureLocation;
 
     public ClientRabbitRenderer(EntityRendererProvider.Context context) {
@@ -47,6 +47,6 @@ public class ClientRabbitRenderer extends PetRenderer<@NotNull ClientRabbit, @No
             case null, default -> rabbitTextureLocation = "textures/entity/rabbit/brown.png";
         }
 
-        return ResourceLocation.withDefaultNamespace(rabbitTextureLocation);
+        return new ResourceLocation("minecraft", rabbitTextureLocation);
     }
 }

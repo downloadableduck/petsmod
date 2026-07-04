@@ -15,7 +15,7 @@ import static com.jeff.pets.Central.CONFIG;
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 
 public class RacoonRenderer extends MobRenderer<@NotNull Racoon, @NotNull RacoonModel> {
-    public static final ModelLayerLocation RACOON_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(MOD_ID, "racoon"), "main");
+    public static final ModelLayerLocation RACOON_LOCATION = new ModelLayerLocation(new ResourceLocation(MOD_ID, "racoon"), "main");
 
     public RacoonRenderer(EntityRendererProvider.Context context) {
         super(context, new RacoonModel(context.bakeLayer(RACOON_LOCATION)), 0.75f);
@@ -42,7 +42,7 @@ public class RacoonRenderer extends MobRenderer<@NotNull Racoon, @NotNull Racoon
         } else {
             racoonTexturePath = "textures/entity/racoon/racoon.png";
         }
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, racoonTexturePath);
+        return new ResourceLocation(MOD_ID, racoonTexturePath);
     }
 
     @Override

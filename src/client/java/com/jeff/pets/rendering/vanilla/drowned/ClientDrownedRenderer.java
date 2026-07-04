@@ -16,7 +16,7 @@ import static com.jeff.pets.Central.CONFIG;
 
 public class ClientDrownedRenderer extends PetRenderer<@NotNull ClientDrowned, @NotNull ClientDrownedModel> {
 
-    public static final ModelLayerLocation DROWNED_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientdrowned"), "main");
+    public static final ModelLayerLocation DROWNED_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientdrowned"), "main");
 
     public ClientDrownedRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientDrownedModel(context.bakeLayer(ModelLayers.DROWNED)), 0.75f);
@@ -38,7 +38,7 @@ public class ClientDrownedRenderer extends PetRenderer<@NotNull ClientDrowned, @
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientDrowned livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/zombie/drowned.png");
+        return new ResourceLocation("minecraft", "textures/entity/zombie/drowned.png");
     }
 
     @Override

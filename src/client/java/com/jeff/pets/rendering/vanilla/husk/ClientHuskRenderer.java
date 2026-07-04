@@ -14,7 +14,7 @@ import static com.jeff.pets.Central.CONFIG;
 
 public class ClientHuskRenderer extends PetRenderer<@NotNull ClientHusk, @NotNull ClientZombieModel<ClientHusk>> {
 
-    public static final ModelLayerLocation HUSK_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clienthusk"), "main");
+    public static final ModelLayerLocation HUSK_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clienthusk"), "main");
 
     public ClientHuskRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientZombieModel<>(context.bakeLayer(ModelLayers.HUSK)), 0.75F);
@@ -29,7 +29,7 @@ public class ClientHuskRenderer extends PetRenderer<@NotNull ClientHusk, @NotNul
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientHusk livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/zombie/husk.png");
+        return new ResourceLocation("minecraft", "textures/entity/zombie/husk.png");
     }
 
     @Override

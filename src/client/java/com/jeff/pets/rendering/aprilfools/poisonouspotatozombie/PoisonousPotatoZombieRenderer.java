@@ -14,7 +14,7 @@ import static com.jeff.pets.Central.CONFIG;
 
 public class PoisonousPotatoZombieRenderer extends PetRenderer<@NotNull PoisonousPotatoZombie, @NotNull ClientZombieModel<PoisonousPotatoZombie>> {
 
-    public static final ModelLayerLocation POISONOUS_POTATO_ZOMBIE_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("poisonosupotatozombie"), "main");
+    public static final ModelLayerLocation POISONOUS_POTATO_ZOMBIE_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "poisonosupotatozombie"), "main");
 
     public PoisonousPotatoZombieRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientZombieModel<>(context.bakeLayer(ModelLayers.ZOMBIE)), 0.75f);
@@ -30,7 +30,7 @@ public class PoisonousPotatoZombieRenderer extends PetRenderer<@NotNull Poisonou
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(PoisonousPotatoZombie livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/zombie/poisonous_potato_zombie.png");
+        return new ResourceLocation("minecraft", "textures/entity/zombie/poisonous_potato_zombie.png");
     }
 
     @Override

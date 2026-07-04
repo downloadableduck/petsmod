@@ -20,7 +20,7 @@ import static com.jeff.pets.Central.CONFIG;
 
 public class SmilingCreeperRenderer extends PetRenderer<@NotNull SmilingCreeper, @NotNull CreeperModel<SmilingCreeper>> {
 
-    public static final ModelLayerLocation SMILING_CREEPER_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("smilingcreeper"), "main");
+    public static final ModelLayerLocation SMILING_CREEPER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "smilingcreeper"), "main");
 
     public SmilingCreeperRenderer(EntityRendererProvider.Context context) {
         super(context, new CreeperModel<>(context.bakeLayer(ModelLayers.CREEPER)), 0.75f);
@@ -29,7 +29,7 @@ public class SmilingCreeperRenderer extends PetRenderer<@NotNull SmilingCreeper,
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(SmilingCreeper livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/creeper/smiling_creeper.png");
+        return new ResourceLocation("minecraft", "textures/entity/creeper/smiling_creeper.png");
     }
 
     @Override

@@ -14,7 +14,7 @@ import static com.jeff.pets.Central.CONFIG;
 
 public class ClientMagmaCubeRenderer extends PetRenderer<@NotNull ClientMagmaCube, @NotNull SlimeModel<ClientMagmaCube>> {
 
-    public static final ModelLayerLocation MAGMA_CUBE_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientmagmacube"), "main");
+    public static final ModelLayerLocation MAGMA_CUBE_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientmagmacube"), "main");
 
     public ClientMagmaCubeRenderer(EntityRendererProvider.Context context) {
         super(context, new SlimeModel<>(context.bakeLayer(ModelLayers.MAGMA_CUBE)), 0.75f);
@@ -33,6 +33,6 @@ public class ClientMagmaCubeRenderer extends PetRenderer<@NotNull ClientMagmaCub
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientMagmaCube livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/slime/magmacube.png");
+        return new ResourceLocation("minecraft", "textures/entity/slime/magmacube.png");
     }
 }

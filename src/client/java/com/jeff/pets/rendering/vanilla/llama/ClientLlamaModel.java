@@ -66,28 +66,28 @@ public class ClientLlamaModel extends EntityModel<ClientLlama> {
         this.leftChest.visible = false;
     }
 
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int j, int k) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int j, float a, float b, float c, float d) {
         if (this.young) {
             float f = 2.0F;
             poseStack.pushPose();
             float g = 0.7F;
             poseStack.scale(0.71428573F, 0.64935064F, 0.7936508F);
             poseStack.translate(0.0F, 1.3125F, 0.22F);
-            this.head.render(poseStack, vertexConsumer, i, j, k);
+            this.head.render(poseStack, vertexConsumer, i, j, a, b, c, d);
             poseStack.popPose();
             poseStack.pushPose();
             float h = 1.1F;
             poseStack.scale(0.625F, 0.45454544F, 0.45454544F);
             poseStack.translate(0.0F, 2.0625F, 0.0F);
-            this.body.render(poseStack, vertexConsumer, i, j, k);
+            this.body.render(poseStack, vertexConsumer, i, j, a, b, c, d);
             poseStack.popPose();
             poseStack.pushPose();
             poseStack.scale(0.45454544F, 0.41322312F, 0.45454544F);
             poseStack.translate(0.0F, 2.0625F, 0.0F);
-            ImmutableList.of(this.rightHindLeg, this.leftHindLeg, this.rightFrontLeg, this.leftFrontLeg, this.rightChest, this.leftChest).forEach((modelPart) -> modelPart.render(poseStack, vertexConsumer, i, j, k));
+            ImmutableList.of(this.rightHindLeg, this.leftHindLeg, this.rightFrontLeg, this.leftFrontLeg, this.rightChest, this.leftChest).forEach((modelPart) -> modelPart.render(poseStack, vertexConsumer, i, j));
             poseStack.popPose();
         } else {
-            ImmutableList.of(this.head, this.body, this.rightHindLeg, this.leftHindLeg, this.rightFrontLeg, this.leftFrontLeg, this.rightChest, this.leftChest).forEach((modelPart) -> modelPart.render(poseStack, vertexConsumer, i, j, k));
+            ImmutableList.of(this.head, this.body, this.rightHindLeg, this.leftHindLeg, this.rightFrontLeg, this.leftFrontLeg, this.rightChest, this.leftChest).forEach((modelPart) -> modelPart.render(poseStack, vertexConsumer, i, j));
         }
     }
 }

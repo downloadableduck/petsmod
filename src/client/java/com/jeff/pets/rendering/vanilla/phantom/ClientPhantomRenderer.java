@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientPhantomRenderer extends PetRenderer<@NotNull ClientPhantom, @NotNull ClientPhantomModel> {
 
-    public static final ModelLayerLocation PHANTOM_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientphantom"), "main");
+    public static final ModelLayerLocation PHANTOM_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientphantom"), "main");
 
     public ClientPhantomRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientPhantomModel(context.bakeLayer(ModelLayers.PHANTOM)), 0.75f);
@@ -20,7 +20,7 @@ public class ClientPhantomRenderer extends PetRenderer<@NotNull ClientPhantom, @
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientPhantom livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/phantom.png");
+        return new ResourceLocation("minecraft", "textures/entity/phantom.png");
     }
 
     /*@Override

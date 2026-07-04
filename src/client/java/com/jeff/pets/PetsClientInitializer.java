@@ -41,8 +41,6 @@ import com.jeff.pets.rendering.vanilla.axolotl.ClientAxolotlRenderer;
 import com.jeff.pets.rendering.vanilla.bat.ClientBatRenderer;
 import com.jeff.pets.rendering.vanilla.bee.ClientBeeRenderer;
 import com.jeff.pets.rendering.vanilla.blaze.ClientBlazeRenderer;
-import com.jeff.pets.rendering.vanilla.bogged.ClientBoggedRenderer;
-import com.jeff.pets.rendering.vanilla.breeze.ClientBreezeRenderer;
 import com.jeff.pets.rendering.vanilla.camel.ClientCamelRenderer;
 import com.jeff.pets.rendering.vanilla.cat.ClientCatRenderer;
 import com.jeff.pets.rendering.vanilla.cavespider.ClientCaveSpiderRenderer;
@@ -204,8 +202,6 @@ public class PetsClientInitializer implements ClientModInitializer {
         EntityRenderers.register(PetsInitializer.WOLF, ClientWolfRenderer::new);
         EntityRenderers.register(PetsInitializer.ELDER_GUARDIAN_COOKIE, ClientElderGuardianRenderer::new);
         EntityRenderers.register(PetsInitializer.BLAZE, ClientBlazeRenderer::new);
-        EntityRenderers.register(PetsInitializer.BOGGED, ClientBoggedRenderer::new);
-        EntityRenderers.register(PetsInitializer.BREEZE, ClientBreezeRenderer::new);
         EntityRenderers.register(PetsInitializer.CREEPER, ClientCreeperRenderer::new);
         EntityRenderers.register(PetsInitializer.DROWNED, ClientDrownedRenderer::new);
         EntityRenderers.register(PetsInitializer.ENDERMITE, ClientEndermiteRenderer::new);
@@ -301,8 +297,6 @@ public class PetsClientInitializer implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(ClientWolfRenderer.WOLF_LOCATION, ClientWolfRenderer::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientElderGuardianRenderer.ELDER_GUARDIAN_LOCATION, GuardianModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientBlazeRenderer.BLAZE_LOCATION, BlazeModel::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(ClientBoggedRenderer.BOGGED_LOCATION, BoggedModel::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(ClientBreezeRenderer.BREEZE_LOCATION, () -> BreezeModel.createBodyLayer(32, 32));
         EntityModelLayerRegistry.registerModelLayer(ClientCreeperRenderer.CREEPER_LOCATION, ClientCreeperRenderer::createBaseCreeperLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientDrownedRenderer.DROWNED_LOCATION, ClientDrownedRenderer::createBaseDrownedLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientEndermiteRenderer.ENDERMITE_LOCATION, EndermiteModel::createBodyLayer);

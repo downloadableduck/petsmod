@@ -15,7 +15,7 @@ import java.util.Objects;
 import static com.jeff.pets.Central.CONFIG;
 
 public class ClientMooshroomRenderer extends PetRenderer<@NotNull ClientMooshroom, @NotNull ClientCowModel<ClientMooshroom>> {
-    public static final ModelLayerLocation MOOSHROOM_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientmooshroom"), "main");
+    public static final ModelLayerLocation MOOSHROOM_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientmooshroom"), "main");
 
     String mooshroomTexturePath;
 
@@ -40,6 +40,6 @@ public class ClientMooshroomRenderer extends PetRenderer<@NotNull ClientMooshroo
         } else {
             mooshroomTexturePath = "textures/entity/cow/red_mooshroom.png";
         }
-        return ResourceLocation.withDefaultNamespace(mooshroomTexturePath);
+        return new ResourceLocation("minecraft", mooshroomTexturePath);
     }
 }

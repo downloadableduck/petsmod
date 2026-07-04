@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.jeff.pets.Central.CONFIG;
 
 public class ClientPigRenderer extends PetRenderer<@NotNull ClientPig, @NotNull ClientPigModel> {
-    public static final ModelLayerLocation PIG_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientpig"), "main");
+    public static final ModelLayerLocation PIG_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientpig"), "main");
     public String pigTexturePath;
 
     public ClientPigRenderer(EntityRendererProvider.Context context) {
@@ -35,6 +35,6 @@ public class ClientPigRenderer extends PetRenderer<@NotNull ClientPig, @NotNull 
     }
 
     public @NotNull ResourceLocation getTextureLocation(ClientPig pigRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/pig/pig.png");
+        return new ResourceLocation("minecraft", "textures/entity/pig/pig.png");
     }
 }

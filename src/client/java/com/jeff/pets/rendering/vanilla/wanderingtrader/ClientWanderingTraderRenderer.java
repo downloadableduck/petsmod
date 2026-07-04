@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientWanderingTraderRenderer extends PetRenderer<@NotNull ClientWanderingTrader, @NotNull VillagerModel<ClientWanderingTrader>> {
-    public static final ModelLayerLocation WANDERING_TRADER_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientwanderingtrader"), "main");
+    public static final ModelLayerLocation WANDERING_TRADER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientwanderingtrader"), "main");
 
     public ClientWanderingTraderRenderer(EntityRendererProvider.Context context) {
         super(context, new VillagerModel<>(context.bakeLayer(ModelLayers.WANDERING_TRADER)), 0.5F);
@@ -18,6 +18,6 @@ public class ClientWanderingTraderRenderer extends PetRenderer<@NotNull ClientWa
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientWanderingTrader villagerRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/wandering_trader.png");
+        return new ResourceLocation("minecraft", "textures/entity/wandering_trader.png");
     }
 }

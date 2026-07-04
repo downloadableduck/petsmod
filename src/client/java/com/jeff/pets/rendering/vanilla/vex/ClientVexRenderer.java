@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientVexRenderer extends PetRenderer<@NotNull ClientVex, @NotNull ClientVexModel> {
 
-    public static final ModelLayerLocation VEX_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientvex"), "main");
+    public static final ModelLayerLocation VEX_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientvex"), "main");
 
     public ClientVexRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientVexModel(context.bakeLayer(ModelLayers.VEX)), 0.75f);
@@ -18,6 +18,6 @@ public class ClientVexRenderer extends PetRenderer<@NotNull ClientVex, @NotNull 
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientVex livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/illager/vex.png");
+        return new ResourceLocation("minecraft", "textures/entity/illager/vex.png");
     }
 }

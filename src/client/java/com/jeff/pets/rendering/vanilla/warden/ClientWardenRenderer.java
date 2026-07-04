@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientWardenRenderer extends PetRenderer<@NotNull ClientWarden, @NotNull ClientWardenModel> {
 
-    public static final ModelLayerLocation WARDEN_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientwarden"), "main");
+    public static final ModelLayerLocation WARDEN_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientwarden"), "main");
 
     public ClientWardenRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientWardenModel(context.bakeLayer(ModelLayers.WARDEN)), 0.75f);
@@ -18,6 +18,6 @@ public class ClientWardenRenderer extends PetRenderer<@NotNull ClientWarden, @No
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientWarden livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/warden/warden.png");
+        return new ResourceLocation("minecraft", "textures/entity/warden/warden.png");
     }
 }

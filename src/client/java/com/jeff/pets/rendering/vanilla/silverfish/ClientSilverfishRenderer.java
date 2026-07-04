@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientSilverfishRenderer extends PetRenderer<@NotNull ClientSilverfish, @NotNull SilverfishModel<ClientSilverfish>> {
 
-    public static final ModelLayerLocation SILVERFISH_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientsilverfish"), "main");
+    public static final ModelLayerLocation SILVERFISH_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientsilverfish"), "main");
 
     public ClientSilverfishRenderer(EntityRendererProvider.Context context) {
         super(context, new SilverfishModel<>(context.bakeLayer(ModelLayers.SILVERFISH)), 0.75f);
@@ -19,6 +19,6 @@ public class ClientSilverfishRenderer extends PetRenderer<@NotNull ClientSilverf
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientSilverfish livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/silverfish.png");
+        return new ResourceLocation("minecraft", "textures/entity/silverfish.png");
     }
 }

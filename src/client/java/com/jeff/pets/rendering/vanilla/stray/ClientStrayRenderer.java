@@ -14,16 +14,16 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientStrayRenderer extends PetRenderer<@NotNull ClientStray, @NotNull SkeletonModel<@NotNull ClientStray>> {
 
-    public static final ModelLayerLocation STRAY_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientstray"), "main");
+    public static final ModelLayerLocation STRAY_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientstray"), "main");
 
     public ClientStrayRenderer(EntityRendererProvider.Context context) {
         super(context, new SkeletonModel<>(context.bakeLayer(ModelLayers.STRAY)), 0.75f);
-        this.addLayer(new SkeletonClothingLayer<>((RenderLayerParent) this, context.getModelSet(), ModelLayers.STRAY_OUTER_LAYER, ResourceLocation.withDefaultNamespace("textures/entity/skeleton/stray_overlay.png")));
+        this.addLayer(new SkeletonClothingLayer<>((RenderLayerParent) this, context.getModelSet(), ModelLayers.STRAY_OUTER_LAYER, new ResourceLocation("minecraft", "textures/entity/skeleton/stray_overlay.png")));
     }
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientStray livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/skeleton/stray.png");
+        return new ResourceLocation("minecraft", "textures/entity/skeleton/stray.png");
     }
 
     @Override

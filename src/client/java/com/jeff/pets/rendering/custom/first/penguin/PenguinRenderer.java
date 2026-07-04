@@ -20,7 +20,7 @@ public class PenguinRenderer extends PetRenderer<@NotNull Penguin, @NotNull Peng
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(Penguin livingEntityRenderState) {
-        return ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, "textures/entity/penguin/penguin.png");
+        return new ResourceLocation(PetsInitializer.MOD_ID, "textures/entity/penguin/penguin.png");
     }
 
     @Override

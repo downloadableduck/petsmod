@@ -36,7 +36,7 @@ public class HeadSkin {
                     "}");
         }
 
-        ResourceLocation identifier = ResourceLocation.withDefaultNamespace("playerskin.png");
+        ResourceLocation identifier = new ResourceLocation("minecraft", "playerskin.png");
 
         try (BufferedInputStream inputStream = new BufferedInputStream(new URL(url).openStream())) {
 

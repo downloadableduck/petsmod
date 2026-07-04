@@ -14,7 +14,7 @@ import static com.jeff.pets.Central.CONFIG;
 
 public class ClientEnderDragonRenderer extends PetRenderer<@NotNull ClientEnderDragon, ClientEnderDragonModel> {
 
-    public static final ModelLayerLocation ENDER_DRAGON_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientenderdragon"), "main");
+    public static final ModelLayerLocation ENDER_DRAGON_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientenderdragon"), "main");
 
     public ClientEnderDragonRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientEnderDragonModel(context.bakeLayer(ModelLayers.ENDER_DRAGON)), 0.75f);
@@ -29,6 +29,6 @@ public class ClientEnderDragonRenderer extends PetRenderer<@NotNull ClientEnderD
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientEnderDragon livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/enderdragon/dragon.png");
+        return new ResourceLocation("minecraft", "textures/entity/enderdragon/dragon.png");
     }
 }

@@ -11,7 +11,7 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
 
 public class ToxifinRenderer extends PetRenderer<@NotNull ToxifinSlab, @NotNull ToxifinSlabModel<ToxifinSlab>> {
 
-    public static final ModelLayerLocation TOXIFIN_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(MOD_ID, "toxifin_slab"), "main");
+    public static final ModelLayerLocation TOXIFIN_LOCATION = new ModelLayerLocation(new ResourceLocation(MOD_ID, "toxifin_slab"), "main");
 
     public ToxifinRenderer(EntityRendererProvider.Context context) {
         super(context, new ToxifinSlabModel<>(context.bakeLayer(TOXIFIN_LOCATION)), 0.75f);
@@ -19,6 +19,6 @@ public class ToxifinRenderer extends PetRenderer<@NotNull ToxifinSlab, @NotNull 
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ToxifinSlab livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/toxifin.png");
+        return new ResourceLocation("minecraft", "textures/entity/toxifin.png");
     }
 }

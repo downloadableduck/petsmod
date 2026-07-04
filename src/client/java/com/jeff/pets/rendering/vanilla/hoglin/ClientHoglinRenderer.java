@@ -15,7 +15,7 @@ import static com.jeff.pets.Central.CONFIG;
 
 public class ClientHoglinRenderer extends PetRenderer<@NotNull ClientHoglin, @NotNull ClientHoglinModel> {
 
-    public static final ModelLayerLocation HOGLIN_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clienthoglin"), "main");
+    public static final ModelLayerLocation HOGLIN_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clienthoglin"), "main");
 
     public ClientHoglinRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientHoglinModel(context.bakeLayer(ModelLayers.HOGLIN)), 0.75f);
@@ -38,6 +38,6 @@ public class ClientHoglinRenderer extends PetRenderer<@NotNull ClientHoglin, @No
         } else {
             hoglinTexturePath = "textures/entity/hoglin/hoglin.png";
         }
-        return ResourceLocation.withDefaultNamespace(hoglinTexturePath);
+        return new ResourceLocation("minecraft", hoglinTexturePath);
     }
 }

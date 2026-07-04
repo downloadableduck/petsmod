@@ -14,7 +14,7 @@ import static com.jeff.pets.Central.CONFIG;
 
 public class PotatoHuskRenderer extends PetRenderer<@NotNull PotatoHusk, @NotNull ClientZombieModel<PotatoHusk>> {
 
-    public static final ModelLayerLocation POTATO_HUSK_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("potatohusk"), "main");
+    public static final ModelLayerLocation POTATO_HUSK_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "potatohusk"), "main");
 
     public PotatoHuskRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientZombieModel<>(context.bakeLayer(ModelLayers.HUSK)), 0.75f);
@@ -29,6 +29,6 @@ public class PotatoHuskRenderer extends PetRenderer<@NotNull PotatoHusk, @NotNul
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(PotatoHusk livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/zombie/husk_potato.png");
+        return new ResourceLocation("minecraft", "textures/entity/zombie/husk_potato.png");
     }
 }

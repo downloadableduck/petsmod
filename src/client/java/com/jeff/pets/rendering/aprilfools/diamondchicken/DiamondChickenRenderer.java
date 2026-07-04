@@ -13,7 +13,7 @@ import static com.jeff.pets.Central.CONFIG;
 
 public class DiamondChickenRenderer extends PetRenderer<@NotNull DiamondChicken, @NotNull ClientChickenModel<DiamondChicken>> {
 
-    public static final ModelLayerLocation DIAMOND_CHICKEN_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("diamondchicken"), "main");
+    public static final ModelLayerLocation DIAMOND_CHICKEN_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "diamondchicken"), "main");
 
     public DiamondChickenRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientChickenModel<>(context.bakeLayer(DIAMOND_CHICKEN_LOCATION)), 0.75f);
@@ -28,6 +28,6 @@ public class DiamondChickenRenderer extends PetRenderer<@NotNull DiamondChicken,
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(DiamondChicken livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/diamond_chicken.png");
+        return new ResourceLocation("minecraft", "textures/entity/diamond_chicken.png");
     }
 }

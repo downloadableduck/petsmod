@@ -11,7 +11,7 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
 
 public class KoiRenderer extends PetRenderer<Koi, KoiModel> {
 
-    public static final ModelLayerLocation KOI_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(MOD_ID, "koi"), "main");
+    public static final ModelLayerLocation KOI_LOCATION = new ModelLayerLocation(new ResourceLocation(MOD_ID, "koi"), "main");
 
     public KoiRenderer(EntityRendererProvider.Context context) {
         super(context, new KoiModel(context.bakeLayer(KOI_LOCATION)), 0.5f);
@@ -19,6 +19,6 @@ public class KoiRenderer extends PetRenderer<Koi, KoiModel> {
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull Koi state) {
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/entity/koi/koi.png");
+        return new ResourceLocation(MOD_ID, "textures/entity/koi/koi.png");
     }
 }

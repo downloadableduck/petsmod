@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class MegaSpudOuterLayer extends RenderLayer<MegaSpud, @NotNull MegaSpudModel> {
 
-    public static final ModelLayerLocation MEGA_SPUD_OUTER_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("mega_spud_outer"), "main");
+    public static final ModelLayerLocation MEGA_SPUD_OUTER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "mega_spud_outer"), "main");
 
     private final EntityModel model;
 
@@ -27,14 +27,14 @@ public class MegaSpudOuterLayer extends RenderLayer<MegaSpud, @NotNull MegaSpudM
     }
 
     public static ResourceLocation megaSpud() {
-        return ResourceLocation.withDefaultNamespace("textures/entity/slime/mega_spud.png");
+        return new ResourceLocation("minecraft", "textures/entity/slime/mega_spud.png");
     }
 
 
     @Override
     public void render(@NotNull PoseStack poseStack, MultiBufferSource bufferSource, int i, MegaSpud entityRenderState, float f, float g, float a, float h, float k, float l) {
         int overlayCoords = LivingEntityRenderer.getOverlayCoords(entityRenderState, 0.0f);
-        VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.entityTranslucent(ResourceLocation.withDefaultNamespace("textures/entity/slime/mega_spud.png")));
-        this.model.renderToBuffer(poseStack, vertexConsumer, i, overlayCoords);
+        VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.entityTranslucent(new ResourceLocation("minecraft", "textures/entity/slime/mega_spud.png")));
+        this.model.renderToBuffer(poseStack, vertexConsumer, i, overlayCoords, 1, 1, 1, 1);
     }
 }

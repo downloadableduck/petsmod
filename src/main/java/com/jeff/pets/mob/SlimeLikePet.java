@@ -119,7 +119,7 @@ public abstract class SlimeLikePet extends AbstractPet {
         }
         if (owner != null) {
             if (distanceTo(owner) >= 10) {
-                this.tryToTeleportToOwner();
+                this.teleportTo(owner.getX(), owner.getY(), owner.getZ());
             }
         }
         if (this.walkAnimation.isMoving() && this.onGround()) {

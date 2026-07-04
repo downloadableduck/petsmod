@@ -18,7 +18,7 @@ import static com.jeff.pets.Central.CONFIG;
 
 public class ClientWitherRenderer extends PetRenderer<@NotNull ClientWither, @NotNull ClientWitherModel<ClientWither>> {
 
-    public static final ModelLayerLocation WITHER_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientwither"), "main");
+    public static final ModelLayerLocation WITHER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientwither"), "main");
 
     public ClientWitherRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientWitherModel<>(context.bakeLayer(ModelLayers.WITHER)), 0.75f);
@@ -40,7 +40,7 @@ public class ClientWitherRenderer extends PetRenderer<@NotNull ClientWither, @No
         } else {
             witherTexturePath = "textures/entity/wither/wither.png";
         }
-        return ResourceLocation.withDefaultNamespace(witherTexturePath);
+        return new ResourceLocation("minecraft", witherTexturePath);
     }
 
     /*@Override

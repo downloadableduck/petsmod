@@ -17,7 +17,7 @@ import static com.jeff.pets.Central.CONFIG;
 
 public class ClientWolfRenderer extends PetRenderer<@NotNull ClientWolf, @NotNull ClientWolfModel> {
 
-    public static final ModelLayerLocation WOLF_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientwolf"), "main");
+    public static final ModelLayerLocation WOLF_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientwolf"), "main");
 
     public ClientWolfRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientWolfModel(context.bakeLayer(ModelLayers.WOLF)), 0.75f);
@@ -52,7 +52,7 @@ public class ClientWolfRenderer extends PetRenderer<@NotNull ClientWolf, @NotNul
             case null, default -> wolfTexturePath = "textures/entity/wolf/wolf.png";
         }
 
-        return ResourceLocation.withDefaultNamespace(wolfTexturePath);
+        return new ResourceLocation("minecraft", wolfTexturePath);
     }
 
     @Override
