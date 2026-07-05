@@ -35,8 +35,8 @@ public class ClientZombieVillagerRenderer extends PetRenderer<@NotNull ClientZom
     }
 
     @Override
-    public void setupRotations(ClientZombieVillager state, @NotNull PoseStack poseStack, float f, float g, float h, float i) {
-        super.setupRotations(state, poseStack, f, g, h, i);
+    public void setupRotations(ClientZombieVillager state, @NotNull PoseStack poseStack, float f, float g, float h) {
+        super.setupRotations(state, poseStack, f, g, h);
         if (state.isPassenger()) {
             poseStack.translate(0, -0.5, 0);
         }

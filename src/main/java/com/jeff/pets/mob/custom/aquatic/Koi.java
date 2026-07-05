@@ -25,7 +25,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -38,7 +38,7 @@ public class Koi extends FlyingPet {
 
     public Koi(EntityType<? extends @NotNull TamableAnimal> type, Level level) {
         super(type, level);
-        this.setPathfindingMalus(PathType.WATER, 0);
+        this.setPathfindingMalus(BlockPathTypes.WATER, 0);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -46,9 +46,9 @@ public class Koi extends FlyingPet {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(IS_SERVER_ENTITY, false);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(IS_SERVER_ENTITY, false);
     }
 
     public boolean isServerEntity() {
@@ -85,9 +85,9 @@ public class Koi extends FlyingPet {
         return koi;
     }
 
-    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull MobSpawnType spawnReason, final @Nullable SpawnGroupData groupData) {
+    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull MobSpawnType spawnReason, final @Nullable SpawnGroupData groupData, CompoundTag compoundTag) {
         this.setServerEntity(true);
-        return super.finalizeSpawn(level, difficulty, spawnReason, groupData);
+        return super.finalizeSpawn(level, difficulty, spawnReason, groupData, compoundTag);
     }
 
     public boolean isFood(final @NotNull ItemStack itemStack) {

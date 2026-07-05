@@ -1,6 +1,7 @@
 package com.jeff.pets.mob.custom.first;
 
 import com.jeff.pets.mob.AbstractPet;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
@@ -20,6 +21,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
@@ -58,9 +61,9 @@ public class Racoon extends AbstractPet {
     }
 
     @Override
-    public @Nullable SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData groupData) {
+    public @Nullable SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData groupData, CompoundTag compoundTag) {
         this.setServerEntity(true);
-        return super.finalizeSpawn(level, difficulty, spawnReason, groupData);
+        return super.finalizeSpawn(level, difficulty, spawnReason, groupData, compoundTag);
     }
 
     @Override
@@ -69,7 +72,7 @@ public class Racoon extends AbstractPet {
         this.goalSelector.addGoal(1, new BreedGoal(this, 1));
         this.goalSelector.addGoal(2, new FloatGoal(this));
         this.goalSelector.addGoal(3, new PanicGoal(this, 1.4d));
-        this.goalSelector.addGoal(4, new TemptGoal(this, 1.0f, stack -> stack.is(ItemTags.SKULLS), false));
+        this.goalSelector.addGoal(4, new TemptGoal(this, 1.0f, Ingredient.of(Items.SKELETON_SKULL, Items.WITHER_SKELETON_SKULL), false));
 
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1.0D));
@@ -77,9 +80,9 @@ public class Racoon extends AbstractPet {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(IS_SERVER_ENTITY, false);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(IS_SERVER_ENTITY, false);
     }
 
     public boolean isServerEntity() {
@@ -92,7 +95,7 @@ public class Racoon extends AbstractPet {
 
     @Override
     public boolean isFood(@NotNull ItemStack itemStack) {
-        return itemStack.is(ItemTags.CHICKEN_FOOD) || itemStack.is(ItemTags.FOX_FOOD);
+        return itemStack.is(ItemTags.VILLAGER_PLANTABLE_SEEDS) || itemStack.is(ItemTags.FOX_FOOD);
     }
 
     @Override

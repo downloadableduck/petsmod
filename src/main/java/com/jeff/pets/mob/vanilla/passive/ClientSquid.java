@@ -104,7 +104,7 @@ public class ClientSquid extends FlyingPet {
                 if (this.hasEffect(MobEffects.LEVITATION)) {
                     e = 0.05 * (double) (this.getEffect(MobEffects.LEVITATION).getAmplifier() + 1);
                 } else {
-                    e -= this.getGravity();
+                    e -= 1;
                 }
 
                 this.setDeltaMovement((double) 0.0F, e * (double) 0.98F, (double) 0.0F);

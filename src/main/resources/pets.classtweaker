@@ -9,3 +9,4 @@ accessible field net/minecraft/client/resources/SplashManager SPLASHES_LOCATION 
 accessible method net/minecraft/client/renderer/entity/EntityRenderers register (Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
 accessible field net/minecraft/world/entity/LivingEntity jumping Z
 extendable method net/minecraft/world/entity/LivingEntity canBreatheUnderwater ()Z
+accessible method net/minecraft/world/level/block/entity/SkullBlockEntity fetchGameProfile (Ljava/lang/String;)Ljava/util/concurrent/CompletableFuture;

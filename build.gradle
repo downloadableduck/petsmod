@@ -50,7 +50,8 @@ dependencies {
     // Fabric API. This is technically optional, but you probably want it anyway.
     modApi "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
     modApi("com.terraformersmc:modmenu:${project.modmenu_version}")
-    modApi "dev.isxander:yet-another-config-lib:${project.yacl_version}"
+    //modApi "dev.isxander:yet-another-config-lib:${project.yacl_version}"
+    modApi "maven.modrinth:yacl:${project.yacl_version}"
 }
 
 processResources {

@@ -37,20 +37,7 @@ public class ClientWolfRenderer extends PetRenderer<@NotNull ClientWolf, @NotNul
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientWolf livingEntityRenderState) {
-        String wolfTexturePath;
-
-        switch (CONFIG.wolfSkin) {
-            case "pale" -> wolfTexturePath = "textures/entity/wolf/wolf.png";
-            case "ashen" -> wolfTexturePath = "textures/entity/wolf/wolf_ashen.png";
-            case "black" -> wolfTexturePath = "textures/entity/wolf/wolf_black.png";
-            case "chestnut" -> wolfTexturePath = "textures/entity/wolf/wolf_chestnut.png";
-            case "rusty" -> wolfTexturePath = "textures/entity/wolf/wolf_rusty.png";
-            case "snowy" -> wolfTexturePath = "textures/entity/wolf/wolf_snowy.png";
-            case "spotted" -> wolfTexturePath = "textures/entity/wolf/wolf_spotted.png";
-            case "striped" -> wolfTexturePath = "textures/entity/wolf/wolf_striped.png";
-            case "woods" -> wolfTexturePath = "textures/entity/wolf/wolf_woods.png";
-            case null, default -> wolfTexturePath = "textures/entity/wolf/wolf.png";
-        }
+        String wolfTexturePath = "textures/entity/wolf/wolf.png";
 
         return new ResourceLocation("minecraft", wolfTexturePath);
     }

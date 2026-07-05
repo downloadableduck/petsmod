@@ -6,7 +6,6 @@ import net.minecraft.network.chat.Component;
 public enum PetList implements NameableEnum {
     allay,
     angry_ghast,
-    armadillo,
     axolotl,
     bat,
     batato,

@@ -36,7 +36,6 @@ import com.jeff.pets.rendering.custom.first.penguin.PenguinRenderer;
 import com.jeff.pets.rendering.custom.first.racoon.RacoonModel;
 import com.jeff.pets.rendering.custom.first.racoon.RacoonRenderer;
 import com.jeff.pets.rendering.vanilla.allay.ClientAllayRenderer;
-import com.jeff.pets.rendering.vanilla.armadillo.ClientArmadilloRenderer;
 import com.jeff.pets.rendering.vanilla.axolotl.ClientAxolotlRenderer;
 import com.jeff.pets.rendering.vanilla.bat.ClientBatRenderer;
 import com.jeff.pets.rendering.vanilla.bee.ClientBeeRenderer;
@@ -163,7 +162,6 @@ public class PetsClientInitializer implements ClientModInitializer {
         EntityRenderers.register(PetsInitializer.SHEEP, ClientSheepRenderer::new);
         EntityRenderers.register(PetsInitializer.CAT, ClientCatRenderer::new);
         EntityRenderers.register(PetsInitializer.ALLAY, ClientAllayRenderer::new);
-        EntityRenderers.register(PetsInitializer.ARMADILLO, ClientArmadilloRenderer::new);
         EntityRenderers.register(PetsInitializer.AXOLOTL, ClientAxolotlRenderer::new);
         EntityRenderers.register(PetsInitializer.BAT, ClientBatRenderer::new);
         EntityRenderers.register(PetsInitializer.CAMEL, ClientCamelRenderer::new);
@@ -258,7 +256,6 @@ public class PetsClientInitializer implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(ClientSheepWoolLayer.SHEEP_WOOL_BABY_LOCATION, ClientSheepFurModel::createFurLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientCatRenderer.CAT_LOCATION, ClientCatRenderer::createCatBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientAllayRenderer.ALLAY_TEXTURE, AllayModel::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(ClientArmadilloRenderer.ARMADILLO_LOCATION, ArmadilloModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientAxolotlRenderer.AXOLOTL_LOCATION, AxolotlModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientBatRenderer.BAT_LOCATION, BatModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientCamelRenderer.CAMEL_LOCATION, CamelModel::createBodyLayer);

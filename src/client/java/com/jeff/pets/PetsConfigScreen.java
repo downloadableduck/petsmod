@@ -399,9 +399,9 @@ public class PetsConfigScreen implements ModMenuApi {
                                                                 PandaSkins.valueOf(CONFIG.pandaSkin.replaceAll(" ", "_"));
                                                         case "piglin" ->
                                                                 PiglinSkins.valueOf(CONFIG.piglinSkin.replaceAll(" ", "_"));
-                                                        case "wolf" ->
+                                                        /*case "wolf" ->
                                                                 WolfSkins.valueOf(CONFIG.wolfSkin.replaceAll(" ", "_"));
-                                                        case "hoglin" ->
+                                                        */case "hoglin" ->
                                                                 HoglinSkins.valueOf(CONFIG.hoglinSkin.replaceAll(" ", "_"));
                                                         case "magma_cube" ->
                                                                 SlimeLikeSkins.valueOf(CONFIG.magmaCubeSkin.replaceAll(" ", "_"));

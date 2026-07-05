@@ -74,7 +74,7 @@ public class Central implements ClientModInitializer {
     public static final List<String> NAUTILUS_SKINS = List.of("nautilus", "zombie", "coral zombie");
     public static final List<String> PANDA_SKINS = List.of("normal", "lazy", "agressive", "worried", "playful", "weak", "brown");
     public static final List<String> PIGLIN_SKINS = List.of("piglin", "zombified", "brute");
-    public static final List<String> WOLF_SKINS = List.of("pale", "ashen", "black", "chestnut", "rusty", "snowy", "spotted", "striped", "woods");
+    //public static final List<String> WOLF_SKINS = List.of("pale", "ashen", "black", "chestnut", "rusty", "snowy", "spotted", "striped", "woods");
     public static final List<String> PETS_LIST = new ArrayList<>();
     public static final SuggestionProvider<FabricClientCommandSource> PETS = (context, builder) ->
             SharedSuggestionProvider.suggest(PETS_LIST, builder);
@@ -111,7 +111,6 @@ public class Central implements ClientModInitializer {
     public static ClientSheep sheep;
     public static ClientCat cat;
     public static ClientAllay allay;
-    public static ClientArmadillo armadillo;
     public static ClientAxolotl axolotl;
     public static ClientBat bat;
     public static ClientCamel camel;
@@ -221,7 +220,6 @@ public class Central implements ClientModInitializer {
         Utils.despawnEntity(sheep);
         Utils.despawnEntity(cat);
         Utils.despawnEntity(allay);
-        Utils.despawnEntity(armadillo);
         Utils.despawnEntity(axolotl);
         Utils.despawnEntity(bat);
         Utils.despawnEntity(camel);
@@ -321,7 +319,6 @@ public class Central implements ClientModInitializer {
         sheep = new ClientSheep(PetsInitializer.SHEEP, world);
         cat = new ClientCat(PetsInitializer.CAT, world);
         allay = new ClientAllay(PetsInitializer.ALLAY, world);
-        armadillo = new ClientArmadillo(PetsInitializer.ARMADILLO, world);
         axolotl = new ClientAxolotl(PetsInitializer.AXOLOTL, world);
         bat = new ClientBat(PetsInitializer.BAT, world);
         camel = new ClientCamel(PetsInitializer.CAMEL, world);
@@ -420,8 +417,6 @@ public class Central implements ClientModInitializer {
                 Utils.summonPet(cat, CONFIG.catName);
             } else if (Objects.equals(CONFIG.activePet, "allay")) {
                 Utils.summonPet(allay, CONFIG.allayName);
-            } else if (Objects.equals(CONFIG.activePet, "armadillo")) {
-                Utils.summonPet(armadillo, CONFIG.armadilloName);
             } else if (Objects.equals(CONFIG.activePet, "axolotl")) {
                 Utils.summonPet(axolotl, CONFIG.axolotlName);
             } else if (Objects.equals(CONFIG.activePet, "bat")) {
@@ -606,7 +601,6 @@ public class Central implements ClientModInitializer {
         Utils.checkName("penguin", penguin, CONFIG.penguinName);
         Utils.checkName("sheep", sheep, CONFIG.sheepName);
         Utils.checkName("allay", allay, CONFIG.allayName);
-        Utils.checkName("armadillo", armadillo, CONFIG.armadilloName);
         Utils.checkName("axolotl", axolotl, CONFIG.axolotlName);
         Utils.checkName("bat", bat, CONFIG.batName);
         Utils.checkName("camel", camel, CONFIG.camelName);
@@ -718,7 +712,7 @@ public class Central implements ClientModInitializer {
             case "nautilus" -> NAUTILUS_SKINS;
             case "panda" -> PANDA_SKINS;
             case "piglin" -> PIGLIN_SKINS;
-            case "wolf" -> WOLF_SKINS;
+            //case "wolf" -> WOLF_SKINS;
             case "hoglin" -> HOGLIN_SKINS;
             case "magma_cube", "slime", "tropical_slime" -> SLIME_LIKE_SKINS;
             case "zombie_villager" -> VILLAGER_SKINS;
@@ -1335,7 +1329,7 @@ public class Central implements ClientModInitializer {
                                 default:
                                     isValid = false;
                             }
-                        } else if (Objects.equals(CONFIG.activePet, "wolf")) {
+                        } /*else if (Objects.equals(CONFIG.activePet, "wolf")) {
                             switch (skin) {
                                 case "pale":
                                     CONFIG.wolfSkin = "pale";
@@ -1368,7 +1362,7 @@ public class Central implements ClientModInitializer {
                                 default:
                                     isValid = false;
                             }
-                        } else if (Objects.equals(CONFIG.activePet, "hoglin")) {
+                        }*/else if (Objects.equals(CONFIG.activePet, "hoglin")) {
                             switch (skin) {
                                 case "hoglin", "normal" -> CONFIG.hoglinSkin = "hoglin";
                                 case "zoglin" -> CONFIG.hoglinSkin = "zoglin";
@@ -1740,8 +1734,6 @@ public class Central implements ClientModInitializer {
                 Utils.setActivePet(cat, "cat");
             } else if (Objects.equals(species, "allay")) {
                 Utils.setActivePet(allay, "allay");
-            } else if (Objects.equals(species, "armadillo")) {
-                Utils.setActivePet(armadillo, "armadillo");
             } else if (Objects.equals(species, "axolotl")) {
                 Utils.setActivePet(axolotl, "axolotl");
             } else if (Objects.equals(species, "bat")) {
@@ -2124,7 +2116,7 @@ public class Central implements ClientModInitializer {
     }
 
     void createPetsList() {
-        String[] stuffs = new String[]{"allay", "angry ghast", "armadillo",
+        String[] stuffs = new String[]{"allay", "angry ghast",
                 "axolotl", "bat", "batato", "bee", "blaze",
                 "camel", "cat", "cave spider", "chicken",
                 "cod", "cow",
