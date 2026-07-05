@@ -10,7 +10,6 @@ import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -155,7 +154,7 @@ public class Duck extends AbstractPet {
 
         this.goalSelector.addGoal(1, new RandomStrollGoal(this, 1.0D));
 
-        this.goalSelector.addGoal(0, new FollowOwnerGoal(this, 1, 2, 10));
+        this.goalSelector.addGoal(0, new FollowOwnerGoal(this, 1, 2, 10, false));
         this.goalSelector.addGoal(9, new BreedGoal(this, 1));
         this.goalSelector.addGoal(2, new FloatGoal(this));
         this.goalSelector.addGoal(3, new PanicGoal(this, 1.4d));
@@ -164,7 +163,7 @@ public class Duck extends AbstractPet {
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(7, new EatBlockGoal(this));
-        this.goalSelector.addGoal(8, new FollowOwnerGoal(this, 1, 2, 10));
+        this.goalSelector.addGoal(8, new FollowOwnerGoal(this, 1, 2, 10, false));
     }
 
     @Override
@@ -253,7 +252,7 @@ public class Duck extends AbstractPet {
         }
         if (owner != null) {
             if (distanceTo(owner) >= 10 && !this.isServerEntity()) {
-                this.tryToTeleportToOwner();
+                this.teleportTo(owner.getX(), owner.getY(), owner.getZ());
             }
         }
 
@@ -289,11 +288,11 @@ public class Duck extends AbstractPet {
     }
 
     @Override
-    public @NotNull Packet<@NotNull ClientGamePacketListener> getAddEntityPacket(@NotNull ServerEntity serverEntity) {
+    public @NotNull Packet<@NotNull ClientGamePacketListener> getAddEntityPacket() {
         if (this.level().isClientSide()) {
-            return new ClientboundAddEntityPacket(this, serverEntity);
+            return new ClientboundAddEntityPacket(this);
         } else {
-            return super.getAddEntityPacket(serverEntity);
+            return super.getAddEntityPacket();
         }
     }
 }

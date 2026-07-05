@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientWitherSkeleton extends GroundPet implements RangedAttackMob {
 
+
     public ClientWitherSkeleton(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
         super(entityType, level);
     }

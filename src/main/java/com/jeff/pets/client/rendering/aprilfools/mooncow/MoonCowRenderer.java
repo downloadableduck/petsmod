@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class MoonCowRenderer extends PetRenderer<@NotNull MoonCow, @NotNull LegacyCowModel> {
 
-    public static final ModelLayerLocation MOON_COW_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("mooncow"), "main");
+    public static final ModelLayerLocation MOON_COW_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "mooncow"), "main");
 
     public MoonCowRenderer(EntityRendererProvider.Context context) {
         super(context, new LegacyCowModel(context.bakeLayer(MOON_COW_LOCATION)), 0.75f);
@@ -24,6 +24,6 @@ public class MoonCowRenderer extends PetRenderer<@NotNull MoonCow, @NotNull Lega
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(MoonCow livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/cow/moon_cow.png");
+        return new ResourceLocation("minecraft", "textures/entity/cow/moon_cow.png");
     }
 }

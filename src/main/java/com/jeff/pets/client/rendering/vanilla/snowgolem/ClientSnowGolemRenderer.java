@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientSnowGolemRenderer extends PetRenderer<@NotNull ClientSnowGolem, @NotNull SnowGolemModel<ClientSnowGolem>> {
-    public static final ModelLayerLocation SNOW_GOLEM = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientsnowgolem"), "main");
+    public static final ModelLayerLocation SNOW_GOLEM = new ModelLayerLocation(new ResourceLocation("minecraft", "clientsnowgolem"), "main");
 
     public ClientSnowGolemRenderer(EntityRendererProvider.Context context) {
         super(context, new SnowGolemModel<>(context.bakeLayer(ModelLayers.SNOW_GOLEM)), 0.5F);
@@ -19,7 +19,7 @@ public class ClientSnowGolemRenderer extends PetRenderer<@NotNull ClientSnowGole
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientSnowGolem snowGolemRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/snow_golem.png");
+        return new ResourceLocation("minecraft", "textures/entity/snow_golem.png");
     }
 
     /*@Override

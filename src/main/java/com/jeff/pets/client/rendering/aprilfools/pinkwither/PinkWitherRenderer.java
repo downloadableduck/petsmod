@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class PinkWitherRenderer extends PetRenderer<@NotNull PinkWither, @NotNull ClientWitherModel<PinkWither>> {
 
-    public static final ModelLayerLocation PINK_WITHER_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("pinkwither"), "main");
+    public static final ModelLayerLocation PINK_WITHER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "pinkwither"), "main");
 
     public PinkWitherRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientWitherModel<>(context.bakeLayer(ModelLayers.WITHER)), 0.75f);
@@ -19,7 +19,7 @@ public class PinkWitherRenderer extends PetRenderer<@NotNull PinkWither, @NotNul
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(PinkWither livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/wither/wither_pink.png");
+        return new ResourceLocation("minecraft", "textures/entity/wither/wither_pink.png");
     }
 
     /*@Override

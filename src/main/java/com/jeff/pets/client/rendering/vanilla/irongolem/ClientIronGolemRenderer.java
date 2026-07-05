@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientIronGolemRenderer extends PetRenderer<@NotNull ClientIronGolem, @NotNull ClientIronGolemModel<ClientIronGolem>> {
 
-    public static final ModelLayerLocation IRON_GOLEM_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientirongolem"), "main");
+    public static final ModelLayerLocation IRON_GOLEM_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientirongolem"), "main");
 
     public ClientIronGolemRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientIronGolemModel<>(context.bakeLayer(ModelLayers.IRON_GOLEM)), 0.75f);
@@ -18,6 +18,6 @@ public class ClientIronGolemRenderer extends PetRenderer<@NotNull ClientIronGole
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientIronGolem livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/iron_golem/iron_golem.png");
+        return new ResourceLocation("minecraft", "textures/entity/iron_golem/iron_golem.png");
     }
 }

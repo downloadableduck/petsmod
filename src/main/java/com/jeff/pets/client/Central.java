@@ -209,7 +209,6 @@ public class Central {
     public static ClientSpider spider;
     public static ClientWolf wolf;
     public static ClientBlaze blaze;
-    public static ClientBreeze breeze;
     public static ClientCreeper creeper;
     public static ClientElderGuardian elderGuardian;
     public static ClientEndermite endermite;
@@ -233,7 +232,6 @@ public class Central {
     public static ClientZombieVillager zombieVillager;
     public static ClientHusk husk;
     public static ClientDrowned drowned;
-    public static ClientBogged bogged;
     public static ClientStray stray;
     public static ClientWitherSkeleton witherSkeleton;
     public static ClientEnderDragon enderDragon;
@@ -328,7 +326,6 @@ public class Central {
         Utils.despawnEntity(spider);
         Utils.despawnEntity(wolf);
         Utils.despawnEntity(blaze);
-        Utils.despawnEntity(breeze);
         Utils.despawnEntity(creeper);
         Utils.despawnEntity(elderGuardian);
         Utils.despawnEntity(endermite);
@@ -352,7 +349,6 @@ public class Central {
         Utils.despawnEntity(zombieVillager);
         Utils.despawnEntity(husk);
         Utils.despawnEntity(drowned);
-        Utils.despawnEntity(bogged);
         Utils.despawnEntity(stray);
         Utils.despawnEntity(witherSkeleton);
         Utils.despawnEntity(enderDragon);
@@ -430,7 +426,6 @@ public class Central {
         spider = new ClientSpider(PetsInitializer.Entities.SPIDER.get(), world);
         wolf = new ClientWolf(PetsInitializer.Entities.WOLF.get(), world);
         blaze = new ClientBlaze(PetsInitializer.Entities.BLAZE.get(), world);
-        breeze = new ClientBreeze(PetsInitializer.Entities.BREEZE.get(), world);
         creeper = new ClientCreeper(PetsInitializer.Entities.CREEPER.get(), world);
         elderGuardian = new ClientElderGuardian(PetsInitializer.Entities.ELDER_GUARDIAN_COOKIE.get(), world);
         endermite = new ClientEndermite(PetsInitializer.Entities.ENDERMITE.get(), world);
@@ -454,7 +449,6 @@ public class Central {
         zombieVillager = new ClientZombieVillager(PetsInitializer.Entities.ZOMBIE_VILLAGER.get(), world);
         husk = new ClientHusk(PetsInitializer.Entities.HUSK.get(), world);
         drowned = new ClientDrowned(PetsInitializer.Entities.DROWNED.get(), world);
-        bogged = new ClientBogged(PetsInitializer.Entities.BOGGED.get(), world);
         stray = new ClientStray(PetsInitializer.Entities.STRAY.get(), world);
         witherSkeleton = new ClientWitherSkeleton(PetsInitializer.Entities.WITHER_SKELETON.get(), world);
         enderDragon = new ClientEnderDragon(PetsInitializer.Entities.ENDER_DRAGON.get(), world);
@@ -569,8 +563,6 @@ public class Central {
                 Utils.summonPet(wolf, CONFIG.wolfName);
             } else if (Objects.equals(CONFIG.activePet, "blaze")) {
                 Utils.summonPet(blaze, CONFIG.blazeName);
-            } else if (Objects.equals(CONFIG.activePet, "breeze")) {
-                Utils.summonPet(breeze, CONFIG.breezeName);
             } else if (Objects.equals(CONFIG.activePet, "creeper")) {
                 Utils.summonPet(creeper, CONFIG.creeperName);
             } else if (Objects.equals(CONFIG.activePet, "elder_guardian")) {
@@ -617,8 +609,6 @@ public class Central {
                 Utils.summonPet(husk, CONFIG.huskName);
             } else if (Objects.equals(CONFIG.activePet, "drowned")) {
                 Utils.summonPet(drowned, CONFIG.drownedName);
-            } else if (Objects.equals(CONFIG.activePet, "bogged")) {
-                Utils.summonPet(bogged, CONFIG.boggedName);
             } else if (Objects.equals(CONFIG.activePet, "stray")) {
                 Utils.summonPet(stray, CONFIG.strayName);
             } else if (Objects.equals(CONFIG.activePet, "wither_skeleton")) {
@@ -722,7 +712,6 @@ public class Central {
         Utils.checkName("spider", spider, CONFIG.spiderName);
         Utils.checkName("wolf", wolf, CONFIG.wolfName);
         Utils.checkName("blaze", blaze, CONFIG.blazeName);
-        Utils.checkName("breeze", breeze, CONFIG.breezeName);
         Utils.checkName("creeper", creeper, CONFIG.creeperName);
         Utils.checkName("elder_guardian", elderGuardian, CONFIG.elderGuardianName);
         Utils.checkName("endermite", endermite, CONFIG.endermiteName);
@@ -742,7 +731,6 @@ public class Central {
         Utils.checkName("vindicator", vindicator, CONFIG.vindicatorName);
         Utils.checkName("husk", husk, CONFIG.huskName);
         Utils.checkName("drowned", drowned, CONFIG.drownedName);
-        Utils.checkName("bogged", bogged, CONFIG.boggedName);
         Utils.checkName("stray", stray, CONFIG.strayName);
         Utils.checkName("wither_skeleton", witherSkeleton, CONFIG.witherSkeletonName);
         Utils.checkName("ender_dragon", enderDragon, CONFIG.enderDragonName);
@@ -1673,8 +1661,6 @@ public class Central {
                 Utils.setActivePet(wolf, "wolf");
             } else if (Objects.equals(species, "blaze")) {
                 Utils.setActivePet(blaze, "blaze");
-            } else if (Objects.equals(species, "breeze")) {
-                Utils.setActivePet(breeze, "breeze");
             } else if (Objects.equals(species, "creeper")) {
                 Utils.setActivePet(creeper, "creeper");
             } else if (Objects.equals(species, "elder_guardian") || Objects.equals(species, "elder guardian")) {
@@ -1721,8 +1707,6 @@ public class Central {
                 Utils.setActivePet(husk, "husk");
             } else if (Objects.equals(species, "drowned")) {
                 Utils.setActivePet(drowned, "drowned");
-            } else if (Objects.equals(species, "bogged")) {
-                Utils.setActivePet(bogged, "bogged");
             } else if (Objects.equals(species, "stray")) {
                 Utils.setActivePet(stray, "stray");
             } else if (Objects.equals(species, "wither_skeleton") || Objects.equals(species, "wither skeleton")) {
@@ -2227,8 +2211,8 @@ public class Central {
 
     void createPetsList() {
         String[] stuffs = new String[]{"allay", "angry ghast", "armadillo",
-                "axolotl", "bat", "batato", "bee", "blaze", "bogged",
-                "breeze", "camel", "cat", "cave spider", "chicken",
+                "axolotl", "bat", "batato", "bee", "blaze",
+                "camel", "cat", "cave spider", "chicken",
                 "cod", "cow",
                 "creaking", "creeper", "diamond chicken",
                 "dolphin", "donkey", "drowned", "duck", "dumbo octopus",

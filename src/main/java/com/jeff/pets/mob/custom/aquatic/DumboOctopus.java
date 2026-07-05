@@ -11,7 +11,6 @@ import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -127,7 +126,7 @@ public class DumboOctopus extends FlyingPet {
         this.goalSelector.addGoal(1, new RandomSwimmingGoal(this, 1, 1));
         this.goalSelector.addGoal(2, new TryFindWaterGoal(this));
 
-        this.goalSelector.addGoal(0, new FollowOwnerGoal(this, 1, 2, 10));
+        this.goalSelector.addGoal(0, new FollowOwnerGoal(this, 1, 2, 10, false));
         this.goalSelector.addGoal(9, new BreedGoal(this, 1));
         this.goalSelector.addGoal(3, new PanicGoal(this, 1.4d));
         // this.goalSelector.addGoal(4, new TemptGoal(this, 1.0f, stack -> stack.is(ItemTags.FISHES), false));
@@ -217,7 +216,7 @@ public class DumboOctopus extends FlyingPet {
         }
         if (owner != null) {
             if (distanceTo(owner) >= 10) {
-                this.tryToTeleportToOwner();
+                this.teleportTo(owner.getX(), owner.getY(), owner.getZ());
             }
         }
 
@@ -249,11 +248,11 @@ public class DumboOctopus extends FlyingPet {
     }
 
     @Override
-    public @NotNull Packet<@NotNull ClientGamePacketListener> getAddEntityPacket(@NotNull ServerEntity serverEntity) {
+    public @NotNull Packet<@NotNull ClientGamePacketListener> getAddEntityPacket() {
         if (this.level().isClientSide()) {
-            return new ClientboundAddEntityPacket(this, serverEntity);
+            return new ClientboundAddEntityPacket(this);
         } else {
-            return super.getAddEntityPacket(serverEntity);
+            return super.getAddEntityPacket();
         }
     }
 

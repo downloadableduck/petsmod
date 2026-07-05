@@ -16,7 +16,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientPolarBearRenderer extends PetRenderer<@NotNull ClientPolarBear, @NotNull ClientPolarBearModel> {
 
-    public static final ModelLayerLocation POLAR_BEAR_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientpolarbear"), "main");
+    public static final ModelLayerLocation POLAR_BEAR_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientpolarbear"), "main");
 
     public ClientPolarBearRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientPolarBearModel(context.bakeLayer(ModelLayers.POLAR_BEAR)), 0.75f);
@@ -36,6 +36,6 @@ public class ClientPolarBearRenderer extends PetRenderer<@NotNull ClientPolarBea
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientPolarBear livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/bear/polarbear.png");
+        return new ResourceLocation("minecraft", "textures/entity/bear/polarbear.png");
     }
 }

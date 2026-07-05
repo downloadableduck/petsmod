@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientDonkeyRenderer extends PetRenderer<@NotNull ClientDonkey, @NotNull ClientHorseModel<ClientDonkey>> {
-    public static ModelLayerLocation DONKEY_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientdonkey"), "main");
+    public static ModelLayerLocation DONKEY_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientdonkey"), "main");
 
     public ClientDonkeyRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientHorseModel<>(context.bakeLayer(ModelLayers.DONKEY)), 0.5f);
@@ -25,7 +25,7 @@ public class ClientDonkeyRenderer extends PetRenderer<@NotNull ClientDonkey, @No
     }
 
     public @NotNull ResourceLocation getTextureLocation(ClientDonkey donkeyRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/horse/donkey.png");
+        return new ResourceLocation("minecraft", "textures/entity/horse/donkey.png");
     }
 
     @Override

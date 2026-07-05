@@ -22,7 +22,7 @@ import java.util.Objects;
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientCreeperRenderer extends PetRenderer<@NotNull ClientCreeper, @NotNull CreeperModel<ClientCreeper>> {
-    public static final ModelLayerLocation CREEPER_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientcreeper"), "main");
+    public static final ModelLayerLocation CREEPER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientcreeper"), "main");
 
     public ClientCreeperRenderer(EntityRendererProvider.Context context) {
         super(context, new CreeperModel<>(context.bakeLayer(ModelLayers.CREEPER)), 0.75f);
@@ -36,7 +36,7 @@ public class ClientCreeperRenderer extends PetRenderer<@NotNull ClientCreeper, @
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientCreeper livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/creeper/creeper.png");
+        return new ResourceLocation("minecraft", "textures/entity/creeper/creeper.png");
     }
 
     @Override

@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientWitchRenderer extends PetRenderer<@NotNull ClientWitch, @NotNull WitchModel<ClientWitch>> {
 
-    public static final ModelLayerLocation WITCH_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientwitch"), "main");
+    public static final ModelLayerLocation WITCH_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientwitch"), "main");
 
     public ClientWitchRenderer(EntityRendererProvider.Context context) {
         super(context, new WitchModel<>(context.bakeLayer(ModelLayers.WITCH)), 0.75f);
@@ -19,6 +19,6 @@ public class ClientWitchRenderer extends PetRenderer<@NotNull ClientWitch, @NotN
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientWitch livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/witch.png");
+        return new ResourceLocation("minecraft", "textures/entity/witch.png");
     }
 }

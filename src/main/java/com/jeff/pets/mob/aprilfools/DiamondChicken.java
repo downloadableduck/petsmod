@@ -1,6 +1,5 @@
 package com.jeff.pets.mob.aprilfools;
 
-import com.jeff.pets.mob.GroundPet;
 import com.jeff.pets.mob.vanilla.passive.ClientChicken;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;

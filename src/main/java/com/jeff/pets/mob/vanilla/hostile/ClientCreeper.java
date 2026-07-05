@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientCreeper extends GroundPet implements PowerableMob {
 
-    public boolean isPowered = false;
+    public boolean isPowered;
 
     public ClientCreeper(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
         super(entityType, level);

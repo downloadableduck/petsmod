@@ -90,7 +90,7 @@ public class Head extends AbstractPet {
 
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1.0D));
-        this.goalSelector.addGoal(8, new FollowOwnerGoal(this, 1, 2, 10));
+        this.goalSelector.addGoal(8, new FollowOwnerGoal(this, 1, 2, 10, false));
     }
 
     @Override
@@ -232,7 +232,7 @@ public class Head extends AbstractPet {
         }
         if (owner != null) {
             if (distanceTo(owner) >= 10) {
-                this.tryToTeleportToOwner();
+                this.teleportTo(owner.getX(), owner.getY(), owner.getZ());
             }
         }
 

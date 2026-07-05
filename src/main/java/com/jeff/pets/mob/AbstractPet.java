@@ -6,7 +6,6 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
@@ -150,11 +149,11 @@ public abstract class AbstractPet extends TamableAnimal {
      * Never, under any circumstances, remove this method.
      */
     @Override
-    public @NotNull Packet<@NotNull ClientGamePacketListener> getAddEntityPacket(@NotNull ServerEntity serverEntity) {
+    public @NotNull Packet<@NotNull ClientGamePacketListener> getAddEntityPacket() {
         if (this.level().isClientSide()) {
-            return new ClientboundAddEntityPacket(this, serverEntity);
+            return new ClientboundAddEntityPacket(this);
         } else {
-            return super.getAddEntityPacket(serverEntity);
+            return super.getAddEntityPacket();
         }
     }
 

@@ -17,7 +17,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientPiglinRenderer extends PetRenderer<@NotNull ClientPiglin, @NotNull ClientPiglinModel> {
 
-    public static ModelLayerLocation PIGLIN_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientpiglin"), "main");
+    public static ModelLayerLocation PIGLIN_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientpiglin"), "main");
     private String piglinTexturePath;
 
     public ClientPiglinRenderer(EntityRendererProvider.Context context) {
@@ -48,6 +48,6 @@ public class ClientPiglinRenderer extends PetRenderer<@NotNull ClientPiglin, @No
                 piglinTexturePath = "textures/entity/piglin/piglin_brute.png";
             }
         }
-        return ResourceLocation.withDefaultNamespace(piglinTexturePath);
+        return new ResourceLocation("minecraft", piglinTexturePath);
     }
 }

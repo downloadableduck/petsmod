@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientEvokerRenderer extends PetRenderer<@NotNull ClientEvoker, @NotNull ClientEvokerModel<ClientEvoker>> {
-    public static final ModelLayerLocation EVOKER_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientevoker"), "main");
+    public static final ModelLayerLocation EVOKER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientevoker"), "main");
 
     public ClientEvokerRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientEvokerModel(context.bakeLayer(ModelLayers.EVOKER)), 0.75f);
@@ -17,6 +17,6 @@ public class ClientEvokerRenderer extends PetRenderer<@NotNull ClientEvoker, @No
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientEvoker livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/illager/evoker.png");
+        return new ResourceLocation("minecraft", "textures/entity/illager/evoker.png");
     }
 }

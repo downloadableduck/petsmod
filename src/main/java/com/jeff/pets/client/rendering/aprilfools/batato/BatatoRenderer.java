@@ -11,7 +11,7 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
 
 public class BatatoRenderer extends PetRenderer<@NotNull Batato, @NotNull BatatoModel> {
 
-    public static final ModelLayerLocation BATATO_LOCAITON = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(MOD_ID, "batato"), "main");
+    public static final ModelLayerLocation BATATO_LOCAITON = new ModelLayerLocation(new ResourceLocation(MOD_ID, "batato"), "main");
 
     public BatatoRenderer(EntityRendererProvider.Context context) {
         super(context, new BatatoModel(context.bakeLayer(BATATO_LOCAITON)), 0.25f);
@@ -19,6 +19,6 @@ public class BatatoRenderer extends PetRenderer<@NotNull Batato, @NotNull Batato
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(Batato livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/batato.png");
+        return new ResourceLocation("minecraft", "textures/entity/batato.png");
     }
 }

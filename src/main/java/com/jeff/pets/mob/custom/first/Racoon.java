@@ -7,7 +7,6 @@ import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -73,7 +72,7 @@ public class Racoon extends AbstractPet {
 
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1.0D));
-        this.goalSelector.addGoal(8, new FollowOwnerGoal(this, 1, 2, 10));
+        this.goalSelector.addGoal(8, new FollowOwnerGoal(this, 1, 2, 10, false));
     }
 
     @Override
@@ -181,7 +180,7 @@ public class Racoon extends AbstractPet {
         }
         if (owner != null) {
             if (distanceTo(owner) >= 10) {
-                this.tryToTeleportToOwner();
+                this.teleportTo(owner.getX(), owner.getY(), owner.getZ());
             }
         }
 
@@ -206,11 +205,11 @@ public class Racoon extends AbstractPet {
     }
 
     @Override
-    public @NotNull Packet<@NotNull ClientGamePacketListener> getAddEntityPacket(@NotNull ServerEntity serverEntity) {
+    public @NotNull Packet<@NotNull ClientGamePacketListener> getAddEntityPacket() {
         if (this.level().isClientSide()) {
-            return new ClientboundAddEntityPacket(this, serverEntity);
+            return new ClientboundAddEntityPacket(this);
         } else {
-            return super.getAddEntityPacket(serverEntity);
+            return super.getAddEntityPacket();
         }
     }
 }

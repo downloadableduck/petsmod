@@ -16,10 +16,9 @@ import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-
 public class ClientSheepWoolLayer extends RenderLayer<@NotNull ClientSheep, @NotNull ClientSheepModel> {
-    public static final ModelLayerLocation SHEEP_WOOL_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("sheep_wool"), "outer");
-    public static final ModelLayerLocation SHEEP_WOOL_BABY_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("sheep_wool_baby"), "outer");
+    public static final ModelLayerLocation SHEEP_WOOL_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "sheep_wool"), "outer");
+    public static final ModelLayerLocation SHEEP_WOOL_BABY_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "sheep_wool_baby"), "outer");
     private final EntityModel<@NotNull ClientSheep> model;
     int woolColor;
 
@@ -29,7 +28,7 @@ public class ClientSheepWoolLayer extends RenderLayer<@NotNull ClientSheep, @Not
     }
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource source, int i, ClientSheep sheepRenderState, float f, float g, float h, float j, float k, float l) {
+    public void render(PoseStack poseStack, MultiBufferSource source, int i, ClientSheep sheepRenderState, float f, float a, float h, float j, float k, float l) {
         if (Objects.equals(CONFIG.sheepSkin, "white")) {
             woolColor = 15132390;
         } else if (Objects.equals(CONFIG.sheepSkin, "orange")) {
@@ -66,6 +65,10 @@ public class ClientSheepWoolLayer extends RenderLayer<@NotNull ClientSheep, @Not
             woolColor = 1381656;
         }
 
-        coloredCutoutModelCopyLayerRender(this.getParentModel(), this.model, ResourceLocation.withDefaultNamespace("textures/entity/sheep/sheep_fur.png"), poseStack, source, i, sheepRenderState, f, g, j, k, l, h, woolColor);
+        float r = (float)(woolColor >> 16 & 255) / 255.0F;
+        float g = (float)(woolColor >> 8 & 255) / 255.0F;
+        float b = (float)(woolColor & 255) / 255.0F;
+
+        coloredCutoutModelCopyLayerRender(this.getParentModel(), this.model, new ResourceLocation("minecraft", "textures/entity/sheep/sheep_fur.png"), poseStack, source, i, sheepRenderState, f, a, j, k, l, h, r, g, b);
     }
 }

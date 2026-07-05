@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientAllayRenderer extends PetRenderer<@NotNull ClientAllay, @NotNull ClientAllayModel> {
-    public static final ModelLayerLocation ALLAY_TEXTURE = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("textures/entity/allay/allay.png"), "main");
+    public static final ModelLayerLocation ALLAY_TEXTURE = new ModelLayerLocation(new ResourceLocation("minecraft", "textures/entity/allay/allay.png"), "main");
 
     public ClientAllayRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientAllayModel(context.bakeLayer(ModelLayers.ALLAY)), 0.4F);

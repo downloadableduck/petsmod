@@ -14,7 +14,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientShulkerRenderer extends PetRenderer<@NotNull ClientShulker, @NotNull ClientShulkerModel> {
 
-    public static final ModelLayerLocation SHULKER_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientshulker"), "main");
+    public static final ModelLayerLocation SHULKER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientshulker"), "main");
 
     public ClientShulkerRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientShulkerModel(context.bakeLayer(ModelLayers.SHULKER)), 0.75f);
@@ -41,7 +41,7 @@ public class ClientShulkerRenderer extends PetRenderer<@NotNull ClientShulker, @
             case "yellow" -> shulkerFile = "shulker_yellow.png";
             case null, default -> shulkerFile = "shulker.png";
         }
-        return ResourceLocation.withDefaultNamespace(folderPath + shulkerFile);
+        return new ResourceLocation("minecraft", folderPath + shulkerFile);
     }
 
     @Override

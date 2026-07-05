@@ -46,6 +46,6 @@ public class DuckRenderer extends PetRenderer<@NotNull Duck, @NotNull DuckModel>
         } else if (CONFIG.duckSkin.equals("bronze")) {
             duckTexturePath = "textures/entity/duck/bronze.png";
         }
-        return ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, duckTexturePath);
+        return new ResourceLocation(PetsInitializer.MOD_ID, duckTexturePath);
     }
 }

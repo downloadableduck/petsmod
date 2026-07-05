@@ -28,8 +28,8 @@ public class NerdCreeperNerdLayer extends RenderLayer<@NotNull NerdCreeper, @Not
         int overlayCoords = LivingEntityRenderer.getOverlayCoords(entityRenderState, 0.0f);
         poseStack.pushPose();
         poseStack.scale(1.1f, 1.0f, 1.1f);
-        VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityTranslucent(ResourceLocation.withDefaultNamespace("textures/entity/creeper/nerd_creeper_overlay.png")));
-        this.getParentModel().renderToBuffer(poseStack, consumer, i, overlayCoords);
+        VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityTranslucent(new ResourceLocation("minecraft", "textures/entity/creeper/nerd_creeper_overlay.png")));
+        this.getParentModel().renderToBuffer(poseStack, consumer, i, overlayCoords, 1, 1, 1, 1);
         poseStack.popPose();
     }
 }

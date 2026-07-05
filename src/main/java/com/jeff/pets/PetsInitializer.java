@@ -114,7 +114,6 @@ public class PetsInitializer {
         event.put(Entities.SPIDER.get(), ClientSpider.createAttributes().build());
         event.put(Entities.WOLF.get(), ClientWolf.createAttributes().build());
         event.put(Entities.BLAZE.get(), ClientBlaze.createAttributes().build());
-        event.put(Entities.BREEZE.get(), ClientBreeze.createAttributes().build());
         event.put(Entities.CREEPER.get(), ClientCreeper.createAttributes().build());
         event.put(Entities.ELDER_GUARDIAN_COOKIE.get(), ClientElderGuardian.createAttributes().build());
         event.put(Entities.ENDERMITE.get(), ClientEndermite.createAttributes().build());
@@ -138,7 +137,6 @@ public class PetsInitializer {
         event.put(Entities.ZOMBIE_VILLAGER.get(), ClientZombieVillager.createAttributes().build());
         event.put(Entities.HUSK.get(), ClientHusk.createAttributes().build());
         event.put(Entities.DROWNED.get(), ClientDrowned.createAttributes().build());
-        event.put(Entities.BOGGED.get(), ClientBogged.createAttributes().build());
         event.put(Entities.STRAY.get(), ClientStray.createAttributes().build());
         event.put(Entities.WITHER_SKELETON.get(), ClientWitherSkeleton.createAttributes().build());
         event.put(Entities.ENDER_DRAGON.get(), ClientEnderDragon.createAttributes().build());
@@ -603,16 +601,6 @@ public class PetsInitializer {
                                 .build(BLAZE_KEY.location().getPath())
                 );
 
-        public static final ResourceKey<@NotNull EntityType<?>> BREEZE_KEY = createResourceKey("clientbreeze");
-        public static final RegistryObject< @NotNull EntityType<ClientBreeze>> BREEZE =
-                ENTITY_TYPES.register("clientbreeze", () ->
-                        EntityType.Builder.of(ClientBreeze::new, MobCategory.AMBIENT)
-                                .noSummon()
-                                .sized(0.6f, 1.77f)
-                                .eyeHeight(1.77f)
-                                .build(BREEZE_KEY.location().getPath())
-                );
-
         public static final ResourceKey<@NotNull EntityType<?>> CREEPER_KEY = createResourceKey("clientcreeper");
         public static final RegistryObject< @NotNull EntityType<ClientCreeper>> CREEPER =
                 ENTITY_TYPES.register("clientcreeper", () ->
@@ -839,16 +827,6 @@ public class PetsInitializer {
                                 .sized(0.6f, 1.95f)
                                 .eyeHeight(2.0f)
                                 .build(DROWNED_KEY.location().getPath())
-                );
-
-        public static final ResourceKey<@NotNull EntityType<?>> BOGGED_KEY = createResourceKey("clientbogged");
-        public static final RegistryObject< @NotNull EntityType<ClientBogged>> BOGGED =
-                ENTITY_TYPES.register("clientbogged", () ->
-                        EntityType.Builder.of(ClientBogged::new, MobCategory.AMBIENT)
-                                .noSummon()
-                                .sized(0.6f, 1.95f)
-                                .eyeHeight(2.0f)
-                                .build(BOGGED_KEY.location().getPath())
                 );
 
         public static final ResourceKey<@NotNull EntityType<?>> STRAY_KEY = createResourceKey("clientstray");

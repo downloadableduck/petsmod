@@ -13,7 +13,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientArmadilloRenderer extends PetRenderer<@NotNull ClientArmadillo, @NotNull ClientArmadilloModel> {
 
-    public static final ModelLayerLocation ARMADILLO_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("textures/entity/armadillo.png"), "main");
+    public static final ModelLayerLocation ARMADILLO_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "textures/entity/armadillo.png"), "main");
 
     public ClientArmadilloRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientArmadilloModel(context.bakeLayer(ModelLayers.ARMADILLO)), 0.4F);

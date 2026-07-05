@@ -10,6 +10,7 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 public class SmilingCreeper extends GroundPet implements PowerableMob {
+
     public boolean isPowered = false;
 
     public SmilingCreeper(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {

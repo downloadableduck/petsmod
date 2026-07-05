@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientAxolotlRenderer extends PetRenderer<@NotNull ClientAxolotl, @NotNull ClientAxolotlModel> {
-    public static final ModelLayerLocation AXOLOTL_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientaxolotl"), "main");
+    public static final ModelLayerLocation AXOLOTL_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientaxolotl"), "main");
 
     String axolotlTextureLocation;
 
@@ -33,7 +33,7 @@ public class ClientAxolotlRenderer extends PetRenderer<@NotNull ClientAxolotl, @
                 axolotlTextureLocation = "textures/entity/axolotl/axolotl_lucy.png";
             }
         }
-        return ResourceLocation.withDefaultNamespace(axolotlTextureLocation);
+        return new ResourceLocation("minecraft", axolotlTextureLocation);
     }
 
     @Override

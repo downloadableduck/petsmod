@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientPufferFishRenderer extends PetRenderer<@NotNull ClientPufferFish, @NotNull PufferfishBigModel<ClientPufferFish>> {
 
-    public static final ModelLayerLocation PUFFERFISH_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientpufferfish"), "main");
+    public static final ModelLayerLocation PUFFERFISH_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientpufferfish"), "main");
 
     public ClientPufferFishRenderer(EntityRendererProvider.Context context) {
         super(context, new PufferfishBigModel<>(context.bakeLayer(ModelLayers.PUFFERFISH_BIG)), 0.75f);
@@ -19,6 +19,6 @@ public class ClientPufferFishRenderer extends PetRenderer<@NotNull ClientPufferF
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientPufferFish livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/fish/pufferfish.png");
+        return new ResourceLocation("minecraft", "textures/entity/fish/pufferfish.png");
     }
 }

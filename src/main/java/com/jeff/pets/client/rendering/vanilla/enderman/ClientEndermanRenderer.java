@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientEndermanRenderer extends PetRenderer<@NotNull ClientEnderman, @NotNull EndermanModel<ClientEnderman>> {
-    public static final ModelLayerLocation ENDERMAN_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientenderman"), "main");
+    public static final ModelLayerLocation ENDERMAN_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientenderman"), "main");
 
     public ClientEndermanRenderer(EntityRendererProvider.Context context) {
         super(context, new EndermanModel<>(context.bakeLayer(ModelLayers.ENDERMAN)), 0.5f);
@@ -20,6 +20,6 @@ public class ClientEndermanRenderer extends PetRenderer<@NotNull ClientEnderman,
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientEnderman enderman) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/enderman/enderman.png");
+        return new ResourceLocation("minecraft", "textures/entity/enderman/enderman.png");
     }
 }

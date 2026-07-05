@@ -13,7 +13,7 @@ import java.util.Objects;
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientParrotRenderer extends PetRenderer<@NotNull ClientParrot, @NotNull ClientParrotModel> {
-    public static final ModelLayerLocation PARROT_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientparrot"), "main");
+    public static final ModelLayerLocation PARROT_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientparrot"), "main");
 
     String parrotTexturePath;
 
@@ -33,7 +33,7 @@ public class ClientParrotRenderer extends PetRenderer<@NotNull ClientParrot, @No
         } else if (Objects.equals(CONFIG.parrotSkin, "gray")) {
             parrotTexturePath = "textures/entity/parrot/parrot_gray.png";
         }
-        return ResourceLocation.withDefaultNamespace(parrotTexturePath);
+        return new ResourceLocation("minecraft", parrotTexturePath);
 
     }
 

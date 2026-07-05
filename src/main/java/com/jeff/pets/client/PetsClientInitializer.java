@@ -42,8 +42,6 @@ import com.jeff.pets.client.rendering.vanilla.axolotl.ClientAxolotlRenderer;
 import com.jeff.pets.client.rendering.vanilla.bat.ClientBatRenderer;
 import com.jeff.pets.client.rendering.vanilla.bee.ClientBeeRenderer;
 import com.jeff.pets.client.rendering.vanilla.blaze.ClientBlazeRenderer;
-import com.jeff.pets.client.rendering.vanilla.bogged.ClientBoggedRenderer;
-import com.jeff.pets.client.rendering.vanilla.breeze.ClientBreezeRenderer;
 import com.jeff.pets.client.rendering.vanilla.camel.ClientCamelRenderer;
 import com.jeff.pets.client.rendering.vanilla.cat.ClientCatRenderer;
 import com.jeff.pets.client.rendering.vanilla.cavespider.ClientCaveSpiderRenderer;
@@ -223,8 +221,6 @@ public class PetsClientInitializer {
         event.registerLayerDefinition(ClientWolfRenderer.WOLF_LOCATION, ClientWolfRenderer::createBodyLayer);
         event.registerLayerDefinition(ClientElderGuardianRenderer.ELDER_GUARDIAN_LOCATION, GuardianModel::createBodyLayer);
         event.registerLayerDefinition(ClientBlazeRenderer.BLAZE_LOCATION, BlazeModel::createBodyLayer);
-        event.registerLayerDefinition(ClientBoggedRenderer.BOGGED_LOCATION, BoggedModel::createBodyLayer);
-        event.registerLayerDefinition(ClientBreezeRenderer.BREEZE_LOCATION, () -> BreezeModel.createBodyLayer(32, 32));
         event.registerLayerDefinition(ClientCreeperRenderer.CREEPER_LOCATION, ClientCreeperRenderer::createBaseCreeperLayer);
         event.registerLayerDefinition(ClientDrownedRenderer.DROWNED_LOCATION, ClientDrownedRenderer::createBaseDrownedLayer);
         event.registerLayerDefinition(ClientEndermiteRenderer.ENDERMITE_LOCATION, EndermiteModel::createBodyLayer);
@@ -319,8 +315,6 @@ public class PetsClientInitializer {
         event.registerEntityRenderer(PetsInitializer.Entities.WOLF.get(), ClientWolfRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.ELDER_GUARDIAN_COOKIE.get(), ClientElderGuardianRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.BLAZE.get(), ClientBlazeRenderer::new);
-        event.registerEntityRenderer(PetsInitializer.Entities.BOGGED.get(), ClientBoggedRenderer::new);
-        event.registerEntityRenderer(PetsInitializer.Entities.BREEZE.get(), ClientBreezeRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.CREEPER.get(), ClientCreeperRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.DROWNED.get(), ClientDrownedRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.ENDERMITE.get(), ClientEndermiteRenderer::new);

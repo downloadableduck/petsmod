@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientVindicatorRenderer extends PetRenderer<@NotNull ClientVindicator, @NotNull ClientEvokerModel<ClientVindicator>> {
 
-    public static final ModelLayerLocation VINDICATOR_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientvindicator"), "main");
+    public static final ModelLayerLocation VINDICATOR_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientvindicator"), "main");
 
     public ClientVindicatorRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientEvokerModel<>(context.bakeLayer(ModelLayers.VINDICATOR)), 0.75f);
@@ -19,6 +19,6 @@ public class ClientVindicatorRenderer extends PetRenderer<@NotNull ClientVindica
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientVindicator livingEntityRenderState) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/illager/vindicator.png");
+        return new ResourceLocation("minecraft", "textures/entity/illager/vindicator.png");
     }
 }

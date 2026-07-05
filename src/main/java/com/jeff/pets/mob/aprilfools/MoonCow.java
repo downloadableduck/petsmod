@@ -119,7 +119,7 @@ public class MoonCow extends AbstractPet {
         }
         if (owner != null) {
             if (distanceTo(owner) >= 15) {
-                this.tryToTeleportToOwner();
+                this.teleportTo(owner.getX(), owner.getY(), owner.getZ());
             }
         }
         if (this.walkAnimation.isMoving() && this.onGround()) {

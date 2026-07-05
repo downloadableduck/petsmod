@@ -14,7 +14,7 @@ import java.util.Objects;
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientBeeRenderer extends PetRenderer<@NotNull ClientBee, @NotNull ClientBeeModel> {
-    public static final ModelLayerLocation BEE_LOCATION = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("clientbee"), "main");
+    public static final ModelLayerLocation BEE_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientbee"), "main");
     public String beeTexturePath;
 
     public ClientBeeRenderer(EntityRendererProvider.Context context) {
@@ -35,6 +35,6 @@ public class ClientBeeRenderer extends PetRenderer<@NotNull ClientBee, @NotNull 
         } else if (Objects.equals(CONFIG.beeSkin, "angry")) {
             beeTexturePath = "textures/entity/bee/bee_angry.png";
         }
-        return ResourceLocation.withDefaultNamespace(beeTexturePath);
+        return new ResourceLocation("minecraft", beeTexturePath);
     }
 }
