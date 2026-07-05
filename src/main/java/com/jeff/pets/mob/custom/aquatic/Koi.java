@@ -226,7 +226,7 @@ public class Koi extends FlyingPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level().playLocalSound(this, SoundEvents.SQUID_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f);
+            level().playLocalSound(this.blockPosition(), SoundEvents.SQUID_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f, true);
         }
     }
 }

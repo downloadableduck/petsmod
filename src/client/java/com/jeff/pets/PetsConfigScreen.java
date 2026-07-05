@@ -3,6 +3,7 @@ package com.jeff.pets;
 import com.jeff.pets.enums.*;
 import com.jeff.pets.mixin.client.SplashManagerMixin;
 import com.jeff.pets.mixin.client.TitleScreenRenderingMixin;
+import com.jeff.pets.yacl3.EnumDropdownControllerBuilder;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import dev.isxander.yacl3.api.*;
