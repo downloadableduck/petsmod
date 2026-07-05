@@ -383,7 +383,7 @@ public class PetsConfigScreen {
                                                                 WitherSkins.valueOf(CONFIG.witherSkin.replaceAll(" ", "_"));
                                                         case "dumbo_octopus" ->
                                                                 DumboOctopusSkins.valueOf(CONFIG.dumboOctopusSkin.replaceAll(" ", "_"));
-                                                        case null, default ->
+                                                        default ->
                                                                 PetList.valueOf(CONFIG.activePet.replaceAll(" ", "_"));
                                                     };
                                                 } catch (IllegalArgumentException e) {
@@ -885,7 +885,7 @@ public class PetsConfigScreen {
                                                             CONFIG.dumboOctopusSkin = "pink";
                                                         }
                                                     }
-                                                    case null, default -> {
+                                                    default -> {
                                                         try {
 
                                                         } catch (NullPointerException ignored) {
@@ -931,7 +931,7 @@ public class PetsConfigScreen {
                                                     case "shulker" -> enumClass = ShulkerSkins.class;
                                                     case "wither" -> enumClass = WitherSkins.class;
                                                     case "dumbo_octopus" -> enumClass = DumboOctopusSkins.class;
-                                                    case null, default -> {
+                                                    default -> {
                                                         return EnumControllerBuilder.create((Option) opt).enumClass(PetList.class).formatValue(new ValueFormatter() {
                                                             @Override
                                                             public Component format(Object value) {

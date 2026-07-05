@@ -37,7 +37,6 @@ import com.jeff.pets.client.rendering.custom.first.penguin.PenguinRenderer;
 import com.jeff.pets.client.rendering.custom.first.racoon.RacoonModel;
 import com.jeff.pets.client.rendering.custom.first.racoon.RacoonRenderer;
 import com.jeff.pets.client.rendering.vanilla.allay.ClientAllayRenderer;
-import com.jeff.pets.client.rendering.vanilla.armadillo.ClientArmadilloRenderer;
 import com.jeff.pets.client.rendering.vanilla.axolotl.ClientAxolotlRenderer;
 import com.jeff.pets.client.rendering.vanilla.bat.ClientBatRenderer;
 import com.jeff.pets.client.rendering.vanilla.bee.ClientBeeRenderer;
@@ -148,7 +147,7 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
  * @see Central
  */
 @Mod(MOD_ID)
-@Mod.EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class PetsClientInitializer {
 
     public static List<String> ADDONS = new ArrayList<>();
@@ -160,10 +159,9 @@ public class PetsClientInitializer {
      */
     public PetsClientInitializer() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        bus.register(this);
+        //bus.register(this);
         bus.addListener(PetsClientInitializer::registerModelLayers);
         bus.addListener(PetsClientInitializer::register);
-        bus.addListener(this::createKeyBinding);
     }
 
     @SubscribeEvent
@@ -183,7 +181,6 @@ public class PetsClientInitializer {
         event.registerLayerDefinition(ClientSheepWoolLayer.SHEEP_WOOL_LOCATION, ClientSheepModel::createBodyLayer);
         event.registerLayerDefinition(ClientCatRenderer.CAT_LOCATION, ClientCatRenderer::createCatBodyLayer);
         event.registerLayerDefinition(ClientAllayRenderer.ALLAY_TEXTURE, AllayModel::createBodyLayer);
-        event.registerLayerDefinition(ClientArmadilloRenderer.ARMADILLO_LOCATION, ArmadilloModel::createBodyLayer);
         event.registerLayerDefinition(ClientAxolotlRenderer.AXOLOTL_LOCATION, AxolotlModel::createBodyLayer);
         event.registerLayerDefinition(ClientBatRenderer.BAT_LOCATION, BatModel::createBodyLayer);
         event.registerLayerDefinition(ClientCamelRenderer.CAMEL_LOCATION, CamelModel::createBodyLayer);
@@ -276,7 +273,6 @@ public class PetsClientInitializer {
         event.registerEntityRenderer(PetsInitializer.Entities.SHEEP.get(), ClientSheepRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.CAT.get(), ClientCatRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.ALLAY.get(), ClientAllayRenderer::new);
-        event.registerEntityRenderer(PetsInitializer.Entities.ARMADILLO.get(), ClientArmadilloRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.AXOLOTL.get(), ClientAxolotlRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.BAT.get(), ClientBatRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.CAMEL.get(), ClientCamelRenderer::new);
@@ -367,10 +363,11 @@ public class PetsClientInitializer {
      * is pressed
      */
 
-    @SubscribeEvent
+    //dont need this for now
+    /*@SubscribeEvent
     void createKeyBinding(RegisterKeyMappingsEvent event) {
         openConfigScreen = new KeyMapping("Open Pets Menu", GLFW.GLFW_KEY_P, "petsmod.keymapping");
 
         event.register(openConfigScreen);
-    }
+    }*/
 }

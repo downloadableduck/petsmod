@@ -32,7 +32,7 @@ public class ClientStray extends GroundPet implements RangedAttackMob {
     }
 
     @Override
-    public void performRangedAttack(LivingEntity livingEntity, float v) {
+    public void performRangedAttack(LivingEntity livingEntity, float f) {
 
     }
 }

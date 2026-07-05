@@ -28,7 +28,7 @@ public class ClientAxolotlRenderer extends PetRenderer<@NotNull ClientAxolotl, @
             case "gold" -> axolotlTextureLocation = "textures/entity/axolotl/axolotl_gold.png";
             case "cyan" -> axolotlTextureLocation = "textures/entity/axolotl/axolotl_cyan.png";
             case "blue" -> axolotlTextureLocation = "textures/entity/axolotl/axolotl_blue.png";
-            case null, default -> {
+            default -> {
                 CONFIG.axolotlSkin = "pink";
                 axolotlTextureLocation = "textures/entity/axolotl/axolotl_lucy.png";
             }

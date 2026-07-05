@@ -33,8 +33,8 @@ public class ClientHuskRenderer extends PetRenderer<@NotNull ClientHusk, @NotNul
     }
 
     @Override
-    public void setupRotations(ClientHusk husk, @NotNull PoseStack poseStack, float f, float g, float i, float j) {
-        super.setupRotations(husk, poseStack, f, g, i, j);
+    public void setupRotations(ClientHusk husk, @NotNull PoseStack poseStack, float f, float g, float i) {
+        super.setupRotations(husk, poseStack, f, g, i);
         if (husk.isPassenger()) {
             poseStack.translate(0, -0.5, 0);
         }

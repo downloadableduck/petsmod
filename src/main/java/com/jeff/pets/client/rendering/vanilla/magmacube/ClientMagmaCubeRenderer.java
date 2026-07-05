@@ -26,7 +26,7 @@ public class ClientMagmaCubeRenderer extends PetRenderer<@NotNull ClientMagmaCub
             case "small" -> 1;
             case "medium" -> 2;
             case "large" -> 4;
-            case null, default -> 1;
+            default -> 1;
         };
         poseStack.scale(magmaCubeScale, magmaCubeScale, magmaCubeScale);
     }

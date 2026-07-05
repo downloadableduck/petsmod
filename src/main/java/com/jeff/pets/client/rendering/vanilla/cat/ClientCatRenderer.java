@@ -53,7 +53,7 @@ public class ClientCatRenderer extends PetRenderer<@NotNull ClientCat, @NotNull 
             case "siamese" -> new ResourceLocation("minecraft", "textures/entity/cat/siamese.png");
             case "tabby" -> new ResourceLocation("minecraft", "textures/entity/cat/tabby.png");
             case "white" -> new ResourceLocation("minecraft", "textures/entity/cat/white.png");
-            case null, default -> new ResourceLocation("minecraft", "textures/entity/cat/black.png");
+            default -> new ResourceLocation("minecraft", "textures/entity/cat/black.png");
         };
     }
 

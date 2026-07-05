@@ -118,7 +118,7 @@ public class Utils {
      * {@link PetsInitializer#MOD_ID} and the parameter {@code path} set to the user's input
      */
     public static ResourceLocation withModNamespace(String path) {
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+        return new ResourceLocation(MOD_ID, path);
     }
 
     /**

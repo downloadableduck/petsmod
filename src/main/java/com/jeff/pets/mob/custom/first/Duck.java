@@ -25,6 +25,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -66,10 +68,10 @@ public class Duck extends AbstractPet {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(DUCK_SKIN, 1);
-        builder.define(IS_SERVER_ENTITY, false);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(DUCK_SKIN, 1);
+        this.entityData.define(IS_SERVER_ENTITY, false);
     }
 
     public boolean isServerEntity() {
@@ -139,10 +141,10 @@ public class Duck extends AbstractPet {
         return duck;
     }
 
-    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull MobSpawnType spawnReason, final @Nullable SpawnGroupData groupData) {
+    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull MobSpawnType spawnReason, final @Nullable SpawnGroupData groupData, CompoundTag compoundTag) {
         this.setServerEntity(true);
         this.entityData.set(DUCK_SKIN, this.random.nextInt(2));
-        return super.finalizeSpawn(level, difficulty, spawnReason, groupData);
+        return super.finalizeSpawn(level, difficulty, spawnReason, groupData, compoundTag);
     }
 
     public boolean isFood(final @NotNull ItemStack itemStack) {
@@ -158,7 +160,7 @@ public class Duck extends AbstractPet {
         this.goalSelector.addGoal(9, new BreedGoal(this, 1));
         this.goalSelector.addGoal(2, new FloatGoal(this));
         this.goalSelector.addGoal(3, new PanicGoal(this, 1.4d));
-        this.goalSelector.addGoal(4, new TemptGoal(this, 1.0f, stack -> stack.is(ItemTags.SKULLS), false));
+        this.goalSelector.addGoal(4, new TemptGoal(this, 1.0f, Ingredient.of(Items.SKELETON_SKULL, Items.WITHER_SKELETON_SKULL), false));
 
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1.0D));
@@ -207,7 +209,7 @@ public class Duck extends AbstractPet {
                 this.setYHeadRot(this.getYRot());
                 this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.yHeadRot, 50.0f);
 
-                double speed = owner.getSpeed() * 2.0;
+                double speed = owner.getSpeed() * 2;
                 this.setDeltaMovement(dir.x * speed, this.getDeltaMovement().y, dir.z * speed);
             } else {
                 this.lookAt(owner, 5, 0);
@@ -216,12 +218,14 @@ public class Duck extends AbstractPet {
 
             int yHeightToOwner = (int) (owner.getY() - this.getY());
 
-            if ((yHeightToOwner > 1 || (this.horizontalCollision && this.onGround())) && !this.isServerEntity()) {
+            if (this.horizontalCollision && this.onGround()) {
                 this.jumpFromGround();
+                this.processFlappingMovement();
             }
 
-            if (yHeightToOwner > -1 && !this.isServerEntity()) {
+            if (yHeightToOwner > -1) {
                 this.setDeltaMovement(this.getDeltaMovement().add(0, -0.01, 0));
+                this.processFlappingMovement();
             }
 
             if (!this.onGround()) {
@@ -251,14 +255,10 @@ public class Duck extends AbstractPet {
             }
         }
         if (owner != null) {
-            if (distanceTo(owner) >= 10 && !this.isServerEntity()) {
+            if (distanceTo(owner) >= 10) {
                 this.teleportTo(owner.getX(), owner.getY(), owner.getZ());
             }
         }
-
-        /*if (this.walkAnimation.isMoving()) {
-            level().playLocalSound(this, SoundEvents.CHICKEN_STEP, SoundSource.NEUTRAL, 1.0f, 1.0f);
-        }*/
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {

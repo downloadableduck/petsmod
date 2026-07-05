@@ -21,11 +21,11 @@ public class PetsSounds {
             DeferredRegister.create(Registries.SOUND_EVENT, PetsInitializer.MOD_ID);
 
     public static final RegistryObject<SoundEvent> DUCK_AMBIENT = SOUND_EVENTS.register("duck_ambient",
-            () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, "duck_ambient"))
+            () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(PetsInitializer.MOD_ID, "duck_ambient"))
     );
 
     public static final RegistryObject<SoundEvent> PENGUIN_AMBIENT = SOUND_EVENTS.register("penguin_ambient",
-            () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(PetsInitializer.MOD_ID, "penguin_ambient")));
+            () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(PetsInitializer.MOD_ID, "penguin_ambient")));
 
     /**
      * Static initializer

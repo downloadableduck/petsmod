@@ -39,7 +39,7 @@ public class ClientShulkerRenderer extends PetRenderer<@NotNull ClientShulker, @
             case "red" -> shulkerFile = "shulker_red.png";
             case "white" -> shulkerFile = "shulker_white.png";
             case "yellow" -> shulkerFile = "shulker_yellow.png";
-            case null, default -> shulkerFile = "shulker.png";
+            default -> shulkerFile = "shulker.png";
         }
         return new ResourceLocation("minecraft", folderPath + shulkerFile);
     }

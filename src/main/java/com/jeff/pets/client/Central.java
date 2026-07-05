@@ -95,8 +95,7 @@ public class Central {
     public static final List<String> PIGLIN_SKINS = List.of("piglin", "zombified", "brute");
     public static final List<String> WOLF_SKINS = List.of("pale", "ashen", "black", "chestnut", "rusty", "snowy", "spotted", "striped", "woods");
     public static final List<String> PETS_LIST = List.of("allay", "angry ghast", "armadillo",
-            "axolotl", "bat", "batato", "bee", "blaze", "bogged",
-            "breeze", "camel", "cat", "cave spider", "chicken",
+            "axolotl", "bat", "batato", "bee", "blaze","camel", "cat", "cave spider", "chicken",
             "cod", "cow",
             "creeper", "diamond chicken",
             "dolphin", "donkey", "drowned", "duck", "dumbo octopus",
@@ -171,7 +170,6 @@ public class Central {
     public static ClientSheep sheep;
     public static ClientCat cat;
     public static ClientAllay allay;
-    public static ClientArmadillo armadillo;
     public static ClientAxolotl axolotl;
     public static ClientBat bat;
     public static ClientCamel camel;
@@ -288,7 +286,6 @@ public class Central {
         Utils.despawnEntity(sheep);
         Utils.despawnEntity(cat);
         Utils.despawnEntity(allay);
-        Utils.despawnEntity(armadillo);
         Utils.despawnEntity(axolotl);
         Utils.despawnEntity(bat);
         Utils.despawnEntity(camel);
@@ -388,7 +385,6 @@ public class Central {
         sheep = new ClientSheep(PetsInitializer.Entities.SHEEP.get(), world);
         cat = new ClientCat(PetsInitializer.Entities.CAT.get(), world);
         allay = new ClientAllay(PetsInitializer.Entities.ALLAY.get(), world);
-        armadillo = new ClientArmadillo(PetsInitializer.Entities.ARMADILLO.get(), world);
         axolotl = new ClientAxolotl(PetsInitializer.Entities.AXOLOTL.get(), world);
         bat = new ClientBat(PetsInitializer.Entities.BAT.get(), world);
         camel = new ClientCamel(PetsInitializer.Entities.CAMEL.get(), world);
@@ -487,8 +483,6 @@ public class Central {
                 Utils.summonPet(cat, CONFIG.catName);
             } else if (Objects.equals(CONFIG.activePet, "allay")) {
                 Utils.summonPet(allay, CONFIG.allayName);
-            } else if (Objects.equals(CONFIG.activePet, "armadillo")) {
-                Utils.summonPet(armadillo, CONFIG.armadilloName);
             } else if (Objects.equals(CONFIG.activePet, "axolotl")) {
                 Utils.summonPet(axolotl, CONFIG.axolotlName);
             } else if (Objects.equals(CONFIG.activePet, "bat")) {
@@ -674,7 +668,6 @@ public class Central {
         Utils.checkName("penguin", penguin, CONFIG.penguinName);
         Utils.checkName("sheep", sheep, CONFIG.sheepName);
         Utils.checkName("allay", allay, CONFIG.allayName);
-        Utils.checkName("armadillo", armadillo, CONFIG.armadilloName);
         Utils.checkName("axolotl", axolotl, CONFIG.axolotlName);
         Utils.checkName("bat", bat, CONFIG.batName);
         Utils.checkName("camel", camel, CONFIG.camelName);
@@ -795,7 +788,7 @@ public class Central {
             case "head" -> HEAD_SKINS;
             case "traitor" -> TRAITOR_SKINS;
             case "dumbo_octopus" -> DUMBO_OCTOPUS_SKINS;
-            case null, default -> EMPTY_LIST;
+            default -> EMPTY_LIST;
         };
 
         currentSuggestions.clear();
@@ -843,15 +836,15 @@ public class Central {
      */
     public static void reassignLogo(Boolean bl) {
         if (bl) {
-            LogoRenderer.MINECRAFT_LOGO = ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/title/petsmod.png");
-            LogoRenderer.EASTER_EGG_LOGO = ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/title/modpets.png");
-            LogoRenderer.MINECRAFT_EDITION = ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/title/version.png");
-            SplashManager.SPLASHES_LOCATION = ResourceLocation.fromNamespaceAndPath(MOD_ID, "texts/splashes.txt");
+            LogoRenderer.MINECRAFT_LOGO = new ResourceLocation(MOD_ID, "textures/title/petsmod.png");
+            LogoRenderer.EASTER_EGG_LOGO = new ResourceLocation(MOD_ID, "textures/title/modpets.png");
+            LogoRenderer.MINECRAFT_EDITION = new ResourceLocation(MOD_ID, "textures/title/version.png");
+            SplashManager.SPLASHES_LOCATION = new ResourceLocation(MOD_ID, "texts/splashes.txt");
         } else {
-            LogoRenderer.MINECRAFT_LOGO = ResourceLocation.withDefaultNamespace("textures/gui/title/minecraft.png");
-            LogoRenderer.EASTER_EGG_LOGO = ResourceLocation.withDefaultNamespace("textures/gui/title/minceraft.png");
-            LogoRenderer.MINECRAFT_EDITION = ResourceLocation.withDefaultNamespace("textures/gui/title/edition.png");
-            SplashManager.SPLASHES_LOCATION = ResourceLocation.withDefaultNamespace("texts/splashes.txt");
+            LogoRenderer.MINECRAFT_LOGO = new ResourceLocation("minecraft", "textures/gui/title/minecraft.png");
+            LogoRenderer.EASTER_EGG_LOGO = new ResourceLocation("minecraft", "textures/gui/title/minceraft.png");
+            LogoRenderer.MINECRAFT_EDITION = new ResourceLocation("minecraft", "textures/gui/title/edition.png");
+            SplashManager.SPLASHES_LOCATION = new ResourceLocation("minecraft", "texts/splashes.txt");
         }
     }
 
@@ -893,7 +886,6 @@ public class Central {
                                 case "bronze":
                                     CONFIG.duckSkin = "bronze";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -901,7 +893,7 @@ public class Central {
                             switch (skin) {
                                 case "normal" -> CONFIG.racoonSkin = "normal";
                                 case "albino" -> CONFIG.racoonSkin = "albino";
-                                case null, default -> isValid = false;
+                                default -> isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "cat")) {
                             switch (skin) {
@@ -939,7 +931,6 @@ public class Central {
                                 case "jellie":
                                     CONFIG.catSkin = "jellie";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -995,7 +986,6 @@ public class Central {
                                 case "black":
                                     CONFIG.sheepSkin = "black";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -1010,7 +1000,6 @@ public class Central {
                                 case "warm":
                                     CONFIG.chickenSkin = "warm";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -1031,7 +1020,6 @@ public class Central {
                                 case "blue":
                                     CONFIG.axolotlSkin = "blue";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -1057,7 +1045,6 @@ public class Central {
                                 case "oxidized":
                                     CONFIG.copperGolemSkin = "oxidized";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -1072,7 +1059,6 @@ public class Central {
                                 case "warm":
                                     CONFIG.cowSkin = "warm";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -1087,7 +1073,6 @@ public class Central {
                                 case "warm":
                                     CONFIG.frogSkin = "warm";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -1120,7 +1105,6 @@ public class Central {
                                 case "zombie":
                                     CONFIG.horseSkin = "zombie";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -1141,7 +1125,6 @@ public class Central {
                                 case "gray":
                                     CONFIG.parrotSkin = "gray";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -1156,7 +1139,6 @@ public class Central {
                                 case "cold":
                                     CONFIG.pigSkin = "cold";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -1186,7 +1168,6 @@ public class Central {
                                 case "toast":
                                     CONFIG.rabbitSkin = "toast";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -1255,7 +1236,6 @@ public class Central {
                                 case "unemployed":
                                     CONFIG.villagerSkin = "unemployed";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -1283,7 +1263,6 @@ public class Central {
                                 case "angry":
                                     CONFIG.beeSkin = "angry";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -1295,7 +1274,6 @@ public class Central {
                                 case "snow":
                                     CONFIG.foxSkin = "snow";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -1313,7 +1291,6 @@ public class Central {
                                 case "white":
                                     CONFIG.llamaSkin = "white";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -1329,7 +1306,6 @@ public class Central {
                                 case "coral zombie":
                                     CONFIG.nautilusSkin = "coral_zombie";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -1356,7 +1332,6 @@ public class Central {
                                 case "brown":
                                     CONFIG.pandaSkin = "brown";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -1375,7 +1350,6 @@ public class Central {
                                 case "brute":
                                     CONFIG.piglinSkin = "brute";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -1408,7 +1382,6 @@ public class Central {
                                 case "woods":
                                     CONFIG.wolfSkin = "woods";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -1416,21 +1389,21 @@ public class Central {
                             switch (skin) {
                                 case "hoglin", "normal" -> CONFIG.hoglinSkin = "hoglin";
                                 case "zoglin" -> CONFIG.hoglinSkin = "zoglin";
-                                case null, default -> isValid = false;
+                                default -> isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "magma_cube")) {
                             switch (skin) {
                                 case "small" -> CONFIG.magmaCubeSkin = "small";
                                 case "medium" -> CONFIG.magmaCubeSkin = "medium";
                                 case "large" -> CONFIG.magmaCubeSkin = "large";
-                                case null, default -> isValid = false;
+                                default -> isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "slime") || Objects.equals(CONFIG.activePet, "tropical_slime")) {
                             switch (skin) {
                                 case "small" -> CONFIG.slimeSkin = "small";
                                 case "medium" -> CONFIG.slimeSkin = "medium";
                                 case "large" -> CONFIG.slimeSkin = "large";
-                                case null, default -> isValid = false;
+                                default -> isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "shulker")) {
                             switch (skin) {
@@ -1450,7 +1423,7 @@ public class Central {
                                 case "red" -> CONFIG.shulkerSkin = "red";
                                 case "white" -> CONFIG.shulkerSkin = "white";
                                 case "yellow" -> CONFIG.shulkerSkin = "yellow";
-                                case null, default -> isValid = false;
+                                default -> isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "zombie_villager")) {
                             switch (skin) {
@@ -1499,7 +1472,6 @@ public class Central {
                                 case "unemployed":
                                     CONFIG.zombieVillagerSkin = "unemployed";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -1507,13 +1479,13 @@ public class Central {
                             switch (skin) {
                                 case "normal" -> CONFIG.creeperSkin = "normal";
                                 case "charged" -> CONFIG.creeperSkin = "charged";
-                                case null, default -> isValid = false;
+                                default -> isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "wither")) {
                             switch (skin) {
                                 case "normal" -> CONFIG.witherSkin = "normal";
                                 case "invulnerable" -> CONFIG.witherSkin = "invulnerable";
-                                case null, default -> isValid = false;
+                                default -> isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "head")) {
                             CONFIG.headSkin = skin.toLowerCase();
@@ -1526,7 +1498,7 @@ public class Central {
                                 case "snow", "snowy" -> CONFIG.traitorSkin = "snow";
                                 case "swamp" -> CONFIG.traitorSkin = "swamp";
                                 case "taiga" -> CONFIG.traitorSkin = "taiga";
-                                case null, default -> isValid = false;
+                                default -> isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "dumbo_octopus")) {
                             switch (skin) {
@@ -1536,7 +1508,7 @@ public class Central {
                                 case "green" -> CONFIG.dumboOctopusSkin = "green";
                                 case "orange" -> CONFIG.dumboOctopusSkin = "orange";
                                 case "pink" -> CONFIG.dumboOctopusSkin = "pink";
-                                case null, default -> isValid = false;
+                                default -> isValid = false;
                             }
                         }
                     }
@@ -1585,8 +1557,6 @@ public class Central {
                 Utils.setActivePet(cat, "cat");
             } else if (Objects.equals(species, "allay")) {
                 Utils.setActivePet(allay, "allay");
-            } else if (Objects.equals(species, "armadillo")) {
-                Utils.setActivePet(armadillo, "armadillo");
             } else if (Objects.equals(species, "axolotl")) {
                 Utils.setActivePet(axolotl, "axolotl");
             } else if (Objects.equals(species, "bat")) {
@@ -1774,7 +1744,7 @@ public class Central {
      * - Generates a random number for {@link #petSkin}, which used to be used for <a href="https://modrinth.com/mod/pets-natural">Pets Natural</a> and <a href="https://modrinth.com/mod/duck--mod">DuckMod</a>.
      */
     @SubscribeEvent
-    static void createTickWatcher(TickEvent.ClientTickEvent.Post post) {
+    static void createTickWatcher(TickEvent.ClientTickEvent post) {
         ModContainer container = ModList.get().getModContainerById(MOD_ID).get();
         Minecraft client = Minecraft.getInstance();
         client.execute(() -> {
@@ -2210,7 +2180,7 @@ public class Central {
     }
 
     void createPetsList() {
-        String[] stuffs = new String[]{"allay", "angry ghast", "armadillo",
+        String[] stuffs = new String[]{"allay", "angry ghast",
                 "axolotl", "bat", "batato", "bee", "blaze",
                 "camel", "cat", "cave spider", "chicken",
                 "cod", "cow",
