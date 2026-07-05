@@ -40,7 +40,7 @@ base {
 }
 
 // Mojang ships Java 25 to end users in 26.1, so mods should target Java 25.
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 neoForge {
     // Specify the version of NeoForge to use.
@@ -121,7 +121,9 @@ configurations {
 dependencies {
     implementation "me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config_version}"
     // Fabric API. This is technically optional, but you probably want it anyway.
-    implementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
+    //implementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
+    api "maven.modrinth:yacl:${project.yacl_version}"
+
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"

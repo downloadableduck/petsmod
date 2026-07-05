@@ -8,13 +8,15 @@ import dev.isxander.yacl3.api.controller.*;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.client.ConfigScreenHandler;
 
 import java.util.Objects;
+import java.util.function.Supplier;
 
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 
@@ -24,7 +26,7 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
  *
  * @see Central
  */
-@Mod(value = MOD_ID, dist = Dist.CLIENT)
+@Mod(value = MOD_ID)
 public class PetsConfigScreen {
 
     /**
@@ -63,7 +65,7 @@ public class PetsConfigScreen {
      * @see TitleScreenRenderingMixin
      */
     public PetsConfigScreen(ModContainer modContainer) {
-        modContainer.registerExtensionPoint(IConfigScreenFactory.class, (parentScreen, s) -> {
+        modContainer.registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, (Supplier) () -> {
             PetsConfig CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
             String activePet = CONFIG.activePet;
             return YetAnotherConfigLib.createBuilder()
@@ -401,7 +403,7 @@ public class PetsConfigScreen {
                                                                 WitherSkins.valueOf(CONFIG.witherSkin.replaceAll(" ", "_"));
                                                         case "dumbo_octopus" ->
                                                                 DumboOctopusSkins.valueOf(CONFIG.dumboOctopusSkin.replaceAll(" ", "_"));
-                                                        case null, default ->
+                                                        default ->
                                                                 PetList.valueOf(CONFIG.activePet.replaceAll(" ", "_"));
                                                     };
                                                 } catch (IllegalArgumentException e) {
@@ -903,7 +905,7 @@ public class PetsConfigScreen {
                                                             CONFIG.dumboOctopusSkin = "pink";
                                                         }
                                                     }
-                                                    case null, default -> {
+                                                    default -> {
                                                         try {
 
                                                         } catch (NullPointerException ignored) {
@@ -949,7 +951,7 @@ public class PetsConfigScreen {
                                                     case "shulker" -> enumClass = ShulkerSkins.class;
                                                     case "wither" -> enumClass = WitherSkins.class;
                                                     case "dumbo_octopus" -> enumClass = DumboOctopusSkins.class;
-                                                    case null, default -> {
+                                                    default -> {
                                                         return EnumControllerBuilder.create((Option) opt).enumClass(PetList.class).formatValue(new ValueFormatter() {
                                                             @Override
                                                             public Component format(Object value) {
@@ -1000,7 +1002,7 @@ public class PetsConfigScreen {
                                     .build())
                             .build())
                     .build()
-                    .generateScreen(s);
+                    .generateScreen(Minecraft.getInstance().screen);
         });
     }
 

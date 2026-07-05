@@ -39,7 +39,7 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
             case "green" -> path = green;
             case "orange" -> path = orange;
             case "pink" -> path = pink;
-            case null, default -> path = yellow;
+            default -> path = yellow;
         }
         return new ResourceLocation(MOD_ID, path);
     }

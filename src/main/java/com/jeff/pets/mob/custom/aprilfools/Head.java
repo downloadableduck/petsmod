@@ -22,6 +22,7 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
@@ -48,9 +49,9 @@ public class Head extends AbstractPet {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(IS_SERVER_ENTITY, false);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(IS_SERVER_ENTITY, false);
     }
 
     public boolean isServerEntity() {
@@ -76,9 +77,9 @@ public class Head extends AbstractPet {
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull MobSpawnType spawnReason, final @Nullable SpawnGroupData groupData) {
+    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, MobSpawnType mobSpawnType, final @Nullable SpawnGroupData groupData, CompoundTag compoundTag) {
         this.setServerEntity(true);
-        return super.finalizeSpawn(level, difficulty, spawnReason, groupData);
+        return super.finalizeSpawn(level, difficulty, mobSpawnType, groupData, compoundTag);
     }
 
     @Override
@@ -86,7 +87,7 @@ public class Head extends AbstractPet {
 
         this.goalSelector.addGoal(2, new FloatGoal(this));
         this.goalSelector.addGoal(3, new PanicGoal(this, 1.4d));
-        this.goalSelector.addGoal(4, new TemptGoal(this, 1.0f, stack -> stack.is(Items.CAKE), false));
+        this.goalSelector.addGoal(4, new TemptGoal(this, 1.0f, Ingredient.of(Items.CAKE), false));
 
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1.0D));

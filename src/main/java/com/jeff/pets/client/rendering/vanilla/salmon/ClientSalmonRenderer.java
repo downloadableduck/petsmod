@@ -25,8 +25,8 @@ public class ClientSalmonRenderer extends PetRenderer<@NotNull ClientSalmon, @No
     }
 
     @Override
-    protected void setupRotations(ClientSalmon salmonRenderState, @NotNull PoseStack poseStack, float ageInTicks, float g, float a, float b) {
-        super.setupRotations(salmonRenderState, poseStack, ageInTicks, g, a, b);
+    protected void setupRotations(ClientSalmon salmonRenderState, @NotNull PoseStack poseStack, float ageInTicks, float g, float a) {
+        super.setupRotations(salmonRenderState, poseStack, ageInTicks, g, a);
         float h = 1.0F;
         float i = 1.0F;
 

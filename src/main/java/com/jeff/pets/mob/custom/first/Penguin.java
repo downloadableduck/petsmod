@@ -22,6 +22,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -63,9 +65,9 @@ public class Penguin extends AbstractPet {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(IS_SERVER_ENTITY, false);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(IS_SERVER_ENTITY, false);
     }
 
     public boolean isServerEntity() {
@@ -104,15 +106,15 @@ public class Penguin extends AbstractPet {
     }
 
     protected SoundEvent getAmbientSound() {
-        return PetsSounds.PENGUIN_AMBIENT;
+        return PetsSounds.PENGUIN_AMBIENT.get();
     }
 
     protected SoundEvent getHurtSound(final @NotNull DamageSource source) {
-        return PetsSounds.PENGUIN_AMBIENT;
+        return PetsSounds.PENGUIN_AMBIENT.get();
     }
 
     protected SoundEvent getDeathSound() {
-        return PetsSounds.PENGUIN_AMBIENT;
+        return PetsSounds.PENGUIN_AMBIENT.get();
     }
 
     protected void playStepSound(final @NotNull BlockPos pos, final @NotNull BlockState blockState) {
@@ -125,9 +127,9 @@ public class Penguin extends AbstractPet {
         return penguin;
     }
 
-    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull MobSpawnType spawnReason, final @Nullable SpawnGroupData groupData) {
+    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull MobSpawnType spawnReason, final @Nullable SpawnGroupData groupData, CompoundTag compoundTag) {
         this.setServerEntity(true);
-        return super.finalizeSpawn(level, difficulty, spawnReason, groupData);
+        return super.finalizeSpawn(level, difficulty, spawnReason, groupData, compoundTag);
     }
 
     public boolean isFood(final @NotNull ItemStack itemStack) {
@@ -140,7 +142,7 @@ public class Penguin extends AbstractPet {
         this.goalSelector.addGoal(1, new BreedGoal(this, 1));
         this.goalSelector.addGoal(2, new FloatGoal(this));
         this.goalSelector.addGoal(3, new PanicGoal(this, 1.4d));
-        this.goalSelector.addGoal(4, new TemptGoal(this, 1.0f, stack -> stack.is(ItemTags.SKULLS), false));
+        this.goalSelector.addGoal(4, new TemptGoal(this, 1.0f, Ingredient.of(Items.SKELETON_SKULL, Items.WITHER_SKELETON_SKULL), false));
 
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1.0D));
@@ -242,7 +244,7 @@ public class Penguin extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level().playLocalSound(this, PetsSounds.PENGUIN_AMBIENT, SoundSource.NEUTRAL, 1.0f, 1.0f);
+            level().playLocalSound(this, PetsSounds.PENGUIN_AMBIENT.get(), SoundSource.NEUTRAL, 1.0f, 1.0f);
         }
     }
 

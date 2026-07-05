@@ -24,7 +24,7 @@ public class ClientFrogRenderer extends PetRenderer<@NotNull ClientFrog, @NotNul
             case "temperate" -> frogTexturePath = "textures/entity/frog/temperate_frog.png";
             case "warm" -> frogTexturePath = "textures/entity/frog/warm_frog.png";
             case "cold" -> frogTexturePath = "textures/entity/frog/cold_frog.png";
-            case null, default -> frogTexturePath = "textures/entity/frog/temperate_frog.png";
+            default -> frogTexturePath = "textures/entity/frog/temperate_frog.png";
         }
         return new ResourceLocation("minecraft", frogTexturePath);
     }

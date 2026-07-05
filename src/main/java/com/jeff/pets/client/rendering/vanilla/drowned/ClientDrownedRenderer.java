@@ -42,8 +42,8 @@ public class ClientDrownedRenderer extends PetRenderer<@NotNull ClientDrowned, @
     }
 
     @Override
-    public void setupRotations(ClientDrowned state, @NotNull PoseStack poseStack, float f, float g, float i, float k) {
-        super.setupRotations(state, poseStack, f, g, i, k);
+    public void setupRotations(ClientDrowned state, @NotNull PoseStack poseStack, float f, float g, float i) {
+        super.setupRotations(state, poseStack, f, g, i);
         if (state.isPassenger()) {
             poseStack.translate(0, -0.5, 0);
         }

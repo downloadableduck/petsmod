@@ -37,7 +37,6 @@ import com.jeff.pets.client.rendering.custom.first.penguin.PenguinRenderer;
 import com.jeff.pets.client.rendering.custom.first.racoon.RacoonModel;
 import com.jeff.pets.client.rendering.custom.first.racoon.RacoonRenderer;
 import com.jeff.pets.client.rendering.vanilla.allay.ClientAllayRenderer;
-import com.jeff.pets.client.rendering.vanilla.armadillo.ClientArmadilloRenderer;
 import com.jeff.pets.client.rendering.vanilla.axolotl.ClientAxolotlRenderer;
 import com.jeff.pets.client.rendering.vanilla.bat.ClientBatRenderer;
 import com.jeff.pets.client.rendering.vanilla.bee.ClientBeeRenderer;
@@ -124,6 +123,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import org.lwjgl.glfw.GLFW;
@@ -145,7 +145,8 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
  * @see PetsInitializer
  * @see Central
  */
-@Mod(value = MOD_ID, dist = Dist.CLIENT)
+@Mod(value = MOD_ID)
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class PetsClientInitializer {
 
     public static List<String> ADDONS = new ArrayList<>();
@@ -155,9 +156,11 @@ public class PetsClientInitializer {
     /**
      * Misc rendering stuff
      */
-    public PetsClientInitializer(IEventBus bus) {
-        bus.addListener(this::registerModelLayers);
-        bus.addListener(this::register);
+    public PetsClientInitializer() {
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        //bus.register(this);
+        bus.addListener(PetsClientInitializer::registerModelLayers);
+        bus.addListener(PetsClientInitializer::register);
         bus.addListener(this::createKeyBinding);
     }
 
@@ -168,7 +171,8 @@ public class PetsClientInitializer {
         });
     }
 
-    void registerModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+    @SubscribeEvent
+    static void registerModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(HeadModel.LAYER_LOCATION, HeadModel::getTexturedModelData);
         event.registerLayerDefinition(RacoonRenderer.RACOON_LOCATION, RacoonModel::getTexturedModelData);
         event.registerLayerDefinition(DuckModel.LAYER_LOCATION, DuckModel::getTexturedModelData);
@@ -177,7 +181,6 @@ public class PetsClientInitializer {
         event.registerLayerDefinition(ClientSheepWoolLayer.SHEEP_WOOL_LOCATION, ClientSheepModel::createBodyLayer);
         event.registerLayerDefinition(ClientCatRenderer.CAT_LOCATION, ClientCatRenderer::createCatBodyLayer);
         event.registerLayerDefinition(ClientAllayRenderer.ALLAY_TEXTURE, AllayModel::createBodyLayer);
-        event.registerLayerDefinition(ClientArmadilloRenderer.ARMADILLO_LOCATION, ArmadilloModel::createBodyLayer);
         event.registerLayerDefinition(ClientAxolotlRenderer.AXOLOTL_LOCATION, AxolotlModel::createBodyLayer);
         event.registerLayerDefinition(ClientBatRenderer.BAT_LOCATION, BatModel::createBodyLayer);
         event.registerLayerDefinition(ClientCamelRenderer.CAMEL_LOCATION, CamelModel::createBodyLayer);
@@ -262,7 +265,8 @@ public class PetsClientInitializer {
         event.registerLayerDefinition(StingrayRenderer.STINGRAY_LOCATION, StingrayModel::createBodyLayer);
     }
 
-    void register(EntityRenderersEvent.RegisterRenderers event) {
+    @SubscribeEvent
+    static void register(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(PetsInitializer.Entities.HEAD.get(), HeadRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.DUCK.get(), DuckRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.RACOON.get(), RacoonRenderer::new);
@@ -270,7 +274,6 @@ public class PetsClientInitializer {
         event.registerEntityRenderer(PetsInitializer.Entities.SHEEP.get(), ClientSheepRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.CAT.get(), ClientCatRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.ALLAY.get(), ClientAllayRenderer::new);
-        event.registerEntityRenderer(PetsInitializer.Entities.ARMADILLO.get(), ClientArmadilloRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.AXOLOTL.get(), ClientAxolotlRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.BAT.get(), ClientBatRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.CAMEL.get(), ClientCamelRenderer::new);

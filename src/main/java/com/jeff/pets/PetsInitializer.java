@@ -19,7 +19,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -34,6 +37,7 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
  * Registers all of the blocks and entities used in this mod, as well as providing the {@link #MOD_ID}.
  */
 @Mod(MOD_ID)
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class PetsInitializer {
     public static final String MOD_ID = "pets_mod";
 
@@ -42,10 +46,20 @@ public class PetsInitializer {
     public static final DeferredRegister<@NotNull EntityType<?>> ENTITY_TYPES =
             DeferredRegister.create(Registries.ENTITY_TYPE, PetsInitializer.MOD_ID);
 
+    static {
+       // NeoForge.EVENT_BUS.register(PetsInitializer.class);
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        //bus.register(PetsInitializer.class);
+        ENTITY_TYPES.register(bus);
+        DeferredHolder<?, ?> ignored = Entities.ALLAY;
+        PetsSounds.initialize(bus);
+    }
+
     public PetsInitializer(IEventBus bus) {
+        System.out.println("hello!");
         DeferredHolder<?, ?> ignored = ALLAY;
         ENTITY_TYPES.register(bus);
-        bus.addListener(this::onInitialize);
+        bus.addListener(PetsInitializer::onInitialize);
 
     }
 
@@ -53,7 +67,8 @@ public class PetsInitializer {
         return ResourceKey.create(Registries.ENTITY_TYPE, new ResourceLocation(PetsInitializer.MOD_ID, path));
     }
 
-    public void onInitialize(EntityAttributeCreationEvent event) {
+    @SubscribeEvent
+    public static void onInitialize(EntityAttributeCreationEvent event) {
 
         event.put(Entities.RACOON.get(), Racoon.createAttributes().build());
         event.put(Entities.DUCK.get(), Duck.createAttributes().build());
@@ -61,7 +76,6 @@ public class PetsInitializer {
         event.put(Entities.SHEEP.get(), ClientSheep.createAttributes().build());
         event.put(Entities.CAT.get(), ClientCat.createAttributes().build());
         event.put(Entities.ALLAY.get(), ClientAllay.createAttributes().build());
-        event.put(Entities.ARMADILLO.get(), ClientArmadillo.createAttributes().build());
         event.put(Entities.AXOLOTL.get(), ClientAxolotl.createAttributes().build());
         event.put(Entities.BAT.get(), ClientBat.createAttributes().build());
         event.put(Entities.CAMEL.get(), ClientCamel.createAttributes().build());
@@ -148,8 +162,6 @@ public class PetsInitializer {
         event.put(Entities.KOI.get(), Koi.createAttributes().build());
         event.put(Entities.STINGRAY.get(), Stingray.createAttributes().build());
 
-        PetsSounds.initialize();
-
         //DuckSpawns.addDuckSpawn();
 
         LOGGER.info("quack");
@@ -160,7 +172,7 @@ public class PetsInitializer {
                 ENTITY_TYPES.register("racoon", () ->
                         EntityType.Builder.of(Racoon::new, MobCategory.CREATURE)
                                 .sized(1.0f, 1.0f)
-                                .eyeHeight(1.0f)
+                                
                                 .build(("racoon"))
                 );
 
@@ -169,17 +181,8 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientAllay::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.35f, 0.6f)
-                                .eyeHeight(0.6f)
+                                
                                 .build(("clientallay"))
-                );
-
-        public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientArmadillo>> ARMADILLO =
-                ENTITY_TYPES.register("clientarmadillo", () ->
-                        EntityType.Builder.of(ClientArmadillo::new, MobCategory.AMBIENT)
-                                .noSummon()
-                                .sized(0.7f, 0.65f)
-                                .eyeHeight(0.65f)
-                                .build(("clientarmadillo"))
                 );
 
         public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientAxolotl>> AXOLOTL =
@@ -187,7 +190,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientAxolotl::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(1.0f, 1.0f)
-                                .eyeHeight(1.0f)
+                                
                                 .build(("clientaxolotl"))
                 );
 
@@ -196,7 +199,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientBat::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.5f, 0.9f)
-                                .eyeHeight(0.9f)
+                                
                                 .build(("clientbat"))
                 );
 
@@ -205,7 +208,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientCamel::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(1.7f, 2.375f)
-                                .eyeHeight(2.375f)
+                                
                                 .build(("clientcamel"))
                 );
 
@@ -213,7 +216,7 @@ public class PetsInitializer {
                 ENTITY_TYPES.register("duck", () ->
                         EntityType.Builder.of(Duck::new, MobCategory.CREATURE)
                                 .sized(0.4f, 0.7f)
-                                .eyeHeight(1.0f)
+                                
                                 .build(("duck"))
                 );
 
@@ -221,7 +224,7 @@ public class PetsInitializer {
                 ENTITY_TYPES.register("penguin", () ->
                         EntityType.Builder.of(Penguin::new, MobCategory.AMBIENT)
                                 .sized(1.0f, 1.5f)
-                                .eyeHeight(1.0f)
+                                
                                 .build(("penguin"))
                 );
 
@@ -230,7 +233,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientSheep::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.9f, 1.3f)
-                                .eyeHeight(1.3f)
+                                
                                 .build(("clientsheep"))
                 );
 
@@ -239,7 +242,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientCat::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 0.7f)
-                                .eyeHeight(1.0f)
+                                
                                 .build(("clientcat"))
                 );
 
@@ -248,7 +251,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientChicken::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.4f, 0.7f)
-                                .eyeHeight(0.7f)
+                                
                                 .build(("clientchicken"))
                 );
 
@@ -257,7 +260,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientCod::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.5f, 0.3f)
-                                .eyeHeight(0.3f)
+                                
                                 .build(("clientcod"))
                 );
 
@@ -266,7 +269,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientCow::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.9f, 1.4f)
-                                .eyeHeight(1.4f)
+                                
                                 .build(("clientcow"))
                 );
 
@@ -275,7 +278,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientDonkey::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(1.3965f, 1.5f)
-                                .eyeHeight(1.5f)
+                                
                                 .build(("clientdonkey"))
                 );
 
@@ -284,7 +287,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientFrog::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.5f, 0.5f)
-                                .eyeHeight(0.5f)
+                                
                                 .build(("clientfrog"))
                 );
 
@@ -293,7 +296,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientHorse::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(1.3965f, 1.6f)
-                                .eyeHeight(1.6f)
+                                
                                 .build(("clienthorse"))
                 );
 
@@ -302,7 +305,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientMooshroom::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.9f, 1.4f)
-                                .eyeHeight(1.4f)
+                                
                                 .build(("clientmooshroom"))
                 );
 
@@ -311,7 +314,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientParrot::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.5f, 0.9f)
-                                .eyeHeight(0.9f)
+                                
                                 .build(("clientparrot")));
 
         public static final ResourceKey<@NotNull EntityType<?>> PIG_KEY = createResourceKey("clientpig");
@@ -320,7 +323,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientPig::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.9f, 0.9f)
-                                .eyeHeight(0.9f)
+                                
                                 .build(PIG_KEY.location().getPath())
                 );
 
@@ -330,7 +333,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientRabbit::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.4f, 0.5f)
-                                .eyeHeight(0.5f)
+                                
                                 .build(RABBIT_KEY.location().getPath())
                 );
 
@@ -340,7 +343,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientSalmon::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.35f, 0.2f)
-                                .eyeHeight(0.2f)
+                                
                                 .build(SALMON_KEY.location().getPath())
                 );
 
@@ -350,7 +353,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientSniffer::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(1.9f, 1.75f)
-                                .eyeHeight(1.75f)
+                                
                                 .build(SNIFFER_KEY.location().getPath())
                 );
 
@@ -360,7 +363,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientSnowGolem::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.7f, 1.9f)
-                                .eyeHeight(1.9f)
+                                
                                 .build(SNOW_GOLEM_KEY.location().getPath())
                 );
 
@@ -370,7 +373,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientSquid::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.8f, -0.8f)
-                                .eyeHeight(0.8f)
+                                
                                 .build(SQUID_KEY.location().getPath())
                 );
 
@@ -380,7 +383,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientStrider::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.9f, 1.7f)
-                                .eyeHeight(1.7f)
+                                
                                 .build(STRIDER_KEY.location().getPath())
                 );
 
@@ -390,7 +393,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientTadpole::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.4f, 0.3f)
-                                .eyeHeight(0.3f)
+                                
                                 .build(TADPOLE_KEY.location().getPath())
                 );
 
@@ -400,7 +403,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientTropicalFish::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(1.0f, 1.0f)
-                                .eyeHeight(1.0f)
+                                
                                 .build(TROPICAL_FISH_KEY.location().getPath())
                 );
 
@@ -410,7 +413,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientTurtle::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(1.2f, 0.4f)
-                                .eyeHeight(0.4f)
+                                
                                 .build(TURTLE_KEY.location().getPath())
                 );
 
@@ -420,7 +423,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientVillager::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
-                                .eyeHeight(1.95f)
+                                
                                 .build(VILLAGER_KEY.location().getPath())
                 );
 
@@ -430,7 +433,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientWanderingTrader::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
-                                .eyeHeight(1.95f)
+                                
                                 .build(WANDERING_TRADER_KEY.location().getPath())
                 );
 
@@ -440,7 +443,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientBee::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.7f, 0.6f)
-                                .eyeHeight(0.6f)
+                                
                                 .build(BEE_KEY.location().getPath())
                 );
 
@@ -450,7 +453,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientCaveSpider::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.7f, 0.5f)
-                                .eyeHeight(0.5f)
+                                
                                 .build(CAVE_SPIDER_KEY.location().getPath())
                 );
 
@@ -460,7 +463,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientDolphin::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.9f, 0.6f)
-                                .eyeHeight(0.6f)
+                                
                                 .build(DOLPHIN_KEY.location().getPath())
                 );
 
@@ -470,7 +473,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientEnderman::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 2.9f)
-                                .eyeHeight(2.9f)
+                                
                                 .build(ENDERMAN_KEY.location().getPath())
                 );
 
@@ -480,7 +483,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientFox::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 0.7f)
-                                .eyeHeight(0.7f)
+                                
                                 .build(FOX_KEY.location().getPath())
                 );
 
@@ -490,7 +493,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientGoat::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.9f, 1.3f)
-                                .eyeHeight(1.3f)
+                                
                                 .build(GOAT_KEY.location().getPath())
                 );
 
@@ -500,7 +503,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientIronGolem::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(1.4f, 2.7f)
-                                .eyeHeight(2.7f)
+                                
                                 .build(IRON_GOLEM_KEY.location().getPath())
                 );
 
@@ -510,7 +513,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientLlama::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.9f, 1.87f)
-                                .eyeHeight(1.87f)
+                                
                                 .build(LLAMA_KEY.location().getPath())
                 );
 
@@ -521,7 +524,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientPanda::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(1.3f, 1.25f)
-                                .eyeHeight(1.25f)
+                                
                                 .build(PANDA_KEY.location().getPath())
                 );
 
@@ -531,7 +534,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientPiglin::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
-                                .eyeHeight(1.95f)
+                                
                                 .build(PIGLIN_KEY.location().getPath())
                 );
 
@@ -541,7 +544,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientPolarBear::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(1.4f, 1.4f)
-                                .eyeHeight(1.4f)
+                                
                                 .build(POLAR_BEAR_KEY.location().getPath())
                 );
 
@@ -551,7 +554,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientPufferFish::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.7f, 0.7f)
-                                .eyeHeight(0.7f)
+                                
                                 .build(PUFFERFISH_KEY.location().getPath())
                 );
 
@@ -561,7 +564,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientSpider::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(1.4f, 0.9f)
-                                .eyeHeight(0.9f)
+                                
                                 .build(SPIDER_KEY.location().getPath())
                 );
 
@@ -571,7 +574,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientWolf::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 0.85f)
-                                .eyeHeight(0.85f)
+                                
                                 .build(WOLF_KEY.location().getPath())
                 );
 
@@ -581,7 +584,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientBlaze::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 1.8f)
-                                .eyeHeight(1.8f)
+                                
                                 .build(BLAZE_KEY.location().getPath())
                 );
 
@@ -591,7 +594,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientCreeper::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 1.7f)
-                                .eyeHeight(1.7f)
+                                
                                 .build(CREEPER_KEY.location().getPath())
                 );
 
@@ -601,7 +604,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientElderGuardian::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(1.9975f, 1.9975f)
-                                .eyeHeight(1.9975f)
+                                
                                 .build(ELDER_GUARDIAN_KEY.location().getPath())
                 );
 
@@ -611,7 +614,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientEndermite::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.4f, 0.3f)
-                                .eyeHeight(0.3f)
+                                
                                 .build(ENDERMITE_KEY.location().getPath())
                 );
 
@@ -621,7 +624,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientEvoker::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
-                                .eyeHeight(1.95f)
+                                
                                 .build(EVOKER_KEY.location().getPath())
                 );
 
@@ -631,7 +634,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientGhast::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(4.0f, 4.0f)
-                                .eyeHeight(4.0f)
+                                
                                 .build(GHAST_KEY.location().getPath()));
 
         public static final ResourceKey<@NotNull EntityType<?>> GUARDIAN_KEY = createResourceKey("clientguardian");
@@ -640,7 +643,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientGuardian::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.85f, 0.85f)
-                                .eyeHeight(0.85f)
+                                
                                 .build(GUARDIAN_KEY.location().getPath())
                 );
 
@@ -650,7 +653,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientHoglin::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(1.3965f, 1.4f)
-                                .eyeHeight(1.4f)
+                                
                                 .build(HOGLIN_KEY.location().getPath())
                 );
 
@@ -660,7 +663,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientMagmaCube::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(2.0f, 2.0f)
-                                .eyeHeight(2.0f)
+                                
                                 .build(MAGMA_CUBE_KEY.location().getPath())
                 );
 
@@ -670,7 +673,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientPhantom::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.9f, 0.5f)
-                                .eyeHeight(0.5f)
+                                
                                 .build(PHANTOM_KEY.location().getPath())
                 );
 
@@ -680,7 +683,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientPillager::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
-                                .eyeHeight(1.95f)
+                                
                                 .build(PILLAGER_KEY.location().getPath())
                 );
 
@@ -690,7 +693,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientRavager::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(1.95f, 2.2f)
-                                .eyeHeight(2.2f)
+                                
                                 .build(RAVAGER_KEY.location().getPath())
                 );
 
@@ -700,7 +703,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientShulker::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(1.0f, 2.0f)
-                                .eyeHeight(2.0f)
+                                
                                 .build(SHULKER_KEY.location().getPath())
                 );
 
@@ -710,7 +713,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientSilverfish::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.4f, 0.3f)
-                                .eyeHeight(0.3f)
+                                
                                 .build(SILVERFISH_KEY.location().getPath())
                 );
 
@@ -720,7 +723,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientSkeleton::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
-                                .eyeHeight(1.95f)
+                                
                                 .build(SKELETON_KEY.location().getPath())
                 );
         public static final ResourceKey<@NotNull EntityType<?>> SLIME_KEY = createResourceKey("clientslime");
@@ -729,7 +732,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientSlime::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(2.0f, 2.0f)
-                                .eyeHeight(2.0f)
+                                
                                 .build(SLIME_KEY.location().getPath())
                 );
 
@@ -739,7 +742,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientVex::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.4f, 0.8f)
-                                .eyeHeight(1.0f)
+                                
                                 .build(VEX_KEY.location().getPath())
                 );
 
@@ -749,7 +752,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientVindicator::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
-                                .eyeHeight(1.95f)
+                                
                                 .build(VINDICATOR_KEY.location().getPath())
                 );
 
@@ -759,7 +762,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientWarden::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.9f, 2.9f)
-                                .eyeHeight(2.9f)
+                                
                                 .build(WARDEN_KEY.location().getPath())
                 );
 
@@ -769,7 +772,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientWitch::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
-                                .eyeHeight(1.95f)
+                                
                                 .build(WITCH_KEY.location().getPath())
                 );
 
@@ -779,7 +782,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientZombie::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
-                                .eyeHeight(1.95f)
+                                
                                 .build(ZOMBIE_KEY.location().getPath())
                 );
 
@@ -789,7 +792,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientZombieVillager::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
-                                .eyeHeight(2.0f)
+                                
                                 .build(ZOMBIE_VILLAGER_KEY.location().getPath())
                 );
 
@@ -799,7 +802,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientHusk::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
-                                .eyeHeight(2.0f)
+                                
                                 .build(HUSK_KEY.location().getPath())
                 );
 
@@ -809,7 +812,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientDrowned::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
-                                .eyeHeight(2.0f)
+                                
                                 .build(DROWNED_KEY.location().getPath())
                 );
 
@@ -819,7 +822,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientStray::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
-                                .eyeHeight(1.95f)
+                                
                                 .build(STRAY_KEY.location().getPath())
                 );
 
@@ -829,7 +832,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientWitherSkeleton::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
-                                .eyeHeight(1.95f)
+                                
                                 .build(WITHER_SKELETON_KEY.location().getPath())
                 );
 
@@ -839,7 +842,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientEnderDragon::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(16.0f, 8.0f)
-                                .eyeHeight(1.0f)
+                                
                                 .build(ENDER_DRAGON_KEY.location().getPath())
                 );
 
@@ -849,7 +852,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ClientWither::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(2.0f, 3.0f)
-                                .eyeHeight(3.0f)
+                                
                                 .build(WITHER_KEY.location().getPath())
                 );
 
@@ -859,7 +862,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(AngryGhast::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(4.0f, 4.0f)
-                                .eyeHeight(4.0f)
+                                
                                 .build(ANGRY_GHAST_KEY.location().getPath())
                 );
 
@@ -869,7 +872,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(Batato::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.5f, 0.9f)
-                                .eyeHeight(0.9f)
+                                
                                 .build(BATATO_KEY.location().getPath())
                 );
 
@@ -879,7 +882,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(DiamondChicken::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.4f, 0.7f)
-                                .eyeHeight(0.7f)
+                                
                                 .build(DIAMOND_CHICKEN_KEY.location().getPath())
                 );
 
@@ -889,7 +892,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(LoveGolem::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(1.4f, 2.7f)
-                                .eyeHeight(3.0f)
+                                
                                 .build(LOVE_GOLEM_KEY.location().getPath())
                 );
 
@@ -899,7 +902,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(MegaSpud::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(9.0f, 12.0f)
-                                .eyeHeight(12.0f)
+                                
                                 .build(MEGA_SPUD_KEY.location().getPath())
                 );
         public static final ResourceKey<@NotNull EntityType<?>> MOON_COW_KEY = createResourceKey("moon_cow");
@@ -908,7 +911,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(MoonCow::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.9f, 1.4f)
-                                .eyeHeight(1.4f)
+                                
                                 .build(MOON_COW_KEY.location().getPath())
                 );
 
@@ -918,7 +921,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(NerdCreeper::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 1.7f)
-                                .eyeHeight(1.7f)
+                                
                                 .build(NERD_CREEPER_KEY.location().getPath())
                 );
 
@@ -928,7 +931,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(PinkWither::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(2.0f, 3.0f)
-                                .eyeHeight(3.0f)
+                                
                                 .build(PINK_WITHER_KEY.location().getPath())
                 );
 
@@ -938,7 +941,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(PlaguewhaleSlab::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(1.9975f, 1.9975f)
-                                .eyeHeight(2.0f)
+                                
                                 .build(PLAGUEWHALE_SLAB_KEY.location().getPath())
                 );
 
@@ -948,7 +951,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(PoisonousPotatoZombie::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
-                                .eyeHeight(1.95f)
+                                
                                 .build(POISONOUS_POTATO_ZOMBIE_KEY.location().getPath())
                 );
 
@@ -958,7 +961,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(RayTracing::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
-                                .eyeHeight(1.95f)
+                                
                                 .build(RAY_TRACING_KEY.location().getPath())
                 );
 
@@ -968,7 +971,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(RedstoneBug::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.4f, 0.3f)
-                                .eyeHeight(0.3f)
+                                
                                 .build(REDSTONE_BUG_KEY.location().getPath())
                 );
 
@@ -978,7 +981,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(SmilingCreeper::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 1.7f)
-                                .eyeHeight(1.7f)
+                                
                                 .build(SMILING_CREEPER_KEY.location().getPath())
                 );
 
@@ -988,7 +991,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(ToxifinSlab::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.85f, 0.85f)
-                                .eyeHeight(0.85f)
+                                
                                 .build(TOXIFIN_SLAB_KEY.location().getPath())
                 );
 
@@ -998,7 +1001,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(PotatoHusk::new, MobCategory.AMBIENT)
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
-                                .eyeHeight(1.95f)
+                                
                                 .build(POTATO_HUSK_KEY.location().getPath())
                 );
 
@@ -1007,7 +1010,7 @@ public class PetsInitializer {
                 ENTITY_TYPES.register("head", () ->
                         EntityType.Builder.of(Head::new, MobCategory.CREATURE)
                                 .sized(0.5f, 0.5f)
-                                .eyeHeight(0.5f)
+                                
                                 .build(HEAD_KEY.location().getPath())
                 );
 
@@ -1017,7 +1020,7 @@ public class PetsInitializer {
                         EntityType.Builder.of(Traitor::new, MobCategory.CREATURE)
                                 .noSummon()
                                 .sized(0.6f, 1.95f)
-                                .eyeHeight(1.95f)
+                                
                                 .build(TRAITOR_KEY.location().getPath())
                 );
 
@@ -1026,7 +1029,7 @@ public class PetsInitializer {
                 ENTITY_TYPES.register("dumbo_octopus", () ->
                         EntityType.Builder.of(DumboOctopus::new, MobCategory.WATER_AMBIENT)
                                 .sized(0.5f, 0.5f)
-                                .eyeHeight(0.5f)
+                                
                                 .build(DUMBO_OCTOPUS_KEY.location().getPath())
                 );
 
@@ -1035,7 +1038,7 @@ public class PetsInitializer {
                 ENTITY_TYPES.register("koi", () ->
                         EntityType.Builder.of(Koi::new, MobCategory.WATER_AMBIENT)
                                 .sized(0.6f, 0.6f)
-                                .eyeHeight(0.6f)
+                                
                                 .build(KOI_KEY.location().getPath())
                 );
 
@@ -1044,7 +1047,7 @@ public class PetsInitializer {
                 ENTITY_TYPES.register("stingray", () ->
                         EntityType.Builder.of(Stingray::new, MobCategory.WATER_AMBIENT)
                                 .sized(1.0f, 0.4f)
-                                .eyeHeight(0.4f)
+                                
                                 .build(STINGRAY_KEY.location().getPath())
                 );
     }
