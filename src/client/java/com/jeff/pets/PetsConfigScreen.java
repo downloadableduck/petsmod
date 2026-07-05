@@ -3,7 +3,6 @@ package com.jeff.pets;
 import com.jeff.pets.enums.*;
 import com.jeff.pets.mixin.client.SplashManagerMixin;
 import com.jeff.pets.mixin.client.TitleScreenRenderingMixin;
-import com.jeff.pets.yacl3.EnumDropdownControllerBuilder;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import dev.isxander.yacl3.api.*;
@@ -108,15 +107,15 @@ public class PetsConfigScreen implements ModMenuApi {
                             .group(OptionGroup.createBuilder()
                                     .name(Component.literal("Active Pet"))
                                     .description(OptionDescription.of(Component.literal("Your currently selected pet is: " + CONFIG.activePet)))
-                                    .option(Option.<Enum>createBuilder()
+                                    .option(Option.<String>createBuilder()
                                             .name(Component.literal("Pet Species"))
                                             .description(OptionDescription.of(Component.literal("The species of your pet. MAKE SURE to save this after it has changed before you change any other values, as they will edit the previous pet.")))
                                             .binding(
-                                                    PetList.valueOf("racoon"),
+                                                    "racoon",
                                                     () -> {
                                                         boolean hasPrintedMessage = false;
                                                         try {
-                                                            return PetList.valueOf(CONFIG.activePet.replaceAll(" ", "_"));
+                                                            return PetList.valueOf(CONFIG.activePet.replaceAll(" ", "_")).getDisplayName().getString();
                                                         } catch (IllegalArgumentException e) {
                                                             assert Minecraft.getInstance().player != null;
                                                             if (!hasPrintedMessage) {
@@ -135,7 +134,7 @@ public class PetsConfigScreen implements ModMenuApi {
                                                         Central.summonPet();
                                                     }
                                             )
-                                            .controller(EnumDropdownControllerBuilder::create)
+                                            .controller(StringControllerBuilder::create)
                                             .build())
                                     .option(Option.<String>createBuilder()
                                             .name(Component.literal("Pet Name"))
