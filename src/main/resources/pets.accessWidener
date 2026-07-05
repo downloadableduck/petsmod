@@ -1,4 +1,4 @@
-classTweaker v1 named
+accessWidener v2 named
 accessible field net/minecraft/client/gui/screens/ChatScreen commandSuggestions Lnet/minecraft/client/gui/components/CommandSuggestions;
 accessible field net/minecraft/client/model/RabbitModel head Lnet/minecraft/client/model/geom/ModelPart;
 mutable field net/minecraft/client/gui/components/LogoRenderer MINECRAFT_LOGO Lnet/minecraft/resources/ResourceLocation;

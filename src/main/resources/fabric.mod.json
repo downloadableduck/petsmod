@@ -3,7 +3,7 @@
   "id": "pets-mod",
   "version": "${version}",
   "name": "Pets Mod",
-  "accessWidener": "pets.classtweaker",
+  "accessWidener": "pets.accessWidener",
   "description": "Adds completely client-sided pets to your game. Supports every vanilla mob and will work on any server, including in singleplayer!",
   "authors": [
     "The Pets Team",

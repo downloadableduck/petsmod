@@ -721,7 +721,7 @@ public class Central implements ClientModInitializer {
             case "head" -> HEAD_SKINS;
             case "traitor" -> TRAITOR_SKINS;
             case "dumbo_octopus" -> DUMBO_OCTOPUS_SKINS;
-            case null, default -> EMPTY_LIST;
+            default -> EMPTY_LIST;
         };
 
         currentSuggestions.clear();
@@ -843,7 +843,6 @@ public class Central implements ClientModInitializer {
                                 case "bronze":
                                     CONFIG.duckSkin = "bronze";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -851,7 +850,7 @@ public class Central implements ClientModInitializer {
                             switch (skin) {
                                 case "normal" -> CONFIG.racoonSkin = "normal";
                                 case "albino" -> CONFIG.racoonSkin = "albino";
-                                case null, default -> isValid = false;
+                                default -> isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "cat")) {
                             switch (skin) {
@@ -889,7 +888,6 @@ public class Central implements ClientModInitializer {
                                 case "jellie":
                                     CONFIG.catSkin = "jellie";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -945,7 +943,6 @@ public class Central implements ClientModInitializer {
                                 case "black":
                                     CONFIG.sheepSkin = "black";
                                     break;
-                                case null:
                                 default:
                                     isValid = false;
                             }
@@ -960,7 +957,7 @@ public class Central implements ClientModInitializer {
                                 case "warm":
                                     CONFIG.chickenSkin = "warm";
                                     break;
-                                case null:
+                                
                                 default:
                                     isValid = false;
                             }
@@ -981,7 +978,7 @@ public class Central implements ClientModInitializer {
                                 case "blue":
                                     CONFIG.axolotlSkin = "blue";
                                     break;
-                                case null:
+                                
                                 default:
                                     isValid = false;
                             }
@@ -1007,7 +1004,7 @@ public class Central implements ClientModInitializer {
                                 case "oxidized":
                                     CONFIG.copperGolemSkin = "oxidized";
                                     break;
-                                case null:
+                                
                                 default:
                                     isValid = false;
                             }
@@ -1022,7 +1019,7 @@ public class Central implements ClientModInitializer {
                                 case "warm":
                                     CONFIG.cowSkin = "warm";
                                     break;
-                                case null:
+                                
                                 default:
                                     isValid = false;
                             }
@@ -1037,7 +1034,7 @@ public class Central implements ClientModInitializer {
                                 case "warm":
                                     CONFIG.frogSkin = "warm";
                                     break;
-                                case null:
+                                
                                 default:
                                     isValid = false;
                             }
@@ -1070,7 +1067,7 @@ public class Central implements ClientModInitializer {
                                 case "zombie":
                                     CONFIG.horseSkin = "zombie";
                                     break;
-                                case null:
+                                
                                 default:
                                     isValid = false;
                             }
@@ -1091,7 +1088,7 @@ public class Central implements ClientModInitializer {
                                 case "gray":
                                     CONFIG.parrotSkin = "gray";
                                     break;
-                                case null:
+                                
                                 default:
                                     isValid = false;
                             }
@@ -1106,7 +1103,7 @@ public class Central implements ClientModInitializer {
                                 case "cold":
                                     CONFIG.pigSkin = "cold";
                                     break;
-                                case null:
+                                
                                 default:
                                     isValid = false;
                             }
@@ -1136,7 +1133,7 @@ public class Central implements ClientModInitializer {
                                 case "toast":
                                     CONFIG.rabbitSkin = "toast";
                                     break;
-                                case null:
+                                
                                 default:
                                     isValid = false;
                             }
@@ -1205,7 +1202,7 @@ public class Central implements ClientModInitializer {
                                 case "unemployed":
                                     CONFIG.villagerSkin = "unemployed";
                                     break;
-                                case null:
+                                
                                 default:
                                     isValid = false;
                             }
@@ -1233,7 +1230,7 @@ public class Central implements ClientModInitializer {
                                 case "angry":
                                     CONFIG.beeSkin = "angry";
                                     break;
-                                case null:
+                                
                                 default:
                                     isValid = false;
                             }
@@ -1245,7 +1242,7 @@ public class Central implements ClientModInitializer {
                                 case "snow":
                                     CONFIG.foxSkin = "snow";
                                     break;
-                                case null:
+                                
                                 default:
                                     isValid = false;
                             }
@@ -1263,7 +1260,7 @@ public class Central implements ClientModInitializer {
                                 case "white":
                                     CONFIG.llamaSkin = "white";
                                     break;
-                                case null:
+                                
                                 default:
                                     isValid = false;
                             }
@@ -1279,7 +1276,7 @@ public class Central implements ClientModInitializer {
                                 case "coral zombie":
                                     CONFIG.nautilusSkin = "coral_zombie";
                                     break;
-                                case null:
+                                
                                 default:
                                     isValid = false;
                             }
@@ -1306,7 +1303,7 @@ public class Central implements ClientModInitializer {
                                 case "brown":
                                     CONFIG.pandaSkin = "brown";
                                     break;
-                                case null:
+                                
                                 default:
                                     isValid = false;
                             }
@@ -1325,7 +1322,7 @@ public class Central implements ClientModInitializer {
                                 case "brute":
                                     CONFIG.piglinSkin = "brute";
                                     break;
-                                case null:
+                                
                                 default:
                                     isValid = false;
                             }
@@ -1358,7 +1355,7 @@ public class Central implements ClientModInitializer {
                                 case "woods":
                                     CONFIG.wolfSkin = "woods";
                                     break;
-                                case null:
+                                
                                 default:
                                     isValid = false;
                             }
@@ -1366,21 +1363,21 @@ public class Central implements ClientModInitializer {
                             switch (skin) {
                                 case "hoglin", "normal" -> CONFIG.hoglinSkin = "hoglin";
                                 case "zoglin" -> CONFIG.hoglinSkin = "zoglin";
-                                case null, default -> isValid = false;
+                                default -> isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "magma_cube")) {
                             switch (skin) {
                                 case "small" -> CONFIG.magmaCubeSkin = "small";
                                 case "medium" -> CONFIG.magmaCubeSkin = "medium";
                                 case "large" -> CONFIG.magmaCubeSkin = "large";
-                                case null, default -> isValid = false;
+                                default -> isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "slime") || Objects.equals(CONFIG.activePet, "tropical_slime")) {
                             switch (skin) {
                                 case "small" -> CONFIG.slimeSkin = "small";
                                 case "medium" -> CONFIG.slimeSkin = "medium";
                                 case "large" -> CONFIG.slimeSkin = "large";
-                                case null, default -> isValid = false;
+                                default -> isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "shulker")) {
                             switch (skin) {
@@ -1400,7 +1397,7 @@ public class Central implements ClientModInitializer {
                                 case "red" -> CONFIG.shulkerSkin = "red";
                                 case "white" -> CONFIG.shulkerSkin = "white";
                                 case "yellow" -> CONFIG.shulkerSkin = "yellow";
-                                case null, default -> isValid = false;
+                                default -> isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "zombie_villager")) {
                             switch (skin) {
@@ -1449,7 +1446,7 @@ public class Central implements ClientModInitializer {
                                 case "unemployed":
                                     CONFIG.zombieVillagerSkin = "unemployed";
                                     break;
-                                case null:
+                                
                                 default:
                                     isValid = false;
                             }
@@ -1457,13 +1454,13 @@ public class Central implements ClientModInitializer {
                             switch (skin) {
                                 case "normal" -> CONFIG.creeperSkin = "normal";
                                 case "charged" -> CONFIG.creeperSkin = "charged";
-                                case null, default -> isValid = false;
+                                default -> isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "wither")) {
                             switch (skin) {
                                 case "normal" -> CONFIG.witherSkin = "normal";
                                 case "invulnerable" -> CONFIG.witherSkin = "invulnerable";
-                                case null, default -> isValid = false;
+                                default -> isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "head")) {
                             CONFIG.headSkin = skin.toLowerCase();
@@ -1476,7 +1473,7 @@ public class Central implements ClientModInitializer {
                                 case "snow", "snowy" -> CONFIG.traitorSkin = "snow";
                                 case "swamp" -> CONFIG.traitorSkin = "swamp";
                                 case "taiga" -> CONFIG.traitorSkin = "taiga";
-                                case null, default -> isValid = false;
+                                default -> isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "dumbo_octopus")) {
                             switch (skin) {
@@ -1486,7 +1483,7 @@ public class Central implements ClientModInitializer {
                                 case "green" -> CONFIG.dumboOctopusSkin = "green";
                                 case "orange" -> CONFIG.dumboOctopusSkin = "orange";
                                 case "pink" -> CONFIG.dumboOctopusSkin = "pink";
-                                case null, default -> isValid = false;
+                                default -> isValid = false;
                             }
                         }
                     }

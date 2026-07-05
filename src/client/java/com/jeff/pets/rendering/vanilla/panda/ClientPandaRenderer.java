@@ -36,7 +36,7 @@ public class ClientPandaRenderer extends PetRenderer<@NotNull ClientPanda, @NotN
             case "playful" -> pandaTexturePath = "textures/entity/panda/playful_panda.png";
             case "weak" -> pandaTexturePath = "textures/entity/panda/weak_panda.png";
             case "brown" -> pandaTexturePath = "textures/entity/panda/brown_panda.png";
-            case null, default -> pandaTexturePath = "textures/entity/panda/panda.png";
+            default -> pandaTexturePath = "textures/entity/panda/panda.png";
         }
         return new ResourceLocation("minecraft", pandaTexturePath);
     }

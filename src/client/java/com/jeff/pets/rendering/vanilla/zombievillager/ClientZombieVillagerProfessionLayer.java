@@ -65,7 +65,7 @@ public class ClientZombieVillagerProfessionLayer extends RenderLayer<@NotNull Cl
                     renderColoredCutoutModel(this.getParentModel(), TOOLSMITH_LOCATION.getModel(), poseStack, source, i, entityRenderState, -1, 1, 1);
             case "weaponsmith" ->
                     renderColoredCutoutModel(this.getParentModel(), WEAPONSMITH_LOCATION.getModel(), poseStack, source, i, entityRenderState, -1, 1, 1);
-            case null, default -> {
+            default -> {
             }
         }
         poseStack.popPose();

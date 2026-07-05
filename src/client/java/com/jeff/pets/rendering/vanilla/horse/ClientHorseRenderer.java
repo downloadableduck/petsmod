@@ -47,7 +47,7 @@ public class ClientHorseRenderer extends PetRenderer<@NotNull ClientHorse, @NotN
             case "white" -> horseTextureLocation = "textures/entity/horse/horse_white.png";
             case "skeleton" -> horseTextureLocation = "textures/entity/horse/horse_skeleton.png";
             case "zombie" -> horseTextureLocation = "textures/entity/horse/horse_zombie.png";
-            case null, default -> horseTextureLocation = "textures/entity/horse/horse_black.png";
+            default -> horseTextureLocation = "textures/entity/horse/horse_black.png";
         }
         return new ResourceLocation("minecraft", horseTextureLocation);
     }

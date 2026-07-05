@@ -46,7 +46,7 @@ public class TraitorBiomeLayer extends RenderLayer<@NotNull Traitor, @NotNull Cl
             case "plains" ->
                     renderColoredCutoutModel(this.getParentModel(), PLAINS_LOCATION.getModel(), poseStack, bufferSource, i, entityRenderState, 1, 1, 1);
 
-            case null, default ->
+           default ->
                     renderColoredCutoutModel(this.getParentModel(), PLAINS_LOCATION.getModel(), poseStack, bufferSource, i, entityRenderState, 1, 1, 1);
         }
         poseStack.popPose();

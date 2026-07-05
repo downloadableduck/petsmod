@@ -44,7 +44,7 @@ public class ClientRabbitRenderer extends PetRenderer<@NotNull ClientRabbit, @No
             case "splotched" -> rabbitTextureLocation = "textures/entity/rabbit/white_splotched.png";
             case "killer" -> rabbitTextureLocation = "textures/entity/rabbit/caerbannog.png";
             case "toast" -> rabbitTextureLocation = "textures/entity/rabbit/toast.png";
-            case null, default -> rabbitTextureLocation = "textures/entity/rabbit/brown.png";
+            default -> rabbitTextureLocation = "textures/entity/rabbit/brown.png";
         }
 
         return new ResourceLocation("minecraft", rabbitTextureLocation);
