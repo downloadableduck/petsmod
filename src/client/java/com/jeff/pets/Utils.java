@@ -53,7 +53,7 @@ public class Utils {
 
         entity.setPos(x, y, z);
         entity.setCustomName(Component.literal(entityName));
-        world.addEntity(entity);
+        world.addEntity(entity.getId(), entity);
         entity.tame(player);
         Central.summonedEntity.add(entity);
     }
