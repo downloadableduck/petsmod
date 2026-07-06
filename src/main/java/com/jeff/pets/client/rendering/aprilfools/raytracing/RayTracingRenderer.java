@@ -10,7 +10,6 @@ import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,10 +24,6 @@ public class RayTracingRenderer extends PetRenderer<@NotNull RayTracing, @NotNul
     public static LayerDefinition createBasePlayerBodyLayer() {
         var mesh = PlayerModel.createMesh(CubeDeformation.NONE, true);
         return LayerDefinition.create(mesh, 64, 64);
-    }
-
-    protected PlayerSkin getSkinFromRayTracingTexture() {
-        return new PlayerSkin(new ResourceLocation("minecraft", "textures/entity/ray_tracing.png"), "https://petsmod.com", new ResourceLocation("minecraft", "textures/entity/ray_tracing.png"), new ResourceLocation("minecraft", "textures/entity/ray_tracing.png"), PlayerSkin.Model.WIDE, false);
     }
 
     @Override
