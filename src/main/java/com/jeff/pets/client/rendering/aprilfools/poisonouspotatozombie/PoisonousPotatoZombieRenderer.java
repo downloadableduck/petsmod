@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.aprilfools.poisonouspotatozombie;
 
+import com.jeff.pets.mob.aprilfools.PoisonousPotatoZombie;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.zombie.ClientZombieModel;
-import com.jeff.pets.mob.aprilfools.PoisonousPotatoZombie;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

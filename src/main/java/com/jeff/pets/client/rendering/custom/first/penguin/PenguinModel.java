@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.custom.first.penguin;
 
 import com.jeff.pets.PetsInitializer;
-import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.first.Penguin;
+import com.jeff.pets.client.rendering.PetModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;

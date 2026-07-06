@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.aprilfools.toxifin;
 
-import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.aprilfools.ToxifinSlab;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;

@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.custom.aprilfools.head;
 
-import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.aprilfools.Head;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

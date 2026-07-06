@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.villager;
 
-import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientVillager;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.VillagerModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;

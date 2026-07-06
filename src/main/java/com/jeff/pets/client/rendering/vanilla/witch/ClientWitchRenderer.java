@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.witch;
 
-import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientWitch;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.model.WitchModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

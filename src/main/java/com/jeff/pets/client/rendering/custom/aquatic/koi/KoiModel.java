@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.custom.aquatic.koi;
 
-import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.aquatic.Koi;
+import com.jeff.pets.client.rendering.PetModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;

@@ -3,7 +3,6 @@ package com.jeff.pets.client.rendering.aprilfools.batato;
 import com.jeff.pets.mob.aprilfools.Batato;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.animation.definitions.BatAnimation;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -13,6 +12,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.AnimationState;
 
 import java.util.Set;
@@ -55,10 +55,18 @@ public class BatatoModel extends HierarchicalModel<Batato> {
 
     @Override
     public void setupAnim(Batato bat, float f, float g, float h, float i, float j) {
-        this.root.getAllParts().forEach(ModelPart::resetPose);
-        flyAnimationState.start(0);
-
-        this.animate(flyAnimationState, BatAnimation.BAT_FLYING, h, 1.0F);
+        this.head.xRot = j * ((float)Math.PI / 180F);
+        this.head.yRot = i * ((float)Math.PI / 180F);
+        this.head.zRot = 0.0F;
+        this.head.setPos(0.0F, 0.0F, 0.0F);
+        //this.rightWing.setPos(0.0F, 0.0F, 0.0F);
+        //this.leftWing.setPos(0.0F, 0.0F, 0.0F);
+        this.body.xRot = ((float)Math.PI / 4F) + Mth.cos(h * 0.1F) * 0.15F;
+        this.body.yRot = 0.0F;
+        this.rightWing.yRot = Mth.cos(h * 74.48451F * ((float)Math.PI / 180F)) * (float)Math.PI * 0.25F;
+        this.leftWing.yRot = -this.rightWing.yRot;
+        this.rightWingTip.yRot = this.rightWing.yRot * 0.5F;
+        this.leftWingTip.yRot = -this.rightWing.yRot * 0.5F;
     }
 
     @Override

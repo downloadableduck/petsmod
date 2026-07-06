@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.wolf;
 
-import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientWolf;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

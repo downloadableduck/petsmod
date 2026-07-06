@@ -18,7 +18,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class PetsSounds {
 
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS =
-            DeferredRegister.create(Registries.SOUND_EVENT, PetsInitializer.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, PetsInitializer.MOD_ID);
 
     public static final RegistryObject<SoundEvent> DUCK_AMBIENT = SOUND_EVENTS.register("duck_ambient",
             () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(PetsInitializer.MOD_ID, "duck_ambient"))

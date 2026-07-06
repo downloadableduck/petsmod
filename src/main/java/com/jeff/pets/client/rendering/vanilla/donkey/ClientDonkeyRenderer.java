@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.donkey;
 
+import com.jeff.pets.mob.vanilla.passive.ClientDonkey;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.horse.ClientHorseModel;
-import com.jeff.pets.mob.vanilla.passive.ClientDonkey;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

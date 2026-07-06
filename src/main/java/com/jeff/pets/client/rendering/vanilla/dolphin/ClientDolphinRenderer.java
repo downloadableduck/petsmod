@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.dolphin;
 
-import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientDolphin;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.DolphinModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;

@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.aprilfools.angryghast;
 
-import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.aprilfools.AngryGhast;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.GhastModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;

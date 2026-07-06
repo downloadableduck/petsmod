@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.elderguardian;
 
+import com.jeff.pets.mob.vanilla.hostile.ClientElderGuardian;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.guardian.ClientGuardianModel;
-import com.jeff.pets.mob.vanilla.hostile.ClientElderGuardian;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

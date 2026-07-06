@@ -244,13 +244,13 @@ public class Penguin extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level().playLocalSound(this, PetsSounds.PENGUIN_AMBIENT.get(), SoundSource.NEUTRAL, 1.0f, 1.0f);
+            level().playLocalSound(this.blockPosition(), PetsSounds.PENGUIN_AMBIENT.get(), SoundSource.NEUTRAL, 1.0f, 1.0f, true);
         }
     }
 
     @Override
     public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
-        if (!this.level().isClientSide()) {
+        if (this.level() != null && !this.level().isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
     }

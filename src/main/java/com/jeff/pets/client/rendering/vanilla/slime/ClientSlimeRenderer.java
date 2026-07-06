@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.slime;
 
-import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.SlimeModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;

@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.pufferfish;
 
-import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientPufferFish;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.model.PufferfishBigModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

@@ -138,7 +138,7 @@ public abstract class AbstractPet extends TamableAnimal {
      */
     @Override
     public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
-        if (!this.level().isClientSide()) {
+        if (this.level() != null && !this.level().isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
     }

@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.aprilfools.traitor;
 
+import com.jeff.pets.mob.aprilfools.Traitor;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.evoker.ClientEvokerModel;
-import com.jeff.pets.mob.aprilfools.Traitor;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

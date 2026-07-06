@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.mooshroom;
 
-import com.jeff.pets.client.rendering.vanilla.cow.ClientCowModel;
 import com.jeff.pets.mob.vanilla.passive.ClientMooshroom;
+import com.jeff.pets.client.rendering.vanilla.cow.ClientCowModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
@@ -38,7 +38,7 @@ public class ClientMushroomCowMushroomLayer extends RenderLayer<ClientMooshroom,
                 poseStack.pushPose();
                 poseStack.translate(0.2F, -0.35F, 0.5F);
                 poseStack.mulPose(Axis.YP.rotationDegrees(-48.0F));
-                poseStack.scale(-1.0F, -1.0F, 1.0F);
+                poseStack.scale(-1.0F, -1.0f, 1.0f);
                 poseStack.translate(-0.5F, -0.5F, -0.5F);
                 this.renderMushroomBlock(poseStack, multiBufferSource, i, bl, blockState, m, bakedModel);
                 poseStack.popPose();
@@ -47,7 +47,7 @@ public class ClientMushroomCowMushroomLayer extends RenderLayer<ClientMooshroom,
                 poseStack.mulPose(Axis.YP.rotationDegrees(42.0F));
                 poseStack.translate(0.1F, 0.0F, -0.6F);
                 poseStack.mulPose(Axis.YP.rotationDegrees(-48.0F));
-                poseStack.scale(-1.0F, -1.0F, 1.0F);
+                poseStack.scale(-1.0F, -1.0f, 1.0f);
                 poseStack.translate(-0.5F, -0.5F, -0.5F);
                 this.renderMushroomBlock(poseStack, multiBufferSource, i, bl, blockState, m, bakedModel);
                 poseStack.popPose();
@@ -55,7 +55,7 @@ public class ClientMushroomCowMushroomLayer extends RenderLayer<ClientMooshroom,
                 (this.getParentModel()).getHead().translateAndRotate(poseStack);
                 poseStack.translate(0.0F, -0.7F, -0.2F);
                 poseStack.mulPose(Axis.YP.rotationDegrees(-78.0F));
-                poseStack.scale(-1.0F, -1.0F, 1.0F);
+                poseStack.scale(-1.0F, -1.0f, 1.0f);
                 poseStack.translate(-0.5F, -0.5F, -0.5F);
                 this.renderMushroomBlock(poseStack, multiBufferSource, i, bl, blockState, m, bakedModel);
                 poseStack.popPose();

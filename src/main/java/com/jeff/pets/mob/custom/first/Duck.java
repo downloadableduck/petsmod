@@ -262,7 +262,7 @@ public class Duck extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level().playLocalSound(this, PetsSounds.DUCK_AMBIENT.get(), SoundSource.NEUTRAL, 1.0f, 1.0f);
+            level().playLocalSound(this.blockPosition(), PetsSounds.DUCK_AMBIENT.get(), SoundSource.NEUTRAL, 1.0f, 1.0f, true);
         }
     }
 
@@ -282,14 +282,14 @@ public class Duck extends AbstractPet {
 
     @Override
     public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
-        if (!this.level().isClientSide()) {
+        if (this.level() != null && this.level() != null && !this.level().isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
     }
 
     @Override
     public @NotNull Packet<@NotNull ClientGamePacketListener> getAddEntityPacket() {
-        if (this.level().isClientSide()) {
+        if (this.level() != null && this.level().isClientSide()) {
             return new ClientboundAddEntityPacket(this);
         } else {
             return super.getAddEntityPacket();

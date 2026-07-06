@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.creeper;
 
-import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientCreeper;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.CreeperModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;

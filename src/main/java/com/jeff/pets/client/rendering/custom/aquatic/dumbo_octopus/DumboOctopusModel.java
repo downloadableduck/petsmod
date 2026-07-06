@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 
-import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
+import com.jeff.pets.client.rendering.PetModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
@@ -59,7 +59,7 @@ public class DumboOctopusModel extends PetModel<@NotNull DumboOctopus> {
 
         PartDefinition leg5 = body.addOrReplaceChild("leg5", CubeListBuilder.create().texOffs(0, 12).addBox(0.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(2.0F, 1.0F, -2.0F));
 
-        PartDefinition leg6 = body.addOrReplaceChild("leg6", CubeListBuilder.create().texOffs(0, 12).addBox(0.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(2.0F, 1.0F, 1.0F));
+        PartDefinition leg6 = body.addOrReplaceChild("leg6", CubeListBuilder.create().texOffs(0, 12).addBox(0.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(2.0F, 1.0f, 1.0f));
 
         PartDefinition leg7 = body.addOrReplaceChild("leg7", CubeListBuilder.create().texOffs(0, 12).addBox(-1.0F, -1.0F, 0.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(1.0F, 1.0F, 3.0F));
 

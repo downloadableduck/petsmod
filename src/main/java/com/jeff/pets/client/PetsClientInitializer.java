@@ -363,11 +363,10 @@ public class PetsClientInitializer {
      * is pressed
      */
 
-    //dont need this for now
-    /*@SubscribeEvent
+    @SubscribeEvent
     void createKeyBinding(RegisterKeyMappingsEvent event) {
         openConfigScreen = new KeyMapping("Open Pets Menu", GLFW.GLFW_KEY_P, "petsmod.keymapping");
 
         event.register(openConfigScreen);
-    }*/
+    }
 }

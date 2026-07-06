@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.aprilfools.lovegolem;
 
+import com.jeff.pets.mob.aprilfools.LoveGolem;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.irongolem.ClientIronGolemModel;
-import com.jeff.pets.mob.aprilfools.LoveGolem;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;

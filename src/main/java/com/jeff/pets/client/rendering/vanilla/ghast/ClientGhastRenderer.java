@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.ghast;
 
-import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientGhast;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.GhastModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;

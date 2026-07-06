@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.aprilfools.traitor;
 
-import com.jeff.pets.client.rendering.vanilla.evoker.ClientEvokerModel;
 import com.jeff.pets.mob.aprilfools.Traitor;
+import com.jeff.pets.client.rendering.vanilla.evoker.ClientEvokerModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.MultiBufferSource;

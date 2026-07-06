@@ -2,8 +2,26 @@ package com.jeff.pets.client;
 
 import com.jeff.pets.client.mixin.client.SplashManagerMixin;
 import com.jeff.pets.client.mixin.client.TitleScreenRenderingMixin;
+import dev.isxander.yacl3.api.*;
+import dev.isxander.yacl3.api.controller.EnumControllerBuilder;
+import dev.isxander.yacl3.api.controller.StringControllerBuilder;
+import dev.isxander.yacl3.api.controller.TickBoxControllerBuilder;
+import dev.isxander.yacl3.api.controller.ValueFormatter;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.gui.ConfigScreenProvider;
+import net.minecraft.Util;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
+import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.fml.ModContainer;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import com.jeff.pets.client.enums.*;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.javafmlmod.FMLModContainer;
+
+import java.util.Objects;
+import java.util.function.Supplier;
 
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 
@@ -15,6 +33,14 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
  */
 @Mod(value = MOD_ID)
 public class PetsConfigScreen {
+
+
+    /**
+     * This is one of the most important values in this class. It allows the easy swapping out
+     * of the enums that store the petskins, in turn allowing the PetSkins option below to
+     * carry and assign different values based on what the user's currently active pet is.
+     */
+    public Class<? extends Enum<?>> enumClass = DuckSkins.class;
 
     /**
      * Creates the config screen.
@@ -45,10 +71,12 @@ public class PetsConfigScreen {
      * @see TitleScreenRenderingMixin
      */
     public PetsConfigScreen() {
-        /*modContainer.registerExtensionPoint(IConfigScreenFactory.class, (parentScreen, s) -> {
+        ModContainer modContainer = ModLoadingContext.get().getActiveContainer();
+        modContainer.registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> {
             PetsConfig CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
             String activePet = CONFIG.activePet;
-            return YetAnotherConfigLib.createBuilder()
+            return new ConfigScreenHandler.ConfigScreenFactory((minecraft, s) ->
+                    YetAnotherConfigLib.createBuilder()
                     .title(Component.literal("Config"))
                     .save(() -> {
                         AutoConfig.getConfigHolder(PetsConfig.class).save();
@@ -77,15 +105,15 @@ public class PetsConfigScreen {
                             .group(OptionGroup.createBuilder()
                                     .name(Component.literal("Active Pet"))
                                     .description(OptionDescription.of(Component.literal("Your currently selected pet is: " + CONFIG.activePet)))
-                                    .option(Option.<Enum>createBuilder()
+                                    .option(Option.<String>createBuilder()
                                             .name(Component.literal("Pet Species"))
                                             .description(OptionDescription.of(Component.literal("The species of your pet. MAKE SURE to save this after it has changed before you change any other values, as they will edit the previous pet.")))
                                             .binding(
-                                                    PetList.valueOf("racoon"),
+                                                    "racoon",
                                                     () -> {
                                                         boolean hasPrintedMessage = false;
                                                         try {
-                                                            return PetList.valueOf(CONFIG.activePet.replaceAll(" ", "_"));
+                                                            return PetList.valueOf(CONFIG.activePet.replaceAll(" ", "_")).getDisplayName().getString();
                                                         } catch (IllegalArgumentException e) {
                                                             assert Minecraft.getInstance().player != null;
                                                             if (!hasPrintedMessage) {
@@ -104,7 +132,7 @@ public class PetsConfigScreen {
                                                         Central.summonPet();
                                                     }
                                             )
-                                            .controller(EnumDropdownControllerBuilder::create)
+                                            .controller(StringControllerBuilder::create)
                                             .build())
                                     .option(Option.<String>createBuilder()
                                             .name(Component.literal("Pet Name"))
@@ -192,8 +220,7 @@ public class PetsConfigScreen {
                                                                 case "nerd_creeper" -> CONFIG.nerdCreeperName;
                                                                 case "pink_wither" -> CONFIG.pinkWitherName;
                                                                 case "plaguewhale_slab" -> CONFIG.plaguewhaleSlabName;
-                                                                case "poisonous_potato_zombie" ->
-                                                                        CONFIG.poisonousPotatoZombieName;
+                                                                case "poisonous_potato_zombie" -> CONFIG.poisonousPotatoZombieName;
                                                                 case "ray_tracing" -> CONFIG.rayTracingName;
                                                                 case "redstone_bug" -> CONFIG.redstoneBugName;
                                                                 case "smiling_creeper" -> CONFIG.smilingCreeperName;
@@ -236,8 +263,7 @@ public class PetsConfigScreen {
                                                             case "tropical_fish" -> CONFIG.tropicalFishName = name;
                                                             case "turtle" -> CONFIG.turtleName = name;
                                                             case "villager" -> CONFIG.villagerName = name;
-                                                            case "wandering_trader" ->
-                                                                    CONFIG.wanderingTraderName = name;
+                                                            case "wandering_trader" -> CONFIG.wanderingTraderName = name;
                                                             case "bee" -> CONFIG.beeName = name;
                                                             case "cave_spider" -> CONFIG.caveSpiderName = name;
                                                             case "dolphin" -> CONFIG.dolphinName = name;
@@ -287,10 +313,8 @@ public class PetsConfigScreen {
                                                             case "moon_cow" -> CONFIG.moonCowName = name;
                                                             case "nerd_creeper" -> CONFIG.nerdCreeperName = name;
                                                             case "pink_wither" -> CONFIG.pinkWitherName = name;
-                                                            case "plaguewhale_slab" ->
-                                                                    CONFIG.plaguewhaleSlabName = name;
-                                                            case "poisonous_potato_zombie" ->
-                                                                    CONFIG.poisonousPotatoZombieName = name;
+                                                            case "plaguewhale_slab" -> CONFIG.plaguewhaleSlabName = name;
+                                                            case "poisonous_potato_zombie" -> CONFIG.poisonousPotatoZombieName = name;
                                                             case "ray_tracing" -> CONFIG.rayTracingName = name;
                                                             case "redstone_bug" -> CONFIG.redstoneBugName = name;
                                                             case "smiling_creeper" -> CONFIG.smilingCreeperName = name;
@@ -315,76 +339,42 @@ public class PetsConfigScreen {
                                                 boolean hasPrintedMessage = false;
                                                 try {
                                                     return switch (CONFIG.activePet) {
-                                                        case "duck" ->
-                                                                DuckSkins.valueOf(CONFIG.duckSkin.replaceAll(" ", "_"));
-                                                        case "cat" ->
-                                                                CatSkins.valueOf(CONFIG.catSkin.replaceAll(" ", "_"));
-                                                        case "racoon" ->
-                                                                RacoonSkins.valueOf(CONFIG.racoonSkin.replaceAll(" ", "_"));
-                                                        case "sheep" ->
-                                                                SheepSkins.valueOf(CONFIG.sheepSkin.replaceAll(" ", "_"));
-                                                        case "axolotl" ->
-                                                                AxolotlSkins.valueOf(CONFIG.axolotlSkin.replaceAll(" ", "_"));
-                                                        case "camel" ->
-                                                                CamelSkins.valueOf(CONFIG.camelSkin.replaceAll(" ", "_"));
-                                                        case "chicken" ->
-                                                                ChickenSkins.valueOf(CONFIG.chickenSkin.replaceAll(" ", "_"));
+                                                        case "duck" -> DuckSkins.valueOf(CONFIG.duckSkin.replaceAll(" ", "_"));
+                                                        case "cat" -> CatSkins.valueOf(CONFIG.catSkin.replaceAll(" ", "_"));
+                                                        case "racoon" -> RacoonSkins.valueOf(CONFIG.racoonSkin.replaceAll(" ", "_"));
+                                                        case "sheep" -> SheepSkins.valueOf(CONFIG.sheepSkin.replaceAll(" ", "_"));
+                                                        case "axolotl" -> AxolotlSkins.valueOf(CONFIG.axolotlSkin.replaceAll(" ", "_"));
+                                                        case "camel" -> CamelSkins.valueOf(CONFIG.camelSkin.replaceAll(" ", "_"));
+                                                        case "chicken" -> ChickenSkins.valueOf(CONFIG.chickenSkin.replaceAll(" ", "_"));
                                                         case "creeper", "nerd_creeper", "smiling_creeper" ->
                                                                 CreeperSkins.valueOf(CONFIG.creeperSkin.replaceAll(" ", "_"));
-                                                        case "copper_golem" ->
-                                                                CopperGolemSkins.valueOf(CONFIG.copperGolemSkin.replaceAll(" ", "_"));
-                                                        case "cow" ->
-                                                                CowSkins.valueOf(CONFIG.cowSkin.replaceAll(" ", "_"));
-                                                        case "frog" ->
-                                                                FrogSkins.valueOf(CONFIG.frogSkin.replaceAll(" ", "_"));
-                                                        case "horse" ->
-                                                                HorseSkins.valueOf(CONFIG.horseSkin.replaceAll(" ", "_"));
-                                                        case "parrot" ->
-                                                                ParrotSkins.valueOf(CONFIG.parrotSkin.replaceAll(" ", "_"));
-                                                        case "pig" ->
-                                                                PigSkins.valueOf(CONFIG.pigSkin.replaceAll(" ", "_"));
-                                                        case "rabbit" ->
-                                                                RabbitSkins.valueOf(CONFIG.rabbitSkin.replaceAll(" ", "_"));
-                                                        case "snow_golem" ->
-                                                                SnowGolemSkins.valueOf(CONFIG.snowGolemSkin.replaceAll(" ", "_"));
-                                                        case "squid" ->
-                                                                SquidSkins.valueOf(CONFIG.squidSkin.replaceAll(" ", "_"));
-                                                        case "strider" ->
-                                                                StriderSkins.valueOf(CONFIG.striderSkin.replaceAll(" ", "_"));
-                                                        case "tropical_fish" ->
-                                                                TropicalFishSkins.valueOf(CONFIG.tropicalFishSkin.replaceAll(" ", "_"));
-                                                        case "villager" ->
-                                                                VillagerSkins.valueOf(CONFIG.villagerSkin.replaceAll(" ", "_"));
-                                                        case "mooshroom" ->
-                                                                MooshroomSkins.valueOf(CONFIG.mooshroomSkin.replaceAll(" ", "_"));
-                                                        case "bee" ->
-                                                                BeeSkins.valueOf(CONFIG.beeSkin.replaceAll(" ", "_"));
-                                                        case "fox" ->
-                                                                FoxSkins.valueOf(CONFIG.foxSkin.replaceAll(" ", "_"));
-                                                        case "llama" ->
-                                                                LlamaSkins.valueOf(CONFIG.llamaSkin.replaceAll(" ", "_"));
-                                                        case "nautilus" ->
-                                                                NautilusSkins.valueOf(CONFIG.nautilusSkin.replaceAll(" ", "_"));
-                                                        case "panda" ->
-                                                                PandaSkins.valueOf(CONFIG.pandaSkin.replaceAll(" ", "_"));
-                                                        case "piglin" ->
-                                                                PiglinSkins.valueOf(CONFIG.piglinSkin.replaceAll(" ", "_"));
-                                                        case "wolf" ->
-                                                                WolfSkins.valueOf(CONFIG.wolfSkin.replaceAll(" ", "_"));
-                                                        case "hoglin" ->
-                                                                HoglinSkins.valueOf(CONFIG.hoglinSkin.replaceAll(" ", "_"));
-                                                        case "magma_cube" ->
-                                                                SlimeLikeSkins.valueOf(CONFIG.magmaCubeSkin.replaceAll(" ", "_"));
-                                                        case "slime", "tropical_slime" ->
-                                                                SlimeLikeSkins.valueOf(CONFIG.slimeSkin.replaceAll(" ", "_"));
-                                                        case "zombie_villager" ->
-                                                                ZombieVillagerSkins.valueOf(CONFIG.zombieVillagerSkin.replaceAll(" ", "_"));
-                                                        case "wither" ->
-                                                                WitherSkins.valueOf(CONFIG.witherSkin.replaceAll(" ", "_"));
-                                                        case "dumbo_octopus" ->
-                                                                DumboOctopusSkins.valueOf(CONFIG.dumboOctopusSkin.replaceAll(" ", "_"));
-                                                        default ->
-                                                                PetList.valueOf(CONFIG.activePet.replaceAll(" ", "_"));
+                                                        case "copper_golem" -> CopperGolemSkins.valueOf(CONFIG.copperGolemSkin.replaceAll(" ", "_"));
+                                                        case "cow" -> CowSkins.valueOf(CONFIG.cowSkin.replaceAll(" ", "_"));
+                                                        case "frog" -> FrogSkins.valueOf(CONFIG.frogSkin.replaceAll(" ", "_"));
+                                                        case "horse" -> HorseSkins.valueOf(CONFIG.horseSkin.replaceAll(" ", "_"));
+                                                        case "parrot" -> ParrotSkins.valueOf(CONFIG.parrotSkin.replaceAll(" ", "_"));
+                                                        case "pig" -> PigSkins.valueOf(CONFIG.pigSkin.replaceAll(" ", "_"));
+                                                        case "rabbit" -> RabbitSkins.valueOf(CONFIG.rabbitSkin.replaceAll(" ", "_"));
+                                                        case "snow_golem" -> SnowGolemSkins.valueOf(CONFIG.snowGolemSkin.replaceAll(" ", "_"));
+                                                        case "squid" -> SquidSkins.valueOf(CONFIG.squidSkin.replaceAll(" ", "_"));
+                                                        case "strider" -> StriderSkins.valueOf(CONFIG.striderSkin.replaceAll(" ", "_"));
+                                                        case "tropical_fish" -> TropicalFishSkins.valueOf(CONFIG.tropicalFishSkin.replaceAll(" ", "_"));
+                                                        case "villager" -> VillagerSkins.valueOf(CONFIG.villagerSkin.replaceAll(" ", "_"));
+                                                        case "mooshroom" -> MooshroomSkins.valueOf(CONFIG.mooshroomSkin.replaceAll(" ", "_"));
+                                                        case "bee" -> BeeSkins.valueOf(CONFIG.beeSkin.replaceAll(" ", "_"));
+                                                        case "fox" -> FoxSkins.valueOf(CONFIG.foxSkin.replaceAll(" ", "_"));
+                                                        case "llama" -> LlamaSkins.valueOf(CONFIG.llamaSkin.replaceAll(" ", "_"));
+                                                        case "nautilus" -> NautilusSkins.valueOf(CONFIG.nautilusSkin.replaceAll(" ", "_"));
+                                                        case "panda" -> PandaSkins.valueOf(CONFIG.pandaSkin.replaceAll(" ", "_"));
+                                                        case "piglin" -> PiglinSkins.valueOf(CONFIG.piglinSkin.replaceAll(" ", "_"));
+                                                        case "wolf" -> WolfSkins.valueOf(CONFIG.wolfSkin.replaceAll(" ", "_"));
+                                                        case "hoglin" -> HoglinSkins.valueOf(CONFIG.hoglinSkin.replaceAll(" ", "_"));
+                                                        case "magma_cube" -> SlimeLikeSkins.valueOf(CONFIG.magmaCubeSkin.replaceAll(" ", "_"));
+                                                        case "slime", "tropical_slime" -> SlimeLikeSkins.valueOf(CONFIG.slimeSkin.replaceAll(" ", "_"));
+                                                        case "zombie_villager" -> ZombieVillagerSkins.valueOf(CONFIG.zombieVillagerSkin.replaceAll(" ", "_"));
+                                                        case "wither" -> WitherSkins.valueOf(CONFIG.witherSkin.replaceAll(" ", "_"));
+                                                        case "dumbo_octopus" -> DumboOctopusSkins.valueOf(CONFIG.dumboOctopusSkin.replaceAll(" ", "_"));
+                                                        default -> PetList.valueOf(CONFIG.activePet.replaceAll(" ", "_"));
                                                     };
                                                 } catch (IllegalArgumentException e) {
                                                     assert Minecraft.getInstance().player != null;
@@ -399,8 +389,8 @@ public class PetsConfigScreen {
                                                 }
                                             }, value -> {
                                                 String val = value.toString().replace(" ", "_");
-                                                /**Do NOT replace this with dynamic checking! It will cause a mismatch
-                                                 * between the enums and crash. Use manual checking instead.*
+                                                /*Do NOT replace this with dynamic checking! It will cause a mismatch
+                                                 * between the enums and crash. Use manual checking instead.*/
                                                 switch (CONFIG.activePet) {
                                                     case "duck" -> {
                                                         if (Objects.equals(val, "mallard")) {
@@ -904,8 +894,7 @@ public class PetsConfigScreen {
                                                     case "axolotl" -> enumClass = AxolotlSkins.class;
                                                     case "camel" -> enumClass = CamelSkins.class;
                                                     case "chicken" -> enumClass = ChickenSkins.class;
-                                                    case "creeper", "nerd_creeper", "smiling_creeper" ->
-                                                            enumClass = CreeperSkins.class;
+                                                    case "creeper", "nerd_creeper", "smiling_creeper" -> enumClass = CreeperSkins.class;
                                                     case "copper_golem" -> enumClass = CopperGolemSkins.class;
                                                     case "cow" -> enumClass = CowSkins.class;
                                                     case "frog" -> enumClass = FrogSkins.class;
@@ -982,10 +971,9 @@ public class PetsConfigScreen {
                                     .build())
                             .build())
                     .build()
-                    .generateScreen(s);
-        });*/
+                    .generateScreen(Minecraft.getInstance().screen));
+        });
     }
-
     private static String getInstalledAddons() {
         if (PetsClientInitializer.ADDONS.isEmpty()) {
             return "none";

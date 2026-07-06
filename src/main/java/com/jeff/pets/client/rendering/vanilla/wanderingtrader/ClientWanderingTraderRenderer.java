@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.wanderingtrader;
 
-import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientWanderingTrader;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.model.VillagerModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

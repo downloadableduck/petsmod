@@ -94,7 +94,7 @@ public class Central {
     public static final List<String> PANDA_SKINS = List.of("normal", "lazy", "agressive", "worried", "playful", "weak", "brown");
     public static final List<String> PIGLIN_SKINS = List.of("piglin", "zombified", "brute");
     public static final List<String> WOLF_SKINS = List.of("pale", "ashen", "black", "chestnut", "rusty", "snowy", "spotted", "striped", "woods");
-    public static final List<String> PETS_LIST = List.of("allay", "angry ghast", "armadillo",
+    public static final List<String> PETS_LIST = List.of("allay", "angry ghast",
             "axolotl", "bat", "batato", "bee", "blaze","camel", "cat", "cave spider", "chicken",
             "cod", "cow",
             "creeper", "diamond chicken",

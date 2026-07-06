@@ -238,18 +238,18 @@ public class Head extends AbstractPet {
         }
 
         /*if (this.walkAnimation.isMoving()) {
-            level().playLocalSound(this, SoundEvents., SoundSource.NEUTRAL, 1.0f, 1.0f);
+            level().playLocalSound(this.blockPosition(), SoundEvents., SoundSource.NEUTRAL, 1.0f, 1.0f, true);
         }*/
 
         /*int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level().playLocalSound(this, PetsSounds.PENGUIN_AMBIENT, SoundSource.NEUTRAL, 1.0f, 1.0f);
+            level().playLocalSound(this.blockPosition(), PetsSounds.PENGUIN_AMBIENT, SoundSource.NEUTRAL, 1.0f, 1.0f, true);
         }*/
     }
 
     @Override
     public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
-        if (!this.level().isClientSide()) {
+        if (this.level() != null && !this.level().isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
     }

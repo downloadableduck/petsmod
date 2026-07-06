@@ -189,7 +189,7 @@ public class Racoon extends AbstractPet {
 
         /*int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level().playLocalSound(this, SoundEvents.BOGGED_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f);
+            level().playLocalSound(this.blockPosition(), SoundEvents.BOGGED_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f, true);
         }*/
     }
 
@@ -202,7 +202,7 @@ public class Racoon extends AbstractPet {
 
     @Override
     public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
-        if (!this.level().isClientSide()) {
+        if (this.level() != null && !this.level().isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
     }

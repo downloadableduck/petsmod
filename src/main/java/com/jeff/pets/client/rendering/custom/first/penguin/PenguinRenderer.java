@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.custom.first.penguin;
 
 import com.jeff.pets.PetsInitializer;
-import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Penguin;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
