@@ -12,6 +12,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -37,6 +38,8 @@ import org.jetbrains.annotations.Nullable;
  * @see GroundPet
  */
 public abstract class AbstractPet extends TamableAnimal {
+
+    public WalkAnimationState walkAnimation = new WalkAnimationState();
 
     protected int waitingTime = 0;
     private boolean isReturningToOwner = false;

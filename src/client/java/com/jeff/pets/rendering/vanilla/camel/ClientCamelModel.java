@@ -4,6 +4,7 @@ import com.jeff.pets.mob.vanilla.passive.ClientCamel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.animation.definitions.CamelAnimation;
+import net.minecraft.client.model.CamelModel;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -25,6 +26,7 @@ public class ClientCamelModel extends HierarchicalModel<ClientCamel> {
     private final ModelPart[] ridingParts;
     private AnimationState idleAnimationState = new AnimationState();
     private AnimationState dashAnimationState = new AnimationState();
+    private AnimationState walkAnimationState = new AnimationState();
 
     public ClientCamelModel(ModelPart modelPart) {
         this.root = modelPart;
@@ -58,7 +60,9 @@ public class ClientCamelModel extends HierarchicalModel<ClientCamel> {
         this.root().getAllParts().forEach(ModelPart::resetPose);
         this.applyHeadRotation(camel, i, j, h);
         this.toggleInvisibleParts(camel);
-        this.animateWalk(CamelAnimation.CAMEL_WALK, f, g, 2.0F, 2.5F);
+        float k = (float)camel.getDeltaMovement().horizontalDistanceSqr();
+        float l = Mth.clamp(k * 400.0F, 0.3F, 2.0F);
+        this.animate(walkAnimationState, CamelAnimation.CAMEL_WALK, h, l);
         this.animate(idleAnimationState, CamelAnimation.CAMEL_IDLE, h, 1.0F);
         this.animate(dashAnimationState, CamelAnimation.CAMEL_DASH, h, 1.0F);
     }

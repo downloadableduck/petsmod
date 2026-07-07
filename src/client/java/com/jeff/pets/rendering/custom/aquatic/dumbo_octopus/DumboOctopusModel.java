@@ -72,7 +72,7 @@ public class DumboOctopusModel extends PetModel<@NotNull DumboOctopus> {
     @Override
     public void setupAnim(DumboOctopus state, float f, float g, float h, float i, float k) {
         super.setupAnim(state, f, g, h, i, k);
-        if (state.walkAnimation.speed() > 0) {
+        if (state.walkAnimation.getSpeed() > 0) {
             leg1.zRot = -state.tentacleAngle / 10;
             float rot = leg1.zRot;
             leg2.zRot = rot;

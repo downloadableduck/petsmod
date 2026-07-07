@@ -248,17 +248,6 @@ public class PetsInitializer implements ModInitializer {
                     
                     .build(SALMON_KEY.location().getPath())
     );
-    private static final ResourceKey<@NotNull EntityType<?>> SNIFFER_KEY =
-            ResourceKey.create(Registries.ENTITY_TYPE, new ResourceLocation(MOD_ID, "clientsniffer"));
-    public static final EntityType<@NotNull ClientSniffer> SNIFFER = Registry.register(
-            BuiltInRegistries.ENTITY_TYPE,
-            new ResourceLocation(MOD_ID, "clientsniffer"),
-            EntityType.Builder.of(ClientSniffer::new, MobCategory.AMBIENT)
-                    .noSummon()
-                    .sized(1.9f, 1.75f)
-                    
-                    .build(SNIFFER_KEY.location().getPath())
-    );
     private static final ResourceKey<@NotNull EntityType<?>> SNOW_GOLEM_KEY =
             ResourceKey.create(Registries.ENTITY_TYPE, new ResourceLocation(MOD_ID, "clientsnowgolem"));
     public static final EntityType<@NotNull ClientSnowGolem> SNOW_GOLEM = Registry.register(
@@ -1057,7 +1046,6 @@ public class PetsInitializer implements ModInitializer {
         FabricDefaultAttributeRegistry.register(PIG, ClientPig.createAttributes().build());
         FabricDefaultAttributeRegistry.register(RABBIT, ClientRabbit.createAttributes().build());
         FabricDefaultAttributeRegistry.register(SALMON, ClientSalmon.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(SNIFFER, ClientSniffer.createAttributes().build());
         FabricDefaultAttributeRegistry.register(SNOW_GOLEM, ClientSnowGolem.createAttributes().build());
         FabricDefaultAttributeRegistry.register(SQUID, ClientSquid.createAttributes().build());
         FabricDefaultAttributeRegistry.register(STRIDER, ClientStrider.createAttributes().build());

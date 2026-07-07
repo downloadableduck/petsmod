@@ -83,7 +83,7 @@ public abstract class GroundPet extends AbstractPet {
                 this.walkAnimation.setSpeed(0);
             } else {
                 this.lookAt(owner, 5, 0);
-                this.walkAnimation.setSpeed(this.walkAnimation.speed() + 0.1f);
+                this.walkAnimation.setSpeed(this.walkAnimation.getSpeed() + 0.1f);
                 this.setDeltaMovement(this.getDeltaMovement().multiply(0.8, 1.0, 0.8));
             }
 

@@ -94,7 +94,6 @@ import com.jeff.pets.rendering.vanilla.shulker.ClientShulkerRenderer;
 import com.jeff.pets.rendering.vanilla.silverfish.ClientSilverfishRenderer;
 import com.jeff.pets.rendering.vanilla.skeleton.ClientSkeletonRenderer;
 import com.jeff.pets.rendering.vanilla.slime.ClientSlimeRenderer;
-import com.jeff.pets.rendering.vanilla.sniffer.ClientSnifferRenderer;
 import com.jeff.pets.rendering.vanilla.snowgolem.ClientSnowGolemRenderer;
 import com.jeff.pets.rendering.vanilla.spider.ClientSpiderRenderer;
 import com.jeff.pets.rendering.vanilla.squid.ClientSquidRenderer;
@@ -176,7 +175,6 @@ public class PetsClientInitializer implements ClientModInitializer {
         EntityRenderers.register(PetsInitializer.PIG, ClientPigRenderer::new);
         EntityRenderers.register(PetsInitializer.RABBIT, ClientRabbitRenderer::new);
         EntityRenderers.register(PetsInitializer.SALMON, ClientSalmonRenderer::new);
-        EntityRenderers.register(PetsInitializer.SNIFFER, ClientSnifferRenderer::new);
         EntityRenderers.register(PetsInitializer.SNOW_GOLEM, ClientSnowGolemRenderer::new);
         EntityRenderers.register(PetsInitializer.SQUID, ClientSquidRenderer::new);
         EntityRenderers.register(PetsInitializer.STRIDER, ClientStriderRenderer::new);
@@ -270,7 +268,6 @@ public class PetsClientInitializer implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(ClientPigRenderer.PIG_LOCATION, ClientPigRenderer::createBasePigModel);
         EntityModelLayerRegistry.registerModelLayer(ClientRabbitRenderer.RABBIT_LOCATION, ClientRabbitRenderer::createBaseRabbitLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientSalmonRenderer.SALMON_LOCATION, ClientSalmonModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(ClientSnifferRenderer.SNIFFER_LOCATION, SnifferModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientSnowGolemRenderer.SNOW_GOLEM, SnowGolemModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientSquidRenderer.SQUID_LOCATION, SquidModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientStriderRenderer.STRIDER_LOCATION, StriderModel::createBodyLayer);
