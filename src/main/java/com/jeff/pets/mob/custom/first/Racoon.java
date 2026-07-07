@@ -95,7 +95,7 @@ public class Racoon extends AbstractPet {
 
     @Override
     public boolean isFood(@NotNull ItemStack itemStack) {
-        return itemStack.is(ItemTags.VILLAGER_PLANTABLE_SEEDS) || itemStack.is(ItemTags.FOX_FOOD);
+        return itemStack.is(ItemTags.FOX_FOOD);
     }
 
     @Override
@@ -149,7 +149,7 @@ public class Racoon extends AbstractPet {
 
             int yHeightToOwner = (int) (owner.getY() - this.getY());
 
-            if (this.horizontalCollision && this.onGround()) {
+            if (this.horizontalCollision && this.onGround) {
                 this.jumpFromGround();
             }
 
@@ -164,7 +164,7 @@ public class Racoon extends AbstractPet {
                 this.waitingTime = 0;
             }
 
-            if (!this.onGround()) {
+            if (!this.onGround) {
                 this.processFlappingMovement();
             }
             this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
@@ -178,7 +178,7 @@ public class Racoon extends AbstractPet {
 
             this.move(MoverType.SELF, this.getDeltaMovement());
 
-            if (!this.onGround()) {
+            if (!this.onGround) {
                 this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
             }
         }
@@ -190,7 +190,7 @@ public class Racoon extends AbstractPet {
 
         /*int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level().playLocalSound(this, SoundEvents.BOGGED_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f);
+            level.playLocalSound(this, SoundEvents.BOGGED_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f);
         }*/
     }
 
@@ -203,14 +203,14 @@ public class Racoon extends AbstractPet {
 
     @Override
     public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
-        if (!this.level().isClientSide()) {
+        if (!this.level.isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
     }
 
     @Override
     public @NotNull Packet<@NotNull ClientGamePacketListener> getAddEntityPacket() {
-        if (this.level().isClientSide()) {
+        if (this.level.isClientSide()) {
             return new ClientboundAddEntityPacket(this);
         } else {
             return super.getAddEntityPacket();

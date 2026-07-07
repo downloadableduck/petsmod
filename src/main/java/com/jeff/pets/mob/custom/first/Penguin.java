@@ -82,15 +82,15 @@ public class Penguin extends AbstractPet {
         super.aiStep();
         this.oFlap = this.flap;
         this.oFlapSpeed = this.flapSpeed;
-        this.flapSpeed += (this.onGround() ? -1.0F : 4.0F) * 0.3F;
+        this.flapSpeed += (this.onGround ? -1.0F : 4.0F) * 0.3F;
         this.flapSpeed = Mth.clamp(this.flapSpeed, 0.0F, 1.0F);
-        if (!this.onGround() && this.flapping < 1.0F) {
+        if (!this.onGround && this.flapping < 1.0F) {
             this.flapping = 1.0F;
         }
 
         this.flapping *= 0.9F;
         Vec3 movement = this.getDeltaMovement();
-        if (!this.onGround() && movement.y < (double) 0.0F) {
+        if (!this.onGround && movement.y < (double) 0.0F) {
             this.setDeltaMovement(movement.multiply(1.0F, 0.6, 1.0F));
         }
 
@@ -200,7 +200,7 @@ public class Penguin extends AbstractPet {
 
             int yHeightToOwner = (int) (owner.getY() - this.getY());
 
-            if (this.horizontalCollision && this.onGround()) {
+            if (this.horizontalCollision && this.onGround) {
                 this.jumpFromGround();
                 this.processFlappingMovement();
             }
@@ -210,7 +210,7 @@ public class Penguin extends AbstractPet {
                 this.processFlappingMovement();
             }
 
-            if (!this.onGround()) {
+            if (!this.onGround) {
                 this.processFlappingMovement();
             }
 
@@ -232,7 +232,7 @@ public class Penguin extends AbstractPet {
 
             this.move(MoverType.SELF, this.getDeltaMovement());
 
-            if (!this.onGround()) {
+            if (!this.onGround) {
                 this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
             }
         }
@@ -244,13 +244,13 @@ public class Penguin extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level().playLocalSound(this.blockPosition(), PetsSounds.PENGUIN_AMBIENT, SoundSource.NEUTRAL, 1.0f, 1.0f, true);
+            level.playLocalSound(this.blockPosition(), PetsSounds.PENGUIN_AMBIENT, SoundSource.NEUTRAL, 1.0f, 1.0f, true);
         }
     }
 
     @Override
     public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
-        if (!this.level().isClientSide()) {
+        if (!this.level.isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
     }

@@ -79,7 +79,7 @@ public abstract class AbstractPet extends TamableAnimal {
      * - Right clicking on a pet with an empty hand will let make hearts appear above it:
      * <pre>
      *     {@code if (this.isTame() && itemStack.isEmpty() && !player.isShiftKeyDown()) {
-     *         this.level().addParticle(
+     *         this.level.addParticle(
      *                 ParticleTypes.HEART,
      *                 this.getX(),
      *                 this.getY() + this.heartHeight(),
@@ -110,7 +110,7 @@ public abstract class AbstractPet extends TamableAnimal {
         ItemStack itemStack = player.getItemInHand(hand);
 
         if (this.isTame() && itemStack.isEmpty() && !player.isShiftKeyDown()) {
-            this.level().addParticle(
+            this.level.addParticle(
                     ParticleTypes.HEART,
                     this.getX(),
                     this.getY() + this.heartHeight(),
@@ -139,7 +139,7 @@ public abstract class AbstractPet extends TamableAnimal {
      */
     @Override
     public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
-        if (!this.level().isClientSide()) {
+        if (!this.level.isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
     }
@@ -150,7 +150,7 @@ public abstract class AbstractPet extends TamableAnimal {
      */
     @Override
     public @NotNull Packet<@NotNull ClientGamePacketListener> getAddEntityPacket() {
-        if (this.level().isClientSide()) {
+        if (this.level.isClientSide()) {
             return new ClientboundAddEntityPacket(this);
         } else {
             return super.getAddEntityPacket();
@@ -229,10 +229,10 @@ public abstract class AbstractPet extends TamableAnimal {
             this.yBodyRot = smoothYaw;
         }
 
-        if (this.horizontalCollision && this.onGround()) {
+        if (this.horizontalCollision && this.onGround) {
             this.jumpFromGround();
         }
-        if (!this.onGround()) {
+        if (!this.onGround) {
             this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
         }
         double dx = lookDir.x - this.getX();

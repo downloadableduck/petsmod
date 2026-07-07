@@ -84,7 +84,7 @@ public abstract class FlyingPet extends AbstractPet {
                 this.jumpFromGround();
             }
 
-            if (!this.onGround()) {
+            if (!this.onGround) {
                 this.processFlappingMovement();
             }
 
@@ -107,7 +107,7 @@ public abstract class FlyingPet extends AbstractPet {
 
             this.move(MoverType.SELF, this.getDeltaMovement());
 
-            //if (!this.onGround()) {
+            //if (!this.onGround) {
             //  this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
             //}
         }
@@ -119,7 +119,7 @@ public abstract class FlyingPet extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level().playLocalSound(this.blockPosition(), Objects.requireNonNull(this.getAmbientSound()), SoundSource.AMBIENT, 1.0f, 1.0f, true);
+            level.playLocalSound(this.blockPosition(), Objects.requireNonNull(this.getAmbientSound()), SoundSource.AMBIENT, 1.0f, 1.0f, true);
         }
     }
 }

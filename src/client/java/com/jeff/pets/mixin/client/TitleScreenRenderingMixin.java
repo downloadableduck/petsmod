@@ -2,7 +2,7 @@ package com.jeff.pets.mixin.client;
 
 import com.jeff.pets.Central;
 import com.jeff.pets.PetsConfig;
-import net.minecraft.client.gui.GuiGraphics;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.TitleScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,7 +17,7 @@ import static com.jeff.pets.Central.CONFIG;
 @Mixin(TitleScreen.class)
 public class TitleScreenRenderingMixin {
     @Inject(at = @At("HEAD"), method = "render")
-    private void init(GuiGraphics graphics, int mouseX, int mouseY, float a, CallbackInfo ci) {
+    private void init(PoseStack poseStack, int i, int j, float f, CallbackInfo ci) {
         Central.reassignLogo(CONFIG.customTitleEnabled);
     }
 }
