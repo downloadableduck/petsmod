@@ -1,8 +1,6 @@
 accessWidener v2 named
 accessible field net/minecraft/client/gui/screens/ChatScreen commandSuggestions Lnet/minecraft/client/gui/components/CommandSuggestions;
 accessible field net/minecraft/client/model/RabbitModel head Lnet/minecraft/client/model/geom/ModelPart;
-mutable field net/minecraft/client/gui/components/LogoRenderer MINECRAFT_LOGO Lnet/minecraft/resources/ResourceLocation;
-mutable field net/minecraft/client/gui/components/LogoRenderer MINECRAFT_EDITION Lnet/minecraft/resources/ResourceLocation;
 mutable field net/minecraft/client/resources/SplashManager SPLASHES_LOCATION Lnet/minecraft/resources/ResourceLocation;
 accessible field net/minecraft/client/resources/SplashManager SPLASHES_LOCATION Lnet/minecraft/resources/ResourceLocation;
 accessible method net/minecraft/client/renderer/entity/EntityRenderers register (Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
