@@ -85,7 +85,7 @@ public class ClientEnderDragon extends FlyingPet {
                 e = es[1] - ds[1];
             }
         } else {
-            BlockPos blockPos = this.level().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, EndPodiumFeature.getLocation(this.blockPosition()));
+            BlockPos blockPos = this.level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, EndPodiumFeature.END_PODIUM_LOCATION);
             double d = Math.max(Math.sqrt(blockPos.distToCenterSqr(this.position())) / (double) 4.0F, (double) 1.0F);
             e = (double) i / d;
         }

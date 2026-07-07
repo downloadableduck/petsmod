@@ -6,7 +6,6 @@ import dev.isxander.yacl3.api.*;
 import dev.isxander.yacl3.api.controller.EnumControllerBuilder;
 import dev.isxander.yacl3.api.controller.StringControllerBuilder;
 import dev.isxander.yacl3.api.controller.TickBoxControllerBuilder;
-import dev.isxander.yacl3.api.controller.ValueFormatter;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.gui.ConfigScreenProvider;
 import net.minecraft.Util;
@@ -921,12 +920,7 @@ public class PetsConfigScreen {
                                                     case "wither" -> enumClass = WitherSkins.class;
                                                     case "dumbo_octopus" -> enumClass = DumboOctopusSkins.class;
                                                     default -> {
-                                                        return EnumControllerBuilder.create((Option) opt).enumClass(PetList.class).formatValue(new ValueFormatter() {
-                                                            @Override
-                                                            public Component format(Object value) {
-                                                                return Component.literal(CONFIG.activePet.replace("_", " "));
-                                                            }
-                                                        });
+                                                        return EnumControllerBuilder.create((Option) opt).enumClass(PetList.class);
                                                     }
                                                 }
                                                 return EnumControllerBuilder.create((Option) opt).enumClass(enumClass);

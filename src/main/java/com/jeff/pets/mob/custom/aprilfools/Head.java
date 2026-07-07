@@ -66,7 +66,7 @@ public class Head extends AbstractPet {
         super.aiStep();
 
         Vec3 movement = this.getDeltaMovement();
-        if (!this.onGround() && movement.y < (double) 0.0F) {
+        if (!this.onGround && movement.y < (double) 0.0F) {
             this.setDeltaMovement(movement.multiply(1.0F, 0.6, 1.0F));
         }
     }
@@ -121,7 +121,7 @@ public class Head extends AbstractPet {
             if (this.random.nextInt(3) == 0) {
                 this.tame(player);
                 this.navigation.stop();
-                this.level().addParticle(
+                this.level.addParticle(
                         ParticleTypes.HEART,
 
                         x + (player.getRandom().nextFloat() * 0.4 - 0.25),
@@ -133,7 +133,7 @@ public class Head extends AbstractPet {
         }
 
         if (this.isTame() && itemStack.isEmpty()) {
-            this.level().addParticle(
+            this.level.addParticle(
                     ParticleTypes.HEART,
                     this.getX(),
                     this.getY() + 1,
@@ -213,7 +213,7 @@ public class Head extends AbstractPet {
                 this.processFlappingMovement();
             }
 
-            if (!this.onGround()) {
+            if (!this.onGround) {
                 this.processFlappingMovement();
             }
             this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
@@ -227,7 +227,7 @@ public class Head extends AbstractPet {
 
             this.move(MoverType.SELF, this.getDeltaMovement());
 
-            if (!this.onGround()) {
+            if (!this.onGround) {
                 this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
             }
         }
@@ -238,18 +238,18 @@ public class Head extends AbstractPet {
         }
 
         /*if (this.walkAnimation.isMoving()) {
-            level().playLocalSound(this.blockPosition(), SoundEvents., SoundSource.NEUTRAL, 1.0f, 1.0f, true);
+            level.playLocalSound(this.blockPosition(), SoundEvents., SoundSource.NEUTRAL, 1.0f, 1.0f, true);
         }*/
 
         /*int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level().playLocalSound(this.blockPosition(), PetsSounds.PENGUIN_AMBIENT, SoundSource.NEUTRAL, 1.0f, 1.0f, true);
+            level.playLocalSound(this.blockPosition(), PetsSounds.PENGUIN_AMBIENT, SoundSource.NEUTRAL, 1.0f, 1.0f, true);
         }*/
     }
 
     @Override
     public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
-        if (this.level() != null && !this.level().isClientSide()) {
+        if (this.level != null && !this.level.isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
     }

@@ -192,7 +192,7 @@ public class DumboOctopus extends FlyingPet {
                 this.setDeltaMovement(this.getDeltaMovement().add(0, -0.01, 0));
             }
 
-            if (!this.onGround()) {
+            if (!this.onGround) {
                 this.processFlappingMovement();
             }
 
@@ -222,7 +222,7 @@ public class DumboOctopus extends FlyingPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level().playLocalSound(this.blockPosition(), SoundEvents.SQUID_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f, true);
+            level.playLocalSound(this.blockPosition(), SoundEvents.SQUID_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f, true);
         }
     }
 
@@ -242,14 +242,14 @@ public class DumboOctopus extends FlyingPet {
 
     @Override
     public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
-        if (this.level() != null && !this.level().isClientSide()) {
+        if (this.level != null && !this.level.isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
     }
 
     @Override
     public @NotNull Packet<@NotNull ClientGamePacketListener> getAddEntityPacket() {
-        if (this.level().isClientSide()) {
+        if (this.level.isClientSide()) {
             return new ClientboundAddEntityPacket(this);
         } else {
             return super.getAddEntityPacket();

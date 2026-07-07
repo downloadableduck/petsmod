@@ -59,7 +59,7 @@ public class ClientSquid extends FlyingPet {
         this.oldTentacleAngle = this.tentacleAngle;
         this.tentacleMovement += this.tentacleSpeed;
         if ((double) this.tentacleMovement > (Math.PI * 2D)) {
-            if (this.level().isClientSide) {
+            if (this.level.isClientSide) {
                 this.tentacleMovement = ((float) Math.PI * 2F);
             } else {
                 this.tentacleMovement -= ((float) Math.PI * 2F);
@@ -67,7 +67,7 @@ public class ClientSquid extends FlyingPet {
                     this.tentacleSpeed = 1.0F / (this.random.nextFloat() + 1.0F) * 0.2F;
                 }
 
-                this.level().broadcastEntityEvent(this, (byte) 19);
+                this.level.broadcastEntityEvent(this, (byte) 19);
             }
         }
 
@@ -87,7 +87,7 @@ public class ClientSquid extends FlyingPet {
                 this.rotateSpeed *= 0.99F;
             }
 
-            if (!this.level().isClientSide) {
+            if (!this.level.isClientSide) {
                 this.setDeltaMovement((double) (this.tx * this.speed), (double) (this.ty * this.speed), (double) (this.tz * this.speed));
             }
 
@@ -99,7 +99,7 @@ public class ClientSquid extends FlyingPet {
             this.xBodyRot += (-((float) Mth.atan2(d, vec3.y)) * (180F / (float) Math.PI) - this.xBodyRot) * 0.1F;
         } else {
             this.tentacleAngle = Mth.abs(Mth.sin(this.tentacleMovement)) * (float) Math.PI * 0.25F;
-            if (!this.level().isClientSide) {
+            if (!this.level.isClientSide) {
                 double e = this.getDeltaMovement().y;
                 if (this.hasEffect(MobEffects.LEVITATION)) {
                     e = 0.05 * (double) (this.getEffect(MobEffects.LEVITATION).getAmplifier() + 1);

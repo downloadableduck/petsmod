@@ -99,7 +99,7 @@ public class MoonCow extends AbstractPet {
                 this.setDeltaMovement(this.getDeltaMovement().add(0, -0.01, 0));
             }
 
-            if (!this.onGround()) {
+            if (!this.onGround) {
                 this.processFlappingMovement();
             }
             this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
@@ -113,7 +113,7 @@ public class MoonCow extends AbstractPet {
 
             this.move(MoverType.SELF, this.getDeltaMovement());
 
-            if (!this.onGround()) {
+            if (!this.onGround) {
                 this.setDeltaMovement(this.getDeltaMovement().add(0, -0.01, 0));
             }
         }
@@ -122,13 +122,13 @@ public class MoonCow extends AbstractPet {
                 this.teleportTo(owner.getX(), owner.getY(), owner.getZ());
             }
         }
-        if (this.walkAnimation.isMoving() && this.onGround()) {
+        if (this.walkAnimation.isMoving() && this.onGround) {
             this.jumpFromGround();
         }
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level().playLocalSound(this.blockPosition(), SoundEvents.COW_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f, true);
+            level.playLocalSound(this.blockPosition(), SoundEvents.COW_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f, true);
         }
     }
 }

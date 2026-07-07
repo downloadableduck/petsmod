@@ -65,13 +65,13 @@ public class Stingray extends FlyingPet {
 
     public void aiStep() {
         super.aiStep();
-        if (!this.onGround() && this.flapping < 1.0F) {
+        if (!this.onGround && this.flapping < 1.0F) {
             this.flapping = 1.0F;
         }
 
         this.flapping *= 0.9F;
         Vec3 movement = this.getDeltaMovement();
-        if (!this.onGround() && movement.y < (double) 0.0F) {
+        if (!this.onGround && movement.y < (double) 0.0F) {
             this.setDeltaMovement(movement.multiply(1.0F, 0.6, 1.0F));
         }
 
@@ -158,7 +158,7 @@ public class Stingray extends FlyingPet {
     public void tick() {
         super.tick();
         this.oFlap = this.flap;
-        if (!this.onGround() && this.flapping < 1.0F) {
+        if (!this.onGround && this.flapping < 1.0F) {
             this.flapping = 1.0F;
         }
 
@@ -219,7 +219,7 @@ public class Stingray extends FlyingPet {
                 this.setDeltaMovement(this.getDeltaMovement().add(0, -0.01, 0));
             }
 
-            if (!this.onGround()) {
+            if (!this.onGround) {
                 this.processFlappingMovement();
             }
 
@@ -249,7 +249,7 @@ public class Stingray extends FlyingPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level().playLocalSound(this.blockPosition(), SoundEvents.SQUID_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f, true);
+            level.playLocalSound(this.blockPosition(), SoundEvents.SQUID_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f, true);
         }
     }
 }

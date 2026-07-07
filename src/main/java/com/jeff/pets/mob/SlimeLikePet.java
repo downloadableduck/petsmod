@@ -30,7 +30,7 @@ public abstract class SlimeLikePet extends AbstractPet {
 
     /**
      * Custom ticking logic. Note this logic: <pre>
-     * {@code if (this.walkAnimation.isMoving() && this.onGround()) {
+     * {@code if (this.walkAnimation.isMoving() && this.onGround) {
      *     this.jumpFromGround();
      * }}</pre>
      */
@@ -83,7 +83,7 @@ public abstract class SlimeLikePet extends AbstractPet {
 
             int yHeightToOwner = (int) (owner.getY() - this.getY());
 
-            if (yHeightToOwner > 1 && this.onGround()) {
+            if (yHeightToOwner > 1 && this.onGround) {
                 this.jumpFromGround();
             }
 
@@ -91,7 +91,7 @@ public abstract class SlimeLikePet extends AbstractPet {
                 this.setDeltaMovement(this.getDeltaMovement().add(0, -0.02, 0));
             }
 
-            if (!this.onGround()) {
+            if (!this.onGround) {
                 this.processFlappingMovement();
             }
 
@@ -113,7 +113,7 @@ public abstract class SlimeLikePet extends AbstractPet {
 
             this.move(MoverType.SELF, this.getDeltaMovement());
 
-            if (!this.onGround()) {
+            if (!this.onGround) {
                 this.setDeltaMovement(this.getDeltaMovement().add(0, -0.02, 0));
             }
         }
@@ -122,13 +122,13 @@ public abstract class SlimeLikePet extends AbstractPet {
                 this.teleportTo(owner.getX(), owner.getY(), owner.getZ());
             }
         }
-        if (this.walkAnimation.isMoving() && this.onGround()) {
+        if (this.walkAnimation.isMoving() && this.onGround) {
             this.jumpFromGround();
         }
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level().playLocalSound(this.blockPosition(), Objects.requireNonNull(this.getAmbientSound()), SoundSource.AMBIENT, 1.0f, 1.0f, true);
+            level.playLocalSound(this.blockPosition(), Objects.requireNonNull(this.getAmbientSound()), SoundSource.AMBIENT, 1.0f, 1.0f, true);
         }
     }
 }

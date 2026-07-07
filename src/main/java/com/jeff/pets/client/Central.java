@@ -836,15 +836,15 @@ public class Central {
      */
     public static void reassignLogo(Boolean bl) {
         if (bl) {
-            LogoRenderer.MINECRAFT_LOGO = new ResourceLocation(MOD_ID, "textures/title/petsmod.png");
-            LogoRenderer.EASTER_EGG_LOGO = new ResourceLocation(MOD_ID, "textures/title/modpets.png");
-            LogoRenderer.MINECRAFT_EDITION = new ResourceLocation(MOD_ID, "textures/title/version.png");
-            SplashManager.SPLASHES_LOCATION = new ResourceLocation(MOD_ID, "texts/splashes.txt");
+            //LogoRenderer.MINECRAFT_LOGO = new ResourceLocation(MOD_ID, "textures/title/petsmod.png");
+            //LogoRenderer.EASTER_EGG_LOGO = new ResourceLocation(MOD_ID, "textures/title/modpets.png");
+            //LogoRenderer.MINECRAFT_EDITION = new ResourceLocation(MOD_ID, "textures/title/version.png");
+            //SplashManager.SPLASHES_LOCATION = new ResourceLocation(MOD_ID, "texts/splashes.txt");
         } else {
-            LogoRenderer.MINECRAFT_LOGO = new ResourceLocation("minecraft", "textures/gui/title/minecraft.png");
-            LogoRenderer.EASTER_EGG_LOGO = new ResourceLocation("minecraft", "textures/gui/title/minceraft.png");
-            LogoRenderer.MINECRAFT_EDITION = new ResourceLocation("minecraft", "textures/gui/title/edition.png");
-            SplashManager.SPLASHES_LOCATION = new ResourceLocation("minecraft", "texts/splashes.txt");
+            //LogoRenderer.MINECRAFT_LOGO = new ResourceLocation("minecraft", "textures/gui/title/minecraft.png");
+           // LogoRenderer.EASTER_EGG_LOGO = new ResourceLocation("minecraft", "textures/gui/title/minceraft.png");
+           // LogoRenderer.MINECRAFT_EDITION = new ResourceLocation("minecraft", "textures/gui/title/edition.png");
+           // SplashManager.SPLASHES_LOCATION = new ResourceLocation("minecraft", "texts/splashes.txt");
         }
     }
 
