@@ -25,9 +25,11 @@ public abstract class PetRenderer<D extends Mob, K extends EntityModel<D>> exten
 
     @Override
     public void render(D entity, float f, float g, PoseStack poseStack, MultiBufferSource source, int i) {
-        super.render(entity, f, g, poseStack, source, i);
+        poseStack.pushPose();
         if (entity.isPassenger()) {
-            entity.setPos(entity.getX(), (entity.getY() + 0.35), entity.getZ());
+            poseStack.translate(0, 0.35, 0);
         }
+        super.render(entity, f, g, poseStack, source, i);
+        poseStack.popPose();
     }
 }

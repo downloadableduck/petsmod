@@ -93,7 +93,8 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> implements ModMenuA
                     .setSavingRunnable(() -> {
                         AutoConfig.getConfigHolder(PetsConfig.class).save();
                         Minecraft.getInstance().setScreen(this.getModConfigScreenFactory().create(null));
-                    });
+                    })
+                    .setTransparentBackground(true);
                     ConfigCategory general = builder.getOrCreateCategory(Component.literal("Config"));
                     ConfigEntryBuilder entryBuilder = builder.entryBuilder();
                     general.addEntry(this.createPetOnOption(entryBuilder, CONFIG).build());
