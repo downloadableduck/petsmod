@@ -148,7 +148,7 @@ public abstract class AbstractPet extends TamableAnimal {
      * Never, under any circumstances, remove this method.
      */
     @Override
-    public @NotNull Packet<@NotNull ClientGamePacketListener> getAddEntityPacket() {
+    public @NotNull Packet<?> getAddEntityPacket() {
         if (this.level.isClientSide()) {
             return new ClientboundAddEntityPacket(this);
         } else {

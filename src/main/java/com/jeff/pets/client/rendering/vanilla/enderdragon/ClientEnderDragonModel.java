@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.vanilla.enderdragon;
 import com.jeff.pets.mob.vanilla.boss.ClientEnderDragon;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;
@@ -74,7 +74,7 @@ public class ClientEnderDragonModel extends EntityModel<ClientEnderDragon> {
         float m = (float)(Math.sin((double)(l * ((float)Math.PI * 2F) - 1.0F)) + (double)1.0F);
         m = (m * m + m * 2.0F) * 0.05F;
         poseStack.translate(0.0F, m - 2.0F, -3.0F);
-        poseStack.mulPose(Axis.XP.rotationDegrees(m * 2.0F));
+        poseStack.mulPose(Vector3f.XP.rotationDegrees(m * 2.0F));
         float n = 0.0F;
         float o = 20.0F;
         float p = -12.0F;
@@ -109,7 +109,7 @@ public class ClientEnderDragonModel extends EntityModel<ClientEnderDragon> {
         this.head.render(poseStack, vertexConsumer, i, j, 1.0F, 1.0F, 1.0F, k);
         poseStack.pushPose();
         poseStack.translate(0.0F, 1.0F, 0.0F);
-        poseStack.mulPose(Axis.ZP.rotationDegrees(-r * 1.5F));
+        poseStack.mulPose(Vector3f.ZP.rotationDegrees(-r * 1.5F));
         poseStack.translate(0.0F, -1.0F, 0.0F);
         this.body.zRot = 0.0F;
         this.body.render(poseStack, vertexConsumer, i, j, 1.0F, 1.0F, 1.0F, k);

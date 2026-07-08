@@ -189,7 +189,7 @@ public class Racoon extends AbstractPet {
 
         /*int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level.playLocalSound(this.blockPosition(), SoundEvents.BOGGED_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f, true);
+            level.playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.BOGGED_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f, true);
         }*/
     }
 
@@ -208,7 +208,7 @@ public class Racoon extends AbstractPet {
     }
 
     @Override
-    public @NotNull Packet<@NotNull ClientGamePacketListener> getAddEntityPacket() {
+    public @NotNull Packet<?> getAddEntityPacket() {
         if (this.level.isClientSide()) {
             return new ClientboundAddEntityPacket(this);
         } else {

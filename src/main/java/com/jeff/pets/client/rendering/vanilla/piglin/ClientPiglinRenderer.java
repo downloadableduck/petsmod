@@ -26,7 +26,6 @@ public class ClientPiglinRenderer extends PetRenderer<@NotNull ClientPiglin, @No
 
     public static LayerDefinition createBodyLayer() {
         PiglinModel.createMesh(CubeDeformation.NONE, 0f);
-        PiglinModel.addHead(CubeDeformation.NONE, new MeshDefinition());
         return LayerDefinition.create(new MeshDefinition(), 64, 64);
     }
 

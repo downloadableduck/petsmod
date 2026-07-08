@@ -262,7 +262,7 @@ public class Duck extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level.playLocalSound(this.blockPosition(), PetsSounds.DUCK_AMBIENT.get(), SoundSource.NEUTRAL, 1.0f, 1.0f, true);
+            level.playLocalSound(this.getX(), this.getY(), this.getZ(), PetsSounds.DUCK_AMBIENT.get(), SoundSource.NEUTRAL, 1.0f, 1.0f, true);
         }
     }
 
@@ -288,7 +288,7 @@ public class Duck extends AbstractPet {
     }
 
     @Override
-    public @NotNull Packet<@NotNull ClientGamePacketListener> getAddEntityPacket() {
+    public @NotNull Packet<?> getAddEntityPacket() {
         if (this.level != null && this.level.isClientSide()) {
             return new ClientboundAddEntityPacket(this);
         } else {

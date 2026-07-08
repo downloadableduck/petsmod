@@ -36,7 +36,10 @@ public class ClientFrog extends GroundPet {
     @Override
     public void tick() {
         super.tick();
-        this.idleAnimationState.animateWhen(this.animationSpeed <= 0, this.tickCount);
-        this.walkAnimationState.animateWhen(this.animationSpeed > 0, this.tickCount);
+        if (this.animationSpeed <= 0) {
+            this.idleAnimationState.start(this.tickCount);
+        } else {
+            this.walkAnimationState.start(this.tickCount);
+        }
     }
 }

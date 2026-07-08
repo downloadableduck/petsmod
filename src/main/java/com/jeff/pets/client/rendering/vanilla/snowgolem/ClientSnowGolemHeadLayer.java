@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.snowgolem;
 
 import com.jeff.pets.mob.vanilla.passive.ClientSnowGolem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.SnowGolemModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -39,7 +39,7 @@ public class ClientSnowGolemHeadLayer extends RenderLayer<ClientSnowGolem, SnowG
                 this.getParentModel().getHead().translateAndRotate(poseStack);
                 float m = 0.625F;
                 poseStack.translate(0.0F, -0.34375F, 0.0F);
-                poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
+                poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
                 poseStack.scale(0.625F, -0.625F, -0.625F);
                 ItemStack itemStack = new ItemStack(Blocks.CARVED_PUMPKIN);
                 if (bl) {

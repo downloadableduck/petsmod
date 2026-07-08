@@ -1,11 +1,7 @@
 package com.jeff.pets;
 
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -21,11 +17,11 @@ public class PetsSounds {
             DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, PetsInitializer.MOD_ID);
 
     public static final RegistryObject<SoundEvent> DUCK_AMBIENT = SOUND_EVENTS.register("duck_ambient",
-            () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(PetsInitializer.MOD_ID, "duck_ambient"))
+            () -> new SoundEvent(new ResourceLocation(PetsInitializer.MOD_ID, "duck_ambient"))
     );
 
     public static final RegistryObject<SoundEvent> PENGUIN_AMBIENT = SOUND_EVENTS.register("penguin_ambient",
-            () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(PetsInitializer.MOD_ID, "penguin_ambient")));
+            () -> new SoundEvent(new ResourceLocation(PetsInitializer.MOD_ID, "penguin_ambient")));
 
     /**
      * Static initializer

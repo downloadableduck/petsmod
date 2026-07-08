@@ -128,7 +128,7 @@ public class MoonCow extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level.playLocalSound(this.blockPosition(), SoundEvents.COW_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f, true);
+            level.playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.COW_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f, true);
         }
     }
 }

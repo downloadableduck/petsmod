@@ -13,9 +13,6 @@ import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import com.jeff.pets.mob.vanilla.hostile.*;
 import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.common.MinecraftForge;
@@ -23,11 +20,9 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -73,7 +68,6 @@ public class PetsInitializer {
         event.put(Entities.ALLAY.get(), ClientAllay.createAttributes().build());
         event.put(Entities.AXOLOTL.get(), ClientAxolotl.createAttributes().build());
         event.put(Entities.BAT.get(), ClientBat.createAttributes().build());
-        event.put(Entities.CAMEL.get(), ClientCamel.createAttributes().build());
         event.put(Entities.CHICKEN.get(), ClientChicken.createAttributes().build());
         event.put(Entities.COD.get(), ClientCod.createAttributes().build());
         event.put(Entities.COW.get(), ClientCow.createAttributes().build());
@@ -199,15 +193,6 @@ public class PetsInitializer {
                                 .sized(0.5f, 0.9f)
                                 
                                 .build(("clientbat"))
-                );
-
-        public static final RegistryObject< @NotNull EntityType<ClientCamel>> CAMEL =
-                ENTITY_TYPES.register("clientcamel", () ->
-                        EntityType.Builder.of(ClientCamel::new, MobCategory.AMBIENT)
-                                .noSummon()
-                                .sized(1.7f, 2.375f)
-                                
-                                .build(("clientcamel"))
                 );
 
         public static final RegistryObject< @NotNull EntityType<Duck>> DUCK =

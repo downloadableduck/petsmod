@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.vanilla.salmon;
 import com.jeff.pets.mob.vanilla.passive.ClientSalmon;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -31,6 +31,6 @@ public class ClientSalmonRenderer extends PetRenderer<@NotNull ClientSalmon, @No
         float i = 1.0F;
 
         float j = h * 4.3F * Mth.sin(i * 0.6F * ageInTicks);
-        poseStack.mulPose(Axis.YP.rotationDegrees(j));
+        poseStack.mulPose(Vector3f.YP.rotationDegrees(j));
     }
 }

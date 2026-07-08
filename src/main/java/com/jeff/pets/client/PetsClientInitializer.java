@@ -41,7 +41,6 @@ import com.jeff.pets.client.rendering.vanilla.axolotl.ClientAxolotlRenderer;
 import com.jeff.pets.client.rendering.vanilla.bat.ClientBatRenderer;
 import com.jeff.pets.client.rendering.vanilla.bee.ClientBeeRenderer;
 import com.jeff.pets.client.rendering.vanilla.blaze.ClientBlazeRenderer;
-import com.jeff.pets.client.rendering.vanilla.camel.ClientCamelRenderer;
 import com.jeff.pets.client.rendering.vanilla.cat.ClientCatRenderer;
 import com.jeff.pets.client.rendering.vanilla.cavespider.ClientCaveSpiderRenderer;
 import com.jeff.pets.client.rendering.vanilla.chicken.ClientChickenModel;
@@ -182,7 +181,6 @@ public class PetsClientInitializer {
         event.registerLayerDefinition(ClientAllayRenderer.ALLAY_TEXTURE, AllayModel::createBodyLayer);
         event.registerLayerDefinition(ClientAxolotlRenderer.AXOLOTL_LOCATION, AxolotlModel::createBodyLayer);
         event.registerLayerDefinition(ClientBatRenderer.BAT_LOCATION, BatModel::createBodyLayer);
-        event.registerLayerDefinition(ClientCamelRenderer.CAMEL_LOCATION, CamelModel::createBodyLayer);
         event.registerLayerDefinition(ClientChickenRenderer.CHICKEN_LOCATION, ClientChickenModel::createBodyLayer);
         event.registerLayerDefinition(ClientCodRenderer.COD_LOCATION, CodModel::createBodyLayer);
         event.registerLayerDefinition(ClientCowRenderer.COW_LOCATION, ClientCowModel::createBodyLayer);
@@ -273,7 +271,6 @@ public class PetsClientInitializer {
         event.registerEntityRenderer(PetsInitializer.Entities.ALLAY.get(), ClientAllayRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.AXOLOTL.get(), ClientAxolotlRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.BAT.get(), ClientBatRenderer::new);
-        event.registerEntityRenderer(PetsInitializer.Entities.CAMEL.get(), ClientCamelRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.CHICKEN.get(), ClientChickenRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.COD.get(), ClientCodRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.COW.get(), ClientCowRenderer::new);

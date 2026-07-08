@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.allay;
 
 import com.jeff.pets.mob.vanilla.passive.ClientAllay;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -82,7 +82,7 @@ public class ClientAllayModel extends HierarchicalModel<ClientAllay> implements 
         this.root.translateAndRotate(poseStack);
         this.body.translateAndRotate(poseStack);
         poseStack.translate(0.0F, 0.0625F, 0.1875F);
-        poseStack.mulPose(Axis.XP.rotation(this.right_arm.xRot));
+        poseStack.mulPose(Vector3f.XP.rotation(this.right_arm.xRot));
         poseStack.scale(0.7F, 0.7F, 0.7F);
         poseStack.translate(0.0625F, 0.0F, 0.0F);
     }

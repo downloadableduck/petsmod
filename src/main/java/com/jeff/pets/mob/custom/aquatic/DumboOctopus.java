@@ -222,7 +222,7 @@ public class DumboOctopus extends FlyingPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level.playLocalSound(this.blockPosition(), SoundEvents.SQUID_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f, true);
+            level.playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.SQUID_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f, true);
         }
     }
 
@@ -248,7 +248,7 @@ public class DumboOctopus extends FlyingPet {
     }
 
     @Override
-    public @NotNull Packet<@NotNull ClientGamePacketListener> getAddEntityPacket() {
+    public @NotNull Packet<?> getAddEntityPacket() {
         if (this.level.isClientSide()) {
             return new ClientboundAddEntityPacket(this);
         } else {
