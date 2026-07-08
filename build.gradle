@@ -52,9 +52,9 @@ dependencies {
     modApi "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
     modApi("com.terraformersmc:modmenu:${project.modmenu_version}")
     //modApi "dev.isxander:yet-another-config-lib:${project.yacl_version}"
-    modApi "maven.modrinth:yacl:${project.yacl_version}"
-    modImplementation "org.quiltmc.parsers:gson:0.2.1"
-    modImplementation "org.quiltmc.parsers:json:0.2.1"
+    //modApi "maven.modrinth:yacl:${project.yacl_version}"
+   // modImplementation "org.quiltmc.parsers:gson:0.2.1"
+    //modImplementation "org.quiltmc.parsers:json:0.2.1"
 }
 
 processResources {

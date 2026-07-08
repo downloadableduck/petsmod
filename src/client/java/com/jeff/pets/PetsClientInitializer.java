@@ -40,7 +40,6 @@ import com.jeff.pets.rendering.vanilla.axolotl.ClientAxolotlRenderer;
 import com.jeff.pets.rendering.vanilla.bat.ClientBatRenderer;
 import com.jeff.pets.rendering.vanilla.bee.ClientBeeRenderer;
 import com.jeff.pets.rendering.vanilla.blaze.ClientBlazeRenderer;
-import com.jeff.pets.rendering.vanilla.camel.ClientCamelRenderer;
 import com.jeff.pets.rendering.vanilla.cat.ClientCatRenderer;
 import com.jeff.pets.rendering.vanilla.cavespider.ClientCaveSpiderRenderer;
 import com.jeff.pets.rendering.vanilla.chicken.ClientChickenModel;
@@ -163,7 +162,6 @@ public class PetsClientInitializer implements ClientModInitializer {
         EntityRenderers.register(PetsInitializer.ALLAY, ClientAllayRenderer::new);
         EntityRenderers.register(PetsInitializer.AXOLOTL, ClientAxolotlRenderer::new);
         EntityRenderers.register(PetsInitializer.BAT, ClientBatRenderer::new);
-        EntityRenderers.register(PetsInitializer.CAMEL, ClientCamelRenderer::new);
         EntityRenderers.register(PetsInitializer.CHICKEN, ClientChickenRenderer::new);
         EntityRenderers.register(PetsInitializer.COD, ClientCodRenderer::new);
         EntityRenderers.register(PetsInitializer.COW, ClientCowRenderer::new);
@@ -256,7 +254,6 @@ public class PetsClientInitializer implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(ClientAllayRenderer.ALLAY_TEXTURE, AllayModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientAxolotlRenderer.AXOLOTL_LOCATION, AxolotlModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientBatRenderer.BAT_LOCATION, BatModel::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(ClientCamelRenderer.CAMEL_LOCATION, CamelModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientChickenRenderer.CHICKEN_LOCATION, ClientChickenModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientCodRenderer.COD_LOCATION, CodModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ClientCowRenderer.COW_LOCATION, ClientCowModel::createBodyLayer);

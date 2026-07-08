@@ -13,7 +13,7 @@ public class ClientVexRenderer extends PetRenderer<@NotNull ClientVex, @NotNull 
     public static final ModelLayerLocation VEX_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientvex"), "main");
 
     public ClientVexRenderer(EntityRendererProvider.Context context) {
-        super(context, new ClientVexModel(context.bakeLayer(ModelLayers.VEX)), 0.75f);
+        super(context, new ClientVexModel(context.bakeLayer(VEX_LOCATION)), 0.75f);
     }
 
     @Override

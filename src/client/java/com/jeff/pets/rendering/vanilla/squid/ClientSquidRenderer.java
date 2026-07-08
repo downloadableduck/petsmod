@@ -3,7 +3,7 @@ package com.jeff.pets.rendering.vanilla.squid;
 import com.jeff.pets.mob.vanilla.passive.ClientSquid;
 import com.jeff.pets.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.model.SquidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -45,9 +45,9 @@ public class ClientSquidRenderer extends PetRenderer<@NotNull ClientSquid, @NotN
         float j = Mth.lerp(h, squid.xBodyRotO, squid.xBodyRot);
         float k = Mth.lerp(h, squid.zBodyRotO, squid.zBodyRot);
         poseStack.translate(0.0F, 0.5F, 0.0F);
-        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - g));
-        poseStack.mulPose(Axis.XP.rotationDegrees(j));
-        poseStack.mulPose(Axis.YP.rotationDegrees(k));
+        poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F - g));
+        poseStack.mulPose(Vector3f.XP.rotationDegrees(j));
+        poseStack.mulPose(Vector3f.YP.rotationDegrees(k));
         poseStack.translate(0.0F, -1.2F, 0.0F);
     }
 

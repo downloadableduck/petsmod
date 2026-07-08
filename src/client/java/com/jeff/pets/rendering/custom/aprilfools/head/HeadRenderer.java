@@ -10,6 +10,7 @@ import com.mojang.authlib.minecraft.MinecraftSessionService;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.client.resources.SkinManager;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.resources.ResourceLocation;
@@ -43,10 +44,14 @@ public class HeadRenderer extends PetRenderer<@NotNull Head, @NotNull HeadModel>
                 MinecraftSessionService service = Minecraft.getInstance().getMinecraftSessionService();
                 service.fillProfileProperties(gameProfile.get(), true);
             }
-            return minecraft.getSkinManager().getInsecureSkinLocation(gameProfile.get());
+            Map<MinecraftProfileTexture.Type, MinecraftProfileTexture> map = minecraft.getSkinManager().getInsecureSkinInformation(gameProfile.get());
+            if (map.containsKey(MinecraftProfileTexture.Type.SKIN)) {
+                return minecraft.getSkinManager().registerTexture(map.get(MinecraftProfileTexture.Type.SKIN), MinecraftProfileTexture.Type.SKIN);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        return DefaultPlayerSkin.getDefaultSkin();
     }
 
     private static CompletableFuture<Optional<GameProfile>> fetchGameProfile(String string) {

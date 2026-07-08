@@ -1,7 +1,6 @@
 package com.jeff.pets;
 
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 
@@ -15,12 +14,12 @@ public class PetsSounds {
 
     private static SoundEvent registerSound() {
         ResourceLocation identifier = new ResourceLocation(PetsInitializer.MOD_ID, "duck_ambient");
-        return Registry.register(BuiltInRegistries.SOUND_EVENT, identifier, SoundEvent.createVariableRangeEvent(identifier));
+        return Registry.register(Registry.SOUND_EVENT, identifier, new SoundEvent(identifier));
     }
 
     private static SoundEvent registerPenguinSound() {
         ResourceLocation identifier = new ResourceLocation(PetsInitializer.MOD_ID, "penguin_ambient");
-        return Registry.register(BuiltInRegistries.SOUND_EVENT, identifier, SoundEvent.createVariableRangeEvent(identifier));
+        return Registry.register(Registry.SOUND_EVENT, identifier, new SoundEvent(identifier));
     }
 
     /**

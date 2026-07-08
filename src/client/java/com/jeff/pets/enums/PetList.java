@@ -10,7 +10,6 @@ public enum PetList implements NameableEnum {
     batato,
     bee,
     blaze,
-    camel,
     cat,
     cave_spider,
     chicken,

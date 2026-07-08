@@ -3,12 +3,12 @@ package com.jeff.pets.rendering.vanilla.axolotl;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
 import com.jeff.pets.mob.vanilla.passive.ClientAxolotl;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.model.AgeableListModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
-import org.joml.Vector3f;
 
 import java.util.Map;
 

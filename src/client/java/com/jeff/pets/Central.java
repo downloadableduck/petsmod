@@ -112,7 +112,6 @@ public class Central implements ClientModInitializer {
     public static ClientAllay allay;
     public static ClientAxolotl axolotl;
     public static ClientBat bat;
-    public static ClientCamel camel;
     public static ClientChicken chicken;
     public static ClientCod cod;
     public static ClientCow cow;
@@ -220,7 +219,6 @@ public class Central implements ClientModInitializer {
         Utils.despawnEntity(allay);
         Utils.despawnEntity(axolotl);
         Utils.despawnEntity(bat);
-        Utils.despawnEntity(camel);
         Utils.despawnEntity(chicken);
         Utils.despawnEntity(cod);
         Utils.despawnEntity(cow);
@@ -318,7 +316,6 @@ public class Central implements ClientModInitializer {
         allay = new ClientAllay(PetsInitializer.ALLAY, world);
         axolotl = new ClientAxolotl(PetsInitializer.AXOLOTL, world);
         bat = new ClientBat(PetsInitializer.BAT, world);
-        camel = new ClientCamel(PetsInitializer.CAMEL, world);
         chicken = new ClientChicken(PetsInitializer.CHICKEN, world);
         cod = new ClientCod(PetsInitializer.COD, world);
         cow = new ClientCow(PetsInitializer.COW, world);
@@ -417,8 +414,6 @@ public class Central implements ClientModInitializer {
                 Utils.summonPet(axolotl, CONFIG.axolotlName);
             } else if (Objects.equals(CONFIG.activePet, "bat")) {
                 Utils.summonPet(bat, CONFIG.batName);
-            } else if (Objects.equals(CONFIG.activePet, "camel")) {
-                Utils.summonPet(camel, CONFIG.camelName);
             } else if (Objects.equals(CONFIG.activePet, "chicken")) {
                 Utils.summonPet(chicken, CONFIG.chickenName);
             } else if (Objects.equals(CONFIG.activePet, "cod")) {
@@ -597,7 +592,6 @@ public class Central implements ClientModInitializer {
         Utils.checkName("allay", allay, CONFIG.allayName);
         Utils.checkName("axolotl", axolotl, CONFIG.axolotlName);
         Utils.checkName("bat", bat, CONFIG.batName);
-        Utils.checkName("camel", camel, CONFIG.camelName);
         Utils.checkName("chicken", chicken, CONFIG.chickenName);
         Utils.checkName("cod", cod, CONFIG.codName);
         Utils.checkName("cow", cow, CONFIG.cowName);
@@ -1729,8 +1723,6 @@ public class Central implements ClientModInitializer {
                 Utils.setActivePet(axolotl, "axolotl");
             } else if (Objects.equals(species, "bat")) {
                 Utils.setActivePet(bat, "bat");
-            } else if (Objects.equals(species, "camel")) {
-                Utils.setActivePet(camel, "camel");
             } else if (Objects.equals(species, "chicken")) {
                 Utils.setActivePet(chicken, "chicken");
             } else if (Objects.equals(species, "cod")) {
@@ -2107,7 +2099,7 @@ public class Central implements ClientModInitializer {
     void createPetsList() {
         String[] stuffs = new String[]{"allay", "angry ghast",
                 "axolotl", "bat", "batato", "bee", "blaze",
-                "camel", "cat", "cave spider", "chicken",
+                "cat", "cave spider", "chicken",
                 "cod", "cow",
                 "creeper", "diamond chicken",
                 "dolphin", "donkey", "drowned", "duck", "dumbo octopus",
