@@ -22,10 +22,10 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
 @Mixin(SplashManager.class)
 public class SplashManagerMixin {
 
-    @Redirect(method = "<clinit>", at = @At(value = "FIELD", opcode = Opcodes.PUTSTATIC, target = "Lnet/minecraft/client/resources/SplashManager;SPLASHES_LOCATION:Lnet/minecraft/resources/ResourceLocation;"))
+    /*@Redirect(method = "<clinit>", at = @At(value = "FIELD", opcode = Opcodes.PUTSTATIC, target = "Lnet/minecraft/client/resources/SplashManager;SPLASHES_LOCATION:Lnet/minecraft/resources/ResourceLocation;"))
     private static void redirect(ResourceLocation identifier) {
         SplashManager.SPLASHES_LOCATION = CONFIG.customTitleEnabled
                 ? new ResourceLocation(MOD_ID, "texts/splashes.txt")
                 : new ResourceLocation("minecraft", "texts/splashes.txt");
-    }
+    }*/
 }

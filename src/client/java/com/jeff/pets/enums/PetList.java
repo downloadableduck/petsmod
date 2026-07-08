@@ -3,7 +3,6 @@ package com.jeff.pets.enums;
 import net.minecraft.network.chat.Component;
 
 public enum PetList implements NameableEnum {
-    allay,
     angry_ghast,
     axolotl,
     bat,
@@ -28,7 +27,6 @@ public enum PetList implements NameableEnum {
     endermite,
     evoker,
     fox,
-    frog,
     ghast,
     goat,
     guardian,
@@ -78,7 +76,6 @@ public enum PetList implements NameableEnum {
     strider,
     stray,
     wither_skeleton,
-    tadpole,
     toxifin_slab,
     traitor,
     turtle,
@@ -86,7 +83,6 @@ public enum PetList implements NameableEnum {
     villager,
     vindicator,
     wandering_trader,
-    warden,
     witch,
     wither,
     wolf,
@@ -95,6 +91,6 @@ public enum PetList implements NameableEnum {
 
     @Override
     public Component getDisplayName() {
-        return Component.literal(String.valueOf(this).replace("_", " "));
+        return new net.minecraft.network.chat.TextComponent(String.valueOf(this).replace("_", " "));
     }
 }

@@ -51,11 +51,6 @@ public class ClientLlamaModel extends EntityModel<ClientLlama> {
     }
 
     public void setupAnim(ClientLlama abstractChestedHorse, float f, float g, float h, float i, float j) {
-        if (CONFIG.isBaby) {
-            head.yScale = 1.5f;
-            head.zScale = 1.5f;
-            head.xScale = 1.5f;
-        }
         this.head.xRot = j * ((float) Math.PI / 180F);
         this.head.yRot = i * ((float) Math.PI / 180F);
         this.rightHindLeg.xRot = Mth.cos(f * 0.6662F) * 1.4F * g;
@@ -70,11 +65,17 @@ public class ClientLlamaModel extends EntityModel<ClientLlama> {
         if (this.young) {
             float f = 2.0F;
             poseStack.pushPose();
+            if (CONFIG.isBaby) {
+                poseStack.scale(2, 2, 2);
+            } else {
+                poseStack.scale(1, 1, 1);
+            }
+            this.head.translateAndRotate(poseStack);
+            poseStack.popPose();
             float g = 0.7F;
             poseStack.scale(0.71428573F, 0.64935064F, 0.7936508F);
             poseStack.translate(0.0F, 1.3125F, 0.22F);
             this.head.render(poseStack, vertexConsumer, i, j, a, b, c, d);
-            poseStack.popPose();
             poseStack.pushPose();
             float h = 1.1F;
             poseStack.scale(0.625F, 0.45454544F, 0.45454544F);

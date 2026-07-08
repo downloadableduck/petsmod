@@ -1,6 +1,8 @@
 package com.jeff.pets.rendering.vanilla.drowned;
 
 import com.jeff.pets.mob.vanilla.hostile.ClientDrowned;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -35,12 +37,6 @@ public class ClientDrownedModel extends HumanoidModel<ClientDrowned> {
     @Override
     public void setupAnim(@NotNull ClientDrowned state, float f, float g, float h, float i, float k) {
         super.setupAnim(state, f, g, h, i, k);
-        if (CONFIG.isBaby) {
-            headScale = 1.5f;
-            this.head.yScale = headScale;
-            this.head.zScale = headScale;
-            this.head.xScale = headScale;
-        }
         AnimationUtils.animateZombieArms(this.leftArm, this.rightArm, true, this.attackTime, h);
     }
 
@@ -66,15 +62,17 @@ public class ClientDrownedModel extends HumanoidModel<ClientDrowned> {
             var10000.xRot += this.swimAmount * 0.55F * Mth.sin(0.1F * h);
             this.head.xRot = 0.0F;
         }
+    }
+    @Override
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int j, float f, float g, float h, float k) {
+        super.renderToBuffer(poseStack, vertexConsumer, i, j, f, g, h, k);
+        poseStack.pushPose();
         if (CONFIG.isBaby) {
-            headScale = 1.5f;
-            this.head.yScale = headScale;
-            this.head.zScale = headScale;
-            this.head.xScale = headScale;
+            poseStack.scale(1.5f, 1.5f, 1.5f);
         } else {
-            this.head.yScale = 1;
-            this.head.zScale = 1;
-            this.head.xScale = 1;
+            poseStack.scale(1, 1, 1);
         }
+        this.head.translateAndRotate(poseStack);
+        poseStack.popPose();
     }
 }

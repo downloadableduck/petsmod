@@ -15,7 +15,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.BatRenderer;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.AnimationState;
 
 import java.util.Set;
 
@@ -28,7 +27,6 @@ public class BatatoModel extends HierarchicalModel<Batato> {
     private final ModelPart leftWingTip;
     private final ModelPart feet;
     private final ModelPart head;
-    AnimationState flyAnimationState = new AnimationState();
 
     public BatatoModel(ModelPart modelPart) {
         super(RenderType::entityCutout);

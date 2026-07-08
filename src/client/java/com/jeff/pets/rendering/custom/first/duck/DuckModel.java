@@ -1,8 +1,11 @@
 package com.jeff.pets.rendering.custom.first.duck;
 
 import com.jeff.pets.PetsInitializer;
+import com.jeff.pets.Utils;
 import com.jeff.pets.mob.custom.first.Duck;
 import com.jeff.pets.rendering.PetModel;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -64,7 +67,6 @@ public class DuckModel extends PetModel<@NotNull Duck> {
 
     @Override
     public void setupAnim(final Duck state, float f, float g, float h, float i, float j) {
-        this.root.getAllParts().forEach(ModelPart::resetPose);
         float flapAngle = state.isOnGround() ? 0 : (Mth.sin(h) + 1.0F) * state.flapSpeed;
         this.head.xRot = j * ((float) Math.PI / 180F);
         this.head.yRot = i * ((float) Math.PI / 180F);
@@ -75,18 +77,29 @@ public class DuckModel extends PetModel<@NotNull Duck> {
         this.rightWing.zRot = flapAngle;
         this.leftWing.zRot = -flapAngle;
         if (state.isPassenger()) {
-            this.root.x += 0.4F;
-            this.root.y += 2.5f;
+            this.root.x = 0.4F;
+            this.root.y = 2.5F;
+            this.root.z = 0.0F;
             this.rightLeg.visible = false;
             this.leftLeg.visible = false;
         } else {
+            this.root.x = 0.0F;
+            this.root.y = 0.0F;
+            this.root.z = 0.0F;
             this.rightLeg.visible = true;
             this.leftLeg.visible = true;
         }
+    }
+    @Override
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int j, float f, float g, float h, float k) {
+        poseStack.pushPose();
         if (CONFIG.isBaby) {
-            this.head.xScale = 1.5f;
-            this.head.yScale = 1.5f;
-            this.head.zScale = 1.5f;
+            poseStack.scale(1.5f, 1.5f, 1.5f);
+        } else {
+            poseStack.scale(1, 1, 1);
         }
+        this.head.translateAndRotate(poseStack);
+        poseStack.popPose();
+        super.renderToBuffer(poseStack, vertexConsumer, i, j, f, g, h, k);
     }
 }

@@ -1,5 +1,7 @@
 package com.jeff.pets.rendering.vanilla.cow;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.Entity;
@@ -17,16 +19,15 @@ public class ClientCowModel<T extends Entity> extends CowModel<T> {
     }
 
     @Override
-    public void setupAnim(T state, float f, float g, float h, float i, float k) {
-        super.setupAnim(state, f, g, h, i, k);
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int j, float f, float g, float h, float k) {
+        super.renderToBuffer(poseStack, vertexConsumer, i, j, f, g, h, k);
+        poseStack.pushPose();
         if (CONFIG.isBaby) {
-            head.xScale = 2.0f;
-            head.yScale = 2.0f;
-            head.zScale = 2.0f;
+            poseStack.scale(2, 2, 2);
         } else {
-            head.xScale = 1.0f;
-            head.yScale = 1.0f;
-            head.zScale = 1.0f;
+            poseStack.scale(1, 1, 1);
         }
+        this.head.translateAndRotate(poseStack);
+        poseStack.popPose();
     }
 }

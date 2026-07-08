@@ -1,6 +1,8 @@
 package com.jeff.pets.rendering.vanilla.sheep;
 
 import com.jeff.pets.mob.vanilla.passive.ClientSheep;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.QuadrupedModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -29,10 +31,17 @@ public class ClientSheepModel extends QuadrupedModel<ClientSheep> {
 
     public void setupAnim(ClientSheep sheep, float f, float g, float h, float i, float j) {
         super.setupAnim(sheep, f, g, h, i, j);
+    }
+    @Override
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int j, float f, float g, float h, float k) {
+        super.renderToBuffer(poseStack, vertexConsumer, i, j, f, g, h, k);
+        poseStack.pushPose();
         if (CONFIG.isBaby) {
-            head.xScale = 2.0f;
-            head.yScale = 2.0f;
-            head.zScale = 2.0f;
+            poseStack.scale(1.5f, 1.5f, 1.5f);
+        } else {
+            poseStack.scale(1, 1, 1);
         }
+        this.head.translateAndRotate(poseStack);
+        poseStack.popPose();
     }
 }

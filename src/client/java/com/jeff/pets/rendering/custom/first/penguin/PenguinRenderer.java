@@ -25,7 +25,7 @@ public class PenguinRenderer extends PetRenderer<@NotNull Penguin, @NotNull Peng
 
     @Override
     protected void scale(@NotNull Penguin livingEntityRenderState, @NotNull PoseStack poseStack, float f) {
-        if ((CONFIG.isBaby && !livingEntityRenderState.isServerEntity()) || (livingEntityRenderState.isBaby() && livingEntityRenderState.isServerEntity())) {
+        if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }

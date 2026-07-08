@@ -3,8 +3,10 @@ package com.jeff.pets;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -52,7 +54,7 @@ public class Utils {
         double z = player.getZ() - lookAngle.z * (double) 0.5F;
 
         entity.setPos(x, y, z);
-        entity.setCustomName(Component.literal(entityName));
+        entity.setCustomName(new TextComponent(entityName));
         world.addEntity(entity.getId(), entity);
         entity.tame(player);
         Central.summonedEntity.add(entity);
@@ -165,5 +167,11 @@ public class Utils {
             e.printStackTrace();
         }
         return Blocks.AIR;
+    }
+    public static void resetPose(ModelPart modelPart) {
+        modelPart.setRotation(0, 0, 0);
+        modelPart.x = 0;
+        modelPart.y = 0;
+        modelPart.z = 0;
     }
 }

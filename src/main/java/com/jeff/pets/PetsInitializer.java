@@ -39,17 +39,6 @@ public class PetsInitializer implements ModInitializer {
             EntityType.Builder.of(Racoon::new, MobCategory.CREATURE)
                     .sized(1f, 1f)
                     .build(RACOON_KEY.location().getPath()));
-    private static final ResourceKey<@NotNull EntityType<?>> ALLAY_KEY =
-            ResourceKey.create(Registry.ENTITY_TYPE.key(), new ResourceLocation(MOD_ID, "clientallay"));
-    public static final EntityType<@NotNull ClientAllay> ALLAY = Registry.register(
-            Registry.ENTITY_TYPE,
-            new ResourceLocation(MOD_ID, "clientallay"),
-            EntityType.Builder.of(ClientAllay::new, MobCategory.AMBIENT)
-                    .noSummon()
-                    .sized(0.35f, 0.6f)
-                    
-                    .build(ALLAY_KEY.location().getPath())
-    );
     private static final ResourceKey<@NotNull EntityType<?>> AXOLOTL_KEY =
             ResourceKey.create(Registry.ENTITY_TYPE.key(), new ResourceLocation(MOD_ID, "clientaxolotl"));
     public static final EntityType<@NotNull ClientAxolotl> AXOLOTL = Registry.register(
@@ -158,17 +147,6 @@ public class PetsInitializer implements ModInitializer {
                     
                     .build(DONKEY_KEY.location().getPath())
     );
-    private static final ResourceKey<@NotNull EntityType<?>> FROG_KEY =
-            ResourceKey.create(Registry.ENTITY_TYPE.key(), new ResourceLocation(MOD_ID, "clientfrog"));
-    public static final EntityType<@NotNull ClientFrog> FROG = Registry.register(
-            Registry.ENTITY_TYPE,
-            new ResourceLocation(MOD_ID, "clientfrog"),
-            EntityType.Builder.of(ClientFrog::new, MobCategory.AMBIENT)
-                    .noSummon()
-                    .sized(0.5f, 0.5f)
-                    
-                    .build(FROG_KEY.location().getPath())
-    );
     private static final ResourceKey<@NotNull EntityType<?>> HORSE_KEY =
             ResourceKey.create(Registry.ENTITY_TYPE.key(), new ResourceLocation(MOD_ID, "clienthorse"));
     public static final EntityType<@NotNull ClientHorse> HORSE = Registry.register(
@@ -267,17 +245,6 @@ public class PetsInitializer implements ModInitializer {
                     .sized(0.9f, 1.7f)
                     
                     .build(STRIDER_KEY.location().getPath())
-    );
-    private static final ResourceKey<@NotNull EntityType<?>> TADPOLE_KEY =
-            ResourceKey.create(Registry.ENTITY_TYPE.key(), new ResourceLocation(MOD_ID, "clienttadpole"));
-    public static final EntityType<@NotNull ClientTadpole> TADPOLE = Registry.register(
-            Registry.ENTITY_TYPE,
-            new ResourceLocation(MOD_ID, "clienttadpole"),
-            EntityType.Builder.of(ClientTadpole::new, MobCategory.AMBIENT)
-                    .noSummon()
-                    .sized(0.4f, 0.3f)
-                    
-                    .build(TADPOLE_KEY.location().getPath())
     );
     private static final ResourceKey<@NotNull EntityType<?>> TROPICAL_FISH_KEY =
             ResourceKey.create(Registry.ENTITY_TYPE.key(), new ResourceLocation(MOD_ID, "clienttropicalfish"));
@@ -678,17 +645,6 @@ public class PetsInitializer implements ModInitializer {
                     
                     .build(VINDICATOR_KEY.location().getPath())
     );
-    private static final ResourceKey<@NotNull EntityType<?>> WARDEN_KEY =
-            ResourceKey.create(Registry.ENTITY_TYPE.key(), new ResourceLocation(MOD_ID, "clientwarden"));
-    public static final EntityType<@NotNull ClientWarden> WARDEN = Registry.register(
-            Registry.ENTITY_TYPE,
-            new ResourceLocation(MOD_ID, "clientwarden"),
-            EntityType.Builder.of(ClientWarden::new, MobCategory.AMBIENT)
-                    .noSummon()
-                    .sized(0.9f, 2.9f)
-                    
-                    .build(WARDEN_KEY.location().getPath())
-    );
     private static final ResourceKey<@NotNull EntityType<?>> WITCH_KEY =
             ResourceKey.create(Registry.ENTITY_TYPE.key(), new ResourceLocation(MOD_ID, "clientwitch"));
     public static final EntityType<@NotNull ClientWitch> WITCH = Registry.register(
@@ -1018,14 +974,12 @@ public class PetsInitializer implements ModInitializer {
         FabricDefaultAttributeRegistry.register(PENGUIN, Penguin.createAttributes());
         FabricDefaultAttributeRegistry.register(SHEEP, ClientSheep.createAttributes());
         FabricDefaultAttributeRegistry.register(CAT, ClientCat.createAttributes());
-        FabricDefaultAttributeRegistry.register(ALLAY, ClientAllay.createAttributes());
         FabricDefaultAttributeRegistry.register(AXOLOTL, ClientAxolotl.createAttributes());
         FabricDefaultAttributeRegistry.register(BAT, ClientBat.createAttributes());
         FabricDefaultAttributeRegistry.register(CHICKEN, ClientChicken.createAttributes());
         FabricDefaultAttributeRegistry.register(COD, ClientCod.createAttributes());
         FabricDefaultAttributeRegistry.register(COW, ClientCow.createAttributes());
         FabricDefaultAttributeRegistry.register(DONKEY, ClientDonkey.createAttributes());
-        FabricDefaultAttributeRegistry.register(FROG, ClientFrog.createAttributes());
         FabricDefaultAttributeRegistry.register(HORSE, ClientHorse.createAttributes());
         FabricDefaultAttributeRegistry.register(MOOSHROOM, ClientMooshroom.createAttributes());
         FabricDefaultAttributeRegistry.register(PARROT, ClientParrot.createAttributes());
@@ -1035,7 +989,6 @@ public class PetsInitializer implements ModInitializer {
         FabricDefaultAttributeRegistry.register(SNOW_GOLEM, ClientSnowGolem.createAttributes());
         FabricDefaultAttributeRegistry.register(SQUID, ClientSquid.createAttributes());
         FabricDefaultAttributeRegistry.register(STRIDER, ClientStrider.createAttributes());
-        FabricDefaultAttributeRegistry.register(TADPOLE, ClientTadpole.createAttributes());
         FabricDefaultAttributeRegistry.register(TROPICAL_FISH, ClientTropicalFish.createAttributes());
         FabricDefaultAttributeRegistry.register(TURTLE, ClientTurtle.createAttributes());
         FabricDefaultAttributeRegistry.register(VILLAGER, ClientVillager.createAttributes());
@@ -1072,7 +1025,6 @@ public class PetsInitializer implements ModInitializer {
         FabricDefaultAttributeRegistry.register(SLIME, ClientSlime.createAttributes());
         FabricDefaultAttributeRegistry.register(VEX, ClientVex.createAttributes());
         FabricDefaultAttributeRegistry.register(VINDICATOR, ClientVindicator.createAttributes());
-        FabricDefaultAttributeRegistry.register(WARDEN, ClientWarden.createAttributes());
         FabricDefaultAttributeRegistry.register(WITCH, ClientWitch.createAttributes());
         FabricDefaultAttributeRegistry.register(ZOMBIE, ClientZombie.createAttributes());
         FabricDefaultAttributeRegistry.register(ZOMBIE_VILLAGER, ClientZombieVillager.createAttributes());

@@ -18,6 +18,7 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.TextComponent;
 
 import java.util.List;
 import java.util.Objects;
@@ -89,13 +90,13 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> implements ModMenuA
         return parentScreen -> {
             PetsConfig CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
             ConfigBuilder builder = ConfigBuilder.create()
-                    .setTitle(Component.literal("Config"))
+                    .setTitle(new TextComponent("Config"))
                     .setSavingRunnable(() -> {
                         AutoConfig.getConfigHolder(PetsConfig.class).save();
                         Minecraft.getInstance().setScreen(this.getModConfigScreenFactory().create(null));
                     })
                     .setTransparentBackground(true);
-                    ConfigCategory general = builder.getOrCreateCategory(Component.literal("Config"));
+                    ConfigCategory general = builder.getOrCreateCategory(new TextComponent("Config"));
                     ConfigEntryBuilder entryBuilder = builder.entryBuilder();
                     general.addEntry(this.createPetOnOption(entryBuilder, CONFIG).build());
                     general.addEntry(this.createPetSpeciesOption(entryBuilder, CONFIG).build());
@@ -108,12 +109,12 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> implements ModMenuA
     }
 
     private BooleanToggleBuilder createPetOnOption(ConfigEntryBuilder builder, PetsConfig CONFIG) {
-        return builder.startBooleanToggle(Component.literal("Pet On"), CONFIG.petOn)
+        return builder.startBooleanToggle(new TextComponent("Pet On"), CONFIG.petOn)
                 .setSaveConsumer((newVal) -> CONFIG.petOn = newVal);
     }
 
     private DropdownMenuBuilder<String> createPetSpeciesOption(ConfigEntryBuilder builder, PetsConfig CONFIG) {
-        return builder.startStringDropdownMenu(Component.literal("Pet Species"), CONFIG.activePet)
+        return builder.startStringDropdownMenu(new TextComponent("Pet Species"), CONFIG.activePet)
                 .setSaveConsumer((newVal) -> {
                     CONFIG.activePet = newVal;
                     Central.despawnPet();
@@ -214,7 +215,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> implements ModMenuA
             case "stingray" -> CONFIG.stingrayName;
             default -> "";
         };
-        return builder.startStrField(Component.literal("Pet Name"), defaultVal)
+        return builder.startStrField(new TextComponent("Pet Name"), defaultVal)
                 .setSaveConsumer((name) -> {
                     switch (activePet) {
                         case "penguin" -> CONFIG.penguinName = name;
@@ -351,7 +352,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> implements ModMenuA
             case "dumbo_octopus" -> DumboOctopusSkins.valueOf(CONFIG.dumboOctopusSkin.replaceAll(" ", "_"));
             default -> PetList.valueOf(CONFIG.activePet.replaceAll(" ", "_"));
         };
-        return builder.startEnumSelector(Component.literal("Pet Skin"), enumClass, initialValue)
+        return builder.startEnumSelector(new TextComponent("Pet Skin"), enumClass, initialValue)
                 .setSaveConsumer((value) -> {
                     String val = value.getDisplayName().getString().replace(" ", "_");
                     enumClass = (Class<T>) switch (CONFIG.activePet) {
@@ -882,11 +883,11 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> implements ModMenuA
     }
 
     private BooleanToggleBuilder createBabyOption(ConfigEntryBuilder builder, PetsConfig CONFIG) {
-        return builder.startBooleanToggle(Component.literal("Baby?"), CONFIG.isBaby)
+        return builder.startBooleanToggle(new TextComponent("Baby?"), CONFIG.isBaby)
                 .setSaveConsumer((newVal) -> CONFIG.isBaby = newVal);
     }
 
     private TextDescriptionBuilder createAddonsOption(ConfigEntryBuilder builder, PetsConfig CONFIG) {
-        return builder.startTextDescription(Component.literal("Installed addons: " + PetsClientInitializer.ADDONS.size()));
+        return builder.startTextDescription(new TextComponent("Installed addons: " + PetsClientInitializer.ADDONS.size()));
     }
 }

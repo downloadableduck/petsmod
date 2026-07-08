@@ -7,6 +7,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
+import org.lwjgl.system.CallbackI;
 
 public class ClientBeeModel extends AgeableListModel<ClientBee> {
     private static final float BEE_Y_BASE = 19.0F;
@@ -62,7 +63,7 @@ public class ClientBeeModel extends AgeableListModel<ClientBee> {
     }
 
     public void setupAnim(ClientBee bee, float f, float g, float h, float i, float j) {
-        this.root.getAllParts().forEach(ModelPart::resetPose);
+        this.root.getAllParts().forEach((modelPart -> modelPart.loadPose(PartPose.ZERO)));
         this.rightWing.xRot = 0.0F;
         this.leftAntenna.xRot = 0.0F;
         this.rightAntenna.xRot = 0.0F;

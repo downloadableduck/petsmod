@@ -13,6 +13,6 @@ public enum DumboOctopusSkins implements NameableEnum {
 
     @Override
     public Component getDisplayName() {
-        return Component.literal(String.valueOf(this));
+        return new net.minecraft.network.chat.TextComponent(String.valueOf(this));
     }
 }

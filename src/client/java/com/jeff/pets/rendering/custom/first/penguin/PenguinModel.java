@@ -3,6 +3,8 @@ package com.jeff.pets.rendering.custom.first.penguin;
 import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.mob.custom.first.Penguin;
 import com.jeff.pets.rendering.PetModel;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -68,30 +70,15 @@ public class PenguinModel extends PetModel<@NotNull Penguin> {
 
     @Override
     public void setupAnim(Penguin state, float f, float g, float h, float i, float k) {
-        this.root.getAllParts().forEach(ModelPart::resetPose);
         float flapAngle = (Mth.sin(state.flap) + 1.0F) * state.flapSpeed;
         this.head.xRot = state.getXRot() * ((float) Math.PI / 180F);
         float animationSpeed = state.animationSpeed;
         float animationPos = state.animationPosition;
         this.right_foot.xRot = Mth.cos(animationPos * 0.6662F) * 1.4F * animationSpeed;
         this.left_foot.xRot = Mth.cos(animationPos * 0.6662F + (float) Math.PI) * 1.4F * animationSpeed;
-        this.right_wing.xRot = flapAngle * 0.75f;
-        this.left_wing.xRot = -flapAngle * 0.75f;
+        this.right_wing.xRot = flapAngle * 0.75F;
+        this.left_wing.xRot = -flapAngle * 0.75F;
         this.body.zRot = Mth.cos(animationPos * 0.6662F) * 0.1F * animationSpeed;
         this.head.zRot = Mth.cos(animationPos * 0.6662F) * 0.1F * animationSpeed;
-        if (state.isPassenger()) {
-            this.root.y += 3;
-            this.right_foot.z -= 3;
-            this.right_foot.y -= 4;
-            this.right_foot.xRot = -1.6f;
-            this.left_foot.z -= 3;
-            this.left_foot.y -= 4;
-            this.left_foot.xRot = -1.6f;
-        }
-        if (CONFIG.isBaby) {
-            this.head.xScale = 1.5f;
-            this.head.yScale = 1.5f;
-            this.head.zScale = 1.5f;
-        }
     }
 }

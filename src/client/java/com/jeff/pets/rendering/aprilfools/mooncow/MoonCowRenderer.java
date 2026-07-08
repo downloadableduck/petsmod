@@ -2,6 +2,7 @@ package com.jeff.pets.rendering.aprilfools.mooncow;
 
 import com.jeff.pets.mob.aprilfools.MoonCow;
 import com.jeff.pets.rendering.PetRenderer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -19,7 +20,7 @@ public class MoonCowRenderer extends PetRenderer<@NotNull MoonCow, @NotNull Lega
 
     public MoonCowRenderer(EntityRendererProvider.Context context) {
         super(context, new LegacyCowModel(context.bakeLayer(MOON_COW_LOCATION)), 0.75f);
-        this.addLayer((RenderLayer) new MoonCowHelmetLayer((RenderLayerParent) this, context.getBlockRenderDispatcher()));
+        this.addLayer(new MoonCowHelmetLayer(this, Minecraft.getInstance().getBlockRenderer()));
     }
 
     @Override

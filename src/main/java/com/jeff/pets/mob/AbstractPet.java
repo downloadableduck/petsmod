@@ -2,6 +2,7 @@ package com.jeff.pets.mob;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
@@ -183,7 +184,7 @@ public abstract class AbstractPet extends TamableAnimal {
      * Easier way to call {@link TamableAnimal#setCustomName} that takes a String rather than a {@link Component}
      */
     public void setName(String string) {
-        this.setCustomName(Component.literal(string));
+        this.setCustomName(new TextComponent(string));
     }
 
     public void wander() {

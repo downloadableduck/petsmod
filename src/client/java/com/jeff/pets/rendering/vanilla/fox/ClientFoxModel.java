@@ -2,6 +2,8 @@ package com.jeff.pets.rendering.vanilla.fox;
 
 import com.google.common.collect.ImmutableList;
 import com.jeff.pets.mob.vanilla.neutral.ClientFox;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.AgeableListModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -104,10 +106,17 @@ public class ClientFoxModel extends AgeableListModel<ClientFox> {
     public void setupAnim(ClientFox fox, float f, float g, float h, float i, float j) {
         this.head.xRot = j * ((float) Math.PI / 180F);
         this.head.yRot = i * ((float) Math.PI / 180F);
+    }
+    @Override
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int j, float f, float g, float h, float k) {
+        super.renderToBuffer(poseStack, vertexConsumer, i, j, f, g, h, k);
+        poseStack.pushPose();
         if (CONFIG.isBaby) {
-            head.xScale = 1.5f;
-            head.yScale = 1.5f;
-            head.zScale = 1.5f;
+            poseStack.scale(1.5f, 1.5f, 1.5f);
+        } else {
+            poseStack.scale(1, 1, 1);
         }
+        this.head.translateAndRotate(poseStack);
+        poseStack.popPose();
     }
 }

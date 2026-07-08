@@ -4,6 +4,7 @@ import com.jeff.pets.mob.vanilla.passive.ClientMooshroom;
 import com.jeff.pets.rendering.PetRenderer;
 import com.jeff.pets.rendering.vanilla.cow.ClientCowModel;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -21,7 +22,7 @@ public class ClientMooshroomRenderer extends PetRenderer<@NotNull ClientMooshroo
 
     public ClientMooshroomRenderer(EntityRendererProvider.Context context) {
         super(context, new ClientCowModel<>(context.bakeLayer(ModelLayers.COW)), 0.7F);
-        this.addLayer(new ClientMushroomCowMushroomLayer(this, context.getBlockRenderDispatcher()));
+        this.addLayer(new ClientMushroomCowMushroomLayer(this, Minecraft.getInstance().getBlockRenderer()));
     }
 
     @Override

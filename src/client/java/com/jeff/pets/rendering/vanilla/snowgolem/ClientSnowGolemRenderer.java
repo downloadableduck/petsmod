@@ -2,6 +2,7 @@ package com.jeff.pets.rendering.vanilla.snowgolem;
 
 import com.jeff.pets.mob.vanilla.passive.ClientSnowGolem;
 import com.jeff.pets.rendering.PetRenderer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.SnowGolemModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -14,7 +15,7 @@ public class ClientSnowGolemRenderer extends PetRenderer<@NotNull ClientSnowGole
 
     public ClientSnowGolemRenderer(EntityRendererProvider.Context context) {
         super(context, new SnowGolemModel<>(context.bakeLayer(ModelLayers.SNOW_GOLEM)), 0.5F);
-        this.addLayer(new ClientSnowGolemHeadLayer(this, context.getBlockRenderDispatcher(), context.getItemRenderer()));
+        this.addLayer(new ClientSnowGolemHeadLayer(this, Minecraft.getInstance().getBlockRenderer(), context.getItemRenderer()));
     }
 
     @Override
