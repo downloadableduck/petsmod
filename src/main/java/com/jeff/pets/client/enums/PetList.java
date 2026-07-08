@@ -1,6 +1,6 @@
 package com.jeff.pets.client.enums;
 
-import dev.isxander.yacl3.api.NameableEnum;
+
 import net.minecraft.network.chat.Component;
 
 public enum PetList implements NameableEnum {
@@ -73,7 +73,6 @@ public enum PetList implements NameableEnum {
     skeleton,
     slime,
     smiling_creeper,
-    sniffer,
     snow_golem,
     spider,
     squid,

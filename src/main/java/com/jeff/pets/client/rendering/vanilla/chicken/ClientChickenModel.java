@@ -10,30 +10,14 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientChickenModel<T extends ClientChicken> extends ChickenModel<T> {
 
-    private final ModelPart head;
-    private final ModelPart body;
-    private final ModelPart rightLeg;
-    private final ModelPart leftLeg;
-    private final ModelPart rightWing;
-    private final ModelPart leftWing;
-    private final ModelPart beak;
-    private final ModelPart redThing;
-
     public ClientChickenModel(ModelPart modelPart) {
         super(modelPart);
-        head = modelPart.getChild("head");
-        this.beak = modelPart.getChild("beak");
-        this.redThing = modelPart.getChild("red_thing");
-        this.body = modelPart.getChild("body");
-        this.rightLeg = modelPart.getChild("right_leg");
-        this.leftLeg = modelPart.getChild("left_leg");
-        this.rightWing = modelPart.getChild("right_wing");
-        this.leftWing = modelPart.getChild("left_wing");
     }
 
     @Override
     public void setupAnim(@NotNull T state, float f, float g, float h, float i, float j) {
         h = getBob(state, f);
+        ModelPart head = this.headParts().iterator().next();
         super.setupAnim(state, f, g, h, i, j);
         if (CONFIG.isBaby) {
             head.zScale = 2;

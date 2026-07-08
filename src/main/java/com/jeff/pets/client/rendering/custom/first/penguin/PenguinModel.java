@@ -71,8 +71,8 @@ public class PenguinModel extends PetModel<@NotNull Penguin> {
         this.root.getAllParts().forEach(ModelPart::resetPose);
         float flapAngle = (Mth.sin(state.flap) + 1.0F) * state.flapSpeed;
         this.head.xRot = state.getXRot() * ((float) Math.PI / 180F);
-        float animationSpeed = state.walkAnimation.speed();
-        float animationPos = state.walkAnimation.position();
+        float animationSpeed = state.animationSpeed;
+        float animationPos = state.animationPosition;
         this.right_foot.xRot = Mth.cos(animationPos * 0.6662F) * 1.4F * animationSpeed;
         this.left_foot.xRot = Mth.cos(animationPos * 0.6662F + (float) Math.PI) * 1.4F * animationSpeed;
         this.right_wing.xRot = flapAngle * 0.75f;

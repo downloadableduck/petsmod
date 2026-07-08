@@ -6,7 +6,7 @@ import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.world.entity.AnimationState;
+import net.minecraft.util.Mth;
 
 public class ClientFrogModel extends HierarchicalModel<ClientFrog> {
     private static final float MAX_WALK_ANIMATION_SPEED = 1.5F;
@@ -22,9 +22,6 @@ public class ClientFrogModel extends HierarchicalModel<ClientFrog> {
     private final ModelPart leftLeg;
     private final ModelPart rightLeg;
     private final ModelPart croakingBody;
-    AnimationState croakAnimationState = new AnimationState();
-    private AnimationState jumpAnimationState = new AnimationState();
-    private AnimationState tongueAnimationState = new AnimationState();
 
     public ClientFrogModel(ModelPart modelPart) {
         this.root = modelPart.getChild("root");
@@ -63,12 +60,12 @@ public class ClientFrogModel extends HierarchicalModel<ClientFrog> {
 
     public void setupAnim(ClientFrog frog, float f, float g, float h, float i, float j) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
-        this.animate(jumpAnimationState, FrogAnimation.FROG_JUMP, h);
-        this.animate(croakAnimationState, FrogAnimation.FROG_CROAK, h);
-        if (frog.isInWaterOrBubble()) {
-            this.animateWalk(FrogAnimation.FROG_SWIM, f, g, 1.0F, 2.5F);
+        float k = (float)frog.getDeltaMovement().horizontalDistanceSqr();
+        float l = Mth.clamp(k * 8000.0F, 0.5F, 1.5F);
+        if (!(frog.animationSpeed > 0)) {
+            this.animate(frog.idleAnimationState, FrogAnimation.FROG_IDLE_WATER, h);
         } else {
-            this.animateWalk(FrogAnimation.FROG_WALK, f, g, 1.5F, 2.5F);
+            this.animate(frog.walkAnimationState, FrogAnimation.FROG_WALK, h, l);
         }
         this.croakingBody.visible = false;
     }

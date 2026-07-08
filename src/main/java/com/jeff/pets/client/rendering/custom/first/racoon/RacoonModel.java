@@ -59,8 +59,8 @@ public class RacoonModel extends PetModel<@NotNull Racoon> {
     @Override
     public void setupAnim(Racoon state, float f, float g, float h, float i, float k) {
         super.setupAnim(state, f, g, h, i, k);
-        float animSpeed = state.walkAnimation.speed();
-        float animPos = state.walkAnimation.position();
+        float animSpeed = state.animationSpeed;
+        float animPos = state.animationPosition;
         this.rightFrontLeg.xRot = Mth.cos(animPos * 0.6662F + (float) Math.PI) * 1.4F * animSpeed;
         this.leftFrontLeg.xRot = Mth.cos(animPos * 0.6662F) * 1.4F * animSpeed;
         this.rightHindLeg.xRot = Mth.cos(animPos * 0.6662F + (float) Math.PI) * 1.4F * animSpeed;

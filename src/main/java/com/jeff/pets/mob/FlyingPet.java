@@ -63,7 +63,7 @@ public abstract class FlyingPet extends AbstractPet {
 
             if (distance > this.stopDistance()) {
 
-                this.walkAnimation.setSpeed(0.5F);
+                this.animationSpeed = (0.5F);
 
                 Vec3 dir = vecToOwner.normalize();
                 double speed = owner.getSpeed() * 1.5;

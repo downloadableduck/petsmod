@@ -85,7 +85,6 @@ public class PetsInitializer {
         event.put(Entities.PIG.get(), ClientPig.createAttributes().build());
         event.put(Entities.RABBIT.get(), ClientRabbit.createAttributes().build());
         event.put(Entities.SALMON.get(), ClientSalmon.createAttributes().build());
-        event.put(Entities.SNIFFER.get(), ClientSniffer.createAttributes().build());
         event.put(Entities.SNOW_GOLEM.get(), ClientSnowGolem.createAttributes().build());
         event.put(Entities.SQUID.get(), ClientSquid.createAttributes().build());
         event.put(Entities.STRIDER.get(), ClientStrider.createAttributes().build());
@@ -338,14 +337,6 @@ public class PetsInitializer {
                                 .noSummon()
                                 .sized(0.35f, 0.2f)
                                 .build("clientsalmon")
-                );
-
-        public static final RegistryObject< @NotNull EntityType<ClientSniffer>> SNIFFER =
-                ENTITY_TYPES.register("clientsniffer", () ->
-                        EntityType.Builder.of(ClientSniffer::new, MobCategory.AMBIENT)
-                                .noSummon()
-                                .sized(1.9f, 1.75f)
-                                .build("clientsniffer")
                 );
 
         public static final RegistryObject< @NotNull EntityType<ClientSnowGolem>> SNOW_GOLEM =

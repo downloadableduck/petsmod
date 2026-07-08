@@ -34,7 +34,6 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
-import net.minecraft.client.gui.components.LogoRenderer;
 import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -119,7 +118,7 @@ public class Central {
             "salmon",
             "sheep",
             "shulker",
-            "silverfish", "skeleton", "slime", "smiling creeper", "sniffer", "snow golem",
+            "silverfish", "skeleton", "slime", "smiling creeper", "snow golem",
             "spider", "squid", "stingray", "stray", "strider", "tadpole", "toxifin slab",
             "traitor", "turtle",
             "vex", "villager", "vindicator", "wandering trader", "warden", "witch", "wither",
@@ -184,7 +183,6 @@ public class Central {
     public static ClientPig pig;
     public static ClientRabbit rabbit;
     public static ClientSalmon salmon;
-    public static ClientSniffer sniffer;
     public static ClientSnowGolem snowGolem;
     public static ClientSquid squid;
     public static ClientStrider strider;
@@ -300,7 +298,6 @@ public class Central {
         Utils.despawnEntity(pig);
         Utils.despawnEntity(rabbit);
         Utils.despawnEntity(salmon);
-        Utils.despawnEntity(sniffer);
         Utils.despawnEntity(snowGolem);
         Utils.despawnEntity(squid);
         Utils.despawnEntity(strider);
@@ -399,7 +396,6 @@ public class Central {
         pig = new ClientPig(PetsInitializer.Entities.PIG.get(), world);
         rabbit = new ClientRabbit(PetsInitializer.Entities.RABBIT.get(), world);
         salmon = new ClientSalmon(PetsInitializer.Entities.SALMON.get(), world);
-        sniffer = new ClientSniffer(PetsInitializer.Entities.SNIFFER.get(), world);
         snowGolem = new ClientSnowGolem(PetsInitializer.Entities.SNOW_GOLEM.get(), world);
         squid = new ClientSquid(PetsInitializer.Entities.SQUID.get(), world);
         strider = new ClientStrider(PetsInitializer.Entities.STRIDER.get(), world);
@@ -511,8 +507,6 @@ public class Central {
                 Utils.summonPet(rabbit, CONFIG.rabbitName);
             } else if (Objects.equals(CONFIG.activePet, "salmon")) {
                 Utils.summonPet(salmon, CONFIG.salmonName);
-            } else if (Objects.equals(CONFIG.activePet, "sniffer")) {
-                Utils.summonPet(sniffer, CONFIG.snifferName);
             } else if (Objects.equals(CONFIG.activePet, "snow_golem")) {
                 Utils.summonPet(snowGolem, CONFIG.snowGolemName);
             } else if (Objects.equals(CONFIG.activePet, "squid")) {
@@ -682,7 +676,6 @@ public class Central {
         Utils.checkName("pig", pig, CONFIG.pigName);
         Utils.checkName("rabbit", rabbit, CONFIG.rabbitName);
         Utils.checkName("salmon", salmon, CONFIG.salmonName);
-        Utils.checkName("sniffer", sniffer, CONFIG.snifferName);
         Utils.checkName("snow_golem", snowGolem, CONFIG.snowGolemName);
         Utils.checkName("squid", squid, CONFIG.squidName);
         Utils.checkName("strider", strider, CONFIG.striderName);
@@ -1585,8 +1578,6 @@ public class Central {
                 Utils.setActivePet(rabbit, "rabbit");
             } else if (Objects.equals(species, "salmon")) {
                 Utils.setActivePet(salmon, "salmon");
-            } else if (Objects.equals(species, "sniffer")) {
-                Utils.setActivePet(sniffer, "sniffer");
             } else if (Objects.equals(species, "snow_golem") || Objects.equals(species, "snow golem")) {
                 Utils.setActivePet(snowGolem, "snow_golem");
             } else if (Objects.equals(species, "squid")) {
@@ -2125,6 +2116,7 @@ public class Central {
         CONFIG.pillagerName = Utils.checkNullString(CONFIG.pillagerName);
         CONFIG.ravagerName = Utils.checkNullString(CONFIG.ravagerName);
         CONFIG.shulkerName = Utils.checkNullString(CONFIG.shulkerName);
+        CONFIG.shulkerSkin = Utils.checkNullString(CONFIG.shulkerSkin, "normal");
         CONFIG.silverfishName = Utils.checkNullString(CONFIG.silverfishName);
         CONFIG.skeletonName = Utils.checkNullString(CONFIG.skeletonName);
 
@@ -2206,7 +2198,7 @@ public class Central {
                 "salmon",
                 "sheep",
                 "shulker",
-                "silverfish", "skeleton", "slime", "smiling creeper", "sniffer", "snow golem",
+                "silverfish", "skeleton", "slime", "smiling creeper", "snow golem",
                 "spider", "squid", "stingray", "stray", "strider", "tadpole", "toxifin slab",
                 "traitor", "turtle",
                 "vex", "villager", "vindicator", "wandering trader", "warden", "witch", "wither",

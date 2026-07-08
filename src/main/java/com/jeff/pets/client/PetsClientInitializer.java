@@ -94,7 +94,6 @@ import com.jeff.pets.client.rendering.vanilla.shulker.ClientShulkerRenderer;
 import com.jeff.pets.client.rendering.vanilla.silverfish.ClientSilverfishRenderer;
 import com.jeff.pets.client.rendering.vanilla.skeleton.ClientSkeletonRenderer;
 import com.jeff.pets.client.rendering.vanilla.slime.ClientSlimeRenderer;
-import com.jeff.pets.client.rendering.vanilla.sniffer.ClientSnifferRenderer;
 import com.jeff.pets.client.rendering.vanilla.snowgolem.ClientSnowGolemRenderer;
 import com.jeff.pets.client.rendering.vanilla.spider.ClientSpiderRenderer;
 import com.jeff.pets.client.rendering.vanilla.squid.ClientSquidRenderer;
@@ -195,7 +194,6 @@ public class PetsClientInitializer {
         event.registerLayerDefinition(ClientPigRenderer.PIG_LOCATION, ClientPigRenderer::createBasePigModel);
         event.registerLayerDefinition(ClientRabbitRenderer.RABBIT_LOCATION, ClientRabbitRenderer::createBaseRabbitLayer);
         event.registerLayerDefinition(ClientSalmonRenderer.SALMON_LOCATION, ClientSalmonModel::getTexturedModelData);
-        event.registerLayerDefinition(ClientSnifferRenderer.SNIFFER_LOCATION, SnifferModel::createBodyLayer);
         event.registerLayerDefinition(ClientSnowGolemRenderer.SNOW_GOLEM, SnowGolemModel::createBodyLayer);
         event.registerLayerDefinition(ClientSquidRenderer.SQUID_LOCATION, SquidModel::createBodyLayer);
         event.registerLayerDefinition(ClientStriderRenderer.STRIDER_LOCATION, StriderModel::createBodyLayer);
@@ -287,7 +285,6 @@ public class PetsClientInitializer {
         event.registerEntityRenderer(PetsInitializer.Entities.PIG.get(), ClientPigRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.RABBIT.get(), ClientRabbitRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.SALMON.get(), ClientSalmonRenderer::new);
-        event.registerEntityRenderer(PetsInitializer.Entities.SNIFFER.get(), ClientSnifferRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.SNOW_GOLEM.get(), ClientSnowGolemRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.SQUID.get(), ClientSquidRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.STRIDER.get(), ClientStriderRenderer::new);

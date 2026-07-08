@@ -130,7 +130,7 @@ public class Racoon extends AbstractPet {
 
             if (distance > 2.0) {
 
-                this.walkAnimation.setSpeed(0.5F);
+                this.animationSpeed = (0.5F);
 
                 Vec3 targetPos = owner.position();
                 Vec3 dir = targetPos.subtract(this.position()).normalize();

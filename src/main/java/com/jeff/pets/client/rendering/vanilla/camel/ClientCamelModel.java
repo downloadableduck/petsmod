@@ -9,7 +9,6 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.AnimationState;
 
 public class ClientCamelModel extends HierarchicalModel<ClientCamel> {
     private static final float MAX_WALK_ANIMATION_SPEED = 2.0F;
@@ -23,8 +22,6 @@ public class ClientCamelModel extends HierarchicalModel<ClientCamel> {
     private final ModelPart head;
     private final ModelPart[] saddleParts;
     private final ModelPart[] ridingParts;
-    private AnimationState idleAnimationState = new AnimationState();
-    private AnimationState dashAnimationState = new AnimationState();
 
     public ClientCamelModel(ModelPart modelPart) {
         this.root = modelPart;
@@ -58,9 +55,10 @@ public class ClientCamelModel extends HierarchicalModel<ClientCamel> {
         this.root().getAllParts().forEach(ModelPart::resetPose);
         this.applyHeadRotation(camel, i, j, h);
         this.toggleInvisibleParts(camel);
-        this.animateWalk(CamelAnimation.CAMEL_WALK, f, g, 2.0F, 2.5F);
-        this.animate(idleAnimationState, CamelAnimation.CAMEL_IDLE, h, 1.0F);
-        this.animate(dashAnimationState, CamelAnimation.CAMEL_DASH, h, 1.0F);
+        float k = (float)camel.getDeltaMovement().horizontalDistanceSqr();
+        float l = Mth.clamp(k * 400.0F, 0.3F, 2.0F);
+        this.animate(camel.walkAnimationState, CamelAnimation.CAMEL_WALK, h, l);
+        this.animate(camel.idleAnimationState, CamelAnimation.CAMEL_IDLE, h, 1.0F);
     }
 
     private void applyHeadRotation(ClientCamel camel, float f, float g, float h) {

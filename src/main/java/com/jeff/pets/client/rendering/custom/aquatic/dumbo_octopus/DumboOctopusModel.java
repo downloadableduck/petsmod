@@ -59,7 +59,7 @@ public class DumboOctopusModel extends PetModel<@NotNull DumboOctopus> {
 
         PartDefinition leg5 = body.addOrReplaceChild("leg5", CubeListBuilder.create().texOffs(0, 12).addBox(0.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(2.0F, 1.0F, -2.0F));
 
-        PartDefinition leg6 = body.addOrReplaceChild("leg6", CubeListBuilder.create().texOffs(0, 12).addBox(0.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(2.0F, 1.0f, 1.0f));
+        PartDefinition leg6 = body.addOrReplaceChild("leg6", CubeListBuilder.create().texOffs(0, 12).addBox(0.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(2.0F, 1.0F, 1.0F));
 
         PartDefinition leg7 = body.addOrReplaceChild("leg7", CubeListBuilder.create().texOffs(0, 12).addBox(-1.0F, -1.0F, 0.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(1.0F, 1.0F, 3.0F));
 
@@ -72,7 +72,7 @@ public class DumboOctopusModel extends PetModel<@NotNull DumboOctopus> {
     @Override
     public void setupAnim(DumboOctopus state, float f, float g, float h, float i, float k) {
         super.setupAnim(state, f, g, h, i, k);
-        if (state.walkAnimation.speed() > 0) {
+        if (state.animationSpeed > 0) {
             leg1.zRot = -state.tentacleAngle / 10;
             float rot = leg1.zRot;
             leg2.zRot = rot;

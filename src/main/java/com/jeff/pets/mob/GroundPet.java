@@ -68,7 +68,7 @@ public abstract class GroundPet extends AbstractPet {
 
             if (distance > this.stopDistance()) {
 
-                this.walkAnimation.setSpeed(0.5F);
+                this.animationSpeed = (0.5F);
 
                 Vec3 targetPos = owner.position();
                 Vec3 dir = targetPos.subtract(this.position()).normalize();
@@ -80,10 +80,10 @@ public abstract class GroundPet extends AbstractPet {
                 double speed = owner.getSpeed() * 2.0;
                 this.setDeltaMovement(dir.x * speed, this.getDeltaMovement().y, dir.z * speed);
             } else if (distance < 1.5) {
-                this.walkAnimation.setSpeed(0);
+                this.animationSpeed = (0);
             } else {
                 this.lookAt(owner, 5, 0);
-                this.walkAnimation.setSpeed(this.walkAnimation.speed() + 0.1f);
+                this.animationSpeed = (this.animationSpeed + 0.1f);
                 this.setDeltaMovement(this.getDeltaMovement().multiply(0.8, 1.0, 0.8));
             }
 

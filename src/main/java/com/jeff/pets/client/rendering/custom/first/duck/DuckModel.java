@@ -68,8 +68,8 @@ public class DuckModel extends PetModel<@NotNull Duck> {
         float flapAngle = state.isOnGround() ? 0 : (Mth.sin(h) + 1.0F) * state.flapSpeed;
         this.head.xRot = j * ((float) Math.PI / 180F);
         this.head.yRot = i * ((float) Math.PI / 180F);
-        float animationSpeed = state.walkAnimation.speed();
-        float animationPos = state.walkAnimation.position();
+        float animationSpeed = state.animationSpeed;
+        float animationPos = state.animationPosition;
         this.rightLeg.xRot = Mth.cos(animationPos * 0.6662F) * 1.4F * animationSpeed;
         this.leftLeg.xRot = Mth.cos(animationPos * 0.6662F + (float) Math.PI) * 1.4F * animationSpeed;
         this.rightWing.zRot = flapAngle;
