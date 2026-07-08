@@ -168,7 +168,7 @@ public class DumboOctopus extends FlyingPet {
 
             if (distance > 2.0) {
 
-                this.walkAnimation.setSpeed(0.5F);
+                this.animationSpeed = (0.5F);
 
                 Vec3 dir = vecToOwner.normalize();
                 double speed = 0.2;

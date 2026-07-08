@@ -58,8 +58,8 @@ public class ClientEvokerModel<T extends AbstractPet> extends PetModel<@NotNull 
     }
 
     public void setupAnim(T illagerRenderState, float x, float z, float h, float m, float i) {
-        float f = illagerRenderState.walkAnimation.getSpeed();
-        float g = illagerRenderState.walkAnimation.getPosition();
+        float f = illagerRenderState.animationSpeed;
+        float g = illagerRenderState.animationPosition;
         this.rightLeg.xRot = Mth.cos(g * 0.6662F) * 1.4F * f * 0.5F;
         this.rightLeg.yRot = 0.0F;
         this.rightLeg.zRot = 0.0F;

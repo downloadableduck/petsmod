@@ -51,8 +51,8 @@ public class ClientPillagerModel extends PetModel<ClientPillager> {
 
     @Override
     public void setupAnim(ClientPillager illagerRenderState, float a, float c, float h, float b, float k) {
-        float f = illagerRenderState.walkAnimation.speed();
-        float g = illagerRenderState.walkAnimation.position();
+        float f = illagerRenderState.animationSpeed;
+        float g = illagerRenderState.animationPosition;
         this.rightArm.xRot = Mth.cos(g * 0.6662F + (float) Math.PI) * 2.0F * f * 0.5F;
         this.rightArm.yRot = 0.0F;
         this.rightArm.zRot = 0.0F;

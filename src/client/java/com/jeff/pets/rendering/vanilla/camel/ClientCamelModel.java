@@ -24,9 +24,6 @@ public class ClientCamelModel extends HierarchicalModel<ClientCamel> {
     private final ModelPart head;
     private final ModelPart[] saddleParts;
     private final ModelPart[] ridingParts;
-    private AnimationState idleAnimationState = new AnimationState();
-    private AnimationState dashAnimationState = new AnimationState();
-    private AnimationState walkAnimationState = new AnimationState();
 
     public ClientCamelModel(ModelPart modelPart) {
         this.root = modelPart;
@@ -62,9 +59,8 @@ public class ClientCamelModel extends HierarchicalModel<ClientCamel> {
         this.toggleInvisibleParts(camel);
         float k = (float)camel.getDeltaMovement().horizontalDistanceSqr();
         float l = Mth.clamp(k * 400.0F, 0.3F, 2.0F);
-        this.animate(walkAnimationState, CamelAnimation.CAMEL_WALK, h, l);
-        this.animate(idleAnimationState, CamelAnimation.CAMEL_IDLE, h, 1.0F);
-        this.animate(dashAnimationState, CamelAnimation.CAMEL_DASH, h, 1.0F);
+        this.animate(camel.walkAnimationState, CamelAnimation.CAMEL_WALK, h, l);
+        this.animate(camel.idleAnimationState, CamelAnimation.CAMEL_IDLE, h, 1.0F);
     }
 
     private void applyHeadRotation(ClientCamel camel, float f, float g, float h) {

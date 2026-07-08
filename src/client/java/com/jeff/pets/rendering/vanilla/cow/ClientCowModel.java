@@ -3,6 +3,7 @@ package com.jeff.pets.rendering.vanilla.cow;
 import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.animal.Chicken;
 
 import static com.jeff.pets.Central.CONFIG;
 

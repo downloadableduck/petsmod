@@ -42,7 +42,7 @@ public class StingrayModel extends PetModel<@NotNull Stingray> {
     public void setupAnim(Stingray state, float f, float g, float m, float k, float p) {
         float partialTick = m;
         float flapTime = Mth.lerp(partialTick, state.oFlap, state.flap);
-        if (state.walkAnimation.speed() > 0) {
+        if (state.animationSpeed > 0) {
             float anim = flapTime * 7.448451F * ((float) Math.PI / 180F);
             this.left_fin.zRot = Mth.cos(anim) * 16.0F * ((float) Math.PI / 180F);
             this.right_fin.zRot = -this.left_fin.zRot;

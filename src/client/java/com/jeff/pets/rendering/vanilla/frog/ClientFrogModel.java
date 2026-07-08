@@ -24,11 +24,6 @@ public class ClientFrogModel extends HierarchicalModel<ClientFrog> {
     private final ModelPart leftLeg;
     private final ModelPart rightLeg;
     private final ModelPart croakingBody;
-    AnimationState croakAnimationState = new AnimationState();
-    private AnimationState jumpAnimationState = new AnimationState();
-    private AnimationState tongueAnimationState = new AnimationState();
-    private AnimationState walkAnimationState = new AnimationState();
-    private AnimationState swimAnimationState = new AnimationState();
 
     public ClientFrogModel(ModelPart modelPart) {
         this.root = modelPart.getChild("root");
@@ -67,14 +62,12 @@ public class ClientFrogModel extends HierarchicalModel<ClientFrog> {
 
     public void setupAnim(ClientFrog frog, float f, float g, float h, float i, float j) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
-        this.animate(jumpAnimationState, FrogAnimation.FROG_JUMP, h);
-        this.animate(croakAnimationState, FrogAnimation.FROG_CROAK, h);
         float k = (float)frog.getDeltaMovement().horizontalDistanceSqr();
         float l = Mth.clamp(k * 8000.0F, 0.5F, 1.5F);
-        if (frog.isInWaterOrBubble()) {
-            this.animate(swimAnimationState, FrogAnimation.FROG_SWIM, h);
+        if (!(frog.animationSpeed > 0)) {
+            this.animate(frog.idleAnimationState, FrogAnimation.FROG_IDLE_WATER, h);
         } else {
-            this.animate(walkAnimationState, FrogAnimation.FROG_WALK, h, l);
+            this.animate(frog.walkAnimationState, FrogAnimation.FROG_WALK, h, l);
         }
         this.croakingBody.visible = false;
     }

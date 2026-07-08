@@ -65,7 +65,7 @@ public abstract class SlimeLikePet extends AbstractPet {
 
             if (distance > 4.0) {
 
-                this.walkAnimation.setSpeed(0.5F);
+                this.animationSpeed = (0.5F);
 
                 Vec3 targetPos = owner.position();
                 Vec3 dir = targetPos.subtract(this.position()).normalize();
@@ -122,7 +122,7 @@ public abstract class SlimeLikePet extends AbstractPet {
                 this.teleportTo(owner.getX(), owner.getY(), owner.getZ());
             }
         }
-        if (this.walkAnimation.isMoving() && this.onGround) {
+        if (this.animationSpeed > 0 && this.onGround) {
             this.jumpFromGround();
         }
 

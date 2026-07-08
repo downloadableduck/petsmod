@@ -1639,6 +1639,7 @@ public class Central implements ClientModInitializer {
         CONFIG.pillagerName = Utils.checkNullString(CONFIG.pillagerName);
         CONFIG.ravagerName = Utils.checkNullString(CONFIG.ravagerName);
         CONFIG.shulkerName = Utils.checkNullString(CONFIG.shulkerName);
+        CONFIG.shulkerSkin = Utils.checkNullString(CONFIG.shulkerSkin, "normal");
         CONFIG.silverfishName = Utils.checkNullString(CONFIG.silverfishName);
         CONFIG.skeletonName = Utils.checkNullString(CONFIG.skeletonName);
 
