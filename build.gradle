@@ -29,14 +29,13 @@ repositories {
 }
 
 loom {
-    splitEnvironmentSourceSets()
+    //splitEnvironmentSourceSets()
 
     accessWidenerPath = file("src/main/resources/pets.accessWidener")
 
     mods {
         "pets-mod" {
             sourceSet sourceSets.main
-            sourceSet sourceSets.client
         }
     }
 }
@@ -65,7 +64,7 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-    it.options.release = 17
+    it.options.release = 16
 }
 
 java {
@@ -75,8 +74,8 @@ java {
     withSourcesJar()
     withJavadocJar()
 
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_16
+    targetCompatibility = JavaVersion.VERSION_16
 }
 
 jar {

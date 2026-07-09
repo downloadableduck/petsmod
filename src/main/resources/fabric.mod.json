@@ -22,27 +22,26 @@
       "com.jeff.pets.PetsInitializer"
     ],
     "client": [
-      "com.jeff.pets.PetsClientInitializer",
-      "com.jeff.pets.Central"
+      "com.jeff.pets.client.PetsClientInitializer",
+      "com.jeff.pets.client.Central"
     ],
     "modmenu": [
-      "com.jeff.pets.PetsConfigScreen"
+      "com.jeff.pets.client.PetsConfigScreen"
     ]
   },
   "mixins": [
-    "pets.mixins.json",
     {
-      "config": "pets.client.mixins.json",
+      "config": "pets.mixins.json",
       "environment": "client"
     }
   ],
   "depends": {
     "fabricloader": ">=0.18",
     "minecraft": [
-      "~1.18"
+      "~1.17"
     ],
     "java": "*",
-    "cloth-config": "*",
+    "cloth-config2": "*",
     "fabric": "*",
     "modmenu": "*"
   },
