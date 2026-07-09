@@ -7,9 +7,9 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class ClientWitherSkeletonRenderer extends PetRenderer<@NotNull ClientWitherSkeleton, @NotNull SkeletonModel<@NotNull ClientWitherSkeleton>> {
+
+public class ClientWitherSkeletonRenderer extends PetRenderer< ClientWitherSkeleton,  SkeletonModel< ClientWitherSkeleton>> {
 
     public static final ModelLayerLocation WITHER_SKELETON_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientwitherskeleton"), "main");
 
@@ -18,7 +18,7 @@ public class ClientWitherSkeletonRenderer extends PetRenderer<@NotNull ClientWit
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientWitherSkeleton livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientWitherSkeleton livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/skeleton/wither_skeleton.png");
     }
 }

@@ -2,6 +2,8 @@ package com.jeff.pets.client.rendering.vanilla.wolf;
 
 import com.google.common.collect.ImmutableList;
 import com.jeff.pets.mob.vanilla.neutral.ClientWolf;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.ColorableAgeableListModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -109,10 +111,19 @@ public class ClientWolfModel extends ColorableAgeableListModel<ClientWolf> {
         this.head.yRot = i * ((float) Math.PI / 180F);
         //this.tail.xRot = h;
         if (CONFIG.isBaby) {
-            head.xScale = 2.0f;
-            head.yScale = 2.0f;
-            head.zScale = 2.0f;
             head.y -= 1;
         }
+    }
+    @Override
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int j, float f, float g, float h, float k) {
+        super.renderToBuffer(poseStack, vertexConsumer, i, j, f, g, h, k);
+        poseStack.pushPose();
+        if (CONFIG.isBaby) {
+            poseStack.scale(1.5f, 1.5f, 1.5f);
+        } else {
+            poseStack.scale(1, 1, 1);
+        }
+        this.head.translateAndRotate(poseStack);
+        poseStack.popPose();
     }
 }

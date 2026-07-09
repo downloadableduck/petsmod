@@ -7,9 +7,9 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class ClientBlazeRenderer extends PetRenderer<@NotNull ClientBlaze, @NotNull BlazeModel<ClientBlaze>> {
+
+public class ClientBlazeRenderer extends PetRenderer< ClientBlaze,  BlazeModel<ClientBlaze>> {
     public static final ModelLayerLocation BLAZE_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientblaze"), "main");
 
     public ClientBlazeRenderer(EntityRendererProvider.Context context) {
@@ -17,7 +17,7 @@ public class ClientBlazeRenderer extends PetRenderer<@NotNull ClientBlaze, @NotN
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientBlaze livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientBlaze livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/blaze.png");
     }
 }

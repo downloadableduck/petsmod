@@ -1,6 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.zombievillager;
 
 import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.VillagerHeadModel;
@@ -46,11 +48,6 @@ public class ClientZombieVillagerModel extends HumanoidModel<ClientZombieVillage
     public void setupAnim(ClientZombieVillager zombie, float f, float g, float h, float i, float j) {
         super.setupAnim(zombie, f, g, h, i, j);
         AnimationUtils.animateZombieArms(this.leftArm, this.rightArm, zombie.isAggressive(), this.attackTime, h);
-        if (CONFIG.isBaby) {
-            head.xScale = 1.5f;
-            head.yScale = 1.5f;
-            head.zScale = 1.5f;
-        }
         AnimationUtils.animateZombieArms(this.leftArm, this.rightArm, true, this.attackTime, h);
     }
 
@@ -58,5 +55,17 @@ public class ClientZombieVillagerModel extends HumanoidModel<ClientZombieVillage
         this.head.visible = bl;
         this.hat.visible = bl;
         this.hatRim.visible = bl;
+    }
+    @Override
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int j, float f, float g, float h, float k) {
+        super.renderToBuffer(poseStack, vertexConsumer, i, j, f, g, h, k);
+        poseStack.pushPose();
+        if (CONFIG.isBaby) {
+            poseStack.scale(1.5f, 1.5f, 1.5f);
+        } else {
+            poseStack.scale(1, 1, 1);
+        }
+        this.head.translateAndRotate(poseStack);
+        poseStack.popPose();
     }
 }

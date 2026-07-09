@@ -9,14 +9,14 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.world.level.block.Blocks;
-import org.jetbrains.annotations.NotNull;
 
 
-public class MoonCowHelmetLayer extends RenderLayer<@NotNull MoonCow, @NotNull LegacyCowModel> {
+
+public class MoonCowHelmetLayer extends RenderLayer< MoonCow,  LegacyCowModel> {
 
     private final BlockRenderDispatcher dispatcher;
 
-    public MoonCowHelmetLayer(final RenderLayerParent<@NotNull MoonCow, @NotNull LegacyCowModel> renderer, BlockRenderDispatcher dispatcher) {
+    public MoonCowHelmetLayer(final RenderLayerParent< MoonCow,  LegacyCowModel> renderer, BlockRenderDispatcher dispatcher) {
         super(renderer);
         this.dispatcher = dispatcher;
     }

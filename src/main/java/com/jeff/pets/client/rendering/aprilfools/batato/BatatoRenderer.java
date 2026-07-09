@@ -5,11 +5,11 @@ import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 
-public class BatatoRenderer extends PetRenderer<@NotNull Batato, @NotNull BatatoModel> {
+public class BatatoRenderer extends PetRenderer< Batato,  BatatoModel> {
 
     public static final ModelLayerLocation BATATO_LOCAITON = new ModelLayerLocation(new ResourceLocation(MOD_ID, "batato"), "main");
 
@@ -18,7 +18,7 @@ public class BatatoRenderer extends PetRenderer<@NotNull Batato, @NotNull Batato
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(Batato livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(Batato livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/batato.png");
     }
 }

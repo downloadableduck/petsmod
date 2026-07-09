@@ -6,10 +6,10 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
-import org.jetbrains.annotations.NotNull;
 
 
-public class ClientEvokerModel<T extends AbstractPet> extends PetModel<@NotNull T> {
+
+public class ClientEvokerModel<T extends AbstractPet> extends PetModel< T> {
     private final ModelPart head;
     private final ModelPart body;
     private final ModelPart arms;

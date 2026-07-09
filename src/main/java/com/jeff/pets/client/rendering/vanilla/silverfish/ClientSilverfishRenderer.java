@@ -7,9 +7,9 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class ClientSilverfishRenderer extends PetRenderer<@NotNull ClientSilverfish, @NotNull SilverfishModel<ClientSilverfish>> {
+
+public class ClientSilverfishRenderer extends PetRenderer< ClientSilverfish,  SilverfishModel<ClientSilverfish>> {
 
     public static final ModelLayerLocation SILVERFISH_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientsilverfish"), "main");
 
@@ -18,7 +18,7 @@ public class ClientSilverfishRenderer extends PetRenderer<@NotNull ClientSilverf
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientSilverfish livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientSilverfish livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/silverfish.png");
     }
 }

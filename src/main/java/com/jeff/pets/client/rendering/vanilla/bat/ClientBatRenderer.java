@@ -6,9 +6,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class ClientBatRenderer extends PetRenderer<@NotNull ClientBat, @NotNull ClientBatModel> {
+
+public class ClientBatRenderer extends PetRenderer< ClientBat,  ClientBatModel> {
     public static final ModelLayerLocation BAT_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "textures/entity/bat.png"), "main");
 
     public ClientBatRenderer(EntityRendererProvider.Context context) {
@@ -21,7 +21,7 @@ public class ClientBatRenderer extends PetRenderer<@NotNull ClientBat, @NotNull 
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientBat batRenderState) {
+    public  ResourceLocation getTextureLocation(ClientBat batRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/bat.png");
     }
 }

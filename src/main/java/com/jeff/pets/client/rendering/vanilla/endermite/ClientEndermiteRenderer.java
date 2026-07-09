@@ -7,9 +7,9 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class ClientEndermiteRenderer extends PetRenderer<@NotNull ClientEndermite, @NotNull EndermiteModel<ClientEndermite>> {
+
+public class ClientEndermiteRenderer extends PetRenderer< ClientEndermite,  EndermiteModel<ClientEndermite>> {
 
     public static final ModelLayerLocation ENDERMITE_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientendermite"), "main");
 
@@ -18,7 +18,7 @@ public class ClientEndermiteRenderer extends PetRenderer<@NotNull ClientEndermit
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientEndermite livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientEndermite livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/endermite.png");
     }
 }

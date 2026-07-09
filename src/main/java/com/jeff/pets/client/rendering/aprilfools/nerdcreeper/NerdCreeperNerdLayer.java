@@ -12,19 +12,19 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class NerdCreeperNerdLayer extends RenderLayer<@NotNull NerdCreeper, @NotNull CreeperModel<NerdCreeper>> {
+
+public class NerdCreeperNerdLayer extends RenderLayer< NerdCreeper,  CreeperModel<NerdCreeper>> {
 
     private final CreeperModel nerdCreeperLayer;
 
-    public NerdCreeperNerdLayer(RenderLayerParent<@NotNull NerdCreeper, @NotNull CreeperModel<NerdCreeper>> renderLayerParent, EntityRendererProvider.Context context) {
+    public NerdCreeperNerdLayer(RenderLayerParent< NerdCreeper,  CreeperModel<NerdCreeper>> renderLayerParent, EntityRendererProvider.Context context) {
         super(renderLayerParent);
         this.nerdCreeperLayer = new CreeperModel(context.bakeLayer(ModelLayers.CREEPER));
     }
 
     @Override
-    public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int i, NerdCreeper entityRenderState, float f, float g, float k, float m, float l, float ignored) {
+    public void render( PoseStack poseStack,  MultiBufferSource bufferSource, int i, NerdCreeper entityRenderState, float f, float g, float k, float m, float l, float ignored) {
         int overlayCoords = LivingEntityRenderer.getOverlayCoords(entityRenderState, 0.0f);
         poseStack.pushPose();
         poseStack.scale(1.1f, 1.0f, 1.1f);

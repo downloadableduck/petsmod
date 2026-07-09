@@ -8,13 +8,13 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import org.jetbrains.annotations.NotNull;
+
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class DuckRenderer extends PetRenderer<@NotNull Duck, @NotNull DuckModel> {
+public class DuckRenderer extends PetRenderer< Duck,  DuckModel> {
     public String duckTexturePath;
 
     public DuckRenderer(final EntityRendererProvider.Context context) {
@@ -22,7 +22,7 @@ public class DuckRenderer extends PetRenderer<@NotNull Duck, @NotNull DuckModel>
     }
 
     @Override
-    protected void scale(@NotNull Duck livingEntityRenderState, @NotNull PoseStack poseStack, float f) {
+    protected void scale( Duck livingEntityRenderState,  PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.6f, 0.6f, 0.6f);
         }
@@ -36,7 +36,7 @@ public class DuckRenderer extends PetRenderer<@NotNull Duck, @NotNull DuckModel>
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(final Duck state) {
+    public  ResourceLocation getTextureLocation(final Duck state) {
         if (Objects.equals(CONFIG.duckSkin, "pekin")) {
             duckTexturePath = "textures/entity/duck/pekin.png";
         } else if (Objects.equals(CONFIG.duckSkin, "mallard")) {

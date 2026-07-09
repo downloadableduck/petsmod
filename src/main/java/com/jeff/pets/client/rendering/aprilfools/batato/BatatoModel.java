@@ -12,7 +12,6 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.AnimationState;
 
 public class BatatoModel extends HierarchicalModel<Batato> {
     private final ModelPart root;
@@ -23,7 +22,6 @@ public class BatatoModel extends HierarchicalModel<Batato> {
     private final ModelPart leftWingTip;
     private final ModelPart feet;
     private final ModelPart head;
-    AnimationState flyAnimationState = new AnimationState();
 
     public BatatoModel(ModelPart modelPart) {
         super(RenderType::entityCutout);

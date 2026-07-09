@@ -11,9 +11,9 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class RayTracingRenderer extends PetRenderer<@NotNull RayTracing, @NotNull HumanoidModel<@NotNull RayTracing>> {
+
+public class RayTracingRenderer extends PetRenderer< RayTracing,  HumanoidModel< RayTracing>> {
 
     public static final ModelLayerLocation RAY_TRACING_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "raytracing"), "main");
 
@@ -27,7 +27,7 @@ public class RayTracingRenderer extends PetRenderer<@NotNull RayTracing, @NotNul
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(RayTracing livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(RayTracing livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/ray_tracing.png");
     }
 

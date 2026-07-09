@@ -12,19 +12,19 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import org.jetbrains.annotations.NotNull;
+
 
 public class ClientDrownedOuterLayer extends RenderLayer {
 
     private final ClientDrownedModel drownedModel;
 
-    public ClientDrownedOuterLayer(RenderLayerParent<@NotNull ClientDrowned, ?> renderLayerParent, EntityRendererProvider.Context context) {
+    public ClientDrownedOuterLayer(RenderLayerParent< ClientDrowned, ?> renderLayerParent, EntityRendererProvider.Context context) {
         super(renderLayerParent);
         this.drownedModel = new ClientDrownedModel(context.bakeLayer(ModelLayers.DROWNED));
     }
 
     @Override
-    public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource source, int i, Entity entityRenderState, float f, float g, float h, float b, float k, float t) {
+    public void render( PoseStack poseStack,  MultiBufferSource source, int i, Entity entityRenderState, float f, float g, float h, float b, float k, float t) {
         int overlayCoords = ClientDrownedRenderer.getOverlayCoords((LivingEntity) entityRenderState, 0.0f);
         poseStack.scale(1f, 1f, 1f);
         VertexConsumer consumer = source.getBuffer(RenderType.entityTranslucent(new ResourceLocation("minecraft", "textures/entity/zombie/drowned_outer_layer.png")));

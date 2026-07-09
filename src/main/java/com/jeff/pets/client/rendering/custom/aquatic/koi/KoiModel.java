@@ -6,9 +6,9 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
-import org.jetbrains.annotations.NotNull;
 
-public class KoiModel extends PetModel<@NotNull Koi> {
+
+public class KoiModel extends PetModel< Koi> {
     private final ModelPart body;
     private final ModelPart tail_fin;
     private final ModelPart left_fin;

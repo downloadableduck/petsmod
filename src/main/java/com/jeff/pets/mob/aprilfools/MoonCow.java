@@ -15,10 +15,10 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
+
 
 public class MoonCow extends AbstractPet {
-    public MoonCow(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
+    public MoonCow(EntityType<? extends  TamableAnimal> entityType, Level level) {
         super(entityType, level);
     }
 

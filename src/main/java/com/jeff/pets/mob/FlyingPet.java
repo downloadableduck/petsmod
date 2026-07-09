@@ -9,7 +9,7 @@ import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
+
 
 import java.util.Objects;
 
@@ -22,7 +22,7 @@ import java.util.Objects;
  */
 public abstract class FlyingPet extends AbstractPet {
 
-    protected FlyingPet(EntityType<? extends @NotNull TamableAnimal> type, Level level) {
+    protected FlyingPet(EntityType<? extends  TamableAnimal> type, Level level) {
         super(type, level);
     }
 

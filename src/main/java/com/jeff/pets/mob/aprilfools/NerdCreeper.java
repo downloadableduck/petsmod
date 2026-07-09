@@ -7,13 +7,13 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PowerableMob;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
+
 
 public class NerdCreeper extends GroundPet implements PowerableMob {
 
     public boolean isPowered = false;
 
-    public NerdCreeper(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
+    public NerdCreeper(EntityType<? extends  TamableAnimal> entityType, Level level) {
         super(entityType, level);
     }
 

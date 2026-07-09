@@ -10,7 +10,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
+
 
 @CanFly
 public class ClientSquid extends FlyingPet {
@@ -31,7 +31,7 @@ public class ClientSquid extends FlyingPet {
     private float tz;
 
 
-    public ClientSquid(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
+    public ClientSquid(EntityType<? extends  TamableAnimal> entityType, Level level) {
         super(entityType, level);
     }
 

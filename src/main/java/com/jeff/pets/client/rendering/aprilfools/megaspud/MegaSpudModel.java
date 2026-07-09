@@ -8,9 +8,9 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import org.jetbrains.annotations.NotNull;
 
-public class MegaSpudModel extends PetModel<@NotNull MegaSpud> {
+
+public class MegaSpudModel extends PetModel< MegaSpud> {
     private final ModelPart root;
 
     public MegaSpudModel(ModelPart modelPart) {
@@ -36,7 +36,7 @@ public class MegaSpudModel extends PetModel<@NotNull MegaSpud> {
     }
 
     @Override
-    public void setupAnim(@NotNull MegaSpud entity, float f, float g, float h, float i, float j) {
+    public void setupAnim( MegaSpud entity, float f, float g, float h, float i, float j) {
 
     }
 }

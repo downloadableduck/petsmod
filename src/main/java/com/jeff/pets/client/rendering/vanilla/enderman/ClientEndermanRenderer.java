@@ -8,9 +8,9 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.layers.EnderEyesLayer;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class ClientEndermanRenderer extends PetRenderer<@NotNull ClientEnderman, @NotNull EndermanModel<ClientEnderman>> {
+
+public class ClientEndermanRenderer extends PetRenderer< ClientEnderman,  EndermanModel<ClientEnderman>> {
     public static final ModelLayerLocation ENDERMAN_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientenderman"), "main");
 
     public ClientEndermanRenderer(EntityRendererProvider.Context context) {
@@ -19,7 +19,7 @@ public class ClientEndermanRenderer extends PetRenderer<@NotNull ClientEnderman,
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientEnderman enderman) {
+    public  ResourceLocation getTextureLocation(ClientEnderman enderman) {
         return new ResourceLocation("minecraft", "textures/entity/enderman/enderman.png");
     }
 }

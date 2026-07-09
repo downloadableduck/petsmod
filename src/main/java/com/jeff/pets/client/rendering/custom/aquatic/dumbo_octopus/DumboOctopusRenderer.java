@@ -7,7 +7,7 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.client.Central.CONFIG;
 import static com.jeff.pets.PetsInitializer.MOD_ID;
@@ -24,7 +24,7 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(@NotNull DumboOctopus state) {
+    public  ResourceLocation getTextureLocation( DumboOctopus state) {
         String path;
         String yellow = "textures/entity/dumbo_octopus/yellow.png";
         String red = "textures/entity/dumbo_octopus/red.png";

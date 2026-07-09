@@ -7,7 +7,7 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 
@@ -20,7 +20,7 @@ public class StingrayRenderer extends PetRenderer<Stingray, StingrayModel> {
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(@NotNull Stingray state) {
+    public  ResourceLocation getTextureLocation( Stingray state) {
         return new ResourceLocation(MOD_ID, "textures/entity/stingray/stingray.png");
     }
 

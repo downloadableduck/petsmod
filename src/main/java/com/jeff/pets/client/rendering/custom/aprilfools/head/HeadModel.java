@@ -8,9 +8,9 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class HeadModel extends PetModel<@NotNull Head> {
+
+public class HeadModel extends PetModel< Head> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
             new ResourceLocation(PetsInitializer.MOD_ID, "head"), "main"
     );

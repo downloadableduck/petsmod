@@ -31,16 +31,16 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 import static com.jeff.pets.PetsInitializer.Entities.DUCK;
 
 public class Duck extends AbstractPet {
 
-    public static final EntityDataAccessor<@NotNull Boolean> IS_SERVER_ENTITY =
+    public static final EntityDataAccessor< Boolean> IS_SERVER_ENTITY =
             SynchedEntityData.defineId(Duck.class, EntityDataSerializers.BOOLEAN);
-    public static final EntityDataAccessor<@NotNull Integer> DUCK_SKIN =
+    public static final EntityDataAccessor< Integer> DUCK_SKIN =
             SynchedEntityData.defineId(Duck.class, EntityDataSerializers.INT);
     public float flap;
     public float flapSpeed;
@@ -52,7 +52,7 @@ public class Duck extends AbstractPet {
     public ServerPlayer owner = (ServerPlayer) this.getOwner();
     private float nextFlap = 1.0F;
 
-    public Duck(final EntityType<? extends @NotNull Duck> type, final Level level) {
+    public Duck(final EntityType<? extends  Duck> type, final Level level) {
         super(type, level);
     }
 
@@ -123,7 +123,7 @@ public class Duck extends AbstractPet {
         return PetsSounds.DUCK_AMBIENT.get();
     }
 
-    protected SoundEvent getHurtSound(final @NotNull DamageSource source) {
+    protected SoundEvent getHurtSound(final  DamageSource source) {
         return PetsSounds.DUCK_AMBIENT.get();
     }
 
@@ -131,23 +131,23 @@ public class Duck extends AbstractPet {
         return PetsSounds.DUCK_AMBIENT.get();
     }
 
-    protected void playStepSound(final @NotNull BlockPos pos, final @NotNull BlockState blockState) {
+    protected void playStepSound(final  BlockPos pos, final  BlockState blockState) {
         this.playSound(SoundEvents.CHICKEN_STEP, 0.15F, 1.0F);
     }
 
-    public @Nullable Duck getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgeableMob partner) {
+    public  Duck getBreedOffspring(final  ServerLevel level, final  AgeableMob partner) {
         Duck duck = DUCK.get().create(level);
         duck.setServerEntity(true);
         return duck;
     }
 
-    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull MobSpawnType spawnReason, final @Nullable SpawnGroupData groupData, CompoundTag compoundTag) {
+    public SpawnGroupData finalizeSpawn(final  ServerLevelAccessor level, final  DifficultyInstance difficulty, final  MobSpawnType spawnReason, final  SpawnGroupData groupData, CompoundTag compoundTag) {
         this.setServerEntity(true);
         this.entityData.set(DUCK_SKIN, this.random.nextInt(2));
         return super.finalizeSpawn(level, difficulty, spawnReason, groupData, compoundTag);
     }
 
-    public boolean isFood(final @NotNull ItemStack itemStack) {
+    public boolean isFood(final  ItemStack itemStack) {
         return itemStack.is(ItemTags.FISHES);
     }
 
@@ -267,28 +267,28 @@ public class Duck extends AbstractPet {
     }
 
     @Override
-    public void addAdditionalSaveData(@NotNull CompoundTag output) {
+    public void addAdditionalSaveData( CompoundTag output) {
         super.addAdditionalSaveData(output);
         output.putBoolean("isServerEntity", true);
         output.putInt("variant", this.entityData.get(DUCK_SKIN));
     }
 
     @Override
-    public void readAdditionalSaveData(@NotNull CompoundTag input) {
+    public void readAdditionalSaveData( CompoundTag input) {
         super.readAdditionalSaveData(input);
         this.setServerEntity(input.getBoolean("isServerEntity"));
         this.entityData.set(DUCK_SKIN, input.getInt("variant"));
     }
 
     @Override
-    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
+    public void onSyncedDataUpdated( EntityDataAccessor<?> key) {
         if (this.level != null && this.level != null && !this.level.isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
     }
 
     @Override
-    public @NotNull Packet<?> getAddEntityPacket() {
+    public  Packet<?> getAddEntityPacket() {
         if (this.level != null && this.level.isClientSide()) {
             return new ClientboundAddEntityPacket(this);
         } else {

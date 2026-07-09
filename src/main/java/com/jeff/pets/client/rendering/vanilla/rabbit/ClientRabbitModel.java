@@ -67,6 +67,12 @@ public class ClientRabbitModel extends EntityModel<ClientRabbit> {
         if (this.young) {
             float f = 1.5F;
             poseStack.pushPose();
+            if (CONFIG.isBaby) {
+                poseStack.scale(1.5f, 1.5f, 1.5f);
+            } else {
+                poseStack.scale(1, 1, 1);
+            }
+            this.head.translateAndRotate(poseStack);
             poseStack.scale(0.56666666F, 0.56666666F, 0.56666666F);
             poseStack.translate(0.0F, 1.375F, 0.125F);
             ImmutableList.of(this.head, this.leftEar, this.rightEar, this.nose).forEach((modelPart) -> modelPart.render(poseStack, vertexConsumer, i, j));
@@ -103,16 +109,6 @@ public class ClientRabbitModel extends EntityModel<ClientRabbit> {
         this.rightRearFoot.xRot = this.jumpRotation * 50.0F * ((float) Math.PI / 180F);
         this.leftFrontLeg.xRot = (this.jumpRotation * -40.0F - 11.0F) * ((float) Math.PI / 180F);
         this.rightFrontLeg.xRot = (this.jumpRotation * -40.0F - 11.0F) * ((float) Math.PI / 180F);
-
-        if (CONFIG.isBaby) {
-            this.head.xScale = 1.5f;
-            this.head.yScale = 1.5f;
-            this.head.zScale = 1.5f;
-        } else {
-            this.head.xScale = 1f;
-            this.head.yScale = 1f;
-            this.head.zScale = 1f;
-        }
     }
 
     public void prepareMobModel(ClientRabbit rabbit, float f, float g, float h) {

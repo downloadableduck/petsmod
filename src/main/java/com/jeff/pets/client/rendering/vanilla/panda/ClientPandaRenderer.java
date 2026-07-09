@@ -7,11 +7,11 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientPandaRenderer extends PetRenderer<@NotNull ClientPanda, @NotNull ClientPandaModel> {
+public class ClientPandaRenderer extends PetRenderer< ClientPanda,  ClientPandaModel> {
     public static final ModelLayerLocation PANDA_LOCAITON = new ModelLayerLocation(new ResourceLocation("minecraft", "clientpanda"), "main");
 
     public ClientPandaRenderer(EntityRendererProvider.Context context) {
@@ -19,14 +19,14 @@ public class ClientPandaRenderer extends PetRenderer<@NotNull ClientPanda, @NotN
     }
 
     @Override
-    protected void scale(ClientPanda state, @NotNull PoseStack poseStack, float f) {
+    protected void scale(ClientPanda state,  PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientPanda livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientPanda livingEntityRenderState) {
         String pandaTexturePath;
         switch (CONFIG.pandaSkin) {
             case "normal" -> pandaTexturePath = "textures/entity/panda/panda.png";

@@ -7,11 +7,11 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientAxolotlRenderer extends PetRenderer<@NotNull ClientAxolotl, @NotNull ClientAxolotlModel> {
+public class ClientAxolotlRenderer extends PetRenderer< ClientAxolotl,  ClientAxolotlModel> {
     public static final ModelLayerLocation AXOLOTL_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientaxolotl"), "main");
 
     String axolotlTextureLocation;
@@ -21,7 +21,7 @@ public class ClientAxolotlRenderer extends PetRenderer<@NotNull ClientAxolotl, @
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientAxolotl axolotlRenderState) {
+    public  ResourceLocation getTextureLocation(ClientAxolotl axolotlRenderState) {
         switch (CONFIG.axolotlSkin) {
             case "pink" -> axolotlTextureLocation = "textures/entity/axolotl/axolotl_lucy.png";
             case "brown" -> axolotlTextureLocation = "textures/entity/axolotl/axolotl_wild.png";
@@ -37,7 +37,7 @@ public class ClientAxolotlRenderer extends PetRenderer<@NotNull ClientAxolotl, @
     }
 
     @Override
-    protected void scale(ClientAxolotl state, @NotNull PoseStack poseStack, float f) {
+    protected void scale(ClientAxolotl state,  PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }

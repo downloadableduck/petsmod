@@ -6,9 +6,9 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class ClientRavagerRenderer extends PetRenderer<@NotNull ClientRavager, @NotNull ClientRavagerModel> {
+
+public class ClientRavagerRenderer extends PetRenderer< ClientRavager,  ClientRavagerModel> {
 
     public static final ModelLayerLocation RAVAGER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientravager"), "main");
 
@@ -17,7 +17,7 @@ public class ClientRavagerRenderer extends PetRenderer<@NotNull ClientRavager, @
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientRavager livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientRavager livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/illager/ravager.png");
     }
 }

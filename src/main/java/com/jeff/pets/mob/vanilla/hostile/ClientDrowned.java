@@ -6,13 +6,13 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
+
 
 public class ClientDrowned extends GroundPet {
 
     public boolean isOnHead;
 
-    public ClientDrowned(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
+    public ClientDrowned(EntityType<? extends  TamableAnimal> entityType, Level level) {
         super(entityType, level);
     }
 

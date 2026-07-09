@@ -36,7 +36,6 @@ import com.jeff.pets.client.rendering.custom.first.penguin.PenguinModel;
 import com.jeff.pets.client.rendering.custom.first.penguin.PenguinRenderer;
 import com.jeff.pets.client.rendering.custom.first.racoon.RacoonModel;
 import com.jeff.pets.client.rendering.custom.first.racoon.RacoonRenderer;
-import com.jeff.pets.client.rendering.vanilla.allay.ClientAllayRenderer;
 import com.jeff.pets.client.rendering.vanilla.axolotl.ClientAxolotlRenderer;
 import com.jeff.pets.client.rendering.vanilla.bat.ClientBatRenderer;
 import com.jeff.pets.client.rendering.vanilla.bee.ClientBeeRenderer;
@@ -60,7 +59,6 @@ import com.jeff.pets.client.rendering.vanilla.evoker.ClientEvokerModel;
 import com.jeff.pets.client.rendering.vanilla.evoker.ClientEvokerRenderer;
 import com.jeff.pets.client.rendering.vanilla.fox.ClientFoxModel;
 import com.jeff.pets.client.rendering.vanilla.fox.ClientFoxRenderer;
-import com.jeff.pets.client.rendering.vanilla.frog.ClientFrogRenderer;
 import com.jeff.pets.client.rendering.vanilla.ghast.ClientGhastRenderer;
 import com.jeff.pets.client.rendering.vanilla.goat.ClientGoatModel;
 import com.jeff.pets.client.rendering.vanilla.goat.ClientGoatRenderer;
@@ -98,13 +96,11 @@ import com.jeff.pets.client.rendering.vanilla.spider.ClientSpiderRenderer;
 import com.jeff.pets.client.rendering.vanilla.squid.ClientSquidRenderer;
 import com.jeff.pets.client.rendering.vanilla.stray.ClientStrayRenderer;
 import com.jeff.pets.client.rendering.vanilla.strider.ClientStriderRenderer;
-import com.jeff.pets.client.rendering.vanilla.tadpole.ClientTadpoleRenderer;
 import com.jeff.pets.client.rendering.vanilla.turtle.ClientTurtleRenderer;
 import com.jeff.pets.client.rendering.vanilla.vex.ClientVexRenderer;
 import com.jeff.pets.client.rendering.vanilla.villager.ClientVillagerRenderer;
 import com.jeff.pets.client.rendering.vanilla.vindicator.ClientVindicatorRenderer;
 import com.jeff.pets.client.rendering.vanilla.wanderingtrader.ClientWanderingTraderRenderer;
-import com.jeff.pets.client.rendering.vanilla.warden.ClientWardenRenderer;
 import com.jeff.pets.client.rendering.vanilla.witch.ClientWitchRenderer;
 import com.jeff.pets.client.rendering.vanilla.wither.ClientWitherRenderer;
 import com.jeff.pets.client.rendering.vanilla.witherskeleton.ClientWitherSkeletonRenderer;
@@ -123,8 +119,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fmlclient.registry.ClientRegistry;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -178,14 +174,12 @@ public class PetsClientInitializer {
         event.registerLayerDefinition(ClientSheepRenderer.SHEEP_LOCATION, ClientSheepModel::createBodyLayer);
         event.registerLayerDefinition(ClientSheepWoolLayer.SHEEP_WOOL_LOCATION, ClientSheepModel::createBodyLayer);
         event.registerLayerDefinition(ClientCatRenderer.CAT_LOCATION, ClientCatRenderer::createCatBodyLayer);
-        event.registerLayerDefinition(ClientAllayRenderer.ALLAY_TEXTURE, AllayModel::createBodyLayer);
         event.registerLayerDefinition(ClientAxolotlRenderer.AXOLOTL_LOCATION, AxolotlModel::createBodyLayer);
         event.registerLayerDefinition(ClientBatRenderer.BAT_LOCATION, BatModel::createBodyLayer);
         event.registerLayerDefinition(ClientChickenRenderer.CHICKEN_LOCATION, ClientChickenModel::createBodyLayer);
         event.registerLayerDefinition(ClientCodRenderer.COD_LOCATION, CodModel::createBodyLayer);
         event.registerLayerDefinition(ClientCowRenderer.COW_LOCATION, ClientCowModel::createBodyLayer);
         event.registerLayerDefinition(ClientDonkeyRenderer.DONKEY_LOCATION, ClientDonkeyRenderer::createBodyLayer);
-        event.registerLayerDefinition(ClientFrogRenderer.FROG_LOCATION, FrogModel::createBodyLayer);
         event.registerLayerDefinition(ClientHorseRenderer.HORSE_LOCATION, ClientHorseRenderer::createBaseHorseLayer);
         event.registerLayerDefinition(ClientMooshroomRenderer.MOOSHROOM_LOCATION, ClientCowModel::createBodyLayer);
         event.registerLayerDefinition(ClientParrotRenderer.PARROT_LOCATION, ParrotModel::createBodyLayer);
@@ -195,7 +189,6 @@ public class PetsClientInitializer {
         event.registerLayerDefinition(ClientSnowGolemRenderer.SNOW_GOLEM, SnowGolemModel::createBodyLayer);
         event.registerLayerDefinition(ClientSquidRenderer.SQUID_LOCATION, SquidModel::createBodyLayer);
         event.registerLayerDefinition(ClientStriderRenderer.STRIDER_LOCATION, StriderModel::createBodyLayer);
-        event.registerLayerDefinition(ClientTadpoleRenderer.TADPOLE_LOCATION, TadpoleModel::createBodyLayer);
         event.registerLayerDefinition(ClientTurtleRenderer.TURTLE_LOCATION, TurtleModel::createBodyLayer);
         event.registerLayerDefinition(ClientVillagerRenderer.VILLAGER_LOCATION, ClientVillagerRenderer::createBaseVillagerLayer);
         event.registerLayerDefinition(ClientWanderingTraderRenderer.WANDERING_TRADER_LOCATION, ClientVillagerRenderer::createBaseVillagerLayer);
@@ -232,7 +225,6 @@ public class PetsClientInitializer {
         event.registerLayerDefinition(ClientStrayRenderer.STRAY_LOCATION, SkeletonModel::createBodyLayer);
         event.registerLayerDefinition(ClientVexRenderer.VEX_LOCATION, VexModel::createBodyLayer);
         event.registerLayerDefinition(ClientVindicatorRenderer.VINDICATOR_LOCATION, ClientEvokerModel::createBodyLayer);
-        event.registerLayerDefinition(ClientWardenRenderer.WARDEN_LOCATION, WardenModel::createBodyLayer);
         event.registerLayerDefinition(ClientWitchRenderer.WITCH_LOCATION, WitchModel::createBodyLayer);
         event.registerLayerDefinition(ClientWitherSkeletonRenderer.WITHER_SKELETON_LOCATION, SkeletonModel::createBodyLayer);
         event.registerLayerDefinition(ClientZombieRenderer.ZOMBIE_LOCATION, ClientZombieRenderer::createBaseZombieLayer);
@@ -268,14 +260,12 @@ public class PetsClientInitializer {
         event.registerEntityRenderer(PetsInitializer.Entities.PENGUIN.get(), PenguinRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.SHEEP.get(), ClientSheepRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.CAT.get(), ClientCatRenderer::new);
-        event.registerEntityRenderer(PetsInitializer.Entities.ALLAY.get(), ClientAllayRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.AXOLOTL.get(), ClientAxolotlRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.BAT.get(), ClientBatRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.CHICKEN.get(), ClientChickenRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.COD.get(), ClientCodRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.COW.get(), ClientCowRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.DONKEY.get(), ClientDonkeyRenderer::new);
-        event.registerEntityRenderer(PetsInitializer.Entities.FROG.get(), ClientFrogRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.HORSE.get(), ClientHorseRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.MOOSHROOM.get(), ClientMooshroomRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.PARROT.get(), ClientParrotRenderer::new);
@@ -285,7 +275,6 @@ public class PetsClientInitializer {
         event.registerEntityRenderer(PetsInitializer.Entities.SNOW_GOLEM.get(), ClientSnowGolemRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.SQUID.get(), ClientSquidRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.STRIDER.get(), ClientStriderRenderer::new);
-        event.registerEntityRenderer(PetsInitializer.Entities.TADPOLE.get(), ClientTadpoleRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.TURTLE.get(), ClientTurtleRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.VILLAGER.get(), ClientVillagerRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.WANDERING_TRADER.get(), ClientWanderingTraderRenderer::new);
@@ -324,7 +313,6 @@ public class PetsClientInitializer {
         event.registerEntityRenderer(PetsInitializer.Entities.STRAY.get(), ClientStrayRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.VEX.get(), ClientVexRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.VINDICATOR.get(), ClientVindicatorRenderer::new);
-        event.registerEntityRenderer(PetsInitializer.Entities.WARDEN.get(), ClientWardenRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.WITCH.get(), ClientWitchRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.WITHER_SKELETON.get(), ClientWitherSkeletonRenderer::new);
         event.registerEntityRenderer(PetsInitializer.Entities.ZOMBIE.get(), ClientZombieRenderer::new);
@@ -358,9 +346,11 @@ public class PetsClientInitializer {
      */
 
     @SubscribeEvent
-    void createKeyBinding(RegisterKeyMappingsEvent event) {
+    void createKeyBinding(FMLClientSetupEvent event) {
+        event.enqueueWork(() -> {
         openConfigScreen = new KeyMapping("Open Pets Menu", GLFW.GLFW_KEY_P, "petsmod.keymapping");
 
-        event.register(openConfigScreen);
+            ClientRegistry.registerKeyBinding(openConfigScreen);
+        });
     }
 }

@@ -8,7 +8,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
+
 
 @CanFly
 public class ClientParrot extends FlyingPet {
@@ -21,7 +21,7 @@ public class ClientParrot extends FlyingPet {
 
     public boolean isOnHead;
 
-    public ClientParrot(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
+    public ClientParrot(EntityType<? extends  TamableAnimal> entityType, Level level) {
         super(entityType, level);
     }
 

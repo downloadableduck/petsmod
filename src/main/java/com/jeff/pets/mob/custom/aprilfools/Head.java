@@ -26,16 +26,16 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 import static com.jeff.pets.PetsInitializer.Entities.HEAD;
 
 public class Head extends AbstractPet {
-    public static final EntityDataAccessor<@NotNull Boolean> IS_SERVER_ENTITY =
+    public static final EntityDataAccessor< Boolean> IS_SERVER_ENTITY =
             SynchedEntityData.defineId(Head.class, EntityDataSerializers.BOOLEAN);
 
-    public Head(final EntityType<? extends @NotNull Head> type, final Level level) {
+    public Head(final EntityType<? extends  Head> type, final Level level) {
         super(type, level);
     }
 
@@ -44,7 +44,7 @@ public class Head extends AbstractPet {
     }
 
     @Override
-    public @Nullable AgeableMob getBreedOffspring(@NotNull ServerLevel serverLevel, @NotNull AgeableMob ageableMob) {
+    public  AgeableMob getBreedOffspring( ServerLevel serverLevel,  AgeableMob ageableMob) {
         return HEAD.get().create(serverLevel);
     }
 
@@ -72,12 +72,12 @@ public class Head extends AbstractPet {
     }
 
     @Override
-    public boolean isFood(@NotNull ItemStack itemStack) {
+    public boolean isFood( ItemStack itemStack) {
         return itemStack.is(Items.CAKE);
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, MobSpawnType mobSpawnType, final @Nullable SpawnGroupData groupData, CompoundTag compoundTag) {
+    public SpawnGroupData finalizeSpawn(final  ServerLevelAccessor level, final  DifficultyInstance difficulty, MobSpawnType mobSpawnType, final  SpawnGroupData groupData, CompoundTag compoundTag) {
         this.setServerEntity(true);
         return super.finalizeSpawn(level, difficulty, mobSpawnType, groupData, compoundTag);
     }
@@ -110,7 +110,7 @@ public class Head extends AbstractPet {
     }
 
     @Override
-    public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
+    public  InteractionResult mobInteract( Player player,  InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
 
         var x = this.getX();
@@ -248,20 +248,20 @@ public class Head extends AbstractPet {
     }
 
     @Override
-    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
+    public void onSyncedDataUpdated( EntityDataAccessor<?> key) {
         if (this.level != null && !this.level.isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
     }
 
     @Override
-    public void addAdditionalSaveData(@NotNull CompoundTag output) {
+    public void addAdditionalSaveData( CompoundTag output) {
         super.addAdditionalSaveData(output);
         output.putBoolean("isServerEntity", true);
     }
 
     @Override
-    public void readAdditionalSaveData(@NotNull CompoundTag input) {
+    public void readAdditionalSaveData( CompoundTag input) {
         super.readAdditionalSaveData(input);
         this.setServerEntity(input.getBoolean("isServerEntity"));
     }

@@ -9,9 +9,9 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class TraitorRenderer extends PetRenderer<@NotNull Traitor, @NotNull ClientEvokerModel<Traitor>> {
+
+public class TraitorRenderer extends PetRenderer< Traitor,  ClientEvokerModel<Traitor>> {
 
     public static final ModelLayerLocation TRAITOR_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "traitor"), "main");
 
@@ -21,7 +21,7 @@ public class TraitorRenderer extends PetRenderer<@NotNull Traitor, @NotNull Clie
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(Traitor livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(Traitor livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/illager/pillager.png");
     }
 }

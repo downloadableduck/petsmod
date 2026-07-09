@@ -10,13 +10,13 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientWitherRenderer extends PetRenderer<@NotNull ClientWither, @NotNull ClientWitherModel<ClientWither>> {
+public class ClientWitherRenderer extends PetRenderer< ClientWither,  ClientWitherModel<ClientWither>> {
 
     public static final ModelLayerLocation WITHER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientwither"), "main");
 
@@ -31,7 +31,7 @@ public class ClientWitherRenderer extends PetRenderer<@NotNull ClientWither, @No
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientWither livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientWither livingEntityRenderState) {
         String witherTexturePath;
         if (Objects.equals(CONFIG.witherSkin, "normal")) {
             witherTexturePath = "textures/entity/wither/wither.png";

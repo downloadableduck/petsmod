@@ -8,11 +8,11 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class TraitorBiomeLayer extends RenderLayer<@NotNull Traitor, @NotNull ClientEvokerModel<Traitor>> {
+public class TraitorBiomeLayer extends RenderLayer< Traitor,  ClientEvokerModel<Traitor>> {
 
     public static final ModelLayerLocation DESERT_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "textures/entity/villager/type/desert.png"), "main");
     public static final ModelLayerLocation JUNGLE_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "textures/entity/villager/type/jungle.png"), "main");
@@ -22,12 +22,12 @@ public class TraitorBiomeLayer extends RenderLayer<@NotNull Traitor, @NotNull Cl
     public static final ModelLayerLocation SWAMP_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "textures/entity/villager/type/swamp.png"), "main");
     public static final ModelLayerLocation TAIGA_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "textures/entity/villager/type/taiga.png"), "main");
 
-    public TraitorBiomeLayer(RenderLayerParent<@NotNull Traitor, @NotNull ClientEvokerModel<Traitor>> renderLayerParent) {
+    public TraitorBiomeLayer(RenderLayerParent< Traitor,  ClientEvokerModel<Traitor>> renderLayerParent) {
         super(renderLayerParent);
     }
 
     @Override
-    public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int i, Traitor entityRenderState, float f, float g, float h, float j, float k, float m) {
+    public void render( PoseStack poseStack,  MultiBufferSource bufferSource, int i, Traitor entityRenderState, float f, float g, float h, float j, float k, float m) {
         poseStack.pushPose();
         poseStack.scale(1.001f, 1.001f, 1.001f);
         switch (CONFIG.traitorSkin) {

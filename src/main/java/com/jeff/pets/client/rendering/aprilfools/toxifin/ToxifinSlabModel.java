@@ -12,9 +12,9 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
 
-public class ToxifinSlabModel<T extends LivingEntity> extends PetModel<@NotNull T> {
+
+public class ToxifinSlabModel<T extends LivingEntity> extends PetModel< T> {
     private static final float A2;
     private static final float A12;
     private static final float[] SPIKE_X_ROT_SLAB;

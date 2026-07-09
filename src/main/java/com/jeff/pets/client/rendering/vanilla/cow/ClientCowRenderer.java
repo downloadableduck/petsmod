@@ -7,11 +7,11 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientCowRenderer extends PetRenderer<@NotNull ClientCow, @NotNull ClientCowModel<ClientCow>> {
+public class ClientCowRenderer extends PetRenderer< ClientCow,  ClientCowModel<ClientCow>> {
     public static ModelLayerLocation COW_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientcow"), "main");
     String cowTexturePath;
 
@@ -19,12 +19,12 @@ public class ClientCowRenderer extends PetRenderer<@NotNull ClientCow, @NotNull 
         super(context, new ClientCowModel<>(context.bakeLayer(ModelLayers.COW)), 0.7F);
     }
 
-    public @NotNull ResourceLocation getTextureLocation(ClientCow LivingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientCow LivingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/cow/cow.png");
     }
 
     @Override
-    protected void scale(ClientCow state, @NotNull PoseStack poseStack, float f) {
+    protected void scale(ClientCow state,  PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }

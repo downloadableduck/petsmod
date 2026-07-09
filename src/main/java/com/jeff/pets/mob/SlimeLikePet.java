@@ -11,7 +11,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
+
 
 import java.util.Objects;
 
@@ -20,7 +20,7 @@ import java.util.Objects;
  * including rabbits.
  */
 public abstract class SlimeLikePet extends AbstractPet {
-    public SlimeLikePet(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
+    public SlimeLikePet(EntityType<? extends  TamableAnimal> entityType, Level level) {
         super(entityType, level);
     }
 

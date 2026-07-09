@@ -7,9 +7,9 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class ClientWanderingTraderRenderer extends PetRenderer<@NotNull ClientWanderingTrader, @NotNull VillagerModel<ClientWanderingTrader>> {
+
+public class ClientWanderingTraderRenderer extends PetRenderer< ClientWanderingTrader,  VillagerModel<ClientWanderingTrader>> {
     public static final ModelLayerLocation WANDERING_TRADER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientwanderingtrader"), "main");
 
     public ClientWanderingTraderRenderer(EntityRendererProvider.Context context) {
@@ -17,7 +17,7 @@ public class ClientWanderingTraderRenderer extends PetRenderer<@NotNull ClientWa
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientWanderingTrader villagerRenderState) {
+    public  ResourceLocation getTextureLocation(ClientWanderingTrader villagerRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/wandering_trader.png");
     }
 }

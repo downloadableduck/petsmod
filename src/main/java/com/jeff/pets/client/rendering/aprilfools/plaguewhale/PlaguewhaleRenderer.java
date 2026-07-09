@@ -7,9 +7,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class PlaguewhaleRenderer extends PetRenderer<@NotNull PlaguewhaleSlab, @NotNull ToxifinSlabModel<PlaguewhaleSlab>> {
+
+public class PlaguewhaleRenderer extends PetRenderer< PlaguewhaleSlab,  ToxifinSlabModel<PlaguewhaleSlab>> {
 
     public static final ModelLayerLocation PLAGUEWHALE_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "plaguewhale_slab"), "main");
 
@@ -23,7 +23,7 @@ public class PlaguewhaleRenderer extends PetRenderer<@NotNull PlaguewhaleSlab, @
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(PlaguewhaleSlab livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(PlaguewhaleSlab livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/plaguewhale.png");
     }
 }

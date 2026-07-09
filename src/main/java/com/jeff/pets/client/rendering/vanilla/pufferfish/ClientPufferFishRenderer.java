@@ -7,9 +7,9 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class ClientPufferFishRenderer extends PetRenderer<@NotNull ClientPufferFish, @NotNull PufferfishBigModel<ClientPufferFish>> {
+
+public class ClientPufferFishRenderer extends PetRenderer< ClientPufferFish,  PufferfishBigModel<ClientPufferFish>> {
 
     public static final ModelLayerLocation PUFFERFISH_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientpufferfish"), "main");
 
@@ -18,7 +18,7 @@ public class ClientPufferFishRenderer extends PetRenderer<@NotNull ClientPufferF
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientPufferFish livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientPufferFish livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/fish/pufferfish.png");
     }
 }

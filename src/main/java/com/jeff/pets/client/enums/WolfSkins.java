@@ -16,6 +16,6 @@ public enum WolfSkins implements NameableEnum {
 
     @Override
     public Component getDisplayName() {
-        return Component.literal(String.valueOf(this).replace("_", " "));
+        return new net.minecraft.network.chat.TextComponent(String.valueOf(this).replace("_", " "));
     }
 }

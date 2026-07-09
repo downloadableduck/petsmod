@@ -10,11 +10,11 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientLlamaRenderer extends PetRenderer<@NotNull ClientLlama, @NotNull ClientLlamaModel> {
+public class ClientLlamaRenderer extends PetRenderer< ClientLlama,  ClientLlamaModel> {
 
     public static final ModelLayerLocation LLAMA_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientllama"), "main");
     public String llamaTexturePath;
@@ -30,14 +30,14 @@ public class ClientLlamaRenderer extends PetRenderer<@NotNull ClientLlama, @NotN
     }
 
     @Override
-    protected void scale(ClientLlama state, @NotNull PoseStack poseStack, float f) {
+    protected void scale(ClientLlama state,  PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientLlama livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientLlama livingEntityRenderState) {
         switch (CONFIG.llamaSkin) {
             case "brown" -> llamaTexturePath = "textures/entity/llama/brown.png";
             case "creamy" -> llamaTexturePath = "textures/entity/llama/creamy.png";

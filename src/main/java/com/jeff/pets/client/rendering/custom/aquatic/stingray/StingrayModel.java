@@ -6,9 +6,9 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
-import org.jetbrains.annotations.NotNull;
 
-public class StingrayModel extends PetModel<@NotNull Stingray> {
+
+public class StingrayModel extends PetModel< Stingray> {
     private final ModelPart body;
     private final ModelPart tail;
     private final ModelPart right_fin;

@@ -10,13 +10,13 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import org.jetbrains.annotations.NotNull;
+
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSquidRenderer extends PetRenderer<@NotNull ClientSquid, @NotNull SquidModel<ClientSquid>> {
+public class ClientSquidRenderer extends PetRenderer< ClientSquid,  SquidModel<ClientSquid>> {
     public static final ModelLayerLocation SQUID_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientsquid"), "main");
     String squidTexturePath;
 
@@ -25,7 +25,7 @@ public class ClientSquidRenderer extends PetRenderer<@NotNull ClientSquid, @NotN
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientSquid squidRenderState) {
+    public  ResourceLocation getTextureLocation(ClientSquid squidRenderState) {
         if (Objects.equals(CONFIG.squidSkin, "squid")) {
             squidTexturePath = "textures/entity/squid/squid.png";
         } else if (Objects.equals(CONFIG.squidSkin, "glow_squid")) {
@@ -35,7 +35,7 @@ public class ClientSquidRenderer extends PetRenderer<@NotNull ClientSquid, @NotN
     }
 
     @Override
-    protected void scale(@NotNull ClientSquid livingEntityRenderState, @NotNull PoseStack poseStack, float f) {
+    protected void scale( ClientSquid livingEntityRenderState,  PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }

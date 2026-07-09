@@ -7,7 +7,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
+
 
 public class ClientChicken extends GroundPet {
 
@@ -17,7 +17,7 @@ public class ClientChicken extends GroundPet {
     public float flapSpeed;
     public float flapping = 1.0F;
 
-    public ClientChicken(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
+    public ClientChicken(EntityType<? extends  TamableAnimal> entityType, Level level) {
         super(entityType, level);
     }
 

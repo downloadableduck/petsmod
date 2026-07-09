@@ -7,11 +7,11 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
+
 
 @CanFly
 public class PinkWither extends FlyingPet {
-    public PinkWither(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
+    public PinkWither(EntityType<? extends  TamableAnimal> entityType, Level level) {
         super(entityType, level);
     }
 

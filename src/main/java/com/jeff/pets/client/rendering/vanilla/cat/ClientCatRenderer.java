@@ -12,11 +12,11 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientCatRenderer extends PetRenderer<@NotNull ClientCat, @NotNull ClientCatModel> {
+public class ClientCatRenderer extends PetRenderer< ClientCat,  ClientCatModel> {
     public static final ModelLayerLocation CAT_LOCATION = new ModelLayerLocation(
             new ResourceLocation(PetsInitializer.MOD_ID, "clientcat"), "main"
     );
@@ -31,14 +31,14 @@ public class ClientCatRenderer extends PetRenderer<@NotNull ClientCat, @NotNull 
     }
 
     @Override
-    protected void scale(ClientCat state, @NotNull PoseStack poseStack, float f) {
+    protected void scale(ClientCat state,  PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientCat livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientCat livingEntityRenderState) {
         return switch (CONFIG.catSkin) {
             case "black" -> new ResourceLocation("minecraft", "textures/entity/cat/all_black.png");
             case "tuxedo" -> new ResourceLocation("minecraft", "textures/entity/cat/black.png");

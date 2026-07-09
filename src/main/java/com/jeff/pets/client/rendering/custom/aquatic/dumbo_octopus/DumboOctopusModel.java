@@ -5,9 +5,9 @@ import com.jeff.pets.client.rendering.PetModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import org.jetbrains.annotations.NotNull;
 
-public class DumboOctopusModel extends PetModel<@NotNull DumboOctopus> {
+
+public class DumboOctopusModel extends PetModel< DumboOctopus> {
     private final ModelPart body;
     private final ModelPart left_ear;
     private final ModelPart right_ear;

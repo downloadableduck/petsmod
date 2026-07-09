@@ -7,11 +7,11 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientChickenRenderer extends PetRenderer<@NotNull ClientChicken, @NotNull ClientChickenModel<ClientChicken>> {
+public class ClientChickenRenderer extends PetRenderer< ClientChicken,  ClientChickenModel<ClientChicken>> {
     public static final ModelLayerLocation CHICKEN_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientchicken"), "main");
 
     public ClientChickenRenderer(EntityRendererProvider.Context context) {
@@ -19,12 +19,12 @@ public class ClientChickenRenderer extends PetRenderer<@NotNull ClientChicken, @
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientChicken livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientChicken livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/chicken.png");
     }
 
     @Override
-    protected void scale(ClientChicken state, @NotNull PoseStack poseStack, float f) {
+    protected void scale(ClientChicken state,  PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }

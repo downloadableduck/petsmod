@@ -7,9 +7,9 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class ClientVindicatorRenderer extends PetRenderer<@NotNull ClientVindicator, @NotNull ClientEvokerModel<ClientVindicator>> {
+
+public class ClientVindicatorRenderer extends PetRenderer< ClientVindicator,  ClientEvokerModel<ClientVindicator>> {
 
     public static final ModelLayerLocation VINDICATOR_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientvindicator"), "main");
 
@@ -18,7 +18,7 @@ public class ClientVindicatorRenderer extends PetRenderer<@NotNull ClientVindica
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientVindicator livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientVindicator livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/illager/vindicator.png");
     }
 }

@@ -7,10 +7,10 @@ import net.minecraft.client.model.GhastModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
 
-public class AngryGhastRenderer extends PetRenderer<@NotNull AngryGhast, @NotNull GhastModel<AngryGhast>> {
+
+public class AngryGhastRenderer extends PetRenderer< AngryGhast,  GhastModel<AngryGhast>> {
 
     public static final ModelLayerLocation ANGRY_GHAST_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "angryghast"), "main");
 
@@ -24,7 +24,7 @@ public class AngryGhastRenderer extends PetRenderer<@NotNull AngryGhast, @NotNul
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(AngryGhast livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(AngryGhast livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/angry_ghast/ghast_angry.png");
     }
 }

@@ -7,9 +7,9 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class ClientCodRenderer extends PetRenderer<@NotNull ClientCod, @NotNull CodModel<ClientCod>> {
+
+public class ClientCodRenderer extends PetRenderer< ClientCod,  CodModel<ClientCod>> {
     public static final ModelLayerLocation COD_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientcod"), "main");
 
     public ClientCodRenderer(EntityRendererProvider.Context context) {
@@ -17,7 +17,7 @@ public class ClientCodRenderer extends PetRenderer<@NotNull ClientCod, @NotNull 
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientCod livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientCod livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/fish/cod.png");
     }
 }

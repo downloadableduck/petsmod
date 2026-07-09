@@ -62,7 +62,7 @@ public class ClientBeeModel extends AgeableListModel<ClientBee> {
     }
 
     public void setupAnim(ClientBee bee, float f, float g, float h, float i, float j) {
-        this.root.getAllParts().forEach(ModelPart::resetPose);
+        this.root.getAllParts().forEach((modelPart -> modelPart.loadPose(PartPose.ZERO)));
         this.rightWing.xRot = 0.0F;
         this.leftAntenna.xRot = 0.0F;
         this.rightAntenna.xRot = 0.0F;

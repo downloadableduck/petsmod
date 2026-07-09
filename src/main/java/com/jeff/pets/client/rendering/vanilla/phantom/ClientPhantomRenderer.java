@@ -7,9 +7,9 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.layers.PhantomEyesLayer;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class ClientPhantomRenderer extends PetRenderer<@NotNull ClientPhantom, @NotNull ClientPhantomModel> {
+
+public class ClientPhantomRenderer extends PetRenderer< ClientPhantom,  ClientPhantomModel> {
 
     public static final ModelLayerLocation PHANTOM_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientphantom"), "main");
 
@@ -19,7 +19,7 @@ public class ClientPhantomRenderer extends PetRenderer<@NotNull ClientPhantom, @
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientPhantom livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientPhantom livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/phantom.png");
     }
 

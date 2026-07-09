@@ -8,11 +8,11 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientShulkerRenderer extends PetRenderer<@NotNull ClientShulker, @NotNull ClientShulkerModel> {
+public class ClientShulkerRenderer extends PetRenderer< ClientShulker,  ClientShulkerModel> {
 
     public static final ModelLayerLocation SHULKER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientshulker"), "main");
 
@@ -21,7 +21,7 @@ public class ClientShulkerRenderer extends PetRenderer<@NotNull ClientShulker, @
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientShulker state) {
+    public  ResourceLocation getTextureLocation(ClientShulker state) {
         String shulkerFile;
         String folderPath = "textures/entity/shulker/";
         switch (CONFIG.shulkerSkin) {

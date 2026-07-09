@@ -25,18 +25,18 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 import static com.jeff.pets.PetsInitializer.Entities.RACOON;
 
 public class Racoon extends AbstractPet {
 
-    public static final EntityDataAccessor<@NotNull Boolean> IS_SERVER_ENTITY =
+    public static final EntityDataAccessor< Boolean> IS_SERVER_ENTITY =
             SynchedEntityData.defineId(Racoon.class, EntityDataSerializers.BOOLEAN);
     public boolean isOnHead;
 
-    public Racoon(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
+    public Racoon(EntityType<? extends  TamableAnimal> entityType, Level level) {
         super(entityType, level);
     }
 
@@ -60,7 +60,7 @@ public class Racoon extends AbstractPet {
     }
 
     @Override
-    public @Nullable SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData groupData, CompoundTag compoundTag) {
+    public  SpawnGroupData finalizeSpawn( ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnReason,  SpawnGroupData groupData, CompoundTag compoundTag) {
         this.setServerEntity(true);
         return super.finalizeSpawn(level, difficulty, spawnReason, groupData, compoundTag);
     }
@@ -93,7 +93,7 @@ public class Racoon extends AbstractPet {
     }
 
     @Override
-    public boolean isFood(@NotNull ItemStack itemStack) {
+    public boolean isFood( ItemStack itemStack) {
         return itemStack.is(ItemTags.FOX_FOOD);
     }
 
@@ -194,21 +194,21 @@ public class Racoon extends AbstractPet {
     }
 
     @Override
-    public @Nullable AgeableMob getBreedOffspring(@NotNull ServerLevel serverLevel, @NotNull AgeableMob ageableMob) {
+    public  AgeableMob getBreedOffspring( ServerLevel serverLevel,  AgeableMob ageableMob) {
         Racoon racoon = RACOON.get().create(serverLevel);
         racoon.setServerEntity(false);
         return racoon;
     }
 
     @Override
-    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
+    public void onSyncedDataUpdated( EntityDataAccessor<?> key) {
         if (this.level != null && !this.level.isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
     }
 
     @Override
-    public @NotNull Packet<?> getAddEntityPacket() {
+    public  Packet<?> getAddEntityPacket() {
         if (this.level.isClientSide()) {
             return new ClientboundAddEntityPacket(this);
         } else {

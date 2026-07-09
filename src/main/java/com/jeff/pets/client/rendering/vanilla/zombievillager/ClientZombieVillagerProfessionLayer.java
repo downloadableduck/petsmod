@@ -7,11 +7,11 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientZombieVillagerProfessionLayer extends RenderLayer<@NotNull ClientZombieVillager, ClientZombieVillagerModel> {
+public class ClientZombieVillagerProfessionLayer extends RenderLayer< ClientZombieVillager, ClientZombieVillagerModel> {
 
     public static final ModelLayerLocation ARMORER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "textures/entity/zombie_villager/profession/armorer.png"), "main");
     public static final ModelLayerLocation BUTCHER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "textures/entity/zombie_villager/profession/butcher.png"), "main");
@@ -28,12 +28,12 @@ public class ClientZombieVillagerProfessionLayer extends RenderLayer<@NotNull Cl
     public static final ModelLayerLocation TOOLSMITH_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "textures/entity/zombie_villager/profession/toolsmith.png"), "main");
     public static final ModelLayerLocation WEAPONSMITH_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "textures/entity/zombie_villager/profession/weaponsmith.png"), "main");
 
-    public ClientZombieVillagerProfessionLayer(RenderLayerParent<@NotNull ClientZombieVillager, @NotNull ClientZombieVillagerModel> renderLayerParent) {
+    public ClientZombieVillagerProfessionLayer(RenderLayerParent< ClientZombieVillager,  ClientZombieVillagerModel> renderLayerParent) {
         super(renderLayerParent);
     }
 
     @Override
-    public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource source, int i, ClientZombieVillager entityRenderState, float f, float g, float h, float k, float l, float u) {
+    public void render( PoseStack poseStack,  MultiBufferSource source, int i, ClientZombieVillager entityRenderState, float f, float g, float h, float k, float l, float u) {
         poseStack.pushPose();
         poseStack.scale(1.001f, 1.001f, 1.001f);
         switch (CONFIG.zombieVillagerSkin) {

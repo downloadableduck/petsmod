@@ -6,9 +6,9 @@ import com.jeff.pets.client.rendering.vanilla.irongolem.ClientIronGolemModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class LoveGolemRenderer extends PetRenderer<@NotNull LoveGolem, @NotNull ClientIronGolemModel<LoveGolem>> {
+
+public class LoveGolemRenderer extends PetRenderer< LoveGolem,  ClientIronGolemModel<LoveGolem>> {
 
     public static final ModelLayerLocation LOVE_GOLEM_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "lovegolem"), "main");
 
@@ -17,7 +17,7 @@ public class LoveGolemRenderer extends PetRenderer<@NotNull LoveGolem, @NotNull 
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(LoveGolem livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(LoveGolem livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/irongolem/love_golem.png");
     }
 }

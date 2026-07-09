@@ -10,19 +10,19 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSheepWoolLayer extends RenderLayer<@NotNull ClientSheep, @NotNull ClientSheepModel> {
+public class ClientSheepWoolLayer extends RenderLayer< ClientSheep,  ClientSheepModel> {
     public static final ModelLayerLocation SHEEP_WOOL_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "sheep_wool"), "outer");
     public static final ModelLayerLocation SHEEP_WOOL_BABY_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "sheep_wool_baby"), "outer");
-    private final EntityModel<@NotNull ClientSheep> model;
+    private final EntityModel< ClientSheep> model;
     int woolColor;
 
-    public ClientSheepWoolLayer(RenderLayerParent<@NotNull ClientSheep, @NotNull ClientSheepModel> renderLayerParent, EntityModelSet entityModelSet) {
+    public ClientSheepWoolLayer(RenderLayerParent< ClientSheep,  ClientSheepModel> renderLayerParent, EntityModelSet entityModelSet) {
         super(renderLayerParent);
         this.model = new ClientSheepFurModel(entityModelSet.bakeLayer(ModelLayers.SHEEP_FUR));
     }

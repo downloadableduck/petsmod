@@ -8,12 +8,12 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
+
 
 public class ClientWitherSkeleton extends GroundPet implements RangedAttackMob {
 
 
-    public ClientWitherSkeleton(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
+    public ClientWitherSkeleton(EntityType<? extends  TamableAnimal> entityType, Level level) {
         super(entityType, level);
     }
 

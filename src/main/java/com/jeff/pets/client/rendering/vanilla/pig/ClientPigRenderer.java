@@ -10,11 +10,11 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientPigRenderer extends PetRenderer<@NotNull ClientPig, @NotNull ClientPigModel> {
+public class ClientPigRenderer extends PetRenderer< ClientPig,  ClientPigModel> {
     public static final ModelLayerLocation PIG_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientpig"), "main");
     public String pigTexturePath;
 
@@ -28,13 +28,13 @@ public class ClientPigRenderer extends PetRenderer<@NotNull ClientPig, @NotNull 
     }
 
     @Override
-    protected void scale(@NotNull ClientPig livingEntityRenderState, @NotNull PoseStack poseStack, float f) {
+    protected void scale( ClientPig livingEntityRenderState,  PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
-    public @NotNull ResourceLocation getTextureLocation(ClientPig pigRenderState) {
+    public  ResourceLocation getTextureLocation(ClientPig pigRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/pig/pig.png");
     }
 }

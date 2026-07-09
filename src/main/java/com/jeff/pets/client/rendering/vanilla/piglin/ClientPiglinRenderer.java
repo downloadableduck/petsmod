@@ -11,11 +11,11 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientPiglinRenderer extends PetRenderer<@NotNull ClientPiglin, @NotNull ClientPiglinModel> {
+public class ClientPiglinRenderer extends PetRenderer< ClientPiglin,  ClientPiglinModel> {
 
     public static ModelLayerLocation PIGLIN_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientpiglin"), "main");
     private String piglinTexturePath;
@@ -30,14 +30,14 @@ public class ClientPiglinRenderer extends PetRenderer<@NotNull ClientPiglin, @No
     }
 
     @Override
-    protected void scale(ClientPiglin state, @NotNull PoseStack poseStack, float f) {
+    protected void scale(ClientPiglin state,  PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientPiglin livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientPiglin livingEntityRenderState) {
         switch (CONFIG.piglinSkin) {
             case "zombified_piglin" -> {
                 piglinTexturePath = "textures/entity/piglin/zombified_piglin.png";

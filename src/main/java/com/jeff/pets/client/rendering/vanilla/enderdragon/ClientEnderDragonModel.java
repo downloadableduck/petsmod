@@ -7,7 +7,7 @@ import com.mojang.math.Vector3f;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;
-import org.jetbrains.annotations.Nullable;
+
 
 public class ClientEnderDragonModel extends EntityModel<ClientEnderDragon> {
     private final ModelPart head;
@@ -31,7 +31,7 @@ public class ClientEnderDragonModel extends EntityModel<ClientEnderDragon> {
     private final ModelPart rightRearLegTip;
     private final ModelPart rightRearFoot;
     private final ModelPart root;
-    @Nullable
+    
     private ClientEnderDragon entity;
     private float a;
 

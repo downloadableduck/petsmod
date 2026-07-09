@@ -12,11 +12,11 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientVillagerRenderer extends PetRenderer<@NotNull ClientVillager, VillagerModel<ClientVillager>> {
+public class ClientVillagerRenderer extends PetRenderer< ClientVillager, VillagerModel<ClientVillager>> {
     public static final ModelLayerLocation VILLAGER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientvillager"), "main");
 
     public ClientVillagerRenderer(EntityRendererProvider.Context context) {
@@ -31,14 +31,14 @@ public class ClientVillagerRenderer extends PetRenderer<@NotNull ClientVillager,
     }
 
     @Override
-    protected void scale(ClientVillager state, @NotNull PoseStack poseStack, float f) {
+    protected void scale(ClientVillager state,  PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientVillager villagerRenderState) {
+    public  ResourceLocation getTextureLocation(ClientVillager villagerRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/villager/villager.png");
     }
 }

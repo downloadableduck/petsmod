@@ -9,11 +9,11 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientDonkeyRenderer extends PetRenderer<@NotNull ClientDonkey, @NotNull ClientHorseModel<ClientDonkey>> {
+public class ClientDonkeyRenderer extends PetRenderer< ClientDonkey,  ClientHorseModel<ClientDonkey>> {
     public static ModelLayerLocation DONKEY_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientdonkey"), "main");
 
     public ClientDonkeyRenderer(EntityRendererProvider.Context context) {
@@ -24,12 +24,12 @@ public class ClientDonkeyRenderer extends PetRenderer<@NotNull ClientDonkey, @No
         return DonkeyModel.createBodyLayer();
     }
 
-    public @NotNull ResourceLocation getTextureLocation(ClientDonkey donkeyRenderState) {
+    public  ResourceLocation getTextureLocation(ClientDonkey donkeyRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/horse/donkey.png");
     }
 
     @Override
-    protected void scale(ClientDonkey state, @NotNull PoseStack poseStack, float f) {
+    protected void scale(ClientDonkey state,  PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }

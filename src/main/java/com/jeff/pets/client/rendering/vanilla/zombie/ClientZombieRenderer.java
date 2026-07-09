@@ -10,11 +10,11 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientZombieRenderer extends PetRenderer<@NotNull ClientZombie, @NotNull ClientZombieModel<ClientZombie>> {
+public class ClientZombieRenderer extends PetRenderer< ClientZombie,  ClientZombieModel<ClientZombie>> {
 
     public static final ModelLayerLocation ZOMBIE_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientzombie"), "main");
 
@@ -28,14 +28,14 @@ public class ClientZombieRenderer extends PetRenderer<@NotNull ClientZombie, @No
     }
 
     @Override
-    protected void scale(@NotNull ClientZombie livingEntityRenderState, @NotNull PoseStack poseStack, float f) {
+    protected void scale( ClientZombie livingEntityRenderState,  PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientZombie livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientZombie livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/zombie/zombie.png");
     }
 }

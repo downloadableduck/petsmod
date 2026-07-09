@@ -20,8 +20,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /**
  * Abstract class that extends {@link TamableAnimal}, providing multiple utilities
@@ -42,7 +42,7 @@ public abstract class AbstractPet extends TamableAnimal {
     private float randomX = (float) (Math.random() - 1f);
     private float randomZ = (float) (Math.random() - 1);
 
-    protected AbstractPet(EntityType<? extends @NotNull TamableAnimal> type, Level level) {
+    protected AbstractPet(EntityType<? extends  TamableAnimal> type, Level level) {
         super(type, level);
         this.setSpeed(0.5f);
     }
@@ -105,7 +105,7 @@ public abstract class AbstractPet extends TamableAnimal {
      * @return It's super method
      */
     @Override
-    public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
+    public  InteractionResult mobInteract( Player player,  InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
 
         if (this.isTame() && itemStack.isEmpty() && !player.isShiftKeyDown()) {
@@ -137,7 +137,7 @@ public abstract class AbstractPet extends TamableAnimal {
      * <p> Calls: It's super method, if the level is not client-sided.
      */
     @Override
-    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
+    public void onSyncedDataUpdated( EntityDataAccessor<?> key) {
         if (this.level != null && !this.level.isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
@@ -148,7 +148,7 @@ public abstract class AbstractPet extends TamableAnimal {
      * Never, under any circumstances, remove this method.
      */
     @Override
-    public @NotNull Packet<?> getAddEntityPacket() {
+    public  Packet<?> getAddEntityPacket() {
         if (this.level.isClientSide()) {
             return new ClientboundAddEntityPacket(this);
         } else {
@@ -163,7 +163,7 @@ public abstract class AbstractPet extends TamableAnimal {
      * Make sure to override this when using a custom-made mob.
      */
     @Override
-    public boolean isFood(@NotNull ItemStack itemStack) {
+    public boolean isFood( ItemStack itemStack) {
         return false;
     }
 
@@ -174,7 +174,7 @@ public abstract class AbstractPet extends TamableAnimal {
      * @return {@code null}
      */
     @Override
-    public @Nullable AgeableMob getBreedOffspring(@NotNull ServerLevel serverLevel, @NotNull AgeableMob ageableMob) {
+    public  AgeableMob getBreedOffspring( ServerLevel serverLevel,  AgeableMob ageableMob) {
         return null;
     }
 
@@ -182,7 +182,7 @@ public abstract class AbstractPet extends TamableAnimal {
      * Easier way to call {@link TamableAnimal#setCustomName} that takes a String rather than a {@link Component}
      */
     public void setName(String string) {
-        this.setCustomName(Component.literal(string));
+        this.setCustomName(new net.minecraft.network.chat.TextComponent(string));
     }
 
     public void wander() {

@@ -8,11 +8,11 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientMagmaCubeRenderer extends PetRenderer<@NotNull ClientMagmaCube, @NotNull SlimeModel<ClientMagmaCube>> {
+public class ClientMagmaCubeRenderer extends PetRenderer< ClientMagmaCube,  SlimeModel<ClientMagmaCube>> {
 
     public static final ModelLayerLocation MAGMA_CUBE_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientmagmacube"), "main");
 
@@ -21,7 +21,7 @@ public class ClientMagmaCubeRenderer extends PetRenderer<@NotNull ClientMagmaCub
     }
 
     @Override
-    protected void scale(ClientMagmaCube slimeRenderState, @NotNull PoseStack poseStack, float a) {
+    protected void scale(ClientMagmaCube slimeRenderState,  PoseStack poseStack, float a) {
         int magmaCubeScale = switch (CONFIG.magmaCubeSkin) {
             case "small" -> 1;
             case "medium" -> 2;
@@ -32,7 +32,7 @@ public class ClientMagmaCubeRenderer extends PetRenderer<@NotNull ClientMagmaCub
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientMagmaCube livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientMagmaCube livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/slime/magmacube.png");
     }
 }

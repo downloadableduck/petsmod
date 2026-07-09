@@ -11,11 +11,11 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientWolfRenderer extends PetRenderer<@NotNull ClientWolf, @NotNull ClientWolfModel> {
+public class ClientWolfRenderer extends PetRenderer< ClientWolf,  ClientWolfModel> {
 
     public static final ModelLayerLocation WOLF_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientwolf"), "main");
 
@@ -29,14 +29,14 @@ public class ClientWolfRenderer extends PetRenderer<@NotNull ClientWolf, @NotNul
     }
 
     @Override
-    protected void scale(@NotNull ClientWolf livingEntityRenderState, @NotNull PoseStack poseStack, float f) {
+    protected void scale( ClientWolf livingEntityRenderState,  PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientWolf livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientWolf livingEntityRenderState) {
         String wolfTexturePath = "textures/entity/wolf/wolf.png";
 
         return new ResourceLocation("minecraft", wolfTexturePath);

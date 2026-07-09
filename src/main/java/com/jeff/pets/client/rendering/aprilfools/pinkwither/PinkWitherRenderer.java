@@ -7,9 +7,9 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class PinkWitherRenderer extends PetRenderer<@NotNull PinkWither, @NotNull ClientWitherModel<PinkWither>> {
+
+public class PinkWitherRenderer extends PetRenderer< PinkWither,  ClientWitherModel<PinkWither>> {
 
     public static final ModelLayerLocation PINK_WITHER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "pinkwither"), "main");
 
@@ -18,7 +18,7 @@ public class PinkWitherRenderer extends PetRenderer<@NotNull PinkWither, @NotNul
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(PinkWither livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(PinkWither livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/wither/wither_pink.png");
     }
 

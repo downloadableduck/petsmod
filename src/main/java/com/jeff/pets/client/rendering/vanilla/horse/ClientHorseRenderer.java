@@ -11,11 +11,11 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientHorseRenderer extends PetRenderer<@NotNull ClientHorse, @NotNull ClientHorseModel<ClientHorse>> {
+public class ClientHorseRenderer extends PetRenderer< ClientHorse,  ClientHorseModel<ClientHorse>> {
     public static final ModelLayerLocation HORSE_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clienthorse"), "main");
     public String horseTextureLocation;
 
@@ -29,14 +29,14 @@ public class ClientHorseRenderer extends PetRenderer<@NotNull ClientHorse, @NotN
     }
 
     @Override
-    protected void scale(ClientHorse state, @NotNull PoseStack poseStack, float f) {
+    protected void scale(ClientHorse state,  PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientHorse horseRenderState) {
+    public  ResourceLocation getTextureLocation(ClientHorse horseRenderState) {
         switch (CONFIG.horseSkin) {
             case "black" -> horseTextureLocation = "textures/entity/horse/horse_black.png";
             case "brown" -> horseTextureLocation = "textures/entity/horse/horse_brown.png";

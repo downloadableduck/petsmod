@@ -8,9 +8,9 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class ClientCaveSpiderRenderer extends PetRenderer<@NotNull ClientCaveSpider, @NotNull SpiderModel<ClientCaveSpider>> {
+
+public class ClientCaveSpiderRenderer extends PetRenderer< ClientCaveSpider,  SpiderModel<ClientCaveSpider>> {
     public static final ModelLayerLocation CAVE_SPIDER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientcavespider"), "main");
 
     public ClientCaveSpiderRenderer(EntityRendererProvider.Context context) {
@@ -23,7 +23,7 @@ public class ClientCaveSpiderRenderer extends PetRenderer<@NotNull ClientCaveSpi
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientCaveSpider livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientCaveSpider livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/spider/cave_spider.png");
     }
 }

@@ -12,13 +12,13 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.CreeperPowerLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class NerdCreeperRenderer extends PetRenderer<@NotNull NerdCreeper, @NotNull CreeperModel<NerdCreeper>> {
+public class NerdCreeperRenderer extends PetRenderer< NerdCreeper,  CreeperModel<NerdCreeper>> {
 
     public static final ModelLayerLocation NERD_CREEPER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "nerdcreeper"), "main");
 
@@ -29,7 +29,7 @@ public class NerdCreeperRenderer extends PetRenderer<@NotNull NerdCreeper, @NotN
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(NerdCreeper livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(NerdCreeper livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/creeper/creeper.png");
     }
 

@@ -6,11 +6,7 @@ import com.jeff.pets.mob.vanilla.hostile.ClientVex;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 
@@ -42,9 +38,9 @@ public class ClientVexModel extends HumanoidModel<ClientVex> {
     public void setupAnim(ClientVex vex, float f, float g, float h, float i, float j) {
         super.setupAnim(vex, f, g, h, i, j);
         if (vex.getMainArm() == HumanoidArm.RIGHT) {
-            this.rightArm.xRot = 3.7699115F;
-        } else {
-            this.leftArm.xRot = 3.7699115F;
+                this.rightArm.xRot = 3.7699115F;
+            } else {
+                this.leftArm.xRot = 3.7699115F;
         }
 
         ModelPart var10000 = this.rightLeg;

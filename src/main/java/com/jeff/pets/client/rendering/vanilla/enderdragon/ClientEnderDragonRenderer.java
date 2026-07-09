@@ -7,12 +7,12 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.client.Central.CONFIG;
 
 
-public class ClientEnderDragonRenderer extends PetRenderer<@NotNull ClientEnderDragon, ClientEnderDragonModel> {
+public class ClientEnderDragonRenderer extends PetRenderer< ClientEnderDragon, ClientEnderDragonModel> {
 
     public static final ModelLayerLocation ENDER_DRAGON_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientenderdragon"), "main");
 
@@ -21,14 +21,14 @@ public class ClientEnderDragonRenderer extends PetRenderer<@NotNull ClientEnderD
     }
 
     @Override
-    protected void scale(@NotNull ClientEnderDragon livingEntityRenderState, @NotNull PoseStack poseStack, float f) {
+    protected void scale( ClientEnderDragon livingEntityRenderState,  PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.25f, 0.25f, 0.25f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientEnderDragon livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientEnderDragon livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/enderdragon/dragon.png");
     }
 }

@@ -8,13 +8,13 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientFoxRenderer extends PetRenderer<@NotNull ClientFox, @NotNull ClientFoxModel> {
+public class ClientFoxRenderer extends PetRenderer< ClientFox,  ClientFoxModel> {
     public static final ModelLayerLocation FOX_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientfox"), "main");
     public String foxTexturePath;
 
@@ -23,14 +23,14 @@ public class ClientFoxRenderer extends PetRenderer<@NotNull ClientFox, @NotNull 
     }
 
     @Override
-    protected void scale(ClientFox state, @NotNull PoseStack poseStack, float f) {
+    protected void scale(ClientFox state,  PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientFox livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientFox livingEntityRenderState) {
         if (Objects.equals(CONFIG.foxSkin, "red")) {
             foxTexturePath = "textures/entity/fox/fox.png";
         } else if (Objects.equals(CONFIG.foxSkin, "snow")) {

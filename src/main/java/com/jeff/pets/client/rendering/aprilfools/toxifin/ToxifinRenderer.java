@@ -5,11 +5,11 @@ import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 
-public class ToxifinRenderer extends PetRenderer<@NotNull ToxifinSlab, @NotNull ToxifinSlabModel<ToxifinSlab>> {
+public class ToxifinRenderer extends PetRenderer< ToxifinSlab,  ToxifinSlabModel<ToxifinSlab>> {
 
     public static final ModelLayerLocation TOXIFIN_LOCATION = new ModelLayerLocation(new ResourceLocation(MOD_ID, "toxifin_slab"), "main");
 
@@ -18,7 +18,7 @@ public class ToxifinRenderer extends PetRenderer<@NotNull ToxifinSlab, @NotNull 
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ToxifinSlab livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ToxifinSlab livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/toxifin.png");
     }
 }

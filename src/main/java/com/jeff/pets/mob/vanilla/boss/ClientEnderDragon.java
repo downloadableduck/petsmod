@@ -3,6 +3,7 @@ package com.jeff.pets.mob.vanilla.boss;
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -14,7 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.EndPodiumFeature;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
+
 
 @CanFly
 public class ClientEnderDragon extends FlyingPet {
@@ -23,7 +24,7 @@ public class ClientEnderDragon extends FlyingPet {
     public float flapTime;
     public int posPointer = -1;
 
-    public ClientEnderDragon(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
+    public ClientEnderDragon(EntityType<? extends  TamableAnimal> entityType, Level level) {
         super(entityType, level);
     }
 
@@ -86,7 +87,7 @@ public class ClientEnderDragon extends FlyingPet {
             }
         } else {
             BlockPos blockPos = this.level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, EndPodiumFeature.END_PODIUM_LOCATION);
-            double d = Math.max(Math.sqrt(blockPos.distToCenterSqr(this.position())) / (double) 4.0F, (double) 1.0F);
+            double d = Math.max(Math.sqrt(blockPos.distSqr(new Vec3i(this.position().x, this.position().y, this.position().z)) / (double) 4.0F), (double) 1.0F);
             e = (double) i / d;
         }
 

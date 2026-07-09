@@ -6,9 +6,9 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class ClientPillagerRenderer extends PetRenderer<@NotNull ClientPillager, @NotNull ClientPillagerModel> {
+
+public class ClientPillagerRenderer extends PetRenderer< ClientPillager,  ClientPillagerModel> {
     public static final ModelLayerLocation PILLAGER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientpillager"), "main");
 
     public ClientPillagerRenderer(EntityRendererProvider.Context context) {
@@ -16,7 +16,7 @@ public class ClientPillagerRenderer extends PetRenderer<@NotNull ClientPillager,
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientPillager livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientPillager livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/illager/pillager.png");
     }
 }

@@ -8,24 +8,24 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class PenguinRenderer extends PetRenderer<@NotNull Penguin, @NotNull PenguinModel> {
+public class PenguinRenderer extends PetRenderer< Penguin,  PenguinModel> {
 
     public PenguinRenderer(EntityRendererProvider.Context context) {
         super(context, new PenguinModel(context.bakeLayer(PenguinModel.PENGUIN_LOCATION)), 0.5f);
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(Penguin livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(Penguin livingEntityRenderState) {
         return new ResourceLocation(PetsInitializer.MOD_ID, "textures/entity/penguin/penguin.png");
     }
 
     @Override
-    protected void scale(@NotNull Penguin livingEntityRenderState, @NotNull PoseStack poseStack, float f) {
-        if ((CONFIG.isBaby && !livingEntityRenderState.isServerEntity()) || (livingEntityRenderState.isBaby() && livingEntityRenderState.isServerEntity())) {
+    protected void scale( Penguin livingEntityRenderState,  PoseStack poseStack, float f) {
+        if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }

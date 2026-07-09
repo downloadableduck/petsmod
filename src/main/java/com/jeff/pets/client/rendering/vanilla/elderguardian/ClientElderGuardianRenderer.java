@@ -8,9 +8,9 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class ClientElderGuardianRenderer extends PetRenderer<@NotNull ClientElderGuardian, @NotNull ClientGuardianModel<ClientElderGuardian>> {
+
+public class ClientElderGuardianRenderer extends PetRenderer< ClientElderGuardian,  ClientGuardianModel<ClientElderGuardian>> {
     public static final ModelLayerLocation ELDER_GUARDIAN_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientelderguardian"), "main");
 
     public ClientElderGuardianRenderer(EntityRendererProvider.Context context) {
@@ -23,7 +23,7 @@ public class ClientElderGuardianRenderer extends PetRenderer<@NotNull ClientElde
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientElderGuardian livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientElderGuardian livingEntityRenderState) {
         //livingEntityRenderState.spike = 1;
         return new ResourceLocation("minecraft", "textures/entity/guardian_elder.png");
     }

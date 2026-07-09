@@ -13,6 +13,7 @@ import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import com.jeff.pets.mob.vanilla.hostile.*;
 import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
+import net.minecraft.core.Registry;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.common.MinecraftForge;
@@ -21,10 +22,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +45,7 @@ public class PetsInitializer {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         bus.register(PetsInitializer.class);
         Entities.ENTITY_TYPES.register(bus);
-        RegistryObject<?> ignored = Entities.ALLAY;
+        RegistryObject<?> ignored = Entities.ANGRY_GHAST;
         PetsSounds.initialize(bus);
     }
 
@@ -54,7 +54,7 @@ public class PetsInitializer {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         bus.register(PetsInitializer.class);
         Entities.ENTITY_TYPES.register(bus);
-        RegistryObject<?> ignored = Entities.ALLAY;
+        RegistryObject<?> ignored = Entities.ANGRY_GHAST;
     }
 
     @SubscribeEvent
@@ -65,14 +65,12 @@ public class PetsInitializer {
         event.put(Entities.PENGUIN.get(), Penguin.createAttributes().build());
         event.put(Entities.SHEEP.get(), ClientSheep.createAttributes().build());
         event.put(Entities.CAT.get(), ClientCat.createAttributes().build());
-        event.put(Entities.ALLAY.get(), ClientAllay.createAttributes().build());
         event.put(Entities.AXOLOTL.get(), ClientAxolotl.createAttributes().build());
         event.put(Entities.BAT.get(), ClientBat.createAttributes().build());
         event.put(Entities.CHICKEN.get(), ClientChicken.createAttributes().build());
         event.put(Entities.COD.get(), ClientCod.createAttributes().build());
         event.put(Entities.COW.get(), ClientCow.createAttributes().build());
         event.put(Entities.DONKEY.get(), ClientDonkey.createAttributes().build());
-        event.put(Entities.FROG.get(), ClientFrog.createAttributes().build());
         event.put(Entities.HORSE.get(), ClientHorse.createAttributes().build());
         event.put(Entities.MOOSHROOM.get(), ClientMooshroom.createAttributes().build());
         event.put(Entities.PARROT.get(), ClientParrot.createAttributes().build());
@@ -82,7 +80,6 @@ public class PetsInitializer {
         event.put(Entities.SNOW_GOLEM.get(), ClientSnowGolem.createAttributes().build());
         event.put(Entities.SQUID.get(), ClientSquid.createAttributes().build());
         event.put(Entities.STRIDER.get(), ClientStrider.createAttributes().build());
-        event.put(Entities.TADPOLE.get(), ClientTadpole.createAttributes().build());
         event.put(Entities.TROPICAL_FISH.get(), ClientTropicalFish.createAttributes().build());
         event.put(Entities.TURTLE.get(), ClientTurtle.createAttributes().build());
         event.put(Entities.VILLAGER.get(), ClientVillager.createAttributes().build());
@@ -119,7 +116,6 @@ public class PetsInitializer {
         event.put(Entities.SLIME.get(), ClientSlime.createAttributes().build());
         event.put(Entities.VEX.get(), ClientVex.createAttributes().build());
         event.put(Entities.VINDICATOR.get(), ClientVindicator.createAttributes().build());
-        event.put(Entities.WARDEN.get(), ClientWarden.createAttributes().build());
         event.put(Entities.WITCH.get(), ClientWitch.createAttributes().build());
         event.put(Entities.ZOMBIE.get(), ClientZombie.createAttributes().build());
         event.put(Entities.ZOMBIE_VILLAGER.get(), ClientZombieVillager.createAttributes().build());
@@ -157,10 +153,10 @@ public class PetsInitializer {
 
     public static class Entities {
 
-        public static final DeferredRegister<@NotNull EntityType<?>> ENTITY_TYPES =
-                DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MOD_ID);
+        public static final DeferredRegister< EntityType<?>> ENTITY_TYPES =
+                DeferredRegister.create(ForgeRegistries.ENTITIES, MOD_ID);
 
-        public static final RegistryObject<@NotNull EntityType<Racoon>> RACOON =
+        public static final RegistryObject< EntityType<Racoon>> RACOON =
                 ENTITY_TYPES.register("racoon", () ->
                         EntityType.Builder.of(Racoon::new, MobCategory.CREATURE)
                                 .sized(1.0f, 1.0f)
@@ -168,16 +164,7 @@ public class PetsInitializer {
                                 .build(("racoon"))
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientAllay>> ALLAY =
-                ENTITY_TYPES.register("clientallay", () ->
-                        EntityType.Builder.of(ClientAllay::new, MobCategory.AMBIENT)
-                                .noSummon()
-                                .sized(0.35f, 0.6f)
-                                
-                                .build(("clientallay"))
-                );
-
-        public static final RegistryObject< @NotNull EntityType<ClientAxolotl>> AXOLOTL =
+        public static final RegistryObject<  EntityType<ClientAxolotl>> AXOLOTL =
                 ENTITY_TYPES.register("clientaxolotl", () ->
                         EntityType.Builder.of(ClientAxolotl::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -186,7 +173,7 @@ public class PetsInitializer {
                                 .build(("clientaxolotl"))
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientBat>> BAT =
+        public static final RegistryObject<  EntityType<ClientBat>> BAT =
                 ENTITY_TYPES.register("clientbat", () ->
                         EntityType.Builder.of(ClientBat::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -195,7 +182,7 @@ public class PetsInitializer {
                                 .build(("clientbat"))
                 );
 
-        public static final RegistryObject< @NotNull EntityType<Duck>> DUCK =
+        public static final RegistryObject<  EntityType<Duck>> DUCK =
                 ENTITY_TYPES.register("duck", () ->
                         EntityType.Builder.of(Duck::new, MobCategory.CREATURE)
                                 .sized(0.4f, 0.7f)
@@ -203,7 +190,7 @@ public class PetsInitializer {
                                 .build(("duck"))
                 );
 
-        public static final RegistryObject< @NotNull EntityType<Penguin>> PENGUIN =
+        public static final RegistryObject<  EntityType<Penguin>> PENGUIN =
                 ENTITY_TYPES.register("penguin", () ->
                         EntityType.Builder.of(Penguin::new, MobCategory.AMBIENT)
                                 .sized(1.0f, 1.5f)
@@ -211,7 +198,7 @@ public class PetsInitializer {
                                 .build(("penguin"))
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientSheep>> SHEEP =
+        public static final RegistryObject<  EntityType<ClientSheep>> SHEEP =
                 ENTITY_TYPES.register("clientsheep", () ->
                         EntityType.Builder.of(ClientSheep::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -220,7 +207,7 @@ public class PetsInitializer {
                                 .build(("clientsheep"))
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientCat>> CAT =
+        public static final RegistryObject<  EntityType<ClientCat>> CAT =
                 ENTITY_TYPES.register("clientcat", () ->
                         EntityType.Builder.of(ClientCat::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -229,7 +216,7 @@ public class PetsInitializer {
                                 .build(("clientcat"))
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientChicken>> CHICKEN =
+        public static final RegistryObject<  EntityType<ClientChicken>> CHICKEN =
                 ENTITY_TYPES.register("clientchicken", () ->
                         EntityType.Builder.of(ClientChicken::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -238,7 +225,7 @@ public class PetsInitializer {
                                 .build(("clientchicken"))
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientCod>> COD =
+        public static final RegistryObject<  EntityType<ClientCod>> COD =
                 ENTITY_TYPES.register("clientcod", () ->
                         EntityType.Builder.of(ClientCod::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -247,7 +234,7 @@ public class PetsInitializer {
                                 .build(("clientcod"))
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientCow>> COW =
+        public static final RegistryObject<  EntityType<ClientCow>> COW =
                 ENTITY_TYPES.register("clientcow", () ->
                         EntityType.Builder.of(ClientCow::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -256,7 +243,7 @@ public class PetsInitializer {
                                 .build(("clientcow"))
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientDonkey>> DONKEY =
+        public static final RegistryObject<  EntityType<ClientDonkey>> DONKEY =
                 ENTITY_TYPES.register("clientdonkey", () ->
                         EntityType.Builder.of(ClientDonkey::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -265,16 +252,7 @@ public class PetsInitializer {
                                 .build(("clientdonkey"))
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientFrog>> FROG =
-                ENTITY_TYPES.register("clientfrog", () ->
-                        EntityType.Builder.of(ClientFrog::new, MobCategory.AMBIENT)
-                                .noSummon()
-                                .sized(0.5f, 0.5f)
-                                
-                                .build(("clientfrog"))
-                );
-
-        public static final RegistryObject< @NotNull EntityType<ClientHorse>> HORSE =
+        public static final RegistryObject<  EntityType<ClientHorse>> HORSE =
                 ENTITY_TYPES.register("clienthorse", () ->
                         EntityType.Builder.of(ClientHorse::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -283,7 +261,7 @@ public class PetsInitializer {
                                 .build(("clienthorse"))
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientMooshroom>> MOOSHROOM =
+        public static final RegistryObject<  EntityType<ClientMooshroom>> MOOSHROOM =
                 ENTITY_TYPES.register("clientmooshroom", () ->
                         EntityType.Builder.of(ClientMooshroom::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -292,7 +270,7 @@ public class PetsInitializer {
                                 .build(("clientmooshroom"))
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientParrot>> PARROT =
+        public static final RegistryObject<  EntityType<ClientParrot>> PARROT =
                 ENTITY_TYPES.register("clientparrot", () ->
                         EntityType.Builder.of(ClientParrot::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -300,7 +278,7 @@ public class PetsInitializer {
                                 
                                 .build(("clientparrot")));
 
-        public static final RegistryObject< @NotNull EntityType<ClientPig>> PIG =
+        public static final RegistryObject<  EntityType<ClientPig>> PIG =
                 ENTITY_TYPES.register("clientpig", () ->
                         EntityType.Builder.of(ClientPig::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -308,7 +286,7 @@ public class PetsInitializer {
                                 .build("clientpig")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientRabbit>> RABBIT =
+        public static final RegistryObject<  EntityType<ClientRabbit>> RABBIT =
                 ENTITY_TYPES.register("clientrabbit", () ->
                         EntityType.Builder.of(ClientRabbit::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -316,7 +294,7 @@ public class PetsInitializer {
                                 .build("clientrabbit")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientSalmon>> SALMON =
+        public static final RegistryObject<  EntityType<ClientSalmon>> SALMON =
                 ENTITY_TYPES.register("clientsalmon", () ->
                         EntityType.Builder.of(ClientSalmon::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -324,7 +302,7 @@ public class PetsInitializer {
                                 .build("clientsalmon")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientSnowGolem>> SNOW_GOLEM =
+        public static final RegistryObject<  EntityType<ClientSnowGolem>> SNOW_GOLEM =
                 ENTITY_TYPES.register("clientsnowgolem", () ->
                         EntityType.Builder.of(ClientSnowGolem::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -332,7 +310,7 @@ public class PetsInitializer {
                                 .build("clientsnowgolem")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientSquid>> SQUID =
+        public static final RegistryObject<  EntityType<ClientSquid>> SQUID =
                 ENTITY_TYPES.register("clientsquid", () ->
                         EntityType.Builder.of(ClientSquid::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -340,7 +318,7 @@ public class PetsInitializer {
                                 .build("clientsquid")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientStrider>> STRIDER =
+        public static final RegistryObject<  EntityType<ClientStrider>> STRIDER =
                 ENTITY_TYPES.register("clientstrider", () ->
                         EntityType.Builder.of(ClientStrider::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -348,15 +326,7 @@ public class PetsInitializer {
                                 .build("clientstrider")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientTadpole>> TADPOLE =
-                ENTITY_TYPES.register("clienttadpole", () ->
-                        EntityType.Builder.of(ClientTadpole::new, MobCategory.AMBIENT)
-                                .noSummon()
-                                .sized(0.4f, 0.3f)
-                                .build("clienttadpole")
-                );
-
-        public static final RegistryObject< @NotNull EntityType<ClientTropicalFish>> TROPICAL_FISH =
+        public static final RegistryObject<  EntityType<ClientTropicalFish>> TROPICAL_FISH =
                 ENTITY_TYPES.register("clienttropicalfish", () ->
                         EntityType.Builder.of(ClientTropicalFish::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -364,7 +334,7 @@ public class PetsInitializer {
                                 .build("clienttropicalfish")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientTurtle>> TURTLE =
+        public static final RegistryObject<  EntityType<ClientTurtle>> TURTLE =
                 ENTITY_TYPES.register("clientturtle", () ->
                         EntityType.Builder.of(ClientTurtle::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -372,7 +342,7 @@ public class PetsInitializer {
                                 .build("clientturtle")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientVillager>> VILLAGER =
+        public static final RegistryObject<  EntityType<ClientVillager>> VILLAGER =
                 ENTITY_TYPES.register("clientvillager", () ->
                         EntityType.Builder.of(ClientVillager::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -380,7 +350,7 @@ public class PetsInitializer {
                                 .build("clientvillager")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientWanderingTrader>> WANDERING_TRADER =
+        public static final RegistryObject<  EntityType<ClientWanderingTrader>> WANDERING_TRADER =
                 ENTITY_TYPES.register("clientwanderingtrader", () ->
                         EntityType.Builder.of(ClientWanderingTrader::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -388,7 +358,7 @@ public class PetsInitializer {
                                 .build("clientwanderingtrader")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientBee>> BEE =
+        public static final RegistryObject<  EntityType<ClientBee>> BEE =
                 ENTITY_TYPES.register("clientbee", () ->
                         EntityType.Builder.of(ClientBee::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -396,7 +366,7 @@ public class PetsInitializer {
                                 .build("clientbee")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientCaveSpider>> CAVE_SPIDER =
+        public static final RegistryObject<  EntityType<ClientCaveSpider>> CAVE_SPIDER =
                 ENTITY_TYPES.register("clientcavespider", () ->
                         EntityType.Builder.of(ClientCaveSpider::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -404,7 +374,7 @@ public class PetsInitializer {
                                 .build("clientcavespider")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientDolphin>> DOLPHIN =
+        public static final RegistryObject<  EntityType<ClientDolphin>> DOLPHIN =
                 ENTITY_TYPES.register("clientdolphin", () ->
                         EntityType.Builder.of(ClientDolphin::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -412,7 +382,7 @@ public class PetsInitializer {
                                 .build("clientdolphin")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientEnderman>> ENDERMAN =
+        public static final RegistryObject<  EntityType<ClientEnderman>> ENDERMAN =
                 ENTITY_TYPES.register("clientenderman", () ->
                         EntityType.Builder.of(ClientEnderman::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -420,7 +390,7 @@ public class PetsInitializer {
                                 .build("clientenderman")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientFox>> FOX =
+        public static final RegistryObject<  EntityType<ClientFox>> FOX =
                 ENTITY_TYPES.register("clientfox", () ->
                         EntityType.Builder.of(ClientFox::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -428,7 +398,7 @@ public class PetsInitializer {
                                 .build("clientfox")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientGoat>> GOAT =
+        public static final RegistryObject<  EntityType<ClientGoat>> GOAT =
                 ENTITY_TYPES.register("clientgoat", () ->
                         EntityType.Builder.of(ClientGoat::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -436,7 +406,7 @@ public class PetsInitializer {
                                 .build("clientgoat")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientIronGolem>> IRON_GOLEM =
+        public static final RegistryObject<  EntityType<ClientIronGolem>> IRON_GOLEM =
                 ENTITY_TYPES.register("clientirongolem", () ->
                         EntityType.Builder.of(ClientIronGolem::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -444,7 +414,7 @@ public class PetsInitializer {
                                 .build("clientirongolem")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientLlama>> LLAMA =
+        public static final RegistryObject<  EntityType<ClientLlama>> LLAMA =
                 ENTITY_TYPES.register("clientllama", () ->
                         EntityType.Builder.of(ClientLlama::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -452,7 +422,7 @@ public class PetsInitializer {
                                 .build("clientllama")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientPanda>> PANDA =
+        public static final RegistryObject<  EntityType<ClientPanda>> PANDA =
                 ENTITY_TYPES.register("clientpanda", () ->
                         EntityType.Builder.of(ClientPanda::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -460,7 +430,7 @@ public class PetsInitializer {
                                 .build("clientpanda")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientPiglin>> PIGLIN =
+        public static final RegistryObject<  EntityType<ClientPiglin>> PIGLIN =
                 ENTITY_TYPES.register("clientpiglin", () ->
                         EntityType.Builder.of(ClientPiglin::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -468,7 +438,7 @@ public class PetsInitializer {
                                 .build("clientpiglin")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientPolarBear>> POLAR_BEAR =
+        public static final RegistryObject<  EntityType<ClientPolarBear>> POLAR_BEAR =
                 ENTITY_TYPES.register("clientpolarbear", () ->
                         EntityType.Builder.of(ClientPolarBear::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -476,7 +446,7 @@ public class PetsInitializer {
                                 .build("clientpolarbear")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientPufferFish>> PUFFERFISH =
+        public static final RegistryObject<  EntityType<ClientPufferFish>> PUFFERFISH =
                 ENTITY_TYPES.register("clientpufferfish", () ->
                         EntityType.Builder.of(ClientPufferFish::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -484,7 +454,7 @@ public class PetsInitializer {
                                 .build("clientpufferfish")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientSpider>> SPIDER =
+        public static final RegistryObject<  EntityType<ClientSpider>> SPIDER =
                 ENTITY_TYPES.register("clientspider", () ->
                         EntityType.Builder.of(ClientSpider::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -492,7 +462,7 @@ public class PetsInitializer {
                                 .build("clientspider")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientWolf>> WOLF =
+        public static final RegistryObject<  EntityType<ClientWolf>> WOLF =
                 ENTITY_TYPES.register("clientwolf", () ->
                         EntityType.Builder.of(ClientWolf::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -500,7 +470,7 @@ public class PetsInitializer {
                                 .build("clientwolf")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientBlaze>> BLAZE =
+        public static final RegistryObject<  EntityType<ClientBlaze>> BLAZE =
                 ENTITY_TYPES.register("clientblaze", () ->
                         EntityType.Builder.of(ClientBlaze::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -508,7 +478,7 @@ public class PetsInitializer {
                                 .build("clientblaze")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientCreeper>> CREEPER =
+        public static final RegistryObject<  EntityType<ClientCreeper>> CREEPER =
                 ENTITY_TYPES.register("clientcreeper", () ->
                         EntityType.Builder.of(ClientCreeper::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -516,7 +486,7 @@ public class PetsInitializer {
                                 .build("clientcreeper")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientElderGuardian>> ELDER_GUARDIAN_COOKIE =
+        public static final RegistryObject<  EntityType<ClientElderGuardian>> ELDER_GUARDIAN_COOKIE =
                 ENTITY_TYPES.register("clientelderguardian", () ->
                         EntityType.Builder.of(ClientElderGuardian::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -524,7 +494,7 @@ public class PetsInitializer {
                                 .build("clientelderguardian")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientEndermite>> ENDERMITE =
+        public static final RegistryObject<  EntityType<ClientEndermite>> ENDERMITE =
                 ENTITY_TYPES.register("clientendermite", () ->
                         EntityType.Builder.of(ClientEndermite::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -532,7 +502,7 @@ public class PetsInitializer {
                                 .build("clientendermite")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientEvoker>> EVOKER =
+        public static final RegistryObject<  EntityType<ClientEvoker>> EVOKER =
                 ENTITY_TYPES.register("clientevoker", () ->
                         EntityType.Builder.of(ClientEvoker::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -540,7 +510,7 @@ public class PetsInitializer {
                                 .build("clientevoker")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientGhast>> GHAST =
+        public static final RegistryObject<  EntityType<ClientGhast>> GHAST =
                 ENTITY_TYPES.register("clientghast", () ->
                         EntityType.Builder.of(ClientGhast::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -548,7 +518,7 @@ public class PetsInitializer {
                                 .build("clientghast")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientGuardian>> GUARDIAN =
+        public static final RegistryObject<  EntityType<ClientGuardian>> GUARDIAN =
                 ENTITY_TYPES.register("clientguardian", () ->
                         EntityType.Builder.of(ClientGuardian::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -556,7 +526,7 @@ public class PetsInitializer {
                                 .build("clientguardian")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientHoglin>> HOGLIN =
+        public static final RegistryObject<  EntityType<ClientHoglin>> HOGLIN =
                 ENTITY_TYPES.register("clienthoglin", () ->
                         EntityType.Builder.of(ClientHoglin::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -564,7 +534,7 @@ public class PetsInitializer {
                                 .build("clienthoglin")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientMagmaCube>> MAGMA_CUBE =
+        public static final RegistryObject<  EntityType<ClientMagmaCube>> MAGMA_CUBE =
                 ENTITY_TYPES.register("clientmagmacube", () ->
                         EntityType.Builder.of(ClientMagmaCube::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -572,7 +542,7 @@ public class PetsInitializer {
                                 .build("clientmagmacube")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientPhantom>> PHANTOM =
+        public static final RegistryObject<  EntityType<ClientPhantom>> PHANTOM =
                 ENTITY_TYPES.register("clientphantom", () ->
                         EntityType.Builder.of(ClientPhantom::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -580,7 +550,7 @@ public class PetsInitializer {
                                 .build("clientphantom")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientPillager>> PILLAGER =
+        public static final RegistryObject<  EntityType<ClientPillager>> PILLAGER =
                 ENTITY_TYPES.register("clientpillager", () ->
                         EntityType.Builder.of(ClientPillager::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -588,7 +558,7 @@ public class PetsInitializer {
                                 .build("clientpillager")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientRavager>> RAVAGER =
+        public static final RegistryObject<  EntityType<ClientRavager>> RAVAGER =
                 ENTITY_TYPES.register("clientravager", () ->
                         EntityType.Builder.of(ClientRavager::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -596,7 +566,7 @@ public class PetsInitializer {
                                 .build("clientravager")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientShulker>> SHULKER =
+        public static final RegistryObject<  EntityType<ClientShulker>> SHULKER =
                 ENTITY_TYPES.register("clientshulker", () ->
                         EntityType.Builder.of(ClientShulker::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -604,7 +574,7 @@ public class PetsInitializer {
                                 .build("clientshulker")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientSilverfish>> SILVERFISH =
+        public static final RegistryObject<  EntityType<ClientSilverfish>> SILVERFISH =
                 ENTITY_TYPES.register("clientsilverfish", () ->
                         EntityType.Builder.of(ClientSilverfish::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -612,7 +582,7 @@ public class PetsInitializer {
                                 .build("clientsilverfish")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientSkeleton>> SKELETON =
+        public static final RegistryObject<  EntityType<ClientSkeleton>> SKELETON =
                 ENTITY_TYPES.register("clientskeleton", () ->
                         EntityType.Builder.of(ClientSkeleton::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -620,7 +590,7 @@ public class PetsInitializer {
                                 .build("clientskeleton")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientSlime>> SLIME =
+        public static final RegistryObject<  EntityType<ClientSlime>> SLIME =
                 ENTITY_TYPES.register("clientslime", () ->
                         EntityType.Builder.of(ClientSlime::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -628,7 +598,7 @@ public class PetsInitializer {
                                 .build("clientslime")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientVex>> VEX =
+        public static final RegistryObject<  EntityType<ClientVex>> VEX =
                 ENTITY_TYPES.register("clientvex", () ->
                         EntityType.Builder.of(ClientVex::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -636,7 +606,7 @@ public class PetsInitializer {
                                 .build("clientvex")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientVindicator>> VINDICATOR =
+        public static final RegistryObject<  EntityType<ClientVindicator>> VINDICATOR =
                 ENTITY_TYPES.register("clientvindicator", () ->
                         EntityType.Builder.of(ClientVindicator::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -644,15 +614,7 @@ public class PetsInitializer {
                                 .build("clientvindicator")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientWarden>> WARDEN =
-                ENTITY_TYPES.register("clientwarden", () ->
-                        EntityType.Builder.of(ClientWarden::new, MobCategory.AMBIENT)
-                                .noSummon()
-                                .sized(0.9f, 2.9f)
-                                .build("clientwarden")
-                );
-
-        public static final RegistryObject< @NotNull EntityType<ClientWitch>> WITCH =
+        public static final RegistryObject<  EntityType<ClientWitch>> WITCH =
                 ENTITY_TYPES.register("clientwitch", () ->
                         EntityType.Builder.of(ClientWitch::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -660,7 +622,7 @@ public class PetsInitializer {
                                 .build("clientwitch")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientZombie>> ZOMBIE =
+        public static final RegistryObject<  EntityType<ClientZombie>> ZOMBIE =
                 ENTITY_TYPES.register("clientzombie", () ->
                         EntityType.Builder.of(ClientZombie::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -668,7 +630,7 @@ public class PetsInitializer {
                                 .build("clientzombie")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientZombieVillager>> ZOMBIE_VILLAGER =
+        public static final RegistryObject<  EntityType<ClientZombieVillager>> ZOMBIE_VILLAGER =
                 ENTITY_TYPES.register("clientzombievillager", () ->
                         EntityType.Builder.of(ClientZombieVillager::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -676,7 +638,7 @@ public class PetsInitializer {
                                 .build("clientzombievillager")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientHusk>> HUSK =
+        public static final RegistryObject<  EntityType<ClientHusk>> HUSK =
                 ENTITY_TYPES.register("clienthusk", () ->
                         EntityType.Builder.of(ClientHusk::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -684,7 +646,7 @@ public class PetsInitializer {
                                 .build("clienthusk")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientDrowned>> DROWNED =
+        public static final RegistryObject<  EntityType<ClientDrowned>> DROWNED =
                 ENTITY_TYPES.register("clientdrowned", () ->
                         EntityType.Builder.of(ClientDrowned::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -692,7 +654,7 @@ public class PetsInitializer {
                                 .build("clientdrowned")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientStray>> STRAY =
+        public static final RegistryObject<  EntityType<ClientStray>> STRAY =
                 ENTITY_TYPES.register("clientstray", () ->
                         EntityType.Builder.of(ClientStray::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -700,7 +662,7 @@ public class PetsInitializer {
                                 .build("clientstray")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientWitherSkeleton>> WITHER_SKELETON =
+        public static final RegistryObject<  EntityType<ClientWitherSkeleton>> WITHER_SKELETON =
                 ENTITY_TYPES.register("clientwitherskeleton", () ->
                         EntityType.Builder.of(ClientWitherSkeleton::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -708,7 +670,7 @@ public class PetsInitializer {
                                 .build("clientwitherskeleton")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientEnderDragon>> ENDER_DRAGON =
+        public static final RegistryObject<  EntityType<ClientEnderDragon>> ENDER_DRAGON =
                 ENTITY_TYPES.register("clientenderdragon", () ->
                         EntityType.Builder.of(ClientEnderDragon::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -716,7 +678,7 @@ public class PetsInitializer {
                                 .build("clientenderdragon")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ClientWither>> WITHER =
+        public static final RegistryObject<  EntityType<ClientWither>> WITHER =
                 ENTITY_TYPES.register("clientwither", () ->
                         EntityType.Builder.of(ClientWither::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -724,7 +686,7 @@ public class PetsInitializer {
                                 .build("clientwither")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<AngryGhast>> ANGRY_GHAST =
+        public static final RegistryObject<  EntityType<AngryGhast>> ANGRY_GHAST =
                 ENTITY_TYPES.register("clientangryghast", () ->
                         EntityType.Builder.of(AngryGhast::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -732,7 +694,7 @@ public class PetsInitializer {
                                 .build("clientangryghast")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<Batato>> BATATO =
+        public static final RegistryObject<  EntityType<Batato>> BATATO =
                 ENTITY_TYPES.register("batato", () ->
                         EntityType.Builder.of(Batato::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -740,7 +702,7 @@ public class PetsInitializer {
                                 .build("batato")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<DiamondChicken>> DIAMOND_CHICKEN =
+        public static final RegistryObject<  EntityType<DiamondChicken>> DIAMOND_CHICKEN =
                 ENTITY_TYPES.register("diamond_chicken", () ->
                         EntityType.Builder.of(DiamondChicken::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -748,7 +710,7 @@ public class PetsInitializer {
                                 .build("diamond_chicken")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<LoveGolem>> LOVE_GOLEM =
+        public static final RegistryObject<  EntityType<LoveGolem>> LOVE_GOLEM =
                 ENTITY_TYPES.register("love_golem", () ->
                         EntityType.Builder.of(LoveGolem::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -756,7 +718,7 @@ public class PetsInitializer {
                                 .build("love_golem")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<MegaSpud>> MEGA_SPUD =
+        public static final RegistryObject<  EntityType<MegaSpud>> MEGA_SPUD =
                 ENTITY_TYPES.register("mega_spud", () ->
                         EntityType.Builder.of(MegaSpud::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -764,7 +726,7 @@ public class PetsInitializer {
                                 .build("mega_spud")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<MoonCow>> MOON_COW =
+        public static final RegistryObject<  EntityType<MoonCow>> MOON_COW =
                 ENTITY_TYPES.register("moon_cow", () ->
                         EntityType.Builder.of(MoonCow::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -772,7 +734,7 @@ public class PetsInitializer {
                                 .build("moon_cow")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<NerdCreeper>> NERD_CREEPER =
+        public static final RegistryObject<  EntityType<NerdCreeper>> NERD_CREEPER =
                 ENTITY_TYPES.register("nerd_creeper", () ->
                         EntityType.Builder.of(NerdCreeper::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -780,7 +742,7 @@ public class PetsInitializer {
                                 .build("nerd_creeper")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<PinkWither>> PINK_WITHER =
+        public static final RegistryObject<  EntityType<PinkWither>> PINK_WITHER =
                 ENTITY_TYPES.register("pink_wither", () ->
                         EntityType.Builder.of(PinkWither::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -788,7 +750,7 @@ public class PetsInitializer {
                                 .build("pink_wither")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<PlaguewhaleSlab>> PLAGUEWHALE_SLAB =
+        public static final RegistryObject<  EntityType<PlaguewhaleSlab>> PLAGUEWHALE_SLAB =
                 ENTITY_TYPES.register("plaguewhale_slab", () ->
                         EntityType.Builder.of(PlaguewhaleSlab::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -796,7 +758,7 @@ public class PetsInitializer {
                                 .build("plaguewhale_slab")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<PoisonousPotatoZombie>> POISONOUS_POTATO_ZOMBIE =
+        public static final RegistryObject<  EntityType<PoisonousPotatoZombie>> POISONOUS_POTATO_ZOMBIE =
                 ENTITY_TYPES.register("poisonous_potato_zombie", () ->
                         EntityType.Builder.of(PoisonousPotatoZombie::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -804,7 +766,7 @@ public class PetsInitializer {
                                 .build("poisonous_potato_zombie")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<RayTracing>> RAY_TRACING =
+        public static final RegistryObject<  EntityType<RayTracing>> RAY_TRACING =
                 ENTITY_TYPES.register("ray_tracing", () ->
                         EntityType.Builder.of(RayTracing::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -812,7 +774,7 @@ public class PetsInitializer {
                                 .build("ray_tracing")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<RedstoneBug>> REDSTONE_BUG =
+        public static final RegistryObject<  EntityType<RedstoneBug>> REDSTONE_BUG =
                 ENTITY_TYPES.register("redstone_bug", () ->
                         EntityType.Builder.of(RedstoneBug::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -820,7 +782,7 @@ public class PetsInitializer {
                                 .build("redstone_bug")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<SmilingCreeper>> SMILING_CREEPER =
+        public static final RegistryObject<  EntityType<SmilingCreeper>> SMILING_CREEPER =
                 ENTITY_TYPES.register("smiling_creeper", () ->
                         EntityType.Builder.of(SmilingCreeper::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -828,7 +790,7 @@ public class PetsInitializer {
                                 .build("smiling_creeper")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<ToxifinSlab>> TOXIFIN_SLAB =
+        public static final RegistryObject<  EntityType<ToxifinSlab>> TOXIFIN_SLAB =
                 ENTITY_TYPES.register("toxifin_slab", () ->
                         EntityType.Builder.of(ToxifinSlab::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -836,7 +798,7 @@ public class PetsInitializer {
                                 .build("toxifin_slab")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<PotatoHusk>> POTATO_HUSK =
+        public static final RegistryObject<  EntityType<PotatoHusk>> POTATO_HUSK =
                 ENTITY_TYPES.register("potatohusk", () ->
                         EntityType.Builder.of(PotatoHusk::new, MobCategory.AMBIENT)
                                 .noSummon()
@@ -844,14 +806,14 @@ public class PetsInitializer {
                                 .build("potatohusk")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<Head>> HEAD =
+        public static final RegistryObject<  EntityType<Head>> HEAD =
                 ENTITY_TYPES.register("head", () ->
                         EntityType.Builder.of(Head::new, MobCategory.CREATURE)
                                 .sized(0.5f, 0.5f)
                                 .build("head")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<Traitor>> TRAITOR =
+        public static final RegistryObject<  EntityType<Traitor>> TRAITOR =
                 ENTITY_TYPES.register("traitor", () ->
                         EntityType.Builder.of(Traitor::new, MobCategory.CREATURE)
                                 .noSummon()
@@ -859,21 +821,21 @@ public class PetsInitializer {
                                 .build("traitor")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<DumboOctopus>> DUMBO_OCTOPUS =
+        public static final RegistryObject<  EntityType<DumboOctopus>> DUMBO_OCTOPUS =
                 ENTITY_TYPES.register("dumbo_octopus", () ->
                         EntityType.Builder.of(DumboOctopus::new, MobCategory.WATER_AMBIENT)
                                 .sized(0.5f, 0.5f)
                                 .build("dumbo_octopus")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<Koi>> KOI =
+        public static final RegistryObject<  EntityType<Koi>> KOI =
                 ENTITY_TYPES.register("koi", () ->
                         EntityType.Builder.of(Koi::new, MobCategory.WATER_AMBIENT)
                                 .sized(0.6f, 0.6f)
                                 .build("koi")
                 );
 
-        public static final RegistryObject< @NotNull EntityType<Stingray>> STINGRAY =
+        public static final RegistryObject<  EntityType<Stingray>> STINGRAY =
                 ENTITY_TYPES.register("stingray", () ->
                         EntityType.Builder.of(Stingray::new, MobCategory.WATER_AMBIENT)
                                 .sized(1.0f, 0.4f)

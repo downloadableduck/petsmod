@@ -9,11 +9,11 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.layers.SlimeOuterLayer;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSlimeRenderer extends PetRenderer<@NotNull ClientSlime, @NotNull SlimeModel<ClientSlime>> {
+public class ClientSlimeRenderer extends PetRenderer< ClientSlime,  SlimeModel<ClientSlime>> {
 
     public static final ModelLayerLocation SLIME_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientslime"), "main");
 
@@ -23,7 +23,7 @@ public class ClientSlimeRenderer extends PetRenderer<@NotNull ClientSlime, @NotN
     }
 
     @Override
-    protected void scale(ClientSlime slimeRenderState, @NotNull PoseStack poseStack, float f) {
+    protected void scale(ClientSlime slimeRenderState,  PoseStack poseStack, float f) {
         int slimeScale = switch (CONFIG.slimeSkin) {
             case "small" -> 1;
             case "medium" -> 2;
@@ -34,7 +34,7 @@ public class ClientSlimeRenderer extends PetRenderer<@NotNull ClientSlime, @NotN
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientSlime livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientSlime livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/slime/slime.png");
     }
 }

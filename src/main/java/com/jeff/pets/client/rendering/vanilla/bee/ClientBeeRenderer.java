@@ -7,13 +7,13 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientBeeRenderer extends PetRenderer<@NotNull ClientBee, @NotNull ClientBeeModel> {
+public class ClientBeeRenderer extends PetRenderer< ClientBee,  ClientBeeModel> {
     public static final ModelLayerLocation BEE_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientbee"), "main");
     public String beeTexturePath;
 
@@ -22,14 +22,14 @@ public class ClientBeeRenderer extends PetRenderer<@NotNull ClientBee, @NotNull 
     }
 
     @Override
-    protected void scale(ClientBee state, @NotNull PoseStack poseStack, float f) {
+    protected void scale(ClientBee state,  PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientBee beeRenderState) {
+    public  ResourceLocation getTextureLocation(ClientBee beeRenderState) {
         if (Objects.equals(CONFIG.beeSkin, "happy")) {
             beeTexturePath = "textures/entity/bee/bee.png";
         } else if (Objects.equals(CONFIG.beeSkin, "angry")) {

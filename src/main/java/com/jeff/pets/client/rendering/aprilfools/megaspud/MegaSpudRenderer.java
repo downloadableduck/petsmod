@@ -8,9 +8,9 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class MegaSpudRenderer extends PetRenderer<@NotNull MegaSpud, @NotNull MegaSpudModel> {
+
+public class MegaSpudRenderer extends PetRenderer< MegaSpud,  MegaSpudModel> {
 
     public static final ModelLayerLocation MEGA_SPUD_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "megaspoud"), "main");
 
@@ -25,7 +25,7 @@ public class MegaSpudRenderer extends PetRenderer<@NotNull MegaSpud, @NotNull Me
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(MegaSpud livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(MegaSpud livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/slime/mega_spud.png");
     }
 }

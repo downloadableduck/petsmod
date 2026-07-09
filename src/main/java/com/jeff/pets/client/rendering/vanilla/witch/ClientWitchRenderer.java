@@ -7,9 +7,9 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class ClientWitchRenderer extends PetRenderer<@NotNull ClientWitch, @NotNull WitchModel<ClientWitch>> {
+
+public class ClientWitchRenderer extends PetRenderer< ClientWitch,  WitchModel<ClientWitch>> {
 
     public static final ModelLayerLocation WITCH_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientwitch"), "main");
 
@@ -18,7 +18,7 @@ public class ClientWitchRenderer extends PetRenderer<@NotNull ClientWitch, @NotN
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientWitch livingEntityRenderState) {
+    public  ResourceLocation getTextureLocation(ClientWitch livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/witch.png");
     }
 }

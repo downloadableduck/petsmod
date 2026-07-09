@@ -13,15 +13,15 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
-public class MegaSpudOuterLayer extends RenderLayer<MegaSpud, @NotNull MegaSpudModel> {
+
+public class MegaSpudOuterLayer extends RenderLayer<MegaSpud,  MegaSpudModel> {
 
     public static final ModelLayerLocation MEGA_SPUD_OUTER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "mega_spud_outer"), "main");
 
     private final EntityModel model;
 
-    public MegaSpudOuterLayer(RenderLayerParent<@NotNull MegaSpud, @NotNull MegaSpudModel> renderLayerParent, EntityRendererProvider.Context context) {
+    public MegaSpudOuterLayer(RenderLayerParent< MegaSpud,  MegaSpudModel> renderLayerParent, EntityRendererProvider.Context context) {
         super(renderLayerParent);
         this.model = new SlimeModel(context.bakeLayer(MEGA_SPUD_OUTER_LOCATION));
     }
@@ -32,7 +32,7 @@ public class MegaSpudOuterLayer extends RenderLayer<MegaSpud, @NotNull MegaSpudM
 
 
     @Override
-    public void render(@NotNull PoseStack poseStack, MultiBufferSource bufferSource, int i, MegaSpud entityRenderState, float f, float g, float a, float h, float k, float l) {
+    public void render( PoseStack poseStack, MultiBufferSource bufferSource, int i, MegaSpud entityRenderState, float f, float g, float a, float h, float k, float l) {
         int overlayCoords = LivingEntityRenderer.getOverlayCoords(entityRenderState, 0.0f);
         VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.entityTranslucent(new ResourceLocation("minecraft", "textures/entity/slime/mega_spud.png")));
         this.model.renderToBuffer(poseStack, vertexConsumer, i, overlayCoords, 1, 1, 1, 1);

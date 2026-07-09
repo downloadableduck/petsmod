@@ -6,12 +6,12 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
+
 
 
 public class ClientRabbit extends SlimeLikePet {
 
-    public ClientRabbit(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
+    public ClientRabbit(EntityType<? extends  TamableAnimal> entityType, Level level) {
         super(entityType, level);
     }
 

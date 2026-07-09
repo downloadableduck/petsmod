@@ -8,14 +8,14 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
 //villager layer is blue lmao
-public class ClientVillagerProfessionLayer extends RenderLayer<@NotNull ClientVillager, @NotNull VillagerModel<ClientVillager>> {
+public class ClientVillagerProfessionLayer extends RenderLayer< ClientVillager,  VillagerModel<ClientVillager>> {
 
     public static final ModelLayerLocation ARMORER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "textures/entity/villager/profession/armorer.png"), "main");
     public static final ModelLayerLocation BUTCHER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "textures/entity/villager/profession/butcher.png"), "main");
@@ -32,12 +32,12 @@ public class ClientVillagerProfessionLayer extends RenderLayer<@NotNull ClientVi
     public static final ModelLayerLocation TOOLSMITH_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "textures/entity/villager/profession/toolsmith.png"), "main");
     public static final ModelLayerLocation WEAPONSMITH_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "textures/entity/villager/profession/weaponsmith.png"), "main");
 
-    public ClientVillagerProfessionLayer(RenderLayerParent<@NotNull ClientVillager, @NotNull VillagerModel<ClientVillager>> renderLayerParent) {
+    public ClientVillagerProfessionLayer(RenderLayerParent< ClientVillager,  VillagerModel<ClientVillager>> renderLayerParent) {
         super(renderLayerParent);
     }
 
     @Override
-    public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource source, int i, ClientVillager entityRenderState, float f, float g, float h, float j, float k, float l) {
+    public void render( PoseStack poseStack,  MultiBufferSource source, int i, ClientVillager entityRenderState, float f, float g, float h, float j, float k, float l) {
         poseStack.pushPose();
         poseStack.scale(1.001f, 1.001f, 1.001f);
         if (Objects.equals(CONFIG.villagerSkin, "armorer")) {
