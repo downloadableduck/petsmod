@@ -6,8 +6,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,23 +13,14 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientDrownedModel extends HumanoidModel<ClientDrowned> {
 
-    public static float headScale;
-
-    final ModelPart head;
-    private HumanoidModel.ArmPose rightArmPose;
-    private HumanoidModel.ArmPose leftArmPose;
-
-    public ClientDrownedModel(ModelPart modelPart) {
-        super(modelPart);
-        this.head = modelPart.getChild("head");
-    }
-
-    public static LayerDefinition createBodyLayer(CubeDeformation cubeDeformation) {
-        MeshDefinition meshDefinition = HumanoidModel.createMesh(cubeDeformation, 0.0F);
-        PartDefinition partDefinition = meshDefinition.getRoot();
-        partDefinition.addOrReplaceChild("left_arm", CubeListBuilder.create().texOffs(32, 48).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, cubeDeformation), PartPose.offset(5.0F, 2.0F, 0.0F));
-        partDefinition.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(16, 48).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, cubeDeformation), PartPose.offset(1.9F, 12.0F, 0.0F));
-        return LayerDefinition.create(meshDefinition, 64, 64);
+    public ClientDrownedModel(float f, float g, int i, int j) {
+        super(f, g, i, j);
+        this.rightArm = new ModelPart(this, 32, 48);
+        this.rightArm.addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, f);
+        this.rightArm.setPos(-5.0F, 2.0F + g, 0.0F);
+        this.rightLeg = new ModelPart(this, 16, 48);
+        this.rightLeg.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, f);
+        this.rightLeg.setPos(-1.9F, 12.0F + g, 0.0F);
     }
 
     @Override
@@ -63,6 +52,7 @@ public class ClientDrownedModel extends HumanoidModel<ClientDrowned> {
             this.head.xRot = 0.0F;
         }
     }
+
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int j, float f, float g, float h, float k) {
         super.renderToBuffer(poseStack, vertexConsumer, i, j, f, g, h, k);

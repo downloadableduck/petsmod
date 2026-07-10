@@ -4,20 +4,18 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.AgableMob;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -176,7 +174,7 @@ public abstract class AbstractPet extends TamableAnimal {
      * @return {@code null}
      */
     @Override
-    public @Nullable AgeableMob getBreedOffspring(@NotNull ServerLevel serverLevel, @NotNull AgeableMob ageableMob) {
+    public @Nullable AgableMob getBreedOffspring(@NotNull ServerLevel serverLevel, @NotNull AgableMob AgableMob) {
         return null;
     }
 
@@ -245,8 +243,20 @@ public abstract class AbstractPet extends TamableAnimal {
         this.yBodyRot = targetYaw;
     }
 
+    public float getYRot() {
+        return this.yBodyRot;
+    }
+
+    public void setYRot(float targetYaw) {
+        this.setYHeadRot(targetYaw);
+        this.setYBodyRot(targetYaw);
+    }
+
     private void reCalcPos() {
         this.randomX = (float) (Math.random() - 1);
         this.randomZ = (float) (Math.random() - 1);
+    }
+    public double horizontalDistance(Vec3 vec3) {
+        return Math.sqrt(vec3.x * vec3.x + vec3.z * vec3.z);
     }
 }

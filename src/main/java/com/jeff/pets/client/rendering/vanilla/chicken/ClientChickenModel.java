@@ -12,11 +12,8 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientChickenModel<T extends ClientChicken> extends ChickenModel<T> {
 
-    private final ModelPart head;
-
-    public ClientChickenModel(ModelPart modelPart) {
-        super(modelPart);
-        this.head = modelPart.getChild("head");
+    public ClientChickenModel() {
+        super();
     }
 
     @Override
@@ -41,7 +38,7 @@ public class ClientChickenModel<T extends ClientChicken> extends ChickenModel<T>
         } else {
             poseStack.scale(1, 1, 1);
         }
-        this.head.translateAndRotate(poseStack);
+        this.headParts().iterator().next().translateAndRotate(poseStack);
         poseStack.popPose();
     }
 }

@@ -1,21 +1,17 @@
 package com.jeff.pets.client.rendering.vanilla.snowgolem;
 
-import com.jeff.pets.mob.vanilla.passive.ClientSnowGolem;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientSnowGolem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.SnowGolemModel;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientSnowGolemRenderer extends PetRenderer<@NotNull ClientSnowGolem, @NotNull SnowGolemModel<ClientSnowGolem>> {
-    public static final ModelLayerLocation SNOW_GOLEM = new ModelLayerLocation(new ResourceLocation("minecraft", "clientsnowgolem"), "main");
 
-    public ClientSnowGolemRenderer(EntityRendererProvider.Context context) {
-        super(context, new SnowGolemModel<>(context.bakeLayer(ModelLayers.SNOW_GOLEM)), 0.5F);
-        this.addLayer(new ClientSnowGolemHeadLayer(this, Minecraft.getInstance().getBlockRenderer(), context.getItemRenderer()));
+    public ClientSnowGolemRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+        super(context, new SnowGolemModel<>(), 0.5F);
+        this.addLayer(new ClientSnowGolemHeadLayer(this, Minecraft.getInstance().getBlockRenderer(), context2.getItemRenderer()));
     }
 
     @Override

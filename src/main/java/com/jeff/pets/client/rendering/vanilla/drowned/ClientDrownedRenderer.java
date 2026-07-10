@@ -1,14 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.drowned;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientDrowned;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientDrowned;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,16 +10,9 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientDrownedRenderer extends PetRenderer<@NotNull ClientDrowned, @NotNull ClientDrownedModel> {
 
-    public static final ModelLayerLocation DROWNED_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientdrowned"), "main");
-
-    public ClientDrownedRenderer(EntityRendererProvider.Context context) {
-        super(context, new ClientDrownedModel(context.bakeLayer(ModelLayers.DROWNED)), 0.75f);
-        this.addLayer(new ClientDrownedOuterLayer(this, context));
-    }
-
-    public static LayerDefinition createBaseDrownedLayer() {
-        ClientDrownedModel.createBodyLayer(CubeDeformation.NONE);
-        return LayerDefinition.create(new MeshDefinition(), 64, 64);
+    public ClientDrownedRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+        super(context, new ClientDrownedModel(0.0F, 0.0F, 64, 64), 0.75f);
+        this.addLayer(new ClientDrownedOuterLayer(this, context, context2));
     }
 
     @Override
@@ -34,7 +21,6 @@ public class ClientDrownedRenderer extends PetRenderer<@NotNull ClientDrowned, @
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
-
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientDrowned livingEntityRenderState) {

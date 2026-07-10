@@ -1,22 +1,18 @@
 package com.jeff.pets.client.rendering.vanilla.salmon;
 
-import com.jeff.pets.mob.vanilla.passive.ClientSalmon;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientSalmon;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.model.SalmonModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientSalmonRenderer extends PetRenderer<@NotNull ClientSalmon, @NotNull ClientSalmonModel> {
+public class ClientSalmonRenderer extends PetRenderer<@NotNull ClientSalmon, @NotNull SalmonModel<ClientSalmon>> {
 
-    public static final ModelLayerLocation SALMON_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientsalmon"), "main");
-
-    public ClientSalmonRenderer(EntityRendererProvider.Context context) {
-        super(context, new ClientSalmonModel(context.bakeLayer(ModelLayers.SALMON)), 0.4F);
+    public ClientSalmonRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+        super(context, new SalmonModel<>(), 0.4F);
     }
 
     @Override

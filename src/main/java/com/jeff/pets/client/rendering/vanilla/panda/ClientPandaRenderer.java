@@ -1,21 +1,18 @@
 package com.jeff.pets.client.rendering.vanilla.panda;
 
-import com.jeff.pets.mob.vanilla.neutral.ClientPanda;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.neutral.ClientPanda;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.PandaRenderer;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientPandaRenderer extends PetRenderer<@NotNull ClientPanda, @NotNull ClientPandaModel> {
-    public static final ModelLayerLocation PANDA_LOCAITON = new ModelLayerLocation(new ResourceLocation("minecraft", "clientpanda"), "main");
 
-    public ClientPandaRenderer(EntityRendererProvider.Context context) {
-        super(context, new ClientPandaModel(context.bakeLayer(ModelLayers.PANDA)), 0.75f);
+    public ClientPandaRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+        super(context, new ClientPandaModel(9, 0), 0.75f);
     }
 
     @Override

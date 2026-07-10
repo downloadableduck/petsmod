@@ -1,20 +1,16 @@
 package com.jeff.pets.client.rendering.vanilla.phantom;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientPhantom;
 import com.jeff.pets.client.rendering.PetRenderer;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import com.jeff.pets.mob.vanilla.hostile.ClientPhantom;
+import net.minecraft.client.model.PhantomModel;
 import net.minecraft.client.renderer.entity.layers.PhantomEyesLayer;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientPhantomRenderer extends PetRenderer<@NotNull ClientPhantom, @NotNull ClientPhantomModel> {
+public class ClientPhantomRenderer extends PetRenderer<@NotNull ClientPhantom, @NotNull PhantomModel<ClientPhantom>> {
 
-    public static final ModelLayerLocation PHANTOM_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientphantom"), "main");
-
-    public ClientPhantomRenderer(EntityRendererProvider.Context context) {
-        super(context, new ClientPhantomModel(context.bakeLayer(ModelLayers.PHANTOM)), 0.75f);
+    public ClientPhantomRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+        super(context, new PhantomModel<>(), 0.75f);
         this.addLayer(new PhantomEyesLayer(this));
     }
 

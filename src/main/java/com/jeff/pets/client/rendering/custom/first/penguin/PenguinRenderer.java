@@ -1,11 +1,10 @@
 package com.jeff.pets.client.rendering.custom.first.penguin;
 
 import com.jeff.pets.PetsInitializer;
-import com.jeff.pets.mob.custom.first.Penguin;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.custom.first.Penguin;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
@@ -14,8 +13,8 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class PenguinRenderer extends PetRenderer<@NotNull Penguin, @NotNull PenguinModel> {
 
-    public PenguinRenderer(EntityRendererProvider.Context context) {
-        super(context, new PenguinModel(context.bakeLayer(PenguinModel.PENGUIN_LOCATION)), 0.5f);
+    public PenguinRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+        super(context, new PenguinModel(), 0.5f);
     }
 
     @Override

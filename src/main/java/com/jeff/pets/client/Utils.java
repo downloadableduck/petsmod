@@ -3,10 +3,8 @@ package com.jeff.pets.client;
 import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -18,8 +16,8 @@ import net.minecraft.world.phys.Vec3;
 import java.lang.reflect.Field;
 import java.util.Objects;
 
-import static com.jeff.pets.client.Central.CONFIG;
 import static com.jeff.pets.PetsInitializer.MOD_ID;
+import static com.jeff.pets.client.Central.CONFIG;
 
 /**
  * A utility class used mainly in {@link Central} and misc rendering classes. Contains various
@@ -134,7 +132,7 @@ public class Utils {
      */
     public static void despawnEntity(Entity e) {
         if (e != null) {
-            e.discard();
+            e.remove();
         }
     }
 
@@ -148,10 +146,6 @@ public class Utils {
         Central.summonedEntity.clear();
         Central.summonedEntity.add(e);
         CONFIG.activePet = s;
-    }
-
-    public static ModelLayerLocation createModelLayer(String string) {
-        return new ModelLayerLocation(withModNamespace(string), "main");
     }
 
     public static Block getBlockFromString(String string) {
@@ -168,11 +162,5 @@ public class Utils {
             e.printStackTrace();
         }
         return Blocks.AIR;
-    }
-    public static void resetPose(ModelPart modelPart) {
-        modelPart.setRotation(0, 0, 0);
-        modelPart.x = 0;
-        modelPart.y = 0;
-        modelPart.z = 0;
     }
 }

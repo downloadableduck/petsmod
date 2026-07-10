@@ -3,19 +3,14 @@ package com.jeff.pets.client.rendering.vanilla.cow;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.CowModel;
-import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.animal.Chicken;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientCowModel<T extends Entity> extends CowModel<T> {
 
-    private final ModelPart head;
-
-    public ClientCowModel(ModelPart modelPart) {
-        super(modelPart);
-        this.head = modelPart.getChild("head");
+    public ClientCowModel() {
+        super();
     }
 
     @Override

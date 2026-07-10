@@ -6,28 +6,25 @@ import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -102,7 +99,7 @@ public class DumboOctopus extends FlyingPet {
         this.playSound(SoundEvents.CHICKEN_STEP, 0.15F, 1.0F);
     }
 
-    public @Nullable DumboOctopus getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgeableMob partner) {
+    public @Nullable DumboOctopus getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgableMob partner) {
         DumboOctopus octopus = DUMBO_OCTOPUS.create(level);
         octopus.setServerEntity(true);
         return octopus;
@@ -115,14 +112,14 @@ public class DumboOctopus extends FlyingPet {
     }
 
     public boolean isFood(final @NotNull ItemStack itemStack) {
-        return itemStack.is(ItemTags.FISHES);
+        return itemStack.sameItem(new ItemStack(Items.COD)) || itemStack.sameItem(new ItemStack(Items.SALMON)) || itemStack.sameItem(new ItemStack(Items.TROPICAL_FISH));
     }
 
     @Override
     public void registerGoals() {
 
         /**Using false in this statement causes the mob to sink to the bottom and reptitively spin.*/
-        this.moveControl = new SmoothSwimmingMoveControl(this, 10, 10, 1, 1, true);
+        //this.moveControl = new SmoothSwimmingMoveControl(this, 10, 10, 1, 1, true);
         this.getNavigation().setCanFloat(true);
         this.goalSelector.addGoal(1, new RandomSwimmingGoal(this, 1, 1));
         this.goalSelector.addGoal(2, new TryFindWaterGoal(this));
@@ -173,7 +170,7 @@ public class DumboOctopus extends FlyingPet {
                 Vec3 dir = vecToOwner.normalize();
                 double speed = 0.2;
 
-                this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
+                this.setYBodyRot(Duck.rotlerp(this.yBodyRot, (float) targetYaw));
                 this.setYHeadRot(this.getYRot());
                 this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.yHeadRot, 50.0f);
 
@@ -194,7 +191,7 @@ public class DumboOctopus extends FlyingPet {
             }
 
             if (!this.onGround) {
-                this.processFlappingMovement();
+                //this.processFlappingMovement();
             }
 
             if (owner.getDeltaMovement().lengthSqr() < 0.01) {

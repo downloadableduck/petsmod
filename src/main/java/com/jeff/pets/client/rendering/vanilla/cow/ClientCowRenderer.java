@@ -1,22 +1,17 @@
 package com.jeff.pets.client.rendering.vanilla.cow;
 
-import com.jeff.pets.mob.vanilla.passive.ClientCow;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientCow;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientCowRenderer extends PetRenderer<@NotNull ClientCow, @NotNull ClientCowModel<ClientCow>> {
-    public static ModelLayerLocation COW_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientcow"), "main");
-    String cowTexturePath;
 
-    public ClientCowRenderer(EntityRendererProvider.Context context) {
-        super(context, new ClientCowModel<>(context.bakeLayer(ModelLayers.COW)), 0.7F);
+    public ClientCowRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+        super(context, new ClientCowModel<>(), 0.7F);
     }
 
     public @NotNull ResourceLocation getTextureLocation(ClientCow LivingEntityRenderState) {

@@ -1,11 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.enderdragon;
 
-import com.jeff.pets.mob.vanilla.boss.ClientEnderDragon;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.boss.ClientEnderDragon;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,10 +11,8 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientEnderDragonRenderer extends PetRenderer<@NotNull ClientEnderDragon, ClientEnderDragonModel> {
 
-    public static final ModelLayerLocation ENDER_DRAGON_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientenderdragon"), "main");
-
-    public ClientEnderDragonRenderer(EntityRendererProvider.Context context) {
-        super(context, new ClientEnderDragonModel(context.bakeLayer(ModelLayers.ENDER_DRAGON)), 0.75f);
+    public ClientEnderDragonRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+        super(context, new ClientEnderDragonModel(), 0.75f);
     }
 
     @Override

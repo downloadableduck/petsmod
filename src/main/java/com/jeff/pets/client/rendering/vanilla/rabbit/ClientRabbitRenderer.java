@@ -1,29 +1,18 @@
 package com.jeff.pets.client.rendering.vanilla.rabbit;
 
-import com.jeff.pets.mob.vanilla.passive.ClientRabbit;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientRabbit;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientRabbitRenderer extends PetRenderer<@NotNull ClientRabbit, @NotNull ClientRabbitModel> {
-    public static final ModelLayerLocation RABBIT_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientrabbit"), "main");
     public String rabbitTextureLocation;
 
-    public ClientRabbitRenderer(EntityRendererProvider.Context context) {
-        super(context, new ClientRabbitModel(context.bakeLayer(ModelLayers.RABBIT)), 0.3F);
-    }
-
-    public static LayerDefinition createBaseRabbitLayer() {
-        ClientRabbitModel.createBodyLayer();
-        return LayerDefinition.create(new MeshDefinition(), 64, 32);
+    public ClientRabbitRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+        super(context, new ClientRabbitModel(), 0.3F);
     }
 
     @Override

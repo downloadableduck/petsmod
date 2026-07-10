@@ -4,36 +4,24 @@ import com.google.common.collect.ImmutableList;
 import com.jeff.pets.mob.vanilla.hostile.ClientShulker;
 import net.minecraft.client.model.ListModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.util.Mth;
 
 public class ClientShulkerModel extends ListModel<ClientShulker> {
-    private final ModelPart base;
-    private final ModelPart lid;
-    private final ModelPart head;
+    private final ModelPart base = new ModelPart(64, 64, 0, 28);
+    private final ModelPart lid = new ModelPart(64, 64, 0, 0);
+    private final ModelPart head = new ModelPart(64, 64, 0, 52);
 
-    public ClientShulkerModel(ModelPart modelPart) {
+    public ClientShulkerModel() {
         super(RenderType::entityCutoutNoCullZOffset);
-        this.lid = modelPart.getChild("lid");
-        this.base = modelPart.getChild("base");
-        this.head = modelPart.getChild("head");
+        this.lid.addBox(-8.0F, -16.0F, -8.0F, 16.0F, 12.0F, 16.0F);
+        this.lid.setPos(0.0F, 24.0F, 0.0F);
+        this.base.addBox(-8.0F, -8.0F, -8.0F, 16.0F, 8.0F, 16.0F);
+        this.base.setPos(0.0F, 24.0F, 0.0F);
+        this.head.addBox(-3.0F, 0.0F, -3.0F, 6.0F, 6.0F, 6.0F);
+        this.head.setPos(0.0F, 12.0F, 0.0F);
     }
 
-    public static LayerDefinition createBodyLayer() {
-        MeshDefinition meshDefinition = new MeshDefinition();
-        PartDefinition partDefinition = meshDefinition.getRoot();
-        partDefinition.addOrReplaceChild("lid", CubeListBuilder.create().texOffs(0, 0).addBox(-8.0F, -16.0F, -8.0F, 16.0F, 12.0F, 16.0F), PartPose.offset(0.0F, 24.0F, 0.0F));
-        partDefinition.addOrReplaceChild("base", CubeListBuilder.create().texOffs(0, 28).addBox(-8.0F, -8.0F, -8.0F, 16.0F, 8.0F, 16.0F), PartPose.offset(0.0F, 24.0F, 0.0F));
-        partDefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 52).addBox(-3.0F, 0.0F, -3.0F, 6.0F, 6.0F, 6.0F), PartPose.offset(0.0F, 12.0F, 0.0F));
-        return LayerDefinition.create(meshDefinition, 64, 64);
-    }
-
-    @Override
     public void setupAnim(ClientShulker shulker, float f, float g, float h, float i, float j) {
         float k = h - (float) shulker.tickCount;
         float l = (0.5F + 1) * (float) Math.PI;
@@ -51,11 +39,15 @@ public class ClientShulkerModel extends ListModel<ClientShulker> {
         }
 
         this.head.xRot = j * ((float) Math.PI / 180F);
-        this.head.yRot = (shulker.yHeadRot - shulker.yBodyRot) * ((float) Math.PI / 180F);
+        this.head.yRot = (shulker.yHeadRot - 180.0F - shulker.yBodyRot) * ((float) Math.PI / 180F);
     }
 
     public Iterable<ModelPart> parts() {
-        return ImmutableList.of(this.base, this.lid, this.head);
+        return ImmutableList.of(this.base, this.lid);
+    }
+
+    public ModelPart getBase() {
+        return this.base;
     }
 
     public ModelPart getLid() {

@@ -1,12 +1,9 @@
 package com.jeff.pets.client.rendering.vanilla.slime;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.SlimeModel;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.layers.SlimeOuterLayer;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
@@ -15,11 +12,9 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientSlimeRenderer extends PetRenderer<@NotNull ClientSlime, @NotNull SlimeModel<ClientSlime>> {
 
-    public static final ModelLayerLocation SLIME_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientslime"), "main");
-
-    public ClientSlimeRenderer(EntityRendererProvider.Context context) {
-        super(context, new SlimeModel<>(context.bakeLayer(ModelLayers.SLIME)), 0.75f);
-        this.addLayer(new SlimeOuterLayer(this, context.getModelSet()));
+    public ClientSlimeRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+        super(context, new SlimeModel<>(16), 0.75f);
+        this.addLayer(new SlimeOuterLayer(this));
     }
 
     @Override

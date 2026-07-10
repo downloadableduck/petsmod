@@ -3,12 +3,10 @@ package com.jeff.pets.mob.custom.first;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -95,7 +93,7 @@ public class Racoon extends AbstractPet {
 
     @Override
     public boolean isFood(@NotNull ItemStack itemStack) {
-        return itemStack.is(ItemTags.FOX_FOOD);
+        return itemStack.sameItem(new ItemStack(Items.SWEET_BERRIES));
     }
 
     @Override
@@ -165,7 +163,7 @@ public class Racoon extends AbstractPet {
             }
 
             if (!this.onGround) {
-                this.processFlappingMovement();
+                //this.processFlappingMovement();
             }
             this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
             this.setYHeadRot(this.getYRot());
@@ -195,7 +193,7 @@ public class Racoon extends AbstractPet {
     }
 
     @Override
-    public @Nullable AgeableMob getBreedOffspring(@NotNull ServerLevel serverLevel, @NotNull AgeableMob ageableMob) {
+    public @Nullable AgableMob getBreedOffspring(@NotNull ServerLevel serverLevel, @NotNull AgableMob AgableMob) {
         Racoon racoon = RACOON.create(serverLevel);
         racoon.setServerEntity(false);
         return racoon;

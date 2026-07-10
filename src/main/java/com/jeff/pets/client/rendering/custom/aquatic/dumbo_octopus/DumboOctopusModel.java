@@ -1,16 +1,18 @@
 package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 
-import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
 import com.jeff.pets.client.rendering.PetModel;
+import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.*;
 import org.jetbrains.annotations.NotNull;
 
 public class DumboOctopusModel extends PetModel<@NotNull DumboOctopus> {
     private final ModelPart body;
     private final ModelPart left_ear;
+    private final ModelPart left_ear_r1;
     private final ModelPart right_ear;
+    private final ModelPart right_ear_r1;
     private final ModelPart leg1;
     private final ModelPart leg2;
     private final ModelPart leg3;
@@ -20,52 +22,87 @@ public class DumboOctopusModel extends PetModel<@NotNull DumboOctopus> {
     private final ModelPart leg7;
     private final ModelPart leg8;
 
-    public DumboOctopusModel(ModelPart root) {
-        super(root);
-        this.body = root.getChild("body");
-        this.left_ear = this.body.getChild("left_ear");
-        this.right_ear = this.body.getChild("right_ear");
-        this.leg1 = this.body.getChild("leg1");
-        this.leg2 = this.body.getChild("leg2");
-        this.leg3 = this.body.getChild("leg3");
-        this.leg4 = this.body.getChild("leg4");
-        this.leg5 = this.body.getChild("leg5");
-        this.leg6 = this.body.getChild("leg6");
-        this.leg7 = this.body.getChild("leg7");
-        this.leg8 = this.body.getChild("leg8");
+    public DumboOctopusModel() {
+        texWidth = 32;
+        texHeight = 32;
+
+        body = new ModelPart(this);
+        body.setPos(0.0F, 22.0F, 0.0F);
+        setRotationAngle(body, 0.0F, -1.5708F, 0.0F);
+        body.texOffs(0, 0).addBox(-4.0F, -5.0F, -3.0F, 6.0F, 6.0F, 6.0F, 0.0F, false);
+
+        left_ear = new ModelPart(this);
+        left_ear.setPos(-1.0F, 2.0F, 2.0F);
+        body.addChild(left_ear);
+
+
+        left_ear_r1 = new ModelPart(this);
+        left_ear_r1.setPos(-1.0F, -7.0F, 1.0F);
+        left_ear.addChild(left_ear_r1);
+        setRotationAngle(left_ear_r1, -0.5236F, 0.0F, 0.0F);
+        left_ear_r1.texOffs(8, 12).addBox(-1.0F, -2.0F, -0.5F, 2.0F, 2.0F, 1.0F, 0.0F, false);
+
+        right_ear = new ModelPart(this);
+        right_ear.setPos(-2.0F, -5.0F, 3.0F);
+        body.addChild(right_ear);
+
+
+        right_ear_r1 = new ModelPart(this);
+        right_ear_r1.setPos(0.0F, 0.0F, -6.0F);
+        right_ear.addChild(right_ear_r1);
+        setRotationAngle(right_ear_r1, 0.5236F, 0.0F, 0.0F);
+        right_ear_r1.texOffs(8, 12).addBox(-1.0F, -2.0F, -0.5F, 2.0F, 2.0F, 1.0F, 0.0F, false);
+
+        leg1 = new ModelPart(this);
+        leg1.setPos(-4.0F, 1.0F, 2.0F);
+        body.addChild(leg1);
+        leg1.texOffs(0, 12).addBox(-2.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
+
+        leg2 = new ModelPart(this);
+        leg2.setPos(-4.0F, 1.0F, -1.0F);
+        body.addChild(leg2);
+        leg2.texOffs(0, 12).addBox(-2.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
+
+        leg3 = new ModelPart(this);
+        leg3.setPos(-3.0F, 1.0F, -3.0F);
+        body.addChild(leg3);
+        leg3.texOffs(0, 12).addBox(-1.0F, -1.0F, -2.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
+
+        leg4 = new ModelPart(this);
+        leg4.setPos(0.0F, 1.0F, -3.0F);
+        body.addChild(leg4);
+        leg4.texOffs(0, 12).addBox(-1.0F, -1.0F, -2.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
+
+        leg5 = new ModelPart(this);
+        leg5.setPos(2.0F, 1.0F, -2.0F);
+        body.addChild(leg5);
+        leg5.texOffs(0, 12).addBox(0.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
+
+        leg6 = new ModelPart(this);
+        leg6.setPos(2.0F, 1.0F, 1.0F);
+        body.addChild(leg6);
+        leg6.texOffs(0, 12).addBox(0.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
+
+        leg7 = new ModelPart(this);
+        leg7.setPos(1.0F, 1.0F, 3.0F);
+        body.addChild(leg7);
+        leg7.texOffs(0, 12).addBox(-1.0F, -1.0F, 0.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
+
+        leg8 = new ModelPart(this);
+        leg8.setPos(-2.0F, 1.0F, 3.0F);
+        body.addChild(leg8);
+        leg8.texOffs(0, 12).addBox(-1.0F, -1.0F, 0.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
     }
 
-    public static LayerDefinition createBodyLayer() {
-        MeshDefinition meshdefinition = new MeshDefinition();
-        PartDefinition partdefinition = meshdefinition.getRoot();
+    @Override
+    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        body.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+    }
 
-        PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -5.0F, -3.0F, 6.0F, 6.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 22.0F, 0.0F, 0.0F, -1.5708F, 0.0F));
-
-        PartDefinition left_ear = body.addOrReplaceChild("left_ear", CubeListBuilder.create(), PartPose.offset(-1.0F, 2.0F, 2.0F));
-
-        PartDefinition left_ear_r1 = left_ear.addOrReplaceChild("left_ear_r1", CubeListBuilder.create().texOffs(8, 12).addBox(-1.0F, -2.0F, -0.5F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, -7.0F, 1.0F, -0.5236F, 0.0F, 0.0F));
-
-        PartDefinition right_ear = body.addOrReplaceChild("right_ear", CubeListBuilder.create(), PartPose.offset(-2.0F, -5.0F, 3.0F));
-
-        PartDefinition right_ear_r1 = right_ear.addOrReplaceChild("right_ear_r1", CubeListBuilder.create().texOffs(8, 12).addBox(-1.0F, -2.0F, -0.5F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, -6.0F, 0.5236F, 0.0F, 0.0F));
-
-        PartDefinition leg1 = body.addOrReplaceChild("leg1", CubeListBuilder.create().texOffs(0, 12).addBox(-2.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(-4.0F, 1.0F, 2.0F));
-
-        PartDefinition leg2 = body.addOrReplaceChild("leg2", CubeListBuilder.create().texOffs(0, 12).addBox(-2.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(-4.0F, 1.0F, -1.0F));
-
-        PartDefinition leg3 = body.addOrReplaceChild("leg3", CubeListBuilder.create().texOffs(0, 12).addBox(-1.0F, -1.0F, -2.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(-3.0F, 1.0F, -3.0F));
-
-        PartDefinition leg4 = body.addOrReplaceChild("leg4", CubeListBuilder.create().texOffs(0, 12).addBox(-1.0F, -1.0F, -2.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 1.0F, -3.0F));
-
-        PartDefinition leg5 = body.addOrReplaceChild("leg5", CubeListBuilder.create().texOffs(0, 12).addBox(0.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(2.0F, 1.0F, -2.0F));
-
-        PartDefinition leg6 = body.addOrReplaceChild("leg6", CubeListBuilder.create().texOffs(0, 12).addBox(0.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(2.0F, 1.0F, 1.0F));
-
-        PartDefinition leg7 = body.addOrReplaceChild("leg7", CubeListBuilder.create().texOffs(0, 12).addBox(-1.0F, -1.0F, 0.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(1.0F, 1.0F, 3.0F));
-
-        PartDefinition leg8 = body.addOrReplaceChild("leg8", CubeListBuilder.create().texOffs(0, 12).addBox(-1.0F, -1.0F, 0.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.0F, 1.0F, 3.0F));
-
-        return LayerDefinition.create(meshdefinition, 32, 32);
+    public void setRotationAngle(ModelPart ModelPart, float x, float y, float z) {
+        ModelPart.xRot = x;
+        ModelPart.yRot = y;
+        ModelPart.zRot = z;
     }
 
 

@@ -1,31 +1,18 @@
 package com.jeff.pets.client.rendering.vanilla.horse;
 
-import com.jeff.pets.mob.vanilla.passive.ClientHorse;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientHorse;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.HorseModel;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientHorseRenderer extends PetRenderer<@NotNull ClientHorse, @NotNull ClientHorseModel<ClientHorse>> {
-    public static final ModelLayerLocation HORSE_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clienthorse"), "main");
     public String horseTextureLocation;
 
-    public ClientHorseRenderer(EntityRendererProvider.Context context) {
-        super(context, new ClientHorseModel<>(context.bakeLayer(ModelLayers.HORSE)), 0.5f);
-    }
-
-    public static LayerDefinition createBaseHorseLayer() {
-        HorseModel.createBodyMesh(CubeDeformation.NONE);
-        return LayerDefinition.create(new MeshDefinition(), 64, 64);
+    public ClientHorseRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+        super(context, new ClientHorseModel<>(0), 0.5f);
     }
 
     @Override

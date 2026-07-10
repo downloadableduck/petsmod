@@ -1,13 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.zombievillager;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,11 +10,9 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientZombieVillagerRenderer extends PetRenderer<@NotNull ClientZombieVillager, @NotNull ClientZombieVillagerModel> {
 
-    public static final ModelLayerLocation ZOMBIE_VILLAGER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientzombievillager"), "main");
-
-    public ClientZombieVillagerRenderer(EntityRendererProvider.Context context) {
-        super(context, new ClientZombieVillagerModel(context.bakeLayer(ModelLayers.ZOMBIE_VILLAGER)), 0.75f);
-        this.addLayer((RenderLayer) new ClientZombieVillagerProfessionLayer((RenderLayerParent) this));
+    public ClientZombieVillagerRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+        super(context, new ClientZombieVillagerModel(0, false), 0.75f);
+        this.addLayer(new ClientZombieVillagerProfessionLayer(this));
     }
 
     @Override

@@ -2,29 +2,26 @@ package com.jeff.pets.client.rendering.vanilla.cat;
 
 import com.jeff.pets.mob.vanilla.passive.ClientCat;
 import net.minecraft.client.model.OcelotModel;
-import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;
 
 public class ClientCatModel extends OcelotModel<ClientCat> {
-    private final ModelPart root;
     private float lieDownAmount;
     private float lieDownAmountTail;
     private float relaxStateOneAmount;
 
-    public ClientCatModel(ModelPart modelPart) {
-        super(modelPart);
-        this.root = modelPart;
+    public ClientCatModel(float f) {
+        super(f);
     }
 
     public void setupAnim(ClientCat cat, float a, float b, float c, float d, float e) {
         super.setupAnim(cat, a, b, c, d, e);
         float f = cat.getAge();
         if (cat.isPassenger()) {
-            this.body.y += 1.0F * f;
+            this.body.y += f;
             this.head.y += 2.0F * f;
             //this.tail1.y += 1.0F * f;
-           // this.tail2.y += -4.0F * f;
-           // this.tail2.z += 2.0F * f;
+            // this.tail2.y += -4.0F * f;
+            // this.tail2.z += 2.0F * f;
             //this.tail1.xRot = (float) (Math.PI / 2);
             //this.tail2.xRot = (float) (Math.PI / 2);
         }
@@ -36,15 +33,15 @@ public class ClientCatModel extends OcelotModel<ClientCat> {
             float g = cat.animationSpeed;
             float h = cat.animationPosition;
 
-                this.leftHindLeg.xRot = Mth.cos(h * 0.6662F) * g;
-                this.rightHindLeg.xRot = Mth.cos(h * 0.6662F + (float) Math.PI) * g;
-                this.leftFrontLeg.xRot = (Mth.cos(h * 0.6662F + (float) Math.PI) * g);
-                this.rightFrontLeg.xRot = (Mth.cos(h * 0.6662F) * g);
-                if (!cat.isPassenger()) {
-                    this.tail2.xRot = 1.7278761F + (float) (Math.PI / 4) * Mth.cos(h) * g;
-                } else {
-                    this.tail2.xRot = 1.7278761F + 0.47123894F * Mth.cos(h) * g;
-                }
+            this.backLegL.xRot = Mth.cos(h * 0.6662F) * g;
+            this.backLegR.xRot = Mth.cos(h * 0.6662F + (float) Math.PI) * g;
+            this.frontLegL.xRot = (Mth.cos(h * 0.6662F + (float) Math.PI) * g);
+            this.frontLegR.xRot = (Mth.cos(h * 0.6662F) * g);
+            if (!cat.isPassenger()) {
+                this.tail2.xRot = 1.7278761F + (float) (Math.PI / 4) * Mth.cos(h) * g;
+            } else {
+                this.tail2.xRot = 1.7278761F + 0.47123894F * Mth.cos(h) * g;
+            }
         }
 
         if (cat.isPassenger()) {
@@ -52,25 +49,25 @@ public class ClientCatModel extends OcelotModel<ClientCat> {
             this.body.y += -4.0F * f;
             this.body.z += 5.0F * f;
             this.head.y += -3.3F * f;
-            this.head.z += 1.0F * f;
+            this.head.z += f;
             this.tail1.y += 8.0F * f;
             this.tail1.z += -2.0F * f;
             this.tail2.y += 2.0F * f;
             this.tail2.z += -0.8F * f;
             this.tail1.xRot = 1.7278761F;
             this.tail2.xRot = 2.670354F;
-            this.leftFrontLeg.xRot = (float) (-Math.PI / 20);
-            this.leftFrontLeg.y += 2.0F * f;
-            this.leftFrontLeg.z -= 2.0F * f;
-            this.rightFrontLeg.xRot = (float) (-Math.PI / 20);
-            this.rightFrontLeg.y += 2.0F * f;
-            this.rightFrontLeg.z -= 2.0F * f;
-            this.leftHindLeg.xRot = (float) (-Math.PI / 2);
-            this.leftHindLeg.y += 3.0F * f;
-            this.leftHindLeg.z -= 4.0F * f;
-            this.rightHindLeg.xRot = (float) (-Math.PI / 2);
-            this.rightHindLeg.y += 3.0F * f;
-            this.rightHindLeg.z -= 4.0F * f;
+            this.frontLegL.xRot = (float) (-Math.PI / 20);
+            this.frontLegL.y += 2.0F * f;
+            this.frontLegL.z -= 2.0F * f;
+            this.frontLegR.xRot = (float) (-Math.PI / 20);
+            this.frontLegR.y += 2.0F * f;
+            this.frontLegR.z -= 2.0F * f;
+            this.backLegL.xRot = (float) (-Math.PI / 2);
+            this.backLegL.y += 3.0F * f;
+            this.backLegL.z -= 4.0F * f;
+            this.backLegR.xRot = (float) (-Math.PI / 2);
+            this.backLegR.y += 3.0F * f;
+            this.backLegR.z -= 4.0F * f;
         }
 
         /*if (cat.lieDownAmount > 0.0F) {

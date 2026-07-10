@@ -1,11 +1,10 @@
 package com.jeff.pets.client.rendering.custom.first.duck;
 
 import com.jeff.pets.PetsInitializer;
-import com.jeff.pets.mob.custom.first.Duck;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.custom.first.Duck;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
@@ -17,8 +16,8 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class DuckRenderer extends PetRenderer<@NotNull Duck, @NotNull DuckModel> {
     public String duckTexturePath;
 
-    public DuckRenderer(final EntityRendererProvider.Context context) {
-        super(context, new DuckModel(context.bakeLayer(DuckModel.LAYER_LOCATION)), 0.3F);
+    public DuckRenderer(final net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+        super(context, new DuckModel(), 0.3F);
     }
 
     @Override

@@ -1,11 +1,9 @@
 package com.jeff.pets.client.rendering.custom.aquatic.stingray;
 
-import com.jeff.pets.mob.custom.aquatic.Stingray;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.custom.aquatic.Stingray;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,10 +11,8 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
 
 public class StingrayRenderer extends PetRenderer<Stingray, StingrayModel> {
 
-    public static final ModelLayerLocation STINGRAY_LOCATION = new ModelLayerLocation(new ResourceLocation(MOD_ID, "stingray"), "main");
-
-    public StingrayRenderer(EntityRendererProvider.Context context) {
-        super(context, new StingrayModel(context.bakeLayer(STINGRAY_LOCATION)), 0.75f);
+    public StingrayRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+        super(context, new StingrayModel(), 0.75f);
     }
 
     @Override

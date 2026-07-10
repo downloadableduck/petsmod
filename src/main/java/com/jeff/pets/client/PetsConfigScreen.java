@@ -4,24 +4,14 @@ import com.jeff.pets.client.enums.*;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
-import me.shedaniel.clothconfig2.gui.entries.DropdownBoxEntry;
 import me.shedaniel.clothconfig2.impl.builders.*;
-import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.events.GuiEventListener;
-import net.minecraft.client.gui.narration.NarratableEntry;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.TextComponent;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.function.Function;
 
 /**
  * Uses both the <a href="https://modrinth.com/mod/yacl">YACL</a> and <a href="https://modrinth.com/mod/modmenu">Mod Menu</a> APIs to create a screen and hook it into the Mod Menu.
@@ -94,15 +84,15 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> implements ModMenuA
                         Minecraft.getInstance().setScreen(this.getModConfigScreenFactory().create(null));
                     })
                     .setTransparentBackground(true);
-                    ConfigCategory general = builder.getOrCreateCategory(new TextComponent("Config"));
-                    ConfigEntryBuilder entryBuilder = builder.entryBuilder();
-                    general.addEntry(this.createPetOnOption(entryBuilder, CONFIG).build());
-                    general.addEntry(this.createPetSpeciesOption(entryBuilder, CONFIG).build());
-                    general.addEntry(this.createPetNameOption(entryBuilder, CONFIG).build());
-                    general.addEntry(this.createPetSkinOption(entryBuilder, CONFIG).build());
-                    general.addEntry(this.createBabyOption(entryBuilder, CONFIG).build());
+            ConfigCategory general = builder.getOrCreateCategory(new TextComponent("Config"));
+            ConfigEntryBuilder entryBuilder = builder.entryBuilder();
+            general.addEntry(this.createPetOnOption(entryBuilder, CONFIG).build());
+            general.addEntry(this.createPetSpeciesOption(entryBuilder, CONFIG).build());
+            general.addEntry(this.createPetNameOption(entryBuilder, CONFIG).build());
+            general.addEntry(this.createPetSkinOption(entryBuilder, CONFIG).build());
+            general.addEntry(this.createBabyOption(entryBuilder, CONFIG).build());
 
-                    return builder.build();
+            return builder.build();
         };
     }
 
@@ -119,7 +109,8 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> implements ModMenuA
                     Central.summonPet();
                 });
     }
-    private StringFieldBuilder createPetNameOption(ConfigEntryBuilder builder,PetsConfig CONFIG) {
+
+    private StringFieldBuilder createPetNameOption(ConfigEntryBuilder builder, PetsConfig CONFIG) {
         String activePet = CONFIG.activePet;
         String defaultVal = switch (CONFIG.activePet) {
             case "penguin" -> CONFIG.penguinName;
@@ -358,36 +349,36 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> implements ModMenuA
                         case "racoon" -> (Class<T>) RacoonSkins.class;
                         case "strider" -> (Class<T>) StriderSkins.class;
                         case "sheep" -> (Class<T>) SheepSkins.class;
-                        case "cat" ->  (Class<T>) CatSkins.class;
-                        case "axolotl" ->  (Class<T>) AxolotlSkins.class;
-                        case "camel" ->  (Class<T>) CamelSkins.class;
-                        case "chicken" ->  (Class<T>) ChickenSkins.class;
-                        case "creeper", "nerd_creeper", "smiling_creeper" ->  (Class<T>) CreeperSkins.class;
-                        case "copper_golem" ->  (Class<T>) CopperGolemSkins.class;
-                        case "cow" ->  (Class<T>) CowSkins.class;
-                        case "frog" ->  (Class<T>) FrogSkins.class;
-                        case "horse" ->  (Class<T>) HorseSkins.class;
-                        case "parrot" ->  (Class<T>) ParrotSkins.class;
-                        case "pig" ->  (Class<T>) PigSkins.class;
-                        case "rabbit" ->  (Class<T>) RabbitSkins.class;
-                        case "snow_golem" ->  (Class<T>) SnowGolemSkins.class;
-                        case "squid" ->  (Class<T>) SquidSkins.class;
-                        case "tropical_fish" ->  (Class<T>) TropicalFishSkins.class;
-                        case "villager" ->  (Class<T>) VillagerSkins.class;
-                        case "mooshroom" ->  (Class<T>) MooshroomSkins.class;
-                        case "bee" ->  (Class<T>) BeeSkins.class;
-                        case "fox" ->  (Class<T>) FoxSkins.class;
-                        case "llama" ->  (Class<T>) LlamaSkins.class;
-                        case "nautilus" ->  (Class<T>) NautilusSkins.class;
-                        case "panda" ->  (Class<T>) PandaSkins.class;
-                        case "piglin" ->  (Class<T>) PiglinSkins.class;
-                        case "wolf" ->  (Class<T>) WolfSkins.class;
-                        case "hoglin" ->  (Class<T>) HoglinSkins.class;
-                        case "magma_cube", "slime" ->  (Class<T>) SlimeLikeSkins.class;
-                        case "zombie_villager" ->  (Class<T>) ZombieVillagerSkins.class;
-                        case "shulker" ->  (Class<T>) ShulkerSkins.class;
-                        case "wither" ->  (Class<T>) WitherSkins.class;
-                        case "dumbo_octopus" ->  (Class<T>) DumboOctopusSkins.class;
+                        case "cat" -> (Class<T>) CatSkins.class;
+                        case "axolotl" -> (Class<T>) AxolotlSkins.class;
+                        case "camel" -> (Class<T>) CamelSkins.class;
+                        case "chicken" -> (Class<T>) ChickenSkins.class;
+                        case "creeper", "nerd_creeper", "smiling_creeper" -> (Class<T>) CreeperSkins.class;
+                        case "copper_golem" -> (Class<T>) CopperGolemSkins.class;
+                        case "cow" -> (Class<T>) CowSkins.class;
+                        case "frog" -> (Class<T>) FrogSkins.class;
+                        case "horse" -> (Class<T>) HorseSkins.class;
+                        case "parrot" -> (Class<T>) ParrotSkins.class;
+                        case "pig" -> (Class<T>) PigSkins.class;
+                        case "rabbit" -> (Class<T>) RabbitSkins.class;
+                        case "snow_golem" -> (Class<T>) SnowGolemSkins.class;
+                        case "squid" -> (Class<T>) SquidSkins.class;
+                        case "tropical_fish" -> (Class<T>) TropicalFishSkins.class;
+                        case "villager" -> (Class<T>) VillagerSkins.class;
+                        case "mooshroom" -> (Class<T>) MooshroomSkins.class;
+                        case "bee" -> (Class<T>) BeeSkins.class;
+                        case "fox" -> (Class<T>) FoxSkins.class;
+                        case "llama" -> (Class<T>) LlamaSkins.class;
+                        case "nautilus" -> (Class<T>) NautilusSkins.class;
+                        case "panda" -> (Class<T>) PandaSkins.class;
+                        case "piglin" -> (Class<T>) PiglinSkins.class;
+                        case "wolf" -> (Class<T>) WolfSkins.class;
+                        case "hoglin" -> (Class<T>) HoglinSkins.class;
+                        case "magma_cube", "slime" -> (Class<T>) SlimeLikeSkins.class;
+                        case "zombie_villager" -> (Class<T>) ZombieVillagerSkins.class;
+                        case "shulker" -> (Class<T>) ShulkerSkins.class;
+                        case "wither" -> (Class<T>) WitherSkins.class;
+                        case "dumbo_octopus" -> (Class<T>) DumboOctopusSkins.class;
                         default -> BlankEnum.class;
                     };
                     /**Do NOT replace this with dynamic checking! It will cause a mismatch

@@ -1,21 +1,16 @@
 package com.jeff.pets.client.rendering.vanilla.skeleton;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientSkeleton;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientSkeleton;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.SkeletonModel;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientSkeletonRenderer extends PetRenderer<@NotNull ClientSkeleton, @NotNull SkeletonModel<@NotNull ClientSkeleton>> {
 
-    public static final ModelLayerLocation SKELETON_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientskeleton"), "main");
-
-    public ClientSkeletonRenderer(EntityRendererProvider.Context context) {
-        super(context, new SkeletonModel<>(context.bakeLayer(ModelLayers.SKELETON)), 0.75f);
+    public ClientSkeletonRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+        super(context, new SkeletonModel<>(), 0.75f);
     }
 
     @Override

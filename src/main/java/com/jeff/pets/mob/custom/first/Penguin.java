@@ -44,7 +44,7 @@ public class Penguin extends AbstractPet {
     public ServerPlayer owner = (ServerPlayer) this.getOwner();
     public boolean isOnHead;
     private float nextFlap = 1.0F;
-    private boolean isFlapping = this.flyDist > this.nextFlap;
+    private boolean isFlapping = !this.isOnGround();
 
     public Penguin(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
         super(entityType, level);
@@ -102,7 +102,7 @@ public class Penguin extends AbstractPet {
     }
 
     protected void onFlap() {
-        this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
+        //this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
     }
 
     protected SoundEvent getAmbientSound() {
@@ -121,7 +121,7 @@ public class Penguin extends AbstractPet {
         this.playSound(SoundEvents.CHICKEN_STEP, 0.15F, 1.0F);
     }
 
-    public @Nullable Penguin getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgeableMob partner) {
+    public @Nullable Penguin getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgableMob partner) {
         Penguin penguin = PENGUIN.create(level);
         penguin.setServerEntity(true);
         return penguin;
@@ -133,7 +133,7 @@ public class Penguin extends AbstractPet {
     }
 
     public boolean isFood(final @NotNull ItemStack itemStack) {
-        return itemStack.is(ItemTags.FISHES);
+        return itemStack.sameItem(new ItemStack(Items.COD)) || itemStack.sameItem(new ItemStack(Items.SALMON)) || itemStack.sameItem(new ItemStack(Items.TROPICAL_FISH));
     }
 
     @Override
@@ -202,16 +202,16 @@ public class Penguin extends AbstractPet {
 
             if (this.horizontalCollision && this.onGround) {
                 this.jumpFromGround();
-                this.processFlappingMovement();
+                //this.processFlappingMovement();
             }
 
             if (yHeightToOwner > -1) {
                 this.setDeltaMovement(this.getDeltaMovement().add(0, -0.01, 0));
-                this.processFlappingMovement();
+                //this.processFlappingMovement();
             }
 
             if (!this.onGround) {
-                this.processFlappingMovement();
+                //this.processFlappingMovement();
             }
 
             if (owner.getDeltaMovement().lengthSqr() < 0.01) {

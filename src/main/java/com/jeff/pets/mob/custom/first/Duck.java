@@ -5,18 +5,15 @@ import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -43,13 +40,13 @@ public class Duck extends AbstractPet {
             SynchedEntityData.defineId(Duck.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<@NotNull Integer> DUCK_SKIN =
             SynchedEntityData.defineId(Duck.class, EntityDataSerializers.INT);
+    private final float flyDist = 0;
     public float flap;
     public float flapSpeed;
     public float oFlapSpeed;
     public float oFlap;
     public float flapping = 1.0F;
     public boolean isOnHead;
-
     public ServerPlayer owner = (ServerPlayer) this.getOwner();
     private float nextFlap = 1.0F;
 
@@ -136,7 +133,7 @@ public class Duck extends AbstractPet {
         this.playSound(SoundEvents.CHICKEN_STEP, 0.15F, 1.0F);
     }
 
-    public @Nullable Duck getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgeableMob partner) {
+    public @Nullable Duck getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgableMob partner) {
         Duck duck = DUCK.create(level);
         duck.setServerEntity(true);
         return duck;
@@ -149,7 +146,7 @@ public class Duck extends AbstractPet {
     }
 
     public boolean isFood(final @NotNull ItemStack itemStack) {
-        return itemStack.is(ItemTags.FISHES);
+        return itemStack.sameItem(new ItemStack(Items.COD)) || itemStack.sameItem(new ItemStack(Items.SALMON)) || itemStack.sameItem(new ItemStack(Items.TROPICAL_FISH));
     }
 
     @Override
@@ -221,16 +218,16 @@ public class Duck extends AbstractPet {
 
             if (this.horizontalCollision && this.onGround) {
                 this.jumpFromGround();
-                this.processFlappingMovement();
+                //this.processFlappingMovement();
             }
 
             if (yHeightToOwner > -1) {
                 this.setDeltaMovement(this.getDeltaMovement().add(0, -0.01, 0));
-                this.processFlappingMovement();
+                //this.processFlappingMovement();
             }
 
             if (!this.onGround) {
-                this.processFlappingMovement();
+                // this.processFlappingMovement();
             }
 
             if (owner.getDeltaMovement().lengthSqr() < 0.01) {

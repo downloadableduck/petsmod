@@ -11,17 +11,16 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -79,7 +78,7 @@ public class Koi extends FlyingPet {
         this.playSound(SoundEvents.FISH_SWIM, 0.15F, 1.0F);
     }
 
-    public @Nullable Koi getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgeableMob partner) {
+    public @Nullable Koi getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgableMob partner) {
         Koi koi = KOI.create(level);
         koi.setServerEntity(true);
         return koi;
@@ -91,14 +90,14 @@ public class Koi extends FlyingPet {
     }
 
     public boolean isFood(final @NotNull ItemStack itemStack) {
-        return itemStack.is(ItemTags.FISHES);
+        return itemStack.sameItem(new ItemStack(Items.COD)) || itemStack.sameItem(new ItemStack(Items.SALMON)) || itemStack.sameItem(new ItemStack(Items.TROPICAL_FISH));
     }
 
     @Override
     public void registerGoals() {
 
         /**Using false in this statement causes the mob to sink to the bottom and reptitively spin.*/
-        this.moveControl = new SmoothSwimmingMoveControl(this, 10, 10, 1, 1, true);
+        //this.moveControl = new SmoothSwimmingMoveControl(this, 10, 10, 1, 1, true);
         this.getNavigation().setCanFloat(true);
         this.goalSelector.addGoal(1, new RandomSwimmingGoal(this, 1, 1));
         this.goalSelector.addGoal(2, new TryFindWaterGoal(this));
@@ -197,7 +196,7 @@ public class Koi extends FlyingPet {
             }
 
             if (!this.onGround) {
-                this.processFlappingMovement();
+                // this.processFlappingMovement();
             }
 
             if (owner.getDeltaMovement().lengthSqr() < 0.01) {

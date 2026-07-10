@@ -88,11 +88,11 @@ public class ClientSquid extends FlyingPet {
             }
 
             if (!this.level.isClientSide) {
-                this.setDeltaMovement((double) (this.tx * this.speed), (double) (this.ty * this.speed), (double) (this.tz * this.speed));
+                this.setDeltaMovement(this.tx * this.speed, this.ty * this.speed, this.tz * this.speed);
             }
 
             Vec3 vec3 = this.getDeltaMovement();
-            double d = vec3.horizontalDistance();
+            double d = this.horizontalDistance(vec3);
             this.yBodyRot += (-((float) Mth.atan2(vec3.x, vec3.z)) * (180F / (float) Math.PI) - this.yBodyRot) * 0.1F;
             this.setYRot(this.yBodyRot);
             this.zBodyRot += (float) Math.PI * this.rotateSpeed * 1.5F;
@@ -107,7 +107,7 @@ public class ClientSquid extends FlyingPet {
                     e -= 1;
                 }
 
-                this.setDeltaMovement((double) 0.0F, e * (double) 0.98F, (double) 0.0F);
+                this.setDeltaMovement(0.0F, e * (double) 0.98F, 0.0F);
             }
 
             this.xBodyRot += (-90.0F - this.xBodyRot) * 0.02F;

@@ -1,47 +1,30 @@
 package com.jeff.pets.client.rendering.vanilla.sheep;
 
 import com.jeff.pets.mob.vanilla.passive.ClientSheep;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.QuadrupedModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.*;
-
-import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientSheepModel extends QuadrupedModel<ClientSheep> {
     private float headXRot;
 
-    public ClientSheepModel(ModelPart modelPart) {
-        super(modelPart, false, 8.0F, 4.0F, 2.0F, 2.0F, 24);
-    }
-
-    public static LayerDefinition createBodyLayer() {
-        MeshDefinition meshDefinition = QuadrupedModel.createBodyMesh(12, CubeDeformation.NONE);
-        PartDefinition partDefinition = meshDefinition.getRoot();
-        partDefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -4.0F, -6.0F, 6.0F, 6.0F, 8.0F), PartPose.offset(0.0F, 6.0F, -8.0F));
-        partDefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(28, 8).addBox(-4.0F, -10.0F, -7.0F, 8.0F, 16.0F, 6.0F), PartPose.offsetAndRotation(0.0F, 5.0F, 2.0F, ((float) Math.PI / 2F), 0.0F, 0.0F));
-        return LayerDefinition.create(meshDefinition, 64, 32);
+    public ClientSheepModel() {
+        super(12, 0.0F, false, 8.0F, 4.0F, 2.0F, 2.0F, 24);
+        this.head = new ModelPart(this, 0, 0);
+        this.head.addBox(-3.0F, -4.0F, -6.0F, 6.0F, 6.0F, 8.0F, 0.0F);
+        this.head.setPos(0.0F, 6.0F, -8.0F);
+        this.body = new ModelPart(this, 28, 8);
+        this.body.addBox(-4.0F, -10.0F, -7.0F, 8.0F, 16.0F, 6.0F, 0.0F);
+        this.body.setPos(0.0F, 5.0F, 2.0F);
     }
 
     public void prepareMobModel(ClientSheep sheep, float f, float g, float h) {
         super.prepareMobModel(sheep, f, g, h);
+        this.head.y = 6.0F * 9.0F;
+        this.headXRot = 0;
     }
 
     public void setupAnim(ClientSheep sheep, float f, float g, float h, float i, float j) {
         super.setupAnim(sheep, f, g, h, i, j);
-    }
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int j, float f, float g, float h, float k) {
-        super.renderToBuffer(poseStack, vertexConsumer, i, j, f, g, h, k);
-        poseStack.pushPose();
-        if (CONFIG.isBaby) {
-            poseStack.scale(1.5f, 1.5f, 1.5f);
-        } else {
-            poseStack.scale(1, 1, 1);
-        }
-        this.head.translateAndRotate(poseStack);
-        poseStack.popPose();
+        this.head.xRot = this.headXRot;
     }
 }

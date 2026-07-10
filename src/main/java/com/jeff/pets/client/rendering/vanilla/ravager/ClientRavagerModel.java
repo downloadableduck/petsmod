@@ -1,69 +1,84 @@
 package com.jeff.pets.client.rendering.vanilla.ravager;
 
+import com.google.common.collect.ImmutableList;
 import com.jeff.pets.mob.vanilla.hostile.ClientRavager;
-import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.model.ListModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
-public class ClientRavagerModel extends HierarchicalModel<ClientRavager> {
-    private final ModelPart root;
+public class ClientRavagerModel extends ListModel<ClientRavager> {
     private final ModelPart head;
     private final ModelPart mouth;
-    private final ModelPart rightHindLeg;
-    private final ModelPart leftHindLeg;
-    private final ModelPart rightFrontLeg;
-    private final ModelPart leftFrontLeg;
+    private final ModelPart body;
+    private final ModelPart leg0;
+    private final ModelPart leg1;
+    private final ModelPart leg2;
+    private final ModelPart leg3;
     private final ModelPart neck;
 
-    public ClientRavagerModel(ModelPart modelPart) {
-        this.root = modelPart;
-        this.neck = modelPart.getChild("neck");
-        this.head = this.neck.getChild("head");
-        this.mouth = this.head.getChild("mouth");
-        this.rightHindLeg = modelPart.getChild("right_hind_leg");
-        this.leftHindLeg = modelPart.getChild("left_hind_leg");
-        this.rightFrontLeg = modelPart.getChild("right_front_leg");
-        this.leftFrontLeg = modelPart.getChild("left_front_leg");
-    }
-
-    public static LayerDefinition createBodyLayer() {
-        MeshDefinition meshDefinition = new MeshDefinition();
-        PartDefinition partDefinition = meshDefinition.getRoot();
+    public ClientRavagerModel() {
+        this.texWidth = 128;
+        this.texHeight = 128;
         int i = 16;
-        PartDefinition partDefinition2 = partDefinition.addOrReplaceChild("neck", CubeListBuilder.create().texOffs(68, 73).addBox(-5.0F, -1.0F, -18.0F, 10.0F, 10.0F, 18.0F), PartPose.offset(0.0F, -7.0F, 5.5F));
-        PartDefinition partDefinition3 = partDefinition2.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-8.0F, -20.0F, -14.0F, 16.0F, 20.0F, 16.0F).texOffs(0, 0).addBox(-2.0F, -6.0F, -18.0F, 4.0F, 8.0F, 4.0F), PartPose.offset(0.0F, 16.0F, -17.0F));
-        partDefinition3.addOrReplaceChild("right_horn", CubeListBuilder.create().texOffs(74, 55).addBox(0.0F, -14.0F, -2.0F, 2.0F, 14.0F, 4.0F), PartPose.offsetAndRotation(-10.0F, -14.0F, -8.0F, 1.0995574F, 0.0F, 0.0F));
-        partDefinition3.addOrReplaceChild("left_horn", CubeListBuilder.create().texOffs(74, 55).mirror().addBox(0.0F, -14.0F, -2.0F, 2.0F, 14.0F, 4.0F), PartPose.offsetAndRotation(8.0F, -14.0F, -8.0F, 1.0995574F, 0.0F, 0.0F));
-        partDefinition3.addOrReplaceChild("mouth", CubeListBuilder.create().texOffs(0, 36).addBox(-8.0F, 0.0F, -16.0F, 16.0F, 3.0F, 16.0F), PartPose.offset(0.0F, -2.0F, 2.0F));
-        partDefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 55).addBox(-7.0F, -10.0F, -7.0F, 14.0F, 16.0F, 20.0F).texOffs(0, 91).addBox(-6.0F, 6.0F, -7.0F, 12.0F, 13.0F, 18.0F), PartPose.offsetAndRotation(0.0F, 1.0F, 2.0F, ((float) Math.PI / 2F), 0.0F, 0.0F));
-        partDefinition.addOrReplaceChild("right_hind_leg", CubeListBuilder.create().texOffs(96, 0).addBox(-4.0F, 0.0F, -4.0F, 8.0F, 37.0F, 8.0F), PartPose.offset(-8.0F, -13.0F, 18.0F));
-        partDefinition.addOrReplaceChild("left_hind_leg", CubeListBuilder.create().texOffs(96, 0).mirror().addBox(-4.0F, 0.0F, -4.0F, 8.0F, 37.0F, 8.0F), PartPose.offset(8.0F, -13.0F, 18.0F));
-        partDefinition.addOrReplaceChild("right_front_leg", CubeListBuilder.create().texOffs(64, 0).addBox(-4.0F, 0.0F, -4.0F, 8.0F, 37.0F, 8.0F), PartPose.offset(-8.0F, -13.0F, -5.0F));
-        partDefinition.addOrReplaceChild("left_front_leg", CubeListBuilder.create().texOffs(64, 0).mirror().addBox(-4.0F, 0.0F, -4.0F, 8.0F, 37.0F, 8.0F), PartPose.offset(8.0F, -13.0F, -5.0F));
-        return LayerDefinition.create(meshDefinition, 128, 128);
+        float f = 0.0F;
+        this.neck = new ModelPart(this);
+        this.neck.setPos(0.0F, -7.0F, -1.5F);
+        this.neck.texOffs(68, 73).addBox(-5.0F, -1.0F, -18.0F, 10.0F, 10.0F, 18.0F, 0.0F);
+        this.head = new ModelPart(this);
+        this.head.setPos(0.0F, 16.0F, -17.0F);
+        this.head.texOffs(0, 0).addBox(-8.0F, -20.0F, -14.0F, 16.0F, 20.0F, 16.0F, 0.0F);
+        this.head.texOffs(0, 0).addBox(-2.0F, -6.0F, -18.0F, 4.0F, 8.0F, 4.0F, 0.0F);
+        ModelPart modelPart = new ModelPart(this);
+        modelPart.setPos(-10.0F, -14.0F, -8.0F);
+        modelPart.texOffs(74, 55).addBox(0.0F, -14.0F, -2.0F, 2.0F, 14.0F, 4.0F, 0.0F);
+        modelPart.xRot = 1.0995574F;
+        this.head.addChild(modelPart);
+        ModelPart modelPart2 = new ModelPart(this);
+        modelPart2.mirror = true;
+        modelPart2.setPos(8.0F, -14.0F, -8.0F);
+        modelPart2.texOffs(74, 55).addBox(0.0F, -14.0F, -2.0F, 2.0F, 14.0F, 4.0F, 0.0F);
+        modelPart2.xRot = 1.0995574F;
+        this.head.addChild(modelPart2);
+        this.mouth = new ModelPart(this);
+        this.mouth.setPos(0.0F, -2.0F, 2.0F);
+        this.mouth.texOffs(0, 36).addBox(-8.0F, 0.0F, -16.0F, 16.0F, 3.0F, 16.0F, 0.0F);
+        this.head.addChild(this.mouth);
+        this.neck.addChild(this.head);
+        this.body = new ModelPart(this);
+        this.body.texOffs(0, 55).addBox(-7.0F, -10.0F, -7.0F, 14.0F, 16.0F, 20.0F, 0.0F);
+        this.body.texOffs(0, 91).addBox(-6.0F, 6.0F, -7.0F, 12.0F, 13.0F, 18.0F, 0.0F);
+        this.body.setPos(0.0F, 1.0F, 2.0F);
+        this.leg0 = new ModelPart(this, 96, 0);
+        this.leg0.addBox(-4.0F, 0.0F, -4.0F, 8.0F, 37.0F, 8.0F, 0.0F);
+        this.leg0.setPos(-8.0F, -13.0F, 18.0F);
+        this.leg1 = new ModelPart(this, 96, 0);
+        this.leg1.mirror = true;
+        this.leg1.addBox(-4.0F, 0.0F, -4.0F, 8.0F, 37.0F, 8.0F, 0.0F);
+        this.leg1.setPos(8.0F, -13.0F, 18.0F);
+        this.leg2 = new ModelPart(this, 64, 0);
+        this.leg2.addBox(-4.0F, 0.0F, -4.0F, 8.0F, 37.0F, 8.0F, 0.0F);
+        this.leg2.setPos(-8.0F, -13.0F, -5.0F);
+        this.leg3 = new ModelPart(this, 64, 0);
+        this.leg3.mirror = true;
+        this.leg3.addBox(-4.0F, 0.0F, -4.0F, 8.0F, 37.0F, 8.0F, 0.0F);
+        this.leg3.setPos(8.0F, -13.0F, -5.0F);
     }
 
-    public ModelPart root() {
-        return this.root;
+    public Iterable<ModelPart> parts() {
+        return ImmutableList.of(this.neck, this.body, this.leg0, this.leg1, this.leg2, this.leg3);
     }
 
-    @Override
     public void setupAnim(ClientRavager ravager, float f, float g, float h, float i, float j) {
         this.head.xRot = j * ((float) Math.PI / 180F);
         this.head.yRot = i * ((float) Math.PI / 180F);
+        this.body.xRot = ((float) Math.PI / 2F);
         float k = 0.4F * g;
-        this.rightHindLeg.xRot = Mth.cos(f * 0.6662F) * k;
-        this.leftHindLeg.xRot = Mth.cos(f * 0.6662F + (float) Math.PI) * k;
-        this.rightFrontLeg.xRot = Mth.cos(f * 0.6662F + (float) Math.PI) * k;
-        this.leftFrontLeg.xRot = Mth.cos(f * 0.6662F) * k;
+        this.leg0.xRot = Mth.cos(f * 0.6662F) * k;
+        this.leg1.xRot = Mth.cos(f * 0.6662F + (float) Math.PI) * k;
+        this.leg2.xRot = Mth.cos(f * 0.6662F + (float) Math.PI) * k;
+        this.leg3.xRot = Mth.cos(f * 0.6662F) * k;
     }
 
-    @Override
     public void prepareMobModel(ClientRavager ravager, float f, float g, float h) {
         super.prepareMobModel(ravager, f, g, h);
         int i = 0;

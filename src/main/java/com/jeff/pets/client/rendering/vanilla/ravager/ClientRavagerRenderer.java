@@ -1,19 +1,14 @@
 package com.jeff.pets.client.rendering.vanilla.ravager;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientRavager;
 import com.jeff.pets.client.rendering.PetRenderer;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import com.jeff.pets.mob.vanilla.hostile.ClientRavager;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientRavagerRenderer extends PetRenderer<@NotNull ClientRavager, @NotNull ClientRavagerModel> {
 
-    public static final ModelLayerLocation RAVAGER_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientravager"), "main");
-
-    public ClientRavagerRenderer(EntityRendererProvider.Context context) {
-        super(context, new ClientRavagerModel(context.bakeLayer(ModelLayers.RAVAGER)), 0.75f);
+    public ClientRavagerRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+        super(context, new ClientRavagerModel(), 0.75f);
     }
 
     @Override

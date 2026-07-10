@@ -1,15 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.piglin;
 
-import com.jeff.pets.mob.vanilla.neutral.ClientPiglin;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.neutral.ClientPiglin;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.PiglinModel;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,16 +10,10 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientPiglinRenderer extends PetRenderer<@NotNull ClientPiglin, @NotNull ClientPiglinModel> {
 
-    public static ModelLayerLocation PIGLIN_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientpiglin"), "main");
     private String piglinTexturePath;
 
-    public ClientPiglinRenderer(EntityRendererProvider.Context context) {
-        super(context, new ClientPiglinModel(context.bakeLayer(ModelLayers.PIGLIN)), 0.75f);
-    }
-
-    public static LayerDefinition createBodyLayer() {
-        PiglinModel.createMesh(CubeDeformation.NONE, 0f);
-        return LayerDefinition.create(new MeshDefinition(), 64, 64);
+    public ClientPiglinRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+        super(context, new ClientPiglinModel(0.0F, 64, 64), 0.75f);
     }
 
     @Override
@@ -46,7 +33,7 @@ public class ClientPiglinRenderer extends PetRenderer<@NotNull ClientPiglin, @No
                 piglinTexturePath = "textures/entity/piglin/piglin_brute.png";
             }
             case "piglin" -> piglinTexturePath = "textures/entity/piglin/piglin.png";
-            default -> piglinTexturePath =  "textures/entity/piglin/piglin.png";
+            default -> piglinTexturePath = "textures/entity/piglin/piglin.png";
         }
         return new ResourceLocation("minecraft", piglinTexturePath);
     }

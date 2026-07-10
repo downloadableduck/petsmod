@@ -1,63 +1,67 @@
 package com.jeff.pets.client.rendering.vanilla.wither;
 
-import net.minecraft.client.model.HierarchicalModel;
+import com.google.common.collect.ImmutableList;
+import net.minecraft.client.model.ListModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 
-public class ClientWitherModel<T extends LivingEntity> extends HierarchicalModel<T> {
-    private final ModelPart root;
-    private final ModelPart centerHead;
-    private final ModelPart rightHead;
-    private final ModelPart leftHead;
-    private final ModelPart ribcage;
-    private final ModelPart tail;
+import java.util.Arrays;
 
-    public ClientWitherModel(ModelPart modelPart) {
-        this.root = modelPart;
-        this.ribcage = modelPart.getChild("ribcage");
-        this.tail = modelPart.getChild("tail");
-        this.centerHead = modelPart.getChild("center_head");
-        this.rightHead = modelPart.getChild("right_head");
-        this.leftHead = modelPart.getChild("left_head");
+public class ClientWitherModel<T extends LivingEntity> extends ListModel<T> {
+    private final ModelPart[] upperBodyParts;
+    private final ModelPart[] heads;
+    private final ImmutableList<ModelPart> parts;
+
+    public ClientWitherModel(float f) {
+        this.texWidth = 64;
+        this.texHeight = 64;
+        this.upperBodyParts = new ModelPart[3];
+        this.upperBodyParts[0] = new ModelPart(this, 0, 16);
+        this.upperBodyParts[0].addBox(-10.0F, 3.9F, -0.5F, 20.0F, 3.0F, 3.0F, f);
+        this.upperBodyParts[1] = (new ModelPart(this)).setTexSize(this.texWidth, this.texHeight);
+        this.upperBodyParts[1].setPos(-2.0F, 6.9F, -0.5F);
+        this.upperBodyParts[1].texOffs(0, 22).addBox(0.0F, 0.0F, 0.0F, 3.0F, 10.0F, 3.0F, f);
+        this.upperBodyParts[1].texOffs(24, 22).addBox(-4.0F, 1.5F, 0.5F, 11.0F, 2.0F, 2.0F, f);
+        this.upperBodyParts[1].texOffs(24, 22).addBox(-4.0F, 4.0F, 0.5F, 11.0F, 2.0F, 2.0F, f);
+        this.upperBodyParts[1].texOffs(24, 22).addBox(-4.0F, 6.5F, 0.5F, 11.0F, 2.0F, 2.0F, f);
+        this.upperBodyParts[2] = new ModelPart(this, 12, 22);
+        this.upperBodyParts[2].addBox(0.0F, 0.0F, 0.0F, 3.0F, 6.0F, 3.0F, f);
+        this.heads = new ModelPart[3];
+        this.heads[0] = new ModelPart(this, 0, 0);
+        this.heads[0].addBox(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F, f);
+        this.heads[1] = new ModelPart(this, 32, 0);
+        this.heads[1].addBox(-4.0F, -4.0F, -4.0F, 6.0F, 6.0F, 6.0F, f);
+        this.heads[1].x = -8.0F;
+        this.heads[1].y = 4.0F;
+        this.heads[2] = new ModelPart(this, 32, 0);
+        this.heads[2].addBox(-4.0F, -4.0F, -4.0F, 6.0F, 6.0F, 6.0F, f);
+        this.heads[2].x = 10.0F;
+        this.heads[2].y = 4.0F;
+        ImmutableList.Builder<ModelPart> builder = ImmutableList.builder();
+        builder.addAll(Arrays.asList(this.heads));
+        builder.addAll(Arrays.asList(this.upperBodyParts));
+        this.parts = builder.build();
     }
 
-    public static LayerDefinition createBodyLayer(CubeDeformation cubeDeformation) {
-        MeshDefinition meshDefinition = new MeshDefinition();
-        PartDefinition partDefinition = meshDefinition.getRoot();
-        partDefinition.addOrReplaceChild("shoulders", CubeListBuilder.create().texOffs(0, 16).addBox(-10.0F, 3.9F, -0.5F, 20.0F, 3.0F, 3.0F, cubeDeformation), PartPose.ZERO);
-        float f = 0.20420352F;
-        partDefinition.addOrReplaceChild("ribcage", CubeListBuilder.create().texOffs(0, 22).addBox(0.0F, 0.0F, 0.0F, 3.0F, 10.0F, 3.0F, cubeDeformation).texOffs(24, 22).addBox(-4.0F, 1.5F, 0.5F, 11.0F, 2.0F, 2.0F, cubeDeformation).texOffs(24, 22).addBox(-4.0F, 4.0F, 0.5F, 11.0F, 2.0F, 2.0F, cubeDeformation).texOffs(24, 22).addBox(-4.0F, 6.5F, 0.5F, 11.0F, 2.0F, 2.0F, cubeDeformation), PartPose.offsetAndRotation(-2.0F, 6.9F, -0.5F, 0.20420352F, 0.0F, 0.0F));
-        partDefinition.addOrReplaceChild("tail", CubeListBuilder.create().texOffs(12, 22).addBox(0.0F, 0.0F, 0.0F, 3.0F, 6.0F, 3.0F, cubeDeformation), PartPose.offsetAndRotation(-2.0F, 6.9F + Mth.cos(0.20420352F) * 10.0F, -0.5F + Mth.sin(0.20420352F) * 10.0F, 0.83252203F, 0.0F, 0.0F));
-        partDefinition.addOrReplaceChild("center_head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F, cubeDeformation), PartPose.ZERO);
-        CubeListBuilder cubeListBuilder = CubeListBuilder.create().texOffs(32, 0).addBox(-4.0F, -4.0F, -4.0F, 6.0F, 6.0F, 6.0F, cubeDeformation);
-        partDefinition.addOrReplaceChild("right_head", cubeListBuilder, PartPose.offset(-8.0F, 4.0F, 0.0F));
-        partDefinition.addOrReplaceChild("left_head", cubeListBuilder, PartPose.offset(10.0F, 4.0F, 0.0F));
-        return LayerDefinition.create(meshDefinition, 64, 64);
-    }
-
-    private static <T extends LivingEntity> void setupHeadRotation(T witherBoss, ModelPart modelPart, int i) {
-        modelPart.yRot = (witherBoss.yHeadRot - witherBoss.yBodyRot) * ((float) Math.PI / 180F);
-        modelPart.xRot = witherBoss.getXRot() * ((float) Math.PI / 180F);
-    }
-
-    public ModelPart root() {
-        return this.root;
+    public ImmutableList<ModelPart> parts() {
+        return this.parts;
     }
 
     public void setupAnim(T witherBoss, float f, float g, float h, float i, float j) {
         float k = Mth.cos(h * 0.1F);
-        this.ribcage.xRot = (0.065F + 0.05F * k) * (float) Math.PI;
-        this.tail.setPos(-2.0F, 6.9F + Mth.cos(this.ribcage.xRot) * 10.0F, -0.5F + Mth.sin(this.ribcage.xRot) * 10.0F);
-        this.tail.xRot = (0.265F + 0.1F * k) * (float) Math.PI;
-        this.centerHead.yRot = i * ((float) Math.PI / 180F);
-        this.centerHead.xRot = j * ((float) Math.PI / 180F);
+        this.upperBodyParts[1].xRot = (0.065F + 0.05F * k) * (float) Math.PI;
+        this.upperBodyParts[2].setPos(-2.0F, 6.9F + Mth.cos(this.upperBodyParts[1].xRot) * 10.0F, -0.5F + Mth.sin(this.upperBodyParts[1].xRot) * 10.0F);
+        this.upperBodyParts[2].xRot = (0.265F + 0.1F * k) * (float) Math.PI;
+        this.heads[0].yRot = i * ((float) Math.PI / 180F);
+        this.heads[0].xRot = j * ((float) Math.PI / 180F);
     }
 
     public void prepareMobModel(T witherBoss, float f, float g, float h) {
-        setupHeadRotation(witherBoss, this.rightHead, 0);
-        setupHeadRotation(witherBoss, this.leftHead, 1);
+        for (int i = 1; i < 3; ++i) {
+            this.heads[i].yRot = (witherBoss.getYHeadRot() - witherBoss.yBodyRot) * ((float) Math.PI / 180F);
+            this.heads[i].xRot = witherBoss.xRot * ((float) Math.PI / 180F);
+        }
+
     }
 }

@@ -44,7 +44,7 @@ public class Head extends AbstractPet {
     }
 
     @Override
-    public @Nullable AgeableMob getBreedOffspring(@NotNull ServerLevel serverLevel, @NotNull AgeableMob ageableMob) {
+    public @Nullable AgableMob getBreedOffspring(@NotNull ServerLevel serverLevel, @NotNull AgableMob AgableMob) {
         return HEAD.create(serverLevel);
     }
 
@@ -73,7 +73,7 @@ public class Head extends AbstractPet {
 
     @Override
     public boolean isFood(@NotNull ItemStack itemStack) {
-        return itemStack.is(Items.CAKE);
+        return itemStack.sameItem(new ItemStack(Items.CAKE));
     }
 
     @Override
@@ -205,16 +205,16 @@ public class Head extends AbstractPet {
 
             if (yHeightToOwner > 1) {
                 this.jumpFromGround();
-                this.processFlappingMovement();
+                //this.processFlappingMovement();
             }
 
             if (yHeightToOwner > -1) {
                 this.setDeltaMovement(this.getDeltaMovement().add(0, -0.01, 0));
-                this.processFlappingMovement();
+                // t/his.processFlappingMovement();
             }
 
             if (!this.onGround) {
-                this.processFlappingMovement();
+                //this.processFlappingMovement();
             }
             this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
             this.setYHeadRot(this.getYRot());
