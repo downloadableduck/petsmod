@@ -24,21 +24,34 @@ public class ClientCatRenderer extends PetRenderer<@NotNull ClientCat, @NotNull 
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientCat livingEntityRenderState) {
-        return switch (CONFIG.catSkin) {
-            case "black" -> new ResourceLocation("minecraft", "textures/entity/cat/all_black.png");
-            case "tuxedo" -> new ResourceLocation("minecraft", "textures/entity/cat/black.png");
-            case "british_shorthair" -> new ResourceLocation("minecraft", "textures/entity/cat/british_shorthair.png");
-            case "calico" -> new ResourceLocation("minecraft", "textures/entity/cat/calico.png");
-            case "jellie" -> new ResourceLocation("minecraft", "textures/entity/cat/jellie.png");
-            case "ocelot" -> new ResourceLocation("minecraft", "textures/entity/cat/ocelot.png");
-            case "persian" -> new ResourceLocation("minecraft", "textures/entity/cat/persian.png");
-            case "ragdoll" -> new ResourceLocation("minecraft", "textures/entity/cat/ragdoll.png");
-            case "red" -> new ResourceLocation("minecraft", "textures/entity/cat/red.png");
-            case "siamese" -> new ResourceLocation("minecraft", "textures/entity/cat/siamese.png");
-            case "tabby" -> new ResourceLocation("minecraft", "textures/entity/cat/tabby.png");
-            case "white" -> new ResourceLocation("minecraft", "textures/entity/cat/white.png");
-            default -> new ResourceLocation("minecraft", "textures/entity/cat/black.png");
-        };
+        switch (CONFIG.catSkin) {
+            case "black":
+                return new ResourceLocation("minecraft", "textures/entity/cat/all_black.png");
+            case "tuxedo":
+                return new ResourceLocation("minecraft", "textures/entity/cat/black.png");
+            case "british_shorthair":
+                return new ResourceLocation("minecraft", "textures/entity/cat/british_shorthair.png");
+            case "calico":
+                return new ResourceLocation("minecraft", "textures/entity/cat/calico.png");
+            case "jellie":
+                return new ResourceLocation("minecraft", "textures/entity/cat/jellie.png");
+            case "ocelot":
+                return new ResourceLocation("minecraft", "textures/entity/cat/ocelot.png");
+            case "persian":
+                return new ResourceLocation("minecraft", "textures/entity/cat/persian.png");
+            case "ragdoll":
+                return new ResourceLocation("minecraft", "textures/entity/cat/ragdoll.png");
+            case "red":
+                return new ResourceLocation("minecraft", "textures/entity/cat/red.png");
+            case "siamese":
+                return new ResourceLocation("minecraft", "textures/entity/cat/siamese.png");
+            case "tabby":
+                return new ResourceLocation("minecraft", "textures/entity/cat/tabby.png");
+            case "white":
+                return new ResourceLocation("minecraft", "textures/entity/cat/white.png");
+            default:
+                return new ResourceLocation("minecraft", "textures/entity/cat/black.png");
+        }
     }
 
     @Override

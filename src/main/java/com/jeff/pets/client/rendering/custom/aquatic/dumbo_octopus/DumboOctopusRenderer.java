@@ -29,14 +29,20 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
         String green = "textures/entity/dumbo_octopus/green.png";
         String orange = "textures/entity/dumbo_octopus/orange.png";
         String pink = "textures/entity/dumbo_octopus/pink.png";
-        switch (CONFIG.dumboOctopusSkin) {
-            case "yellow" -> path = yellow;
-            case "red" -> path = red;
-            case "blue" -> path = blue;
-            case "green" -> path = green;
-            case "orange" -> path = orange;
-            case "pink" -> path = pink;
-            default -> path = yellow;
+        if (CONFIG.dumboOctopusSkin.equals("yellow")) {
+            path = yellow;
+        } else if (CONFIG.dumboOctopusSkin.equals("red")) {
+            path = red;
+        } else if (CONFIG.dumboOctopusSkin.equals("blue")) {
+            path = blue;
+        } else if (CONFIG.dumboOctopusSkin.equals("green")) {
+            path = green;
+        } else if (CONFIG.dumboOctopusSkin.equals("orange")) {
+            path = orange;
+        } else if (CONFIG.dumboOctopusSkin.equals("pink")) {
+            path = pink;
+        } else {
+            path = yellow;
         }
         return new ResourceLocation(MOD_ID, path);
     }

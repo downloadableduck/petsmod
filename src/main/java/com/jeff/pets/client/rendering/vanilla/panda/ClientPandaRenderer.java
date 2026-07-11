@@ -25,15 +25,22 @@ public class ClientPandaRenderer extends PetRenderer<@NotNull ClientPanda, @NotN
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientPanda livingEntityRenderState) {
         String pandaTexturePath;
-        switch (CONFIG.pandaSkin) {
-            case "normal" -> pandaTexturePath = "textures/entity/panda/panda.png";
-            case "lazy" -> pandaTexturePath = "textures/entity/panda/lazy_panda.png";
-            case "agressive" -> pandaTexturePath = "textures/entity/panda/aggressive_panda.png";
-            case "worried" -> pandaTexturePath = "textures/entity/panda/worried_panda.png";
-            case "playful" -> pandaTexturePath = "textures/entity/panda/playful_panda.png";
-            case "weak" -> pandaTexturePath = "textures/entity/panda/weak_panda.png";
-            case "brown" -> pandaTexturePath = "textures/entity/panda/brown_panda.png";
-            default -> pandaTexturePath = "textures/entity/panda/panda.png";
+        if (CONFIG.pandaSkin.equals("normal")) {
+            pandaTexturePath = "textures/entity/panda/panda.png";
+        } else if (CONFIG.pandaSkin.equals("lazy")) {
+            pandaTexturePath = "textures/entity/panda/lazy_panda.png";
+        } else if (CONFIG.pandaSkin.equals("agressive")) {
+            pandaTexturePath = "textures/entity/panda/aggressive_panda.png";
+        } else if (CONFIG.pandaSkin.equals("worried")) {
+            pandaTexturePath = "textures/entity/panda/worried_panda.png";
+        } else if (CONFIG.pandaSkin.equals("playful")) {
+            pandaTexturePath = "textures/entity/panda/playful_panda.png";
+        } else if (CONFIG.pandaSkin.equals("weak")) {
+            pandaTexturePath = "textures/entity/panda/weak_panda.png";
+        } else if (CONFIG.pandaSkin.equals("brown")) {
+            pandaTexturePath = "textures/entity/panda/brown_panda.png";
+        } else {
+            pandaTexturePath = "textures/entity/panda/panda.png";
         }
         return new ResourceLocation("minecraft", pandaTexturePath);
     }

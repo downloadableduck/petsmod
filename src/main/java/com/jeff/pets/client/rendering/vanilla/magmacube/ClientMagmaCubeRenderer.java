@@ -17,12 +17,21 @@ public class ClientMagmaCubeRenderer extends PetRenderer<@NotNull ClientMagmaCub
 
     @Override
     protected void scale(ClientMagmaCube slimeRenderState, @NotNull PoseStack poseStack, float a) {
-        int magmaCubeScale = switch (CONFIG.magmaCubeSkin) {
-            case "small" -> 1;
-            case "medium" -> 2;
-            case "large" -> 4;
-            default -> 1;
-        };
+        int magmaCubeScale;
+        switch (CONFIG.magmaCubeSkin) {
+            case "small":
+                magmaCubeScale = 1;
+                break;
+            case "medium":
+                magmaCubeScale = 2;
+                break;
+            case "large":
+                magmaCubeScale = 4;
+                break;
+            default:
+                magmaCubeScale = 1;
+                break;
+        }
         poseStack.scale(magmaCubeScale, magmaCubeScale, magmaCubeScale);
     }
 

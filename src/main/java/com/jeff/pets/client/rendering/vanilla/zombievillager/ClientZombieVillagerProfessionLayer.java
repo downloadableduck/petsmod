@@ -35,37 +35,34 @@ public class ClientZombieVillagerProfessionLayer extends RenderLayer<@NotNull Cl
     public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource source, int i, ClientZombieVillager entityRenderState, float f, float g, float h, float k, float l, float u) {
         poseStack.pushPose();
         poseStack.scale(1.001f, 1.001f, 1.001f);
-        switch (CONFIG.zombieVillagerSkin) {
-            case "armorer" ->
-                    renderColoredCutoutModel(this.getParentModel(), ARMORER_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
-            case "butcher" ->
-                    renderColoredCutoutModel(this.getParentModel(), BUTCHER_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
-            case "cartographer" ->
-                    renderColoredCutoutModel(this.getParentModel(), CARTOGRAPHER_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
-            case "cleric" ->
-                    renderColoredCutoutModel(this.getParentModel(), CLERIC_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
-            case "farmer" ->
-                    renderColoredCutoutModel(this.getParentModel(), FARMER_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
-            case "fisherman" ->
-                    renderColoredCutoutModel(this.getParentModel(), FISHERMAN_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
-            case "fletcher" ->
-                    renderColoredCutoutModel(this.getParentModel(), FLETCHER_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
-            case "leatherworker" ->
-                    renderColoredCutoutModel(this.getParentModel(), LEATHERWORKER_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
-            case "librarian" ->
-                    renderColoredCutoutModel(this.getParentModel(), LIBRARIAN_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
-            case "mason" ->
-                    renderColoredCutoutModel(this.getParentModel(), MASON_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
-            case "nitwit" ->
-                    renderColoredCutoutModel(this.getParentModel(), NITWIT_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
-            case "shepherd" ->
-                    renderColoredCutoutModel(this.getParentModel(), SHEPHERD_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
-            case "toolsmith" ->
-                    renderColoredCutoutModel(this.getParentModel(), TOOLSMITH_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
-            case "weaponsmith" ->
-                    renderColoredCutoutModel(this.getParentModel(), WEAPONSMITH_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
-            default -> {
-            }
+        if (CONFIG.zombieVillagerSkin.equals("armorer")) {
+            renderColoredCutoutModel(this.getParentModel(), ARMORER_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
+        } else if (CONFIG.zombieVillagerSkin.equals("butcher")) {
+            renderColoredCutoutModel(this.getParentModel(), BUTCHER_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
+        } else if (CONFIG.zombieVillagerSkin.equals("cartographer")) {
+            renderColoredCutoutModel(this.getParentModel(), CARTOGRAPHER_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
+        } else if (CONFIG.zombieVillagerSkin.equals("cleric")) {
+            renderColoredCutoutModel(this.getParentModel(), CLERIC_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
+        } else if (CONFIG.zombieVillagerSkin.equals("farmer")) {
+            renderColoredCutoutModel(this.getParentModel(), FARMER_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
+        } else if (CONFIG.zombieVillagerSkin.equals("fisherman")) {
+            renderColoredCutoutModel(this.getParentModel(), FISHERMAN_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
+        } else if (CONFIG.zombieVillagerSkin.equals("fletcher")) {
+            renderColoredCutoutModel(this.getParentModel(), FLETCHER_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
+        } else if (CONFIG.zombieVillagerSkin.equals("leatherworker")) {
+            renderColoredCutoutModel(this.getParentModel(), LEATHERWORKER_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
+        } else if (CONFIG.zombieVillagerSkin.equals("librarian")) {
+            renderColoredCutoutModel(this.getParentModel(), LIBRARIAN_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
+        } else if (CONFIG.zombieVillagerSkin.equals("mason")) {
+            renderColoredCutoutModel(this.getParentModel(), MASON_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
+        } else if (CONFIG.zombieVillagerSkin.equals("nitwit")) {
+            renderColoredCutoutModel(this.getParentModel(), NITWIT_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
+        } else if (CONFIG.zombieVillagerSkin.equals("shepherd")) {
+            renderColoredCutoutModel(this.getParentModel(), SHEPHERD_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
+        } else if (CONFIG.zombieVillagerSkin.equals("toolsmith")) {
+            renderColoredCutoutModel(this.getParentModel(), TOOLSMITH_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
+        } else if (CONFIG.zombieVillagerSkin.equals("weaponsmith")) {
+            renderColoredCutoutModel(this.getParentModel(), WEAPONSMITH_LOCATION, poseStack, source, i, entityRenderState, -1, 1, 1);
         }
         poseStack.popPose();
     }

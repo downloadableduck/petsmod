@@ -24,16 +24,24 @@ public class ClientRabbitRenderer extends PetRenderer<@NotNull ClientRabbit, @No
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientRabbit rabbitRenderState) {
-        switch (CONFIG.activePet) {
-            case "brown" -> rabbitTextureLocation = "textures/entity/rabbit/brown.png";
-            case "white" -> rabbitTextureLocation = "textures/entity/rabbit/white.png";
-            case "black" -> rabbitTextureLocation = "textures/entity/rabbit/black.png";
-            case "gold" -> rabbitTextureLocation = "textures/entity/rabbit/gold.png";
-            case "salt" -> rabbitTextureLocation = "textures/entity/rabbit/salt.png";
-            case "splotched" -> rabbitTextureLocation = "textures/entity/rabbit/white_splotched.png";
-            case "killer" -> rabbitTextureLocation = "textures/entity/rabbit/caerbannog.png";
-            case "toast" -> rabbitTextureLocation = "textures/entity/rabbit/toast.png";
-            default -> rabbitTextureLocation = "textures/entity/rabbit/brown.png";
+        if (CONFIG.activePet.equals("brown")) {
+            rabbitTextureLocation = "textures/entity/rabbit/brown.png";
+        } else if (CONFIG.activePet.equals("white")) {
+            rabbitTextureLocation = "textures/entity/rabbit/white.png";
+        } else if (CONFIG.activePet.equals("black")) {
+            rabbitTextureLocation = "textures/entity/rabbit/black.png";
+        } else if (CONFIG.activePet.equals("gold")) {
+            rabbitTextureLocation = "textures/entity/rabbit/gold.png";
+        } else if (CONFIG.activePet.equals("salt")) {
+            rabbitTextureLocation = "textures/entity/rabbit/salt.png";
+        } else if (CONFIG.activePet.equals("splotched")) {
+            rabbitTextureLocation = "textures/entity/rabbit/white_splotched.png";
+        } else if (CONFIG.activePet.equals("killer")) {
+            rabbitTextureLocation = "textures/entity/rabbit/caerbannog.png";
+        } else if (CONFIG.activePet.equals("toast")) {
+            rabbitTextureLocation = "textures/entity/rabbit/toast.png";
+        } else {
+            rabbitTextureLocation = "textures/entity/rabbit/brown.png";
         }
 
         return new ResourceLocation("minecraft", rabbitTextureLocation);

@@ -84,6 +84,9 @@ public class DuckModel extends PetModel<@NotNull Duck> {
 
     @Override
     public void setupAnim(final Duck state, float f, float g, float h, float i, float j) {
+        System.out.println("Y:" + this.root.y);
+        System.out.println("X:" + this.root.x);
+        System.out.println("Z: " + this.root.z);
         float flapAngle = state.isOnGround() ? 0 : (Mth.sin(h) + 1.0F) * state.flapSpeed;
         this.head.xRot = j * ((float) Math.PI / 180F);
         this.head.yRot = i * ((float) Math.PI / 180F);
@@ -93,16 +96,17 @@ public class DuckModel extends PetModel<@NotNull Duck> {
         this.left_leg.xRot = Mth.cos(animationPos * 0.6662F + (float) Math.PI) * 1.4F * animationSpeed;
         this.right_wing.zRot = flapAngle;
         this.left_wing.zRot = -flapAngle;
+        //thing is weird af in 1.16.5 and below, base y is 15, base x is 0, base z is -4
         if (state.isPassenger()) {
             this.root.x = 0.4F;
-            this.root.y = 2.5F;
-            this.root.z = 0.0F;
+            this.root.y = 17.5F;
+            this.root.z = -4.0F;
             this.right_leg.visible = false;
             this.left_leg.visible = false;
         } else {
-            this.root.x = 0.0F;
-            this.root.y = 0.0F;
-            this.root.z = 0.0F;
+            this.root.x = 0;
+            this.root.y = 15;
+            this.root.z = -4;
             this.right_leg.visible = true;
             this.left_leg.visible = true;
         }

@@ -6,6 +6,7 @@
 
 package com.jeff.pets.client;
 
+import com.google.common.collect.ImmutableList;
 import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.client.mixin.client.ChatAccessor;
 import com.jeff.pets.client.rendering.custom.aprilfools.head.HeadSkin;
@@ -43,6 +44,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.Entity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -60,41 +62,41 @@ public class Central implements ClientModInitializer {
 
     public static final List<Entity> summonedEntity = new ArrayList();
     public static final CopyOnWriteArrayList<String> currentSuggestions = new CopyOnWriteArrayList();
-    public static final List<String> BEE_SKINS = List.of("happy", "angry");
-    public static final List<String> FOX_SKINS = List.of("red", "snow");
-    public static final List<String> LLAMA_SKINS = List.of("brown", "creamy", "gray", "white");
-    public static final List<String> NAUTILUS_SKINS = List.of("nautilus", "zombie", "coral zombie");
-    public static final List<String> PANDA_SKINS = List.of("normal", "lazy", "agressive", "worried", "playful", "weak", "brown");
-    public static final List<String> PIGLIN_SKINS = List.of("piglin", "zombified", "brute");
-    //public static final List<String> WOLF_SKINS = List.of("pale", "ashen", "black", "chestnut", "rusty", "snowy", "spotted", "striped", "woods");
+    public static final List<String> BEE_SKINS = ImmutableList.of("happy", "angry");
+    public static final List<String> FOX_SKINS = ImmutableList.of("red", "snow");
+    public static final List<String> LLAMA_SKINS = ImmutableList.of("brown", "creamy", "gray", "white");
+    public static final List<String> NAUTILUS_SKINS = ImmutableList.of("nautilus", "zombie", "coral zombie");
+    public static final List<String> PANDA_SKINS = ImmutableList.of("normal", "lazy", "agressive", "worried", "playful", "weak", "brown");
+    public static final List<String> PIGLIN_SKINS = ImmutableList.of("piglin", "zombified", "brute");
+    //public static final List<String> WOLF_SKINS = ImmutableList.of("pale", "ashen", "black", "chestnut", "rusty", "snowy", "spotted", "striped", "woods");
     public static final List<String> PETS_LIST = new ArrayList<>();
     public static final SuggestionProvider<FabricClientCommandSource> PETS = (context, builder) ->
             SharedSuggestionProvider.suggest(PETS_LIST, builder);
     private static final SuggestionProvider<SharedSuggestionProvider> ON_OFF = (context, builder) -> SharedSuggestionProvider.suggest(new String[]{"off", "on"}, builder);
-    private static final List<String> DUCK_SKINS = List.of("mallard", "pekin", "rubber", "bronze");
-    private static final List<String> CAT_SKINS = List.of("black", "tuxedo", "british shorthair", "calico", "jellie", "ocelot", "persian", "ragdoll", "red", "siamese", "tabby", "white");
-    private static final List<String> AXOLOTL_SKINS = List.of("pink", "brown", "gold", "cyan", "blue");
-    private static final List<String> CAMEL_SKINS = List.of("camel", "husk");
-    private static final List<String> TEMPERATE_COLD_WARM = List.of("temperate", "cold", "warm");
-    private static final List<String> COPPER_GOLEM_SKINS = List.of("unoxidized", "exposed", "weathered", "oxidized");
-    private static final List<String> HORSE_SKINS = List.of("white", "creamy", "chestnut", "brown", "black", "gray", "dark_brown", "zombie", "skeleton");
-    private static final List<String> PARROT_SKINS = List.of("red", "blue", "green", "cyan", "gray");
-    private static final List<String> RABBIT_SKINS = List.of("brown", "white", "black", "splotched", "gold", "salt", "killer", "toast");
-    private static final List<String> SHEEP_SKINS = List.of("white", "orange", "magenta", "light blue", "yellow", "lime", "pink", "gray", "light gray", "cyan", "purple", "blue", "brown", "green", "red", "black");
-    private static final List<String> SNOW_GOLEM_KINS = List.of("pumpkin on", "pumpkin off");
-    private static final List<String> SQUID_SKINS = List.of("squid", "glow squid");
-    private static final List<String> STRIDER_SKINS = List.of("warm", "cold");
-    private static final List<String> VILLAGER_SKINS = List.of("farmer", "fisherman", "shepherd", "fletcher", "cleric", "weaponsmith", "armorer", "toolsmith", "librarian", "cartographer", "leatherworker", "butcher", "mason", "nitwit", "unemployed");
-    private static final List<String> HOGLIN_SKINS = List.of("hoglin", "zoglin");
-    private static final List<String> SLIME_LIKE_SKINS = List.of("small", "medium", "large");
-    private static final List<String> RACOON_SKINS = List.of("normal", "albino");
-    private static final List<String> CREEPER_SKINS = List.of("normal", "charged");
-    private static final List<String> SHULKER_SKINS = List.of("normal", "black", "brown", "cyan", "gray", "green", "light blue", "light gray", "lime", "magenta", "orange", "pink", "purple", "red", "white", "yellow");
-    private static final List<String> WITHER_SKINS = List.of("normal", "invulnerable");
-    private static final List<String> HEAD_SKINS = List.of("Use any player's name here.");
-    private static final List<String> TRAITOR_SKINS = List.of("desert", "jungle", "plains", "savanna", "snowy", "swamp", "taiga");
-    private static final List<String> DUMBO_OCTOPUS_SKINS = List.of("yellow", "red", "blue", "green", "orange", "pink");
-    private static final List<String> EMPTY_LIST = List.of();
+    private static final List<String> DUCK_SKINS = ImmutableList.of("mallard", "pekin", "rubber", "bronze");
+    private static final List<String> CAT_SKINS = ImmutableList.of("black", "tuxedo", "british shorthair", "calico", "jellie", "ocelot", "persian", "ragdoll", "red", "siamese", "tabby", "white");
+    private static final List<String> AXOLOTL_SKINS = ImmutableList.of("pink", "brown", "gold", "cyan", "blue");
+    private static final List<String> CAMEL_SKINS = ImmutableList.of("camel", "husk");
+    private static final List<String> TEMPERATE_COLD_WARM = ImmutableList.of("temperate", "cold", "warm");
+    private static final List<String> COPPER_GOLEM_SKINS = ImmutableList.of("unoxidized", "exposed", "weathered", "oxidized");
+    private static final List<String> HORSE_SKINS = ImmutableList.of("white", "creamy", "chestnut", "brown", "black", "gray", "dark_brown", "zombie", "skeleton");
+    private static final List<String> PARROT_SKINS = ImmutableList.of("red", "blue", "green", "cyan", "gray");
+    private static final List<String> RABBIT_SKINS = ImmutableList.of("brown", "white", "black", "splotched", "gold", "salt", "killer", "toast");
+    private static final List<String> SHEEP_SKINS = ImmutableList.of("white", "orange", "magenta", "light blue", "yellow", "lime", "pink", "gray", "light gray", "cyan", "purple", "blue", "brown", "green", "red", "black");
+    private static final List<String> SNOW_GOLEM_KINS = ImmutableList.of("pumpkin on", "pumpkin off");
+    private static final List<String> SQUID_SKINS = ImmutableList.of("squid", "glow squid");
+    private static final List<String> STRIDER_SKINS = ImmutableList.of("warm", "cold");
+    private static final List<String> VILLAGER_SKINS = ImmutableList.of("farmer", "fisherman", "shepherd", "fletcher", "cleric", "weaponsmith", "armorer", "toolsmith", "librarian", "cartographer", "leatherworker", "butcher", "mason", "nitwit", "unemployed");
+    private static final List<String> HOGLIN_SKINS = ImmutableList.of("hoglin", "zoglin");
+    private static final List<String> SLIME_LIKE_SKINS = ImmutableList.of("small", "medium", "large");
+    private static final List<String> RACOON_SKINS = ImmutableList.of("normal", "albino");
+    private static final List<String> CREEPER_SKINS = ImmutableList.of("normal", "charged");
+    private static final List<String> SHULKER_SKINS = ImmutableList.of("normal", "black", "brown", "cyan", "gray", "green", "light blue", "light gray", "lime", "magenta", "orange", "pink", "purple", "red", "white", "yellow");
+    private static final List<String> WITHER_SKINS = ImmutableList.of("normal", "invulnerable");
+    private static final List<String> HEAD_SKINS = ImmutableList.of("Use any player's name here.");
+    private static final List<String> TRAITOR_SKINS = ImmutableList.of("desert", "jungle", "plains", "savanna", "snowy", "swamp", "taiga");
+    private static final List<String> DUMBO_OCTOPUS_SKINS = ImmutableList.of("yellow", "red", "blue", "green", "orange", "pink");
+    private static final List<String> EMPTY_LIST = ImmutableList.of();
     public static PetsConfig CONFIG;
     public static int petSkin;
     public static Duck duck;
@@ -538,40 +540,107 @@ public class Central implements ClientModInitializer {
      * @see ChatAccessor
      */
     private static void updateSuggestions(Minecraft client) {
-        List<String> skinSuggestions = switch (CONFIG.activePet) {
-            case "duck" -> DUCK_SKINS;
-            case "racoon" -> RACOON_SKINS;
-            case "cat" -> CAT_SKINS;
-            case "axolotl" -> AXOLOTL_SKINS;
-            case "camel" -> CAMEL_SKINS;
-            case "frog" -> TEMPERATE_COLD_WARM;
-            case "creeper", "nerd_creeper", "smiling_creeper" -> CREEPER_SKINS;
-            case "copper_golem" -> COPPER_GOLEM_SKINS;
-            case "horse" -> HORSE_SKINS;
-            case "parrot" -> PARROT_SKINS;
-            case "rabbit" -> RABBIT_SKINS;
-            case "sheep" -> SHEEP_SKINS;
-            case "snow_golem" -> SNOW_GOLEM_KINS;
-            case "squid" -> SQUID_SKINS;
-            case "strider" -> STRIDER_SKINS;
-            case "villager" -> VILLAGER_SKINS;
-            case "bee" -> BEE_SKINS;
-            case "fox" -> FOX_SKINS;
-            case "llama" -> LLAMA_SKINS;
-            case "nautilus" -> NAUTILUS_SKINS;
-            case "panda" -> PANDA_SKINS;
-            case "piglin" -> PIGLIN_SKINS;
+        List<String> skinSuggestions;
+        switch (CONFIG.activePet) {
+            case "duck":
+                skinSuggestions = DUCK_SKINS;
+                break;
+            case "racoon":
+                skinSuggestions = RACOON_SKINS;
+                break;
+            case "cat":
+                skinSuggestions = CAT_SKINS;
+                break;
+            case "axolotl":
+                skinSuggestions = AXOLOTL_SKINS;
+                break;
+            case "camel":
+                skinSuggestions = CAMEL_SKINS;
+                break;
+            case "frog":
+                skinSuggestions = TEMPERATE_COLD_WARM;
+                break;
+            case "creeper":
+            case "nerd_creeper":
+            case "smiling_creeper":
+                skinSuggestions = CREEPER_SKINS;
+                break;
+            case "copper_golem":
+                skinSuggestions = COPPER_GOLEM_SKINS;
+                break;
+            case "horse":
+                skinSuggestions = HORSE_SKINS;
+                break;
+            case "parrot":
+                skinSuggestions = PARROT_SKINS;
+                break;
+            case "rabbit":
+                skinSuggestions = RABBIT_SKINS;
+                break;
+            case "sheep":
+                skinSuggestions = SHEEP_SKINS;
+                break;
+            case "snow_golem":
+                skinSuggestions = SNOW_GOLEM_KINS;
+                break;
+            case "squid":
+                skinSuggestions = SQUID_SKINS;
+                break;
+            case "strider":
+                skinSuggestions = STRIDER_SKINS;
+                break;
+            case "villager":
+                skinSuggestions = VILLAGER_SKINS;
+                break;
+            case "bee":
+                skinSuggestions = BEE_SKINS;
+                break;
+            case "fox":
+                skinSuggestions = FOX_SKINS;
+                break;
+            case "llama":
+                skinSuggestions = LLAMA_SKINS;
+                break;
+            case "nautilus":
+                skinSuggestions = NAUTILUS_SKINS;
+                break;
+            case "panda":
+                skinSuggestions = PANDA_SKINS;
+                break;
+            case "piglin":
+                skinSuggestions = PIGLIN_SKINS;
+                break;
             //case "wolf" -> WOLF_SKINS;
-            case "hoglin" -> HOGLIN_SKINS;
-            case "magma_cube", "slime", "tropical_slime" -> SLIME_LIKE_SKINS;
-            case "zombie_villager" -> VILLAGER_SKINS;
-            case "shulker" -> SHULKER_SKINS;
-            case "wither" -> WITHER_SKINS;
-            case "head" -> HEAD_SKINS;
-            case "traitor" -> TRAITOR_SKINS;
-            case "dumbo_octopus" -> DUMBO_OCTOPUS_SKINS;
-            default -> EMPTY_LIST;
-        };
+            case "hoglin":
+                skinSuggestions = HOGLIN_SKINS;
+                break;
+            case "magma_cube":
+            case "slime":
+            case "tropical_slime":
+                skinSuggestions = SLIME_LIKE_SKINS;
+                break;
+            case "zombie_villager":
+                skinSuggestions = VILLAGER_SKINS;
+                break;
+            case "shulker":
+                skinSuggestions = SHULKER_SKINS;
+                break;
+            case "wither":
+                skinSuggestions = WITHER_SKINS;
+                break;
+            case "head":
+                skinSuggestions = HEAD_SKINS;
+                break;
+            case "traitor":
+                skinSuggestions = TRAITOR_SKINS;
+                break;
+            case "dumbo_octopus":
+                skinSuggestions = DUMBO_OCTOPUS_SKINS;
+                break;
+            default:
+                skinSuggestions = EMPTY_LIST;
+                break;
+        }
 
         currentSuggestions.clear();
         currentSuggestions.add("baby");
@@ -588,7 +657,8 @@ public class Central implements ClientModInitializer {
      */
     public static void refreshChatSuggestor(Minecraft client) {
         Screen screen = client.screen;
-        if ((screen instanceof ChatScreen chatScreen)) {
+        if ((screen instanceof ChatScreen)) {
+            ChatScreen chatScreen = (ChatScreen) screen;
             ((ChatAccessor) chatScreen).getChatInputSuggestor().updateCommandInfo();
         }
     }
@@ -679,157 +749,110 @@ public class Central implements ClientModInitializer {
                         CONFIG.isBaby = false;
                     } else {
                         if (Objects.equals(CONFIG.activePet, "duck")) {
-                            switch (skin) {
-                                case "mallard":
-                                    CONFIG.duckSkin = "mallard";
-                                    break;
-                                case "pekin":
-                                    CONFIG.duckSkin = "pekin";
-                                    break;
-                                case "rubber":
-                                    CONFIG.duckSkin = "rubber";
-                                    break;
-                                case "bronze":
-                                    CONFIG.duckSkin = "bronze";
-                                    break;
-                                default:
-                                    isValid = false;
+                            if (skin.equals("mallard")) {
+                                CONFIG.duckSkin = "mallard";
+                            } else if (skin.equals("pekin")) {
+                                CONFIG.duckSkin = "pekin";
+                            } else if (skin.equals("rubber")) {
+                                CONFIG.duckSkin = "rubber";
+                            } else if (skin.equals("bronze")) {
+                                CONFIG.duckSkin = "bronze";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "racoon")) {
-                            switch (skin) {
-                                case "normal" -> CONFIG.racoonSkin = "normal";
-                                case "albino" -> CONFIG.racoonSkin = "albino";
-                                default -> isValid = false;
+                            if (skin.equals("normal")) {
+                                CONFIG.racoonSkin = "normal";
+                            } else if (skin.equals("albino")) {
+                                CONFIG.racoonSkin = "albino";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "cat")) {
-                            switch (skin) {
-                                case "black":
-                                    CONFIG.catSkin = "all_black";
-                                    break;
-                                case "tuxedo":
-                                    CONFIG.catSkin = "tuxedo";
-                                    break;
-                                case "tabby":
-                                    CONFIG.catSkin = "tabby";
-                                    break;
-                                case "red":
-                                    CONFIG.catSkin = "red";
-                                    break;
-                                case "siamese":
-                                    CONFIG.catSkin = "siamese";
-                                    break;
-                                case "calico":
-                                    CONFIG.catSkin = "calico";
-                                    break;
-                                case "british_shorthair":
-                                case "british shorthair":
-                                    CONFIG.catSkin = "british_shorthair";
-                                    break;
-                                case "persian":
-                                    CONFIG.catSkin = "persian";
-                                    break;
-                                case "ragdoll":
-                                    CONFIG.catSkin = "ragdoll";
-                                    break;
-                                case "white":
-                                    CONFIG.catSkin = "white";
-                                    break;
-                                case "jellie":
-                                    CONFIG.catSkin = "jellie";
-                                    break;
-                                default:
-                                    isValid = false;
+                            if (skin.equals("black")) {
+                                CONFIG.catSkin = "all_black";
+                            } else if (skin.equals("tuxedo")) {
+                                CONFIG.catSkin = "tuxedo";
+                            } else if (skin.equals("tabby")) {
+                                CONFIG.catSkin = "tabby";
+                            } else if (skin.equals("red")) {
+                                CONFIG.catSkin = "red";
+                            } else if (skin.equals("siamese")) {
+                                CONFIG.catSkin = "siamese";
+                            } else if (skin.equals("calico")) {
+                                CONFIG.catSkin = "calico";
+                            } else if (skin.equals("british_shorthair") || skin.equals("british shorthair")) {
+                                CONFIG.catSkin = "british_shorthair";
+                            } else if (skin.equals("persian")) {
+                                CONFIG.catSkin = "persian";
+                            } else if (skin.equals("ragdoll")) {
+                                CONFIG.catSkin = "ragdoll";
+                            } else if (skin.equals("white")) {
+                                CONFIG.catSkin = "white";
+                            } else if (skin.equals("jellie")) {
+                                CONFIG.catSkin = "jellie";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "sheep")) {
-                            switch (skin) {
-                                case "white":
-                                    CONFIG.sheepSkin = "white";
-                                    break;
-                                case "orange":
-                                    CONFIG.sheepSkin = "orange";
-                                    break;
-                                case "magenta":
-                                    CONFIG.sheepSkin = "magenta";
-                                    break;
-                                case "light_blue":
-                                case "light blue":
-                                    CONFIG.sheepSkin = "light_blue";
-                                    break;
-                                case "yellow":
-                                    CONFIG.sheepSkin = "yellow";
-                                    break;
-                                case "lime":
-                                    CONFIG.sheepSkin = "lime";
-                                    break;
-                                case "pink":
-                                    CONFIG.sheepSkin = "pink";
-                                    break;
-                                case "gray":
-                                    CONFIG.sheepSkin = "gray";
-                                    break;
-                                case "light_gray":
-                                case "light gray":
-                                    CONFIG.sheepSkin = "light_gray";
-                                    break;
-                                case "cyan":
-                                    CONFIG.sheepSkin = "cyan";
-                                    break;
-                                case "purple":
-                                    CONFIG.sheepSkin = "purple";
-                                    break;
-                                case "blue":
-                                    CONFIG.sheepSkin = "blue";
-                                    break;
-                                case "brown":
-                                    CONFIG.sheepSkin = "brown";
-                                    break;
-                                case "green":
-                                    CONFIG.sheepSkin = "green";
-                                    break;
-                                case "red":
-                                    CONFIG.sheepSkin = "red";
-                                    break;
-                                case "black":
-                                    CONFIG.sheepSkin = "black";
-                                    break;
-                                default:
-                                    isValid = false;
+                            if (skin.equals("white")) {
+                                CONFIG.sheepSkin = "white";
+                            } else if (skin.equals("orange")) {
+                                CONFIG.sheepSkin = "orange";
+                            } else if (skin.equals("magenta")) {
+                                CONFIG.sheepSkin = "magenta";
+                            } else if (skin.equals("light_blue") || skin.equals("light blue")) {
+                                CONFIG.sheepSkin = "light_blue";
+                            } else if (skin.equals("yellow")) {
+                                CONFIG.sheepSkin = "yellow";
+                            } else if (skin.equals("lime")) {
+                                CONFIG.sheepSkin = "lime";
+                            } else if (skin.equals("pink")) {
+                                CONFIG.sheepSkin = "pink";
+                            } else if (skin.equals("gray")) {
+                                CONFIG.sheepSkin = "gray";
+                            } else if (skin.equals("light_gray") || skin.equals("light gray")) {
+                                CONFIG.sheepSkin = "light_gray";
+                            } else if (skin.equals("cyan")) {
+                                CONFIG.sheepSkin = "cyan";
+                            } else if (skin.equals("purple")) {
+                                CONFIG.sheepSkin = "purple";
+                            } else if (skin.equals("blue")) {
+                                CONFIG.sheepSkin = "blue";
+                            } else if (skin.equals("brown")) {
+                                CONFIG.sheepSkin = "brown";
+                            } else if (skin.equals("green")) {
+                                CONFIG.sheepSkin = "green";
+                            } else if (skin.equals("red")) {
+                                CONFIG.sheepSkin = "red";
+                            } else if (skin.equals("black")) {
+                                CONFIG.sheepSkin = "black";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "chicken")) {
-                            switch (skin) {
-                                case "temperate":
-                                    CONFIG.chickenSkin = "temperate";
-                                    break;
-                                case "cold":
-                                    CONFIG.chickenSkin = "cold";
-                                    break;
-                                case "warm":
-                                    CONFIG.chickenSkin = "warm";
-                                    break;
-
-                                default:
-                                    isValid = false;
+                            if (skin.equals("temperate")) {
+                                CONFIG.chickenSkin = "temperate";
+                            } else if (skin.equals("cold")) {
+                                CONFIG.chickenSkin = "cold";
+                            } else if (skin.equals("warm")) {
+                                CONFIG.chickenSkin = "warm";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "axolotl")) {
-                            switch (skin) {
-                                case "pink":
-                                    CONFIG.axolotlSkin = "pink";
-                                    break;
-                                case "brown":
-                                    CONFIG.axolotlSkin = "brown";
-                                    break;
-                                case "gold":
-                                    CONFIG.axolotlSkin = "gold";
-                                    break;
-                                case "cyan":
-                                    CONFIG.axolotlSkin = "cyan";
-                                    break;
-                                case "blue":
-                                    CONFIG.axolotlSkin = "blue";
-                                    break;
-
-                                default:
-                                    isValid = false;
+                            if (skin.equals("pink")) {
+                                CONFIG.axolotlSkin = "pink";
+                            } else if (skin.equals("brown")) {
+                                CONFIG.axolotlSkin = "brown";
+                            } else if (skin.equals("gold")) {
+                                CONFIG.axolotlSkin = "gold";
+                            } else if (skin.equals("cyan")) {
+                                CONFIG.axolotlSkin = "cyan";
+                            } else if (skin.equals("blue")) {
+                                CONFIG.axolotlSkin = "blue";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "camel")) {
                             if (Objects.equals(skin, "camel")) {
@@ -840,151 +863,102 @@ public class Central implements ClientModInitializer {
                                 isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "copper_golem")) {
-                            switch (skin) {
-                                case "unoxidized":
-                                    CONFIG.copperGolemSkin = "unoxidized";
-                                    break;
-                                case "exposed":
-                                    CONFIG.copperGolemSkin = "exposed";
-                                    break;
-                                case "weathered":
-                                    CONFIG.copperGolemSkin = "weathered";
-                                    break;
-                                case "oxidized":
-                                    CONFIG.copperGolemSkin = "oxidized";
-                                    break;
-
-                                default:
-                                    isValid = false;
+                            if (skin.equals("unoxidized")) {
+                                CONFIG.copperGolemSkin = "unoxidized";
+                            } else if (skin.equals("exposed")) {
+                                CONFIG.copperGolemSkin = "exposed";
+                            } else if (skin.equals("weathered")) {
+                                CONFIG.copperGolemSkin = "weathered";
+                            } else if (skin.equals("oxidized")) {
+                                CONFIG.copperGolemSkin = "oxidized";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "cow")) {
-                            switch (skin) {
-                                case "temperate":
-                                    CONFIG.cowSkin = "temperate";
-                                    break;
-                                case "cold":
-                                    CONFIG.cowSkin = "cold";
-                                    break;
-                                case "warm":
-                                    CONFIG.cowSkin = "warm";
-                                    break;
-
-                                default:
-                                    isValid = false;
+                            if (skin.equals("temperate")) {
+                                CONFIG.cowSkin = "temperate";
+                            } else if (skin.equals("cold")) {
+                                CONFIG.cowSkin = "cold";
+                            } else if (skin.equals("warm")) {
+                                CONFIG.cowSkin = "warm";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "frog")) {
-                            switch (skin) {
-                                case "temperate":
-                                    CONFIG.frogSkin = "temperate";
-                                    break;
-                                case "cold":
-                                    CONFIG.frogSkin = "cold";
-                                    break;
-                                case "warm":
-                                    CONFIG.frogSkin = "warm";
-                                    break;
-
-                                default:
-                                    isValid = false;
+                            if (skin.equals("temperate")) {
+                                CONFIG.frogSkin = "temperate";
+                            } else if (skin.equals("cold")) {
+                                CONFIG.frogSkin = "cold";
+                            } else if (skin.equals("warm")) {
+                                CONFIG.frogSkin = "warm";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "horse")) {
-                            switch (skin) {
-                                case "white":
-                                    CONFIG.horseSkin = "white";
-                                    break;
-                                case "creamy":
-                                    CONFIG.horseSkin = "creamy";
-                                    break;
-                                case "chestnut":
-                                    CONFIG.horseSkin = "chestnut";
-                                    break;
-                                case "brown":
-                                    CONFIG.horseSkin = "brown";
-                                    break;
-                                case "black":
-                                    CONFIG.horseSkin = "black";
-                                    break;
-                                case "gray":
-                                    CONFIG.horseSkin = "gray";
-                                    break;
-                                case "dark_brown":
-                                    CONFIG.horseSkin = "dark_brown";
-                                    break;
-                                case "skeleton":
-                                    CONFIG.horseSkin = "skeleton";
-                                    break;
-                                case "zombie":
-                                    CONFIG.horseSkin = "zombie";
-                                    break;
-
-                                default:
-                                    isValid = false;
+                            if (skin.equals("white")) {
+                                CONFIG.horseSkin = "white";
+                            } else if (skin.equals("creamy")) {
+                                CONFIG.horseSkin = "creamy";
+                            } else if (skin.equals("chestnut")) {
+                                CONFIG.horseSkin = "chestnut";
+                            } else if (skin.equals("brown")) {
+                                CONFIG.horseSkin = "brown";
+                            } else if (skin.equals("black")) {
+                                CONFIG.horseSkin = "black";
+                            } else if (skin.equals("gray")) {
+                                CONFIG.horseSkin = "gray";
+                            } else if (skin.equals("dark_brown")) {
+                                CONFIG.horseSkin = "dark_brown";
+                            } else if (skin.equals("skeleton")) {
+                                CONFIG.horseSkin = "skeleton";
+                            } else if (skin.equals("zombie")) {
+                                CONFIG.horseSkin = "zombie";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "parrot")) {
-                            switch (skin) {
-                                case "red":
-                                    CONFIG.parrotSkin = "red";
-                                    break;
-                                case "blue":
-                                    CONFIG.parrotSkin = "blue";
-                                    break;
-                                case "green":
-                                    CONFIG.parrotSkin = "green";
-                                    break;
-                                case "cyan":
-                                    CONFIG.parrotSkin = "cyan";
-                                    break;
-                                case "gray":
-                                    CONFIG.parrotSkin = "gray";
-                                    break;
-
-                                default:
-                                    isValid = false;
+                            if (skin.equals("red")) {
+                                CONFIG.parrotSkin = "red";
+                            } else if (skin.equals("blue")) {
+                                CONFIG.parrotSkin = "blue";
+                            } else if (skin.equals("green")) {
+                                CONFIG.parrotSkin = "green";
+                            } else if (skin.equals("cyan")) {
+                                CONFIG.parrotSkin = "cyan";
+                            } else if (skin.equals("gray")) {
+                                CONFIG.parrotSkin = "gray";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "pig")) {
-                            switch (skin) {
-                                case "temperate":
-                                    CONFIG.pigSkin = "temperate";
-                                    break;
-                                case "warm":
-                                    CONFIG.pigSkin = "warm";
-                                    break;
-                                case "cold":
-                                    CONFIG.pigSkin = "cold";
-                                    break;
-
-                                default:
-                                    isValid = false;
+                            if (skin.equals("temperate")) {
+                                CONFIG.pigSkin = "temperate";
+                            } else if (skin.equals("warm")) {
+                                CONFIG.pigSkin = "warm";
+                            } else if (skin.equals("cold")) {
+                                CONFIG.pigSkin = "cold";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "rabbit")) {
-                            switch (skin) {
-                                case "brown":
-                                    CONFIG.rabbitSkin = "brown";
-                                    break;
-                                case "white":
-                                    CONFIG.rabbitSkin = "white";
-                                    break;
-                                case "black":
-                                    CONFIG.rabbitSkin = "black";
-                                    break;
-                                case "splotched":
-                                    CONFIG.rabbitSkin = "splotched";
-                                    break;
-                                case "gold":
-                                    CONFIG.rabbitSkin = "gold";
-                                    break;
-                                case "salt":
-                                    CONFIG.rabbitSkin = "salt";
-                                    break;
-                                case "killer":
-                                    CONFIG.rabbitSkin = "killer";
-                                    break;
-                                case "toast":
-                                    CONFIG.rabbitSkin = "toast";
-                                    break;
-
-                                default:
-                                    isValid = false;
+                            if (skin.equals("brown")) {
+                                CONFIG.rabbitSkin = "brown";
+                            } else if (skin.equals("white")) {
+                                CONFIG.rabbitSkin = "white";
+                            } else if (skin.equals("black")) {
+                                CONFIG.rabbitSkin = "black";
+                            } else if (skin.equals("splotched")) {
+                                CONFIG.rabbitSkin = "splotched";
+                            } else if (skin.equals("gold")) {
+                                CONFIG.rabbitSkin = "gold";
+                            } else if (skin.equals("salt")) {
+                                CONFIG.rabbitSkin = "salt";
+                            } else if (skin.equals("killer")) {
+                                CONFIG.rabbitSkin = "killer";
+                            } else if (skin.equals("toast")) {
+                                CONFIG.rabbitSkin = "toast";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "snow_golem")) {
                             if (!Objects.equals(skin, "pumpkin_on") && !Objects.equals(skin, "pumpkin on")) {
@@ -1005,55 +979,38 @@ public class Central implements ClientModInitializer {
                                 CONFIG.squidSkin = "glow_squid";
                             }
                         } else if (Objects.equals(CONFIG.activePet, "villager")) {
-                            switch (skin) {
-                                case "farmer":
-                                    CONFIG.villagerSkin = "farmer";
-                                    break;
-                                case "fisherman":
-                                    CONFIG.villagerSkin = "fisherman";
-                                    break;
-                                case "shepherd":
-                                    CONFIG.villagerSkin = "shepherd";
-                                    break;
-                                case "fletcher":
-                                    CONFIG.villagerSkin = "fletcher";
-                                    break;
-                                case "cleric":
-                                    CONFIG.villagerSkin = "cleric";
-                                    break;
-                                case "weaponsmith":
-                                    CONFIG.villagerSkin = "weaponsmith";
-                                    break;
-                                case "armorer":
-                                    CONFIG.villagerSkin = "armorer";
-                                    break;
-                                case "toolsmith":
-                                    CONFIG.villagerSkin = "toolsmith";
-                                    break;
-                                case "librarian":
-                                    CONFIG.villagerSkin = "librarian";
-                                    break;
-                                case "cartographer":
-                                    CONFIG.villagerSkin = "cartographer";
-                                    break;
-                                case "leatherworker":
-                                    CONFIG.villagerSkin = "leatherworker";
-                                    break;
-                                case "butcher":
-                                    CONFIG.villagerSkin = "butcher";
-                                    break;
-                                case "mason":
-                                    CONFIG.villagerSkin = "mason";
-                                    break;
-                                case "nitwit":
-                                    CONFIG.villagerSkin = "nitwit";
-                                    break;
-                                case "unemployed":
-                                    CONFIG.villagerSkin = "unemployed";
-                                    break;
-
-                                default:
-                                    isValid = false;
+                            if (skin.equals("farmer")) {
+                                CONFIG.villagerSkin = "farmer";
+                            } else if (skin.equals("fisherman")) {
+                                CONFIG.villagerSkin = "fisherman";
+                            } else if (skin.equals("shepherd")) {
+                                CONFIG.villagerSkin = "shepherd";
+                            } else if (skin.equals("fletcher")) {
+                                CONFIG.villagerSkin = "fletcher";
+                            } else if (skin.equals("cleric")) {
+                                CONFIG.villagerSkin = "cleric";
+                            } else if (skin.equals("weaponsmith")) {
+                                CONFIG.villagerSkin = "weaponsmith";
+                            } else if (skin.equals("armorer")) {
+                                CONFIG.villagerSkin = "armorer";
+                            } else if (skin.equals("toolsmith")) {
+                                CONFIG.villagerSkin = "toolsmith";
+                            } else if (skin.equals("librarian")) {
+                                CONFIG.villagerSkin = "librarian";
+                            } else if (skin.equals("cartographer")) {
+                                CONFIG.villagerSkin = "cartographer";
+                            } else if (skin.equals("leatherworker")) {
+                                CONFIG.villagerSkin = "leatherworker";
+                            } else if (skin.equals("butcher")) {
+                                CONFIG.villagerSkin = "butcher";
+                            } else if (skin.equals("mason")) {
+                                CONFIG.villagerSkin = "mason";
+                            } else if (skin.equals("nitwit")) {
+                                CONFIG.villagerSkin = "nitwit";
+                            } else if (skin.equals("unemployed")) {
+                                CONFIG.villagerSkin = "unemployed";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "mooshroom")) {
                             if (Objects.equals(skin, "red")) {
@@ -1072,108 +1029,70 @@ public class Central implements ClientModInitializer {
                                 isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "bee")) {
-                            switch (skin) {
-                                case "happy":
-                                    CONFIG.beeSkin = "happy";
-                                    break;
-                                case "angry":
-                                    CONFIG.beeSkin = "angry";
-                                    break;
-
-                                default:
-                                    isValid = false;
+                            if (skin.equals("happy")) {
+                                CONFIG.beeSkin = "happy";
+                            } else if (skin.equals("angry")) {
+                                CONFIG.beeSkin = "angry";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "fox")) {
-                            switch (skin) {
-                                case "red":
-                                    CONFIG.foxSkin = "red";
-                                    break;
-                                case "snow":
-                                    CONFIG.foxSkin = "snow";
-                                    break;
-
-                                default:
-                                    isValid = false;
+                            if (skin.equals("red")) {
+                                CONFIG.foxSkin = "red";
+                            } else if (skin.equals("snow")) {
+                                CONFIG.foxSkin = "snow";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "llama")) {
-                            switch (skin) {
-                                case "brown":
-                                    CONFIG.llamaSkin = "brown";
-                                    break;
-                                case "creamy":
-                                    CONFIG.llamaSkin = "creamy";
-                                    break;
-                                case "gray":
-                                    CONFIG.llamaSkin = "gray";
-                                    break;
-                                case "white":
-                                    CONFIG.llamaSkin = "white";
-                                    break;
-
-                                default:
-                                    isValid = false;
+                            if (skin.equals("brown")) {
+                                CONFIG.llamaSkin = "brown";
+                            } else if (skin.equals("creamy")) {
+                                CONFIG.llamaSkin = "creamy";
+                            } else if (skin.equals("gray")) {
+                                CONFIG.llamaSkin = "gray";
+                            } else if (skin.equals("white")) {
+                                CONFIG.llamaSkin = "white";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "nautilus")) {
-                            switch (skin) {
-                                case "nautilus":
-                                    CONFIG.nautilusSkin = "nautilus";
-                                    break;
-                                case "zombie":
-                                    CONFIG.nautilusSkin = "zombie";
-                                    break;
-                                case "coral_zombie":
-                                case "coral zombie":
-                                    CONFIG.nautilusSkin = "coral_zombie";
-                                    break;
-
-                                default:
-                                    isValid = false;
+                            if (skin.equals("nautilus")) {
+                                CONFIG.nautilusSkin = "nautilus";
+                            } else if (skin.equals("zombie")) {
+                                CONFIG.nautilusSkin = "zombie";
+                            } else if (skin.equals("coral_zombie") || skin.equals("coral zombie")) {
+                                CONFIG.nautilusSkin = "coral_zombie";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "panda")) {
-                            switch (skin) {
-                                case "normal":
-                                    CONFIG.pandaSkin = "normal";
-                                    break;
-                                case "lazy":
-                                    CONFIG.pandaSkin = "lazy";
-                                    break;
-                                case "agressive":
-                                    CONFIG.pandaSkin = "agressive";
-                                    break;
-                                case "worried":
-                                    CONFIG.pandaSkin = "worried";
-                                    break;
-                                case "playful":
-                                    CONFIG.pandaSkin = "playful";
-                                    break;
-                                case "weak":
-                                    CONFIG.pandaSkin = "weak";
-                                    break;
-                                case "brown":
-                                    CONFIG.pandaSkin = "brown";
-                                    break;
-
-                                default:
-                                    isValid = false;
+                            if (skin.equals("normal")) {
+                                CONFIG.pandaSkin = "normal";
+                            } else if (skin.equals("lazy")) {
+                                CONFIG.pandaSkin = "lazy";
+                            } else if (skin.equals("agressive")) {
+                                CONFIG.pandaSkin = "agressive";
+                            } else if (skin.equals("worried")) {
+                                CONFIG.pandaSkin = "worried";
+                            } else if (skin.equals("playful")) {
+                                CONFIG.pandaSkin = "playful";
+                            } else if (skin.equals("weak")) {
+                                CONFIG.pandaSkin = "weak";
+                            } else if (skin.equals("brown")) {
+                                CONFIG.pandaSkin = "brown";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "piglin")) {
-                            switch (skin) {
-                                case "piglin":
-                                    CONFIG.piglinSkin = "piglin";
-                                    break;
-                                case "zombified_piglin":
-                                case "zombified piglin":
-                                case "zombified":
-                                    CONFIG.piglinSkin = "zombified";
-                                    break;
-                                case "piglin_brute":
-                                case "piglin brute":
-                                case "brute":
-                                    CONFIG.piglinSkin = "brute";
-                                    break;
-
-                                default:
-                                    isValid = false;
+                            if (skin.equals("piglin")) {
+                                CONFIG.piglinSkin = "piglin";
+                            } else if (skin.equals("zombified_piglin") || skin.equals("zombified piglin") || skin.equals("zombified")) {
+                                CONFIG.piglinSkin = "zombified";
+                            } else if (skin.equals("piglin_brute") || skin.equals("piglin brute") || skin.equals("brute")) {
+                                CONFIG.piglinSkin = "brute";
+                            } else {
+                                isValid = false;
                             }
                         } /*else if (Objects.equals(CONFIG.activePet, "wolf")) {
                             switch (skin) {
@@ -1209,130 +1128,154 @@ public class Central implements ClientModInitializer {
                                     isValid = false;
                             }
                         }*/ else if (Objects.equals(CONFIG.activePet, "hoglin")) {
-                            switch (skin) {
-                                case "hoglin", "normal" -> CONFIG.hoglinSkin = "hoglin";
-                                case "zoglin" -> CONFIG.hoglinSkin = "zoglin";
-                                default -> isValid = false;
+                            if (skin.equals("hoglin") || skin.equals("normal")) {
+                                CONFIG.hoglinSkin = "hoglin";
+                            } else if (skin.equals("zoglin")) {
+                                CONFIG.hoglinSkin = "zoglin";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "magma_cube")) {
-                            switch (skin) {
-                                case "small" -> CONFIG.magmaCubeSkin = "small";
-                                case "medium" -> CONFIG.magmaCubeSkin = "medium";
-                                case "large" -> CONFIG.magmaCubeSkin = "large";
-                                default -> isValid = false;
+                            if (skin.equals("small")) {
+                                CONFIG.magmaCubeSkin = "small";
+                            } else if (skin.equals("medium")) {
+                                CONFIG.magmaCubeSkin = "medium";
+                            } else if (skin.equals("large")) {
+                                CONFIG.magmaCubeSkin = "large";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "slime") || Objects.equals(CONFIG.activePet, "tropical_slime")) {
-                            switch (skin) {
-                                case "small" -> CONFIG.slimeSkin = "small";
-                                case "medium" -> CONFIG.slimeSkin = "medium";
-                                case "large" -> CONFIG.slimeSkin = "large";
-                                default -> isValid = false;
+                            if (skin.equals("small")) {
+                                CONFIG.slimeSkin = "small";
+                            } else if (skin.equals("medium")) {
+                                CONFIG.slimeSkin = "medium";
+                            } else if (skin.equals("large")) {
+                                CONFIG.slimeSkin = "large";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "shulker")) {
-                            switch (skin) {
-                                case "normal" -> CONFIG.shulkerSkin = "normal";
-                                case "black" -> CONFIG.shulkerSkin = "black";
-                                case "brown" -> CONFIG.shulkerSkin = "brown";
-                                case "cyan" -> CONFIG.shulkerSkin = "cyan";
-                                case "gray" -> CONFIG.shulkerSkin = "gray";
-                                case "green" -> CONFIG.shulkerSkin = "green";
-                                case "light_blue", "light blue" -> CONFIG.shulkerSkin = "light_blue";
-                                case "light_gray", "light gray" -> CONFIG.shulkerSkin = "light_gray";
-                                case "lime" -> CONFIG.shulkerSkin = "lime";
-                                case "magenta" -> CONFIG.shulkerSkin = "magenta";
-                                case "orange" -> CONFIG.shulkerSkin = "orange";
-                                case "pink" -> CONFIG.shulkerSkin = "pink";
-                                case "purple" -> CONFIG.shulkerSkin = "purple";
-                                case "red" -> CONFIG.shulkerSkin = "red";
-                                case "white" -> CONFIG.shulkerSkin = "white";
-                                case "yellow" -> CONFIG.shulkerSkin = "yellow";
-                                default -> isValid = false;
+                            if (skin.equals("normal")) {
+                                CONFIG.shulkerSkin = "normal";
+                            } else if (skin.equals("black")) {
+                                CONFIG.shulkerSkin = "black";
+                            } else if (skin.equals("brown")) {
+                                CONFIG.shulkerSkin = "brown";
+                            } else if (skin.equals("cyan")) {
+                                CONFIG.shulkerSkin = "cyan";
+                            } else if (skin.equals("gray")) {
+                                CONFIG.shulkerSkin = "gray";
+                            } else if (skin.equals("green")) {
+                                CONFIG.shulkerSkin = "green";
+                            } else if (skin.equals("light_blue") || skin.equals("light blue")) {
+                                CONFIG.shulkerSkin = "light_blue";
+                            } else if (skin.equals("light_gray") || skin.equals("light gray")) {
+                                CONFIG.shulkerSkin = "light_gray";
+                            } else if (skin.equals("lime")) {
+                                CONFIG.shulkerSkin = "lime";
+                            } else if (skin.equals("magenta")) {
+                                CONFIG.shulkerSkin = "magenta";
+                            } else if (skin.equals("orange")) {
+                                CONFIG.shulkerSkin = "orange";
+                            } else if (skin.equals("pink")) {
+                                CONFIG.shulkerSkin = "pink";
+                            } else if (skin.equals("purple")) {
+                                CONFIG.shulkerSkin = "purple";
+                            } else if (skin.equals("red")) {
+                                CONFIG.shulkerSkin = "red";
+                            } else if (skin.equals("white")) {
+                                CONFIG.shulkerSkin = "white";
+                            } else if (skin.equals("yellow")) {
+                                CONFIG.shulkerSkin = "yellow";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "zombie_villager")) {
-                            switch (skin) {
-                                case "farmer":
-                                    CONFIG.zombieVillagerSkin = "farmer";
-                                    break;
-                                case "fisherman":
-                                    CONFIG.zombieVillagerSkin = "fisherman";
-                                    break;
-                                case "shepherd":
-                                    CONFIG.zombieVillagerSkin = "shepherd";
-                                    break;
-                                case "fletcher":
-                                    CONFIG.zombieVillagerSkin = "fletcher";
-                                    break;
-                                case "cleric":
-                                    CONFIG.zombieVillagerSkin = "cleric";
-                                    break;
-                                case "weaponsmith":
-                                    CONFIG.zombieVillagerSkin = "weaponsmith";
-                                    break;
-                                case "armorer":
-                                    CONFIG.zombieVillagerSkin = "armorer";
-                                    break;
-                                case "toolsmith":
-                                    CONFIG.zombieVillagerSkin = "toolsmith";
-                                    break;
-                                case "librarian":
-                                    CONFIG.zombieVillagerSkin = "librarian";
-                                    break;
-                                case "cartographer":
-                                    CONFIG.zombieVillagerSkin = "cartographer";
-                                    break;
-                                case "leatherworker":
-                                    CONFIG.zombieVillagerSkin = "leatherworker";
-                                    break;
-                                case "butcher":
-                                    CONFIG.zombieVillagerSkin = "butcher";
-                                    break;
-                                case "mason":
-                                    CONFIG.zombieVillagerSkin = "mason";
-                                    break;
-                                case "nitwit":
-                                    CONFIG.zombieVillagerSkin = "nitwit";
-                                    break;
-                                case "unemployed":
-                                    CONFIG.zombieVillagerSkin = "unemployed";
-                                    break;
-
-                                default:
-                                    isValid = false;
+                            if (skin.equals("farmer")) {
+                                CONFIG.zombieVillagerSkin = "farmer";
+                            } else if (skin.equals("fisherman")) {
+                                CONFIG.zombieVillagerSkin = "fisherman";
+                            } else if (skin.equals("shepherd")) {
+                                CONFIG.zombieVillagerSkin = "shepherd";
+                            } else if (skin.equals("fletcher")) {
+                                CONFIG.zombieVillagerSkin = "fletcher";
+                            } else if (skin.equals("cleric")) {
+                                CONFIG.zombieVillagerSkin = "cleric";
+                            } else if (skin.equals("weaponsmith")) {
+                                CONFIG.zombieVillagerSkin = "weaponsmith";
+                            } else if (skin.equals("armorer")) {
+                                CONFIG.zombieVillagerSkin = "armorer";
+                            } else if (skin.equals("toolsmith")) {
+                                CONFIG.zombieVillagerSkin = "toolsmith";
+                            } else if (skin.equals("librarian")) {
+                                CONFIG.zombieVillagerSkin = "librarian";
+                            } else if (skin.equals("cartographer")) {
+                                CONFIG.zombieVillagerSkin = "cartographer";
+                            } else if (skin.equals("leatherworker")) {
+                                CONFIG.zombieVillagerSkin = "leatherworker";
+                            } else if (skin.equals("butcher")) {
+                                CONFIG.zombieVillagerSkin = "butcher";
+                            } else if (skin.equals("mason")) {
+                                CONFIG.zombieVillagerSkin = "mason";
+                            } else if (skin.equals("nitwit")) {
+                                CONFIG.zombieVillagerSkin = "nitwit";
+                            } else if (skin.equals("unemployed")) {
+                                CONFIG.zombieVillagerSkin = "unemployed";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "creeper") || Objects.equals(CONFIG.activePet, "nerd_creeper") || Objects.equals(CONFIG.activePet, "smiling_creeper")) {
-                            switch (skin) {
-                                case "normal" -> CONFIG.creeperSkin = "normal";
-                                case "charged" -> CONFIG.creeperSkin = "charged";
-                                default -> isValid = false;
+                            if (skin.equals("normal")) {
+                                CONFIG.creeperSkin = "normal";
+                            } else if (skin.equals("charged")) {
+                                CONFIG.creeperSkin = "charged";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "wither")) {
-                            switch (skin) {
-                                case "normal" -> CONFIG.witherSkin = "normal";
-                                case "invulnerable" -> CONFIG.witherSkin = "invulnerable";
-                                default -> isValid = false;
+                            if (skin.equals("normal")) {
+                                CONFIG.witherSkin = "normal";
+                            } else if (skin.equals("invulnerable")) {
+                                CONFIG.witherSkin = "invulnerable";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "head")) {
                             CONFIG.headSkin = skin.toLowerCase();
                         } else if (Objects.equals(CONFIG.activePet, "traitor")) {
-                            switch (skin) {
-                                case "desert" -> CONFIG.traitorSkin = "desert";
-                                case "jungle" -> CONFIG.traitorSkin = "jungle";
-                                case "plains" -> CONFIG.traitorSkin = "plains";
-                                case "savanna" -> CONFIG.traitorSkin = "savanna";
-                                case "snow", "snowy" -> CONFIG.traitorSkin = "snow";
-                                case "swamp" -> CONFIG.traitorSkin = "swamp";
-                                case "taiga" -> CONFIG.traitorSkin = "taiga";
-                                default -> isValid = false;
+                            if (skin.equals("desert")) {
+                                CONFIG.traitorSkin = "desert";
+                            } else if (skin.equals("jungle")) {
+                                CONFIG.traitorSkin = "jungle";
+                            } else if (skin.equals("plains")) {
+                                CONFIG.traitorSkin = "plains";
+                            } else if (skin.equals("savanna")) {
+                                CONFIG.traitorSkin = "savanna";
+                            } else if (skin.equals("snow") || skin.equals("snowy")) {
+                                CONFIG.traitorSkin = "snow";
+                            } else if (skin.equals("swamp")) {
+                                CONFIG.traitorSkin = "swamp";
+                            } else if (skin.equals("taiga")) {
+                                CONFIG.traitorSkin = "taiga";
+                            } else {
+                                isValid = false;
                             }
                         } else if (Objects.equals(CONFIG.activePet, "dumbo_octopus")) {
-                            switch (skin) {
-                                case "yellow" -> CONFIG.dumboOctopusSkin = "yellow";
-                                case "red" -> CONFIG.dumboOctopusSkin = "red";
-                                case "blue" -> CONFIG.dumboOctopusSkin = "blue";
-                                case "green" -> CONFIG.dumboOctopusSkin = "green";
-                                case "orange" -> CONFIG.dumboOctopusSkin = "orange";
-                                case "pink" -> CONFIG.dumboOctopusSkin = "pink";
-                                default -> isValid = false;
+                            if (skin.equals("yellow")) {
+                                CONFIG.dumboOctopusSkin = "yellow";
+                            } else if (skin.equals("red")) {
+                                CONFIG.dumboOctopusSkin = "red";
+                            } else if (skin.equals("blue")) {
+                                CONFIG.dumboOctopusSkin = "blue";
+                            } else if (skin.equals("green")) {
+                                CONFIG.dumboOctopusSkin = "green";
+                            } else if (skin.equals("orange")) {
+                                CONFIG.dumboOctopusSkin = "orange";
+                            } else if (skin.equals("pink")) {
+                                CONFIG.dumboOctopusSkin = "pink";
+                            } else {
+                                isValid = false;
                             }
                         }
                     }
@@ -1746,22 +1689,9 @@ public class Central implements ClientModInitializer {
      */
     void createPetHelpCommand() {
         ClientCommandManager.DISPATCHER.register(ClientCommandManager.literal("pethelp").executes(context -> {
-            context.getSource().getPlayer().displayClientMessage(new TextComponent("""
-                    §b[PetsMod] §aPossible commands:\
-                    
-                    §a/pethelp: §rdisplays a list of commands\
-                    
-                    §a/pet <on/off> §rtoggles whether your pet will appear or not\
-                    
-                    §a/petspecies <species>: §rchanges the species of your pet\
-                    
-                    §a/petskin <skin>: §rchanges the skin of your selected pet\
-                    
-                    §a/teleportpet: §rteleports your pet to you. will not work if you are not on the ground.\
-                    
-                    §a/petname: §rchanges the name of your currently selected pet\
-                    
-                    """), false);
+            context.getSource().getPlayer().displayClientMessage(new TextComponent(
+                    "§b[PetsMod] §aPossible commands: §a/pethelp: §rdisplays a list of commands §a/pet <on/off> §rtoggles whether your pet will appear or not§a/petspecies <species>: §rchanges the species of your pet§a/petskin <skin>: §rchanges the skin of your selected pet§a/teleportpet: §rteleports your pet to you. will not work if you are not on the ground.§a/petname: §rchanges the name of your currently selected pet"
+), false);
             return 1;
         }));
     }
@@ -1773,106 +1703,204 @@ public class Central implements ClientModInitializer {
         ClientCommandManager.DISPATCHER.register(ClientCommandManager.literal("petname").then(ClientCommandManager.argument("name", StringArgumentType.greedyString()).executes((context) -> {
             String name = StringArgumentType.getString(context, "name");
             if (!summonedEntity.isEmpty()) {
-                switch (CONFIG.activePet) {
-                    case "penguin" -> CONFIG.penguinName = name;
-                    case "duck" -> CONFIG.duckName = name;
-                    case "racoon" -> CONFIG.racoonName = name;
-                    case "cat" -> CONFIG.catName = name;
-                    case "sheep" -> CONFIG.sheepName = name;
-                    case "allay" -> CONFIG.allayName = name;
-                    case "armadillo" -> CONFIG.armadilloName = name;
-                    case "bat" -> CONFIG.batName = name;
-                    case "camel" -> CONFIG.camelName = name;
-                    case "chicken" -> CONFIG.chickenSkin = name;
-                    case "cod" -> CONFIG.codName = name;
-                    case "copper_golem" -> CONFIG.copperGolemName = name;
-                    case "cow" -> CONFIG.cowName = name;
-                    case "donkey" -> CONFIG.donkeyName = name;
-                    case "frog" -> CONFIG.frogName = name;
-                    case "horse" -> CONFIG.horseName = name;
-                    case "mooshroom" -> CONFIG.mooshroomName = name;
-                    case "mule" -> CONFIG.muleName = name;
-                    case "parrot" -> CONFIG.parrotName = name;
-                    case "pig" -> CONFIG.pigName = name;
-                    case "rabbit" -> CONFIG.rabbitName = name;
-                    case "salmon" -> CONFIG.salmonName = name;
-                    case "sniffer" -> CONFIG.snifferName = name;
-                    case "snow_golem" -> CONFIG.snowGolemName = name;
-                    case "squid" -> CONFIG.squidName = name;
-                    case "strider" -> CONFIG.striderName = name;
-                    case "tadpole" -> CONFIG.tadpoleName = name;
-                    case "tropical_fish" -> CONFIG.tropicalFishName = name;
-                    case "turtle" -> CONFIG.turtleName = name;
-                    case "villager" -> CONFIG.villagerName = name;
-                    case "wandering_trader" -> CONFIG.wanderingTraderName = name;
-                    case "bee" -> CONFIG.beeName = name;
-                    case "cave_spider" -> CONFIG.caveSpiderName = name;
-                    case "dolphin" -> CONFIG.dolphinName = name;
-                    case "enderman" -> CONFIG.endermanName = name;
-                    case "fox" -> CONFIG.foxName = name;
-                    case "goat" -> CONFIG.goatName = name;
-                    case "iron_golem" -> CONFIG.ironGolemName = name;
-                    case "llama" -> CONFIG.llamaName = name;
-                    case "nautilus" -> CONFIG.nautilusName = name;
-                    case "panda" -> CONFIG.pandaName = name;
-                    case "piglin" -> CONFIG.piglinName = name;
-                    case "polar_bear" -> CONFIG.polarBearName = name;
-                    case "pufferfish" -> CONFIG.pufferFishName = name;
-                    case "spider" -> CONFIG.spiderName = name;
-                    case "wolf" -> CONFIG.wolfName = name;
-                    case "blaze" -> CONFIG.blazeName = name;
-                    case "breeze" -> CONFIG.breezeName = name;
-                    case "creaking" -> CONFIG.creakingName = name;
-                    case "creeper" -> CONFIG.creeperName = name;
-                    case "elder_guardian" -> CONFIG.elderGuardianName = name;
-                    case "endermite" -> CONFIG.endermiteName = name;
-                    case "evoker" -> CONFIG.evokerName = name;
-                    case "happy_ghast" -> CONFIG.happyGhastName = name;
-                    case "ghast" -> CONFIG.ghastName = name;
-                    case "guardian" -> CONFIG.guardianName = name;
-                    case "hoglin" -> CONFIG.hoglinName = name;
-                    case "magma_cube" -> CONFIG.magmaCubeName = name;
-                    case "phantom" -> CONFIG.phantomName = name;
-                    case "pillager" -> CONFIG.pillagerName = name;
-                    case "ravager" -> CONFIG.ravagerName = name;
-                    case "shulker" -> CONFIG.shulkerName = name;
-                    case "silverfish" -> CONFIG.silverfishName = name;
-                    case "skeleton" -> CONFIG.skeletonName = name;
-                    case "slime" -> CONFIG.slimeName = name;
-                    case "vex" -> CONFIG.vexName = name;
-                    case "vindicator" -> CONFIG.vindicatorName = name;
-                    case "warden" -> CONFIG.wardenName = name;
-                    case "witch" -> CONFIG.witchName = name;
-                    case "zombie" -> CONFIG.zombieName = name;
-                    case "zombie_villager" -> CONFIG.zombieVillagerName = name;
-                    case "husk" -> CONFIG.huskName = name;
-                    case "drowned" -> CONFIG.drownedName = name;
-                    case "bogged" -> CONFIG.boggedName = name;
-                    case "parched" -> CONFIG.parchedName = name;
-                    case "stray" -> CONFIG.strayName = name;
-                    case "wither_skeleton" -> CONFIG.witherSkeletonName = name;
-                    case "ender_dragon" -> CONFIG.enderDragonName = name;
-                    case "wither" -> CONFIG.witherName = name;
-                    case "angry_ghast" -> CONFIG.angryGhastName = name;
-                    case "batato" -> CONFIG.batatoName = name;
-                    case "diamond_chicken" -> CONFIG.diamondChickenName = name;
-                    case "love_golem" -> CONFIG.loveGolemName = name;
-                    case "mega_spud" -> CONFIG.megaSpudName = name;
-                    case "moon_cow" -> CONFIG.moonCowName = name;
-                    case "nerd_creeper" -> CONFIG.nerdCreeperName = name;
-                    case "pink_wither" -> CONFIG.pinkWitherName = name;
-                    case "plaguewhale_slab" -> CONFIG.plaguewhaleSlabName = name;
-                    case "poisonous_potato_zombie" -> CONFIG.poisonousPotatoZombieName = name;
-                    case "ray_tracing" -> CONFIG.rayTracingName = name;
-                    case "redstone_bug" -> CONFIG.redstoneBugName = name;
-                    case "smiling_creeper" -> CONFIG.smilingCreeperName = name;
-                    case "toxifin_slab" -> CONFIG.toxfinSlabName = name;
-                    case "potato_husk" -> CONFIG.potatoHuskName = name;
-                    case "head" -> CONFIG.headName = name;
-                    case "traitor" -> CONFIG.traitorName = name;
-                    case "dumbo_octopus" -> CONFIG.dumboOctopusName = name;
-                    case "koi" -> CONFIG.koiName = name;
-                    case "stingray" -> CONFIG.stingrayName = name;
+                if (CONFIG.activePet.equals("penguin")) {
+                    CONFIG.penguinName = name;
+                } else if (CONFIG.activePet.equals("duck")) {
+                    CONFIG.duckName = name;
+                } else if (CONFIG.activePet.equals("racoon")) {
+                    CONFIG.racoonName = name;
+                } else if (CONFIG.activePet.equals("cat")) {
+                    CONFIG.catName = name;
+                } else if (CONFIG.activePet.equals("sheep")) {
+                    CONFIG.sheepName = name;
+                } else if (CONFIG.activePet.equals("allay")) {
+                    CONFIG.allayName = name;
+                } else if (CONFIG.activePet.equals("armadillo")) {
+                    CONFIG.armadilloName = name;
+                } else if (CONFIG.activePet.equals("bat")) {
+                    CONFIG.batName = name;
+                } else if (CONFIG.activePet.equals("camel")) {
+                    CONFIG.camelName = name;
+                } else if (CONFIG.activePet.equals("chicken")) {
+                    CONFIG.chickenSkin = name;
+                } else if (CONFIG.activePet.equals("cod")) {
+                    CONFIG.codName = name;
+                } else if (CONFIG.activePet.equals("copper_golem")) {
+                    CONFIG.copperGolemName = name;
+                } else if (CONFIG.activePet.equals("cow")) {
+                    CONFIG.cowName = name;
+                } else if (CONFIG.activePet.equals("donkey")) {
+                    CONFIG.donkeyName = name;
+                } else if (CONFIG.activePet.equals("frog")) {
+                    CONFIG.frogName = name;
+                } else if (CONFIG.activePet.equals("horse")) {
+                    CONFIG.horseName = name;
+                } else if (CONFIG.activePet.equals("mooshroom")) {
+                    CONFIG.mooshroomName = name;
+                } else if (CONFIG.activePet.equals("mule")) {
+                    CONFIG.muleName = name;
+                } else if (CONFIG.activePet.equals("parrot")) {
+                    CONFIG.parrotName = name;
+                } else if (CONFIG.activePet.equals("pig")) {
+                    CONFIG.pigName = name;
+                } else if (CONFIG.activePet.equals("rabbit")) {
+                    CONFIG.rabbitName = name;
+                } else if (CONFIG.activePet.equals("salmon")) {
+                    CONFIG.salmonName = name;
+                } else if (CONFIG.activePet.equals("sniffer")) {
+                    CONFIG.snifferName = name;
+                } else if (CONFIG.activePet.equals("snow_golem")) {
+                    CONFIG.snowGolemName = name;
+                } else if (CONFIG.activePet.equals("squid")) {
+                    CONFIG.squidName = name;
+                } else if (CONFIG.activePet.equals("strider")) {
+                    CONFIG.striderName = name;
+                } else if (CONFIG.activePet.equals("tadpole")) {
+                    CONFIG.tadpoleName = name;
+                } else if (CONFIG.activePet.equals("tropical_fish")) {
+                    CONFIG.tropicalFishName = name;
+                } else if (CONFIG.activePet.equals("turtle")) {
+                    CONFIG.turtleName = name;
+                } else if (CONFIG.activePet.equals("villager")) {
+                    CONFIG.villagerName = name;
+                } else if (CONFIG.activePet.equals("wandering_trader")) {
+                    CONFIG.wanderingTraderName = name;
+                } else if (CONFIG.activePet.equals("bee")) {
+                    CONFIG.beeName = name;
+                } else if (CONFIG.activePet.equals("cave_spider")) {
+                    CONFIG.caveSpiderName = name;
+                } else if (CONFIG.activePet.equals("dolphin")) {
+                    CONFIG.dolphinName = name;
+                } else if (CONFIG.activePet.equals("enderman")) {
+                    CONFIG.endermanName = name;
+                } else if (CONFIG.activePet.equals("fox")) {
+                    CONFIG.foxName = name;
+                } else if (CONFIG.activePet.equals("goat")) {
+                    CONFIG.goatName = name;
+                } else if (CONFIG.activePet.equals("iron_golem")) {
+                    CONFIG.ironGolemName = name;
+                } else if (CONFIG.activePet.equals("llama")) {
+                    CONFIG.llamaName = name;
+                } else if (CONFIG.activePet.equals("nautilus")) {
+                    CONFIG.nautilusName = name;
+                } else if (CONFIG.activePet.equals("panda")) {
+                    CONFIG.pandaName = name;
+                } else if (CONFIG.activePet.equals("piglin")) {
+                    CONFIG.piglinName = name;
+                } else if (CONFIG.activePet.equals("polar_bear")) {
+                    CONFIG.polarBearName = name;
+                } else if (CONFIG.activePet.equals("pufferfish")) {
+                    CONFIG.pufferFishName = name;
+                } else if (CONFIG.activePet.equals("spider")) {
+                    CONFIG.spiderName = name;
+                } else if (CONFIG.activePet.equals("wolf")) {
+                    CONFIG.wolfName = name;
+                } else if (CONFIG.activePet.equals("blaze")) {
+                    CONFIG.blazeName = name;
+                } else if (CONFIG.activePet.equals("breeze")) {
+                    CONFIG.breezeName = name;
+                } else if (CONFIG.activePet.equals("creaking")) {
+                    CONFIG.creakingName = name;
+                } else if (CONFIG.activePet.equals("creeper")) {
+                    CONFIG.creeperName = name;
+                } else if (CONFIG.activePet.equals("elder_guardian")) {
+                    CONFIG.elderGuardianName = name;
+                } else if (CONFIG.activePet.equals("endermite")) {
+                    CONFIG.endermiteName = name;
+                } else if (CONFIG.activePet.equals("evoker")) {
+                    CONFIG.evokerName = name;
+                } else if (CONFIG.activePet.equals("happy_ghast")) {
+                    CONFIG.happyGhastName = name;
+                } else if (CONFIG.activePet.equals("ghast")) {
+                    CONFIG.ghastName = name;
+                } else if (CONFIG.activePet.equals("guardian")) {
+                    CONFIG.guardianName = name;
+                } else if (CONFIG.activePet.equals("hoglin")) {
+                    CONFIG.hoglinName = name;
+                } else if (CONFIG.activePet.equals("magma_cube")) {
+                    CONFIG.magmaCubeName = name;
+                } else if (CONFIG.activePet.equals("phantom")) {
+                    CONFIG.phantomName = name;
+                } else if (CONFIG.activePet.equals("pillager")) {
+                    CONFIG.pillagerName = name;
+                } else if (CONFIG.activePet.equals("ravager")) {
+                    CONFIG.ravagerName = name;
+                } else if (CONFIG.activePet.equals("shulker")) {
+                    CONFIG.shulkerName = name;
+                } else if (CONFIG.activePet.equals("silverfish")) {
+                    CONFIG.silverfishName = name;
+                } else if (CONFIG.activePet.equals("skeleton")) {
+                    CONFIG.skeletonName = name;
+                } else if (CONFIG.activePet.equals("slime")) {
+                    CONFIG.slimeName = name;
+                } else if (CONFIG.activePet.equals("vex")) {
+                    CONFIG.vexName = name;
+                } else if (CONFIG.activePet.equals("vindicator")) {
+                    CONFIG.vindicatorName = name;
+                } else if (CONFIG.activePet.equals("warden")) {
+                    CONFIG.wardenName = name;
+                } else if (CONFIG.activePet.equals("witch")) {
+                    CONFIG.witchName = name;
+                } else if (CONFIG.activePet.equals("zombie")) {
+                    CONFIG.zombieName = name;
+                } else if (CONFIG.activePet.equals("zombie_villager")) {
+                    CONFIG.zombieVillagerName = name;
+                } else if (CONFIG.activePet.equals("husk")) {
+                    CONFIG.huskName = name;
+                } else if (CONFIG.activePet.equals("drowned")) {
+                    CONFIG.drownedName = name;
+                } else if (CONFIG.activePet.equals("bogged")) {
+                    CONFIG.boggedName = name;
+                } else if (CONFIG.activePet.equals("parched")) {
+                    CONFIG.parchedName = name;
+                } else if (CONFIG.activePet.equals("stray")) {
+                    CONFIG.strayName = name;
+                } else if (CONFIG.activePet.equals("wither_skeleton")) {
+                    CONFIG.witherSkeletonName = name;
+                } else if (CONFIG.activePet.equals("ender_dragon")) {
+                    CONFIG.enderDragonName = name;
+                } else if (CONFIG.activePet.equals("wither")) {
+                    CONFIG.witherName = name;
+                } else if (CONFIG.activePet.equals("angry_ghast")) {
+                    CONFIG.angryGhastName = name;
+                } else if (CONFIG.activePet.equals("batato")) {
+                    CONFIG.batatoName = name;
+                } else if (CONFIG.activePet.equals("diamond_chicken")) {
+                    CONFIG.diamondChickenName = name;
+                } else if (CONFIG.activePet.equals("love_golem")) {
+                    CONFIG.loveGolemName = name;
+                } else if (CONFIG.activePet.equals("mega_spud")) {
+                    CONFIG.megaSpudName = name;
+                } else if (CONFIG.activePet.equals("moon_cow")) {
+                    CONFIG.moonCowName = name;
+                } else if (CONFIG.activePet.equals("nerd_creeper")) {
+                    CONFIG.nerdCreeperName = name;
+                } else if (CONFIG.activePet.equals("pink_wither")) {
+                    CONFIG.pinkWitherName = name;
+                } else if (CONFIG.activePet.equals("plaguewhale_slab")) {
+                    CONFIG.plaguewhaleSlabName = name;
+                } else if (CONFIG.activePet.equals("poisonous_potato_zombie")) {
+                    CONFIG.poisonousPotatoZombieName = name;
+                } else if (CONFIG.activePet.equals("ray_tracing")) {
+                    CONFIG.rayTracingName = name;
+                } else if (CONFIG.activePet.equals("redstone_bug")) {
+                    CONFIG.redstoneBugName = name;
+                } else if (CONFIG.activePet.equals("smiling_creeper")) {
+                    CONFIG.smilingCreeperName = name;
+                } else if (CONFIG.activePet.equals("toxifin_slab")) {
+                    CONFIG.toxfinSlabName = name;
+                } else if (CONFIG.activePet.equals("potato_husk")) {
+                    CONFIG.potatoHuskName = name;
+                } else if (CONFIG.activePet.equals("head")) {
+                    CONFIG.headName = name;
+                } else if (CONFIG.activePet.equals("traitor")) {
+                    CONFIG.traitorName = name;
+                } else if (CONFIG.activePet.equals("dumbo_octopus")) {
+                    CONFIG.dumboOctopusName = name;
+                } else if (CONFIG.activePet.equals("koi")) {
+                    CONFIG.koiName = name;
+                } else if (CONFIG.activePet.equals("stingray")) {
+                    CONFIG.stingrayName = name;
                 }
                 AutoConfig.getConfigHolder(PetsConfig.class).save();
             }
@@ -1943,7 +1971,7 @@ public class Central implements ClientModInitializer {
                 "turtle",
                 "vex", "villager", "vindicator", "wandering trader", "witch", "wither",
                 "wither skeleton", "wolf", "zombie", "zombie villager"};
-        PETS_LIST.addAll(List.of(stuffs));
+        Collections.addAll(PETS_LIST, stuffs);
     }
 
     public void checkValidPet(boolean isValid, CommandContext<FabricClientCommandSource> context, String species) {

@@ -19,12 +19,21 @@ public class ClientSlimeRenderer extends PetRenderer<@NotNull ClientSlime, @NotN
 
     @Override
     protected void scale(ClientSlime slimeRenderState, @NotNull PoseStack poseStack, float f) {
-        int slimeScale = switch (CONFIG.slimeSkin) {
-            case "small" -> 1;
-            case "medium" -> 2;
-            case "large" -> 4;
-            default -> 1;
-        };
+        int slimeScale;
+        switch (CONFIG.slimeSkin) {
+            case "small":
+                slimeScale = 1;
+                break;
+            case "medium":
+                slimeScale = 2;
+                break;
+            case "large":
+                slimeScale = 4;
+                break;
+            default:
+                slimeScale = 1;
+                break;
+        }
         poseStack.scale(slimeScale, slimeScale, slimeScale);
     }
 

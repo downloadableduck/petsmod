@@ -25,15 +25,14 @@ public class ClientPiglinRenderer extends PetRenderer<@NotNull ClientPiglin, @No
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientPiglin livingEntityRenderState) {
-        switch (CONFIG.piglinSkin) {
-            case "zombified_piglin" -> {
-                piglinTexturePath = "textures/entity/piglin/zombified_piglin.png";
-            }
-            case "piglin_brute" -> {
-                piglinTexturePath = "textures/entity/piglin/piglin_brute.png";
-            }
-            case "piglin" -> piglinTexturePath = "textures/entity/piglin/piglin.png";
-            default -> piglinTexturePath = "textures/entity/piglin/piglin.png";
+        if (CONFIG.piglinSkin.equals("zombified_piglin")) {
+            piglinTexturePath = "textures/entity/piglin/zombified_piglin.png";
+        } else if (CONFIG.piglinSkin.equals("piglin_brute")) {
+            piglinTexturePath = "textures/entity/piglin/piglin_brute.png";
+        } else if (CONFIG.piglinSkin.equals("piglin")) {
+            piglinTexturePath = "textures/entity/piglin/piglin.png";
+        } else {
+            piglinTexturePath = "textures/entity/piglin/piglin.png";
         }
         return new ResourceLocation("minecraft", piglinTexturePath);
     }

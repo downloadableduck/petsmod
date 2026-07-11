@@ -24,17 +24,26 @@ public class ClientHorseRenderer extends PetRenderer<@NotNull ClientHorse, @NotN
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ClientHorse horseRenderState) {
-        switch (CONFIG.horseSkin) {
-            case "black" -> horseTextureLocation = "textures/entity/horse/horse_black.png";
-            case "brown" -> horseTextureLocation = "textures/entity/horse/horse_brown.png";
-            case "chestnut" -> horseTextureLocation = "textures/entity/horse/horse_chestnut.png";
-            case "creamy" -> horseTextureLocation = "textures/entity/horse/horse_creamy.png";
-            case "dark_brown" -> horseTextureLocation = "textures/entity/horse/horse_brown.png";
-            case "gray" -> horseTextureLocation = "textures/entity/horse/horse_gray.png";
-            case "white" -> horseTextureLocation = "textures/entity/horse/horse_white.png";
-            case "skeleton" -> horseTextureLocation = "textures/entity/horse/horse_skeleton.png";
-            case "zombie" -> horseTextureLocation = "textures/entity/horse/horse_zombie.png";
-            default -> horseTextureLocation = "textures/entity/horse/horse_black.png";
+        if (CONFIG.horseSkin.equals("black")) {
+            horseTextureLocation = "textures/entity/horse/horse_black.png";
+        } else if (CONFIG.horseSkin.equals("brown")) {
+            horseTextureLocation = "textures/entity/horse/horse_brown.png";
+        } else if (CONFIG.horseSkin.equals("chestnut")) {
+            horseTextureLocation = "textures/entity/horse/horse_chestnut.png";
+        } else if (CONFIG.horseSkin.equals("creamy")) {
+            horseTextureLocation = "textures/entity/horse/horse_creamy.png";
+        } else if (CONFIG.horseSkin.equals("dark_brown")) {
+            horseTextureLocation = "textures/entity/horse/horse_brown.png";
+        } else if (CONFIG.horseSkin.equals("gray")) {
+            horseTextureLocation = "textures/entity/horse/horse_gray.png";
+        } else if (CONFIG.horseSkin.equals("white")) {
+            horseTextureLocation = "textures/entity/horse/horse_white.png";
+        } else if (CONFIG.horseSkin.equals("skeleton")) {
+            horseTextureLocation = "textures/entity/horse/horse_skeleton.png";
+        } else if (CONFIG.horseSkin.equals("zombie")) {
+            horseTextureLocation = "textures/entity/horse/horse_zombie.png";
+        } else {
+            horseTextureLocation = "textures/entity/horse/horse_black.png";
         }
         return new ResourceLocation("minecraft", horseTextureLocation);
     }

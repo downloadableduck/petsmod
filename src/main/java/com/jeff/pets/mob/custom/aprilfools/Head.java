@@ -113,9 +113,9 @@ public class Head extends AbstractPet {
     public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
 
-        var x = this.getX();
-        var y = this.getY();
-        var z = this.getZ();
+        double x = this.getX();
+        double y = this.getY();
+        double z = this.getZ();
 
         if (!this.isTame() && this.isFood(itemStack)) {
             if (this.random.nextInt(3) == 0) {
@@ -176,7 +176,7 @@ public class Head extends AbstractPet {
 
             double distance = this.distanceTo(owner);
             float rotation = this.getRotationVector().x;
-            var rotationToOwner = rotation + this.getOwner().getRotationVector().x;
+            float rotationToOwner = rotation + this.getOwner().getRotationVector().x;
             float bodyYawDiff = Mth.wrapDegrees(this.getYHeadRot() - this.yBodyRot);
 
             if (rotationToOwner >= 50) {

@@ -19,22 +19,36 @@ public class ClientShulkerRenderer extends PetRenderer<@NotNull ClientShulker, @
     public @NotNull ResourceLocation getTextureLocation(ClientShulker state) {
         String shulkerFile;
         String folderPath = "textures/entity/shulker/";
-        switch (CONFIG.shulkerSkin) {
-            case "normal" -> shulkerFile = "shulker.png";
-            case "black" -> shulkerFile = "shulker_black.png";
-            case "brown" -> shulkerFile = "shulker_brown.png";
-            case "cyan" -> shulkerFile = "shulker_cyan.png";
-            case "light_blue" -> shulkerFile = "shulker_light_blue.png";
-            case "light_gray" -> shulkerFile = "shulker_light_gray.png";
-            case "lime" -> shulkerFile = "shulker_lime.png";
-            case "magenta" -> shulkerFile = "shulker_magenta.png";
-            case "orange" -> shulkerFile = "shulker_orange.png";
-            case "pink" -> shulkerFile = "shulker_pink.png";
-            case "purple" -> shulkerFile = "shulker_purple.png";
-            case "red" -> shulkerFile = "shulker_red.png";
-            case "white" -> shulkerFile = "shulker_white.png";
-            case "yellow" -> shulkerFile = "shulker_yellow.png";
-            default -> shulkerFile = "shulker.png";
+        if (CONFIG.shulkerSkin.equals("normal")) {
+            shulkerFile = "shulker.png";
+        } else if (CONFIG.shulkerSkin.equals("black")) {
+            shulkerFile = "shulker_black.png";
+        } else if (CONFIG.shulkerSkin.equals("brown")) {
+            shulkerFile = "shulker_brown.png";
+        } else if (CONFIG.shulkerSkin.equals("cyan")) {
+            shulkerFile = "shulker_cyan.png";
+        } else if (CONFIG.shulkerSkin.equals("light_blue")) {
+            shulkerFile = "shulker_light_blue.png";
+        } else if (CONFIG.shulkerSkin.equals("light_gray")) {
+            shulkerFile = "shulker_light_gray.png";
+        } else if (CONFIG.shulkerSkin.equals("lime")) {
+            shulkerFile = "shulker_lime.png";
+        } else if (CONFIG.shulkerSkin.equals("magenta")) {
+            shulkerFile = "shulker_magenta.png";
+        } else if (CONFIG.shulkerSkin.equals("orange")) {
+            shulkerFile = "shulker_orange.png";
+        } else if (CONFIG.shulkerSkin.equals("pink")) {
+            shulkerFile = "shulker_pink.png";
+        } else if (CONFIG.shulkerSkin.equals("purple")) {
+            shulkerFile = "shulker_purple.png";
+        } else if (CONFIG.shulkerSkin.equals("red")) {
+            shulkerFile = "shulker_red.png";
+        } else if (CONFIG.shulkerSkin.equals("white")) {
+            shulkerFile = "shulker_white.png";
+        } else if (CONFIG.shulkerSkin.equals("yellow")) {
+            shulkerFile = "shulker_yellow.png";
+        } else {
+            shulkerFile = "shulker.png";
         }
         return new ResourceLocation("minecraft", folderPath + shulkerFile);
     }
