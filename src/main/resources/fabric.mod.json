@@ -42,8 +42,7 @@
     ],
     "java": "*",
     "cloth-config2": "*",
-    "fabric": "*",
-    "modmenu": "*"
+    "fabric": "*"
   },
   "custom": {
     "modmenu": {

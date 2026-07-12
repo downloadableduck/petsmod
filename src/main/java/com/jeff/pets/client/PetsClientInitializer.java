@@ -186,7 +186,7 @@ public class PetsClientInitializer implements ClientModInitializer {
 
         ClientTickEvents.END_CLIENT_TICK.register((client) -> {
             if (keyMapping.consumeClick()) {
-                client.setScreen(PetsConfigScreen.getInstance().getModConfigScreenFactory().create(client.screen));
+                client.setScreen(PetsConfigScreen.getInstance().getModConfigScreenFactory());
             }
         });
     }
