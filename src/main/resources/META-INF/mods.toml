@@ -80,12 +80,12 @@ mandatory = true
 modId = "minecraft"
 mandatory = true
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
-versionRange = "[1.17, 1.17.1]"
+versionRange = "[1.16, 1.16.5]"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.pets_mod]]
-modId = "cloth_config"
+modId = "cloth-config"
 type = "required"
 reason = "Cloth Config is used for saving data between instances of Minecraft."
 # This version range declares a minimum of the current minecraft version up to but not including the next major version

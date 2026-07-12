@@ -1,30 +1,27 @@
 package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 
-import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
-
-import static com.jeff.pets.client.Central.CONFIG;
 import static com.jeff.pets.PetsInitializer.MOD_ID;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopusModel> {
 
-    public static final ModelLayerLocation DUMBO_OCTOPUS_LOCATION = new ModelLayerLocation(new ResourceLocation(MOD_ID, "dumbo_octopus"), "main");
     double i = 45;
     float direction = 1;
     float speed = 0.5f;
 
-    public DumboOctopusRenderer(EntityRendererProvider.Context context) {
-        super(context, new DumboOctopusModel(context.bakeLayer(DUMBO_OCTOPUS_LOCATION)), 0.5f);
+    public DumboOctopusRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
+        super(context, new DumboOctopusModel(), 0.5f);
     }
 
     @Override
-    public  ResourceLocation getTextureLocation( DumboOctopus state) {
+    public @NotNull ResourceLocation getTextureLocation(@NotNull DumboOctopus state) {
         String path;
         String yellow = "textures/entity/dumbo_octopus/yellow.png";
         String red = "textures/entity/dumbo_octopus/red.png";
@@ -32,14 +29,20 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
         String green = "textures/entity/dumbo_octopus/green.png";
         String orange = "textures/entity/dumbo_octopus/orange.png";
         String pink = "textures/entity/dumbo_octopus/pink.png";
-        switch (CONFIG.dumboOctopusSkin) {
-            case "yellow" -> path = yellow;
-            case "red" -> path = red;
-            case "blue" -> path = blue;
-            case "green" -> path = green;
-            case "orange" -> path = orange;
-            case "pink" -> path = pink;
-            default -> path = yellow;
+        if (CONFIG.dumboOctopusSkin.equals("yellow")) {
+            path = yellow;
+        } else if (CONFIG.dumboOctopusSkin.equals("red")) {
+            path = red;
+        } else if (CONFIG.dumboOctopusSkin.equals("blue")) {
+            path = blue;
+        } else if (CONFIG.dumboOctopusSkin.equals("green")) {
+            path = green;
+        } else if (CONFIG.dumboOctopusSkin.equals("orange")) {
+            path = orange;
+        } else if (CONFIG.dumboOctopusSkin.equals("pink")) {
+            path = pink;
+        } else {
+            path = yellow;
         }
         return new ResourceLocation(MOD_ID, path);
     }

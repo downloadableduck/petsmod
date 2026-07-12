@@ -12,7 +12,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -28,13 +27,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-
-
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import static com.jeff.pets.PetsInitializer.Entities.PENGUIN;
 
 public class Penguin extends AbstractPet {
-    public static final EntityDataAccessor< Boolean> IS_SERVER_ENTITY =
+    public static final EntityDataAccessor<@NotNull Boolean> IS_SERVER_ENTITY =
             SynchedEntityData.defineId(Penguin.class, EntityDataSerializers.BOOLEAN);
     public float flap;
     public float flapSpeed;
@@ -44,9 +43,9 @@ public class Penguin extends AbstractPet {
     public ServerPlayer owner = (ServerPlayer) this.getOwner();
     public boolean isOnHead;
     private float nextFlap = 1.0F;
-    private boolean isFlapping = this.flyDist > this.nextFlap;
+    private boolean isFlapping = !this.isOnGround();
 
-    public Penguin(EntityType<? extends  TamableAnimal> entityType, Level level) {
+    public Penguin(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
         super(entityType, level);
     }
 
@@ -102,14 +101,14 @@ public class Penguin extends AbstractPet {
     }
 
     protected void onFlap() {
-        this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
+        //this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
     }
 
     protected SoundEvent getAmbientSound() {
         return PetsSounds.PENGUIN_AMBIENT.get();
     }
 
-    protected SoundEvent getHurtSound(final  DamageSource source) {
+    protected SoundEvent getHurtSound(final @NotNull DamageSource source) {
         return PetsSounds.PENGUIN_AMBIENT.get();
     }
 
@@ -117,23 +116,23 @@ public class Penguin extends AbstractPet {
         return PetsSounds.PENGUIN_AMBIENT.get();
     }
 
-    protected void playStepSound(final  BlockPos pos, final  BlockState blockState) {
+    protected void playStepSound(final @NotNull BlockPos pos, final @NotNull BlockState blockState) {
         this.playSound(SoundEvents.CHICKEN_STEP, 0.15F, 1.0F);
     }
 
-    public  Penguin getBreedOffspring(final  ServerLevel level, final  AgeableMob partner) {
+    public @Nullable Penguin getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgableMob partner) {
         Penguin penguin = PENGUIN.get().create(level);
         penguin.setServerEntity(true);
         return penguin;
     }
 
-    public SpawnGroupData finalizeSpawn(final  ServerLevelAccessor level, final  DifficultyInstance difficulty, final  MobSpawnType spawnReason, final  SpawnGroupData groupData, CompoundTag compoundTag) {
+    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull MobSpawnType spawnReason, final @Nullable SpawnGroupData groupData, CompoundTag compoundTag) {
         this.setServerEntity(true);
         return super.finalizeSpawn(level, difficulty, spawnReason, groupData, compoundTag);
     }
 
-    public boolean isFood(final  ItemStack itemStack) {
-        return itemStack.is(ItemTags.FISHES);
+    public boolean isFood(final @NotNull ItemStack itemStack) {
+        return itemStack.sameItem(new ItemStack(Items.COD)) || itemStack.sameItem(new ItemStack(Items.SALMON)) || itemStack.sameItem(new ItemStack(Items.TROPICAL_FISH));
     }
 
     @Override
@@ -173,7 +172,7 @@ public class Penguin extends AbstractPet {
 
             double distance = this.distanceTo(owner);
             float rotation = this.getRotationVector().x;
-            var rotationToOwner = rotation + this.getOwner().getRotationVector().x;
+            float rotationToOwner = rotation + this.getOwner().getRotationVector().x;
             float bodyYawDiff = Mth.wrapDegrees(this.getYHeadRot() - this.yBodyRot);
 
             if (rotationToOwner >= 50) {
@@ -202,16 +201,16 @@ public class Penguin extends AbstractPet {
 
             if (this.horizontalCollision && this.onGround) {
                 this.jumpFromGround();
-                this.processFlappingMovement();
+                //this.processFlappingMovement();
             }
 
             if (yHeightToOwner > -1) {
                 this.setDeltaMovement(this.getDeltaMovement().add(0, -0.01, 0));
-                this.processFlappingMovement();
+                //this.processFlappingMovement();
             }
 
             if (!this.onGround) {
-                this.processFlappingMovement();
+                //this.processFlappingMovement();
             }
 
             if (owner.getDeltaMovement().lengthSqr() < 0.01) {
@@ -249,20 +248,20 @@ public class Penguin extends AbstractPet {
     }
 
     @Override
-    public void onSyncedDataUpdated( EntityDataAccessor<?> key) {
-        if (this.level != null && !this.level.isClientSide()) {
+    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
+        if (!this.level.isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
     }
 
     @Override
-    public void addAdditionalSaveData( CompoundTag output) {
+    public void addAdditionalSaveData(@NotNull CompoundTag output) {
         super.addAdditionalSaveData(output);
         output.putBoolean("isServerEntity", true);
     }
 
     @Override
-    public void readAdditionalSaveData( CompoundTag input) {
+    public void readAdditionalSaveData(@NotNull CompoundTag input) {
         super.readAdditionalSaveData(input);
         this.setServerEntity(input.getBoolean("isServerEntity"));
     }

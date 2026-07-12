@@ -1,25 +1,21 @@
 package com.jeff.pets.client.rendering.vanilla.phantom;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientPhantom;
 import com.jeff.pets.client.rendering.PetRenderer;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import com.jeff.pets.mob.vanilla.hostile.ClientPhantom;
+import net.minecraft.client.model.PhantomModel;
 import net.minecraft.client.renderer.entity.layers.PhantomEyesLayer;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
+public class ClientPhantomRenderer extends PetRenderer<@NotNull ClientPhantom, @NotNull PhantomModel<ClientPhantom>> {
 
-public class ClientPhantomRenderer extends PetRenderer< ClientPhantom,  ClientPhantomModel> {
-
-    public static final ModelLayerLocation PHANTOM_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientphantom"), "main");
-
-    public ClientPhantomRenderer(EntityRendererProvider.Context context) {
-        super(context, new ClientPhantomModel(context.bakeLayer(ModelLayers.PHANTOM)), 0.75f);
+    public ClientPhantomRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
+        super(context, new PhantomModel<>(), 0.75f);
         this.addLayer(new PhantomEyesLayer(this));
     }
 
     @Override
-    public  ResourceLocation getTextureLocation(ClientPhantom livingEntityRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(ClientPhantom livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/phantom.png");
     }
 

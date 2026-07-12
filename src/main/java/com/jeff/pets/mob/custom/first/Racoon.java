@@ -3,7 +3,6 @@ package com.jeff.pets.mob.custom.first;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -11,7 +10,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
@@ -25,18 +23,18 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
-
-
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import static com.jeff.pets.PetsInitializer.Entities.RACOON;
 
 public class Racoon extends AbstractPet {
 
-    public static final EntityDataAccessor< Boolean> IS_SERVER_ENTITY =
+    public static final EntityDataAccessor<@NotNull Boolean> IS_SERVER_ENTITY =
             SynchedEntityData.defineId(Racoon.class, EntityDataSerializers.BOOLEAN);
     public boolean isOnHead;
 
-    public Racoon(EntityType<? extends  TamableAnimal> entityType, Level level) {
+    public Racoon(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
         super(entityType, level);
     }
 
@@ -60,7 +58,7 @@ public class Racoon extends AbstractPet {
     }
 
     @Override
-    public  SpawnGroupData finalizeSpawn( ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnReason,  SpawnGroupData groupData, CompoundTag compoundTag) {
+    public @Nullable SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData groupData, CompoundTag compoundTag) {
         this.setServerEntity(true);
         return super.finalizeSpawn(level, difficulty, spawnReason, groupData, compoundTag);
     }
@@ -93,8 +91,8 @@ public class Racoon extends AbstractPet {
     }
 
     @Override
-    public boolean isFood( ItemStack itemStack) {
-        return itemStack.is(ItemTags.FOX_FOOD);
+    public boolean isFood(@NotNull ItemStack itemStack) {
+        return itemStack.sameItem(new ItemStack(Items.SWEET_BERRIES));
     }
 
     @Override
@@ -121,7 +119,7 @@ public class Racoon extends AbstractPet {
 
             double distance = this.distanceTo(owner);
             float rotation = this.getRotationVector().x;
-            var rotationToOwner = rotation + this.getOwner().getRotationVector().x;
+            float rotationToOwner = rotation + this.getOwner().getRotationVector().x;
             float bodyYawDiff = Mth.wrapDegrees(this.getYHeadRot() - this.yBodyRot);
 
             if (rotationToOwner >= 50) {
@@ -164,7 +162,7 @@ public class Racoon extends AbstractPet {
             }
 
             if (!this.onGround) {
-                this.processFlappingMovement();
+                //this.processFlappingMovement();
             }
             this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
             this.setYHeadRot(this.getYRot());
@@ -189,26 +187,26 @@ public class Racoon extends AbstractPet {
 
         /*int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level.playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.BOGGED_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f, true);
+            level.playLocalSound(this, SoundEvents.BOGGED_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f);
         }*/
     }
 
     @Override
-    public  AgeableMob getBreedOffspring( ServerLevel serverLevel,  AgeableMob ageableMob) {
+    public @Nullable AgableMob getBreedOffspring(@NotNull ServerLevel serverLevel, @NotNull AgableMob AgableMob) {
         Racoon racoon = RACOON.get().create(serverLevel);
         racoon.setServerEntity(false);
         return racoon;
     }
 
     @Override
-    public void onSyncedDataUpdated( EntityDataAccessor<?> key) {
-        if (this.level != null && !this.level.isClientSide()) {
+    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
+        if (!this.level.isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
     }
 
     @Override
-    public  Packet<?> getAddEntityPacket() {
+    public @NotNull Packet<?> getAddEntityPacket() {
         if (this.level.isClientSide()) {
             return new ClientboundAddEntityPacket(this);
         } else {

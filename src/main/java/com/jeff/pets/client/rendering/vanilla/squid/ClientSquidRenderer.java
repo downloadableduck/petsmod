@@ -1,31 +1,27 @@
 package com.jeff.pets.client.rendering.vanilla.squid;
 
-import com.jeff.pets.mob.vanilla.passive.ClientSquid;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientSquid;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.model.SquidModel;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSquidRenderer extends PetRenderer< ClientSquid,  SquidModel<ClientSquid>> {
-    public static final ModelLayerLocation SQUID_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientsquid"), "main");
+public class ClientSquidRenderer extends PetRenderer<@NotNull ClientSquid, @NotNull SquidModel<ClientSquid>> {
     String squidTexturePath;
 
-    public ClientSquidRenderer(EntityRendererProvider.Context context) {
-        super(context, new SquidModel<>(context.bakeLayer(ModelLayers.SQUID)), 0.7F);
+    public ClientSquidRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
+        super(context, new SquidModel<>(), 0.7F);
     }
 
     @Override
-    public  ResourceLocation getTextureLocation(ClientSquid squidRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(ClientSquid squidRenderState) {
         if (Objects.equals(CONFIG.squidSkin, "squid")) {
             squidTexturePath = "textures/entity/squid/squid.png";
         } else if (Objects.equals(CONFIG.squidSkin, "glow_squid")) {
@@ -35,7 +31,7 @@ public class ClientSquidRenderer extends PetRenderer< ClientSquid,  SquidModel<C
     }
 
     @Override
-    protected void scale( ClientSquid livingEntityRenderState,  PoseStack poseStack, float f) {
+    protected void scale(@NotNull ClientSquid livingEntityRenderState, @NotNull PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }

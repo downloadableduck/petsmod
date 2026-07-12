@@ -54,7 +54,7 @@ public abstract class FlyingPet extends AbstractPet {
 
             double distance = this.distanceTo(owner);
             float rotation = this.getRotationVector().x;
-            var rotationToOwner = rotation + this.getOwner().getRotationVector().x;
+            float rotationToOwner = rotation + this.getOwner().getRotationVector().x;
             float bodyYawDiff = Mth.wrapDegrees(this.getYHeadRot() - this.yBodyRot);
 
             if (rotationToOwner >= 50) {
@@ -85,7 +85,7 @@ public abstract class FlyingPet extends AbstractPet {
             }
 
             if (!this.onGround) {
-                this.processFlappingMovement();
+                //this.processFlappingMovement();
             }
 
             if (owner.getDeltaMovement().lengthSqr() < 0.01) {

@@ -7,34 +7,38 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.QuadrupedModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
 public class ClientTurtleModel extends QuadrupedModel<ClientTurtle> {
-    private static final String EGG_BELLY = "egg_belly";
     private final ModelPart eggBelly;
 
-    public ClientTurtleModel(ModelPart modelPart) {
-        super(modelPart, true, 120.0F, 0.0F, 9.0F, 6.0F, 120);
-        this.eggBelly = modelPart.getChild("egg_belly");
-    }
-
-    public static LayerDefinition createBodyLayer() {
-        MeshDefinition meshDefinition = new MeshDefinition();
-        PartDefinition partDefinition = meshDefinition.getRoot();
-        partDefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(3, 0).addBox(-3.0F, -1.0F, -3.0F, 6.0F, 5.0F, 6.0F), PartPose.offset(0.0F, 19.0F, -10.0F));
-        partDefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(7, 37).addBox("shell", -9.5F, 3.0F, -10.0F, 19.0F, 20.0F, 6.0F).texOffs(31, 1).addBox("belly", -5.5F, 3.0F, -13.0F, 11.0F, 18.0F, 3.0F), PartPose.offsetAndRotation(0.0F, 11.0F, -10.0F, ((float) Math.PI / 2F), 0.0F, 0.0F));
-        partDefinition.addOrReplaceChild("egg_belly", CubeListBuilder.create().texOffs(70, 33).addBox(-4.5F, 3.0F, -14.0F, 9.0F, 18.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 11.0F, -10.0F, ((float) Math.PI / 2F), 0.0F, 0.0F));
+    public ClientTurtleModel(float f) {
+        super(12, f, true, 120.0F, 0.0F, 9.0F, 6.0F, 120);
+        this.texWidth = 128;
+        this.texHeight = 64;
+        this.head = new ModelPart(this, 3, 0);
+        this.head.addBox(-3.0F, -1.0F, -3.0F, 6.0F, 5.0F, 6.0F, 0.0F);
+        this.head.setPos(0.0F, 19.0F, -10.0F);
+        this.body = new ModelPart(this);
+        this.body.texOffs(7, 37).addBox(-9.5F, 3.0F, -10.0F, 19.0F, 20.0F, 6.0F, 0.0F);
+        this.body.texOffs(31, 1).addBox(-5.5F, 3.0F, -13.0F, 11.0F, 18.0F, 3.0F, 0.0F);
+        this.body.setPos(0.0F, 11.0F, -10.0F);
+        this.eggBelly = new ModelPart(this);
+        this.eggBelly.texOffs(70, 33).addBox(-4.5F, 3.0F, -14.0F, 9.0F, 18.0F, 1.0F, 0.0F);
+        this.eggBelly.setPos(0.0F, 11.0F, -10.0F);
         int i = 1;
-        partDefinition.addOrReplaceChild("right_hind_leg", CubeListBuilder.create().texOffs(1, 23).addBox(-2.0F, 0.0F, 0.0F, 4.0F, 1.0F, 10.0F), PartPose.offset(-3.5F, 22.0F, 11.0F));
-        partDefinition.addOrReplaceChild("left_hind_leg", CubeListBuilder.create().texOffs(1, 12).addBox(-2.0F, 0.0F, 0.0F, 4.0F, 1.0F, 10.0F), PartPose.offset(3.5F, 22.0F, 11.0F));
-        partDefinition.addOrReplaceChild("right_front_leg", CubeListBuilder.create().texOffs(27, 30).addBox(-13.0F, 0.0F, -2.0F, 13.0F, 1.0F, 5.0F), PartPose.offset(-5.0F, 21.0F, -4.0F));
-        partDefinition.addOrReplaceChild("left_front_leg", CubeListBuilder.create().texOffs(27, 24).addBox(0.0F, 0.0F, -2.0F, 13.0F, 1.0F, 5.0F), PartPose.offset(5.0F, 21.0F, -4.0F));
-        return LayerDefinition.create(meshDefinition, 128, 64);
+        this.leg0 = new ModelPart(this, 1, 23);
+        this.leg0.addBox(-2.0F, 0.0F, 0.0F, 4.0F, 1.0F, 10.0F, 0.0F);
+        this.leg0.setPos(-3.5F, 22.0F, 11.0F);
+        this.leg1 = new ModelPart(this, 1, 12);
+        this.leg1.addBox(-2.0F, 0.0F, 0.0F, 4.0F, 1.0F, 10.0F, 0.0F);
+        this.leg1.setPos(3.5F, 22.0F, 11.0F);
+        this.leg2 = new ModelPart(this, 27, 30);
+        this.leg2.addBox(-13.0F, 0.0F, -2.0F, 13.0F, 1.0F, 5.0F, 0.0F);
+        this.leg2.setPos(-5.0F, 21.0F, -4.0F);
+        this.leg3 = new ModelPart(this, 27, 24);
+        this.leg3.addBox(0.0F, 0.0F, -2.0F, 13.0F, 1.0F, 5.0F, 0.0F);
+        this.leg3.setPos(5.0F, 21.0F, -4.0F);
     }
 
     protected Iterable<ModelPart> bodyParts() {
@@ -43,28 +47,29 @@ public class ClientTurtleModel extends QuadrupedModel<ClientTurtle> {
 
     public void setupAnim(ClientTurtle turtle, float f, float g, float h, float i, float j) {
         super.setupAnim(turtle, f, g, h, i, j);
-        this.rightHindLeg.xRot = Mth.cos(f * 0.6662F * 0.6F) * 0.5F * g;
-        this.leftHindLeg.xRot = Mth.cos(f * 0.6662F * 0.6F + (float) Math.PI) * 0.5F * g;
-        this.rightFrontLeg.zRot = Mth.cos(f * 0.6662F * 0.6F + (float) Math.PI) * 0.5F * g;
-        this.leftFrontLeg.zRot = Mth.cos(f * 0.6662F * 0.6F) * 0.5F * g;
-        this.rightFrontLeg.xRot = 0.0F;
-        this.leftFrontLeg.xRot = 0.0F;
-        this.rightFrontLeg.yRot = 0.0F;
-        this.leftFrontLeg.yRot = 0.0F;
-        this.rightHindLeg.yRot = 0.0F;
-        this.leftHindLeg.yRot = 0.0F;
+        this.leg0.xRot = Mth.cos(f * 0.6662F * 0.6F) * 0.5F * g;
+        this.leg1.xRot = Mth.cos(f * 0.6662F * 0.6F + (float) Math.PI) * 0.5F * g;
+        this.leg2.zRot = Mth.cos(f * 0.6662F * 0.6F + (float) Math.PI) * 0.5F * g;
+        this.leg3.zRot = Mth.cos(f * 0.6662F * 0.6F) * 0.5F * g;
+        this.leg2.xRot = 0.0F;
+        this.leg3.xRot = 0.0F;
+        this.leg2.yRot = 0.0F;
+        this.leg3.yRot = 0.0F;
+        this.leg0.yRot = 0.0F;
+        this.leg1.yRot = 0.0F;
+        this.eggBelly.xRot = ((float) Math.PI / 2F);
         if (!turtle.isInWater() && turtle.isOnGround()) {
             float k = 1.0F;
             float l = 1.0F;
             float m = 5.0F;
-            this.rightFrontLeg.yRot = Mth.cos(k * f * 5.0F + (float) Math.PI) * 8.0F * g * l;
-            this.rightFrontLeg.zRot = 0.0F;
-            this.leftFrontLeg.yRot = Mth.cos(k * f * 5.0F) * 8.0F * g * l;
-            this.leftFrontLeg.zRot = 0.0F;
-            this.rightHindLeg.yRot = Mth.cos(f * 5.0F + (float) Math.PI) * 3.0F * g;
-            this.rightHindLeg.xRot = 0.0F;
-            this.leftHindLeg.yRot = Mth.cos(f * 5.0F) * 3.0F * g;
-            this.leftHindLeg.xRot = 0.0F;
+            this.leg2.yRot = Mth.cos(k * f * 5.0F + (float) Math.PI) * 8.0F * g * l;
+            this.leg2.zRot = 0.0F;
+            this.leg3.yRot = Mth.cos(k * f * 5.0F) * 8.0F * g * l;
+            this.leg3.zRot = 0.0F;
+            this.leg0.yRot = Mth.cos(f * 5.0F + (float) Math.PI) * 3.0F * g;
+            this.leg0.xRot = 0.0F;
+            this.leg1.yRot = Mth.cos(f * 5.0F) * 3.0F * g;
+            this.leg1.xRot = 0.0F;
         }
 
         this.eggBelly.visible = false;

@@ -1,60 +1,98 @@
 package com.jeff.pets.client.rendering.custom.aquatic.koi;
 
-import com.jeff.pets.mob.custom.aquatic.Koi;
 import com.jeff.pets.client.rendering.PetModel;
+import com.jeff.pets.mob.custom.aquatic.Koi;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
+import org.jetbrains.annotations.NotNull;
 
-
-public class KoiModel extends PetModel< Koi> {
+public class KoiModel extends PetModel<@NotNull Koi> {
     private final ModelPart body;
-    private final ModelPart tail_fin;
-    private final ModelPart left_fin;
-    private final ModelPart right_fin;
-    private final ModelPart right_hind_fin;
-    private final ModelPart left_hind_fin;
     private final ModelPart top_fin;
+    private final ModelPart left_hind_fin;
+    private final ModelPart left_hind_fin_r1;
+    private final ModelPart right_hind_fin;
+    private final ModelPart right_hind_fin_r1;
+    private final ModelPart left_fin;
+    private final ModelPart left_fin_r1;
+    private final ModelPart right_fin;
+    private final ModelPart right_fin_r1;
+    private final ModelPart tail_fin;
 
-    public KoiModel(ModelPart root) {
-        super(root);
-        this.body = root.getChild("body");
-        this.top_fin = this.body.getChild("top_fin");
-        this.left_hind_fin = this.body.getChild("left_hind_fin");
-        this.right_hind_fin = this.body.getChild("right_hind_fin");
-        this.left_fin = this.body.getChild("left_fin");
-        this.right_fin = this.body.getChild("right_fin");
-        this.tail_fin = this.body.getChild("tail_fin");
+    public KoiModel() {
+        texWidth = 64;
+        texHeight = 64;
+
+        body = new ModelPart(this);
+        body.setPos(0.0F, 20.0F, -7.0F);
+        body.texOffs(0, 0).addBox(-2.0F, -4.0F, -2.0F, 4.0F, 4.0F, 14.0F, 0.0F, false);
+
+        top_fin = new ModelPart(this);
+        top_fin.setPos(-4.0F, 0.0F, 8.0F);
+        body.addChild(top_fin);
+        top_fin.texOffs(16, 26).addBox(4.0F, -6.0F, -6.0F, 0.0F, 2.0F, 4.0F, 0.0F, false);
+
+        left_hind_fin = new ModelPart(this);
+        left_hind_fin.setPos(4.0F, 0.0F, 2.0F);
+        body.addChild(left_hind_fin);
+
+
+        left_hind_fin_r1 = new ModelPart(this);
+        left_hind_fin_r1.setPos(-8.0F, 0.0F, 6.0F);
+        left_hind_fin.addChild(left_hind_fin_r1);
+        setRotationAngle(left_hind_fin_r1, 0.0F, 0.0F, -0.6981F);
+        left_hind_fin_r1.texOffs(24, 26).addBox(0.6F, 0.0F, 0.0F, 2.0F, 0.0F, 2.0F, 0.0F, false);
+
+        right_hind_fin = new ModelPart(this);
+        right_hind_fin.setPos(4.0F, 0.0F, 2.0F);
+        body.addChild(right_hind_fin);
+
+
+        right_hind_fin_r1 = new ModelPart(this);
+        right_hind_fin_r1.setPos(-2.0F, -2.0F, 6.0F);
+        right_hind_fin.addChild(right_hind_fin_r1);
+        setRotationAngle(right_hind_fin_r1, 0.0F, 0.0F, 0.829F);
+        right_hind_fin_r1.texOffs(24, 28).addBox(0.0F, 0.0F, 0.0F, 2.0F, 0.0F, 2.0F, 0.0F, false);
+
+        left_fin = new ModelPart(this);
+        left_fin.setPos(0.0F, 0.0F, 0.0F);
+        body.addChild(left_fin);
+
+
+        left_fin_r1 = new ModelPart(this);
+        left_fin_r1.setPos(-4.0F, 0.0F, 2.0F);
+        left_fin.addChild(left_fin_r1);
+        setRotationAngle(left_fin_r1, 0.0F, 0.0F, -0.6981F);
+        left_fin_r1.texOffs(16, 22).addBox(-1.4F, 0.0F, -2.0F, 4.0F, 0.0F, 4.0F, 0.0F, false);
+
+        right_fin = new ModelPart(this);
+        right_fin.setPos(-4.0F, 0.0F, 2.0F);
+        body.addChild(right_fin);
+
+
+        right_fin_r1 = new ModelPart(this);
+        right_fin_r1.setPos(8.0F, 0.0F, 0.0F);
+        right_fin.addChild(right_fin_r1);
+        setRotationAngle(right_fin_r1, 0.0F, 0.0F, 0.6109F);
+        right_fin_r1.texOffs(16, 18).addBox(-2.6F, 0.0F, -2.0F, 4.0F, 0.0F, 4.0F, 0.0F, false);
+
+        tail_fin = new ModelPart(this);
+        tail_fin.setPos(0.0F, 0.0F, 14.0F);
+        body.addChild(tail_fin);
+        tail_fin.texOffs(0, 18).addBox(0.0F, -8.0F, -2.0F, 0.0F, 12.0F, 8.0F, 0.0F, false);
     }
 
-    public static LayerDefinition createBodyLayer() {
-        MeshDefinition meshdefinition = new MeshDefinition();
-        PartDefinition partdefinition = meshdefinition.getRoot();
+    @Override
+    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        body.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+    }
 
-        PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-2.0F, -4.0F, -2.0F, 4.0F, 4.0F, 14.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 20.0F, -7.0F));
-
-        PartDefinition top_fin = body.addOrReplaceChild("top_fin", CubeListBuilder.create().texOffs(16, 26).addBox(4.0F, -6.0F, -6.0F, 0.0F, 2.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(-4.0F, 0.0F, 8.0F));
-
-        PartDefinition left_hind_fin = body.addOrReplaceChild("left_hind_fin", CubeListBuilder.create(), PartPose.offset(4.0F, 0.0F, 2.0F));
-
-        PartDefinition left_hind_fin_r1 = left_hind_fin.addOrReplaceChild("left_hind_fin_r1", CubeListBuilder.create().texOffs(24, 26).addBox(0.6F, 0.0F, 0.0F, 2.0F, 0.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-8.0F, 0.0F, 6.0F, 0.0F, 0.0F, -0.6981F));
-
-        PartDefinition right_hind_fin = body.addOrReplaceChild("right_hind_fin", CubeListBuilder.create(), PartPose.offset(4.0F, 0.0F, 2.0F));
-
-        PartDefinition right_hind_fin_r1 = right_hind_fin.addOrReplaceChild("right_hind_fin_r1", CubeListBuilder.create().texOffs(24, 28).addBox(0.0F, 0.0F, 0.0F, 2.0F, 0.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.0F, -2.0F, 6.0F, 0.0F, 0.0F, 0.829F));
-
-        PartDefinition left_fin = body.addOrReplaceChild("left_fin", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
-
-        PartDefinition left_fin_r1 = left_fin.addOrReplaceChild("left_fin_r1", CubeListBuilder.create().texOffs(16, 22).addBox(-1.4F, 0.0F, -2.0F, 4.0F, 0.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-4.0F, 0.0F, 2.0F, 0.0F, 0.0F, -0.6981F));
-
-        PartDefinition right_fin = body.addOrReplaceChild("right_fin", CubeListBuilder.create(), PartPose.offset(-4.0F, 0.0F, 2.0F));
-
-        PartDefinition right_fin_r1 = right_fin.addOrReplaceChild("right_fin_r1", CubeListBuilder.create().texOffs(16, 18).addBox(-2.6F, 0.0F, -2.0F, 4.0F, 0.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(8.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.6109F));
-
-        PartDefinition tail_fin = body.addOrReplaceChild("tail_fin", CubeListBuilder.create().texOffs(0, 18).addBox(0.0F, -8.0F, -2.0F, 0.0F, 12.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 14.0F));
-
-        return LayerDefinition.create(meshdefinition, 64, 64);
+    public void setRotationAngle(ModelPart ModelPart, float x, float y, float z) {
+        ModelPart.xRot = x;
+        ModelPart.yRot = y;
+        ModelPart.zRot = z;
     }
 
     @Override

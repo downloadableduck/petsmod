@@ -3,28 +3,23 @@ package com.jeff.pets.client.rendering.vanilla.sheep;
 import com.jeff.pets.mob.vanilla.passive.ClientSheep;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.geom.EntityModelSet;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
-
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSheepWoolLayer extends RenderLayer< ClientSheep,  ClientSheepModel> {
-    public static final ModelLayerLocation SHEEP_WOOL_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "sheep_wool"), "outer");
-    public static final ModelLayerLocation SHEEP_WOOL_BABY_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "sheep_wool_baby"), "outer");
-    private final EntityModel< ClientSheep> model;
+public class ClientSheepWoolLayer extends RenderLayer<@NotNull ClientSheep, @NotNull ClientSheepModel> {
+    private final EntityModel<@NotNull ClientSheep> model;
     int woolColor;
 
-    public ClientSheepWoolLayer(RenderLayerParent< ClientSheep,  ClientSheepModel> renderLayerParent, EntityModelSet entityModelSet) {
+    public ClientSheepWoolLayer(RenderLayerParent<@NotNull ClientSheep, @NotNull ClientSheepModel> renderLayerParent) {
         super(renderLayerParent);
-        this.model = new ClientSheepFurModel(entityModelSet.bakeLayer(ModelLayers.SHEEP_FUR));
+        this.model = new ClientSheepFurModel();
     }
 
     @Override
@@ -65,9 +60,9 @@ public class ClientSheepWoolLayer extends RenderLayer< ClientSheep,  ClientSheep
             woolColor = 1381656;
         }
 
-        float r = (float)(woolColor >> 16 & 255) / 255.0F;
-        float g = (float)(woolColor >> 8 & 255) / 255.0F;
-        float b = (float)(woolColor & 255) / 255.0F;
+        float r = (float) (woolColor >> 16 & 255) / 255.0F;
+        float g = (float) (woolColor >> 8 & 255) / 255.0F;
+        float b = (float) (woolColor & 255) / 255.0F;
 
         coloredCutoutModelCopyLayerRender(this.getParentModel(), this.model, new ResourceLocation("minecraft", "textures/entity/sheep/sheep_fur.png"), poseStack, source, i, sheepRenderState, f, a, j, k, l, h, r, g, b);
     }

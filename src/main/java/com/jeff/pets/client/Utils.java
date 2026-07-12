@@ -2,7 +2,6 @@ package com.jeff.pets.client;
 
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -128,7 +127,7 @@ public class Utils {
      */
     public static void despawnEntity(Entity e) {
         if (e != null) {
-            e.discard();
+            e.remove();
         }
     }
 
@@ -142,9 +141,5 @@ public class Utils {
         Central.summonedEntity.clear();
         Central.summonedEntity.add(e);
         CONFIG.activePet = s;
-    }
-
-    public static ModelLayerLocation createModelLayer(String string) {
-        return new ModelLayerLocation(withModNamespace(string), "main");
     }
 }

@@ -1,40 +1,44 @@
 package com.jeff.pets.client.rendering.vanilla.slime;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.SlimeModel;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.layers.SlimeOuterLayer;
 import net.minecraft.resources.ResourceLocation;
-
+import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSlimeRenderer extends PetRenderer< ClientSlime,  SlimeModel<ClientSlime>> {
+public class ClientSlimeRenderer extends PetRenderer<@NotNull ClientSlime, @NotNull SlimeModel<ClientSlime>> {
 
-    public static final ModelLayerLocation SLIME_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientslime"), "main");
-
-    public ClientSlimeRenderer(EntityRendererProvider.Context context) {
-        super(context, new SlimeModel<>(context.bakeLayer(ModelLayers.SLIME)), 0.75f);
-        this.addLayer(new SlimeOuterLayer(this, context.getModelSet()));
+    public ClientSlimeRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
+        super(context, new SlimeModel<>(16), 0.75f);
+        this.addLayer(new SlimeOuterLayer(this));
     }
 
     @Override
-    protected void scale(ClientSlime slimeRenderState,  PoseStack poseStack, float f) {
-        int slimeScale = switch (CONFIG.slimeSkin) {
-            case "small" -> 1;
-            case "medium" -> 2;
-            case "large" -> 4;
-            default -> 1;
-        };
+    protected void scale(ClientSlime slimeRenderState, @NotNull PoseStack poseStack, float f) {
+        int slimeScale;
+        switch (CONFIG.slimeSkin) {
+            case "small":
+                slimeScale = 1;
+                break;
+            case "medium":
+                slimeScale = 2;
+                break;
+            case "large":
+                slimeScale = 4;
+                break;
+            default:
+                slimeScale = 1;
+                break;
+        }
         poseStack.scale(slimeScale, slimeScale, slimeScale);
     }
 
     @Override
-    public  ResourceLocation getTextureLocation(ClientSlime livingEntityRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(ClientSlime livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/slime/slime.png");
     }
 }

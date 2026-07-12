@@ -1,27 +1,23 @@
 package com.jeff.pets.client.rendering.vanilla.parrot;
 
-import com.jeff.pets.mob.vanilla.passive.ClientParrot;
 import com.jeff.pets.client.rendering.PetRenderer;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import com.jeff.pets.mob.vanilla.passive.ClientParrot;
 import net.minecraft.resources.ResourceLocation;
-
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientParrotRenderer extends PetRenderer< ClientParrot,  ClientParrotModel> {
-    public static final ModelLayerLocation PARROT_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientparrot"), "main");
+public class ClientParrotRenderer extends PetRenderer<@NotNull ClientParrot, @NotNull ClientParrotModel> {
 
     String parrotTexturePath;
 
-    public ClientParrotRenderer(EntityRendererProvider.Context context) {
-        super(context, new ClientParrotModel(context.bakeLayer(ModelLayers.PARROT)), 0.3F);
+    public ClientParrotRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
+        super(context, new ClientParrotModel(), 0.3F);
     }
 
-    public  ResourceLocation getTextureLocation(ClientParrot parrotRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(ClientParrot parrotRenderState) {
         if (Objects.equals(CONFIG.parrotSkin, "red")) {
             parrotTexturePath = "textures/entity/parrot/parrot_red_blue.png";
         } else if (Objects.equals(CONFIG.parrotSkin, "blue")) {

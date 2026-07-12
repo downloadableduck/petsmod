@@ -49,7 +49,7 @@ public class ClientSnowGolemHeadLayer extends RenderLayer<ClientSnowGolem, SnowG
                     poseStack.translate(-0.5F, -0.5F, -0.5F);
                     this.blockRenderer.getModelRenderer().renderModel(poseStack.last(), multiBufferSource.getBuffer(RenderType.outline(TextureAtlas.LOCATION_BLOCKS)), blockState, bakedModel, 0.0F, 0.0F, 0.0F, i, n);
                 } else {
-                    this.itemRenderer.renderStatic(snowGolem, itemStack, ItemTransforms.TransformType.HEAD, false, poseStack, multiBufferSource, snowGolem.level, i, LivingEntityRenderer.getOverlayCoords(snowGolem, 0.0F), snowGolem.getId());
+                    this.itemRenderer.renderStatic(snowGolem, itemStack, ItemTransforms.TransformType.HEAD, false, poseStack, multiBufferSource, snowGolem.level, i, LivingEntityRenderer.getOverlayCoords(snowGolem, 0.0F));
                 }
 
                 poseStack.popPose();

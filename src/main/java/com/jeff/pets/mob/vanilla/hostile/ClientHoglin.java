@@ -7,10 +7,10 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.monster.hoglin.HoglinBase;
 import net.minecraft.world.level.Level;
-
+import org.jetbrains.annotations.NotNull;
 
 public class ClientHoglin extends GroundPet implements HoglinBase {
-    public ClientHoglin(EntityType<? extends  TamableAnimal> entityType, Level level) {
+    public ClientHoglin(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
         super(entityType, level);
     }
 

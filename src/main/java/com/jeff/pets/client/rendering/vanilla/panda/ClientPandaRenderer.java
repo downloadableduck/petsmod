@@ -1,42 +1,45 @@
 package com.jeff.pets.client.rendering.vanilla.panda;
 
-import com.jeff.pets.mob.vanilla.neutral.ClientPanda;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.neutral.ClientPanda;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-
+import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientPandaRenderer extends PetRenderer< ClientPanda,  ClientPandaModel> {
-    public static final ModelLayerLocation PANDA_LOCAITON = new ModelLayerLocation(new ResourceLocation("minecraft", "clientpanda"), "main");
+public class ClientPandaRenderer extends PetRenderer<@NotNull ClientPanda, @NotNull ClientPandaModel> {
 
-    public ClientPandaRenderer(EntityRendererProvider.Context context) {
-        super(context, new ClientPandaModel(context.bakeLayer(ModelLayers.PANDA)), 0.75f);
+    public ClientPandaRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
+        super(context, new ClientPandaModel(9, 0), 0.75f);
     }
 
     @Override
-    protected void scale(ClientPanda state,  PoseStack poseStack, float f) {
+    protected void scale(ClientPanda state, @NotNull PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public  ResourceLocation getTextureLocation(ClientPanda livingEntityRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(ClientPanda livingEntityRenderState) {
         String pandaTexturePath;
-        switch (CONFIG.pandaSkin) {
-            case "normal" -> pandaTexturePath = "textures/entity/panda/panda.png";
-            case "lazy" -> pandaTexturePath = "textures/entity/panda/lazy_panda.png";
-            case "agressive" -> pandaTexturePath = "textures/entity/panda/aggressive_panda.png";
-            case "worried" -> pandaTexturePath = "textures/entity/panda/worried_panda.png";
-            case "playful" -> pandaTexturePath = "textures/entity/panda/playful_panda.png";
-            case "weak" -> pandaTexturePath = "textures/entity/panda/weak_panda.png";
-            case "brown" -> pandaTexturePath = "textures/entity/panda/brown_panda.png";
-            default -> pandaTexturePath = "textures/entity/panda/panda.png";
+        if (CONFIG.pandaSkin.equals("normal")) {
+            pandaTexturePath = "textures/entity/panda/panda.png";
+        } else if (CONFIG.pandaSkin.equals("lazy")) {
+            pandaTexturePath = "textures/entity/panda/lazy_panda.png";
+        } else if (CONFIG.pandaSkin.equals("agressive")) {
+            pandaTexturePath = "textures/entity/panda/aggressive_panda.png";
+        } else if (CONFIG.pandaSkin.equals("worried")) {
+            pandaTexturePath = "textures/entity/panda/worried_panda.png";
+        } else if (CONFIG.pandaSkin.equals("playful")) {
+            pandaTexturePath = "textures/entity/panda/playful_panda.png";
+        } else if (CONFIG.pandaSkin.equals("weak")) {
+            pandaTexturePath = "textures/entity/panda/weak_panda.png";
+        } else if (CONFIG.pandaSkin.equals("brown")) {
+            pandaTexturePath = "textures/entity/panda/brown_panda.png";
+        } else {
+            pandaTexturePath = "textures/entity/panda/panda.png";
         }
         return new ResourceLocation("minecraft", pandaTexturePath);
     }

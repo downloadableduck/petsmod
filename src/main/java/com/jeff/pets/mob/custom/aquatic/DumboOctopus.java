@@ -6,7 +6,6 @@ import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -16,38 +15,37 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
-
-
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import static com.jeff.pets.PetsInitializer.Entities.DUMBO_OCTOPUS;
 
 public class DumboOctopus extends FlyingPet {
 
-    public static final EntityDataAccessor< Boolean> IS_SERVER_ENTITY =
+    public static final EntityDataAccessor<@NotNull Boolean> IS_SERVER_ENTITY =
             SynchedEntityData.defineId(DumboOctopus.class, EntityDataSerializers.BOOLEAN);
-    public static final EntityDataAccessor< Integer> OCTOPUS_SKIN =
+    public static final EntityDataAccessor<@NotNull Integer> OCTOPUS_SKIN =
             SynchedEntityData.defineId(DumboOctopus.class, EntityDataSerializers.INT);
     private final float nextFlap = 1.0F;
     public float tentacleAngle = 0;
     public ServerPlayer owner = (ServerPlayer) this.getOwner();
 
-    public DumboOctopus(final EntityType<? extends  DumboOctopus> type, final Level level) {
+    public DumboOctopus(final EntityType<? extends @NotNull DumboOctopus> type, final Level level) {
         super(type, level);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0f);
     }
@@ -89,7 +87,7 @@ public class DumboOctopus extends FlyingPet {
         return SoundEvents.SQUID_AMBIENT;
     }
 
-    protected SoundEvent getHurtSound(final  DamageSource source) {
+    protected SoundEvent getHurtSound(final @NotNull DamageSource source) {
         return PetsSounds.DUCK_AMBIENT.get();
     }
 
@@ -97,31 +95,31 @@ public class DumboOctopus extends FlyingPet {
         return PetsSounds.DUCK_AMBIENT.get();
     }
 
-    protected void playStepSound(final  BlockPos pos, final  BlockState blockState) {
+    protected void playStepSound(final @NotNull BlockPos pos, final @NotNull BlockState blockState) {
         this.playSound(SoundEvents.CHICKEN_STEP, 0.15F, 1.0F);
     }
 
-    public  DumboOctopus getBreedOffspring(final  ServerLevel level, final  AgeableMob partner) {
+    public @Nullable DumboOctopus getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgableMob partner) {
         DumboOctopus octopus = DUMBO_OCTOPUS.get().create(level);
         octopus.setServerEntity(true);
         return octopus;
     }
 
-    public SpawnGroupData finalizeSpawn(final  ServerLevelAccessor level, final  DifficultyInstance difficulty, final  MobSpawnType spawnReason, final  SpawnGroupData groupData, CompoundTag compoundTag) {
+    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull MobSpawnType spawnReason, final @Nullable SpawnGroupData groupData, CompoundTag compoundTag) {
         this.setServerEntity(true);
         this.entityData.set(OCTOPUS_SKIN, this.random.nextInt(6));
         return super.finalizeSpawn(level, difficulty, spawnReason, groupData, compoundTag);
     }
 
-    public boolean isFood(final  ItemStack itemStack) {
-        return itemStack.is(ItemTags.FISHES);
+    public boolean isFood(final @NotNull ItemStack itemStack) {
+        return itemStack.sameItem(new ItemStack(Items.COD)) || itemStack.sameItem(new ItemStack(Items.SALMON)) || itemStack.sameItem(new ItemStack(Items.TROPICAL_FISH));
     }
 
     @Override
     public void registerGoals() {
 
         /**Using false in this statement causes the mob to sink to the bottom and reptitively spin.*/
-        this.moveControl = new SmoothSwimmingMoveControl(this, 10, 10, 1, 1, true);
+        //this.moveControl = new SmoothSwimmingMoveControl(this, 10, 10, 1, 1, true);
         this.getNavigation().setCanFloat(true);
         this.goalSelector.addGoal(1, new RandomSwimmingGoal(this, 1, 1));
         this.goalSelector.addGoal(2, new TryFindWaterGoal(this));
@@ -158,7 +156,7 @@ public class DumboOctopus extends FlyingPet {
 
             double distance = this.distanceTo(owner);
             float rotation = this.getRotationVector().x;
-            var rotationToOwner = rotation + this.getOwner().getRotationVector().x;
+            float rotationToOwner = rotation + this.getOwner().getRotationVector().x;
             float bodyYawDiff = Mth.wrapDegrees(this.getYHeadRot() - this.yBodyRot);
 
             if (rotationToOwner >= 50) {
@@ -172,7 +170,7 @@ public class DumboOctopus extends FlyingPet {
                 Vec3 dir = vecToOwner.normalize();
                 double speed = 0.2;
 
-                this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
+                this.setYBodyRot(Duck.rotlerp(this.yBodyRot, (float) targetYaw));
                 this.setYHeadRot(this.getYRot());
                 this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.yHeadRot, 50.0f);
 
@@ -193,7 +191,7 @@ public class DumboOctopus extends FlyingPet {
             }
 
             if (!this.onGround) {
-                this.processFlappingMovement();
+                //this.processFlappingMovement();
             }
 
             if (owner.getDeltaMovement().lengthSqr() < 0.01) {
@@ -227,28 +225,28 @@ public class DumboOctopus extends FlyingPet {
     }
 
     @Override
-    public void addAdditionalSaveData( CompoundTag output) {
+    public void addAdditionalSaveData(@NotNull CompoundTag output) {
         super.addAdditionalSaveData(output);
         output.putBoolean("isServerEntity", true);
-        output.putInt("variant", this.entityData.get(OCTOPUS_SKIN));
+        output.putInt("floatiant", this.entityData.get(OCTOPUS_SKIN));
     }
 
     @Override
-    public void readAdditionalSaveData( CompoundTag input) {
+    public void readAdditionalSaveData(@NotNull CompoundTag input) {
         super.readAdditionalSaveData(input);
         this.setServerEntity(input.getBoolean("isServerEntity"));
-        this.entityData.set(OCTOPUS_SKIN, input.getInt("variant"));
+        this.entityData.set(OCTOPUS_SKIN, input.getInt("floatiant"));
     }
 
     @Override
-    public void onSyncedDataUpdated( EntityDataAccessor<?> key) {
-        if (this.level != null && !this.level.isClientSide()) {
+    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
+        if (!this.level.isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
     }
 
     @Override
-    public  Packet<?> getAddEntityPacket() {
+    public @NotNull Packet<?> getAddEntityPacket() {
         if (this.level.isClientSide()) {
             return new ClientboundAddEntityPacket(this);
         } else {

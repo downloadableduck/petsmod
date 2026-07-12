@@ -1,10 +1,10 @@
 package com.jeff.pets.client.rendering.vanilla.donkey;
 
-import com.jeff.pets.mob.vanilla.passive.ClientDonkey;
 import com.jeff.pets.client.rendering.PetModel;
+import com.jeff.pets.mob.vanilla.passive.ClientDonkey;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
 public class DonkeyModel extends PetModel<ClientDonkey> {
@@ -23,64 +23,98 @@ public class DonkeyModel extends PetModel<ClientDonkey> {
     private final ModelPart left_chest;
     private final ModelPart right_chest;
 
-    public DonkeyModel(ModelPart root) {
-        super(root);
-        this.head = root.getChild("head");
-        this.mouth = root.getChild("mouth");
-        this.left_ear = root.getChild("left_ear");
-        this.right_ear = root.getChild("right_ear");
-        this.neck = root.getChild("neck");
-        this.mane = root.getChild("mane");
-        this.body = root.getChild("body");
-        this.tail = root.getChild("tail");
-        this.front_left_leg = root.getChild("front_left_leg");
-        this.front_right_leg = root.getChild("front_right_leg");
-        this.back_left_leg = root.getChild("back_left_leg");
-        this.back_right_leg = root.getChild("back_right_leg");
-        this.left_chest = root.getChild("left_chest");
-        this.right_chest = root.getChild("right_chest");
+    public DonkeyModel() {
+        texWidth = 64;
+        texHeight = 64;
+
+        head = new ModelPart(this);
+        head.setPos(0.0F, 2.0F, -9.0F);
+        head.texOffs(0, 13).addBox(-3.0F, -11.0F, -2.0F, 6.0F, 5.0F, 7.0F, 0.0F, false);
+
+        mouth = new ModelPart(this);
+        mouth.setPos(0.0F, 2.0F, -9.0F);
+        mouth.texOffs(0, 25).addBox(-2.0F, -11.0F, -7.0F, 4.0F, 5.0F, 5.0F, 0.0F, false);
+
+        left_ear = new ModelPart(this);
+        left_ear.setPos(1.5F, -7.9F, -5.0F);
+        left_ear.texOffs(0, 12).addBox(-1.0F, -7.1F, 0.0F, 2.0F, 7.0F, 1.0F, 0.0F, false);
+
+        right_ear = new ModelPart(this);
+        right_ear.setPos(-1.5F, -7.9F, -5.0F);
+        right_ear.texOffs(0, 12).addBox(-1.0F, -7.1F, 0.0F, 2.0F, 7.0F, 1.0F, 0.0F, false);
+
+        neck = new ModelPart(this);
+        neck.setPos(0.0F, 2.0F, -9.0F);
+        neck.texOffs(0, 35).addBox(-2.05F, -6.0F, -2.0F, 4.0F, 12.0F, 7.0F, 0.0F, false);
+
+        mane = new ModelPart(this);
+        mane.setPos(0.0F, 2.0F, -9.01F);
+        mane.texOffs(56, 36).addBox(-1.0F, -11.0F, 5.01F, 2.0F, 16.0F, 2.0F, 0.0F, false);
+
+        body = new ModelPart(this);
+        body.setPos(0.0F, 11.0F, 6.0F);
+        body.texOffs(0, 32).addBox(-5.0F, -8.0F, -17.0F, 10.0F, 10.0F, 22.0F, 0.05F, false);
+
+        tail = new ModelPart(this);
+        tail.setPos(0.0F, 3.0F, 11.0F);
+        tail.texOffs(42, 36).addBox(-1.5F, 0.0F, 0.0F, 3.0F, 14.0F, 4.0F, 0.0F, false);
+
+        front_left_leg = new ModelPart(this);
+        front_left_leg.setPos(4.0F, 14.0F, -9.0F);
+        front_left_leg.texOffs(48, 21).addBox(-3.0F, -1.0F, -1.9F, 4.0F, 11.0F, 4.0F, 0.0F, true);
+
+        front_right_leg = new ModelPart(this);
+        front_right_leg.setPos(-4.0F, 14.0F, -9.0F);
+        front_right_leg.texOffs(48, 21).addBox(-1.0F, -1.0F, -1.9F, 4.0F, 11.0F, 4.0F, 0.0F, false);
+
+        back_left_leg = new ModelPart(this);
+        back_left_leg.setPos(4.0F, 14.0F, 8.0F);
+        back_left_leg.texOffs(48, 21).addBox(-3.0F, -1.0F, -1.0F, 4.0F, 11.0F, 4.0F, 0.0F, true);
+
+        back_right_leg = new ModelPart(this);
+        back_right_leg.setPos(-4.0F, 14.0F, 8.0F);
+        back_right_leg.texOffs(48, 21).addBox(-1.0F, -1.0F, -1.0F, 4.0F, 11.0F, 4.0F, 0.0F, false);
+
+        left_chest = new ModelPart(this);
+        left_chest.setPos(6.0F, 3.0F, 6.0F);
+        setRotationAngle(left_chest, 0.0F, -1.5708F, 0.0F);
+        left_chest.texOffs(26, 21).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 8.0F, 3.0F, 0.0F, false);
+
+        right_chest = new ModelPart(this);
+        right_chest.setPos(-6.0F, 3.0F, 6.0F);
+        setRotationAngle(right_chest, 0.0F, 1.5708F, 0.0F);
+        right_chest.texOffs(26, 21).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 8.0F, 3.0F, 0.0F, false);
     }
 
-    public static LayerDefinition createBodyLayer() {
-        MeshDefinition meshdefinition = new MeshDefinition();
-        PartDefinition partdefinition = meshdefinition.getRoot();
+    @Override
+    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        head.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        mouth.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        left_ear.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        right_ear.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        neck.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        mane.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        body.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        tail.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        front_left_leg.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        front_right_leg.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        back_left_leg.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        back_right_leg.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        left_chest.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        right_chest.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+    }
 
-        PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 13).addBox(-3.0F, -11.0F, -2.0F, 6.0F, 5.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 2.0F, -9.0F));
-
-        PartDefinition mouth = partdefinition.addOrReplaceChild("mouth", CubeListBuilder.create().texOffs(0, 25).addBox(-2.0F, -11.0F, -7.0F, 4.0F, 5.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 2.0F, -9.0F));
-
-        PartDefinition left_ear = partdefinition.addOrReplaceChild("left_ear", CubeListBuilder.create().texOffs(0, 12).addBox(-1.0F, -7.1F, 0.0F, 2.0F, 7.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(1.5F, -7.9F, -5.0F));
-
-        PartDefinition right_ear = partdefinition.addOrReplaceChild("right_ear", CubeListBuilder.create().texOffs(0, 12).addBox(-1.0F, -7.1F, 0.0F, 2.0F, 7.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(-1.5F, -7.9F, -5.0F));
-
-        PartDefinition neck = partdefinition.addOrReplaceChild("neck", CubeListBuilder.create().texOffs(0, 35).addBox(-2.05F, -6.0F, -2.0F, 4.0F, 12.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 2.0F, -9.0F));
-
-        PartDefinition mane = partdefinition.addOrReplaceChild("mane", CubeListBuilder.create().texOffs(56, 36).addBox(-1.0F, -11.0F, 5.01F, 2.0F, 16.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 2.0F, -9.01F));
-
-        PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 32).addBox(-5.0F, -8.0F, -17.0F, 10.0F, 10.0F, 22.0F, new CubeDeformation(0.05F)), PartPose.offset(0.0F, 11.0F, 6.0F));
-
-        PartDefinition tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create().texOffs(42, 36).addBox(-1.5F, 0.0F, 0.0F, 3.0F, 14.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 3.0F, 11.0F));
-
-        PartDefinition front_left_leg = partdefinition.addOrReplaceChild("front_left_leg", CubeListBuilder.create().texOffs(48, 21).mirror().addBox(-3.0F, -1.0F, -1.9F, 4.0F, 11.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(4.0F, 14.0F, -9.0F));
-
-        PartDefinition front_right_leg = partdefinition.addOrReplaceChild("front_right_leg", CubeListBuilder.create().texOffs(48, 21).addBox(-1.0F, -1.0F, -1.9F, 4.0F, 11.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(-4.0F, 14.0F, -9.0F));
-
-        PartDefinition back_left_leg = partdefinition.addOrReplaceChild("back_left_leg", CubeListBuilder.create().texOffs(48, 21).mirror().addBox(-3.0F, -1.0F, -1.0F, 4.0F, 11.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(4.0F, 14.0F, 8.0F));
-
-        PartDefinition back_right_leg = partdefinition.addOrReplaceChild("back_right_leg", CubeListBuilder.create().texOffs(48, 21).addBox(-1.0F, -1.0F, -1.0F, 4.0F, 11.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(-4.0F, 14.0F, 8.0F));
-
-        PartDefinition left_chest = partdefinition.addOrReplaceChild("left_chest", CubeListBuilder.create().texOffs(26, 21).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 8.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(6.0F, 3.0F, 6.0F, 0.0F, -1.5708F, 0.0F));
-
-        PartDefinition right_chest = partdefinition.addOrReplaceChild("right_chest", CubeListBuilder.create().texOffs(26, 21).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 8.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-6.0F, 3.0F, 6.0F, 0.0F, 1.5708F, 0.0F));
-
-        return LayerDefinition.create(meshdefinition, 64, 64);
+    public void setRotationAngle(ModelPart ModelPart, float x, float y, float z) {
+        ModelPart.xRot = x;
+        ModelPart.yRot = y;
+        ModelPart.zRot = z;
     }
 
     @Override
     public void setupAnim(ClientDonkey abstractHorse, float f, float g, float h, float a, float b) {
         float i = Mth.rotLerp(h, abstractHorse.yBodyRotO, abstractHorse.yBodyRot);
         float j = Mth.rotLerp(h, abstractHorse.yHeadRotO, abstractHorse.yHeadRot);
-        float k = Mth.lerp(h, abstractHorse.xRotO, abstractHorse.getXRot());
+        float k = Mth.lerp(h, abstractHorse.xRotO, abstractHorse.xRot);
         float l = j - i;
         float m = k * ((float) Math.PI / 180F);
         if (l > 20.0F) {

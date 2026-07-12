@@ -1,23 +1,19 @@
 package com.jeff.pets.client.rendering.vanilla.guardian;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientGuardian;
 import com.jeff.pets.client.rendering.PetRenderer;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import com.jeff.pets.mob.vanilla.hostile.ClientGuardian;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 
+public class ClientGuardianRenderer extends PetRenderer<@NotNull ClientGuardian, @NotNull ClientGuardianModel<ClientGuardian>> {
 
-public class ClientGuardianRenderer extends PetRenderer< ClientGuardian,  ClientGuardianModel<ClientGuardian>> {
-    public static final ModelLayerLocation GUARDIAN_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientguardian"), "main");
-
-    public ClientGuardianRenderer(EntityRendererProvider.Context context) {
-        super(context, new ClientGuardianModel<>(context.bakeLayer(ModelLayers.GUARDIAN)), 0.75f);
+    public ClientGuardianRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
+        super(context, new ClientGuardianModel<>(), 0.75f);
     }
 
     @Override
-    public  ResourceLocation getTextureLocation(ClientGuardian livingEntityRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(ClientGuardian livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/guardian.png");
     }
 }

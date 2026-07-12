@@ -10,7 +10,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.AgableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -174,7 +174,7 @@ public abstract class AbstractPet extends TamableAnimal {
      * @return {@code null}
      */
     @Override
-    public  AgeableMob getBreedOffspring( ServerLevel serverLevel,  AgeableMob ageableMob) {
+    public  AgableMob getBreedOffspring( ServerLevel serverLevel,  AgableMob AgableMob) {
         return null;
     }
 
@@ -243,8 +243,20 @@ public abstract class AbstractPet extends TamableAnimal {
         this.yBodyRot = targetYaw;
     }
 
+    public float getYRot() {
+        return this.yBodyRot;
+    }
+
+    public void setYRot(float targetYaw) {
+        this.setYHeadRot(targetYaw);
+        this.setYBodyRot(targetYaw);
+    }
+
     private void reCalcPos() {
         this.randomX = (float) (Math.random() - 1);
         this.randomZ = (float) (Math.random() - 1);
+    }
+    public double horizontalDistance(Vec3 vec3) {
+        return Math.sqrt(vec3.x * vec3.x + vec3.z * vec3.z);
     }
 }

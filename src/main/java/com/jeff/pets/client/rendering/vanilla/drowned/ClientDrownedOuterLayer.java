@@ -3,28 +3,26 @@ package com.jeff.pets.client.rendering.vanilla.drowned;
 import com.jeff.pets.mob.vanilla.hostile.ClientDrowned;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-
+import org.jetbrains.annotations.NotNull;
 
 public class ClientDrownedOuterLayer extends RenderLayer {
 
     private final ClientDrownedModel drownedModel;
 
-    public ClientDrownedOuterLayer(RenderLayerParent< ClientDrowned, ?> renderLayerParent, EntityRendererProvider.Context context) {
+    public ClientDrownedOuterLayer(RenderLayerParent<@NotNull ClientDrowned, ?> renderLayerParent, net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
         super(renderLayerParent);
-        this.drownedModel = new ClientDrownedModel(context.bakeLayer(ModelLayers.DROWNED));
+        this.drownedModel = new ClientDrownedModel(0.25F, 0.0F, 64, 64);
     }
 
     @Override
-    public void render( PoseStack poseStack,  MultiBufferSource source, int i, Entity entityRenderState, float f, float g, float h, float b, float k, float t) {
+    public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource source, int i, Entity entityRenderState, float f, float g, float h, float b, float k, float t) {
         int overlayCoords = ClientDrownedRenderer.getOverlayCoords((LivingEntity) entityRenderState, 0.0f);
         poseStack.scale(1f, 1f, 1f);
         VertexConsumer consumer = source.getBuffer(RenderType.entityTranslucent(new ResourceLocation("minecraft", "textures/entity/zombie/drowned_outer_layer.png")));

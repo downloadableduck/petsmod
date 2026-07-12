@@ -1,38 +1,42 @@
 package com.jeff.pets.client.rendering.vanilla.magmacube;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientMagmaCube;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientMagmaCube;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.SlimeModel;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-
+import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientMagmaCubeRenderer extends PetRenderer< ClientMagmaCube,  SlimeModel<ClientMagmaCube>> {
+public class ClientMagmaCubeRenderer extends PetRenderer<@NotNull ClientMagmaCube, @NotNull SlimeModel<ClientMagmaCube>> {
 
-    public static final ModelLayerLocation MAGMA_CUBE_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientmagmacube"), "main");
-
-    public ClientMagmaCubeRenderer(EntityRendererProvider.Context context) {
-        super(context, new SlimeModel<>(context.bakeLayer(ModelLayers.MAGMA_CUBE)), 0.75f);
+    public ClientMagmaCubeRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
+        super(context, new SlimeModel<>(0), 0.75f);
     }
 
     @Override
-    protected void scale(ClientMagmaCube slimeRenderState,  PoseStack poseStack, float a) {
-        int magmaCubeScale = switch (CONFIG.magmaCubeSkin) {
-            case "small" -> 1;
-            case "medium" -> 2;
-            case "large" -> 4;
-            default -> 1;
-        };
+    protected void scale(ClientMagmaCube slimeRenderState, @NotNull PoseStack poseStack, float a) {
+        int magmaCubeScale;
+        switch (CONFIG.magmaCubeSkin) {
+            case "small":
+                magmaCubeScale = 1;
+                break;
+            case "medium":
+                magmaCubeScale = 2;
+                break;
+            case "large":
+                magmaCubeScale = 4;
+                break;
+            default:
+                magmaCubeScale = 1;
+                break;
+        }
         poseStack.scale(magmaCubeScale, magmaCubeScale, magmaCubeScale);
     }
 
     @Override
-    public  ResourceLocation getTextureLocation(ClientMagmaCube livingEntityRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(ClientMagmaCube livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/slime/magmacube.png");
     }
 }

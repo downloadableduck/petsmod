@@ -11,32 +11,31 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
-
-
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import static com.jeff.pets.PetsInitializer.Entities.KOI;
 
 public class Koi extends FlyingPet {
-    public static final EntityDataAccessor< Boolean> IS_SERVER_ENTITY =
+    public static final EntityDataAccessor<@NotNull Boolean> IS_SERVER_ENTITY =
             SynchedEntityData.defineId(Koi.class, EntityDataSerializers.BOOLEAN);
 
-    public Koi(EntityType<? extends  TamableAnimal> type, Level level) {
+    public Koi(EntityType<? extends @NotNull TamableAnimal> type, Level level) {
         super(type, level);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0);
     }
@@ -67,7 +66,7 @@ public class Koi extends FlyingPet {
         return SoundEvents.TROPICAL_FISH_AMBIENT;
     }
 
-    protected SoundEvent getHurtSound(final  DamageSource source) {
+    protected SoundEvent getHurtSound(final @NotNull DamageSource source) {
         return SoundEvents.TROPICAL_FISH_HURT;
     }
 
@@ -75,30 +74,30 @@ public class Koi extends FlyingPet {
         return SoundEvents.TROPICAL_FISH_DEATH;
     }
 
-    protected void playStepSound(final  BlockPos pos, final  BlockState blockState) {
+    protected void playStepSound(final @NotNull BlockPos pos, final @NotNull BlockState blockState) {
         this.playSound(SoundEvents.FISH_SWIM, 0.15F, 1.0F);
     }
 
-    public  Koi getBreedOffspring(final  ServerLevel level, final  AgeableMob partner) {
+    public @Nullable Koi getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgableMob partner) {
         Koi koi = KOI.get().create(level);
         koi.setServerEntity(true);
         return koi;
     }
 
-    public SpawnGroupData finalizeSpawn(final  ServerLevelAccessor level, final  DifficultyInstance difficulty, final  MobSpawnType spawnReason, final  SpawnGroupData groupData, CompoundTag compoundTag) {
+    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull MobSpawnType spawnReason, final @Nullable SpawnGroupData groupData, CompoundTag compoundTag) {
         this.setServerEntity(true);
         return super.finalizeSpawn(level, difficulty, spawnReason, groupData, compoundTag);
     }
 
-    public boolean isFood(final  ItemStack itemStack) {
-        return itemStack.is(ItemTags.FISHES);
+    public boolean isFood(final @NotNull ItemStack itemStack) {
+        return itemStack.sameItem(new ItemStack(Items.COD)) || itemStack.sameItem(new ItemStack(Items.SALMON)) || itemStack.sameItem(new ItemStack(Items.TROPICAL_FISH));
     }
 
     @Override
     public void registerGoals() {
 
         /**Using false in this statement causes the mob to sink to the bottom and reptitively spin.*/
-        this.moveControl = new SmoothSwimmingMoveControl(this, 10, 10, 1, 1, true);
+        //this.moveControl = new SmoothSwimmingMoveControl(this, 10, 10, 1, 1, true);
         this.getNavigation().setCanFloat(true);
         this.goalSelector.addGoal(1, new RandomSwimmingGoal(this, 1, 1));
         this.goalSelector.addGoal(2, new TryFindWaterGoal(this));
@@ -113,13 +112,13 @@ public class Koi extends FlyingPet {
     }
 
     @Override
-    public void addAdditionalSaveData( CompoundTag output) {
+    public void addAdditionalSaveData(@NotNull CompoundTag output) {
         super.addAdditionalSaveData(output);
         output.putBoolean("isServerEntity", true);
     }
 
     @Override
-    public void readAdditionalSaveData( CompoundTag input) {
+    public void readAdditionalSaveData(@NotNull CompoundTag input) {
         super.readAdditionalSaveData(input);
         this.setServerEntity(input.getBoolean("isServerEntity"));
     }
@@ -162,7 +161,7 @@ public class Koi extends FlyingPet {
 
             double distance = this.distanceTo(owner);
             float rotation = this.getRotationVector().x;
-            var rotationToOwner = rotation + this.getOwner().getRotationVector().x;
+            float rotationToOwner = rotation + this.getOwner().getRotationVector().x;
             float bodyYawDiff = Mth.wrapDegrees(this.getYHeadRot() - this.yBodyRot);
 
             if (rotationToOwner >= 50) {
@@ -197,7 +196,7 @@ public class Koi extends FlyingPet {
             }
 
             if (!this.onGround) {
-                this.processFlappingMovement();
+                // this.processFlappingMovement();
             }
 
             if (owner.getDeltaMovement().lengthSqr() < 0.01) {

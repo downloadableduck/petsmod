@@ -1,36 +1,32 @@
 package com.jeff.pets.client.rendering.vanilla.fox;
 
-import com.jeff.pets.mob.vanilla.neutral.ClientFox;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.neutral.ClientFox;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientFoxRenderer extends PetRenderer< ClientFox,  ClientFoxModel> {
-    public static final ModelLayerLocation FOX_LOCATION = new ModelLayerLocation(new ResourceLocation("minecraft", "clientfox"), "main");
+public class ClientFoxRenderer extends PetRenderer<@NotNull ClientFox, @NotNull ClientFoxModel> {
     public String foxTexturePath;
 
-    public ClientFoxRenderer(EntityRendererProvider.Context context) {
-        super(context, new ClientFoxModel(context.bakeLayer(ModelLayers.FOX)), 0.75f);
+    public ClientFoxRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
+        super(context, new ClientFoxModel(), 0.75f);
     }
 
     @Override
-    protected void scale(ClientFox state,  PoseStack poseStack, float f) {
+    protected void scale(ClientFox state, @NotNull PoseStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public  ResourceLocation getTextureLocation(ClientFox livingEntityRenderState) {
+    public @NotNull ResourceLocation getTextureLocation(ClientFox livingEntityRenderState) {
         if (Objects.equals(CONFIG.foxSkin, "red")) {
             foxTexturePath = "textures/entity/fox/fox.png";
         } else if (Objects.equals(CONFIG.foxSkin, "snow")) {

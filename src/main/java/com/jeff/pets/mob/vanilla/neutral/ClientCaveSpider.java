@@ -6,10 +6,10 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.level.Level;
-
+import org.jetbrains.annotations.NotNull;
 
 public class ClientCaveSpider extends GroundPet {
-    public ClientCaveSpider(EntityType<? extends  TamableAnimal> entityType, Level level) {
+    public ClientCaveSpider(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
         super(entityType, level);
     }
 
