@@ -1,37 +1,36 @@
 package com.jeff.pets.client.rendering.vanilla.snowgolem;
 
 import com.jeff.pets.mob.vanilla.passive.ClientSnowGolem;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.SnowGolemModel;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.BlockRendererDispatcher;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
-import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.client.renderer.entity.IEntityRenderer;
+import net.minecraft.client.renderer.entity.LivingRenderer;
+import net.minecraft.client.renderer.entity.layers.LayerRenderer;
+import net.minecraft.client.renderer.entity.model.SnowManModel;
+import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.vector.Vector3f;
+import net.minecraftforge.client.model.SeparatePerspectiveModel;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSnowGolemHeadLayer extends RenderLayer<ClientSnowGolem, SnowGolemModel<ClientSnowGolem>> {
-    private final BlockRenderDispatcher blockRenderer;
+public class ClientSnowGolemHeadLayer extends LayerRenderer<ClientSnowGolem, SnowManModel<ClientSnowGolem>> {
+    private final BlockRendererDispatcher blockRenderer;
     private final ItemRenderer itemRenderer;
 
-    public ClientSnowGolemHeadLayer(RenderLayerParent<ClientSnowGolem, SnowGolemModel<ClientSnowGolem>> renderLayerParent, BlockRenderDispatcher blockRenderDispatcher, ItemRenderer itemRenderer) {
+    public ClientSnowGolemHeadLayer(IEntityRenderer<ClientSnowGolem, SnowManModel<ClientSnowGolem>> renderLayerParent, BlockRendererDispatcher blockRenderDispatcher, ItemRenderer itemRenderer) {
         super(renderLayerParent);
         this.blockRenderer = blockRenderDispatcher;
         this.itemRenderer = itemRenderer;
     }
 
-    public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, ClientSnowGolem snowGolem, float f, float g, float h, float j, float k, float l) {
+    public void render(com.mojang.blaze3d.matrix.MatrixStack poseStack, net.minecraft.client.renderer.IRenderTypeBuffer multiBufferSource, int i, ClientSnowGolem snowGolem, float f, float g, float h, float j, float k, float l) {
         if (CONFIG.snowGolemSkin.equals("pumpkin_on")) {
             boolean bl = Minecraft.getInstance().shouldEntityAppearGlowing(snowGolem) && snowGolem.isInvisible();
             if (!snowGolem.isInvisible() || bl) {
@@ -44,12 +43,12 @@ public class ClientSnowGolemHeadLayer extends RenderLayer<ClientSnowGolem, SnowG
                 ItemStack itemStack = new ItemStack(Blocks.CARVED_PUMPKIN);
                 if (bl) {
                     BlockState blockState = Blocks.CARVED_PUMPKIN.defaultBlockState();
-                    BakedModel bakedModel = this.blockRenderer.getBlockModel(blockState);
-                    int n = LivingEntityRenderer.getOverlayCoords(snowGolem, 0.0F);
+                    IBakedModel bakedModel = this.blockRenderer.getBlockModel(blockState);
+                    int n = LivingRenderer.getOverlayCoords(snowGolem, 0.0F);
                     poseStack.translate(-0.5F, -0.5F, -0.5F);
-                    this.blockRenderer.getModelRenderer().renderModel(poseStack.last(), multiBufferSource.getBuffer(RenderType.outline(TextureAtlas.LOCATION_BLOCKS)), blockState, bakedModel, 0.0F, 0.0F, 0.0F, i, n);
+                    this.blockRenderer.getModelRenderer().renderModel(poseStack.last(), multiBufferSource.getBuffer(RenderType.outline(AtlasTexture.LOCATION_BLOCKS)), blockState, bakedModel, 0.0F, 0.0F, 0.0F, i, n);
                 } else {
-                    this.itemRenderer.renderStatic(snowGolem, itemStack, ItemTransforms.TransformType.HEAD, false, poseStack, multiBufferSource, snowGolem.level, i, LivingEntityRenderer.getOverlayCoords(snowGolem, 0.0F));
+                    this.itemRenderer.renderStatic(snowGolem, itemStack, ItemCameraTransforms.TransformType.HEAD, false, poseStack, multiBufferSource, snowGolem.level, i, LivingRenderer.getOverlayCoords(snowGolem, 0.0F));
                 }
 
                 poseStack.popPose();

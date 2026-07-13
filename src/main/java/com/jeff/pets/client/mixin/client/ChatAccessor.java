@@ -1,8 +1,8 @@
 package com.jeff.pets.client.mixin.client;
 
 import com.jeff.pets.client.Central;
-import net.minecraft.client.gui.components.CommandSuggestions;
-import net.minecraft.client.gui.screens.ChatScreen;
+import net.minecraft.client.gui.CommandSuggestionHelper;
+import net.minecraft.client.gui.screen.ChatScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
@@ -12,5 +12,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(value = ChatScreen.class)
 public interface ChatAccessor {
     @Accessor("commandSuggestions")
-    CommandSuggestions getChatInputSuggestor();
+    CommandSuggestionHelper getChatInputSuggestor();
 }

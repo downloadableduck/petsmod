@@ -3,55 +3,48 @@ package com.jeff.pets.mob.custom.aquatic;
 import com.jeff.pets.PetsSounds;
 import com.jeff.pets.mob.FlyingPet;
 import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.IPacket;
+import net.minecraft.network.play.server.SSpawnObjectPacket;
+import net.minecraft.pathfinding.PathNodeType;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import static com.jeff.pets.PetsInitializer.Entities.DUMBO_OCTOPUS;
 
 public class DumboOctopus extends FlyingPet {
 
-    public static final EntityDataAccessor<@NotNull Boolean> IS_SERVER_ENTITY =
-            SynchedEntityData.defineId(DumboOctopus.class, EntityDataSerializers.BOOLEAN);
-    public static final EntityDataAccessor<@NotNull Integer> OCTOPUS_SKIN =
-            SynchedEntityData.defineId(DumboOctopus.class, EntityDataSerializers.INT);
+    public static final net.minecraft.network.datasync.DataParameter<Boolean> IS_SERVER_ENTITY =
+            net.minecraft.network.datasync.EntityDataManager.defineId(DumboOctopus.class, net.minecraft.network.datasync.DataSerializers.BOOLEAN);
+    public static final net.minecraft.network.datasync.DataParameter<Integer> OCTOPUS_SKIN =
+            net.minecraft.network.datasync.EntityDataManager.defineId(DumboOctopus.class, net.minecraft.network.datasync.DataSerializers.INT);
     private final float nextFlap = 1.0F;
     public float tentacleAngle = 0;
-    public ServerPlayer owner = (ServerPlayer) this.getOwner();
+    public ServerPlayerEntity owner = (ServerPlayerEntity) this.getOwner();
 
-    public DumboOctopus(final EntityType<? extends @NotNull DumboOctopus> type, final Level level) {
+    public DumboOctopus(final EntityType<? extends DumboOctopus> type, final World level) {
         super(type, level);
-        this.setPathfindingMalus(BlockPathTypes.WATER, 0.0f);
+        this.setPathfindingMalus(PathNodeType.WATER, 0.0f);
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0).add(Attributes.MOVEMENT_SPEED, 0.25F);
+    public static AttributeModifierMap.MutableAttribute createAttributes() {
+        return AnimalEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0).add(Attributes.MOVEMENT_SPEED, 0.25F);
     }
 
     @Override
@@ -87,7 +80,7 @@ public class DumboOctopus extends FlyingPet {
         return SoundEvents.SQUID_AMBIENT;
     }
 
-    protected SoundEvent getHurtSound(final @NotNull DamageSource source) {
+    protected SoundEvent getHurtSound(final DamageSource source) {
         return PetsSounds.DUCK_AMBIENT.get();
     }
 
@@ -95,23 +88,23 @@ public class DumboOctopus extends FlyingPet {
         return PetsSounds.DUCK_AMBIENT.get();
     }
 
-    protected void playStepSound(final @NotNull BlockPos pos, final @NotNull BlockState blockState) {
+    protected void playStepSound(final BlockPos pos, final BlockState blockState) {
         this.playSound(SoundEvents.CHICKEN_STEP, 0.15F, 1.0F);
     }
 
-    public @Nullable DumboOctopus getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgableMob partner) {
+    public DumboOctopus getBreedOffspring(final ServerWorld level, final AgeableEntity partner) {
         DumboOctopus octopus = DUMBO_OCTOPUS.get().create(level);
         octopus.setServerEntity(true);
         return octopus;
     }
 
-    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull MobSpawnType spawnReason, final @Nullable SpawnGroupData groupData, CompoundTag compoundTag) {
+    public ILivingEntityData finalizeSpawn(final IWorld level, final DifficultyInstance difficulty, SpawnReason mobSpawnType, final ILivingEntityData groupData, CompoundNBT compoundTag) {
         this.setServerEntity(true);
         this.entityData.set(OCTOPUS_SKIN, this.random.nextInt(6));
-        return super.finalizeSpawn(level, difficulty, spawnReason, groupData, compoundTag);
+        return super.finalizeSpawn(level, difficulty, mobSpawnType, groupData, compoundTag);
     }
 
-    public boolean isFood(final @NotNull ItemStack itemStack) {
+    public boolean isFood(final ItemStack itemStack) {
         return itemStack.sameItem(new ItemStack(Items.COD)) || itemStack.sameItem(new ItemStack(Items.SALMON)) || itemStack.sameItem(new ItemStack(Items.TROPICAL_FISH));
     }
 
@@ -122,14 +115,14 @@ public class DumboOctopus extends FlyingPet {
         //this.moveControl = new SmoothSwimmingMoveControl(this, 10, 10, 1, 1, true);
         this.getNavigation().setCanFloat(true);
         this.goalSelector.addGoal(1, new RandomSwimmingGoal(this, 1, 1));
-        this.goalSelector.addGoal(2, new TryFindWaterGoal(this));
+        this.goalSelector.addGoal(2, new FindWaterGoal(this));
 
         this.goalSelector.addGoal(0, new FollowOwnerGoal(this, 1, 2, 10, false));
         this.goalSelector.addGoal(9, new BreedGoal(this, 1));
         this.goalSelector.addGoal(3, new PanicGoal(this, 1.4d));
         // this.goalSelector.addGoal(4, new TemptGoal(this, 1.0f, stack -> stack.is(ItemTags.FISHES), false));
 
-        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(5, new LookRandomlyGoal(this));
         // this.goalSelector.addGoal(8, new FollowOwnerGoal(this, 1, 2, 10));
     }
 
@@ -150,29 +143,29 @@ public class DumboOctopus extends FlyingPet {
 
             double dx = owner.getX() - this.getX();
             double dz = owner.getZ() - this.getZ();
-            Vec3 ownerPos = owner.position().add(0, owner.getEyeHeight() * 0.8, 0);
-            Vec3 vecToOwner = ownerPos.subtract(this.position());
+            net.minecraft.util.math.vector.Vector3d ownerPos = owner.position().add(0, owner.getEyeHeight() * 0.8, 0);
+            net.minecraft.util.math.vector.Vector3d vecToOwner = ownerPos.subtract(this.position());
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.distanceTo(owner);
             float rotation = this.getRotationVector().x;
             float rotationToOwner = rotation + this.getOwner().getRotationVector().x;
-            float bodyYawDiff = Mth.wrapDegrees(this.getYHeadRot() - this.yBodyRot);
+            float bodyYawDiff = net.minecraft.util.math.MathHelper.wrapDegrees(this.getYHeadRot() - this.yBodyRot);
 
             if (rotationToOwner >= 50) {
-                this.yBodyRot = this.getYHeadRot() - (Mth.sign(bodyYawDiff) * 50.0F);
+                this.yBodyRot = this.getYHeadRot() - (net.minecraft.util.math.MathHelper.sign(bodyYawDiff) * 50.0F);
             }
 
             if (distance > 2.0) {
 
                 this.animationSpeed = (0.5F);
 
-                Vec3 dir = vecToOwner.normalize();
+                net.minecraft.util.math.vector.Vector3d dir = vecToOwner.normalize();
                 double speed = 0.2;
 
                 this.setYBodyRot(Duck.rotlerp(this.yBodyRot, (float) targetYaw));
                 this.setYHeadRot(this.getYRot());
-                this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.yHeadRot, 50.0f);
+                this.yBodyRot = net.minecraft.util.math.MathHelper.rotateIfNecessary(this.yBodyRot, this.yHeadRot, 50.0f);
 
                 this.setDeltaMovement(dir.x * speed, dir.y * speed, dir.z * speed);
             } else {
@@ -205,9 +198,9 @@ public class DumboOctopus extends FlyingPet {
             this.setYHeadRot(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.yBodyRot = this.getYHeadRot() - (Mth.sign(bodyYawDiff) * 50);
+                this.yBodyRot = this.getYHeadRot() - (net.minecraft.util.math.MathHelper.sign(bodyYawDiff) * 50);
             } else {
-                this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.getYHeadRot(), 10);
+                this.yBodyRot = net.minecraft.util.math.MathHelper.rotateIfNecessary(this.yBodyRot, this.getYHeadRot(), 10);
             }
 
             this.move(MoverType.SELF, this.getDeltaMovement());
@@ -220,35 +213,35 @@ public class DumboOctopus extends FlyingPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level.playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.SQUID_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f, true);
+            level.playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.SQUID_AMBIENT, SoundCategory.AMBIENT, 1.0f, 1.0f, true);
         }
     }
 
     @Override
-    public void addAdditionalSaveData(@NotNull CompoundTag output) {
+    public void addAdditionalSaveData(CompoundNBT output) {
         super.addAdditionalSaveData(output);
         output.putBoolean("isServerEntity", true);
         output.putInt("floatiant", this.entityData.get(OCTOPUS_SKIN));
     }
 
     @Override
-    public void readAdditionalSaveData(@NotNull CompoundTag input) {
+    public void readAdditionalSaveData(CompoundNBT input) {
         super.readAdditionalSaveData(input);
         this.setServerEntity(input.getBoolean("isServerEntity"));
         this.entityData.set(OCTOPUS_SKIN, input.getInt("floatiant"));
     }
 
     @Override
-    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
+    public void onSyncedDataUpdated(net.minecraft.network.datasync.DataParameter<?> key) {
         if (!this.level.isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
     }
 
     @Override
-    public @NotNull Packet<?> getAddEntityPacket() {
+    public IPacket<?> getAddEntityPacket() {
         if (this.level.isClientSide()) {
-            return new ClientboundAddEntityPacket(this);
+            return new SSpawnObjectPacket(this);
         } else {
             return super.getAddEntityPacket();
         }

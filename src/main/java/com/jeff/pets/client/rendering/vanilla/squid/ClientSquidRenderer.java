@@ -2,26 +2,23 @@ package com.jeff.pets.client.rendering.vanilla.squid;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientSquid;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
-import net.minecraft.client.model.SquidModel;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.client.renderer.entity.model.SquidModel;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.vector.Vector3f;
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSquidRenderer extends PetRenderer<@NotNull ClientSquid, @NotNull SquidModel<ClientSquid>> {
+public class ClientSquidRenderer extends PetRenderer<ClientSquid, SquidModel<ClientSquid>> {
     String squidTexturePath;
 
-    public ClientSquidRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
+    public ClientSquidRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
         super(context, new SquidModel<>(), 0.7F);
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientSquid squidRenderState) {
+    public ResourceLocation getTextureLocation(ClientSquid squidRenderState) {
         if (Objects.equals(CONFIG.squidSkin, "squid")) {
             squidTexturePath = "textures/entity/squid/squid.png";
         } else if (Objects.equals(CONFIG.squidSkin, "glow_squid")) {
@@ -31,15 +28,16 @@ public class ClientSquidRenderer extends PetRenderer<@NotNull ClientSquid, @NotN
     }
 
     @Override
-    protected void scale(@NotNull ClientSquid livingEntityRenderState, @NotNull PoseStack poseStack, float f) {
+    protected void scale(ClientSquid livingEntityRenderState, com.mojang.blaze3d.matrix.MatrixStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
-    protected void setupRotations(ClientSquid squid, PoseStack poseStack, float f, float g, float h, float i) {
-        float j = Mth.lerp(h, squid.xBodyRotO, squid.xBodyRot);
-        float k = Mth.lerp(h, squid.zBodyRotO, squid.zBodyRot);
+    @Override
+    protected void setupRotations(ClientSquid squid, com.mojang.blaze3d.matrix.MatrixStack poseStack, float f, float g, float h) {
+        float j = net.minecraft.util.math.MathHelper.lerp(h, squid.xBodyRotO, squid.xBodyRot);
+        float k = net.minecraft.util.math.MathHelper.lerp(h, squid.zBodyRotO, squid.zBodyRot);
         poseStack.translate(0.0F, 0.5F, 0.0F);
         poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F - g));
         poseStack.mulPose(Vector3f.XP.rotationDegrees(j));
@@ -48,6 +46,6 @@ public class ClientSquidRenderer extends PetRenderer<@NotNull ClientSquid, @NotN
     }
 
     protected float getBob(ClientSquid squid, float f) {
-        return Mth.lerp(f, squid.oldTentacleAngle, squid.tentacleAngle);
+        return net.minecraft.util.math.MathHelper.lerp(f, squid.oldTentacleAngle, squid.tentacleAngle);
     }
 }

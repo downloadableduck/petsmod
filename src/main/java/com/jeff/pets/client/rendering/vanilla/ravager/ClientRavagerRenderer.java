@@ -2,17 +2,16 @@ package com.jeff.pets.client.rendering.vanilla.ravager;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientRavager;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.util.ResourceLocation;
 
-public class ClientRavagerRenderer extends PetRenderer<@NotNull ClientRavager, @NotNull ClientRavagerModel> {
+public class ClientRavagerRenderer extends PetRenderer<ClientRavager, ClientRavagerModel> {
 
-    public ClientRavagerRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
+    public ClientRavagerRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
         super(context, new ClientRavagerModel(), 0.75f);
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientRavager livingEntityRenderState) {
+    public ResourceLocation getTextureLocation(ClientRavager livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/illager/ravager.png");
     }
 }

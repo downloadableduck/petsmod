@@ -3,36 +3,33 @@ package com.jeff.pets.client.rendering.custom.first.penguin;
 import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Penguin;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class PenguinRenderer extends PetRenderer<@NotNull Penguin, @NotNull PenguinModel> {
+public class PenguinRenderer extends PetRenderer<Penguin, PenguinModel> {
 
-    public PenguinRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
+    public PenguinRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
         super(context, new PenguinModel(), 0.5f);
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(Penguin livingEntityRenderState) {
+    public ResourceLocation getTextureLocation(Penguin livingEntityRenderState) {
         return new ResourceLocation(PetsInitializer.MOD_ID, "textures/entity/penguin/penguin.png");
     }
 
     @Override
-    protected void scale(@NotNull Penguin livingEntityRenderState, @NotNull PoseStack poseStack, float f) {
+    protected void scale(Penguin livingEntityRenderState, com.mojang.blaze3d.matrix.MatrixStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public void render(final Penguin penguin, float f, float partialTicks, PoseStack poseStack, MultiBufferSource source, int i) {
-        penguin.flap = Mth.lerp(partialTicks, penguin.oFlap, penguin.flap);
-        penguin.flapSpeed = Mth.lerp(partialTicks, penguin.oFlapSpeed, penguin.flapSpeed);
+    public void render(final Penguin penguin, float f, float partialTicks, com.mojang.blaze3d.matrix.MatrixStack poseStack, IRenderTypeBuffer source, int i) {
+        penguin.flap = net.minecraft.util.math.MathHelper.lerp(partialTicks, penguin.oFlap, penguin.flap);
+        penguin.flapSpeed = net.minecraft.util.math.MathHelper.lerp(partialTicks, penguin.oFlapSpeed, penguin.flapSpeed);
         super.render(penguin, f, partialTicks, poseStack, source, i);
     }
 }

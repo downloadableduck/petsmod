@@ -1,14 +1,12 @@
 package com.jeff.pets.client.enums;
 
 
-import net.minecraft.network.chat.Component;
-
 public enum CreeperSkins implements NameableEnum {
     normal,
     charged;
 
     @Override
-    public Component getDisplayName() {
-        return new net.minecraft.network.chat.TextComponent(String.valueOf(this).replace("_", " "));
+    public net.minecraft.util.text.ITextComponent getDisplayName() {
+        return new net.minecraft.util.text.StringTextComponent(String.valueOf(this).replace("_", " "));
     }
 }

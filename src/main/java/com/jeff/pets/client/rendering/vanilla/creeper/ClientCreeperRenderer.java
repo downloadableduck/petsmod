@@ -2,33 +2,32 @@ package com.jeff.pets.client.rendering.vanilla.creeper;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientCreeper;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.CreeperModel;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.client.renderer.entity.layers.CreeperPowerLayer;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.entity.IEntityRenderer;
+import net.minecraft.client.renderer.entity.layers.CreeperChargeLayer;
+import net.minecraft.client.renderer.entity.layers.LayerRenderer;
+import net.minecraft.client.renderer.entity.model.CreeperModel;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientCreeperRenderer extends PetRenderer<@NotNull ClientCreeper, @NotNull CreeperModel<ClientCreeper>> {
+public class ClientCreeperRenderer extends PetRenderer<ClientCreeper, CreeperModel<ClientCreeper>> {
 
-    public ClientCreeperRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
+    public ClientCreeperRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
         super(context, new CreeperModel<>(), 0.75f);
-        this.addLayer((RenderLayer) new CreeperPowerLayer((RenderLayerParent) this));
+        this.addLayer((LayerRenderer) new CreeperChargeLayer((IEntityRenderer) this));
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientCreeper livingEntityRenderState) {
+    public ResourceLocation getTextureLocation(ClientCreeper livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/creeper/creeper.png");
     }
 
     @Override
-    public void render(ClientCreeper creeper, float f, float g, PoseStack poseStack, MultiBufferSource source, int i) {
+    public void render(ClientCreeper creeper, float f, float g, MatrixStack poseStack, IRenderTypeBuffer source, int i) {
         super.render(creeper, f, g, poseStack, source, i);
         creeper.isPowered = Objects.equals(CONFIG.creeperSkin, "charged");
     }

@@ -2,55 +2,54 @@ package com.jeff.pets.client.rendering.vanilla.bee;
 
 import com.google.common.collect.ImmutableList;
 import com.jeff.pets.mob.vanilla.neutral.ClientBee;
-import net.minecraft.client.model.AgeableListModel;
-import net.minecraft.client.model.ModelUtils;
-import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.util.Mth;
+import net.minecraft.client.renderer.entity.model.AgeableModel;
+import net.minecraft.client.renderer.entity.model.ModelUtils;
+import net.minecraft.client.renderer.model.ModelRenderer;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientBeeModel extends AgeableListModel<ClientBee> {
-    private final ModelPart bone;
-    private final ModelPart body;
-    private final ModelPart rightWing;
-    private final ModelPart leftWing;
-    private final ModelPart frontLeg;
-    private final ModelPart midLeg;
-    private final ModelPart backLeg;
-    private final ModelPart stinger;
-    private final ModelPart leftAntenna;
-    private final ModelPart rightAntenna;
+public class ClientBeeModel extends AgeableModel<ClientBee> {
+    private final ModelRenderer bone;
+    private final ModelRenderer body;
+    private final ModelRenderer rightWing;
+    private final ModelRenderer leftWing;
+    private final ModelRenderer frontLeg;
+    private final ModelRenderer midLeg;
+    private final ModelRenderer backLeg;
+    private final ModelRenderer stinger;
+    private final ModelRenderer leftAntenna;
+    private final ModelRenderer rightAntenna;
     private float rollAmount;
 
     public ClientBeeModel() {
         super(false, 24.0F, 0.0F);
         this.texWidth = 64;
         this.texHeight = 64;
-        this.bone = new ModelPart(this);
+        this.bone = new ModelRenderer(this);
         this.bone.setPos(0.0F, 19.0F, 0.0F);
-        this.body = new ModelPart(this, 0, 0);
+        this.body = new ModelRenderer(this, 0, 0);
         this.body.setPos(0.0F, 0.0F, 0.0F);
         this.bone.addChild(this.body);
         this.body.addBox(-3.5F, -4.0F, -5.0F, 7.0F, 7.0F, 10.0F, 0.0F);
-        this.stinger = new ModelPart(this, 26, 7);
+        this.stinger = new ModelRenderer(this, 26, 7);
         this.stinger.addBox(0.0F, -1.0F, 5.0F, 0.0F, 1.0F, 2.0F, 0.0F);
         this.body.addChild(this.stinger);
-        this.leftAntenna = new ModelPart(this, 2, 0);
+        this.leftAntenna = new ModelRenderer(this, 2, 0);
         this.leftAntenna.setPos(0.0F, -2.0F, -5.0F);
         this.leftAntenna.addBox(1.5F, -2.0F, -3.0F, 1.0F, 2.0F, 3.0F, 0.0F);
-        this.rightAntenna = new ModelPart(this, 2, 3);
+        this.rightAntenna = new ModelRenderer(this, 2, 3);
         this.rightAntenna.setPos(0.0F, -2.0F, -5.0F);
         this.rightAntenna.addBox(-2.5F, -2.0F, -3.0F, 1.0F, 2.0F, 3.0F, 0.0F);
         this.body.addChild(this.leftAntenna);
         this.body.addChild(this.rightAntenna);
-        this.rightWing = new ModelPart(this, 0, 18);
+        this.rightWing = new ModelRenderer(this, 0, 18);
         this.rightWing.setPos(-1.5F, -4.0F, -3.0F);
         this.rightWing.xRot = 0.0F;
         this.rightWing.yRot = -0.2618F;
         this.rightWing.zRot = 0.0F;
         this.bone.addChild(this.rightWing);
         this.rightWing.addBox(-9.0F, 0.0F, 0.0F, 9.0F, 0.0F, 6.0F, 0.001F);
-        this.leftWing = new ModelPart(this, 0, 18);
+        this.leftWing = new ModelRenderer(this, 0, 18);
         this.leftWing.setPos(1.5F, -4.0F, -3.0F);
         this.leftWing.xRot = 0.0F;
         this.leftWing.yRot = 0.2618F;
@@ -58,15 +57,15 @@ public class ClientBeeModel extends AgeableListModel<ClientBee> {
         this.leftWing.mirror = true;
         this.bone.addChild(this.leftWing);
         this.leftWing.addBox(0.0F, 0.0F, 0.0F, 9.0F, 0.0F, 6.0F, 0.001F);
-        this.frontLeg = new ModelPart(this);
+        this.frontLeg = new ModelRenderer(this);
         this.frontLeg.setPos(1.5F, 3.0F, -2.0F);
         this.bone.addChild(this.frontLeg);
         this.frontLeg.addBox("frontLegBox", -5.0F, 0.0F, 0.0F, 7, 2, 0, 0.0F, 26, 1);
-        this.midLeg = new ModelPart(this);
+        this.midLeg = new ModelRenderer(this);
         this.midLeg.setPos(1.5F, 3.0F, 0.0F);
         this.bone.addChild(this.midLeg);
         this.midLeg.addBox("midLegBox", -5.0F, 0.0F, 0.0F, 7, 2, 0, 0.0F, 26, 3);
-        this.backLeg = new ModelPart(this);
+        this.backLeg = new ModelRenderer(this);
         this.backLeg.setPos(1.5F, 3.0F, 2.0F);
         this.bone.addChild(this.backLeg);
         this.backLeg.addBox("backLegBox", -5.0F, 0.0F, 0.0F, 7, 2, 0, 0.0F, 26, 5);
@@ -97,7 +96,7 @@ public class ClientBeeModel extends AgeableListModel<ClientBee> {
         } else {
             float k = h * 2.1F;
             this.rightWing.yRot = 0.0F;
-            this.rightWing.zRot = Mth.cos(k) * (float) Math.PI * 0.15F;
+            this.rightWing.zRot = net.minecraft.util.math.MathHelper.cos(k) * (float) Math.PI * 0.15F;
             this.leftWing.xRot = this.rightWing.xRot;
             this.leftWing.yRot = this.rightWing.yRot;
             this.leftWing.zRot = -this.rightWing.zRot;
@@ -114,13 +113,13 @@ public class ClientBeeModel extends AgeableListModel<ClientBee> {
             this.bone.yRot = 0.0F;
             this.bone.zRot = 0.0F;
             if (!bl) {
-                float k = Mth.cos(h * 0.18F);
+                float k = net.minecraft.util.math.MathHelper.cos(h * 0.18F);
                 this.bone.xRot = 0.1F + k * (float) Math.PI * 0.025F;
                 this.leftAntenna.xRot = k * (float) Math.PI * 0.03F;
                 this.rightAntenna.xRot = k * (float) Math.PI * 0.03F;
                 this.frontLeg.xRot = -k * (float) Math.PI * 0.1F + ((float) Math.PI / 8F);
                 this.backLeg.xRot = -k * (float) Math.PI * 0.05F + ((float) Math.PI / 4F);
-                this.bone.y = 19.0F - Mth.cos(h * 0.18F) * 0.9F;
+                this.bone.y = 19.0F - net.minecraft.util.math.MathHelper.cos(h * 0.18F) * 0.9F;
             }
         }
 
@@ -130,11 +129,11 @@ public class ClientBeeModel extends AgeableListModel<ClientBee> {
 
     }
 
-    protected Iterable<ModelPart> headParts() {
+    protected Iterable<ModelRenderer> headParts() {
         return ImmutableList.of();
     }
 
-    protected Iterable<ModelPart> bodyParts() {
+    protected Iterable<ModelRenderer> bodyParts() {
         return ImmutableList.of(this.bone);
     }
 }

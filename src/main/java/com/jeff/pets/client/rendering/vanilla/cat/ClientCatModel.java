@@ -1,8 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.cat;
 
 import com.jeff.pets.mob.vanilla.passive.ClientCat;
-import net.minecraft.client.model.OcelotModel;
-import net.minecraft.util.Mth;
+import net.minecraft.client.renderer.entity.model.OcelotModel;
 
 public class ClientCatModel extends OcelotModel<ClientCat> {
     private float lieDownAmount;
@@ -33,14 +32,14 @@ public class ClientCatModel extends OcelotModel<ClientCat> {
             float g = cat.animationSpeed;
             float h = cat.animationPosition;
 
-            this.backLegL.xRot = Mth.cos(h * 0.6662F) * g;
-            this.backLegR.xRot = Mth.cos(h * 0.6662F + (float) Math.PI) * g;
-            this.frontLegL.xRot = (Mth.cos(h * 0.6662F + (float) Math.PI) * g);
-            this.frontLegR.xRot = (Mth.cos(h * 0.6662F) * g);
+            this.backLegL.xRot = net.minecraft.util.math.MathHelper.cos(h * 0.6662F) * g;
+            this.backLegR.xRot = net.minecraft.util.math.MathHelper.cos(h * 0.6662F + (float) Math.PI) * g;
+            this.frontLegL.xRot = (net.minecraft.util.math.MathHelper.cos(h * 0.6662F + (float) Math.PI) * g);
+            this.frontLegR.xRot = (net.minecraft.util.math.MathHelper.cos(h * 0.6662F) * g);
             if (!cat.isPassenger()) {
-                this.tail2.xRot = 1.7278761F + (float) (Math.PI / 4) * Mth.cos(h) * g;
+                this.tail2.xRot = 1.7278761F + (float) (Math.PI / 4) * net.minecraft.util.math.MathHelper.cos(h) * g;
             } else {
-                this.tail2.xRot = 1.7278761F + 0.47123894F * Mth.cos(h) * g;
+                this.tail2.xRot = 1.7278761F + 0.47123894F * net.minecraft.util.math.MathHelper.cos(h) * g;
             }
         }
 
@@ -71,8 +70,8 @@ public class ClientCatModel extends OcelotModel<ClientCat> {
         }
 
         /*if (cat.lieDownAmount > 0.0F) {
-            this.head.zRot = Mth.rotLerp(cat.lieDownAmount, this.head.zRot, -1.2707963F);
-            this.head.yRot = Mth.rotLerp(cat.lieDownAmount, this.head.yRot, 1.2707963F);
+            this.head.zRot = net.minecraft.util.math.MathHelper.rotLerp(cat.lieDownAmount, this.head.zRot, -1.2707963F);
+            this.head.yRot = net.minecraft.util.math.MathHelper.rotLerp(cat.lieDownAmount, this.head.yRot, 1.2707963F);
             this.leftFrontLeg.xRot = -1.2707963F;
             this.rightFrontLeg.xRot = -0.47079635F;
             this.rightFrontLeg.zRot = -0.2F;
@@ -82,12 +81,12 @@ public class ClientCatModel extends OcelotModel<ClientCat> {
             this.rightHindLeg.zRot = -0.5F;
             this.rightHindLeg.x += 0.8F * f;
             this.rightHindLeg.y += 2.0F * f;
-            this.tail1.xRot = Mth.rotLerp(cat.lieDownAmountTail, this.tail1.xRot, 0.8F);
-            this.tail2.xRot = Mth.rotLerp(cat.lieDownAmountTail, this.tail2.xRot, -0.4F);
+            this.tail1.xRot = net.minecraft.util.math.MathHelper.rotLerp(cat.lieDownAmountTail, this.tail1.xRot, 0.8F);
+            this.tail2.xRot = net.minecraft.util.math.MathHelper.rotLerp(cat.lieDownAmountTail, this.tail2.xRot, -0.4F);
         }
 
         if (cat.relaxStateOneAmount > 0.0F) {
-            this.head.xRot = Mth.rotLerp(cat.relaxStateOneAmount, this.head.xRot, -0.58177644F);
+            this.head.xRot = net.minecraft.util.math.MathHelper.rotLerp(cat.relaxStateOneAmount, this.head.xRot, -0.58177644F);
         }*/
     }
 }

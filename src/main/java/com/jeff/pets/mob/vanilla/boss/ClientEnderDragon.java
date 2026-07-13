@@ -2,20 +2,15 @@ package com.jeff.pets.mob.vanilla.boss;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.entity.boss.enderdragon.phases.DragonPhaseInstance;
-import net.minecraft.world.entity.boss.enderdragon.phases.EnderDragonPhase;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.feature.EndPodiumFeature;
-import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.boss.dragon.phase.IPhase;
+import net.minecraft.entity.boss.dragon.phase.PhaseType;
+import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.gen.Heightmap;
+import net.minecraft.world.gen.feature.EndPodiumFeature;
 
 @CanFly
 public class ClientEnderDragon extends FlyingPet {
@@ -24,7 +19,7 @@ public class ClientEnderDragon extends FlyingPet {
     public float flapTime;
     public int posPointer = -1;
 
-    public ClientEnderDragon(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
+    public ClientEnderDragon(EntityType<? extends TameableEntity> entityType, net.minecraft.world.World level) {
         super(entityType, level);
     }
 
@@ -47,7 +42,7 @@ public class ClientEnderDragon extends FlyingPet {
     public void tick() {
         super.tick();
         this.oFlapTime = this.flapTime;
-        Vec3 vec3 = this.getDeltaMovement();
+        net.minecraft.util.math.vector.Vector3d vec3 = this.getDeltaMovement();
         float g = 0.2F / ((float) vec3.y() * 10.0F + 1.0F);
         g *= (float) Math.pow(2.0F, vec3.y);
         if (this.isInWall()) {
@@ -67,27 +62,27 @@ public class ClientEnderDragon extends FlyingPet {
         int k = this.posPointer - i - 1 & 63;
         double[] ds = new double[3];
         double d = this.positions[j][0];
-        double e = Mth.wrapDegrees(this.positions[k][0] - d);
+        double e = net.minecraft.util.math.MathHelper.wrapDegrees(this.positions[k][0] - d);
         ds[0] = d + e * (double) f;
         d = this.positions[j][1];
         e = this.positions[k][1] - d;
         ds[1] = d + e * (double) f;
-        ds[2] = Mth.lerp(f, this.positions[j][2], this.positions[k][2]);
+        ds[2] = net.minecraft.util.math.MathHelper.lerp(f, this.positions[j][2], this.positions[k][2]);
         return ds;
     }
 
     public float getHeadPartYOffset(int i, double[] ds, double[] es) {
-        EnderDragonPhase<? extends DragonPhaseInstance> enderDragonPhase = EnderDragonPhase.HOLDING_PATTERN;
+        PhaseType<? extends IPhase> enderDragonPhase = PhaseType.HOLDING_PATTERN;
         double e;
-        if (enderDragonPhase != EnderDragonPhase.LANDING && enderDragonPhase != EnderDragonPhase.TAKEOFF) {
+        if (enderDragonPhase != PhaseType.LANDING && enderDragonPhase != PhaseType.TAKEOFF) {
             if (i == 6) {
                 e = 0.0F;
             } else {
                 e = es[1] - ds[1];
             }
         } else {
-            BlockPos blockPos = this.level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, EndPodiumFeature.END_PODIUM_LOCATION);
-            double d = Math.max(Math.sqrt(blockPos.distSqr(new Vec3i(this.position().x, this.position().y, this.position().z))) / (double) 4.0F, 1.0F);
+            BlockPos blockPos = this.level.getHeightmapPos(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, EndPodiumFeature.END_PODIUM_LOCATION);
+            double d = Math.max(Math.sqrt(blockPos.distSqr(new net.minecraft.util.math.vector.Vector3i(this.position().x, this.position().y, this.position().z))) / (double) 4.0F, 1.0F);
             e = (double) i / d;
         }
 

@@ -2,44 +2,38 @@ package com.jeff.pets.mob.custom.first;
 
 import com.jeff.pets.PetsSounds;
 import com.jeff.pets.mob.AbstractPet;
-import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.IPacket;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.network.play.server.SSpawnObjectPacket;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
 
 import static com.jeff.pets.PetsInitializer.Entities.DUCK;
 
 public class Duck extends AbstractPet {
 
-    public static final EntityDataAccessor<@NotNull Boolean> IS_SERVER_ENTITY =
-            SynchedEntityData.defineId(Duck.class, EntityDataSerializers.BOOLEAN);
-    public static final EntityDataAccessor<@NotNull Integer> DUCK_SKIN =
-            SynchedEntityData.defineId(Duck.class, EntityDataSerializers.INT);
+    public static final DataParameter<Boolean> IS_SERVER_ENTITY =
+            EntityDataManager.defineId(Duck.class, net.minecraft.network.datasync.DataSerializers.BOOLEAN);
+    public static final DataParameter<Integer> DUCK_SKIN =
+            EntityDataManager.defineId(Duck.class, net.minecraft.network.datasync.DataSerializers.INT);
     private final float flyDist = 0;
     public float flap;
     public float flapSpeed;
@@ -47,19 +41,19 @@ public class Duck extends AbstractPet {
     public float oFlap;
     public float flapping = 1.0F;
     public boolean isOnHead;
-    public ServerPlayer owner = (ServerPlayer) this.getOwner();
+    public ServerPlayerEntity owner = (ServerPlayerEntity) this.getOwner();
     private float nextFlap = 1.0F;
 
-    public Duck(final EntityType<? extends @NotNull Duck> type, final Level level) {
+    public Duck(final EntityType<? extends Duck> type, final World level) {
         super(type, level);
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0).add(Attributes.MOVEMENT_SPEED, 0.25F);
+    public static AttributeModifierMap.MutableAttribute createAttributes() {
+        return AnimalEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0).add(Attributes.MOVEMENT_SPEED, 0.25F);
     }
 
     public static float rotlerp(float start, float end) {
-        float f = Mth.wrapDegrees(end - start);
+        float f = net.minecraft.util.math.MathHelper.wrapDegrees(end - start);
         if (f > 10.0f) f = 10.0f;
         if (f < -10.0f) f = -10.0f;
         return start + f;
@@ -85,13 +79,13 @@ public class Duck extends AbstractPet {
         this.oFlap = this.flap;
         this.oFlapSpeed = this.flapSpeed;
         this.flapSpeed += (this.onGround ? -1.0F : 4.0F) * 0.3F;
-        this.flapSpeed = Mth.clamp(this.flapSpeed, 0.0F, 1.0F);
+        this.flapSpeed = net.minecraft.util.math.MathHelper.clamp(this.flapSpeed, 0.0F, 1.0F);
         if (!this.onGround && this.flapping < 1.0F) {
             this.flapping = 1.0F;
         }
 
         this.flapping *= 0.9F;
-        Vec3 movement = this.getDeltaMovement();
+        net.minecraft.util.math.vector.Vector3d movement = this.getDeltaMovement();
         if (!this.onGround && movement.y < (double) 0.0F) {
             this.setDeltaMovement(movement.multiply(1.0F, 0.6, 1.0F));
         }
@@ -121,7 +115,7 @@ public class Duck extends AbstractPet {
         return PetsSounds.DUCK_AMBIENT.get();
     }
 
-    protected SoundEvent getHurtSound(final @NotNull DamageSource source) {
+    protected SoundEvent getHurtSound(final DamageSource source) {
         return PetsSounds.DUCK_AMBIENT.get();
     }
 
@@ -129,40 +123,40 @@ public class Duck extends AbstractPet {
         return PetsSounds.DUCK_AMBIENT.get();
     }
 
-    protected void playStepSound(final @NotNull BlockPos pos, final @NotNull BlockState blockState) {
+    protected void playStepSound(final BlockPos pos, final BlockState blockState) {
         this.playSound(SoundEvents.CHICKEN_STEP, 0.15F, 1.0F);
     }
 
-    public @Nullable Duck getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgableMob partner) {
+    public Duck getBreedOffspring(final AgeableEntity partner) {
         Duck duck = DUCK.get().create(level);
         duck.setServerEntity(true);
         return duck;
     }
 
-    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull MobSpawnType spawnReason, final @Nullable SpawnGroupData groupData, CompoundTag compoundTag) {
+    public ILivingEntityData finalizeSpawn(final IWorld level, final DifficultyInstance difficulty, SpawnReason mobSpawnType, final ILivingEntityData groupData, CompoundNBT compoundTag) {
         this.setServerEntity(true);
         this.entityData.set(DUCK_SKIN, this.random.nextInt(2));
-        return super.finalizeSpawn(level, difficulty, spawnReason, groupData, compoundTag);
+        return super.finalizeSpawn(level, difficulty, mobSpawnType, groupData, compoundTag);
     }
 
-    public boolean isFood(final @NotNull ItemStack itemStack) {
+    public boolean isFood(final ItemStack itemStack) {
         return itemStack.sameItem(new ItemStack(Items.COD)) || itemStack.sameItem(new ItemStack(Items.SALMON)) || itemStack.sameItem(new ItemStack(Items.TROPICAL_FISH));
     }
 
     @Override
     public void registerGoals() {
 
-        this.goalSelector.addGoal(1, new RandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(1, new RandomWalkingGoal(this, 1.0D));
 
         this.goalSelector.addGoal(0, new FollowOwnerGoal(this, 1, 2, 10, false));
         this.goalSelector.addGoal(9, new BreedGoal(this, 1));
-        this.goalSelector.addGoal(2, new FloatGoal(this));
+        this.goalSelector.addGoal(2, new SwimGoal(this));
         this.goalSelector.addGoal(3, new PanicGoal(this, 1.4d));
         this.goalSelector.addGoal(4, new TemptGoal(this, 1.0f, Ingredient.of(Items.SKELETON_SKULL, Items.WITHER_SKELETON_SKULL), false));
 
-        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1.0D));
-        this.goalSelector.addGoal(7, new EatBlockGoal(this));
+        this.goalSelector.addGoal(5, new LookRandomlyGoal(this));
+        this.goalSelector.addGoal(6, new RandomWalkingGoal(this, 1.0D));
+        this.goalSelector.addGoal(7, new EatGrassGoal(this));
         this.goalSelector.addGoal(8, new FollowOwnerGoal(this, 1, 2, 10, false));
     }
 
@@ -190,22 +184,22 @@ public class Duck extends AbstractPet {
             double distance = this.distanceTo(owner);
             float rotation = this.getRotationVector().x;
             float rotationToOwner = rotation + this.getOwner().getRotationVector().x;
-            float bodyYawDiff = Mth.wrapDegrees(this.getYHeadRot() - this.yBodyRot);
+            float bodyYawDiff = net.minecraft.util.math.MathHelper.wrapDegrees(this.getYHeadRot() - this.yBodyRot);
 
             if (rotationToOwner >= 50) {
-                this.yBodyRot = this.getYHeadRot() - (Mth.sign(bodyYawDiff) * 50.0F);
+                this.yBodyRot = this.getYHeadRot() - (net.minecraft.util.math.MathHelper.sign(bodyYawDiff) * 50.0F);
             }
 
             if (distance > 2.0) {
 
                 this.animationSpeed = (0.5F);
 
-                Vec3 targetPos = owner.position();
-                Vec3 dir = targetPos.subtract(this.position()).normalize();
+                net.minecraft.util.math.vector.Vector3d targetPos = owner.position();
+                net.minecraft.util.math.vector.Vector3d dir = targetPos.subtract(this.position()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setYHeadRot(this.getYRot());
-                this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.yHeadRot, 50.0f);
+                this.yBodyRot = net.minecraft.util.math.MathHelper.rotateIfNecessary(this.yBodyRot, this.yHeadRot, 50.0f);
 
                 double speed = owner.getSpeed() * 2;
                 this.setDeltaMovement(dir.x * speed, this.getDeltaMovement().y, dir.z * speed);
@@ -241,9 +235,9 @@ public class Duck extends AbstractPet {
             this.setYHeadRot(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.yBodyRot = this.getYHeadRot() - (Mth.sign(bodyYawDiff) * 50);
+                this.yBodyRot = this.getYHeadRot() - (net.minecraft.util.math.MathHelper.sign(bodyYawDiff) * 50);
             } else {
-                this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.getYHeadRot(), 10);
+                this.yBodyRot = net.minecraft.util.math.MathHelper.rotateIfNecessary(this.yBodyRot, this.getYHeadRot(), 10);
             }
 
             this.move(MoverType.SELF, this.getDeltaMovement());
@@ -260,35 +254,35 @@ public class Duck extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level.playLocalSound(this.getX(), this.getY(), this.getZ(), PetsSounds.DUCK_AMBIENT.get(), SoundSource.NEUTRAL, 1.0f, 1.0f, true);
+            level.playLocalSound(this.getX(), this.getY(), this.getZ(), PetsSounds.DUCK_AMBIENT.get(), SoundCategory.NEUTRAL, 1.0f, 1.0f, true);
         }
     }
 
     @Override
-    public void addAdditionalSaveData(@NotNull CompoundTag output) {
+    public void addAdditionalSaveData(CompoundNBT output) {
         super.addAdditionalSaveData(output);
         output.putBoolean("isServerEntity", true);
         output.putInt("floatiant", this.entityData.get(DUCK_SKIN));
     }
 
     @Override
-    public void readAdditionalSaveData(@NotNull CompoundTag input) {
+    public void readAdditionalSaveData(CompoundNBT input) {
         super.readAdditionalSaveData(input);
         this.setServerEntity(input.getBoolean("isServerEntity"));
         this.entityData.set(DUCK_SKIN, input.getInt("floatiant"));
     }
 
     @Override
-    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
+    public void onSyncedDataUpdated(net.minecraft.network.datasync.DataParameter<?> key) {
         if (!this.level.isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
     }
 
     @Override
-    public @NotNull Packet<?> getAddEntityPacket() {
+    public IPacket<?> getAddEntityPacket() {
         if (this.level.isClientSide()) {
-            return new ClientboundAddEntityPacket(this);
+            return new SSpawnObjectPacket(this);
         } else {
             return super.getAddEntityPacket();
         }

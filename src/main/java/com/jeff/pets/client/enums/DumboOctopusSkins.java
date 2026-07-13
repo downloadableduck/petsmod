@@ -1,8 +1,6 @@
 package com.jeff.pets.client.enums;
 
 
-import net.minecraft.network.chat.Component;
-
 public enum DumboOctopusSkins implements NameableEnum {
     blue,
     green,
@@ -12,7 +10,7 @@ public enum DumboOctopusSkins implements NameableEnum {
     yellow;
 
     @Override
-    public Component getDisplayName() {
-        return new net.minecraft.network.chat.TextComponent(String.valueOf(this));
+    public net.minecraft.util.text.ITextComponent getDisplayName() {
+        return new net.minecraft.util.text.StringTextComponent(String.valueOf(this));
     }
 }

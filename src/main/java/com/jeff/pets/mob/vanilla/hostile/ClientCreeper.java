@@ -1,19 +1,16 @@
 package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.PowerableMob;
-import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.IChargeableMob;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 
-public class ClientCreeper extends GroundPet implements PowerableMob {
+public class ClientCreeper extends GroundPet implements IChargeableMob {
 
     public boolean isPowered = false;
 
-    public ClientCreeper(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
+    public ClientCreeper(EntityType<? extends net.minecraft.entity.passive.TameableEntity> entityType, net.minecraft.world.World level) {
         super(entityType, level);
     }
 

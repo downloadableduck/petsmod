@@ -2,22 +2,21 @@ package com.jeff.pets.client.rendering.vanilla.parrot;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientParrot;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientParrotRenderer extends PetRenderer<@NotNull ClientParrot, @NotNull ClientParrotModel> {
+public class ClientParrotRenderer extends PetRenderer<ClientParrot, ClientParrotModel> {
 
     String parrotTexturePath;
 
-    public ClientParrotRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
+    public ClientParrotRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
         super(context, new ClientParrotModel(), 0.3F);
     }
 
-    public @NotNull ResourceLocation getTextureLocation(ClientParrot parrotRenderState) {
+    public ResourceLocation getTextureLocation(ClientParrot parrotRenderState) {
         if (Objects.equals(CONFIG.parrotSkin, "red")) {
             parrotTexturePath = "textures/entity/parrot/parrot_red_blue.png";
         } else if (Objects.equals(CONFIG.parrotSkin, "blue")) {
@@ -37,8 +36,8 @@ public class ClientParrotRenderer extends PetRenderer<@NotNull ClientParrot, @No
     /*@Override
     public void extractRenderState(ClientParrot parrot, ParrotRenderState state, float f) {
         super.extractRenderState(parrot, state, f);
-        float flap = Mth.lerp(f, parrot.oFlap, parrot.flap);
-        float flapSpeed = Mth.lerp(f, parrot.oFlapSpeed, parrot.flapSpeed);
-        parrot.flapAngle = (Mth.sin(flap) + 1.0F) * flapSpeed;
+        float flap = net.minecraft.util.math.MathHelper.lerp(f, parrot.oFlap, parrot.flap);
+        float flapSpeed = net.minecraft.util.math.MathHelper.lerp(f, parrot.oFlapSpeed, parrot.flapSpeed);
+        parrot.flapAngle = (net.minecraft.util.math.MathHelper.sin(flap) + 1.0F) * flapSpeed;
     }*/
 }

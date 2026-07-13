@@ -1,16 +1,13 @@
 package com.jeff.pets.client.rendering.vanilla.zombievillager;
 
 import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.client.renderer.entity.IEntityRenderer;
+import net.minecraft.client.renderer.entity.layers.LayerRenderer;
+import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientZombieVillagerProfessionLayer extends RenderLayer<@NotNull ClientZombieVillager, ClientZombieVillagerModel> {
+public class ClientZombieVillagerProfessionLayer extends LayerRenderer<ClientZombieVillager, ClientZombieVillagerModel> {
 
     public static final ResourceLocation ARMORER_LOCATION = new ResourceLocation("minecraft", "textures/entity/zombie_villager/profession/armorer.png");
     public static final ResourceLocation BUTCHER_LOCATION = new ResourceLocation("minecraft", "textures/entity/zombie_villager/profession/butcher.png");
@@ -27,12 +24,12 @@ public class ClientZombieVillagerProfessionLayer extends RenderLayer<@NotNull Cl
     public static final ResourceLocation TOOLSMITH_LOCATION = new ResourceLocation("minecraft", "textures/entity/zombie_villager/profession/toolsmith.png");
     public static final ResourceLocation WEAPONSMITH_LOCATION = new ResourceLocation("minecraft", "textures/entity/zombie_villager/profession/weaponsmith.png");
 
-    public ClientZombieVillagerProfessionLayer(RenderLayerParent<@NotNull ClientZombieVillager, @NotNull ClientZombieVillagerModel> renderLayerParent) {
+    public ClientZombieVillagerProfessionLayer(IEntityRenderer<ClientZombieVillager, ClientZombieVillagerModel> renderLayerParent) {
         super(renderLayerParent);
     }
 
     @Override
-    public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource source, int i, ClientZombieVillager entityRenderState, float f, float g, float h, float k, float l, float u) {
+    public void render(com.mojang.blaze3d.matrix.MatrixStack poseStack, net.minecraft.client.renderer.IRenderTypeBuffer source, int i, ClientZombieVillager entityRenderState, float f, float g, float h, float k, float l, float u) {
         poseStack.pushPose();
         poseStack.scale(1.001f, 1.001f, 1.001f);
         if (CONFIG.zombieVillagerSkin.equals("armorer")) {

@@ -2,69 +2,68 @@ package com.jeff.pets.client.rendering.vanilla.ravager;
 
 import com.google.common.collect.ImmutableList;
 import com.jeff.pets.mob.vanilla.hostile.ClientRavager;
-import net.minecraft.client.model.ListModel;
-import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.util.Mth;
+import net.minecraft.client.renderer.entity.model.SegmentedModel;
+import net.minecraft.client.renderer.model.ModelRenderer;
 
-public class ClientRavagerModel extends ListModel<ClientRavager> {
-    private final ModelPart head;
-    private final ModelPart mouth;
-    private final ModelPart body;
-    private final ModelPart leg0;
-    private final ModelPart leg1;
-    private final ModelPart leg2;
-    private final ModelPart leg3;
-    private final ModelPart neck;
+public class ClientRavagerModel extends SegmentedModel<ClientRavager> {
+    private final ModelRenderer head;
+    private final ModelRenderer mouth;
+    private final ModelRenderer body;
+    private final ModelRenderer leg0;
+    private final ModelRenderer leg1;
+    private final ModelRenderer leg2;
+    private final ModelRenderer leg3;
+    private final ModelRenderer neck;
 
     public ClientRavagerModel() {
         this.texWidth = 128;
         this.texHeight = 128;
         int i = 16;
         float f = 0.0F;
-        this.neck = new ModelPart(this);
+        this.neck = new ModelRenderer(this);
         this.neck.setPos(0.0F, -7.0F, -1.5F);
         this.neck.texOffs(68, 73).addBox(-5.0F, -1.0F, -18.0F, 10.0F, 10.0F, 18.0F, 0.0F);
-        this.head = new ModelPart(this);
+        this.head = new ModelRenderer(this);
         this.head.setPos(0.0F, 16.0F, -17.0F);
         this.head.texOffs(0, 0).addBox(-8.0F, -20.0F, -14.0F, 16.0F, 20.0F, 16.0F, 0.0F);
         this.head.texOffs(0, 0).addBox(-2.0F, -6.0F, -18.0F, 4.0F, 8.0F, 4.0F, 0.0F);
-        ModelPart modelPart = new ModelPart(this);
+        ModelRenderer modelPart = new ModelRenderer(this);
         modelPart.setPos(-10.0F, -14.0F, -8.0F);
         modelPart.texOffs(74, 55).addBox(0.0F, -14.0F, -2.0F, 2.0F, 14.0F, 4.0F, 0.0F);
         modelPart.xRot = 1.0995574F;
         this.head.addChild(modelPart);
-        ModelPart modelPart2 = new ModelPart(this);
+        ModelRenderer modelPart2 = new ModelRenderer(this);
         modelPart2.mirror = true;
         modelPart2.setPos(8.0F, -14.0F, -8.0F);
         modelPart2.texOffs(74, 55).addBox(0.0F, -14.0F, -2.0F, 2.0F, 14.0F, 4.0F, 0.0F);
         modelPart2.xRot = 1.0995574F;
         this.head.addChild(modelPart2);
-        this.mouth = new ModelPart(this);
+        this.mouth = new ModelRenderer(this);
         this.mouth.setPos(0.0F, -2.0F, 2.0F);
         this.mouth.texOffs(0, 36).addBox(-8.0F, 0.0F, -16.0F, 16.0F, 3.0F, 16.0F, 0.0F);
         this.head.addChild(this.mouth);
         this.neck.addChild(this.head);
-        this.body = new ModelPart(this);
+        this.body = new ModelRenderer(this);
         this.body.texOffs(0, 55).addBox(-7.0F, -10.0F, -7.0F, 14.0F, 16.0F, 20.0F, 0.0F);
         this.body.texOffs(0, 91).addBox(-6.0F, 6.0F, -7.0F, 12.0F, 13.0F, 18.0F, 0.0F);
         this.body.setPos(0.0F, 1.0F, 2.0F);
-        this.leg0 = new ModelPart(this, 96, 0);
+        this.leg0 = new ModelRenderer(this, 96, 0);
         this.leg0.addBox(-4.0F, 0.0F, -4.0F, 8.0F, 37.0F, 8.0F, 0.0F);
         this.leg0.setPos(-8.0F, -13.0F, 18.0F);
-        this.leg1 = new ModelPart(this, 96, 0);
+        this.leg1 = new ModelRenderer(this, 96, 0);
         this.leg1.mirror = true;
         this.leg1.addBox(-4.0F, 0.0F, -4.0F, 8.0F, 37.0F, 8.0F, 0.0F);
         this.leg1.setPos(8.0F, -13.0F, 18.0F);
-        this.leg2 = new ModelPart(this, 64, 0);
+        this.leg2 = new ModelRenderer(this, 64, 0);
         this.leg2.addBox(-4.0F, 0.0F, -4.0F, 8.0F, 37.0F, 8.0F, 0.0F);
         this.leg2.setPos(-8.0F, -13.0F, -5.0F);
-        this.leg3 = new ModelPart(this, 64, 0);
+        this.leg3 = new ModelRenderer(this, 64, 0);
         this.leg3.mirror = true;
         this.leg3.addBox(-4.0F, 0.0F, -4.0F, 8.0F, 37.0F, 8.0F, 0.0F);
         this.leg3.setPos(8.0F, -13.0F, -5.0F);
     }
 
-    public Iterable<ModelPart> parts() {
+    public Iterable<ModelRenderer> parts() {
         return ImmutableList.of(this.neck, this.body, this.leg0, this.leg1, this.leg2, this.leg3);
     }
 
@@ -73,10 +72,10 @@ public class ClientRavagerModel extends ListModel<ClientRavager> {
         this.head.yRot = i * ((float) Math.PI / 180F);
         this.body.xRot = ((float) Math.PI / 2F);
         float k = 0.4F * g;
-        this.leg0.xRot = Mth.cos(f * 0.6662F) * k;
-        this.leg1.xRot = Mth.cos(f * 0.6662F + (float) Math.PI) * k;
-        this.leg2.xRot = Mth.cos(f * 0.6662F + (float) Math.PI) * k;
-        this.leg3.xRot = Mth.cos(f * 0.6662F) * k;
+        this.leg0.xRot = net.minecraft.util.math.MathHelper.cos(f * 0.6662F) * k;
+        this.leg1.xRot = net.minecraft.util.math.MathHelper.cos(f * 0.6662F + (float) Math.PI) * k;
+        this.leg2.xRot = net.minecraft.util.math.MathHelper.cos(f * 0.6662F + (float) Math.PI) * k;
+        this.leg3.xRot = net.minecraft.util.math.MathHelper.cos(f * 0.6662F) * k;
     }
 
     public void prepareMobModel(ClientRavager ravager, float f, float g, float h) {
@@ -87,22 +86,22 @@ public class ClientRavagerModel extends ListModel<ClientRavager> {
         int l = 0;
         int m = 10;
         if (l > 0) {
-            float n = Mth.triangleWave((float) l - h, 10.0F);
+            float n = net.minecraft.util.math.MathHelper.triangleWave((float) l - h, 10.0F);
             float o = (1.0F + n) * 0.5F;
             float p = o * o * o * 12.0F;
-            float q = p * Mth.sin(this.neck.xRot);
+            float q = p * net.minecraft.util.math.MathHelper.sin(this.neck.xRot);
             this.neck.z = -6.5F + p;
             this.neck.y = -7.0F - q;
-            float r = Mth.sin(((float) l - h) / 10.0F * (float) Math.PI * 0.25F);
+            float r = net.minecraft.util.math.MathHelper.sin(((float) l - h) / 10.0F * (float) Math.PI * 0.25F);
             this.mouth.xRot = ((float) Math.PI / 2F) * r;
             if (l > 5) {
-                this.mouth.xRot = Mth.sin(((float) (-4 + l) - h) / 4.0F) * (float) Math.PI * 0.4F;
+                this.mouth.xRot = net.minecraft.util.math.MathHelper.sin(((float) (-4 + l) - h) / 4.0F) * (float) Math.PI * 0.4F;
             } else {
-                this.mouth.xRot = 0.15707964F * Mth.sin((float) Math.PI * ((float) l - h) / 10.0F);
+                this.mouth.xRot = 0.15707964F * net.minecraft.util.math.MathHelper.sin((float) Math.PI * ((float) l - h) / 10.0F);
             }
         } else {
             float n = -1.0F;
-            float o = -1.0F * Mth.sin(this.neck.xRot);
+            float o = -1.0F * net.minecraft.util.math.MathHelper.sin(this.neck.xRot);
             this.neck.x = 0.0F;
             this.neck.y = -7.0F - o;
             this.neck.z = 5.5F;
@@ -113,7 +112,7 @@ public class ClientRavagerModel extends ListModel<ClientRavager> {
                 double d = (double) i / (double) 40.0F;
                 this.neck.x = (float) Math.sin(d * (double) 10.0F) * 3.0F;
             } else if (j > 0) {
-                float q = Mth.sin(((float) (20 - j) - h) / 20.0F * (float) Math.PI * 0.25F);
+                float q = net.minecraft.util.math.MathHelper.sin(((float) (20 - j) - h) / 20.0F * (float) Math.PI * 0.25F);
                 this.mouth.xRot = ((float) Math.PI / 2F) * q;
             }
         }

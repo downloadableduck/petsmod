@@ -2,24 +2,23 @@ package com.jeff.pets.client.rendering.vanilla.cavespider;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientCaveSpider;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.SpiderModel;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.client.renderer.entity.model.SpiderModel;
+import net.minecraft.util.ResourceLocation;
 
-public class ClientCaveSpiderRenderer extends PetRenderer<@NotNull ClientCaveSpider, @NotNull SpiderModel<ClientCaveSpider>> {
+public class ClientCaveSpiderRenderer extends PetRenderer<ClientCaveSpider, SpiderModel<ClientCaveSpider>> {
 
-    public ClientCaveSpiderRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
+    public ClientCaveSpiderRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
         super(context, new SpiderModel<>(), 0.75f);
     }
 
     @Override
-    protected void scale(ClientCaveSpider caveSpider, PoseStack poseStack, float f) {
+    protected void scale(ClientCaveSpider caveSpider, MatrixStack poseStack, float f) {
         poseStack.scale(0.7F, 0.7F, 0.7F);
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientCaveSpider livingEntityRenderState) {
+    public ResourceLocation getTextureLocation(ClientCaveSpider livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/spider/cave_spider.png");
     }
 }

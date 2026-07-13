@@ -2,18 +2,17 @@ package com.jeff.pets.client.rendering.vanilla.pufferfish;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientPufferFish;
-import net.minecraft.client.model.PufferfishBigModel;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.client.renderer.entity.model.PufferFishBigModel;
+import net.minecraft.util.ResourceLocation;
 
-public class ClientPufferFishRenderer extends PetRenderer<@NotNull ClientPufferFish, @NotNull PufferfishBigModel<ClientPufferFish>> {
+public class ClientPufferFishRenderer extends PetRenderer<ClientPufferFish, PufferFishBigModel<ClientPufferFish>> {
 
-    public ClientPufferFishRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
-        super(context, new PufferfishBigModel<>(), 0.75f);
+    public ClientPufferFishRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+        super(context, new PufferFishBigModel<>(), 0.75f);
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientPufferFish livingEntityRenderState) {
+    public ResourceLocation getTextureLocation(ClientPufferFish livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/fish/pufferfish.png");
     }
 }

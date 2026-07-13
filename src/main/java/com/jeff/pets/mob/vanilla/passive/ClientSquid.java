@@ -2,15 +2,10 @@ package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.Mth;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.entity.EntityType;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 
 @CanFly
 public class ClientSquid extends FlyingPet {
@@ -31,7 +26,7 @@ public class ClientSquid extends FlyingPet {
     private float tz;
 
 
-    public ClientSquid(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
+    public ClientSquid(EntityType<? extends net.minecraft.entity.passive.TameableEntity> entityType, net.minecraft.world.World level) {
         super(entityType, level);
     }
 
@@ -74,7 +69,7 @@ public class ClientSquid extends FlyingPet {
         if (this.isInWaterOrBubble()) {
             if (this.tentacleMovement < (float) Math.PI) {
                 float f = this.tentacleMovement / (float) Math.PI;
-                this.tentacleAngle = Mth.sin(f * f * (float) Math.PI) * (float) Math.PI * 0.25F;
+                this.tentacleAngle = net.minecraft.util.math.MathHelper.sin(f * f * (float) Math.PI) * (float) Math.PI * 0.25F;
                 if ((double) f > (double) 0.75F) {
                     this.speed = 1.0F;
                     this.rotateSpeed = 1.0F;
@@ -91,18 +86,18 @@ public class ClientSquid extends FlyingPet {
                 this.setDeltaMovement(this.tx * this.speed, this.ty * this.speed, this.tz * this.speed);
             }
 
-            Vec3 vec3 = this.getDeltaMovement();
+            net.minecraft.util.math.vector.Vector3d vec3 = this.getDeltaMovement();
             double d = this.horizontalDistance(vec3);
-            this.yBodyRot += (-((float) Mth.atan2(vec3.x, vec3.z)) * (180F / (float) Math.PI) - this.yBodyRot) * 0.1F;
+            this.yBodyRot += (-((float) net.minecraft.util.math.MathHelper.atan2(vec3.x, vec3.z)) * (180F / (float) Math.PI) - this.yBodyRot) * 0.1F;
             this.setYRot(this.yBodyRot);
             this.zBodyRot += (float) Math.PI * this.rotateSpeed * 1.5F;
-            this.xBodyRot += (-((float) Mth.atan2(d, vec3.y)) * (180F / (float) Math.PI) - this.xBodyRot) * 0.1F;
+            this.xBodyRot += (-((float) net.minecraft.util.math.MathHelper.atan2(d, vec3.y)) * (180F / (float) Math.PI) - this.xBodyRot) * 0.1F;
         } else {
-            this.tentacleAngle = Mth.abs(Mth.sin(this.tentacleMovement)) * (float) Math.PI * 0.25F;
+            this.tentacleAngle = net.minecraft.util.math.MathHelper.abs(net.minecraft.util.math.MathHelper.sin(this.tentacleMovement)) * (float) Math.PI * 0.25F;
             if (!this.level.isClientSide) {
                 double e = this.getDeltaMovement().y;
-                if (this.hasEffect(MobEffects.LEVITATION)) {
-                    e = 0.05 * (double) (this.getEffect(MobEffects.LEVITATION).getAmplifier() + 1);
+                if (this.hasEffect(Effects.LEVITATION)) {
+                    e = 0.05 * (double) (this.getEffect(Effects.LEVITATION).getAmplifier() + 1);
                 } else {
                     e -= 1;
                 }
@@ -116,14 +111,14 @@ public class ClientSquid extends FlyingPet {
 
     @Override
     public void setDeltaMovement(double x, double y, double z) {
-        this.setDeltaMovement(new Vec3(x, y, z));
+        this.setDeltaMovement(new net.minecraft.util.math.vector.Vector3d(x, y, z));
         this.tx = (float) x;
         this.ty = (float) y;
         this.tz = (float) z;
     }
 
     @Override
-    public void setDeltaMovement(Vec3 vec3) {
+    public void setDeltaMovement(net.minecraft.util.math.vector.Vector3d vec3) {
         super.setDeltaMovement(vec3);
         double x = vec3.x;
         double y = vec3.y;

@@ -2,12 +2,11 @@ package com.jeff.pets.client;
 
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.vector.Vector3d;
 
 import java.util.Objects;
 
@@ -36,19 +35,19 @@ public class Utils {
     public static void summonPet(AbstractPet entity, String entityName) {
 
         Minecraft minecraft = Minecraft.getInstance();
-        Player player = minecraft.player;
-        ClientLevel world = minecraft.level;
+        ClientPlayerEntity player = minecraft.player;
+        ClientWorld world = minecraft.level;
 
         if (entity == null || world == null || player == null) return;
 
-        Vec3 lookAngle = player.getLookAngle();
+        Vector3d lookAngle = player.getLookAngle();
 
         double x = player.getX() - lookAngle.x * (double) 0.5F;
         double y = player.getY() + (double) 0.5F;
         double z = player.getZ() - lookAngle.z * (double) 0.5F;
 
         entity.setPos(x, y, z);
-        entity.setCustomName(new net.minecraft.network.chat.TextComponent(entityName));
+        entity.setName(entityName);
         world.addEntity(entity.getId(), entity);
         entity.tame(player);
         Central.summonedEntity.add(entity);

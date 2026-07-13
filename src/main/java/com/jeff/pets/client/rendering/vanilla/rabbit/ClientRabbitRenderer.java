@@ -2,28 +2,26 @@ package com.jeff.pets.client.rendering.vanilla.rabbit;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientRabbit;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientRabbitRenderer extends PetRenderer<@NotNull ClientRabbit, @NotNull ClientRabbitModel> {
+public class ClientRabbitRenderer extends PetRenderer<ClientRabbit, ClientRabbitModel> {
     public String rabbitTextureLocation;
 
-    public ClientRabbitRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
+    public ClientRabbitRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
         super(context, new ClientRabbitModel(), 0.3F);
     }
 
     @Override
-    protected void scale(@NotNull ClientRabbit livingEntityRenderState, @NotNull PoseStack poseStack, float f) {
+    protected void scale(ClientRabbit livingEntityRenderState, com.mojang.blaze3d.matrix.MatrixStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientRabbit rabbitRenderState) {
+    public ResourceLocation getTextureLocation(ClientRabbit rabbitRenderState) {
         if (CONFIG.activePet.equals("brown")) {
             rabbitTextureLocation = "textures/entity/rabbit/brown.png";
         } else if (CONFIG.activePet.equals("white")) {

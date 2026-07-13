@@ -1,24 +1,21 @@
 package com.jeff.pets.client;
 
+import com.jeff.pets.client.enums.*;
 import com.jeff.pets.client.mixin.client.SplashManagerMixin;
 import com.jeff.pets.client.mixin.client.TitleScreenRenderingMixin;
 import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.clothconfig2.api.ConfigBuilder;
-import me.shedaniel.clothconfig2.api.ConfigCategory;
-import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
-import me.shedaniel.clothconfig2.impl.builders.BooleanToggleBuilder;
-import me.shedaniel.clothconfig2.impl.builders.DropdownMenuBuilder;
-import me.shedaniel.clothconfig2.impl.builders.EnumSelectorBuilder;
-import me.shedaniel.clothconfig2.impl.builders.StringFieldBuilder;
-import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import me.shedaniel.clothconfig2.forge.api.ConfigBuilder;
+import me.shedaniel.clothconfig2.forge.api.ConfigCategory;
+import me.shedaniel.clothconfig2.forge.api.ConfigEntryBuilder;
+import me.shedaniel.clothconfig2.forge.impl.builders.BooleanToggleBuilder;
+import me.shedaniel.clothconfig2.forge.impl.builders.DropdownMenuBuilder;
+import me.shedaniel.clothconfig2.forge.impl.builders.EnumSelectorBuilder;
+import me.shedaniel.clothconfig2.forge.impl.builders.StringFieldBuilder;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.client.ConfigGuiHandler;
 import net.minecraftforge.fml.common.Mod;
-import com.jeff.pets.client.enums.*;
 
 import java.util.Objects;
 
@@ -74,43 +71,46 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
         modContainer.registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () -> {
             PetsConfig CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
             return ((minecraft, s) -> {
-            ConfigBuilder builder = ConfigBuilder.create()
-                    .setTitle(new net.minecraft.network.chat.TextComponent("Config"))
-                    .setSavingRunnable(() -> {
-                        AutoConfig.getConfigHolder(PetsConfig.class).save();
-                    })
-                    .setTransparentBackground(true);
-            ConfigCategory general = builder.getOrCreateCategory(new net.minecraft.network.chat.TextComponent("Config"));
-            ConfigEntryBuilder entryBuilder = builder.entryBuilder();
-            general.addEntry(this.createPetOnOption(entryBuilder, CONFIG).build());
-            general.addEntry(this.createPetSpeciesOption(entryBuilder, CONFIG).build());
-            general.addEntry(this.createPetNameOption(entryBuilder, CONFIG).build());
-            general.addEntry(this.createPetSkinOption(entryBuilder, CONFIG).build());
-            general.addEntry(this.createBabyOption(entryBuilder, CONFIG).build());
+                ConfigBuilder builder = ConfigBuilder.create()
+                        .setTitle(new net.minecraft.util.text.StringTextComponent("Config"))
+                        .setSavingRunnable(() -> {
+                            AutoConfig.getConfigHolder(PetsConfig.class).save();
+                        })
+                        .setTransparentBackground(true);
+                ConfigCategory general = builder.getOrCreateCategory(new net.minecraft.util.text.StringTextComponent("Config"));
+                ConfigEntryBuilder entryBuilder = builder.entryBuilder();
+                general.addEntry(this.createPetOnOption(entryBuilder, CONFIG).build());
+                general.addEntry(this.createPetSpeciesOption(entryBuilder, CONFIG).build());
+                general.addEntry(this.createPetNameOption(entryBuilder, CONFIG).build());
+                general.addEntry(this.createPetSkinOption(entryBuilder, CONFIG).build());
+                general.addEntry(this.createBabyOption(entryBuilder, CONFIG).build());
 
-            return builder.build();
+                return builder.build();
+            });
         });
-    });
     }
+
     private static String getInstalledAddons() {
         if (PetsClientInitializer.ADDONS.isEmpty()) {
             return "none";
         }
         return String.join(", \n", PetsClientInitializer.ADDONS);
     }
+
     private BooleanToggleBuilder createPetOnOption(ConfigEntryBuilder builder, PetsConfig CONFIG) {
-        return builder.startBooleanToggle(new net.minecraft.network.chat.TextComponent("Pet On"), CONFIG.petOn)
+        return builder.startBooleanToggle(new net.minecraft.util.text.StringTextComponent("Pet On"), CONFIG.petOn)
                 .setSaveConsumer((newVal) -> CONFIG.petOn = newVal);
     }
 
     private DropdownMenuBuilder<String> createPetSpeciesOption(ConfigEntryBuilder builder, PetsConfig CONFIG) {
-        return builder.startStringDropdownMenu(new net.minecraft.network.chat.TextComponent("Pet Species"), CONFIG.activePet)
+        return builder.startStringDropdownMenu(new net.minecraft.util.text.StringTextComponent("Pet Species"), CONFIG.activePet)
                 .setSaveConsumer((newVal) -> {
                     CONFIG.activePet = newVal;
                     Central.despawnPet();
                     Central.summonPet();
                 });
     }
+
     private StringFieldBuilder createPetNameOption(ConfigEntryBuilder builder, PetsConfig CONFIG) {
         String activePet = CONFIG.activePet;
         String defaultVal;
@@ -386,7 +386,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                 defaultVal = "";
                 break;
         }
-        return builder.startStrField(new net.minecraft.network.chat.TextComponent("Pet Name"), defaultVal)
+        return builder.startStrField(new net.minecraft.util.text.StringTextComponent("Pet Name"), defaultVal)
                 .setSaveConsumer((name) -> {
                     if (activePet.equals("penguin")) {
                         CONFIG.penguinName = name;
@@ -685,7 +685,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                 initialValue = (T) PetList.valueOf(CONFIG.activePet.replaceAll(" ", "_"));
                 break;
         }
-        return builder.startEnumSelector(new TextComponent("Pet Skin"), enumClass, initialValue)
+        return builder.startEnumSelector(new StringTextComponent("Pet Skin"), enumClass, initialValue)
                 .setSaveConsumer((value) -> {
                     String val = value.getDisplayName().getString().replace(" ", "_");
                     switch (CONFIG.activePet) {
@@ -1253,7 +1253,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
     }
 
     private BooleanToggleBuilder createBabyOption(ConfigEntryBuilder builder, PetsConfig CONFIG) {
-        return builder.startBooleanToggle(new net.minecraft.network.chat.TextComponent("Baby?"), CONFIG.isBaby)
+        return builder.startBooleanToggle(new net.minecraft.util.text.StringTextComponent("Baby?"), CONFIG.isBaby)
                 .setSaveConsumer((newVal) -> CONFIG.isBaby = newVal);
     }
 }

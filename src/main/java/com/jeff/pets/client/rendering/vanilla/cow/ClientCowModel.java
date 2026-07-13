@@ -1,9 +1,9 @@
 package com.jeff.pets.client.rendering.vanilla.cow;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.CowModel;
-import net.minecraft.world.entity.Entity;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.renderer.entity.model.CowModel;
+import net.minecraft.entity.Entity;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
@@ -14,7 +14,7 @@ public class ClientCowModel<T extends Entity> extends CowModel<T> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int j, float f, float g, float h, float k) {
+    public void renderToBuffer(MatrixStack poseStack, IVertexBuilder vertexConsumer, int i, int j, float f, float g, float h, float k) {
         super.renderToBuffer(poseStack, vertexConsumer, i, j, f, g, h, k);
         poseStack.pushPose();
         if (CONFIG.isBaby) {

@@ -1,15 +1,11 @@
 package com.jeff.pets.mob;
 
 import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
-
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MoverType;
+import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.util.SoundCategory;
 
 import java.util.Objects;
 
@@ -22,7 +18,7 @@ import java.util.Objects;
  */
 public abstract class FlyingPet extends AbstractPet {
 
-    protected FlyingPet(EntityType<? extends  TamableAnimal> type, Level level) {
+    protected FlyingPet(EntityType<? extends TameableEntity> type, net.minecraft.world.World level) {
         super(type, level);
     }
 
@@ -48,29 +44,29 @@ public abstract class FlyingPet extends AbstractPet {
 
             double dx = owner.getX() - this.getX();
             double dz = owner.getZ() - this.getZ();
-            Vec3 ownerPos = owner.position().add(0, owner.getEyeHeight() * 0.8, 0);
-            Vec3 vecToOwner = ownerPos.subtract(this.position());
+            net.minecraft.util.math.vector.Vector3d ownerPos = owner.position().add(0, owner.getEyeHeight() * 0.8, 0);
+            net.minecraft.util.math.vector.Vector3d vecToOwner = ownerPos.subtract(this.position());
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.distanceTo(owner);
             float rotation = this.getRotationVector().x;
             float rotationToOwner = rotation + this.getOwner().getRotationVector().x;
-            float bodyYawDiff = Mth.wrapDegrees(this.getYHeadRot() - this.yBodyRot);
+            float bodyYawDiff = net.minecraft.util.math.MathHelper.wrapDegrees(this.getYHeadRot() - this.yBodyRot);
 
             if (rotationToOwner >= 50) {
-                this.yBodyRot = this.getYHeadRot() - (Mth.sign(bodyYawDiff) * 50.0F);
+                this.yBodyRot = this.getYHeadRot() - (net.minecraft.util.math.MathHelper.sign(bodyYawDiff) * 50.0F);
             }
 
             if (distance > this.stopDistance()) {
 
                 this.animationSpeed = (0.5F);
 
-                Vec3 dir = vecToOwner.normalize();
+                net.minecraft.util.math.vector.Vector3d dir = vecToOwner.normalize();
                 double speed = owner.getSpeed() * 1.5;
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setYHeadRot(this.getYRot());
-                this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.yHeadRot, 50.0f);
+                this.yBodyRot = net.minecraft.util.math.MathHelper.rotateIfNecessary(this.yBodyRot, this.yHeadRot, 50.0f);
 
                 this.setDeltaMovement(dir.x * speed, dir.y * speed, dir.z * speed);
             } else {
@@ -100,9 +96,9 @@ public abstract class FlyingPet extends AbstractPet {
             this.setYHeadRot(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.yBodyRot = this.getYHeadRot() - (Mth.sign(bodyYawDiff) * 50);
+                this.yBodyRot = this.getYHeadRot() - (net.minecraft.util.math.MathHelper.sign(bodyYawDiff) * 50);
             } else {
-                this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.getYHeadRot(), 10);
+                this.yBodyRot = net.minecraft.util.math.MathHelper.rotateIfNecessary(this.yBodyRot, this.getYHeadRot(), 10);
             }
 
             this.move(MoverType.SELF, this.getDeltaMovement());
@@ -119,7 +115,7 @@ public abstract class FlyingPet extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level.playLocalSound(this.getX(), this.getY(), this.getZ(), Objects.requireNonNull(this.getAmbientSound()), SoundSource.AMBIENT, 1.0f, 1.0f, true);
+            level.playLocalSound(this.getX(), this.getY(), this.getZ(), Objects.requireNonNull(this.getAmbientSound()), SoundCategory.AMBIENT, 1.0f, 1.0f, true);
         }
     }
 }

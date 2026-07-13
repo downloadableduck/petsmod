@@ -1,9 +1,0 @@
-accessWidener v2 named
-accessible field net/minecraft/client/gui/screens/ChatScreen commandSuggestions Lnet/minecraft/client/gui/components/CommandSuggestions;
-accessible field net/minecraft/client/model/RabbitModel head Lnet/minecraft/client/model/geom/ModelPart;
-mutable field net/minecraft/client/resources/SplashManager SPLASHES_LOCATION Lnet/minecraft/resources/ResourceLocation;
-accessible field net/minecraft/client/resources/SplashManager SPLASHES_LOCATION Lnet/minecraft/resources/ResourceLocation;
-accessible field net/minecraft/world/entity/LivingEntity jumping Z
-extendable method net/minecraft/world/entity/LivingEntity canBreatheUnderwater ()Z
-accessible method net/minecraft/client/multiplayer/ClientLevel addEntity (ILnet/minecraft/world/entity/Entity;)V
-accessible field net/minecraft/world/level/block/entity/SkullBlockEntity profileCache Lnet/minecraft/server/players/GameProfileCache;

@@ -7,7 +7,7 @@
 # The license for you mod. This is mandatory metadata and allows for easier comprehension of your redistributive properties.
 # Review your options at https://choosealicense.com/. All rights reserved is the default copyright stance, and is thus the default here.
 license = "MIT"
-modLoader="javafml"
+modLoader = "javafml"
 loaderVersion = "[0,)"
 # A URL to refer people to when problems occur with this mod
 issueTrackerURL = "https://github.com/downloadableduck/petsmod/issues" #optional
@@ -98,7 +98,7 @@ mandatory = true
 #modId = "yet_another_config_lib_v3"
 #type = "required"
 #reason = "Yet Another Config Lib is used for creating an easy-to-configure config screen."
- #This version range declares a minimum of the current minecraft version up to but not including the next major version
+#This version range declares a minimum of the current minecraft version up to but not including the next major version
 #versionRange = "[0,)"
 #ordering = "NONE"
 #side = "BOTH"

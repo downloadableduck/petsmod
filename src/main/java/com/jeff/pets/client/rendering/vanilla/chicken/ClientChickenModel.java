@@ -1,12 +1,10 @@
 package com.jeff.pets.client.rendering.vanilla.chicken;
 
 import com.jeff.pets.mob.vanilla.passive.ClientChicken;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.ChickenModel;
-import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.util.Mth;
-import org.jetbrains.annotations.NotNull;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.renderer.entity.model.ChickenModel;
+import net.minecraft.client.renderer.model.ModelRenderer;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
@@ -17,20 +15,20 @@ public class ClientChickenModel<T extends ClientChicken> extends ChickenModel<T>
     }
 
     @Override
-    public void setupAnim(@NotNull T state, float f, float g, float h, float i, float j) {
+    public void setupAnim(T state, float f, float g, float h, float i, float j) {
         h = getBob(state, f);
-        ModelPart head = this.headParts().iterator().next();
+        ModelRenderer head = this.headParts().iterator().next();
         super.setupAnim(state, f, g, h, i, j);
     }
 
     protected float getBob(ClientChicken chicken, float f) {
-        float g = Mth.lerp(f, chicken.oFlap, chicken.flap);
-        float h = Mth.lerp(f, chicken.oFlapSpeed, chicken.flapSpeed);
-        return (Mth.sin(g) + 1.0F) * h;
+        float g = net.minecraft.util.math.MathHelper.lerp(f, chicken.oFlap, chicken.flap);
+        float h = net.minecraft.util.math.MathHelper.lerp(f, chicken.oFlapSpeed, chicken.flapSpeed);
+        return (net.minecraft.util.math.MathHelper.sin(g) + 1.0F) * h;
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int j, float f, float g, float h, float k) {
+    public void renderToBuffer(MatrixStack poseStack, IVertexBuilder vertexConsumer, int i, int j, float f, float g, float h, float k) {
         super.renderToBuffer(poseStack, vertexConsumer, i, j, f, g, h, k);
         poseStack.pushPose();
         if (CONFIG.isBaby) {

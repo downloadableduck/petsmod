@@ -1,8 +1,8 @@
 package com.jeff.pets.client.mixin.client;
 
 import com.jeff.pets.client.PetsConfig;
-import net.minecraft.client.resources.SplashManager;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.util.Splashes;
+import net.minecraft.util.ResourceLocation;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,13 +19,13 @@ import static com.jeff.pets.client.Central.CONFIG;
  *
  * @see TitleScreenRenderingMixin
  */
-@Mixin(SplashManager.class)
+@Mixin(Splashes.class)
 public class SplashManagerMixin {
 
-    @Redirect(method = "<clinit>", at = @At(value = "FIELD", opcode = Opcodes.PUTSTATIC, target = "Lnet/minecraft/client/resources/SplashManager;SPLASHES_LOCATION:Lnet/minecraft/resources/ResourceLocation;"))
+    /*@Redirect(method = "<clinit>", at = @At(value = "FIELD", opcode = Opcodes.PUTSTATIC, target = "Lnet/minecraft/client/util/Splashes;SPLASHES_LOCATION:Lnet/minecraft/util/ResourceLocation;"))
     private static void redirect(ResourceLocation ResourceLocation) {
-        SplashManager.SPLASHES_LOCATION = CONFIG.customTitleEnabled
+        Splashes.SPLASHES_LOCATION = CONFIG.customTitleEnabled
                 ? new ResourceLocation(MOD_ID, "texts/splashes.txt")
                 : new ResourceLocation("minecraft", "texts/splashes.txt");
-    }
+    }*/
 }

@@ -2,21 +2,20 @@ package com.jeff.pets.client.rendering.vanilla.magmacube;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientMagmaCube;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.SlimeModel;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.client.renderer.entity.model.SlimeModel;
+import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientMagmaCubeRenderer extends PetRenderer<@NotNull ClientMagmaCube, @NotNull SlimeModel<ClientMagmaCube>> {
+public class ClientMagmaCubeRenderer extends PetRenderer<ClientMagmaCube, SlimeModel<ClientMagmaCube>> {
 
-    public ClientMagmaCubeRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
+    public ClientMagmaCubeRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
         super(context, new SlimeModel<>(0), 0.75f);
     }
 
     @Override
-    protected void scale(ClientMagmaCube slimeRenderState, @NotNull PoseStack poseStack, float a) {
+    protected void scale(ClientMagmaCube slimeRenderState, MatrixStack poseStack, float a) {
         int magmaCubeScale;
         switch (CONFIG.magmaCubeSkin) {
             case "small":
@@ -36,7 +35,7 @@ public class ClientMagmaCubeRenderer extends PetRenderer<@NotNull ClientMagmaCub
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientMagmaCube livingEntityRenderState) {
+    public ResourceLocation getTextureLocation(ClientMagmaCube livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/slime/magmacube.png");
     }
 }

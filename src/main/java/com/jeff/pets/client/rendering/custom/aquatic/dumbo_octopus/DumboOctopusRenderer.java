@@ -2,10 +2,8 @@ package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 import static com.jeff.pets.client.Central.CONFIG;
@@ -16,12 +14,12 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
     float direction = 1;
     float speed = 0.5f;
 
-    public DumboOctopusRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
+    public DumboOctopusRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
         super(context, new DumboOctopusModel(), 0.5f);
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(@NotNull DumboOctopus state) {
+    public ResourceLocation getTextureLocation(DumboOctopus state) {
         String path;
         String yellow = "textures/entity/dumbo_octopus/yellow.png";
         String red = "textures/entity/dumbo_octopus/red.png";
@@ -48,7 +46,7 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
     }
 
     @Override
-    public void render(DumboOctopus octopus, float f, float g, PoseStack poseStack, MultiBufferSource source, int i) {
+    public void render(DumboOctopus octopus, float f, float g, com.mojang.blaze3d.matrix.MatrixStack poseStack, IRenderTypeBuffer source, int i) {
         super.render(octopus, f, g, poseStack, source, i);
         float currentSpeed;
         if (i > 67.5f) {

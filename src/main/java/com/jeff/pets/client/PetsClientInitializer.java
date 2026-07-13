@@ -67,8 +67,9 @@ import com.jeff.pets.client.rendering.vanilla.witherskeleton.ClientWitherSkeleto
 import com.jeff.pets.client.rendering.vanilla.wolf.ClientWolfRenderer;
 import com.jeff.pets.client.rendering.vanilla.zombie.ClientZombieRenderer;
 import com.jeff.pets.client.rendering.vanilla.zombievillager.ClientZombieVillagerRenderer;
-import net.minecraft.client.KeyMapping;
-import net.minecraft.client.model.*;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -102,7 +103,7 @@ public class PetsClientInitializer {
 
     public static List<String> ADDONS = new ArrayList<>();
 
-    public static KeyMapping openConfigScreen;
+    public static KeyBinding openConfigScreen;
 
     /**
      * Misc rendering stuff
@@ -116,9 +117,9 @@ public class PetsClientInitializer {
 
     @SubscribeEvent
     public static void printAddons(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> {
-            PetsInitializer.LOGGER.info("PetsMod addons loaded:{}", ADDONS);
-        });
+        //event.enqueueWork(() -> {
+        PetsInitializer.LOGGER.info("PetsMod addons loaded:{}", ADDONS);
+        //});
     }
 
     /*
@@ -286,10 +287,10 @@ public class PetsClientInitializer {
 
     @SubscribeEvent
     void createKeyBinding(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> {
-        openConfigScreen = new KeyMapping("Open Pets Menu", GLFW.GLFW_KEY_P, "petsmod.keymapping");
+        //event.enqueueWork(() -> {
+        openConfigScreen = new KeyBinding("Open Pets Menu", GLFW.GLFW_KEY_P, "petsmod.keymapping");
 
-            ClientRegistry.registerKeyBinding(openConfigScreen);
-        });
+        ClientRegistry.registerKeyBinding(openConfigScreen);
+        //});
     }
 }

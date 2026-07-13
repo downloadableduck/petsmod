@@ -2,51 +2,50 @@ package com.jeff.pets.client.rendering.vanilla.wolf;
 
 import com.google.common.collect.ImmutableList;
 import com.jeff.pets.mob.vanilla.neutral.ClientWolf;
-import net.minecraft.client.model.ColorableAgeableListModel;
-import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.util.Mth;
+import net.minecraft.client.renderer.entity.model.TintedAgeableModel;
+import net.minecraft.client.renderer.model.ModelRenderer;
 
-public class ClientWolfModel extends ColorableAgeableListModel<ClientWolf> {
-    private final ModelPart head;
-    private final ModelPart realHead;
-    private final ModelPart body;
-    private final ModelPart leg0;
-    private final ModelPart leg1;
-    private final ModelPart leg2;
-    private final ModelPart leg3;
-    private final ModelPart tail;
-    private final ModelPart realTail;
-    private final ModelPart upperBody;
+public class ClientWolfModel extends TintedAgeableModel<ClientWolf> {
+    private final ModelRenderer head;
+    private final ModelRenderer realHead;
+    private final ModelRenderer body;
+    private final ModelRenderer leg0;
+    private final ModelRenderer leg1;
+    private final ModelRenderer leg2;
+    private final ModelRenderer leg3;
+    private final ModelRenderer tail;
+    private final ModelRenderer realTail;
+    private final ModelRenderer upperBody;
 
     public ClientWolfModel() {
         float f = 0.0F;
         float g = 13.5F;
-        this.head = new ModelPart(this, 0, 0);
+        this.head = new ModelRenderer(this, 0, 0);
         this.head.setPos(-1.0F, 13.5F, -7.0F);
-        this.realHead = new ModelPart(this, 0, 0);
+        this.realHead = new ModelRenderer(this, 0, 0);
         this.realHead.addBox(-2.0F, -3.0F, -2.0F, 6.0F, 6.0F, 4.0F, 0.0F);
         this.head.addChild(this.realHead);
-        this.body = new ModelPart(this, 18, 14);
+        this.body = new ModelRenderer(this, 18, 14);
         this.body.addBox(-3.0F, -2.0F, -3.0F, 6.0F, 9.0F, 6.0F, 0.0F);
         this.body.setPos(0.0F, 14.0F, 2.0F);
-        this.upperBody = new ModelPart(this, 21, 0);
+        this.upperBody = new ModelRenderer(this, 21, 0);
         this.upperBody.addBox(-3.0F, -3.0F, -3.0F, 8.0F, 6.0F, 7.0F, 0.0F);
         this.upperBody.setPos(-1.0F, 14.0F, 2.0F);
-        this.leg0 = new ModelPart(this, 0, 18);
+        this.leg0 = new ModelRenderer(this, 0, 18);
         this.leg0.addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, 0.0F);
         this.leg0.setPos(-2.5F, 16.0F, 7.0F);
-        this.leg1 = new ModelPart(this, 0, 18);
+        this.leg1 = new ModelRenderer(this, 0, 18);
         this.leg1.addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, 0.0F);
         this.leg1.setPos(0.5F, 16.0F, 7.0F);
-        this.leg2 = new ModelPart(this, 0, 18);
+        this.leg2 = new ModelRenderer(this, 0, 18);
         this.leg2.addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, 0.0F);
         this.leg2.setPos(-2.5F, 16.0F, -4.0F);
-        this.leg3 = new ModelPart(this, 0, 18);
+        this.leg3 = new ModelRenderer(this, 0, 18);
         this.leg3.addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, 0.0F);
         this.leg3.setPos(0.5F, 16.0F, -4.0F);
-        this.tail = new ModelPart(this, 9, 18);
+        this.tail = new ModelRenderer(this, 9, 18);
         this.tail.setPos(-1.0F, 12.0F, 8.0F);
-        this.realTail = new ModelPart(this, 9, 18);
+        this.realTail = new ModelRenderer(this, 9, 18);
         this.realTail.addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, 0.0F);
         this.tail.addChild(this.realTail);
         this.realHead.texOffs(16, 14).addBox(-2.0F, -5.0F, 0.0F, 2.0F, 2.0F, 1.0F, 0.0F);
@@ -54,16 +53,16 @@ public class ClientWolfModel extends ColorableAgeableListModel<ClientWolf> {
         this.realHead.texOffs(0, 10).addBox(-0.5F, 0.0F, -5.0F, 3.0F, 3.0F, 4.0F, 0.0F);
     }
 
-    protected Iterable<ModelPart> headParts() {
+    protected Iterable<ModelRenderer> headParts() {
         return ImmutableList.of(this.head);
     }
 
-    protected Iterable<ModelPart> bodyParts() {
+    protected Iterable<ModelRenderer> bodyParts() {
         return ImmutableList.of(this.body, this.leg0, this.leg1, this.leg2, this.leg3, this.tail, this.upperBody);
     }
 
     public void prepareMobModel(ClientWolf wolf, float f, float g, float h) {
-        this.tail.yRot = Mth.cos(f * 0.6662F) * 1.4F * g;
+        this.tail.yRot = net.minecraft.util.math.MathHelper.cos(f * 0.6662F) * 1.4F * g;
 
         if (wolf.isPassenger()) {
             this.upperBody.setPos(-1.0F, 16.0F, -3.0F);
@@ -90,10 +89,10 @@ public class ClientWolfModel extends ColorableAgeableListModel<ClientWolf> {
             this.leg1.setPos(0.5F, 16.0F, 7.0F);
             this.leg2.setPos(-2.5F, 16.0F, -4.0F);
             this.leg3.setPos(0.5F, 16.0F, -4.0F);
-            this.leg0.xRot = Mth.cos(f * 0.6662F) * 1.4F * g;
-            this.leg1.xRot = Mth.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g;
-            this.leg2.xRot = Mth.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g;
-            this.leg3.xRot = Mth.cos(f * 0.6662F) * 1.4F * g;
+            this.leg0.xRot = net.minecraft.util.math.MathHelper.cos(f * 0.6662F) * 1.4F * g;
+            this.leg1.xRot = net.minecraft.util.math.MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g;
+            this.leg2.xRot = net.minecraft.util.math.MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g;
+            this.leg3.xRot = net.minecraft.util.math.MathHelper.cos(f * 0.6662F) * 1.4F * g;
         }
 
         this.realHead.zRot = 0;

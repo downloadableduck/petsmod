@@ -2,27 +2,26 @@ package com.jeff.pets.client.rendering.vanilla.panda;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientPanda;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientPandaRenderer extends PetRenderer<@NotNull ClientPanda, @NotNull ClientPandaModel> {
+public class ClientPandaRenderer extends PetRenderer<ClientPanda, ClientPandaModel> {
 
-    public ClientPandaRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
+    public ClientPandaRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
         super(context, new ClientPandaModel(9, 0), 0.75f);
     }
 
     @Override
-    protected void scale(ClientPanda state, @NotNull PoseStack poseStack, float f) {
+    protected void scale(ClientPanda state, MatrixStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientPanda livingEntityRenderState) {
+    public ResourceLocation getTextureLocation(ClientPanda livingEntityRenderState) {
         String pandaTexturePath;
         if (CONFIG.pandaSkin.equals("normal")) {
             pandaTexturePath = "textures/entity/panda/panda.png";

@@ -2,21 +2,18 @@ package com.jeff.pets.client.rendering.vanilla.shulker;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientShulker;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientShulkerRenderer extends PetRenderer<@NotNull ClientShulker, @NotNull ClientShulkerModel> {
+public class ClientShulkerRenderer extends PetRenderer<ClientShulker, ClientShulkerModel> {
 
-    public ClientShulkerRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
+    public ClientShulkerRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
         super(context, new ClientShulkerModel(), 0.75f);
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientShulker state) {
+    public ResourceLocation getTextureLocation(ClientShulker state) {
         String shulkerFile;
         String folderPath = "textures/entity/shulker/";
         if (CONFIG.shulkerSkin.equals("normal")) {
@@ -54,7 +51,7 @@ public class ClientShulkerRenderer extends PetRenderer<@NotNull ClientShulker, @
     }
 
     @Override
-    public void render(ClientShulker shulker, float f, float g, PoseStack poseStack, MultiBufferSource source, int i) {
+    public void render(ClientShulker shulker, float f, float g, com.mojang.blaze3d.matrix.MatrixStack poseStack, net.minecraft.client.renderer.IRenderTypeBuffer source, int i) {
         super.render(shulker, f, g, poseStack, source, i);
         shulker.yBodyRot = 180;
         // shulker.peekAmount = 1;

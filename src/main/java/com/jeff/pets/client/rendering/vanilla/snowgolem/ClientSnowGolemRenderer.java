@@ -3,19 +3,19 @@ package com.jeff.pets.client.rendering.vanilla.snowgolem;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientSnowGolem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.SnowGolemModel;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.client.renderer.entity.SnowManRenderer;
+import net.minecraft.client.renderer.entity.model.SnowManModel;
+import net.minecraft.util.ResourceLocation;
 
-public class ClientSnowGolemRenderer extends PetRenderer<@NotNull ClientSnowGolem, @NotNull SnowGolemModel<ClientSnowGolem>> {
+public class ClientSnowGolemRenderer extends PetRenderer<ClientSnowGolem, SnowManModel<ClientSnowGolem>> {
 
-    public ClientSnowGolemRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
-        super(context, new SnowGolemModel<>(), 0.5F);
+    public ClientSnowGolemRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+        super(context, new SnowManModel<>(), 0.5F);
         this.addLayer(new ClientSnowGolemHeadLayer(this, Minecraft.getInstance().getBlockRenderer(), Minecraft.getInstance().getItemRenderer()));
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientSnowGolem snowGolemRenderState) {
+    public ResourceLocation getTextureLocation(ClientSnowGolem snowGolemRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/snow_golem.png");
     }
 

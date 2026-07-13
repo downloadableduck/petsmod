@@ -1,10 +1,9 @@
 package com.jeff.pets.client.rendering.vanilla.panda;
 
 import com.jeff.pets.mob.vanilla.neutral.ClientPanda;
-import net.minecraft.client.model.ModelUtils;
-import net.minecraft.client.model.QuadrupedModel;
-import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.util.Mth;
+import net.minecraft.client.renderer.entity.model.ModelUtils;
+import net.minecraft.client.renderer.entity.model.QuadrupedModel;
+import net.minecraft.client.renderer.model.ModelRenderer;
 
 public class ClientPandaModel extends QuadrupedModel<ClientPanda> {
     private float sitAmount;
@@ -15,27 +14,27 @@ public class ClientPandaModel extends QuadrupedModel<ClientPanda> {
         super(i, f, true, 23.0F, 4.8F, 2.7F, 3.0F, 49);
         this.texWidth = 64;
         this.texHeight = 64;
-        this.head = new ModelPart(this, 0, 6);
+        this.head = new ModelRenderer(this, 0, 6);
         this.head.addBox(-6.5F, -5.0F, -4.0F, 13.0F, 10.0F, 9.0F);
         this.head.setPos(0.0F, 11.5F, -17.0F);
         this.head.texOffs(45, 16).addBox(-3.5F, 0.0F, -6.0F, 7.0F, 5.0F, 2.0F);
         this.head.texOffs(52, 25).addBox(-8.5F, -8.0F, -1.0F, 5.0F, 4.0F, 1.0F);
         this.head.texOffs(52, 25).addBox(3.5F, -8.0F, -1.0F, 5.0F, 4.0F, 1.0F);
-        this.body = new ModelPart(this, 0, 25);
+        this.body = new ModelRenderer(this, 0, 25);
         this.body.addBox(-9.5F, -13.0F, -6.5F, 19.0F, 26.0F, 13.0F);
         this.body.setPos(0.0F, 10.0F, 0.0F);
         int j = 9;
         int k = 6;
-        this.leg0 = new ModelPart(this, 40, 0);
+        this.leg0 = new ModelRenderer(this, 40, 0);
         this.leg0.addBox(-3.0F, 0.0F, -3.0F, 6.0F, 9.0F, 6.0F);
         this.leg0.setPos(-5.5F, 15.0F, 9.0F);
-        this.leg1 = new ModelPart(this, 40, 0);
+        this.leg1 = new ModelRenderer(this, 40, 0);
         this.leg1.addBox(-3.0F, 0.0F, -3.0F, 6.0F, 9.0F, 6.0F);
         this.leg1.setPos(5.5F, 15.0F, 9.0F);
-        this.leg2 = new ModelPart(this, 40, 0);
+        this.leg2 = new ModelRenderer(this, 40, 0);
         this.leg2.addBox(-3.0F, 0.0F, -3.0F, 6.0F, 9.0F, 6.0F);
         this.leg2.setPos(-5.5F, 15.0F, -9.0F);
-        this.leg3 = new ModelPart(this, 40, 0);
+        this.leg3 = new ModelRenderer(this, 40, 0);
         this.leg3.addBox(-3.0F, 0.0F, -3.0F, 6.0F, 9.0F, 6.0F);
         this.leg3.setPos(5.5F, 15.0F, -9.0F);
     }
@@ -55,10 +54,10 @@ public class ClientPandaModel extends QuadrupedModel<ClientPanda> {
         boolean bl3 = false;
         boolean bl4 = false;
         if (bl) {
-            this.head.yRot = 0.35F * Mth.sin(0.6F * h);
-            this.head.zRot = 0.35F * Mth.sin(0.6F * h);
-            this.leg2.xRot = -0.75F * Mth.sin(0.3F * h);
-            this.leg3.xRot = 0.75F * Mth.sin(0.3F * h);
+            this.head.yRot = 0.35F * net.minecraft.util.math.MathHelper.sin(0.6F * h);
+            this.head.zRot = 0.35F * net.minecraft.util.math.MathHelper.sin(0.6F * h);
+            this.leg2.xRot = -0.75F * net.minecraft.util.math.MathHelper.sin(0.3F * h);
+            this.leg3.xRot = 0.75F * net.minecraft.util.math.MathHelper.sin(0.3F * h);
         } else {
             this.head.zRot = 0.0F;
         }
@@ -80,9 +79,9 @@ public class ClientPandaModel extends QuadrupedModel<ClientPanda> {
             this.leg0.zRot = 0.5707964F;
             this.leg1.zRot = -0.5707964F;
             if (bl3) {
-                this.head.xRot = ((float) Math.PI / 2F) + 0.2F * Mth.sin(h * 0.6F);
-                this.leg2.xRot = -0.4F - 0.2F * Mth.sin(h * 0.6F);
-                this.leg3.xRot = -0.4F - 0.2F * Mth.sin(h * 0.6F);
+                this.head.xRot = ((float) Math.PI / 2F) + 0.2F * net.minecraft.util.math.MathHelper.sin(h * 0.6F);
+                this.leg2.xRot = -0.4F - 0.2F * net.minecraft.util.math.MathHelper.sin(h * 0.6F);
+                this.leg3.xRot = -0.4F - 0.2F * net.minecraft.util.math.MathHelper.sin(h * 0.6F);
             }
 
             if (bl4) {
@@ -98,19 +97,19 @@ public class ClientPandaModel extends QuadrupedModel<ClientPanda> {
         }
 
         if (this.lieOnBackAmount > 0.0F) {
-            this.leg0.xRot = -0.6F * Mth.sin(h * 0.15F);
-            this.leg1.xRot = 0.6F * Mth.sin(h * 0.15F);
-            this.leg2.xRot = 0.3F * Mth.sin(h * 0.25F);
-            this.leg3.xRot = -0.3F * Mth.sin(h * 0.25F);
+            this.leg0.xRot = -0.6F * net.minecraft.util.math.MathHelper.sin(h * 0.15F);
+            this.leg1.xRot = 0.6F * net.minecraft.util.math.MathHelper.sin(h * 0.15F);
+            this.leg2.xRot = 0.3F * net.minecraft.util.math.MathHelper.sin(h * 0.25F);
+            this.leg3.xRot = -0.3F * net.minecraft.util.math.MathHelper.sin(h * 0.25F);
             this.head.xRot = ModelUtils.rotlerpRad(this.head.xRot, ((float) Math.PI / 2F), this.lieOnBackAmount);
         }
 
         if (this.rollAmount > 0.0F) {
             this.head.xRot = ModelUtils.rotlerpRad(this.head.xRot, 2.0561945F, this.rollAmount);
-            this.leg0.xRot = -0.5F * Mth.sin(h * 0.5F);
-            this.leg1.xRot = 0.5F * Mth.sin(h * 0.5F);
-            this.leg2.xRot = 0.5F * Mth.sin(h * 0.5F);
-            this.leg3.xRot = -0.5F * Mth.sin(h * 0.5F);
+            this.leg0.xRot = -0.5F * net.minecraft.util.math.MathHelper.sin(h * 0.5F);
+            this.leg1.xRot = 0.5F * net.minecraft.util.math.MathHelper.sin(h * 0.5F);
+            this.leg2.xRot = 0.5F * net.minecraft.util.math.MathHelper.sin(h * 0.5F);
+            this.leg3.xRot = -0.5F * net.minecraft.util.math.MathHelper.sin(h * 0.5F);
         }
 
     }

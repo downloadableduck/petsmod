@@ -1,29 +1,26 @@
 package com.jeff.pets.client.rendering.vanilla.sheep;
 
 import com.jeff.pets.mob.vanilla.passive.ClientSheep;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.client.renderer.entity.IEntityRenderer;
+import net.minecraft.client.renderer.entity.layers.LayerRenderer;
+import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSheepWoolLayer extends RenderLayer<@NotNull ClientSheep, @NotNull ClientSheepModel> {
-    private final EntityModel<@NotNull ClientSheep> model;
+public class ClientSheepWoolLayer extends LayerRenderer<ClientSheep, ClientSheepModel> {
+    private final EntityModel<ClientSheep> model;
     int woolColor;
 
-    public ClientSheepWoolLayer(RenderLayerParent<@NotNull ClientSheep, @NotNull ClientSheepModel> renderLayerParent) {
+    public ClientSheepWoolLayer(IEntityRenderer<ClientSheep, ClientSheepModel> renderLayerParent) {
         super(renderLayerParent);
         this.model = new ClientSheepFurModel();
     }
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource source, int i, ClientSheep sheepRenderState, float f, float a, float h, float j, float k, float l) {
+    public void render(com.mojang.blaze3d.matrix.MatrixStack poseStack, net.minecraft.client.renderer.IRenderTypeBuffer source, int i, ClientSheep sheepRenderState, float f, float a, float h, float j, float k, float l) {
         if (Objects.equals(CONFIG.sheepSkin, "white")) {
             woolColor = 15132390;
         } else if (Objects.equals(CONFIG.sheepSkin, "orange")) {

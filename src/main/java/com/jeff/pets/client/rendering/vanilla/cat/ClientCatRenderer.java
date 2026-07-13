@@ -2,28 +2,25 @@ package com.jeff.pets.client.rendering.vanilla.cat;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientCat;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientCatRenderer extends PetRenderer<@NotNull ClientCat, @NotNull ClientCatModel> {
+public class ClientCatRenderer extends PetRenderer<ClientCat, ClientCatModel> {
 
-    public ClientCatRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
+    public ClientCatRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
         super(context, new ClientCatModel(0), 0.7F);
     }
 
     @Override
-    protected void scale(ClientCat state, @NotNull PoseStack poseStack, float f) {
+    protected void scale(ClientCat state, com.mojang.blaze3d.matrix.MatrixStack poseStack, float f) {
         if (CONFIG.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientCat livingEntityRenderState) {
+    public ResourceLocation getTextureLocation(ClientCat livingEntityRenderState) {
         switch (CONFIG.catSkin) {
             case "black":
                 return new ResourceLocation("minecraft", "textures/entity/cat/all_black.png");
@@ -55,7 +52,7 @@ public class ClientCatRenderer extends PetRenderer<@NotNull ClientCat, @NotNull 
     }
 
     @Override
-    public void render(ClientCat cat, float f, float g, PoseStack poseStack, MultiBufferSource source, int i) {
+    public void render(ClientCat cat, float f, float g, com.mojang.blaze3d.matrix.MatrixStack poseStack, net.minecraft.client.renderer.IRenderTypeBuffer source, int i) {
         super.render(cat, f, g, poseStack, source, i);
         cat.setInSittingPose(cat.isPassenger());
     }

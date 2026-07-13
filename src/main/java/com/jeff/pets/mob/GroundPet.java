@@ -1,15 +1,11 @@
 package com.jeff.pets.mob;
 
 import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
-
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MoverType;
+import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.util.SoundCategory;
 
 import java.util.Objects;
 
@@ -22,7 +18,7 @@ import java.util.Objects;
 public abstract class GroundPet extends AbstractPet {
     private int waitingTime;
 
-    public GroundPet(EntityType<? extends  TamableAnimal> type, Level level) {
+    public GroundPet(EntityType<? extends TameableEntity> type, net.minecraft.world.World level) {
         super(type, level);
     }
 
@@ -60,22 +56,22 @@ public abstract class GroundPet extends AbstractPet {
             double distance = this.distanceTo(owner);
             float rotation = this.getRotationVector().x;
             float rotationToOwner = rotation + this.getOwner().getRotationVector().x;
-            float bodyYawDiff = Mth.wrapDegrees(this.getYHeadRot() - this.yBodyRot);
+            float bodyYawDiff = net.minecraft.util.math.MathHelper.wrapDegrees(this.getYHeadRot() - this.yBodyRot);
 
             if (rotationToOwner >= 50) {
-                this.yBodyRot = this.getYHeadRot() - (Mth.sign(bodyYawDiff) * 50.0F);
+                this.yBodyRot = this.getYHeadRot() - (net.minecraft.util.math.MathHelper.sign(bodyYawDiff) * 50.0F);
             }
 
             if (distance > this.stopDistance()) {
 
                 this.animationSpeed = (0.5F);
 
-                Vec3 targetPos = owner.position();
-                Vec3 dir = targetPos.subtract(this.position()).normalize();
+                net.minecraft.util.math.vector.Vector3d targetPos = owner.position();
+                net.minecraft.util.math.vector.Vector3d dir = targetPos.subtract(this.position()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setYHeadRot(this.getYRot());
-                this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.yHeadRot, 50.0f);
+                this.yBodyRot = net.minecraft.util.math.MathHelper.rotateIfNecessary(this.yBodyRot, this.yHeadRot, 50.0f);
 
                 double speed = owner.getSpeed() * 2.0;
                 this.setDeltaMovement(dir.x * speed, this.getDeltaMovement().y, dir.z * speed);
@@ -112,9 +108,9 @@ public abstract class GroundPet extends AbstractPet {
             this.setYHeadRot(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.yBodyRot = this.getYHeadRot() - (Mth.sign(bodyYawDiff) * 50);
+                this.yBodyRot = this.getYHeadRot() - (net.minecraft.util.math.MathHelper.sign(bodyYawDiff) * 50);
             } else {
-                this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.getYHeadRot(), 10);
+                this.yBodyRot = net.minecraft.util.math.MathHelper.rotateIfNecessary(this.yBodyRot, this.getYHeadRot(), 10);
             }
 
             this.move(MoverType.SELF, this.getDeltaMovement());
@@ -133,7 +129,7 @@ public abstract class GroundPet extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level.playLocalSound(this.getX(), this.getY(), this.getZ(), Objects.requireNonNull(this.getAmbientSound()), SoundSource.NEUTRAL, 1.0f, 1.0f, true);
+            level.playLocalSound(this.getX(), this.getY(), this.getZ(), Objects.requireNonNull(this.getAmbientSound()), SoundCategory.NEUTRAL, 1.0f, 1.0f, true);
         }
     }
 }

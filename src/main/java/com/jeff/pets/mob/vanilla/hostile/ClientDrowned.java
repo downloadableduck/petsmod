@@ -1,18 +1,15 @@
 package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.entity.EntityType;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 
 public class ClientDrowned extends GroundPet {
 
     public boolean isOnHead;
 
-    public ClientDrowned(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
+    public ClientDrowned(EntityType<? extends net.minecraft.entity.passive.TameableEntity> entityType, net.minecraft.world.World level) {
         super(entityType, level);
     }
 

@@ -2,23 +2,22 @@ package com.jeff.pets.client.rendering.vanilla.bat;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientBat;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.util.ResourceLocation;
 
-public class ClientBatRenderer extends PetRenderer<@NotNull ClientBat, @NotNull ClientBatModel> {
+public class ClientBatRenderer extends PetRenderer<ClientBat, ClientBatModel> {
 
-    public ClientBatRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context) {
+    public ClientBatRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
         super(context, new ClientBatModel(), 0.25F);
     }
 
     @Override
-    protected void scale(ClientBat bat, PoseStack poseStack, float f) {
+    protected void scale(ClientBat bat, MatrixStack poseStack, float f) {
         poseStack.scale(0.35F, 0.35F, 0.35F);
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientBat batRenderState) {
+    public ResourceLocation getTextureLocation(ClientBat batRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/bat.png");
     }
 }

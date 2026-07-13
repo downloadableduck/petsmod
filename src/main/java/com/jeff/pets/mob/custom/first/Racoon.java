@@ -1,45 +1,36 @@
 package com.jeff.pets.mob.custom.first;
 
 import com.jeff.pets.mob.AbstractPet;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.Mth;
+import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.IPacket;
+import net.minecraft.network.play.server.SSpawnObjectPacket;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.IWorld;
 
 import static com.jeff.pets.PetsInitializer.Entities.RACOON;
 
 public class Racoon extends AbstractPet {
 
-    public static final EntityDataAccessor<@NotNull Boolean> IS_SERVER_ENTITY =
-            SynchedEntityData.defineId(Racoon.class, EntityDataSerializers.BOOLEAN);
+    public static final net.minecraft.network.datasync.DataParameter<Boolean> IS_SERVER_ENTITY =
+            net.minecraft.network.datasync.EntityDataManager.defineId(Racoon.class, net.minecraft.network.datasync.DataSerializers.BOOLEAN);
     public boolean isOnHead;
 
-    public Racoon(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
+    public Racoon(EntityType<? extends net.minecraft.entity.passive.TameableEntity> entityType, net.minecraft.world.World level) {
         super(entityType, level);
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0F).add(Attributes.MOVEMENT_SPEED, 0.23F);
+    public static AttributeModifierMap.MutableAttribute createAttributes() {
+        return AnimalEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0F).add(Attributes.MOVEMENT_SPEED, 0.23F);
     }
 
     @Override
@@ -58,21 +49,21 @@ public class Racoon extends AbstractPet {
     }
 
     @Override
-    public @Nullable SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData groupData, CompoundTag compoundTag) {
+    public ILivingEntityData finalizeSpawn(final IWorld level, final DifficultyInstance difficulty, SpawnReason mobSpawnType, final ILivingEntityData groupData, CompoundNBT compoundTag) {
         this.setServerEntity(true);
-        return super.finalizeSpawn(level, difficulty, spawnReason, groupData, compoundTag);
+        return super.finalizeSpawn(level, difficulty, mobSpawnType, groupData, compoundTag);
     }
 
     @Override
     public void registerGoals() {
 
         this.goalSelector.addGoal(1, new BreedGoal(this, 1));
-        this.goalSelector.addGoal(2, new FloatGoal(this));
+        this.goalSelector.addGoal(2, new SwimGoal(this));
         this.goalSelector.addGoal(3, new PanicGoal(this, 1.4d));
         this.goalSelector.addGoal(4, new TemptGoal(this, 1.0f, Ingredient.of(Items.SKELETON_SKULL, Items.WITHER_SKELETON_SKULL), false));
 
-        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(5, new LookRandomlyGoal(this));
+        this.goalSelector.addGoal(6, new RandomWalkingGoal(this, 1.0D));
         this.goalSelector.addGoal(8, new FollowOwnerGoal(this, 1, 2, 10, false));
     }
 
@@ -91,7 +82,7 @@ public class Racoon extends AbstractPet {
     }
 
     @Override
-    public boolean isFood(@NotNull ItemStack itemStack) {
+    public boolean isFood(ItemStack itemStack) {
         return itemStack.sameItem(new ItemStack(Items.SWEET_BERRIES));
     }
 
@@ -120,22 +111,22 @@ public class Racoon extends AbstractPet {
             double distance = this.distanceTo(owner);
             float rotation = this.getRotationVector().x;
             float rotationToOwner = rotation + this.getOwner().getRotationVector().x;
-            float bodyYawDiff = Mth.wrapDegrees(this.getYHeadRot() - this.yBodyRot);
+            float bodyYawDiff = net.minecraft.util.math.MathHelper.wrapDegrees(this.getYHeadRot() - this.yBodyRot);
 
             if (rotationToOwner >= 50) {
-                this.yBodyRot = this.getYHeadRot() - (Mth.sign(bodyYawDiff) * 50.0F);
+                this.yBodyRot = this.getYHeadRot() - (net.minecraft.util.math.MathHelper.sign(bodyYawDiff) * 50.0F);
             }
 
             if (distance > 2.0) {
 
                 this.animationSpeed = (0.5F);
 
-                Vec3 targetPos = owner.position();
-                Vec3 dir = targetPos.subtract(this.position()).normalize();
+                net.minecraft.util.math.vector.Vector3d targetPos = owner.position();
+                net.minecraft.util.math.vector.Vector3d dir = targetPos.subtract(this.position()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setYHeadRot(this.getYRot());
-                this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.yHeadRot, 50.0f);
+                this.yBodyRot = net.minecraft.util.math.MathHelper.rotateIfNecessary(this.yBodyRot, this.yHeadRot, 50.0f);
 
                 double speed = owner.getSpeed() * 2;
                 this.setDeltaMovement(dir.x * speed, this.getDeltaMovement().y, dir.z * speed);
@@ -168,9 +159,9 @@ public class Racoon extends AbstractPet {
             this.setYHeadRot(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.yBodyRot = this.getYHeadRot() - (Mth.sign(bodyYawDiff) * 50);
+                this.yBodyRot = this.getYHeadRot() - (net.minecraft.util.math.MathHelper.sign(bodyYawDiff) * 50);
             } else {
-                this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.getYHeadRot(), 10);
+                this.yBodyRot = net.minecraft.util.math.MathHelper.rotateIfNecessary(this.yBodyRot, this.getYHeadRot(), 10);
             }
 
             this.move(MoverType.SELF, this.getDeltaMovement());
@@ -192,23 +183,23 @@ public class Racoon extends AbstractPet {
     }
 
     @Override
-    public @Nullable AgableMob getBreedOffspring(@NotNull ServerLevel serverLevel, @NotNull AgableMob AgableMob) {
-        Racoon racoon = RACOON.get().create(serverLevel);
+    public AgeableEntity getBreedOffspring(AgeableEntity AgableMob) {
+        Racoon racoon = RACOON.get().create(level);
         racoon.setServerEntity(false);
         return racoon;
     }
 
     @Override
-    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
+    public void onSyncedDataUpdated(net.minecraft.network.datasync.DataParameter<?> key) {
         if (!this.level.isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
     }
 
     @Override
-    public @NotNull Packet<?> getAddEntityPacket() {
+    public IPacket<?> getAddEntityPacket() {
         if (this.level.isClientSide()) {
-            return new ClientboundAddEntityPacket(this);
+            return new SSpawnObjectPacket(this);
         } else {
             return super.getAddEntityPacket();
         }

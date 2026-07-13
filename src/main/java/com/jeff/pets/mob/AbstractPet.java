@@ -1,30 +1,25 @@
 package com.jeff.pets.mob;
 
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.AgableMob;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
-
-
+import net.minecraft.entity.AgeableEntity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.IPacket;
+import net.minecraft.network.play.server.SSpawnObjectPacket;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.World;
 
 /**
- * Abstract class that extends {@link TamableAnimal}, providing multiple utilities
+ * Abstract class that extends {@link net.minecraft.entity.passive.TameableEntity}, providing multiple utilities
  * so that each class doesn't have to define the same logic. <p> When creating a custom entity,
  * always extend either {@link GroundPet}, {@link FlyingPet}, or {@link SlimeLikePet},
  * unless adding custom movement logic,
@@ -35,20 +30,20 @@ import net.minecraft.world.phys.Vec3;
  * @see FlyingPet
  * @see GroundPet
  */
-public abstract class AbstractPet extends TamableAnimal {
+public abstract class AbstractPet extends TameableEntity {
 
     protected int waitingTime = 0;
     private boolean isReturningToOwner = false;
     private float randomX = (float) (Math.random() - 1f);
     private float randomZ = (float) (Math.random() - 1);
 
-    protected AbstractPet(EntityType<? extends  TamableAnimal> type, Level level) {
+    protected AbstractPet(EntityType<? extends TameableEntity> type, World level) {
         super(type, level);
         this.setSpeed(0.5f);
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0F).add(Attributes.MOVEMENT_SPEED, 0.23F);
+    public static AttributeModifierMap.MutableAttribute createAttributes() {
+        return AnimalEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0F).add(Attributes.MOVEMENT_SPEED, 0.23F);
     }
 
     /**
@@ -85,7 +80,7 @@ public abstract class AbstractPet extends TamableAnimal {
      *                 this.getZ(),
      *                 5, 5, 5
      *         );
-     *         return InteractionResult.SUCCESS;
+     *         return ActionResultType.SUCCESS;
      *     }}</pre>
      * - Shifting and right clicking on a pet with an empty hand will pick it up:
      * <pre>
@@ -93,11 +88,11 @@ public abstract class AbstractPet extends TamableAnimal {
      *         if (!this.isPassenger()) {
      *             this.startRiding(player);
      *             this.lookAt(player, 1f, 1f);
-     *             return InteractionResult.SUCCESS;
+     *             return ActionResultType.SUCCESS;
      *         } else {
      *             this.stopRiding();
      *         }
-     *         return InteractionResult.SUCCESS;
+     *         return ActionResultType.SUCCESS;
      *     }
      *     }
      * </pre>
@@ -105,7 +100,7 @@ public abstract class AbstractPet extends TamableAnimal {
      * @return It's super method
      */
     @Override
-    public  InteractionResult mobInteract( Player player,  InteractionHand hand) {
+    public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
 
         if (this.isTame() && itemStack.isEmpty() && !player.isShiftKeyDown()) {
@@ -116,18 +111,18 @@ public abstract class AbstractPet extends TamableAnimal {
                     this.getZ(),
                     5, 5, 5
             );
-            return InteractionResult.SUCCESS;
+            return ActionResultType.SUCCESS;
         }
 
         if (this.isTame() && itemStack.isEmpty() && player.isShiftKeyDown()) {
             if (!this.isPassenger()) {
                 this.startRiding(player);
                 this.lookAt(player, 1f, 1f);
-                return InteractionResult.SUCCESS;
+                return ActionResultType.SUCCESS;
             } else {
                 this.stopRiding();
             }
-            return InteractionResult.SUCCESS;
+            return ActionResultType.SUCCESS;
         }
         return super.mobInteract(player, hand);
     }
@@ -137,7 +132,7 @@ public abstract class AbstractPet extends TamableAnimal {
      * <p> Calls: It's super method, if the level is not client-sided.
      */
     @Override
-    public void onSyncedDataUpdated( EntityDataAccessor<?> key) {
+    public void onSyncedDataUpdated(net.minecraft.network.datasync.DataParameter<?> key) {
         if (this.level != null && !this.level.isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
@@ -148,9 +143,9 @@ public abstract class AbstractPet extends TamableAnimal {
      * Never, under any circumstances, remove this method.
      */
     @Override
-    public  Packet<?> getAddEntityPacket() {
+    public IPacket<?> getAddEntityPacket() {
         if (this.level.isClientSide()) {
-            return new ClientboundAddEntityPacket(this);
+            return new SSpawnObjectPacket(this);
         } else {
             return super.getAddEntityPacket();
         }
@@ -163,7 +158,7 @@ public abstract class AbstractPet extends TamableAnimal {
      * Make sure to override this when using a custom-made mob.
      */
     @Override
-    public boolean isFood( ItemStack itemStack) {
+    public boolean isFood(ItemStack itemStack) {
         return false;
     }
 
@@ -174,20 +169,20 @@ public abstract class AbstractPet extends TamableAnimal {
      * @return {@code null}
      */
     @Override
-    public  AgableMob getBreedOffspring( ServerLevel serverLevel,  AgableMob AgableMob) {
+    public AgeableEntity getBreedOffspring(AgeableEntity AgableMob) {
         return null;
     }
 
     /**
-     * Easier way to call {@link TamableAnimal#setCustomName} that takes a String rather than a {@link Component}
+     * Easier way to call {@link net.minecraft.entity.passive.TameableEntity#setCustomName} that takes a String rather than a {@link Component}
      */
     public void setName(String string) {
-        this.setCustomName(new net.minecraft.network.chat.TextComponent(string));
+        this.setCustomName(new StringTextComponent(string));
     }
 
     public void wander() {
         float speed = (float) (this.getSpeed() - 0.35);
-        Vec3 lookDir;
+        net.minecraft.util.math.vector.Vector3d lookDir;
         float z = speed * this.randomZ;
 
         float distance = this.distanceTo(this.getOwner());
@@ -202,9 +197,9 @@ public abstract class AbstractPet extends TamableAnimal {
         }
 
         if (!this.isReturningToOwner) {
-            this.setDeltaMovement(new Vec3(speed, yVelo, z));
+            this.setDeltaMovement(new net.minecraft.util.math.vector.Vector3d(speed, yVelo, z));
         } else {
-            this.setDeltaMovement(new Vec3(-speed, yVelo, -z));
+            this.setDeltaMovement(new net.minecraft.util.math.vector.Vector3d(-speed, yVelo, -z));
         }
 
         //this.lookAt(EntityAnchorArgument.Anchor.EYES, lookDir);
@@ -212,7 +207,7 @@ public abstract class AbstractPet extends TamableAnimal {
         double moveX = this.getDeltaMovement().x;
         double moveZ = this.getDeltaMovement().z;
 
-        lookDir = new Vec3(
+        lookDir = new net.minecraft.util.math.vector.Vector3d(
                 this.getX() + (moveX * 2),
                 this.getY() + this.getEyeHeight(),
                 this.getZ() + (moveZ * 2)
@@ -221,7 +216,7 @@ public abstract class AbstractPet extends TamableAnimal {
 
         if (moveX * moveX + moveZ * moveZ > 0.001) {
             float targetYaw = (float) (Math.atan2(-moveX, moveZ) * (180D / Math.PI));
-            float smoothYaw = net.minecraft.util.Mth.rotLerp(0.2f, this.getYRot(), targetYaw);
+            float smoothYaw = MathHelper.rotLerp(0.2f, this.getYRot(), targetYaw);
 
             this.setYRot(smoothYaw);
             this.setYHeadRot(smoothYaw);
@@ -256,7 +251,8 @@ public abstract class AbstractPet extends TamableAnimal {
         this.randomX = (float) (Math.random() - 1);
         this.randomZ = (float) (Math.random() - 1);
     }
-    public double horizontalDistance(Vec3 vec3) {
+
+    public double horizontalDistance(net.minecraft.util.math.vector.Vector3d vec3) {
         return Math.sqrt(vec3.x * vec3.x + vec3.z * vec3.z);
     }
 }
