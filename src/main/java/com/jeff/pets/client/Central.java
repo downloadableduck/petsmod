@@ -32,7 +32,6 @@ import com.mojang.brigadier.tree.RootCommandNode;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
@@ -1664,13 +1663,11 @@ public class Central implements ClientModInitializer {
      * - If the user's pet preference is set to {@code on} but no pet exists in the world, and vice versa
      * - Generates a random number for {@link #petSkin}, which used to be used for <a href="https://modrinth.com/mod/pets-natural">Pets Natural</a> and <a href="https://modrinth.com/mod/duck--mod">DuckMod</a>.
      */
-    void createTickWatcher() {
-        ClientTickEvents.END_CLIENT_TICK.register((client) -> client.execute(() -> {
-            ++this.i;
+    public static void createTickWatcher() {
             Minecraft minecraft = Minecraft.getInstance();
             ClientLevel world = minecraft.level;
             petSkin = (int) (Math.random() * (double) 3.0F);
-            if (client.player != null && CONFIG.petOn && summonedEntity.isEmpty()) {
+            if (minecraft.player != null && CONFIG.petOn && summonedEntity.isEmpty()) {
                 summonPet();
             }
 
@@ -1682,8 +1679,6 @@ public class Central implements ClientModInitializer {
             }
 
             refreshPetNames();
-
-        }));
     }
 
     /**

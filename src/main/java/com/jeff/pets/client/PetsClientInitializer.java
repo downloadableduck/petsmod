@@ -68,8 +68,6 @@ import com.jeff.pets.client.rendering.vanilla.wolf.ClientWolfRenderer;
 import com.jeff.pets.client.rendering.vanilla.zombie.ClientZombieRenderer;
 import com.jeff.pets.client.rendering.vanilla.zombievillager.ClientZombieVillagerRenderer;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.minecraft.client.KeyMapping;
@@ -97,6 +95,7 @@ import static com.jeff.pets.PetsInitializer.LOGGER;
 public class PetsClientInitializer implements ClientModInitializer {
 
     public static List<String> ADDONS = new ArrayList<>();
+    public static KeyMapping keyMapping;
 
     /**
      * Misc rendering stuff
@@ -172,10 +171,6 @@ public class PetsClientInitializer implements ClientModInitializer {
         EntityRendererRegistry.INSTANCE.register(PetsInitializer.DUMBO_OCTOPUS, DumboOctopusRenderer::new);
         EntityRendererRegistry.INSTANCE.register(PetsInitializer.KOI, KoiRenderer::new);
         EntityRendererRegistry.INSTANCE.register(PetsInitializer.STINGRAY, StingrayRenderer::new);
-
-        ClientLifecycleEvents.CLIENT_STARTED.register((mc) -> {
-            LOGGER.info("PetsMod addons loaded:{}", ADDONS);
-        });
     }
 
     /**
@@ -183,12 +178,6 @@ public class PetsClientInitializer implements ClientModInitializer {
      * is pressed
      */
     void createKeyBinding() {
-        KeyMapping keyMapping = KeyBindingHelper.registerKeyBinding(new KeyMapping("Open Pets Menu", GLFW.GLFW_KEY_P, "petsmod.keymapping"));
-
-        ClientTickEvents.END_CLIENT_TICK.register((client) -> {
-            if (keyMapping.consumeClick()) {
-                client.setScreen(PetsConfigScreen.getInstance().getModConfigScreenFactory().create(client.screen));
-            }
-        });
+        keyMapping = KeyBindingHelper.registerKeyBinding(new KeyMapping("Open Pets Menu", GLFW.GLFW_KEY_P, "petsmod.keymapping"));
     }
 }

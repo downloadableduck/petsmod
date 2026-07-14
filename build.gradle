@@ -48,7 +48,7 @@ dependencies {
     modApi "maven.modrinth:9s6osm5g:mJwBHBVB" // cloth config
     // Fabric API. This is technically optional, but you probably want it anyway.
     modApi "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
-    modApi("maven.modrinth:mOgUt4GM:${project.modmenu_version}") //modmenu
+    //modApi("maven.modrinth:mOgUt4GM:${project.modmenu_version}") //modmenu
     implementation("blue.endless:jankson:${rootProject.jankson_version}")
     implementation("com.moandjiezana.toml:toml4j:${rootProject.toml4j_version}")
     modImplementation "me.shedaniel.cloth:basic-math:0.6.1"
