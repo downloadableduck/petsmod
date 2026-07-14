@@ -52,7 +52,7 @@ dependencies {
     implementation("blue.endless:jankson:${rootProject.jankson_version}")
     implementation("com.moandjiezana.toml:toml4j:${rootProject.toml4j_version}")
     modImplementation "me.shedaniel.cloth:basic-math:0.6.1"
-    include "me.shedaniel:cloth-basic-math:0.6.1"
+    //include "me.shedaniel:cloth-basic-math:0.6.1"
     //modApi "dev.isxander:yet-another-config-lib:${project.yacl_version}"
     //modApi "maven.modrinth:yacl:${project.yacl_version}"
    // modImplementation "org.quiltmc.parsers:gson:0.2.1"
