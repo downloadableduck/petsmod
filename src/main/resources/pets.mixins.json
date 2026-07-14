@@ -12,5 +12,8 @@
   },
   "overwrites": {
     "requireAnnotations": true
-  }
+  },
+  "client": [
+    "ClientPlayJoinHandlerMixin"
+  ]
 }

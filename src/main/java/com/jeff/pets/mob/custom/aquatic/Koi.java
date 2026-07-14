@@ -22,7 +22,7 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
@@ -78,13 +78,13 @@ public class Koi extends FlyingPet {
         this.playSound(SoundEvents.FISH_SWIM, 0.15F, 1.0F);
     }
 
-    public @Nullable Koi getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgableMob partner) {
+    public @Nullable Koi getBreedOffspring(final @NotNull AgableMob partner) {
         Koi koi = KOI.create(level);
         koi.setServerEntity(true);
         return koi;
     }
 
-    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull MobSpawnType spawnReason, final @Nullable SpawnGroupData groupData, CompoundTag compoundTag) {
+    public SpawnGroupData finalizeSpawn(final @NotNull LevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull MobSpawnType spawnReason, final @Nullable SpawnGroupData groupData, CompoundTag compoundTag) {
         this.setServerEntity(true);
         return super.finalizeSpawn(level, difficulty, spawnReason, groupData, compoundTag);
     }

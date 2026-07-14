@@ -174,7 +174,7 @@ public abstract class AbstractPet extends TamableAnimal {
      * @return {@code null}
      */
     @Override
-    public @Nullable AgableMob getBreedOffspring(@NotNull ServerLevel serverLevel, @NotNull AgableMob AgableMob) {
+    public @Nullable AgableMob getBreedOffspring(@NotNull AgableMob AgableMob) {
         return null;
     }
 
@@ -256,6 +256,7 @@ public abstract class AbstractPet extends TamableAnimal {
         this.randomX = (float) (Math.random() - 1);
         this.randomZ = (float) (Math.random() - 1);
     }
+
     public double horizontalDistance(Vec3 vec3) {
         return Math.sqrt(vec3.x * vec3.x + vec3.z * vec3.z);
     }

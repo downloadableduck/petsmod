@@ -73,6 +73,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -186,7 +187,7 @@ public class PetsClientInitializer implements ClientModInitializer {
 
         ClientTickEvents.END_CLIENT_TICK.register((client) -> {
             if (keyMapping.consumeClick()) {
-                client.setScreen(PetsConfigScreen.getInstance().getModConfigScreenFactory());
+                client.setScreen(PetsConfigScreen.getInstance().getModConfigScreenFactory().create(client.screen));
             }
         });
     }

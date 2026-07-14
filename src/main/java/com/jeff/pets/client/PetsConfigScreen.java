@@ -1,13 +1,14 @@
 package com.jeff.pets.client;
 
 import com.jeff.pets.client.enums.*;
+import io.github.prospector.modmenu.api.ConfigScreenFactory;
+import io.github.prospector.modmenu.api.ModMenuApi;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.clothconfig2.impl.builders.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.TextComponent;
 
 import java.util.Objects;
@@ -19,7 +20,7 @@ import java.util.Objects;
  * @see Central
  */
 @SuppressWarnings({"unchecked", ""})
-public class PetsConfigScreen<T extends Enum & NameableEnum> {
+public class PetsConfigScreen<T extends Enum & NameableEnum> implements ModMenuApi {
 
     private static final PetsConfigScreen INSTANCE = new PetsConfigScreen();
 
@@ -72,13 +73,14 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
      * @see SplashManagerMixin
      * @see TitleScreenRenderingMixin
      */
-    public Screen getModConfigScreenFactory() {
+    public ConfigScreenFactory<?> getModConfigScreenFactory() {
+        return parentScreen -> {
             PetsConfig CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
             ConfigBuilder builder = ConfigBuilder.create()
                     .setTitle(new TextComponent("Config"))
                     .setSavingRunnable(() -> {
                         AutoConfig.getConfigHolder(PetsConfig.class).save();
-                        Minecraft.getInstance().setScreen(this.getModConfigScreenFactory());
+                        Minecraft.getInstance().setScreen(this.getModConfigScreenFactory().create(parentScreen));
                     })
                     .setTransparentBackground(true);
             ConfigCategory general = builder.getOrCreateCategory(new TextComponent("Config"));
@@ -91,6 +93,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
 
             return builder.build();
         };
+    }
 
 
     private BooleanToggleBuilder createPetOnOption(ConfigEntryBuilder builder, PetsConfig CONFIG) {

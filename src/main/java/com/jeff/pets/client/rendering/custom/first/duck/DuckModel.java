@@ -84,9 +84,6 @@ public class DuckModel extends PetModel<@NotNull Duck> {
 
     @Override
     public void setupAnim(final Duck state, float f, float g, float h, float i, float j) {
-        System.out.println("Y:" + this.root.y);
-        System.out.println("X:" + this.root.x);
-        System.out.println("Z: " + this.root.z);
         float flapAngle = state.isOnGround() ? 0 : (Mth.sin(h) + 1.0F) * state.flapSpeed;
         this.head.xRot = j * ((float) Math.PI / 180F);
         this.head.yRot = i * ((float) Math.PI / 180F);

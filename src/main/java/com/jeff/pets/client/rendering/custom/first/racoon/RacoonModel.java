@@ -4,7 +4,6 @@ import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.first.Racoon;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.FoxModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;

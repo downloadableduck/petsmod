@@ -26,7 +26,7 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
@@ -99,13 +99,13 @@ public class DumboOctopus extends FlyingPet {
         this.playSound(SoundEvents.CHICKEN_STEP, 0.15F, 1.0F);
     }
 
-    public @Nullable DumboOctopus getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgableMob partner) {
+    public @Nullable DumboOctopus getBreedOffspring(final @NotNull AgableMob partner) {
         DumboOctopus octopus = DUMBO_OCTOPUS.create(level);
         octopus.setServerEntity(true);
         return octopus;
     }
 
-    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull MobSpawnType spawnReason, final @Nullable SpawnGroupData groupData, CompoundTag compoundTag) {
+    public SpawnGroupData finalizeSpawn(final @NotNull LevelAccessor level, final @NotNull DifficultyInstance difficulty, final @NotNull MobSpawnType spawnReason, final @Nullable SpawnGroupData groupData, CompoundTag compoundTag) {
         this.setServerEntity(true);
         this.entityData.set(OCTOPUS_SKIN, this.random.nextInt(6));
         return super.finalizeSpawn(level, difficulty, spawnReason, groupData, compoundTag);

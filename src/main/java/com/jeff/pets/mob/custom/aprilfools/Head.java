@@ -24,7 +24,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -44,8 +44,8 @@ public class Head extends AbstractPet {
     }
 
     @Override
-    public @Nullable AgableMob getBreedOffspring(@NotNull ServerLevel serverLevel, @NotNull AgableMob AgableMob) {
-        return HEAD.create(serverLevel);
+    public @Nullable AgableMob getBreedOffspring(@NotNull AgableMob AgableMob) {
+        return HEAD.create(level);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class Head extends AbstractPet {
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(final @NotNull ServerLevelAccessor level, final @NotNull DifficultyInstance difficulty, MobSpawnType mobSpawnType, final @Nullable SpawnGroupData groupData, CompoundTag compoundTag) {
+    public SpawnGroupData finalizeSpawn(final @NotNull LevelAccessor level, final @NotNull DifficultyInstance difficulty, MobSpawnType mobSpawnType, final @Nullable SpawnGroupData groupData, CompoundTag compoundTag) {
         this.setServerEntity(true);
         return super.finalizeSpawn(level, difficulty, mobSpawnType, groupData, compoundTag);
     }

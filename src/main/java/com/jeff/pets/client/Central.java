@@ -23,22 +23,24 @@ import com.jeff.pets.mob.vanilla.hostile.*;
 import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
+import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import com.mojang.brigadier.tree.RootCommandNode;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
-import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
+import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.Entity;
@@ -70,9 +72,9 @@ public class Central implements ClientModInitializer {
     public static final List<String> PIGLIN_SKINS = ImmutableList.of("piglin", "zombified", "brute");
     //public static final List<String> WOLF_SKINS = ImmutableList.of("pale", "ashen", "black", "chestnut", "rusty", "snowy", "spotted", "striped", "woods");
     public static final List<String> PETS_LIST = new ArrayList<>();
-    public static final SuggestionProvider<FabricClientCommandSource> PETS = (context, builder) ->
+    public static final SuggestionProvider<CommandSourceStack> PETS = (context, builder) ->
             SharedSuggestionProvider.suggest(PETS_LIST, builder);
-    private static final SuggestionProvider<SharedSuggestionProvider> ON_OFF = (context, builder) -> SharedSuggestionProvider.suggest(new String[]{"off", "on"}, builder);
+    private static final SuggestionProvider<CommandSourceStack> ON_OFF = (context, builder) -> SharedSuggestionProvider.suggest(new String[]{"off", "on"}, builder);
     private static final List<String> DUCK_SKINS = ImmutableList.of("mallard", "pekin", "rubber", "bronze");
     private static final List<String> CAT_SKINS = ImmutableList.of("black", "tuxedo", "british shorthair", "calico", "jellie", "ocelot", "persian", "ragdoll", "red", "siamese", "tabby", "white");
     private static final List<String> AXOLOTL_SKINS = ImmutableList.of("pink", "brown", "gold", "cyan", "blue");
@@ -166,7 +168,7 @@ public class Central implements ClientModInitializer {
     public static Koi koi;
     public static Stingray stingray;
 
-    private final SuggestionProvider<FabricClientCommandSource> SKINS = (context, builder) -> {
+    private final SuggestionProvider<CommandSourceStack> SKINS = (context, builder) -> {
         String remaining = builder.getRemaining().toLowerCase();
 
         for (String s : currentSuggestions) {
@@ -737,7 +739,7 @@ public class Central implements ClientModInitializer {
             commandRoot.getExamples().clear();
         }
 
-        ClientCommandManager.DISPATCHER.register(ClientCommandManager.literal("petskin").then(ClientCommandManager.argument("skin", StringArgumentType.greedyString())
+        CommandRegistrationCallback.EVENT.register((a, b) -> a.register(LiteralArgumentBuilder.<CommandSourceStack>literal("petskin").then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("skin", StringArgumentType.greedyString())
                 .suggests(this.SKINS)
                 .executes((context) -> {
                     boolean isValid = true;
@@ -1281,14 +1283,14 @@ public class Central implements ClientModInitializer {
                     }
 
                     if (isValid) {
-                        context.getSource().sendFeedback(new TextComponent("§b[PetsMod] §aYour pet's skin has been updated."));
+                        Minecraft.getInstance().player.displayClientMessage(new TextComponent("§b[PetsMod] §aYour pet's skin has been updated."), false);
                     } else {
-                        context.getSource().sendFeedback(new TextComponent("§b[PetsMod] §cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else."));
+                        Minecraft.getInstance().player.displayClientMessage(new TextComponent("§b[PetsMod] §cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else."), false);
                     }
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
 
                     return 1;
-                })));
+                }))));
     }
 
     /**
@@ -1497,18 +1499,18 @@ public class Central implements ClientModInitializer {
      * Creates the command that allows the user to use {@code /teleportpet}.
      */
     void createPetTeleportCommand() {
-        ClientCommandManager.DISPATCHER.register(ClientCommandManager.literal("teleportpet").executes((context) -> {
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(LiteralArgumentBuilder.<CommandSourceStack>literal("teleportpet").executes((context) -> {
             despawnPet();
             summonPet();
             return 1;
-        }));
+        })));
     }
 
     /**
      * Creates the command that allows the user to use {@code /petspecies}.
      */
     void createPetSpeciesCommand() {
-        ClientCommandManager.DISPATCHER.register(ClientCommandManager.literal("petspecies").then(ClientCommandManager.argument("species", StringArgumentType.greedyString()).suggests(PETS).executes((context) -> {
+        CommandRegistrationCallback.EVENT.register((a, b) -> a.register(LiteralArgumentBuilder.<CommandSourceStack>literal("petspecies").then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("species", StringArgumentType.greedyString()).suggests(PETS).executes((context) -> {
             boolean isValid = true;
             String species = StringArgumentType.getString(context, "species");
 
@@ -1653,7 +1655,7 @@ public class Central implements ClientModInitializer {
             AutoConfig.getConfigHolder(PetsConfig.class).save();
             updateSuggestions(Minecraft.getInstance());
             return 1;
-        })));
+        }))));
     }
 
     /**
@@ -1688,19 +1690,19 @@ public class Central implements ClientModInitializer {
      * Creates a help command to let the user easily view the commands at their disposal.
      */
     void createPetHelpCommand() {
-        ClientCommandManager.DISPATCHER.register(ClientCommandManager.literal("pethelp").executes(context -> {
-            context.getSource().getPlayer().displayClientMessage(new TextComponent(
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(LiteralArgumentBuilder.<CommandSourceStack>literal("pethelp").executes(context -> {
+            Minecraft.getInstance().player.displayClientMessage(new TextComponent(
                     "§b[PetsMod] §aPossible commands: §a/pethelp: §rdisplays a list of commands §a/pet <on/off> §rtoggles whether your pet will appear or not§a/petspecies <species>: §rchanges the species of your pet§a/petskin <skin>: §rchanges the skin of your selected pet§a/teleportpet: §rteleports your pet to you. will not work if you are not on the ground.§a/petname: §rchanges the name of your currently selected pet"
-), false);
+            ), false);
             return 1;
-        }));
+        })));
     }
 
     /**
      * Creates the command that allows the user to change their pet's name.
      */
     void createPetNameCommand() {
-        ClientCommandManager.DISPATCHER.register(ClientCommandManager.literal("petname").then(ClientCommandManager.argument("name", StringArgumentType.greedyString()).executes((context) -> {
+        CommandRegistrationCallback.EVENT.register((a, b) -> a.register(LiteralArgumentBuilder.<CommandSourceStack>literal("petname").then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("name", StringArgumentType.greedyString()).executes((context) -> {
             String name = StringArgumentType.getString(context, "name");
             if (!summonedEntity.isEmpty()) {
                 if (CONFIG.activePet.equals("penguin")) {
@@ -1906,40 +1908,38 @@ public class Central implements ClientModInitializer {
             }
 
             return 1;
-        })));
+        }))));
     }
 
     /**
      * Creates the command that allows the user to toggle their pet on and off.
      */
     void createToggleCommand() {
-        ClientCommandManager.DISPATCHER.register(ClientCommandManager.literal("pet").then(ClientCommandManager.argument("preference", StringArgumentType.string()).suggests((context, builder) -> ON_OFF.getSuggestions((CommandContext<SharedSuggestionProvider>) (CommandContext) context, builder)).executes((context) -> {
+        CommandRegistrationCallback.EVENT.register((a, b) -> a.register(LiteralArgumentBuilder.<CommandSourceStack>literal("pet").then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("preference", StringArgumentType.string()).suggests((CommandContext<CommandSourceStack> context, SuggestionsBuilder builder) -> ON_OFF.getSuggestions(context, builder)).executes((context) -> {
             String preference = StringArgumentType.getString(context, "preference");
             if (Objects.equals(preference, "off")) {
                 CONFIG.petOn = false;
-                context.getSource().sendFeedback(new TextComponent("§b[PetsMod] §7Pet §coff."));
+                Minecraft.getInstance().player.displayClientMessage(new TextComponent("§b[PetsMod] §7Pet §coff."), false);
                 AutoConfig.getConfigHolder(PetsConfig.class).save();
             } else if (Objects.equals(preference, "on")) {
                 CONFIG.petOn = true;
                 AutoConfig.getConfigHolder(PetsConfig.class).save();
-                context.getSource().sendFeedback(new TextComponent("§b[PetsMod] §7Pet §aon."));
+                Minecraft.getInstance().player.displayClientMessage(new TextComponent("§b[PetsMod] §7Pet §aon."), false);
             } else {
-                context.getSource().sendFeedback(new TextComponent("§b[PetsMod] §c§lUnknown value " + preference + "! Possible values: §r§aon, §6off"));
+                Minecraft.getInstance().player.displayClientMessage(new TextComponent("§b[PetsMod] §c§lUnknown value " + preference + "! Possible values: §r§aon, §6off"), false);
             }
 
             return 1;
-        })));
+        }))));
     }
 
     /**
      * Clears the summon entities when the player joins a world so they are re-summoned
      */
-    void createJoinHandler() {
-        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
-            List var10001 = summonedEntity;
-            Objects.requireNonNull(var10001);
-            client.execute(var10001::clear);
-        });
+    public static void createJoinHandler() {
+        List var10001 = summonedEntity;
+        Objects.requireNonNull(var10001);
+        Minecraft.getInstance().execute(var10001::clear);
     }
 
     void createPetsList() {
@@ -1974,15 +1974,15 @@ public class Central implements ClientModInitializer {
         Collections.addAll(PETS_LIST, stuffs);
     }
 
-    public void checkValidPet(boolean isValid, CommandContext<FabricClientCommandSource> context, String species) {
+    public void checkValidPet(boolean isValid, CommandContext<CommandSourceStack> context, String species) {
         if (!isValid) {
-            context.getSource().sendFeedback(new TextComponent("§b[PetsMod] §cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")"));
+            Minecraft.getInstance().player.displayClientMessage(new TextComponent("§b[PetsMod] §cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")"), false);
         } else if (isValid && CONFIG.petOn) {
             despawnPet();
-            context.getSource().sendFeedback(new TextComponent("§b[PetsMod] §aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + "."));
+            Minecraft.getInstance().player.displayClientMessage(new TextComponent("§b[PetsMod] §aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + "."), false);
             summonPet();
         } else if (isValid && !CONFIG.petOn) {
-            context.getSource().sendFeedback(new TextComponent("§b[PetsMod] §cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet enabled. Run §l/pet on§r§c to change this."));
+            Minecraft.getInstance().player.displayClientMessage(new TextComponent("§b[PetsMod] §cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet enabled. Run §l/pet on§r§c to change this."), false);
         }
     }
 }
