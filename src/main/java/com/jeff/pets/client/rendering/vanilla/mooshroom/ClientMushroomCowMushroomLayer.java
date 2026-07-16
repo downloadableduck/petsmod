@@ -30,7 +30,7 @@ public class ClientMushroomCowMushroomLayer extends RenderLayer<ClientMooshroom,
     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, ClientMooshroom mushroomCow, float f, float g, float h, float j, float k, float l) {
         if (!mushroomCow.isBaby()) {
             Minecraft minecraft = Minecraft.getInstance();
-            boolean bl = minecraft.shouldEntityAppearGlowing(mushroomCow) && mushroomCow.isInvisible();
+            boolean bl = mushroomCow.isGlowing() && mushroomCow.isInvisible();
             if (!mushroomCow.isInvisible() || bl) {
                 BlockState blockState = CONFIG.mooshroomSkin.equals("brown") ? Blocks.BROWN_MUSHROOM.defaultBlockState() : Blocks.RED_MUSHROOM.defaultBlockState();
                 int m = LivingEntityRenderer.getOverlayCoords(mushroomCow, 0.0F);

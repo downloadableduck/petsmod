@@ -162,4 +162,7 @@ public class Utils {
         }
         return Blocks.AIR;
     }
+    public static float triangleWave(float p_78172_1_, float p_78172_2_) {
+        return (Math.abs(p_78172_1_ % p_78172_2_ - p_78172_2_ * 0.5F) - p_78172_2_ * 0.25F) / (p_78172_2_ * 0.25F);
+    }
 }

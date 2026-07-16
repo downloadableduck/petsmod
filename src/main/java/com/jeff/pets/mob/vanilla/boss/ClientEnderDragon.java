@@ -58,7 +58,7 @@ public class ClientEnderDragon extends FlyingPet {
     }
 
     public double[] getLatencyPos(int i, float f) {
-        if (this.isDeadOrDying()) {
+        if (this.dead) {
             f = 0.0F;
         }
 

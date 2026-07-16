@@ -33,7 +33,7 @@ public class ClientSnowGolemHeadLayer extends RenderLayer<ClientSnowGolem, SnowG
 
     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, ClientSnowGolem snowGolem, float f, float g, float h, float j, float k, float l) {
         if (CONFIG.snowGolemSkin.equals("pumpkin_on")) {
-            boolean bl = Minecraft.getInstance().shouldEntityAppearGlowing(snowGolem) && snowGolem.isInvisible();
+            boolean bl = snowGolem.isGlowing() && snowGolem.isInvisible();
             if (!snowGolem.isInvisible() || bl) {
                 poseStack.pushPose();
                 this.getParentModel().getHead().translateAndRotate(poseStack);

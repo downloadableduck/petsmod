@@ -25,10 +25,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 public class ConfigEntry {
-    
+
     private ConfigEntry() {
     }
-    
+
     /**
      * Sets the category name of the config entry. Categories are created in order.
      */
@@ -37,7 +37,7 @@ public class ConfigEntry {
     public @interface Category {
         String value();
     }
-    
+
     /**
      * Applies to int and long fields.
      * Sets the GUI to a slider.
@@ -47,10 +47,10 @@ public class ConfigEntry {
     @Target(ElementType.FIELD)
     public @interface BoundedDiscrete {
         long min() default 0;
-        
+
         long max();
     }
-    
+
     /**
      * Applies to int fields.
      * Sets the GUI to a color picker.
@@ -73,11 +73,11 @@ public class ConfigEntry {
 //
 //        double max();
 //    }
-    
+
     public static class Gui {
         private Gui() {
         }
-        
+
         /**
          * Removes the field from the config GUI.
          */
@@ -85,7 +85,7 @@ public class ConfigEntry {
         @Target(ElementType.FIELD)
         public @interface Excluded {
         }
-        
+
         /**
          * Applies to objects.
          * Adds GUI entries for the field's inner fields at the same level as this field.
@@ -94,7 +94,7 @@ public class ConfigEntry {
         @Target(ElementType.FIELD)
         public @interface TransitiveObject {
         }
-        
+
         /**
          * Applies to objects.
          * Adds GUI entries for the field's inner fields in a collapsible section.
@@ -104,7 +104,7 @@ public class ConfigEntry {
         public @interface CollapsibleObject {
             boolean startExpanded() default false;
         }
-        
+
         /**
          * Applies a tooltip to list entries that support it, defined in your lang file.
          */
@@ -113,16 +113,16 @@ public class ConfigEntry {
         public @interface Tooltip {
             int count() default 1;
         }
-        
+
         /**
          * Applies no tooltip to list entries that support it, defined in your lang file.
          */
         @Retention(RetentionPolicy.RUNTIME)
         @Target(ElementType.FIELD)
         public @interface NoTooltip {
-            
+
         }
-        
+
         /**
          * Applies a section of text right before this entry, defined in your lang file.
          */
@@ -130,7 +130,7 @@ public class ConfigEntry {
         @Target(ElementType.FIELD)
         public @interface PrefixText {
         }
-        
+
         /**
          * Requires restart if the field is modified.
          */
@@ -139,7 +139,7 @@ public class ConfigEntry {
         public @interface RequiresRestart {
             boolean value() default true;
         }
-        
+
         /**
          * Defines how an enum is handled
          */
@@ -147,7 +147,7 @@ public class ConfigEntry {
         @Target(ElementType.FIELD)
         public @interface EnumHandler {
             EnumDisplayOption option() default EnumDisplayOption.DROPDOWN;
-            
+
             enum EnumDisplayOption {
                 DROPDOWN,
                 BUTTON

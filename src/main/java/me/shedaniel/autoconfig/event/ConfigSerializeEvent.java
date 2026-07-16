@@ -24,8 +24,9 @@ import me.shedaniel.autoconfig.ConfigHolder;
 import net.minecraft.world.InteractionResult;
 
 public final class ConfigSerializeEvent {
-    private ConfigSerializeEvent() {}
-    
+    private ConfigSerializeEvent() {
+    }
+
     @FunctionalInterface
     public interface Save<T extends ConfigData> {
         /**
@@ -43,7 +44,7 @@ public final class ConfigSerializeEvent {
          */
         InteractionResult onSave(ConfigHolder<T> manager, T data);
     }
-    
+
     @FunctionalInterface
     public interface Load<T extends ConfigData> {
         /**

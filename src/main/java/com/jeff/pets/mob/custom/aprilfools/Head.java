@@ -7,7 +7,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -15,8 +14,6 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -37,10 +34,6 @@ public class Head extends AbstractPet {
 
     public Head(final EntityType<? extends @NotNull Head> type, final Level level) {
         super(type, level);
-    }
-
-    public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 12.0F).add(Attributes.MOVEMENT_SPEED, 0.25F);
     }
 
     @Override
@@ -110,7 +103,7 @@ public class Head extends AbstractPet {
     }
 
     @Override
-    public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
+    public boolean mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
 
         double x = this.getX();
@@ -146,12 +139,12 @@ public class Head extends AbstractPet {
             if (!this.isPassenger()) {
                 this.startRiding(player);
                 this.lookAt(player, 1f, 1f);
-                this.setOrderedToSit(true);
+                this.setSitting(true);
             } else {
                 this.stopRiding();
             }
         }
-        return InteractionResult.SUCCESS;
+        return true;
     }
 
     @Override
@@ -165,7 +158,7 @@ public class Head extends AbstractPet {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
                 } else {
-                    this.setOrderedToSit(true);
+                    this.setSitting(true);
                 }
             }
 

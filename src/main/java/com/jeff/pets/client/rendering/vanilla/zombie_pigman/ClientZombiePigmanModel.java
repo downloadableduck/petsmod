@@ -1,21 +1,20 @@
-package com.jeff.pets.client.rendering.vanilla.zombie;
+package com.jeff.pets.client.rendering.vanilla.zombie_pigman;
 
 import com.jeff.pets.client.rendering.AnimationUtils;
-import com.jeff.pets.mob.AbstractPet;
+import com.jeff.pets.mob.vanilla.neutral.ClientZombiePigman;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.ZombieModel;
+import net.minecraft.client.model.ListModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.CrossbowItem;
-import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.client.Central.CONFIG;
-
-public class ClientZombieModel<T extends AbstractPet> extends EntityModel<@NotNull T> {
+public class ClientZombiePigmanModel extends EntityModel<ClientZombiePigman> {
     private final ModelPart head;
     private final ModelPart headwear;
     private final ModelPart body;
@@ -29,7 +28,7 @@ public class ClientZombieModel<T extends AbstractPet> extends EntityModel<@NotNu
     public float swimAmount;
     private float itemUseTicks;
 
-    public ClientZombieModel() {
+    public ClientZombiePigmanModel() {
         texWidth = 64;
         texHeight = 64;
 
@@ -47,7 +46,7 @@ public class ClientZombieModel<T extends AbstractPet> extends EntityModel<@NotNu
 
         left_arm = new ModelPart(this);
         left_arm.setPos(5.0F, 2.0F, 0.0F);
-        left_arm.texOffs(40, 16).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.0F, true);
+        left_arm.texOffs(40, 16).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.0F, false);
 
         right_arm = new ModelPart(this);
         right_arm.setPos(-5.0F, 2.0F, 0.0F);
@@ -55,25 +54,15 @@ public class ClientZombieModel<T extends AbstractPet> extends EntityModel<@NotNu
 
         left_leg = new ModelPart(this);
         left_leg.setPos(1.9F, 12.0F, 0.0F);
-        left_leg.texOffs(0, 16).addBox(-1.9F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.0F, true);
+        left_leg.texOffs(0, 16).addBox(-1.9F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.0F, false);
 
         right_leg = new ModelPart(this);
         right_leg.setPos(-1.9F, 12.0F, 0.0F);
         right_leg.texOffs(0, 16).addBox(-2.1F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.0F, false);
     }
 
-    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha, int i){
-        head.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        headwear.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        body.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        left_arm.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        right_arm.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        left_leg.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        right_leg.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-    }
-
     @Override
-    public void setupAnim(T state, float f, float g, float h, float i, float j) {
+    public void setupAnim(ClientZombiePigman state, float f, float g, float h, float i, float j) {
         boolean bl = state.getFallFlyingTicks() > 4;
         boolean bl2 = state.isVisuallySwimming();
         this.head.yRot = i * (float) (Math.PI / 180.0);
@@ -299,21 +288,17 @@ public class ClientZombieModel<T extends AbstractPet> extends EntityModel<@NotNu
             this.left_leg.xRot = Mth.lerp(this.swimAmount, this.left_leg.xRot, 0.3F * Mth.cos(f * 0.33333334F + (float) Math.PI));
             this.right_leg.xRot = Mth.lerp(this.swimAmount, this.right_leg.xRot, 0.3F * Mth.cos(f * 0.33333334F));
         }
-
-        AnimationUtils.animateZombieArms(this.left_arm, this.right_arm, true, this.attackTime, h);
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int j, float f, float g, float h, float k) {
-        this.renderToBuffer(poseStack, vertexConsumer, i, j, f, g, h, k, 0);
-        poseStack.pushPose();
-        if (CONFIG.isBaby) {
-            poseStack.scale(1.5f, 1.5f, 1.5f);
-        } else {
-            poseStack.scale(1, 1, 1);
-        }
-        this.head.translateAndRotate(poseStack);
-        poseStack.popPose();
+    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+        head.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        headwear.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        body.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        left_arm.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        right_arm.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        left_leg.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        right_leg.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 
     protected float rotlerpRad(float f, float g, float h) {
@@ -332,5 +317,4 @@ public class ClientZombieModel<T extends AbstractPet> extends EntityModel<@NotNu
     private float quadraticArmUpdate(float f) {
         return -65.0F * f + f * f;
     }
-
 }

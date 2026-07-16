@@ -6,16 +6,12 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.monster.SharedMonsterAttributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -47,8 +43,11 @@ public abstract class AbstractPet extends TamableAnimal {
         this.setSpeed(0.5f);
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0F).add(Attributes.MOVEMENT_SPEED, 0.23F);
+    @Override
+    public void registerAttributes() {
+        super.registerAttributes();
+        this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(8);
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.23);
     }
 
     /**
@@ -105,7 +104,7 @@ public abstract class AbstractPet extends TamableAnimal {
      * @return It's super method
      */
     @Override
-    public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
+    public boolean mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
 
         if (this.isTame() && itemStack.isEmpty() && !player.isShiftKeyDown()) {
@@ -116,18 +115,18 @@ public abstract class AbstractPet extends TamableAnimal {
                     this.getZ(),
                     5, 5, 5
             );
-            return InteractionResult.SUCCESS;
+            return true;
         }
 
         if (this.isTame() && itemStack.isEmpty() && player.isShiftKeyDown()) {
             if (!this.isPassenger()) {
                 this.startRiding(player);
                 this.lookAt(player, 1f, 1f);
-                return InteractionResult.SUCCESS;
+                return true;
             } else {
                 this.stopRiding();
             }
-            return InteractionResult.SUCCESS;
+            return true;
         }
         return super.mobInteract(player, hand);
     }

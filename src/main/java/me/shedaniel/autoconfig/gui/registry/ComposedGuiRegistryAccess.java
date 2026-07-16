@@ -31,13 +31,13 @@ import java.util.Objects;
 
 @Environment(EnvType.CLIENT)
 public class ComposedGuiRegistryAccess implements GuiRegistryAccess {
-    
-    private List<GuiRegistryAccess> children;
-    
+
+    private final List<GuiRegistryAccess> children;
+
     public ComposedGuiRegistryAccess(GuiRegistryAccess... children) {
         this.children = Arrays.asList(children);
     }
-    
+
     @Override
     public List<AbstractConfigListEntry> get(
             String i18n,
@@ -51,7 +51,7 @@ public class ComposedGuiRegistryAccess implements GuiRegistryAccess {
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("No ConfigGuiProvider match!"));
     }
-    
+
     @Override
     public List<AbstractConfigListEntry> transform(
             List<AbstractConfigListEntry> guis,

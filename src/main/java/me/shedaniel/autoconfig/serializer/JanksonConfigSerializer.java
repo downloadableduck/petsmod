@@ -34,25 +34,25 @@ import java.nio.file.Path;
  */
 @SuppressWarnings("unused")
 public class JanksonConfigSerializer<T extends ConfigData> implements ConfigSerializer<T> {
-    
-    private Config definition;
-    private Class<T> configClass;
-    private Jankson jankson;
-    
+
+    private final Config definition;
+    private final Class<T> configClass;
+    private final Jankson jankson;
+
     public JanksonConfigSerializer(Config definition, Class<T> configClass, Jankson jankson) {
         this.definition = definition;
         this.configClass = configClass;
         this.jankson = jankson;
     }
-    
+
     public JanksonConfigSerializer(Config definition, Class<T> configClass) {
         this(definition, configClass, Jankson.builder().build());
     }
-    
+
     private Path getConfigPath() {
         return Utils.getConfigFolder().resolve(definition.name() + ".json5");
     }
-    
+
     @Override
     public void serialize(T config) throws SerializationException {
         Path configPath = getConfigPath();
@@ -65,7 +65,7 @@ public class JanksonConfigSerializer<T extends ConfigData> implements ConfigSeri
             throw new SerializationException(e);
         }
     }
-    
+
     @Override
     public T deserialize() throws SerializationException {
         Path configPath = getConfigPath();
@@ -79,7 +79,7 @@ public class JanksonConfigSerializer<T extends ConfigData> implements ConfigSeri
             return createDefault();
         }
     }
-    
+
     @Override
     public T createDefault() {
         return Utils.constructUnsafely(configClass);

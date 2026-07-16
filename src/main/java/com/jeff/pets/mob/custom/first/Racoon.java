@@ -7,16 +7,12 @@ import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -36,10 +32,6 @@ public class Racoon extends AbstractPet {
 
     public Racoon(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
         super(entityType, level);
-    }
-
-    public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0F).add(Attributes.MOVEMENT_SPEED, 0.23F);
     }
 
     @Override
@@ -108,7 +100,7 @@ public class Racoon extends AbstractPet {
                     this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
                     this.isOnHead = false;
                 } else {
-                    this.setOrderedToSit(true);
+                    this.setSitting(true);
                 }
             }
 

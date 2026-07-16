@@ -31,15 +31,22 @@ public interface ConfigHolder<T extends ConfigData> extends Supplier<T> {
     Class<T> getConfigClass();
 
     void save();
-    
+
     boolean load();
-    
+
     T getConfig();
-    
+
+    /**
+     * Sets the config held by this holder.
+     * <br>
+     * Does not save the set config to file, for that use {@link #save()}.
+     */
+    void setConfig(T config);
+
     void registerSaveListener(ConfigSerializeEvent.Save<T> save);
-    
+
     void registerLoadListener(ConfigSerializeEvent.Load<T> load);
-    
+
     @Override
     default T get() {
         return getConfig();
@@ -51,11 +58,4 @@ public interface ConfigHolder<T extends ConfigData> extends Supplier<T> {
      * Does not save the reset config to file, for that use {@link #save()}.
      */
     void resetToDefault();
-
-    /**
-     * Sets the config held by this holder.
-     * <br>
-     * Does not save the set config to file, for that use {@link #save()}.
-     */
-    void setConfig(T config);
 }

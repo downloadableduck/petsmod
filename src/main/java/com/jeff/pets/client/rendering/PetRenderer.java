@@ -16,11 +16,6 @@ public abstract class PetRenderer<D extends Mob, K extends EntityModel<D>> exten
     }
 
     @Override
-    public boolean isBodyVisible(D entity) {
-        return true;
-    }
-
-    @Override
     public void render(D entity, float f, float g, PoseStack poseStack, MultiBufferSource source, int i) {
         poseStack.pushPose();
         if (entity.isPassenger()) {

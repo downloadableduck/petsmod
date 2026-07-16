@@ -27,13 +27,13 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Config {
-    
+
     String name();
-    
+
     class Gui {
         private Gui() {
         }
-        
+
         /**
          * Sets the background in the config GUI
          */
@@ -41,10 +41,10 @@ public @interface Config {
         @Target(ElementType.TYPE)
         public @interface Background {
             String TRANSPARENT = "cloth-config2:transparent";
-            
+
             String value();
         }
-        
+
         /**
          * Sets the background of a specific category in the config GUI
          */
@@ -53,10 +53,10 @@ public @interface Config {
         @Repeatable(CategoryBackgrounds.class)
         public @interface CategoryBackground {
             String category();
-            
+
             String background();
         }
-        
+
         /**
          * Do not use.
          */

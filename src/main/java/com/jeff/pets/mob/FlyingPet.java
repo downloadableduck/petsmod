@@ -42,7 +42,7 @@ public abstract class FlyingPet extends AbstractPet {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, 0.1, 0));
                 } else {
-                    this.setOrderedToSit(true);
+                    this.setSitting(true);
                 }
             }
 

@@ -57,6 +57,6 @@ public class ClientCatRenderer extends PetRenderer<@NotNull ClientCat, @NotNull 
     @Override
     public void render(ClientCat cat, float f, float g, PoseStack poseStack, MultiBufferSource source, int i) {
         super.render(cat, f, g, poseStack, source, i);
-        cat.setInSittingPose(cat.isPassenger());
+        cat.setSitting(cat.isPassenger());
     }
 }

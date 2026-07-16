@@ -17,10 +17,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.monster.SharedMonsterAttributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -53,15 +51,17 @@ public class Duck extends AbstractPet {
         super(type, level);
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0).add(Attributes.MOVEMENT_SPEED, 0.25F);
-    }
-
     public static float rotlerp(float start, float end) {
         float f = Mth.wrapDegrees(end - start);
         if (f > 10.0f) f = 10.0f;
         if (f < -10.0f) f = -10.0f;
         return start + f;
+    }
+
+    @Override
+    public void registerAttributes() {
+        super.registerAttributes();
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25);
     }
 
     @Override
@@ -177,7 +177,7 @@ public class Duck extends AbstractPet {
                     this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
                     this.isOnHead = false;
                 } else {
-                    this.setOrderedToSit(true);
+                    this.setSitting(true);
                 }
             }
 

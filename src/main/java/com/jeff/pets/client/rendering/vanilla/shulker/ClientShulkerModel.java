@@ -13,7 +13,7 @@ public class ClientShulkerModel extends ListModel<ClientShulker> {
     private final ModelPart head = new ModelPart(64, 64, 0, 52);
 
     public ClientShulkerModel() {
-        super(RenderType::entityCutoutNoCullZOffset);
+        super();
         this.lid.addBox(-8.0F, -16.0F, -8.0F, 16.0F, 12.0F, 16.0F);
         this.lid.setPos(0.0F, 24.0F, 0.0F);
         this.base.addBox(-8.0F, -8.0F, -8.0F, 16.0F, 8.0F, 16.0F);

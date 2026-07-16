@@ -58,7 +58,7 @@ public class ClientTurtleModel extends QuadrupedModel<ClientTurtle> {
         this.leg0.yRot = 0.0F;
         this.leg1.yRot = 0.0F;
         this.eggBelly.xRot = ((float) Math.PI / 2F);
-        if (!turtle.isInWater() && turtle.isOnGround()) {
+        if (!turtle.isInWater() && turtle.onGround) {
             float k = 1.0F;
             float l = 1.0F;
             float m = 5.0F;

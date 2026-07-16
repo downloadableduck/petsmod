@@ -1,4 +1,4 @@
-package com.jeff.pets.mob.vanilla.passive;
+package com.jeff.pets.mob.vanilla.neutral;
 
 import com.jeff.pets.mob.GroundPet;
 import net.minecraft.sounds.SoundEvent;
@@ -8,10 +8,9 @@ import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientStrider extends GroundPet {
-
-    public ClientStrider(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
-        super(entityType, level);
+public class ClientZombiePigman extends GroundPet {
+    public ClientZombiePigman(EntityType<? extends @NotNull TamableAnimal> type, Level level) {
+        super(type, level);
     }
 
     @Override
@@ -21,11 +20,11 @@ public class ClientStrider extends GroundPet {
 
     @Override
     protected float heartHeight() {
-        return 2;
+        return 1.5f;
     }
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.STRIDER_AMBIENT;
+        return SoundEvents.ZOMBIE_PIGMAN_AMBIENT;
     }
 }

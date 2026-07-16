@@ -73,24 +73,24 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
      * @see TitleScreenRenderingMixin
      */
     public Screen getModConfigScreenFactory() {
-            PetsConfig CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
-            ConfigBuilder builder = ConfigBuilder.create()
-                    .setTitle(new TextComponent("Config"))
-                    .setSavingRunnable(() -> {
-                        AutoConfig.getConfigHolder(PetsConfig.class).save();
-                        Minecraft.getInstance().setScreen(this.getModConfigScreenFactory());
-                    })
-                    .setTransparentBackground(true);
-            ConfigCategory general = builder.getOrCreateCategory(new TextComponent("Config"));
-            ConfigEntryBuilder entryBuilder = builder.entryBuilder();
-            general.addEntry(this.createPetOnOption(entryBuilder, CONFIG).build());
-            general.addEntry(this.createPetSpeciesOption(entryBuilder, CONFIG).build());
-            general.addEntry(this.createPetNameOption(entryBuilder, CONFIG).build());
-            general.addEntry(this.createPetSkinOption(entryBuilder, CONFIG).build());
-            general.addEntry(this.createBabyOption(entryBuilder, CONFIG).build());
+        PetsConfig CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
+        ConfigBuilder builder = ConfigBuilder.create()
+                .setTitle(new TextComponent("Config"))
+                .setSavingRunnable(() -> {
+                    AutoConfig.getConfigHolder(PetsConfig.class).save();
+                    Minecraft.getInstance().setScreen(this.getModConfigScreenFactory());
+                })
+                .setTransparentBackground(true);
+        ConfigCategory general = builder.getOrCreateCategory(new TextComponent("Config"));
+        ConfigEntryBuilder entryBuilder = builder.entryBuilder();
+        general.addEntry(this.createPetOnOption(entryBuilder, CONFIG).build());
+        general.addEntry(this.createPetSpeciesOption(entryBuilder, CONFIG).build());
+        general.addEntry(this.createPetNameOption(entryBuilder, CONFIG).build());
+        general.addEntry(this.createPetSkinOption(entryBuilder, CONFIG).build());
+        general.addEntry(this.createBabyOption(entryBuilder, CONFIG).build());
 
-            return builder.build();
-        }
+        return builder.build();
+    }
 
 
     private BooleanToggleBuilder createPetOnOption(ConfigEntryBuilder builder, PetsConfig CONFIG) {
@@ -378,6 +378,9 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
             case "stingray":
                 defaultVal = CONFIG.stingrayName;
                 break;
+            case "zombie_pigman":
+                defaultVal = CONFIG.zombiePigmanName;
+                break;
             default:
                 defaultVal = "";
                 break;
@@ -564,6 +567,8 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         CONFIG.koiName = name;
                     } else if (activePet.equals("stingray")) {
                         CONFIG.stingrayName = name;
+                    } else if (activePet.equals("zombie_pigman")) {
+                        CONFIG.zombiePigmanName = name;
                     }
                     Central.refreshPetNames();
                 });

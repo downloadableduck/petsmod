@@ -32,6 +32,6 @@ public class ClientWolfRenderer extends PetRenderer<@NotNull ClientWolf, @NotNul
     @Override
     public void render(ClientWolf wolf, float f, float g, PoseStack poseStack, MultiBufferSource source, int i) {
         super.render(wolf, f, g, poseStack, source, i);
-        wolf.setInSittingPose(wolf.isPassenger());
+        wolf.setSitting(wolf.isPassenger());
     }
 }

@@ -27,7 +27,6 @@ public enum PetList implements NameableEnum {
     guardian,
     happy_ghast,
     head,
-    hoglin,
     horse,
     husk,
     iron_golem,
@@ -40,7 +39,6 @@ public enum PetList implements NameableEnum {
     penguin,
     phantom,
     pig,
-    piglin,
     pillager,
     polar_bear,
     pufferfish,
@@ -57,7 +55,6 @@ public enum PetList implements NameableEnum {
     spider,
     squid,
     stingray,
-    strider,
     stray,
     wither_skeleton,
     turtle,
@@ -69,7 +66,8 @@ public enum PetList implements NameableEnum {
     wither,
     wolf,
     zombie,
-    zombie_villager;
+    zombie_villager,
+    zombie_pigman;
 
     @Override
     public Component getDisplayName() {

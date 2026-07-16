@@ -39,7 +39,7 @@ public class DefaultGuiRegistryAccess implements GuiRegistryAccess {
         LogManager.getLogger().error("No GUI provider registered for field '{}'!", field);
         return Collections.emptyList();
     }
-    
+
     @Override
     public List<AbstractConfigListEntry> transform(
             List<AbstractConfigListEntry> guis,

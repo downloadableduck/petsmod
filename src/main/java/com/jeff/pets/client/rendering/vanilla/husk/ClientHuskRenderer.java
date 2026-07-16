@@ -12,7 +12,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientHuskRenderer extends PetRenderer<@NotNull ClientHusk, @NotNull ClientZombieModel<ClientHusk>> {
 
     public ClientHuskRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
-        super(context, new ClientZombieModel<>(0), 0.75F);
+        super(context, new ClientZombieModel<>(), 0.75F);
     }
 
     @Override

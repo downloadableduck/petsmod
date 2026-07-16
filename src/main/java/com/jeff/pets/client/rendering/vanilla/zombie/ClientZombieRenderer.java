@@ -3,6 +3,7 @@ package com.jeff.pets.client.rendering.vanilla.zombie;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientZombie;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.entity.ZombieRenderer;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,7 +12,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientZombieRenderer extends PetRenderer<@NotNull ClientZombie, @NotNull ClientZombieModel<ClientZombie>> {
 
     public ClientZombieRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
-        super(context, new ClientZombieModel(0), 0.75f);
+        super(context, new ClientZombieModel<>(), 0.75f);
     }
 
     @Override

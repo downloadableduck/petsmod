@@ -1,9 +1,9 @@
 package com.jeff.pets.client.rendering.vanilla.drowned;
 
+import com.jeff.pets.client.rendering.AnimationUtils;
 import com.jeff.pets.mob.vanilla.hostile.ClientDrowned;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;

@@ -36,7 +36,7 @@ public class ExampleInits {
                 ExampleConfig.class,
                 PartitioningSerializer.wrap(DummyConfigSerializer::new)
         );
-        
+
         // how to read a config:
         holder.getConfig();
         // or (please cache this value, and listen to load to re-cache)
@@ -50,7 +50,7 @@ public class ExampleInits {
             return InteractionResult.SUCCESS;
         });
     }
-    
+
     @Environment(EnvType.CLIENT)
     public static void exampleClientInit() {
         // how to get the gui registry for custom gui handlers

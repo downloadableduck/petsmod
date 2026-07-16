@@ -7,8 +7,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -22,10 +20,6 @@ import java.util.Objects;
 public abstract class SlimeLikePet extends AbstractPet {
     public SlimeLikePet(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
         super(entityType, level);
-    }
-
-    public static AttributeSupplier.Builder createAttributes() {
-        return AbstractPet.createAttributes().add(Attributes.JUMP_STRENGTH, 0.25f);
     }
 
     /**
@@ -45,7 +39,7 @@ public abstract class SlimeLikePet extends AbstractPet {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
                 } else {
-                    this.setOrderedToSit(true);
+                    this.setSitting(true);
                 }
             }
 

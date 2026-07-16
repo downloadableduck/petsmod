@@ -48,7 +48,7 @@ public abstract class GroundPet extends AbstractPet {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
                 } else {
-                    this.setOrderedToSit(true);
+                    this.setSitting(true);
                 }
             }
 

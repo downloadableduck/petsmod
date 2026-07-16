@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.zombievillager;
 
+import com.jeff.pets.client.rendering.AnimationUtils;
 import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
-import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.VillagerHeadModel;
 import net.minecraft.client.model.geom.ModelPart;

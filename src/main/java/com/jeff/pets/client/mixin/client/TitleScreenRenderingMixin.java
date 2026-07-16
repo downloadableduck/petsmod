@@ -17,7 +17,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 @Mixin(TitleScreen.class)
 public class TitleScreenRenderingMixin {
     @Inject(at = @At("HEAD"), method = "render")
-    private void init(PoseStack poseStack, int i, int j, float f, CallbackInfo ci) {
+    private void init(int i, int j, float f, CallbackInfo ci) {
         Central.reassignLogo(CONFIG.customTitleEnabled);
     }
 }

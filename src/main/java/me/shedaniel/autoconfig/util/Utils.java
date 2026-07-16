@@ -35,10 +35,11 @@ import static java.util.stream.Collectors.toMap;
 public class Utils {
     private Utils() {
     }
-    
+
     public static Path getConfigFolder() {
         return new File(Minecraft.getInstance().gameDirectory.getAbsolutePath() + "/config/").toPath();
     }
+
     public static <V> V constructUnsafely(Class<V> cls) {
         try {
             Constructor<V> constructor = cls.getDeclaredConstructor();
@@ -48,11 +49,11 @@ public class Utils {
             throw new RuntimeException(e);
         }
     }
-    
+
     public static <V> V getUnsafely(Field field, Object obj) {
         if (obj == null)
             return null;
-        
+
         try {
             field.setAccessible(true);
             //noinspection unchecked
@@ -61,18 +62,18 @@ public class Utils {
             throw new RuntimeException(e);
         }
     }
-    
+
     public static <V> V getUnsafely(Field field, Object obj, V defaultValue) {
         V ret = getUnsafely(field, obj);
         if (ret == null)
             ret = defaultValue;
         return ret;
     }
-    
+
     public static void setUnsafely(Field field, Object obj, Object newValue) {
         if (obj == null)
             return;
-        
+
         try {
             field.setAccessible(true);
             field.set(obj, newValue);
@@ -80,7 +81,7 @@ public class Utils {
             throw new RuntimeException(e);
         }
     }
-    
+
     public static <T, K, U> Collector<T, ?, Map<K, U>> toLinkedMap(
             Function<? super T, ? extends K> keyMapper,
             Function<? super T, ? extends U> valueMapper

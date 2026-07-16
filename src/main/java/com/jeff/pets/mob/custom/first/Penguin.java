@@ -7,7 +7,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -16,10 +15,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.monster.SharedMonsterAttributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -35,6 +32,7 @@ import static com.jeff.pets.PetsInitializer.PENGUIN;
 public class Penguin extends AbstractPet {
     public static final EntityDataAccessor<@NotNull Boolean> IS_SERVER_ENTITY =
             SynchedEntityData.defineId(Penguin.class, EntityDataSerializers.BOOLEAN);
+    private final float nextFlap = 1.0F;
     public float flap;
     public float flapSpeed;
     public float oFlapSpeed;
@@ -42,16 +40,18 @@ public class Penguin extends AbstractPet {
     public float flapping = 1.0F;
     public ServerPlayer owner = (ServerPlayer) this.getOwner();
     public boolean isOnHead;
-    private final float nextFlap = 1.0F;
-    private boolean isFlapping = !this.isOnGround();
+    private boolean isFlapping = !this.onGround;
 
     public Penguin(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
         super(entityType, level);
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0F).add(Attributes.MOVEMENT_SPEED, 0.25F);
+    @Override
+    public void registerAttributes() {
+        super.registerAttributes();
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25);
     }
+
 
     @Override
     protected int stopDistance() {
@@ -161,7 +161,7 @@ public class Penguin extends AbstractPet {
                     this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
                     this.isOnHead = false;
                 } else {
-                    this.setOrderedToSit(true);
+                    this.setSitting(true);
                 }
             }
 

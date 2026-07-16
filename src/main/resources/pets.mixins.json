@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_6",
   "mixins": [
     "ChatAccessor",
+    "SchemaMixin",
     "SplashManagerMixin",
     "TitleScreenRenderingMixin"
   ],
