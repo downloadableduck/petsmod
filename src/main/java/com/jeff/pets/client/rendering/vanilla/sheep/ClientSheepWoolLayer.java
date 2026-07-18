@@ -1,29 +1,31 @@
 package com.jeff.pets.client.rendering.vanilla.sheep;
 
 import com.jeff.pets.mob.vanilla.passive.ClientSheep;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
+import com.mojang.blaze3d.platform.GlStateManager;
+import net.minecraft.client.render.entity.feature.FeatureRenderer;
+import net.minecraft.client.render.entity.feature.FeatureRendererContext;
+import net.minecraft.client.render.entity.model.EntityModel;
+import net.minecraft.entity.passive.SheepEntity;
+import net.minecraft.util.DyeColor;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSheepWoolLayer extends RenderLayer<@NotNull ClientSheep, @NotNull ClientSheepModel> {
+public class ClientSheepWoolLayer extends FeatureRenderer<@NotNull ClientSheep, @NotNull ClientSheepModel> {
     private final EntityModel<@NotNull ClientSheep> model;
     int woolColor;
 
-    public ClientSheepWoolLayer(RenderLayerParent<@NotNull ClientSheep, @NotNull ClientSheepModel> renderLayerParent) {
+    public ClientSheepWoolLayer(FeatureRendererContext<@NotNull ClientSheep, @NotNull ClientSheepModel> renderLayerParent) {
         super(renderLayerParent);
         this.model = new ClientSheepFurModel();
     }
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource source, int i, ClientSheep sheepRenderState, float f, float a, float h, float j, float k, float l) {
+    public void render(ClientSheep sheep, float f, float a, float h, float i, float j, float k, float l) {
+        this.bindTexture(new Identifier("minecraft", "textures/entity/sheep/sheep_fur.png"));
         if (Objects.equals(CONFIG.sheepSkin, "white")) {
             woolColor = 15132390;
         } else if (Objects.equals(CONFIG.sheepSkin, "orange")) {
@@ -63,7 +65,15 @@ public class ClientSheepWoolLayer extends RenderLayer<@NotNull ClientSheep, @Not
         float r = (float) (woolColor >> 16 & 255) / 255.0F;
         float g = (float) (woolColor >> 8 & 255) / 255.0F;
         float b = (float) (woolColor & 255) / 255.0F;
+            GlStateManager.color3f(r, g, b);
 
-        coloredCutoutModelCopyLayerRender(this.getParentModel(), this.model, new ResourceLocation("minecraft", "textures/entity/sheep/sheep_fur.png"), poseStack, source, i, sheepRenderState, f, a, j, k, l, h, r, g, b);
+            (this.getModel()).copyStateTo(this.model);
+            this.model.animateModel(sheep, f, g, h);
+            this.model.render(sheep, f, g, i, j, k, l);
+    }
+
+    @Override
+    public boolean hasHurtOverlay() {
+        return false;
     }
 }

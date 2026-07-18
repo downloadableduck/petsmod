@@ -1,10 +1,8 @@
 package com.jeff.pets.client.rendering.custom.first.racoon;
 
 import com.jeff.pets.mob.custom.first.Racoon;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.render.entity.MobEntityRenderer;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -12,21 +10,21 @@ import java.util.Objects;
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class RacoonRenderer extends MobRenderer<@NotNull Racoon, @NotNull RacoonModel> {
+public class RacoonRenderer extends MobEntityRenderer<@NotNull Racoon, @NotNull RacoonModel> {
 
-    public RacoonRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+    public RacoonRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
         super(context, new RacoonModel(), 0.75f);
     }
 
     @Override
-    protected void scale(@NotNull Racoon livingEntityRenderState, @NotNull PoseStack poseStack, float f) {
+    protected void scale(@NotNull Racoon livingEntityRenderState, float f) {
         if ((CONFIG.isBaby && !livingEntityRenderState.isServerEntity()) || (livingEntityRenderState.isBaby() && livingEntityRenderState.isServerEntity())) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(Racoon state) {
+    public @NotNull Identifier getTexture(Racoon state) {
         String racoonTexturePath;
         if (!state.isServerEntity()) {
             if (Objects.equals(CONFIG.racoonSkin, "normal")) {
@@ -39,12 +37,12 @@ public class RacoonRenderer extends MobRenderer<@NotNull Racoon, @NotNull Racoon
         } else {
             racoonTexturePath = "textures/entity/racoon/racoon.png";
         }
-        return new ResourceLocation(MOD_ID, racoonTexturePath);
+        return new Identifier(MOD_ID, racoonTexturePath);
     }
 
     @Override
-    public void render(Racoon racoon, float g, float f, PoseStack poseStack, MultiBufferSource source, int i) {
-        super.render(racoon, g, f, poseStack, source, i);
-        racoon.setServerEntity(racoon.getEntityData().get(Racoon.IS_SERVER_ENTITY));
+    public void render(Racoon racoon, float g, float f, float u, float h, float m, float i) {
+        super.render(racoon, g, f, u, h, m, i);
+        racoon.setServerEntity(racoon.getDataTracker().get(Racoon.IS_SERVER_ENTITY));
     }
 }

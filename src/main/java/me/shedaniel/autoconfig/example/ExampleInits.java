@@ -25,7 +25,7 @@ import me.shedaniel.autoconfig.serializer.DummyConfigSerializer;
 import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.util.ActionResult;
 import org.jetbrains.annotations.ApiStatus;
 
 @ApiStatus.Internal
@@ -44,10 +44,10 @@ public class ExampleInits {
         // this event allows you to change or register specific listeners
         // for when the config has changed
         AutoConfig.getConfigHolder(ExampleConfig.class).registerSaveListener((manager, data) -> {
-            return InteractionResult.SUCCESS;
+            return ActionResult.SUCCESS;
         });
         AutoConfig.getConfigHolder(ExampleConfig.class).registerLoadListener((manager, newData) -> {
-            return InteractionResult.SUCCESS;
+            return ActionResult.SUCCESS;
         });
     }
 

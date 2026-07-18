@@ -1,8 +1,6 @@
 package com.jeff.pets.client.enums;
 
 
-import net.minecraft.network.chat.Component;
-
 public enum ParrotSkins implements NameableEnum {
     blue,
     cyan,
@@ -11,7 +9,7 @@ public enum ParrotSkins implements NameableEnum {
     red;
 
     @Override
-    public Component getDisplayName() {
+    public net.minecraft.network.chat.TextComponent getDisplayName() {
         return new net.minecraft.network.chat.TextComponent(String.valueOf(this).replace("_", " "));
     }
 }

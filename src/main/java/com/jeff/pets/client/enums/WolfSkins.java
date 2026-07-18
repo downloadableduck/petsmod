@@ -1,8 +1,6 @@
 package com.jeff.pets.client.enums;
 
 
-import net.minecraft.network.chat.Component;
-
 public enum WolfSkins implements NameableEnum {
     ashen,
     black,
@@ -15,7 +13,7 @@ public enum WolfSkins implements NameableEnum {
     woods;
 
     @Override
-    public Component getDisplayName() {
+    public net.minecraft.network.chat.TextComponent getDisplayName() {
         return new net.minecraft.network.chat.TextComponent(String.valueOf(this).replace("_", " "));
     }
 }

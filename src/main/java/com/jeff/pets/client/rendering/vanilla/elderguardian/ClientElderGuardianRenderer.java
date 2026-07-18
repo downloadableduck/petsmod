@@ -3,24 +3,23 @@ package com.jeff.pets.client.rendering.vanilla.elderguardian;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.guardian.ClientGuardianModel;
 import com.jeff.pets.mob.vanilla.hostile.ClientElderGuardian;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientElderGuardianRenderer extends PetRenderer<@NotNull ClientElderGuardian, @NotNull ClientGuardianModel<ClientElderGuardian>> {
 
-    public ClientElderGuardianRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+    public ClientElderGuardianRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
         super(context, new ClientGuardianModel<>(), 0.75f);
     }
 
     @Override
-    public void scale(ClientElderGuardian elderGuardian, PoseStack poseStack, float f) {
-        poseStack.scale(2.35f, 2.35f, 2.35f);
+    public void scale(ClientElderGuardian elderGuardian, float f) {
+        com.mojang.blaze3d.platform.GlStateManager.scalef(2.35f, 2.35f, 2.35f);
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientElderGuardian livingEntityRenderState) {
+    public @NotNull Identifier getTexture(ClientElderGuardian livingEntityRenderState) {
         //livingEntityRenderState.spike = 1;
-        return new ResourceLocation("minecraft", "textures/entity/guardian_elder.png");
+        return new Identifier("minecraft", "textures/entity/guardian_elder.png");
     }
 }

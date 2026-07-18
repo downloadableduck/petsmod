@@ -29,7 +29,7 @@ import me.shedaniel.autoconfig.gui.registry.GuiRegistry;
 import me.shedaniel.autoconfig.serializer.ConfigSerializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.Screen;
 
 import java.util.HashMap;
 import java.util.Map;

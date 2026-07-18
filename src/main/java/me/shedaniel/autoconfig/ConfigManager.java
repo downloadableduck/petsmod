@@ -22,7 +22,7 @@ package me.shedaniel.autoconfig;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.event.ConfigSerializeEvent;
 import me.shedaniel.autoconfig.serializer.ConfigSerializer;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.util.ActionResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.ApiStatus;
@@ -72,10 +72,10 @@ public class ConfigManager<T extends ConfigData> implements ConfigHolder<T> {
     @Override
     public void save() {
         for (ConfigSerializeEvent.Save<T> save : saveEvent) {
-            InteractionResult result = save.onSave(this, config);
-            if (result == InteractionResult.FAIL) {
+            ActionResult result = save.onSave(this, config);
+            if (result == ActionResult.FAIL) {
                 return;
-            } else if (result != InteractionResult.PASS) {
+            } else if (result != ActionResult.PASS) {
                 break;
             }
         }
@@ -92,12 +92,12 @@ public class ConfigManager<T extends ConfigData> implements ConfigHolder<T> {
             T deserialized = serializer.deserialize();
 
             for (ConfigSerializeEvent.Load<T> load : loadEvent) {
-                InteractionResult result = load.onLoad(this, deserialized);
-                if (result == InteractionResult.FAIL) {
+                ActionResult result = load.onLoad(this, deserialized);
+                if (result == ActionResult.FAIL) {
                     config = serializer.createDefault();
                     config.validatePostLoad();
                     return false;
-                } else if (result != InteractionResult.PASS) {
+                } else if (result != ActionResult.PASS) {
                     break;
                 }
             }

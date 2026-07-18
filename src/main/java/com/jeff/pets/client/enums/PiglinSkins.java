@@ -1,8 +1,6 @@
 package com.jeff.pets.client.enums;
 
 
-import net.minecraft.network.chat.Component;
-
 public enum PiglinSkins implements NameableEnum {
     piglin,
     piglin_brute,
@@ -10,7 +8,7 @@ public enum PiglinSkins implements NameableEnum {
 
 
     @Override
-    public Component getDisplayName() {
+    public net.minecraft.network.chat.TextComponent getDisplayName() {
         return new net.minecraft.network.chat.TextComponent(String.valueOf(this).replace("_", " "));
     }
 }

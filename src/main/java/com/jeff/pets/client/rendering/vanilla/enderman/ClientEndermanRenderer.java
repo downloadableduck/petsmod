@@ -2,20 +2,20 @@ package com.jeff.pets.client.rendering.vanilla.enderman;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientEnderman;
-import net.minecraft.client.model.EndermanModel;
-import net.minecraft.client.renderer.entity.layers.EnderEyesLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.render.entity.feature.EndermanEyesFeatureRenderer;
+import net.minecraft.client.render.entity.model.EndermanEntityModel;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientEndermanRenderer extends PetRenderer<@NotNull ClientEnderman, @NotNull EndermanModel<ClientEnderman>> {
+public class ClientEndermanRenderer extends PetRenderer<@NotNull ClientEnderman, @NotNull EndermanEntityModel<ClientEnderman>> {
 
-    public ClientEndermanRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
-        super(context, new EndermanModel<>(0), 0.5f);
-        this.addLayer(new EnderEyesLayer<>(this));
+    public ClientEndermanRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
+        super(context, new EndermanEntityModel<>(0), 0.5f);
+        this.addFeature(new EndermanEyesFeatureRenderer<>(this));
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientEnderman enderman) {
-        return new ResourceLocation("minecraft", "textures/entity/enderman/enderman.png");
+    public @NotNull Identifier getTexture(ClientEnderman enderman) {
+        return new Identifier("minecraft", "textures/entity/enderman/enderman.png");
     }
 }

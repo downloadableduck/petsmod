@@ -1,60 +1,54 @@
 package com.jeff.pets.client.rendering.vanilla.shulker;
 
-import com.google.common.collect.ImmutableList;
 import com.jeff.pets.mob.vanilla.hostile.ClientShulker;
-import net.minecraft.client.model.ListModel;
-import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.util.Mth;
+import net.minecraft.client.model.Cuboid;
+import net.minecraft.client.render.entity.model.EntityModel;
+import net.minecraft.util.math.MathHelper;
 
-public class ClientShulkerModel extends ListModel<ClientShulker> {
-    private final ModelPart base = new ModelPart(64, 64, 0, 28);
-    private final ModelPart lid = new ModelPart(64, 64, 0, 0);
-    private final ModelPart head = new ModelPart(64, 64, 0, 52);
+public class ClientShulkerModel extends EntityModel<ClientShulker> {
+    private final Cuboid field_3553;
+    private final Cuboid field_3555;
+    private final Cuboid field_3554;
 
     public ClientShulkerModel() {
-        super();
-        this.lid.addBox(-8.0F, -16.0F, -8.0F, 16.0F, 12.0F, 16.0F);
-        this.lid.setPos(0.0F, 24.0F, 0.0F);
-        this.base.addBox(-8.0F, -8.0F, -8.0F, 16.0F, 8.0F, 16.0F);
-        this.base.setPos(0.0F, 24.0F, 0.0F);
-        this.head.addBox(-3.0F, 0.0F, -3.0F, 6.0F, 6.0F, 6.0F);
-        this.head.setPos(0.0F, 12.0F, 0.0F);
+        this.textureHeight = 64;
+        this.textureWidth = 64;
+        this.field_3555 = new Cuboid(this);
+        this.field_3553 = new Cuboid(this);
+        this.field_3554 = new Cuboid(this);
+        this.field_3555.setTextureOffset(0, 0).addBox(-8.0F, -16.0F, -8.0F, 16, 12, 16);
+        this.field_3555.setRotationPoint(0.0F, 24.0F, 0.0F);
+        this.field_3553.setTextureOffset(0, 28).addBox(-8.0F, -8.0F, -8.0F, 16, 8, 16);
+        this.field_3553.setRotationPoint(0.0F, 24.0F, 0.0F);
+        this.field_3554.setTextureOffset(0, 52).addBox(-3.0F, 0.0F, -3.0F, 6, 6, 6);
+        this.field_3554.setRotationPoint(0.0F, 12.0F, 0.0F);
     }
 
-    public void setupAnim(ClientShulker shulker, float f, float g, float h, float i, float j) {
-        float k = h - (float) shulker.tickCount;
-        float l = (0.5F + 1) * (float) Math.PI;
-        float m = -1.0F + Mth.sin(l);
-        float n = 0.0F;
-        if (l > (float) Math.PI) {
-            n = Mth.sin(h * 0.1F) * 0.7F;
+    @Override
+    public void setAngles(ClientShulker shulkerEntity, float f, float g, float h, float i, float j, float k) {
+        float l = h - (float) shulkerEntity.age;
+        float m = (0.5F + 180 * (float) Math.PI);
+        float n = -1.0F + MathHelper.sin(m);
+        float o = 0.0F;
+        if (m > (float) Math.PI) {
+            o = MathHelper.sin(h * 0.1F) * 0.7F;
         }
 
-        this.lid.setPos(0.0F, 16.0F + Mth.sin(l) * 8.0F + n, 0.0F);
-        if (1 > 0.3F) {
-            this.lid.yRot = m * m * m * m * (float) Math.PI * 0.125F;
+        this.field_3555.setRotationPoint(0.0F, 16.0F + MathHelper.sin(m) * 8.0F + o, 0.0F);
+        if (180 > 0.3F) {
+            this.field_3555.yaw = n * n * n * n * (float) Math.PI * 0.125F;
         } else {
-            this.lid.yRot = 0.0F;
+            this.field_3555.yaw = 0.0F;
         }
 
-        this.head.xRot = j * ((float) Math.PI / 180F);
-        this.head.yRot = (shulker.yHeadRot - 180.0F - shulker.yBodyRot) * ((float) Math.PI / 180F);
+        this.field_3554.pitch = j * ((float) Math.PI / 180F);
+        this.field_3554.yaw = i * ((float) Math.PI / 180F);
     }
 
-    public Iterable<ModelPart> parts() {
-        return ImmutableList.of(this.base, this.lid);
-    }
-
-    public ModelPart getBase() {
-        return this.base;
-    }
-
-    public ModelPart getLid() {
-        return this.lid;
-    }
-
-    public ModelPart getHead() {
-        return this.head;
+    @Override
+    public void render(ClientShulker shulkerEntity, float f, float g, float h, float i, float j, float k) {
+        this.field_3553.render(k);
+        this.field_3554.render(k);
+        this.field_3555.render(k);
     }
 }

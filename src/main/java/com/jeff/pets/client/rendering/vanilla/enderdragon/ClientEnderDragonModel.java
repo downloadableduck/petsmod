@@ -1,232 +1,198 @@
 package com.jeff.pets.client.rendering.vanilla.enderdragon;
 
 import com.jeff.pets.mob.vanilla.boss.ClientEnderDragon;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
-import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
-import org.jetbrains.annotations.Nullable;
+import com.mojang.blaze3d.platform.GlStateManager;
+import net.minecraft.client.model.Cuboid;
+import net.minecraft.client.render.entity.model.EntityModel;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
+import net.minecraft.util.math.MathHelper;
 
 public class ClientEnderDragonModel extends EntityModel<ClientEnderDragon> {
-    private final ModelPart head;
-    private final ModelPart neck;
-    private final ModelPart jaw;
-    private final ModelPart body;
-    private final ModelPart leftWing;
-    private final ModelPart leftWingTip;
-    private final ModelPart leftFrontLeg;
-    private final ModelPart leftFrontLegTip;
-    private final ModelPart leftFrontFoot;
-    private final ModelPart leftRearLeg;
-    private final ModelPart leftRearLegTip;
-    private final ModelPart leftRearFoot;
-    private final ModelPart rightWing;
-    private final ModelPart rightWingTip;
-    private final ModelPart rightFrontLeg;
-    private final ModelPart rightFrontLegTip;
-    private final ModelPart rightFrontFoot;
-    private final ModelPart rightRearLeg;
-    private final ModelPart rightRearLegTip;
-    private final ModelPart rightRearFoot;
-    @Nullable
-    private EnderDragon entity;
-    private float a;
+    private final Cuboid head;
+    private final Cuboid neck;
+    private final Cuboid jaw;
+    private final Cuboid body;
+    private final Cuboid rearLeg;
+    private final Cuboid frontLeg;
+    private final Cuboid rearLegTip;
+    private final Cuboid frontLegTip;
+    private final Cuboid rearFoot;
+    private final Cuboid frontFoot;
+    private final Cuboid wing;
+    private final Cuboid wingTip;
+    private float delta;
 
-    public ClientEnderDragonModel() {
-        this.texWidth = 256;
-        this.texHeight = 256;
-        float f = -16.0F;
-        this.head = new ModelPart(this);
-        this.head.addBox("upperlip", -6.0F, -1.0F, -24.0F, 12, 5, 16, 0.0F, 176, 44);
-        this.head.addBox("upperhead", -8.0F, -8.0F, -10.0F, 16, 16, 16, 0.0F, 112, 30);
+    public ClientEnderDragonModel(float f) {
+        this.textureWidth = 256;
+        this.textureHeight = 256;
+        float g = -16.0F;
+        this.head = new Cuboid(this, "head");
+        this.head.addBox("upperlip", -6.0F, -1.0F, -24.0F, 12, 5, 16, f, 176, 44);
+        this.head.addBox("upperhead", -8.0F, -8.0F, -10.0F, 16, 16, 16, f, 112, 30);
         this.head.mirror = true;
-        this.head.addBox("scale", -5.0F, -12.0F, -4.0F, 2, 4, 6, 0.0F, 0, 0);
-        this.head.addBox("nostril", -5.0F, -3.0F, -22.0F, 2, 2, 4, 0.0F, 112, 0);
+        this.head.addBox("scale", -5.0F, -12.0F, -4.0F, 2, 4, 6, f, 0, 0);
+        this.head.addBox("nostril", -5.0F, -3.0F, -22.0F, 2, 2, 4, f, 112, 0);
         this.head.mirror = false;
-        this.head.addBox("scale", 3.0F, -12.0F, -4.0F, 2, 4, 6, 0.0F, 0, 0);
-        this.head.addBox("nostril", 3.0F, -3.0F, -22.0F, 2, 2, 4, 0.0F, 112, 0);
-        this.jaw = new ModelPart(this);
-        this.jaw.setPos(0.0F, 4.0F, -8.0F);
-        this.jaw.addBox("jaw", -6.0F, 0.0F, -16.0F, 12, 4, 16, 0.0F, 176, 65);
+        this.head.addBox("scale", 3.0F, -12.0F, -4.0F, 2, 4, 6, f, 0, 0);
+        this.head.addBox("nostril", 3.0F, -3.0F, -22.0F, 2, 2, 4, f, 112, 0);
+        this.jaw = new Cuboid(this, "jaw");
+        this.jaw.setRotationPoint(0.0F, 4.0F, -8.0F);
+        this.jaw.addBox("jaw", -6.0F, 0.0F, -16.0F, 12, 4, 16, f, 176, 65);
         this.head.addChild(this.jaw);
-        this.neck = new ModelPart(this);
-        this.neck.addBox("box", -5.0F, -5.0F, -5.0F, 10, 10, 10, 0.0F, 192, 104);
-        this.neck.addBox("scale", -1.0F, -9.0F, -3.0F, 2, 4, 6, 0.0F, 48, 0);
-        this.body = new ModelPart(this);
-        this.body.setPos(0.0F, 4.0F, 8.0F);
-        this.body.addBox("body", -12.0F, 0.0F, -16.0F, 24, 24, 64, 0.0F, 0, 0);
-        this.body.addBox("scale", -1.0F, -6.0F, -10.0F, 2, 6, 12, 0.0F, 220, 53);
-        this.body.addBox("scale", -1.0F, -6.0F, 10.0F, 2, 6, 12, 0.0F, 220, 53);
-        this.body.addBox("scale", -1.0F, -6.0F, 30.0F, 2, 6, 12, 0.0F, 220, 53);
-        this.leftWing = new ModelPart(this);
-        this.leftWing.mirror = true;
-        this.leftWing.setPos(12.0F, 5.0F, 2.0F);
-        this.leftWing.addBox("bone", 0.0F, -4.0F, -4.0F, 56, 8, 8, 0.0F, 112, 88);
-        this.leftWing.addBox("skin", 0.0F, 0.0F, 2.0F, 56, 0, 56, 0.0F, -56, 88);
-        this.leftWingTip = new ModelPart(this);
-        this.leftWingTip.mirror = true;
-        this.leftWingTip.setPos(56.0F, 0.0F, 0.0F);
-        this.leftWingTip.addBox("bone", 0.0F, -2.0F, -2.0F, 56, 4, 4, 0.0F, 112, 136);
-        this.leftWingTip.addBox("skin", 0.0F, 0.0F, 2.0F, 56, 0, 56, 0.0F, -56, 144);
-        this.leftWing.addChild(this.leftWingTip);
-        this.leftFrontLeg = new ModelPart(this);
-        this.leftFrontLeg.setPos(12.0F, 20.0F, 2.0F);
-        this.leftFrontLeg.addBox("main", -4.0F, -4.0F, -4.0F, 8, 24, 8, 0.0F, 112, 104);
-        this.leftFrontLegTip = new ModelPart(this);
-        this.leftFrontLegTip.setPos(0.0F, 20.0F, -1.0F);
-        this.leftFrontLegTip.addBox("main", -3.0F, -1.0F, -3.0F, 6, 24, 6, 0.0F, 226, 138);
-        this.leftFrontLeg.addChild(this.leftFrontLegTip);
-        this.leftFrontFoot = new ModelPart(this);
-        this.leftFrontFoot.setPos(0.0F, 23.0F, 0.0F);
-        this.leftFrontFoot.addBox("main", -4.0F, 0.0F, -12.0F, 8, 4, 16, 0.0F, 144, 104);
-        this.leftFrontLegTip.addChild(this.leftFrontFoot);
-        this.leftRearLeg = new ModelPart(this);
-        this.leftRearLeg.setPos(16.0F, 16.0F, 42.0F);
-        this.leftRearLeg.addBox("main", -8.0F, -4.0F, -8.0F, 16, 32, 16, 0.0F, 0, 0);
-        this.leftRearLegTip = new ModelPart(this);
-        this.leftRearLegTip.setPos(0.0F, 32.0F, -4.0F);
-        this.leftRearLegTip.addBox("main", -6.0F, -2.0F, 0.0F, 12, 32, 12, 0.0F, 196, 0);
-        this.leftRearLeg.addChild(this.leftRearLegTip);
-        this.leftRearFoot = new ModelPart(this);
-        this.leftRearFoot.setPos(0.0F, 31.0F, 4.0F);
-        this.leftRearFoot.addBox("main", -9.0F, 0.0F, -20.0F, 18, 6, 24, 0.0F, 112, 0);
-        this.leftRearLegTip.addChild(this.leftRearFoot);
-        this.rightWing = new ModelPart(this);
-        this.rightWing.setPos(-12.0F, 5.0F, 2.0F);
-        this.rightWing.addBox("bone", -56.0F, -4.0F, -4.0F, 56, 8, 8, 0.0F, 112, 88);
-        this.rightWing.addBox("skin", -56.0F, 0.0F, 2.0F, 56, 0, 56, 0.0F, -56, 88);
-        this.rightWingTip = new ModelPart(this);
-        this.rightWingTip.setPos(-56.0F, 0.0F, 0.0F);
-        this.rightWingTip.addBox("bone", -56.0F, -2.0F, -2.0F, 56, 4, 4, 0.0F, 112, 136);
-        this.rightWingTip.addBox("skin", -56.0F, 0.0F, 2.0F, 56, 0, 56, 0.0F, -56, 144);
-        this.rightWing.addChild(this.rightWingTip);
-        this.rightFrontLeg = new ModelPart(this);
-        this.rightFrontLeg.setPos(-12.0F, 20.0F, 2.0F);
-        this.rightFrontLeg.addBox("main", -4.0F, -4.0F, -4.0F, 8, 24, 8, 0.0F, 112, 104);
-        this.rightFrontLegTip = new ModelPart(this);
-        this.rightFrontLegTip.setPos(0.0F, 20.0F, -1.0F);
-        this.rightFrontLegTip.addBox("main", -3.0F, -1.0F, -3.0F, 6, 24, 6, 0.0F, 226, 138);
-        this.rightFrontLeg.addChild(this.rightFrontLegTip);
-        this.rightFrontFoot = new ModelPart(this);
-        this.rightFrontFoot.setPos(0.0F, 23.0F, 0.0F);
-        this.rightFrontFoot.addBox("main", -4.0F, 0.0F, -12.0F, 8, 4, 16, 0.0F, 144, 104);
-        this.rightFrontLegTip.addChild(this.rightFrontFoot);
-        this.rightRearLeg = new ModelPart(this);
-        this.rightRearLeg.setPos(-16.0F, 16.0F, 42.0F);
-        this.rightRearLeg.addBox("main", -8.0F, -4.0F, -8.0F, 16, 32, 16, 0.0F, 0, 0);
-        this.rightRearLegTip = new ModelPart(this);
-        this.rightRearLegTip.setPos(0.0F, 32.0F, -4.0F);
-        this.rightRearLegTip.addBox("main", -6.0F, -2.0F, 0.0F, 12, 32, 12, 0.0F, 196, 0);
-        this.rightRearLeg.addChild(this.rightRearLegTip);
-        this.rightRearFoot = new ModelPart(this);
-        this.rightRearFoot.setPos(0.0F, 31.0F, 4.0F);
-        this.rightRearFoot.addBox("main", -9.0F, 0.0F, -20.0F, 18, 6, 24, 0.0F, 112, 0);
-        this.rightRearLegTip.addChild(this.rightRearFoot);
+        this.neck = new Cuboid(this, "neck");
+        this.neck.addBox("box", -5.0F, -5.0F, -5.0F, 10, 10, 10, f, 192, 104);
+        this.neck.addBox("scale", -1.0F, -9.0F, -3.0F, 2, 4, 6, f, 48, 0);
+        this.body = new Cuboid(this, "body");
+        this.body.setRotationPoint(0.0F, 4.0F, 8.0F);
+        this.body.addBox("body", -12.0F, 0.0F, -16.0F, 24, 24, 64, f, 0, 0);
+        this.body.addBox("scale", -1.0F, -6.0F, -10.0F, 2, 6, 12, f, 220, 53);
+        this.body.addBox("scale", -1.0F, -6.0F, 10.0F, 2, 6, 12, f, 220, 53);
+        this.body.addBox("scale", -1.0F, -6.0F, 30.0F, 2, 6, 12, f, 220, 53);
+        this.wing = new Cuboid(this, "wing");
+        this.wing.setRotationPoint(-12.0F, 5.0F, 2.0F);
+        this.wing.addBox("bone", -56.0F, -4.0F, -4.0F, 56, 8, 8, f, 112, 88);
+        this.wing.addBox("skin", -56.0F, 0.0F, 2.0F, 56, 0, 56, f, -56, 88);
+        this.wingTip = new Cuboid(this, "wingtip");
+        this.wingTip.setRotationPoint(-56.0F, 0.0F, 0.0F);
+        this.wingTip.addBox("bone", -56.0F, -2.0F, -2.0F, 56, 4, 4, f, 112, 136);
+        this.wingTip.addBox("skin", -56.0F, 0.0F, 2.0F, 56, 0, 56, f, -56, 144);
+        this.wing.addChild(this.wingTip);
+        this.frontLeg = new Cuboid(this, "frontleg");
+        this.frontLeg.setRotationPoint(-12.0F, 20.0F, 2.0F);
+        this.frontLeg.addBox("main", -4.0F, -4.0F, -4.0F, 8, 24, 8, f, 112, 104);
+        this.frontLegTip = new Cuboid(this, "frontlegtip");
+        this.frontLegTip.setRotationPoint(0.0F, 20.0F, -1.0F);
+        this.frontLegTip.addBox("main", -3.0F, -1.0F, -3.0F, 6, 24, 6, f, 226, 138);
+        this.frontLeg.addChild(this.frontLegTip);
+        this.frontFoot = new Cuboid(this, "frontfoot");
+        this.frontFoot.setRotationPoint(0.0F, 23.0F, 0.0F);
+        this.frontFoot.addBox("main", -4.0F, 0.0F, -12.0F, 8, 4, 16, f, 144, 104);
+        this.frontLegTip.addChild(this.frontFoot);
+        this.rearLeg = new Cuboid(this, "rearleg");
+        this.rearLeg.setRotationPoint(-16.0F, 16.0F, 42.0F);
+        this.rearLeg.addBox("main", -8.0F, -4.0F, -8.0F, 16, 32, 16, f, 0, 0);
+        this.rearLegTip = new Cuboid(this, "rearlegtip");
+        this.rearLegTip.setRotationPoint(0.0F, 32.0F, -4.0F);
+        this.rearLegTip.addBox("main", -6.0F, -2.0F, 0.0F, 12, 32, 12, f, 196, 0);
+        this.rearLeg.addChild(this.rearLegTip);
+        this.rearFoot = new Cuboid(this, "rearfoot");
+        this.rearFoot.setRotationPoint(0.0F, 31.0F, 4.0F);
+        this.rearFoot.addBox("main", -9.0F, 0.0F, -20.0F, 18, 6, 24, f, 112, 0);
+        this.rearLegTip.addChild(this.rearFoot);
     }
 
-    public void prepareMobModel(EnderDragon enderDragon, float f, float g, float h) {
-        this.entity = enderDragon;
-        this.a = h;
+    @Override
+    public void animateModel(ClientEnderDragon enderDragonEntity, float f, float g, float h) {
+        this.delta = h;
     }
 
-    public void setupAnim(ClientEnderDragon enderDragon, float f, float g, float h, float i, float j) {
-    }
-
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int j, float f, float g, float h, float k) {
-        poseStack.pushPose();
-        float l = Mth.lerp(this.a, this.entity.oFlapTime, this.entity.flapTime);
-        this.jaw.xRot = (float) (Math.sin(l * ((float) Math.PI * 2F)) + (double) 1.0F) * 0.2F;
+    @Override
+    public void render(ClientEnderDragon enderDragonEntity, float f, float g, float h, float i, float j, float k) {
+        GlStateManager.pushMatrix();
+        float l = MathHelper.lerp(this.delta, enderDragonEntity.oFlapTime, enderDragonEntity.flapTime);
+        this.jaw.pitch = (float) (Math.sin(l * ((float) Math.PI * 2F)) + (double) 1.0F) * 0.2F;
         float m = (float) (Math.sin(l * ((float) Math.PI * 2F) - 1.0F) + (double) 1.0F);
         m = (m * m + m * 2.0F) * 0.05F;
-        poseStack.translate(0.0F, m - 2.0F, -3.0F);
-        poseStack.mulPose(Vector3f.XP.rotationDegrees(m * 2.0F));
+        GlStateManager.translatef(0.0F, m - 2.0F, -3.0F);
+        GlStateManager.rotatef(m * 2.0F, 1.0F, 0.0F, 0.0F);
         float n = 0.0F;
         float o = 20.0F;
         float p = -12.0F;
         float q = 1.5F;
-        double[] ds = this.entity.getLatencyPos(6, this.a);
-        float r = Mth.wrapDegrees((float) (this.entity.getLatencyPos(5, this.a)[0] - this.entity.getLatencyPos(10, this.a)[0]));
-        float s = Mth.wrapDegrees((float) (this.entity.getLatencyPos(5, this.a)[0] + (double) (r / 2.0F)));
+        double[] ds = enderDragonEntity.getLatencyPos(6, this.delta);
+        float r = this.updateRotations(enderDragonEntity.getLatencyPos(5, this.delta)[0] - enderDragonEntity.getLatencyPos(10, this.delta)[0]);
+        float s = this.updateRotations(enderDragonEntity.getLatencyPos(5, this.delta)[0] + (double) (r / 2.0F));
         float t = l * ((float) Math.PI * 2F);
 
         for (int u = 0; u < 5; ++u) {
-            double[] es = this.entity.getLatencyPos(5 - u, this.a);
+            double[] es = enderDragonEntity.getLatencyPos(5 - u, this.delta);
             float v = (float) Math.cos((float) u * 0.45F + t) * 0.15F;
-            this.neck.yRot = Mth.wrapDegrees((float) (es[0] - ds[0])) * ((float) Math.PI / 180F) * 1.5F;
-            this.neck.xRot = v + this.entity.getHeadPartYOffset(u, ds, es) * ((float) Math.PI / 180F) * 1.5F * 5.0F;
-            this.neck.zRot = -Mth.wrapDegrees((float) (es[0] - (double) s)) * ((float) Math.PI / 180F) * 1.5F;
-            this.neck.y = o;
-            this.neck.z = p;
-            this.neck.x = n;
-            o += Mth.sin(this.neck.xRot) * 10.0F;
-            p -= Mth.cos(this.neck.yRot) * Mth.cos(this.neck.xRot) * 10.0F;
-            n -= Mth.sin(this.neck.yRot) * Mth.cos(this.neck.xRot) * 10.0F;
-            this.neck.render(poseStack, vertexConsumer, i, j, 1.0F, 1.0F, 1.0F, k);
+            this.neck.yaw = this.updateRotations(es[0] - ds[0]) * ((float) Math.PI / 180F) * 1.5F;
+            this.neck.pitch = v + enderDragonEntity.getHeadPartYOffset(u, ds, es) * ((float) Math.PI / 180F) * 1.5F * 5.0F;
+            this.neck.roll = -this.updateRotations(es[0] - (double) s) * ((float) Math.PI / 180F) * 1.5F;
+            this.neck.rotationPointY = o;
+            this.neck.rotationPointZ = p;
+            this.neck.rotationPointX = n;
+            o = (float) ((double) o + Math.sin(this.neck.pitch) * (double) 10.0F);
+            p = (float) ((double) p - Math.cos(this.neck.yaw) * Math.cos(this.neck.pitch) * (double) 10.0F);
+            n = (float) ((double) n - Math.sin(this.neck.yaw) * Math.cos(this.neck.pitch) * (double) 10.0F);
+            this.neck.render(k);
         }
 
-        this.head.y = o;
-        this.head.z = p;
-        this.head.x = n;
-        double[] fs = this.entity.getLatencyPos(0, this.a);
-        this.head.yRot = Mth.wrapDegrees((float) (fs[0] - ds[0])) * ((float) Math.PI / 180F);
-        this.head.xRot = Mth.wrapDegrees(this.entity.getHeadPartYOffset(6, ds, fs)) * ((float) Math.PI / 180F) * 1.5F * 5.0F;
-        this.head.zRot = -Mth.wrapDegrees((float) (fs[0] - (double) s)) * ((float) Math.PI / 180F);
-        this.head.render(poseStack, vertexConsumer, i, j, 1.0F, 1.0F, 1.0F, k);
-        poseStack.pushPose();
-        poseStack.translate(0.0F, 1.0F, 0.0F);
-        poseStack.mulPose(Vector3f.ZP.rotationDegrees(-r * 1.5F));
-        poseStack.translate(0.0F, -1.0F, 0.0F);
-        this.body.zRot = 0.0F;
-        this.body.render(poseStack, vertexConsumer, i, j, 1.0F, 1.0F, 1.0F, k);
-        float w = l * ((float) Math.PI * 2F);
-        this.leftWing.xRot = 0.125F - (float) Math.cos(w) * 0.2F;
-        this.leftWing.yRot = -0.25F;
-        this.leftWing.zRot = -((float) (Math.sin(w) + (double) 0.125F)) * 0.8F;
-        this.leftWingTip.zRot = (float) (Math.sin(w + 2.0F) + (double) 0.5F) * 0.75F;
-        this.rightWing.xRot = this.leftWing.xRot;
-        this.rightWing.yRot = -this.leftWing.yRot;
-        this.rightWing.zRot = -this.leftWing.zRot;
-        this.rightWingTip.zRot = -this.leftWingTip.zRot;
-        this.renderSide(poseStack, vertexConsumer, i, j, m, this.leftWing, this.leftFrontLeg, this.leftFrontLegTip, this.leftFrontFoot, this.leftRearLeg, this.leftRearLegTip, this.leftRearFoot, (int) k);
-        this.renderSide(poseStack, vertexConsumer, i, j, m, this.rightWing, this.rightFrontLeg, this.rightFrontLegTip, this.rightFrontFoot, this.rightRearLeg, this.rightRearLegTip, this.rightRearFoot, (int) k);
-        poseStack.popPose();
-        float v = -Mth.sin(l * ((float) Math.PI * 2F)) * 0.0F;
+        this.head.rotationPointY = o;
+        this.head.rotationPointZ = p;
+        this.head.rotationPointX = n;
+        double[] fs = enderDragonEntity.getLatencyPos(0, this.delta);
+        this.head.yaw = this.updateRotations(fs[0] - ds[0]) * ((float) Math.PI / 180F);
+        this.head.pitch = this.updateRotations(enderDragonEntity.getHeadPartYOffset(6, ds, fs)) * ((float) Math.PI / 180F) * 1.5F * 5.0F;
+        this.head.roll = -this.updateRotations(fs[0] - (double) s) * ((float) Math.PI / 180F);
+        this.head.render(k);
+        GlStateManager.pushMatrix();
+        GlStateManager.translatef(0.0F, 1.0F, 0.0F);
+        GlStateManager.rotatef(-r * 1.5F, 0.0F, 0.0F, 1.0F);
+        GlStateManager.translatef(0.0F, -1.0F, 0.0F);
+        this.body.roll = 0.0F;
+        this.body.render(k);
+
+        for (int w = 0; w < 2; ++w) {
+            GlStateManager.enableCull();
+            float v = l * ((float) Math.PI * 2F);
+            this.wing.pitch = 0.125F - (float) Math.cos(v) * 0.2F;
+            this.wing.yaw = 0.25F;
+            this.wing.roll = (float) (Math.sin(v) + (double) 0.125F) * 0.8F;
+            this.wingTip.roll = -((float) (Math.sin(v + 2.0F) + (double) 0.5F)) * 0.75F;
+            this.rearLeg.pitch = 1.0F + m * 0.1F;
+            this.rearLegTip.pitch = 0.5F + m * 0.1F;
+            this.rearFoot.pitch = 0.75F + m * 0.1F;
+            this.frontLeg.pitch = 1.3F + m * 0.1F;
+            this.frontLegTip.pitch = -0.5F - m * 0.1F;
+            this.frontFoot.pitch = 0.75F + m * 0.1F;
+            this.wing.render(k);
+            this.frontLeg.render(k);
+            this.rearLeg.render(k);
+            GlStateManager.scalef(-1.0F, 1.0F, 1.0F);
+            if (w == 0) {
+                GlStateManager.cullFace(GlStateManager.FaceSides.FRONT);
+            }
+        }
+
+        GlStateManager.popMatrix();
+        GlStateManager.cullFace(GlStateManager.FaceSides.BACK);
+        GlStateManager.disableCull();
+        float x = -((float) Math.sin(l * ((float) Math.PI * 2F))) * 0.0F;
         t = l * ((float) Math.PI * 2F);
         o = 10.0F;
         p = 60.0F;
         n = 0.0F;
-        ds = this.entity.getLatencyPos(11, this.a);
+        ds = enderDragonEntity.getLatencyPos(11, this.delta);
 
-        for (int x = 0; x < 12; ++x) {
-            fs = this.entity.getLatencyPos(12 + x, this.a);
-            v += Mth.sin((float) x * 0.45F + t) * 0.05F;
-            this.neck.yRot = (Mth.wrapDegrees((float) (fs[0] - ds[0])) * 1.5F + 180.0F) * ((float) Math.PI / 180F);
-            this.neck.xRot = v + (float) (fs[1] - ds[1]) * ((float) Math.PI / 180F) * 1.5F * 5.0F;
-            this.neck.zRot = Mth.wrapDegrees((float) (fs[0] - (double) s)) * ((float) Math.PI / 180F) * 1.5F;
-            this.neck.y = o;
-            this.neck.z = p;
-            this.neck.x = n;
-            o += Mth.sin(this.neck.xRot) * 10.0F;
-            p -= Mth.cos(this.neck.yRot) * Mth.cos(this.neck.xRot) * 10.0F;
-            n -= Mth.sin(this.neck.yRot) * Mth.cos(this.neck.xRot) * 10.0F;
-            this.neck.render(poseStack, vertexConsumer, i, j, 1.0F, 1.0F, 1.0F, k);
+        for (int y = 0; y < 12; ++y) {
+            fs = enderDragonEntity.getLatencyPos(12 + y, this.delta);
+            x = (float) ((double) x + Math.sin((float) y * 0.45F + t) * (double) 0.05F);
+            this.neck.yaw = (this.updateRotations(fs[0] - ds[0]) * 1.5F + 180.0F) * ((float) Math.PI / 180F);
+            this.neck.pitch = x + (float) (fs[1] - ds[1]) * ((float) Math.PI / 180F) * 1.5F * 5.0F;
+            this.neck.roll = this.updateRotations(fs[0] - (double) s) * ((float) Math.PI / 180F) * 1.5F;
+            this.neck.rotationPointY = o;
+            this.neck.rotationPointZ = p;
+            this.neck.rotationPointX = n;
+            o = (float) ((double) o + Math.sin(this.neck.pitch) * (double) 10.0F);
+            p = (float) ((double) p - Math.cos(this.neck.yaw) * Math.cos(this.neck.pitch) * (double) 10.0F);
+            n = (float) ((double) n - Math.sin(this.neck.yaw) * Math.cos(this.neck.pitch) * (double) 10.0F);
+            this.neck.render(k);
         }
 
-        poseStack.popPose();
+        GlStateManager.popMatrix();
     }
 
-    private void renderSide(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int j, float f, ModelPart modelPart, ModelPart modelPart2, ModelPart modelPart3, ModelPart modelPart4, ModelPart modelPart5, ModelPart modelPart6, ModelPart modelPart7, int k) {
-        modelPart5.xRot = 1.0F + f * 0.1F;
-        modelPart6.xRot = 0.5F + f * 0.1F;
-        modelPart7.xRot = 0.75F + f * 0.1F;
-        modelPart2.xRot = 1.3F + f * 0.1F;
-        modelPart3.xRot = -0.5F - f * 0.1F;
-        modelPart4.xRot = 0.75F + f * 0.1F;
-        modelPart.render(poseStack, vertexConsumer, i, j, k, 1, 1, 1);
-        modelPart2.render(poseStack, vertexConsumer, i, j, k, 1, 1, 1);
-        modelPart5.render(poseStack, vertexConsumer, i, j, k, 1, 1, 1);
+    private float updateRotations(double d) {
+        while (d >= (double) 180.0F) {
+            d -= 360.0F;
+        }
+
+        while (d < (double) -180.0F) {
+            d += 360.0F;
+        }
+
+        return (float) d;
     }
 }

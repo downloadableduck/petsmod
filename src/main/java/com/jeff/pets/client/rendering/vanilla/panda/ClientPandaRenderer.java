@@ -2,27 +2,26 @@ package com.jeff.pets.client.rendering.vanilla.panda;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientPanda;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientPandaRenderer extends PetRenderer<@NotNull ClientPanda, @NotNull ClientPandaModel> {
 
-    public ClientPandaRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+    public ClientPandaRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
         super(context, new ClientPandaModel(9, 0), 0.75f);
     }
 
     @Override
-    protected void scale(ClientPanda state, @NotNull PoseStack poseStack, float f) {
+    protected void scale(ClientPanda state, float f) {
         if (CONFIG.isBaby) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientPanda livingEntityRenderState) {
+    public @NotNull Identifier getTexture(ClientPanda livingEntityRenderState) {
         String pandaTexturePath;
         if (CONFIG.pandaSkin.equals("normal")) {
             pandaTexturePath = "textures/entity/panda/panda.png";
@@ -41,6 +40,6 @@ public class ClientPandaRenderer extends PetRenderer<@NotNull ClientPanda, @NotN
         } else {
             pandaTexturePath = "textures/entity/panda/panda.png";
         }
-        return new ResourceLocation("minecraft", pandaTexturePath);
+        return new Identifier("minecraft", pandaTexturePath);
     }
 }

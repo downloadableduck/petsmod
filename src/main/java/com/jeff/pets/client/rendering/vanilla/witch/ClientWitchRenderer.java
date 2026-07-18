@@ -2,18 +2,18 @@ package com.jeff.pets.client.rendering.vanilla.witch;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientWitch;
-import net.minecraft.client.model.WitchModel;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.render.entity.model.WitchEntityModel;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientWitchRenderer extends PetRenderer<@NotNull ClientWitch, @NotNull WitchModel<ClientWitch>> {
+public class ClientWitchRenderer extends PetRenderer<@NotNull ClientWitch, @NotNull WitchEntityModel<ClientWitch>> {
 
-    public ClientWitchRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
-        super(context, new WitchModel<>(0), 0.75f);
+    public ClientWitchRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
+        super(context, new WitchEntityModel<>(0), 0.75f);
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientWitch livingEntityRenderState) {
-        return new ResourceLocation("minecraft", "textures/entity/witch.png");
+    public @NotNull Identifier getTexture(ClientWitch livingEntityRenderState) {
+        return new Identifier("minecraft", "textures/entity/witch.png");
     }
 }

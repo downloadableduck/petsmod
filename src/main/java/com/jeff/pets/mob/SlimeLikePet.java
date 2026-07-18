@@ -1,14 +1,14 @@
 package com.jeff.pets.mob;
 
 import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MovementType;
+import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.world.World;
+import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -18,7 +18,7 @@ import java.util.Objects;
  * including rabbits.
  */
 public abstract class SlimeLikePet extends AbstractPet {
-    public SlimeLikePet(EntityType<? extends @NotNull TamableAnimal> entityType, Level level) {
+    public SlimeLikePet(EntityType<? extends @NotNull TameableEntity> entityType, World level) {
         super(entityType, level);
     }
 
@@ -35,61 +35,61 @@ public abstract class SlimeLikePet extends AbstractPet {
         if (owner != null) {
 
             if (owner.hasPassenger(this)) {
-                if (owner.isCrouching() && owner.jumping) {
+                if (owner.isInSneakingPose() && owner.jumping) {
                     this.stopRiding();
-                    this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
+                    this.setVelocity(this.getVelocity().add(0, -0.04, 0));
                 } else {
                     this.setSitting(true);
                 }
             }
 
-            double dx = owner.getX() - this.getX();
-            double dz = owner.getZ() - this.getZ();
+            double dx = owner.x - this.x;
+            double dz = owner.z - this.z;
 
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.distanceTo(owner);
-            float rotation = this.getRotationVector().x;
-            float rotationToOwner = rotation + this.getOwner().getRotationVector().x;
-            float bodyYawDiff = Mth.wrapDegrees(this.getYHeadRot() - this.yBodyRot);
+            float rotation = this.getRotationClient().x;
+            float rotationToOwner = rotation + this.getOwner().getRotationClient().x;
+            float bodyYawDiff = MathHelper.wrapDegrees(this.getHeadYaw() - this.field_6283 /*bodyYaw*/);
 
             if (rotationToOwner >= 50) {
-                this.yBodyRot = this.getYHeadRot() - (Mth.sign(bodyYawDiff) * 50.0F);
+                this.field_6283 /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.sign(bodyYawDiff) * 50.0F);
             }
 
             if (distance > 4.0) {
 
-                this.animationSpeed = (0.5F);
+                this.limbDistance = (0.5F);
 
-                Vec3 targetPos = owner.position();
-                Vec3 dir = targetPos.subtract(this.position()).normalize();
+                Vec3d targetPos = owner.getPos();
+                Vec3d dir = targetPos.subtract(this.getPos()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
-                this.setYHeadRot(this.getYRot());
-                this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.yHeadRot, 50.0f);
+                this.setHeadYaw(this.getYRot());
+                this.field_6283 /*bodyYaw*/ = MathHelper.method_20306(this.field_6283 /*bodyYaw*/, this.headYaw, 50.0f);
 
-                double speed = owner.getSpeed() * 2;
-                this.setDeltaMovement(dir.x * speed, this.getDeltaMovement().y, dir.z * speed);
+                double speed = owner.getMovementSpeed() * 2;
+                this.setVelocity(dir.x * speed, this.getVelocity().y, dir.z * speed);
             } else {
-                this.lookAt(owner, 5, 0);
-                this.setDeltaMovement(this.getDeltaMovement().multiply(0.8, 1.0, 0.8));
+                this.lookAtEntity(owner, 5, 0);
+                this.setVelocity(this.getVelocity().multiply(0.8, 1.0, 0.8));
             }
 
-            int yHeightToOwner = (int) (owner.getY() - this.getY());
+            int yHeightToOwner = (int) (owner.y - this.y);
 
             if (yHeightToOwner > 1 && this.onGround) {
-                this.jumpFromGround();
+                this.jump();
             }
 
             if (yHeightToOwner > -1) {
-                this.setDeltaMovement(this.getDeltaMovement().add(0, -0.02, 0));
+                this.setVelocity(this.getVelocity().add(0, -0.02, 0));
             }
 
             if (!this.onGround) {
                 //this.processFlappingMovement();
             }
 
-            if (owner.getDeltaMovement().lengthSqr() < 0.01) {
+            if (owner.getVelocity().lengthSquared() < 0.01) {
                 this.waitingTime++;
                 if (this.waitingTime > 30) this.wander();
             } else {
@@ -97,32 +97,32 @@ public abstract class SlimeLikePet extends AbstractPet {
             }
 
             this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
-            this.setYHeadRot(this.getYRot());
+            this.setHeadYaw(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.yBodyRot = this.getYHeadRot() - (Mth.sign(bodyYawDiff) * 50);
+                this.field_6283 /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.sign(bodyYawDiff) * 50);
             } else {
-                this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.getYHeadRot(), 10);
+                this.field_6283 /*bodyYaw*/ = MathHelper.method_20306(this.field_6283 /*bodyYaw*/, this.getHeadYaw(), 10);
             }
 
-            this.move(MoverType.SELF, this.getDeltaMovement());
+            this.move(MovementType.SELF, this.getVelocity());
 
             if (!this.onGround) {
-                this.setDeltaMovement(this.getDeltaMovement().add(0, -0.02, 0));
+                this.setVelocity(this.getVelocity().add(0, -0.02, 0));
             }
         }
         if (owner != null) {
             if (distanceTo(owner) >= 10) {
-                this.teleportTo(owner.getX(), owner.getY(), owner.getZ());
+                this.requestTeleport(owner.x, owner.y, owner.z);
             }
         }
-        if (this.animationSpeed > 0 && this.onGround) {
-            this.jumpFromGround();
+        if (this.limbDistance > 0 && this.onGround) {
+            this.jump();
         }
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level.playLocalSound(this.getX(), this.getY(), this.getZ(), Objects.requireNonNull(this.getAmbientSound()), SoundSource.AMBIENT, 1.0f, 1.0f, true);
+            world.playSound(this.x, this.y, this.z, Objects.requireNonNull(this.getAmbientSound()), SoundCategory.AMBIENT, 1.0f, 1.0f, true);
         }
     }
 }

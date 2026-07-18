@@ -19,6 +19,8 @@
 
 package me.shedaniel.autoconfig.gui;
 
+import com.mojang.brigadier.StringReader;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.ConfigManager;
 import me.shedaniel.autoconfig.annotation.Config;
@@ -28,10 +30,11 @@ import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TranslationException;
+import net.minecraft.util.Identifier;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -46,7 +49,7 @@ import static java.util.stream.Collectors.*;
 @Environment(EnvType.CLIENT)
 public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Screen> {
 
-    private static final ResourceLocation TRANSPARENT_BACKGROUND = new ResourceLocation(Config.Gui.Background.TRANSPARENT);
+    private static final Identifier TRANSPARENT_BACKGROUND = new Identifier(Config.Gui.Background.TRANSPARENT);
 
     private final ConfigManager<T> manager;
     private final GuiRegistryAccess registry;
@@ -93,25 +96,30 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
 
         String i18n = i18nFunction.apply(manager);
 
-        ConfigBuilder builder = ConfigBuilder.create().setParentScreen(parent).setTitle(new TranslatableComponent(String.format("%s.title", i18n))).setSavingRunnable(manager::save);
+        ConfigBuilder builder = ConfigBuilder.create().setParentScreen(parent).setTitle(String.format("%s.title", i18n)).setSavingRunnable(manager::save);
 
         Class<T> configClass = manager.getConfigClass();
 
         if (configClass.isAnnotationPresent(Config.Gui.Background.class)) {
             String bg = configClass.getAnnotation(Config.Gui.Background.class).value();
-            ResourceLocation bgId = ResourceLocation.tryParse(bg);
+            Identifier bgId = null;
+            try {
+                bgId = Identifier.parse(new StringReader(bg));
+            } catch (CommandSyntaxException e) {
+                e.printStackTrace();
+            }
             if (TRANSPARENT_BACKGROUND.equals(bgId))
                 builder.transparentBackground();
             else
                 builder.setDefaultBackgroundTexture(bgId);
         }
 
-        Map<String, ResourceLocation> categoryBackgrounds =
+        Map<String, Identifier> categoryBackgrounds =
                 Arrays.stream(configClass.getAnnotationsByType(Config.Gui.CategoryBackground.class))
                         .collect(
                                 toMap(
                                         Config.Gui.CategoryBackground::category,
-                                        ann -> new ResourceLocation(ann.background())
+                                        ann -> new Identifier(ann.background())
                                 )
                         );
 
@@ -139,7 +147,7 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
     private ConfigCategory getOrCreateCategoryForField(
             Field field,
             ConfigBuilder screenBuilder,
-            Map<String, ResourceLocation> backgroundMap,
+            Map<String, Identifier> backgroundMap,
             String baseI13n
     ) {
         String categoryName = "default";
@@ -149,14 +157,14 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
 
         Component categoryKey = new TranslatableComponent(categoryFunction.apply(baseI13n, categoryName));
 
-        if (!screenBuilder.hasCategory(categoryKey)) {
-            ConfigCategory category = screenBuilder.getOrCreateCategory(categoryKey);
+        if (!screenBuilder.hasCategory(categoryKey.getString())) {
+            ConfigCategory category = screenBuilder.getOrCreateCategory(categoryKey.getString());
             if (backgroundMap.containsKey(categoryName)) {
                 category.setCategoryBackground(backgroundMap.get(categoryName));
             }
             return category;
         }
 
-        return screenBuilder.getOrCreateCategory(categoryKey);
+        return screenBuilder.getOrCreateCategory(categoryKey.getString());
     }
 }

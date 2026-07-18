@@ -1,48 +1,57 @@
 package com.jeff.pets.client.rendering.vanilla.vex;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Iterables;
 import com.jeff.pets.mob.vanilla.hostile.ClientVex;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.util.Mth;
+import net.minecraft.client.model.Cuboid;
+import net.minecraft.client.render.entity.model.BipedEntityModel;
+import net.minecraft.client.render.entity.model.VexEntityModel;
+import net.minecraft.entity.mob.VexEntity;
+import net.minecraft.util.AbsoluteHand;
+import net.minecraft.util.math.MathHelper;
 
-public class ClientVexModel extends HumanoidModel<ClientVex> {
-    private final ModelPart leftWing;
-    private final ModelPart rightWing;
+public class ClientVexModel extends BipedEntityModel<ClientVex> {
+    private final Cuboid field_3601;
+    private final Cuboid field_3602;
 
     public ClientVexModel() {
-        super(0.0F, 0.0F, 64, 64);
+        this(0.0F);
+    }
+
+    public ClientVexModel(float f) {
+        super(f, 0.0F, 64, 64);
         this.leftLeg.visible = false;
-        this.hat.visible = false;
-        this.rightLeg = new ModelPart(this, 32, 0);
-        this.rightLeg.addBox(-1.0F, -1.0F, -2.0F, 6.0F, 10.0F, 4.0F, 0.0F);
-        this.rightLeg.setPos(-1.9F, 12.0F, 0.0F);
-        this.rightWing = new ModelPart(this, 0, 32);
-        this.rightWing.addBox(-20.0F, 0.0F, 0.0F, 20.0F, 12.0F, 1.0F);
-        this.leftWing = new ModelPart(this, 0, 32);
-        this.leftWing.mirror = true;
-        this.leftWing.addBox(0.0F, 0.0F, 0.0F, 20.0F, 12.0F, 1.0F);
+        this.headwear.visible = false;
+        this.rightLeg = new Cuboid(this, 32, 0);
+        this.rightLeg.addBox(-1.0F, -1.0F, -2.0F, 6, 10, 4, 0.0F);
+        this.rightLeg.setRotationPoint(-1.9F, 12.0F, 0.0F);
+        this.field_3602 = new Cuboid(this, 0, 32);
+        this.field_3602.addBox(-20.0F, 0.0F, 0.0F, 20, 12, 1);
+        this.field_3601 = new Cuboid(this, 0, 32);
+        this.field_3601.mirror = true;
+        this.field_3601.addBox(0.0F, 0.0F, 0.0F, 20, 12, 1);
     }
 
-    protected Iterable<ModelPart> bodyParts() {
-        return Iterables.concat(super.bodyParts(), ImmutableList.of(this.rightWing, this.leftWing));
+    @Override
+    public void render(ClientVex vexEntity, float f, float g, float h, float i, float j, float k) {
+        super.render(vexEntity, f, g, h, i, j, k);
+        this.field_3602.render(k);
+        this.field_3601.render(k);
     }
 
-    public void setupAnim(ClientVex vex, float f, float g, float h, float i, float j) {
-        super.setupAnim(vex, f, g, h, i, j);
+    @Override
+    public void setAngles(ClientVex vexEntity, float f, float g, float h, float i, float j, float k) {
+        super.method_17087(vexEntity, f, g, h, i, j, k);
 
-        ModelPart var10000 = this.rightLeg;
-        var10000.xRot += ((float) Math.PI / 5F);
-        this.rightWing.z = 2.0F;
-        this.leftWing.z = 2.0F;
-        this.rightWing.y = 1.0F;
-        this.leftWing.y = 1.0F;
-        this.rightWing.yRot = 0.47123894F + Mth.cos(h * 0.8F) * (float) Math.PI * 0.05F;
-        this.leftWing.yRot = -this.rightWing.yRot;
-        this.leftWing.zRot = -0.47123894F;
-        this.leftWing.xRot = 0.47123894F;
-        this.rightWing.xRot = 0.47123894F;
-        this.rightWing.zRot = 0.47123894F;
+        Cuboid var10000 = this.rightLeg;
+        var10000.pitch += ((float)Math.PI / 5F);
+        this.field_3602.rotationPointZ = 2.0F;
+        this.field_3601.rotationPointZ = 2.0F;
+        this.field_3602.rotationPointY = 1.0F;
+        this.field_3601.rotationPointY = 1.0F;
+        this.field_3602.yaw = 0.47123894F + MathHelper.cos(h * 0.8F) * (float)Math.PI * 0.05F;
+        this.field_3601.yaw = -this.field_3602.yaw;
+        this.field_3601.roll = -0.47123894F;
+        this.field_3601.pitch = 0.47123894F;
+        this.field_3602.pitch = 0.47123894F;
+        this.field_3602.roll = 0.47123894F;
     }
 }

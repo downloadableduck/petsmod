@@ -2,9 +2,9 @@ package com.jeff.pets.client.rendering.vanilla.zombie_pigman;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientZombiePigman;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.resources.ResourceLocation;
+import net.fabricmc.fabric.api.client.render.EntityRendererRegistry;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.util.Identifier;
 
 public class ClientZombiePigmanRenderer extends PetRenderer<ClientZombiePigman, ClientZombiePigmanModel> {
     public ClientZombiePigmanRenderer(EntityRenderDispatcher context, EntityRendererRegistry.Context content2) {
@@ -12,7 +12,7 @@ public class ClientZombiePigmanRenderer extends PetRenderer<ClientZombiePigman, 
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ClientZombiePigman entity) {
-        return new ResourceLocation("minecraft", "textures/entity/zombie_pigman.png");
+    public Identifier getTexture(ClientZombiePigman entity) {
+        return new Identifier("minecraft", "textures/entity/zombie_pigman.png");
     }
 }

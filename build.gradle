@@ -43,11 +43,10 @@ loom {
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings loom.officialMojangMappings()
+    mappings "net.fabricmc:yarn:${project.yarn_version}"
     modApi "net.fabricmc:fabric-loader:${project.loader_version}"
-    modApi "maven.modrinth:9s6osm5g:mJwBHBVB" // cloth config
-    // Fabric API. This is technically optional, but you probably want it anyway.
-    modApi "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+    modApi "maven.modrinth:9s6osm5g:vcrZcwvb"
+    modImplementation files(files('libs/fabric-api.jar'))
     //modApi("maven.modrinth:mOgUt4GM:${project.modmenu_version}") //modmenu
     implementation("blue.endless:jankson:${rootProject.jankson_version}")
     implementation("com.moandjiezana.toml:toml4j:${rootProject.toml4j_version}")

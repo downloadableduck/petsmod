@@ -3,9 +3,8 @@ package com.jeff.pets.client.rendering.vanilla.mooshroom;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.cow.ClientCowModel;
 import com.jeff.pets.mob.vanilla.passive.ClientMooshroom;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -16,20 +15,20 @@ public class ClientMooshroomRenderer extends PetRenderer<@NotNull ClientMooshroo
 
     String mooshroomTexturePath;
 
-    public ClientMooshroomRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+    public ClientMooshroomRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
         super(context, new ClientCowModel<>(), 0.7F);
-        this.addLayer(new ClientMushroomCowMushroomLayer(this, Minecraft.getInstance().getBlockRenderer()));
+        this.addFeature(new ClientMushroomCowMushroomLayer(this, MinecraftClient.getInstance().getBlockRenderManager()));
     }
 
     @Override
-    protected void scale(ClientMooshroom state, @NotNull PoseStack poseStack, float f) {
+    protected void scale(ClientMooshroom state, float f) {
         if (CONFIG.isBaby) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientMooshroom cowRenderState) {
+    public @NotNull Identifier getTexture(ClientMooshroom cowRenderState) {
         if (Objects.equals(CONFIG.mooshroomSkin, "red")) {
             mooshroomTexturePath = "textures/entity/cow/red_mooshroom.png";
         } else if (Objects.equals(CONFIG.mooshroomSkin, "brown")) {
@@ -37,6 +36,6 @@ public class ClientMooshroomRenderer extends PetRenderer<@NotNull ClientMooshroo
         } else {
             mooshroomTexturePath = "textures/entity/cow/red_mooshroom.png";
         }
-        return new ResourceLocation("minecraft", mooshroomTexturePath);
+        return new Identifier("minecraft", mooshroomTexturePath);
     }
 }

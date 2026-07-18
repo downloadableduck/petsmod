@@ -2,67 +2,64 @@ package com.jeff.pets.client.rendering.vanilla.drowned;
 
 import com.jeff.pets.client.rendering.AnimationUtils;
 import com.jeff.pets.mob.vanilla.hostile.ClientDrowned;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.util.Mth;
+import net.minecraft.client.model.Cuboid;
+import net.minecraft.client.render.entity.model.BipedEntityModel;
+import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientDrownedModel extends HumanoidModel<ClientDrowned> {
+public class ClientDrownedModel extends BipedEntityModel<ClientDrowned> {
 
     public ClientDrownedModel(float f, float g, int i, int j) {
         super(f, g, i, j);
-        this.rightArm = new ModelPart(this, 32, 48);
-        this.rightArm.addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, f);
-        this.rightArm.setPos(-5.0F, 2.0F + g, 0.0F);
-        this.rightLeg = new ModelPart(this, 16, 48);
-        this.rightLeg.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, f);
-        this.rightLeg.setPos(-1.9F, 12.0F + g, 0.0F);
+        this.rightArm = new Cuboid(this, 32, 48);
+        this.rightArm.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, f);
+        this.rightArm.setRotationPoint(-5.0F, 2.0F + g, 0.0F);
+        this.rightLeg = new Cuboid(this, 16, 48);
+        this.rightLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, f);
+        this.rightLeg.setRotationPoint(-1.9F, 12.0F + g, 0.0F);
     }
 
     @Override
-    public void setupAnim(@NotNull ClientDrowned state, float f, float g, float h, float i, float k) {
-        super.setupAnim(state, f, g, h, i, k);
-        AnimationUtils.animateZombieArms(this.leftArm, this.rightArm, true, this.attackTime, h);
+    public void setAngles(@NotNull ClientDrowned state, float f, float g, float h, float i, float k, float s) {
+        super.setAngles(state, f, g, h, i, k, s);
+        AnimationUtils.animateZombieArms(this.leftArm, this.rightArm, true, this.handSwingProgress, h);
     }
 
-    public void prepareMobModel(ClientDrowned zombie, float f, float g, float h) {
-        this.rightArmPose = HumanoidModel.ArmPose.EMPTY;
-        this.leftArmPose = HumanoidModel.ArmPose.EMPTY;
+    public void animateModel(ClientDrowned zombie, float f, float g, float h) {
+        this.rightArmPose = ArmPose.EMPTY;
+        this.leftArmPose = ArmPose.EMPTY;
 
-        super.prepareMobModel(zombie, f, g, h);
+        super.animateModel(zombie, f, g, h);
 
         if (this.rightArmPose == ArmPose.THROW_SPEAR) {
-            this.rightArm.xRot = this.rightArm.xRot * 0.5F - (float) Math.PI;
-            this.rightArm.yRot = 0.0F;
+            this.rightArm.pitch = this.rightArm.pitch * 0.5F - (float) Math.PI;
+            this.rightArm.yaw = 0.0F;
         }
 
-        if (this.swimAmount > 0.0F) {
-            this.rightArm.xRot = this.rotlerpRad(this.swimAmount, this.rightArm.xRot, -2.5132742F) + this.swimAmount * 0.35F * Mth.sin(0.1F * h);
-            this.leftArm.xRot = this.rotlerpRad(this.swimAmount, this.leftArm.xRot, -2.5132742F) - this.swimAmount * 0.35F * Mth.sin(0.1F * h);
-            this.rightArm.zRot = this.rotlerpRad(this.swimAmount, this.rightArm.zRot, -0.15F);
-            this.leftArm.zRot = this.rotlerpRad(this.swimAmount, this.leftArm.zRot, 0.15F);
-            ModelPart var10000 = this.leftLeg;
-            var10000.xRot -= this.swimAmount * 0.55F * Mth.sin(0.1F * h);
+        if (this.field_3396 > 0.0F) {
+            this.rightArm.pitch = this.method_2804(this.field_3396, this.rightArm.pitch, -2.5132742F) + this.field_3396 * 0.35F * MathHelper.sin(0.1F * h);
+            this.leftArm.pitch = this.method_2804(this.field_3396, this.leftArm.pitch, -2.5132742F) - this.field_3396 * 0.35F * MathHelper.sin(0.1F * h);
+            this.rightArm.roll = this.method_2804(this.field_3396, this.rightArm.roll, -0.15F);
+            this.leftArm.roll = this.method_2804(this.field_3396, this.leftArm.roll, 0.15F);
+            Cuboid var10000 = this.leftLeg;
+            var10000.pitch -= this.field_3396 * 0.55F * MathHelper.sin(0.1F * h);
             var10000 = this.rightLeg;
-            var10000.xRot += this.swimAmount * 0.55F * Mth.sin(0.1F * h);
-            this.head.xRot = 0.0F;
+            var10000.pitch += this.field_3396 * 0.55F * MathHelper.sin(0.1F * h);
+            this.head.pitch = 0.0F;
         }
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int j, float f, float g, float h, float k) {
-        super.renderToBuffer(poseStack, vertexConsumer, i, j, f, g, h, k);
-        poseStack.pushPose();
+    public void render(ClientDrowned drowned, float f, float j, float h, float i, float k, float l) {
+        super.render(drowned, f, j, h, i, k, l);
+        com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
         if (CONFIG.isBaby) {
-            poseStack.scale(1.5f, 1.5f, 1.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(1.5f, 1.5f, 1.5f);
         } else {
-            poseStack.scale(1, 1, 1);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(1, 1, 1);
         }
-        this.head.translateAndRotate(poseStack);
-        poseStack.popPose();
+        com.mojang.blaze3d.platform.GlStateManager.popMatrix();
     }
 }

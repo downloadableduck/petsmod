@@ -2,8 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.llama;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientLlama;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -12,19 +11,19 @@ public class ClientLlamaRenderer extends PetRenderer<@NotNull ClientLlama, @NotN
 
     public String llamaTexturePath;
 
-    public ClientLlamaRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+    public ClientLlamaRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
         super(context, new ClientLlamaModel(0), 0.75F);
     }
 
     @Override
-    protected void scale(ClientLlama state, @NotNull PoseStack poseStack, float f) {
+    protected void scale(ClientLlama state, float f) {
         if (CONFIG.isBaby) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientLlama livingEntityRenderState) {
+    public @NotNull Identifier getTexture(ClientLlama livingEntityRenderState) {
         if (CONFIG.llamaSkin.equals("brown")) {
             llamaTexturePath = "textures/entity/llama/brown.png";
         } else if (CONFIG.llamaSkin.equals("creamy")) {
@@ -36,6 +35,6 @@ public class ClientLlamaRenderer extends PetRenderer<@NotNull ClientLlama, @NotN
         } else {
             llamaTexturePath = "textures/entity/llama/brown.png";
         }
-        return new ResourceLocation("minecraft", llamaTexturePath);
+        return new Identifier("minecraft", llamaTexturePath);
     }
 }

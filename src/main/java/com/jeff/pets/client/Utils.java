@@ -2,15 +2,15 @@ package com.jeff.pets.client;
 
 import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.mob.AbstractPet;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 
 import java.lang.reflect.Field;
 import java.util.Objects;
@@ -21,7 +21,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 /**
  * A utility class used mainly in {@link Central} and misc rendering classes. Contains various
  * shortcuts and utilities for spawning, despawning, and avoiding {@code NullPointerExceptions},
- * as well as a shortcut to {@link ResourceLocation#fromNamespaceAndPath}.
+ * as well as a shortcut to {@link Identifier#fromNamespaceAndPath}.
  *
  * @author downloadableduck
  * @see Central
@@ -39,22 +39,22 @@ public class Utils {
      */
     public static void summonPet(AbstractPet entity, String entityName) {
 
-        Minecraft minecraft = Minecraft.getInstance();
-        Player player = minecraft.player;
-        ClientLevel world = minecraft.level;
+        MinecraftClient minecraft = MinecraftClient.getInstance();
+        PlayerEntity player = minecraft.player;
+        ClientWorld world = minecraft.world;
 
         if (entity == null || world == null || player == null) return;
 
-        Vec3 lookAngle = player.getLookAngle();
+        Vec3d lookAngle = player.getRotationVector();
 
-        double x = player.getX() - lookAngle.x * (double) 0.5F;
-        double y = player.getY() + (double) 0.5F;
-        double z = player.getZ() - lookAngle.z * (double) 0.5F;
+        double x = player.x - lookAngle.x * (double) 0.5F;
+        double y = player.y + (double) 0.5F;
+        double z = player.z - lookAngle.z * (double) 0.5F;
 
-        entity.setPos(x, y, z);
+        entity.setPosition(x, y, z);
         entity.setCustomName(new TextComponent(entityName));
-        world.addEntity(entity.getId(), entity);
-        entity.tame(player);
+        world.addEntityPrivate(entity.getEntityId(), entity);
+        entity.setOwner(player);
         Central.summonedEntity.add(entity);
     }
 
@@ -113,15 +113,15 @@ public class Utils {
     }
 
     /**
-     * Used as a shortcut to {@link ResourceLocation#fromNamespaceAndPath}, and sets the parameter
+     * Used as a shortcut to {@link Identifier#fromNamespaceAndPath}, and sets the parameter
      * {@code namespace} with {@link PetsInitializer#MOD_ID}.
      *
      * @param path The String that goes in the {@code path} parameter.
-     * @return {@link ResourceLocation#fromNamespaceAndPath}, with the parameter {@code namespace} set to
+     * @return {@link Identifier#fromNamespaceAndPath}, with the parameter {@code namespace} set to
      * {@link PetsInitializer#MOD_ID} and the parameter {@code path} set to the user's input
      */
-    public static ResourceLocation withModNamespace(String path) {
-        return new ResourceLocation(MOD_ID, path);
+    public static Identifier withModNamespace(String path) {
+        return new Identifier(MOD_ID, path);
     }
 
     /**
@@ -162,6 +162,7 @@ public class Utils {
         }
         return Blocks.AIR;
     }
+
     public static float triangleWave(float p_78172_1_, float p_78172_2_) {
         return (Math.abs(p_78172_1_ % p_78172_2_ - p_78172_2_ * 0.5F) - p_78172_2_ * 0.25F) / (p_78172_2_ * 0.25F);
     }

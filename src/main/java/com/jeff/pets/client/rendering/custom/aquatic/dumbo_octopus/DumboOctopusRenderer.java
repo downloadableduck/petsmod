@@ -2,9 +2,7 @@ package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.PetsInitializer.MOD_ID;
@@ -16,12 +14,12 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
     float direction = 1;
     float speed = 0.5f;
 
-    public DumboOctopusRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+    public DumboOctopusRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
         super(context, new DumboOctopusModel(), 0.5f);
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(@NotNull DumboOctopus state) {
+    public @NotNull Identifier getTexture(@NotNull DumboOctopus state) {
         String path;
         String yellow = "textures/entity/dumbo_octopus/yellow.png";
         String red = "textures/entity/dumbo_octopus/red.png";
@@ -44,12 +42,12 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
         } else {
             path = yellow;
         }
-        return new ResourceLocation(MOD_ID, path);
+        return new Identifier(MOD_ID, path);
     }
 
     @Override
-    public void render(DumboOctopus octopus, float f, float g, PoseStack poseStack, MultiBufferSource source, int i) {
-        super.render(octopus, f, g, poseStack, source, i);
+    public void render(DumboOctopus octopus, double f, double g, double h, float j, float i) {
+        super.render(octopus, f, g, h, j, i);
         float currentSpeed;
         if (i > 67.5f) {
             currentSpeed = speed;
@@ -60,6 +58,6 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
         if (i >= 90 || i <= 45) {
             direction *= -1;
         }
-        octopus.tentacleAngle = (float) (i % 360);
+        octopus.tentacleAngle = i % 360;
     }
 }

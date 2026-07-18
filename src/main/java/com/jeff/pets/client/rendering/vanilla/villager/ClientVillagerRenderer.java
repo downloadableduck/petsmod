@@ -2,30 +2,29 @@ package com.jeff.pets.client.rendering.vanilla.villager;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientVillager;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.VillagerModel;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.render.entity.model.VillagerResemblingModel;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientVillagerRenderer extends PetRenderer<@NotNull ClientVillager, VillagerModel<ClientVillager>> {
+public class ClientVillagerRenderer extends PetRenderer<@NotNull ClientVillager, VillagerResemblingModel<ClientVillager>> {
 
-    public ClientVillagerRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
-        super(context, new VillagerModel<>(0), 0.5F);
-        this.addLayer(new ClientVillagerDefaultLayer(this));
-        this.addLayer(new ClientVillagerProfessionLayer(this));
+    public ClientVillagerRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
+        super(context, new VillagerResemblingModel<>(0), 0.5F);
+        this.addFeature(new ClientVillagerDefaultLayer(this));
+        this.addFeature(new ClientVillagerProfessionLayer(this));
     }
 
     @Override
-    protected void scale(ClientVillager state, @NotNull PoseStack poseStack, float f) {
+    protected void scale(ClientVillager state, float f) {
         if (CONFIG.isBaby) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientVillager villagerRenderState) {
-        return new ResourceLocation("minecraft", "textures/entity/villager/villager.png");
+    public @NotNull Identifier getTexture(ClientVillager villagerRenderState) {
+        return new Identifier("minecraft", "textures/entity/villager/villager.png");
     }
 }

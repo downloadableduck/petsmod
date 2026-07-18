@@ -2,29 +2,28 @@ package com.jeff.pets.client.rendering.vanilla.sheep;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientSheep;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientSheepRenderer extends PetRenderer<@NotNull ClientSheep, @NotNull ClientSheepModel> {
 
-    public ClientSheepRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+    public ClientSheepRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
         super(context, new ClientSheepModel(), 0.7F);
-        this.addLayer(new ClientSheepWoolLayer(this));
+        this.addFeature(new ClientSheepWoolLayer(this));
     }
 
     @Override
-    protected void scale(@NotNull ClientSheep livingEntityRenderState, @NotNull PoseStack poseStack, float f) {
+    protected void scale(@NotNull ClientSheep livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(@NotNull ClientSheep livingEntityRenderState) {
-        return new ResourceLocation("minecraft", "textures/entity/sheep/sheep.png");
+    public @NotNull Identifier getTexture(@NotNull ClientSheep livingEntityRenderState) {
+        return new Identifier("minecraft", "textures/entity/sheep/sheep.png");
     }
 
     /*@Override

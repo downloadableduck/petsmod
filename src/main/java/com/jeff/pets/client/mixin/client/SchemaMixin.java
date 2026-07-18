@@ -18,6 +18,6 @@ public abstract class SchemaMixin {
     @Inject(at = @At("HEAD"), method = "getChoiceType", cancellable = true, remap = false)
     private void getChoiceType(DSL.TypeReference type, String choiceName, CallbackInfoReturnable<Type<?>> cir) {
         final TaggedChoice.TaggedChoiceType<?> choiceType = this.findChoiceType(type);
-        cir.setReturnValue( choiceType.types().get(choiceName));
+        cir.setReturnValue(choiceType.types().get(choiceName));
     }
 }

@@ -2,52 +2,49 @@ package com.jeff.pets.client.rendering.vanilla.squid;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientSquid;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
-import net.minecraft.client.model.SquidModel;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
+import com.mojang.blaze3d.platform.GlStateManager;
+import net.minecraft.client.render.entity.model.SquidEntityModel;
+import net.minecraft.entity.passive.SquidEntity;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSquidRenderer extends PetRenderer<@NotNull ClientSquid, @NotNull SquidModel<ClientSquid>> {
+public class ClientSquidRenderer extends PetRenderer<@NotNull ClientSquid, @NotNull SquidEntityModel<ClientSquid>> {
     String squidTexturePath;
 
-    public ClientSquidRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
-        super(context, new SquidModel<>(), 0.7F);
+    public ClientSquidRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
+        super(context, new SquidEntityModel<>(), 0.7F);
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientSquid squidRenderState) {
-        if (Objects.equals(CONFIG.squidSkin, "squid")) {
-            squidTexturePath = "textures/entity/squid/squid.png";
-        } else if (Objects.equals(CONFIG.squidSkin, "glow_squid")) {
-            squidTexturePath = "textures/entity/squid/glow_squid.png";
-        }
-        return new ResourceLocation("minecraft", squidTexturePath);
+    public @NotNull Identifier getTexture(ClientSquid squidRenderState) {
+        squidTexturePath = "textures/entity/squid.png";
+        return new Identifier("minecraft", squidTexturePath);
     }
 
     @Override
-    protected void scale(@NotNull ClientSquid livingEntityRenderState, @NotNull PoseStack poseStack, float f) {
+    protected void scale(@NotNull ClientSquid livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
-    protected void setupRotations(ClientSquid squid, PoseStack poseStack, float f, float g, float h, float i) {
-        float j = Mth.lerp(h, squid.xBodyRotO, squid.xBodyRot);
-        float k = Mth.lerp(h, squid.zBodyRotO, squid.zBodyRot);
-        poseStack.translate(0.0F, 0.5F, 0.0F);
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F - g));
-        poseStack.mulPose(Vector3f.XP.rotationDegrees(j));
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(k));
-        poseStack.translate(0.0F, -1.2F, 0.0F);
+    protected void setupTransforms(ClientSquid squidEntity, float f, float g, float h) {
+        super.setupTransforms(squidEntity, f, g, h);
+        float i = MathHelper.lerp(h, squidEntity.xBodyRotO, squidEntity.xBodyRot);
+        float j = MathHelper.lerp(h, squidEntity.zBodyRotO, squidEntity.zBodyRot);
+        GlStateManager.translatef(0.0F, 0.5F, 0.0F);
+        GlStateManager.rotatef(180.0F - g, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotatef(i, 1.0F, 0.0F, 0.0F);
+        GlStateManager.rotatef(j, 0.0F, 1.0F, 0.0F);
+        GlStateManager.translatef(0.0F, -1.2F, 0.0F);
     }
 
-    protected float getBob(ClientSquid squid, float f) {
-        return Mth.lerp(f, squid.oldTentacleAngle, squid.tentacleAngle);
+    protected float getAnimationProgress(SquidEntity squidEntity, float f) {
+        return MathHelper.lerp(f, squidEntity.field_6900, squidEntity.field_6904);
     }
 }

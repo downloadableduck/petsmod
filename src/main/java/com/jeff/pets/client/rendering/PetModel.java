@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering;
 
-import net.minecraft.client.model.EntityModel;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.client.render.entity.model.EntityModel;
+import net.minecraft.entity.LivingEntity;
 
 public abstract class PetModel<T extends LivingEntity> extends EntityModel<T> {
 
@@ -10,7 +10,7 @@ public abstract class PetModel<T extends LivingEntity> extends EntityModel<T> {
     }
 
     @Override
-    public void setupAnim(T entity, float f, float g, float h, float i, float j) {
+    public void setAngles(T entity, float f, float g, float h, float i, float j, float s) {
 
     }
 }

@@ -1,8 +1,6 @@
 package com.jeff.pets.client.enums;
 
 
-import net.minecraft.network.chat.Component;
-
 public enum ShulkerSkins implements NameableEnum {
     normal,
     black,
@@ -24,7 +22,7 @@ public enum ShulkerSkins implements NameableEnum {
 
 
     @Override
-    public Component getDisplayName() {
+    public net.minecraft.network.chat.TextComponent getDisplayName() {
         return new net.minecraft.network.chat.TextComponent(String.valueOf(this).replace("_", " "));
     }
 }

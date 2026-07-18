@@ -1,59 +1,61 @@
 package com.jeff.pets.client.rendering.vanilla.snowgolem;
 
 import com.jeff.pets.mob.vanilla.passive.ClientSnowGolem;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.SnowGolemModel;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
-import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
+import com.mojang.blaze3d.platform.GlStateManager;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.client.render.block.BlockRenderManager;
+import net.minecraft.client.render.entity.feature.FeatureRenderer;
+import net.minecraft.client.render.entity.feature.FeatureRendererContext;
+import net.minecraft.client.render.entity.feature.SnowmanPumpkinFeatureRenderer;
+import net.minecraft.client.render.entity.model.SnowmanEntityModel;
+import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.item.ItemStack;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSnowGolemHeadLayer extends RenderLayer<ClientSnowGolem, SnowGolemModel<ClientSnowGolem>> {
-    private final BlockRenderDispatcher blockRenderer;
+public class ClientSnowGolemHeadLayer extends FeatureRenderer<ClientSnowGolem, SnowmanEntityModel<ClientSnowGolem>> {
+    private final BlockRenderManager blockRenderer;
     private final ItemRenderer itemRenderer;
 
-    public ClientSnowGolemHeadLayer(RenderLayerParent<ClientSnowGolem, SnowGolemModel<ClientSnowGolem>> renderLayerParent, BlockRenderDispatcher blockRenderDispatcher, ItemRenderer itemRenderer) {
+    public ClientSnowGolemHeadLayer(FeatureRendererContext<ClientSnowGolem, SnowmanEntityModel<ClientSnowGolem>> renderLayerParent, BlockRenderManager blockRenderDispatcher, ItemRenderer itemRenderer) {
         super(renderLayerParent);
         this.blockRenderer = blockRenderDispatcher;
         this.itemRenderer = itemRenderer;
     }
 
-    public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, ClientSnowGolem snowGolem, float f, float g, float h, float j, float k, float l) {
+    @Override
+    public void render(ClientSnowGolem snowGolem, float f, float g, float h, float i, float j, float k, float l) {
         if (CONFIG.snowGolemSkin.equals("pumpkin_on")) {
             boolean bl = snowGolem.isGlowing() && snowGolem.isInvisible();
             if (!snowGolem.isInvisible() || bl) {
-                poseStack.pushPose();
-                this.getParentModel().getHead().translateAndRotate(poseStack);
+                com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
+                //this.getContextModel().method_2834().rotate(poseStack);
                 float m = 0.625F;
-                poseStack.translate(0.0F, -0.34375F, 0.0F);
-                poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
-                poseStack.scale(0.625F, -0.625F, -0.625F);
+                GlStateManager.translatef(0.0F, -0F, 0.0F);
+                //poseStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180.0F));
+                com.mojang.blaze3d.platform.GlStateManager.scalef(0.625F, -0.625F, -0.625F);
+                GlStateManager.rotatef(180.0F, 0.0F, 1.0F, 0.0F);
                 ItemStack itemStack = new ItemStack(Blocks.CARVED_PUMPKIN);
                 if (bl) {
-                    BlockState blockState = Blocks.CARVED_PUMPKIN.defaultBlockState();
-                    BakedModel bakedModel = this.blockRenderer.getBlockModel(blockState);
-                    int n = LivingEntityRenderer.getOverlayCoords(snowGolem, 0.0F);
-                    poseStack.translate(-0.5F, -0.5F, -0.5F);
-                    this.blockRenderer.getModelRenderer().renderModel(poseStack.last(), multiBufferSource.getBuffer(RenderType.outline(TextureAtlas.LOCATION_BLOCKS)), blockState, bakedModel, 0.0F, 0.0F, 0.0F, i, n);
+                    BlockState blockState = Blocks.CARVED_PUMPKIN.getDefaultState();
+                    BakedModel bakedModel = this.blockRenderer.getModel(blockState);
+                    int n = 0;
+                    com.mojang.blaze3d.platform.GlStateManager.translatef(-0.5F, -0.5F, -0.5F);
+                    this.blockRenderer.getModelRenderer().render(blockState, bakedModel, 0.0F, 0.0F, 0.0F, i);
                 } else {
-                    this.itemRenderer.renderStatic(snowGolem, itemStack, ItemTransforms.TransformType.HEAD, false, poseStack, multiBufferSource, snowGolem.level, i, LivingEntityRenderer.getOverlayCoords(snowGolem, 0.0F));
+                    this.itemRenderer.renderItem(itemStack, ModelTransformation.Type.HEAD);
                 }
 
-                poseStack.popPose();
+                com.mojang.blaze3d.platform.GlStateManager.popMatrix();
             }
         }
+    }
+
+    @Override
+    public boolean hasHurtOverlay() {
+        return false;
     }
 }

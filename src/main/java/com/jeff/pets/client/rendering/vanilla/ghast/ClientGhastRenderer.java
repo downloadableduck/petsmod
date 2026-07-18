@@ -2,24 +2,23 @@ package com.jeff.pets.client.rendering.vanilla.ghast;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientGhast;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.GhastModel;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.render.entity.model.GhastEntityModel;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientGhastRenderer extends PetRenderer<@NotNull ClientGhast, @NotNull GhastModel<ClientGhast>> {
+public class ClientGhastRenderer extends PetRenderer<@NotNull ClientGhast, @NotNull GhastEntityModel<ClientGhast>> {
 
-    public ClientGhastRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
-        super(context, new GhastModel<>(), 0.75f);
+    public ClientGhastRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
+        super(context, new GhastEntityModel<>(), 0.75f);
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientGhast livingEntityRenderState) {
-        return new ResourceLocation("minecraft", "textures/entity/ghast/ghast.png");
+    public @NotNull Identifier getTexture(ClientGhast livingEntityRenderState) {
+        return new Identifier("minecraft", "textures/entity/ghast/ghast.png");
     }
 
     @Override
-    public void scale(ClientGhast ghast, PoseStack poseStack, float f) {
-        poseStack.scale(4.5F, 4.5F, 4.5F);
+    public void scale(ClientGhast ghast, float f) {
+        com.mojang.blaze3d.platform.GlStateManager.scalef(4.5F, 4.5F, 4.5F);
     }
 }

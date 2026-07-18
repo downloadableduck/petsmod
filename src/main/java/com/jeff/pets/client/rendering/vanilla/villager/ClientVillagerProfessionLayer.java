@@ -1,12 +1,11 @@
 package com.jeff.pets.client.rendering.vanilla.villager;
 
 import com.jeff.pets.mob.vanilla.passive.ClientVillager;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.VillagerModel;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.render.entity.feature.FeatureRenderer;
+import net.minecraft.client.render.entity.feature.FeatureRendererContext;
+import net.minecraft.client.render.entity.feature.VillagerClothingFeatureRenderer;
+import net.minecraft.client.render.entity.model.VillagerResemblingModel;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -14,60 +13,66 @@ import java.util.Objects;
 import static com.jeff.pets.client.Central.CONFIG;
 
 //villager layer is blue lmao
-public class ClientVillagerProfessionLayer extends RenderLayer<@NotNull ClientVillager, @NotNull VillagerModel<ClientVillager>> {
+public class ClientVillagerProfessionLayer extends FeatureRenderer<@NotNull ClientVillager, @NotNull VillagerResemblingModel<ClientVillager>> {
 
-    public static final ResourceLocation ARMORER_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/armorer.png");
-    public static final ResourceLocation BUTCHER_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/butcher.png");
-    public static final ResourceLocation CARTOGRAPHER_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/cartographer.png");
-    public static final ResourceLocation CLERIC_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/cleric.png");
-    public static final ResourceLocation FARMER_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/farmer.png");
-    public static final ResourceLocation FISHERMAN_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/fisherman.png");
-    public static final ResourceLocation FLETCHER_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/fletcher.png");
-    public static final ResourceLocation LEATHERWORKER_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/leatherworker.png");
-    public static final ResourceLocation LIBRARIAN_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/librarian.png");
-    public static final ResourceLocation MASON_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/mason.png");
-    public static final ResourceLocation NITWIT_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/nitwit.png");
-    public static final ResourceLocation SHEPHERD_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/shepherd.png");
-    public static final ResourceLocation TOOLSMITH_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/toolsmith.png");
-    public static final ResourceLocation WEAPONSMITH_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/weaponsmith.png");
+    public static final Identifier ARMORER_LOCATION = new Identifier("minecraft", "textures/entity/villager/profession/armorer.png");
+    public static final Identifier BUTCHER_LOCATION = new Identifier("minecraft", "textures/entity/villager/profession/butcher.png");
+    public static final Identifier CARTOGRAPHER_LOCATION = new Identifier("minecraft", "textures/entity/villager/profession/cartographer.png");
+    public static final Identifier CLERIC_LOCATION = new Identifier("minecraft", "textures/entity/villager/profession/cleric.png");
+    public static final Identifier FARMER_LOCATION = new Identifier("minecraft", "textures/entity/villager/profession/farmer.png");
+    public static final Identifier FISHERMAN_LOCATION = new Identifier("minecraft", "textures/entity/villager/profession/fisherman.png");
+    public static final Identifier FLETCHER_LOCATION = new Identifier("minecraft", "textures/entity/villager/profession/fletcher.png");
+    public static final Identifier LEATHERWORKER_LOCATION = new Identifier("minecraft", "textures/entity/villager/profession/leatherworker.png");
+    public static final Identifier LIBRARIAN_LOCATION = new Identifier("minecraft", "textures/entity/villager/profession/librarian.png");
+    public static final Identifier MASON_LOCATION = new Identifier("minecraft", "textures/entity/villager/profession/mason.png");
+    public static final Identifier NITWIT_LOCATION = new Identifier("minecraft", "textures/entity/villager/profession/nitwit.png");
+    public static final Identifier SHEPHERD_LOCATION = new Identifier("minecraft", "textures/entity/villager/profession/shepherd.png");
+    public static final Identifier TOOLSMITH_LOCATION = new Identifier("minecraft", "textures/entity/villager/profession/toolsmith.png");
+    public static final Identifier WEAPONSMITH_LOCATION = new Identifier("minecraft", "textures/entity/villager/profession/weaponsmith.png");
 
-    public ClientVillagerProfessionLayer(RenderLayerParent<@NotNull ClientVillager, @NotNull VillagerModel<ClientVillager>> renderLayerParent) {
+    public ClientVillagerProfessionLayer(FeatureRendererContext<@NotNull ClientVillager, @NotNull VillagerResemblingModel<ClientVillager>> renderLayerParent) {
         super(renderLayerParent);
     }
 
     @Override
-    public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource source, int i, ClientVillager entityRenderState, float f, float g, float h, float j, float k, float l) {
-        poseStack.pushPose();
-        poseStack.scale(1.001f, 1.001f, 1.001f);
+    public void render(ClientVillager villager, float f, float g, float h, float i, float j, float k, float l) {
+        com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
+        com.mojang.blaze3d.platform.GlStateManager.scalef(1.001f, 1.001f, 1.001f);
         if (Objects.equals(CONFIG.villagerSkin, "armorer")) {
-            renderColoredCutoutModel(this.getParentModel(), ARMORER_LOCATION, poseStack, source, i, entityRenderState, 1, 1, 1);
+            this.bindTexture(ARMORER_LOCATION);
         } else if (Objects.equals(CONFIG.villagerSkin, "butcher")) {
-            renderColoredCutoutModel(this.getParentModel(), BUTCHER_LOCATION, poseStack, source, i, entityRenderState, 1, 1, 1);
+            bindTexture(BUTCHER_LOCATION);
         } else if (Objects.equals(CONFIG.villagerSkin, "cartographer")) {
-            renderColoredCutoutModel(this.getParentModel(), CARTOGRAPHER_LOCATION, poseStack, source, i, entityRenderState, 1, 1, 1);
+            this.bindTexture(CARTOGRAPHER_LOCATION);
         } else if (Objects.equals(CONFIG.villagerSkin, "cleric")) {
-            renderColoredCutoutModel(this.getParentModel(), CLERIC_LOCATION, poseStack, source, i, entityRenderState, 1, 1, 1);
+            this.bindTexture(CLERIC_LOCATION);
         } else if (Objects.equals(CONFIG.villagerSkin, "farmer")) {
-            renderColoredCutoutModel(this.getParentModel(), FARMER_LOCATION, poseStack, source, i, entityRenderState, 1, 1, 1);
+            this.bindTexture(FARMER_LOCATION);
         } else if (Objects.equals(CONFIG.villagerSkin, "fisherman")) {
-            renderColoredCutoutModel(this.getParentModel(), FISHERMAN_LOCATION, poseStack, source, i, entityRenderState, 1, 1, 1);
+            this.bindTexture(FISHERMAN_LOCATION);
         } else if (Objects.equals(CONFIG.villagerSkin, "fletcher")) {
-            renderColoredCutoutModel(this.getParentModel(), FLETCHER_LOCATION, poseStack, source, i, entityRenderState, 1, 1, 1);
+            this.bindTexture(FLETCHER_LOCATION);
         } else if (Objects.equals(CONFIG.villagerSkin, "leatherworker")) {
-            renderColoredCutoutModel(this.getParentModel(), LEATHERWORKER_LOCATION, poseStack, source, i, entityRenderState, 1, 1, 1);
+            this.bindTexture(LEATHERWORKER_LOCATION);
         } else if (Objects.equals(CONFIG.villagerSkin, "librarian")) {
-            renderColoredCutoutModel(this.getParentModel(), LIBRARIAN_LOCATION, poseStack, source, i, entityRenderState, 1, 1, 1);
+            this.bindTexture(LIBRARIAN_LOCATION);
         } else if (Objects.equals(CONFIG.villagerSkin, "mason")) {
-            renderColoredCutoutModel(this.getParentModel(), MASON_LOCATION, poseStack, source, i, entityRenderState, 1, 1, 1);
+            this.bindTexture(MASON_LOCATION);
         } else if (Objects.equals(CONFIG.villagerSkin, "nitwit")) {
-            renderColoredCutoutModel(this.getParentModel(), NITWIT_LOCATION, poseStack, source, i, entityRenderState, 1, 1, 1);
+            this.bindTexture(NITWIT_LOCATION);
         } else if (Objects.equals(CONFIG.villagerSkin, "shepherd")) {
-            renderColoredCutoutModel(this.getParentModel(), SHEPHERD_LOCATION, poseStack, source, i, entityRenderState, 1, 1, 1);
+            this.bindTexture(SHEPHERD_LOCATION);
         } else if (Objects.equals(CONFIG.villagerSkin, "toolsmith")) {
-            renderColoredCutoutModel(this.getParentModel(), TOOLSMITH_LOCATION, poseStack, source, i, entityRenderState, 1, 1, 1);
+            this.bindTexture(TOOLSMITH_LOCATION);
         } else if (Objects.equals(CONFIG.villagerSkin, "weaponsmith")) {
-            renderColoredCutoutModel(this.getParentModel(), WEAPONSMITH_LOCATION, poseStack, source, i, entityRenderState, 1, 1, 1);
+            this.bindTexture(WEAPONSMITH_LOCATION);
         }
-        poseStack.popPose();
+        this.getModel().render(villager, f, g, i, j, k, l);
+        com.mojang.blaze3d.platform.GlStateManager.popMatrix();
+    }
+
+    @Override
+    public boolean hasHurtOverlay() {
+        return false;
     }
 }

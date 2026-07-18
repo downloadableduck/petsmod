@@ -2,18 +2,18 @@ package com.jeff.pets.client.rendering.vanilla.witherskeleton;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientWitherSkeleton;
-import net.minecraft.client.model.SkeletonModel;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.render.entity.model.StrayEntityModel;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientWitherSkeletonRenderer extends PetRenderer<@NotNull ClientWitherSkeleton, @NotNull SkeletonModel<@NotNull ClientWitherSkeleton>> {
+public class ClientWitherSkeletonRenderer extends PetRenderer<@NotNull ClientWitherSkeleton, @NotNull StrayEntityModel<@NotNull ClientWitherSkeleton>> {
 
-    public ClientWitherSkeletonRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
-        super(context, new SkeletonModel<>(), 0.75f);
+    public ClientWitherSkeletonRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
+        super(context, new StrayEntityModel<>(), 0.75f);
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientWitherSkeleton livingEntityRenderState) {
-        return new ResourceLocation("minecraft", "textures/entity/skeleton/wither_skeleton.png");
+    public @NotNull Identifier getTexture(ClientWitherSkeleton livingEntityRenderState) {
+        return new Identifier("minecraft", "textures/entity/skeleton/wither_skeleton.png");
     }
 }

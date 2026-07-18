@@ -2,8 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.horse;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientHorse;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -11,19 +10,19 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientHorseRenderer extends PetRenderer<@NotNull ClientHorse, @NotNull ClientHorseModel<ClientHorse>> {
     public String horseTextureLocation;
 
-    public ClientHorseRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+    public ClientHorseRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
         super(context, new ClientHorseModel<>(0), 0.5f);
     }
 
     @Override
-    protected void scale(ClientHorse state, @NotNull PoseStack poseStack, float f) {
+    protected void scale(ClientHorse state, float f) {
         if (CONFIG.isBaby) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientHorse horseRenderState) {
+    public @NotNull Identifier getTexture(ClientHorse horseRenderState) {
         if (CONFIG.horseSkin.equals("black")) {
             horseTextureLocation = "textures/entity/horse/horse_black.png";
         } else if (CONFIG.horseSkin.equals("brown")) {
@@ -45,6 +44,6 @@ public class ClientHorseRenderer extends PetRenderer<@NotNull ClientHorse, @NotN
         } else {
             horseTextureLocation = "textures/entity/horse/horse_black.png";
         }
-        return new ResourceLocation("minecraft", horseTextureLocation);
+        return new Identifier("minecraft", horseTextureLocation);
     }
 }

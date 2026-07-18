@@ -1,112 +1,111 @@
 package com.jeff.pets.client.rendering.vanilla.guardian;
 
-import com.google.common.collect.ImmutableList;
 import com.jeff.pets.mob.AbstractPet;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ListModel;
-import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.model.Cuboid;
+import net.minecraft.client.render.entity.model.EntityModel;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.mob.GuardianEntity;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 
-public class ClientGuardianModel<T extends AbstractPet> extends ListModel<T> {
-    private static final float[] SPIKE_X_ROT = new float[]{1.75F, 0.25F, 0.0F, 0.0F, 0.5F, 0.5F, 0.5F, 0.5F, 1.25F, 0.75F, 0.0F, 0.0F};
-    private static final float[] SPIKE_Y_ROT = new float[]{0.0F, 0.0F, 0.0F, 0.0F, 0.25F, 1.75F, 1.25F, 0.75F, 0.0F, 0.0F, 0.0F, 0.0F};
-    private static final float[] SPIKE_Z_ROT = new float[]{0.0F, 0.0F, 0.25F, 1.75F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.75F, 1.25F};
-    private static final float[] SPIKE_X = new float[]{0.0F, 0.0F, 8.0F, -8.0F, -8.0F, 8.0F, 8.0F, -8.0F, 0.0F, 0.0F, 8.0F, -8.0F};
-    private static final float[] SPIKE_Y = new float[]{-8.0F, -8.0F, -8.0F, -8.0F, 0.0F, 0.0F, 0.0F, 0.0F, 8.0F, 8.0F, 8.0F, 8.0F};
-    private static final float[] SPIKE_Z = new float[]{8.0F, -8.0F, 0.0F, 0.0F, -8.0F, -8.0F, 8.0F, 8.0F, 8.0F, -8.0F, 0.0F, 0.0F};
-    private final ModelPart head;
-    private final ModelPart eye;
-    private final ModelPart[] spikeParts;
-    private final ModelPart[] tailParts;
+public class ClientGuardianModel<T extends AbstractPet> extends EntityModel<T> {
+    private static final float[] field_17131 = new float[]{1.75F, 0.25F, 0.0F, 0.0F, 0.5F, 0.5F, 0.5F, 0.5F, 1.25F, 0.75F, 0.0F, 0.0F};
+    private static final float[] field_17132 = new float[]{0.0F, 0.0F, 0.0F, 0.0F, 0.25F, 1.75F, 1.25F, 0.75F, 0.0F, 0.0F, 0.0F, 0.0F};
+    private static final float[] field_17133 = new float[]{0.0F, 0.0F, 0.25F, 1.75F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.75F, 1.25F};
+    private static final float[] field_17134 = new float[]{0.0F, 0.0F, 8.0F, -8.0F, -8.0F, 8.0F, 8.0F, -8.0F, 0.0F, 0.0F, 8.0F, -8.0F};
+    private static final float[] field_17135 = new float[]{-8.0F, -8.0F, -8.0F, -8.0F, 0.0F, 0.0F, 0.0F, 0.0F, 8.0F, 8.0F, 8.0F, 8.0F};
+    private static final float[] field_17136 = new float[]{8.0F, -8.0F, 0.0F, 0.0F, -8.0F, -8.0F, 8.0F, 8.0F, 8.0F, -8.0F, 0.0F, 0.0F};
+    private final Cuboid field_3379;
+    private final Cuboid field_3381;
+    private final Cuboid[] field_3380;
+    private final Cuboid[] field_3378;
 
     public ClientGuardianModel() {
-        this.texWidth = 64;
-        this.texHeight = 64;
-        this.spikeParts = new ModelPart[12];
-        this.head = new ModelPart(this);
-        this.head.texOffs(0, 0).addBox(-6.0F, 10.0F, -8.0F, 12.0F, 12.0F, 16.0F);
-        this.head.texOffs(0, 28).addBox(-8.0F, 10.0F, -6.0F, 2.0F, 12.0F, 12.0F);
-        this.head.texOffs(0, 28).addBox(6.0F, 10.0F, -6.0F, 2.0F, 12.0F, 12.0F, true);
-        this.head.texOffs(16, 40).addBox(-6.0F, 8.0F, -6.0F, 12.0F, 2.0F, 12.0F);
-        this.head.texOffs(16, 40).addBox(-6.0F, 22.0F, -6.0F, 12.0F, 2.0F, 12.0F);
+        this.textureWidth = 64;
+        this.textureHeight = 64;
+        this.field_3380 = new Cuboid[12];
+        this.field_3379 = new Cuboid(this);
+        this.field_3379.setTextureOffset(0, 0).addBox(-6.0F, 10.0F, -8.0F, 12, 12, 16);
+        this.field_3379.setTextureOffset(0, 28).addBox(-8.0F, 10.0F, -6.0F, 2, 12, 12);
+        this.field_3379.setTextureOffset(0, 28).addBox(6.0F, 10.0F, -6.0F, 2, 12, 12, true);
+        this.field_3379.setTextureOffset(16, 40).addBox(-6.0F, 8.0F, -6.0F, 12, 2, 12);
+        this.field_3379.setTextureOffset(16, 40).addBox(-6.0F, 22.0F, -6.0F, 12, 2, 12);
 
-        for (int i = 0; i < this.spikeParts.length; ++i) {
-            this.spikeParts[i] = new ModelPart(this, 0, 0);
-            this.spikeParts[i].addBox(-1.0F, -4.5F, -1.0F, 2.0F, 9.0F, 2.0F);
-            this.head.addChild(this.spikeParts[i]);
+        for (int i = 0; i < this.field_3380.length; ++i) {
+            this.field_3380[i] = new Cuboid(this, 0, 0);
+            this.field_3380[i].addBox(-1.0F, -4.5F, -1.0F, 2, 9, 2);
+            this.field_3379.addChild(this.field_3380[i]);
         }
 
-        this.eye = new ModelPart(this, 8, 0);
-        this.eye.addBox(-1.0F, 15.0F, 0.0F, 2.0F, 2.0F, 1.0F);
-        this.head.addChild(this.eye);
-        this.tailParts = new ModelPart[3];
-        this.tailParts[0] = new ModelPart(this, 40, 0);
-        this.tailParts[0].addBox(-2.0F, 14.0F, 7.0F, 4.0F, 4.0F, 8.0F);
-        this.tailParts[1] = new ModelPart(this, 0, 54);
-        this.tailParts[1].addBox(0.0F, 14.0F, 0.0F, 3.0F, 3.0F, 7.0F);
-        this.tailParts[2] = new ModelPart(this);
-        this.tailParts[2].texOffs(41, 32).addBox(0.0F, 14.0F, 0.0F, 2.0F, 2.0F, 6.0F);
-        this.tailParts[2].texOffs(25, 19).addBox(1.0F, 10.5F, 3.0F, 1.0F, 9.0F, 9.0F);
-        this.head.addChild(this.tailParts[0]);
-        this.tailParts[0].addChild(this.tailParts[1]);
-        this.tailParts[1].addChild(this.tailParts[2]);
-        this.setupSpikes(0.0F, 0.0F);
+        this.field_3381 = new Cuboid(this, 8, 0);
+        this.field_3381.addBox(-1.0F, 15.0F, 0.0F, 2, 2, 1);
+        this.field_3379.addChild(this.field_3381);
+        this.field_3378 = new Cuboid[3];
+        this.field_3378[0] = new Cuboid(this, 40, 0);
+        this.field_3378[0].addBox(-2.0F, 14.0F, 7.0F, 4, 4, 8);
+        this.field_3378[1] = new Cuboid(this, 0, 54);
+        this.field_3378[1].addBox(0.0F, 14.0F, 0.0F, 3, 3, 7);
+        this.field_3378[2] = new Cuboid(this);
+        this.field_3378[2].setTextureOffset(41, 32).addBox(0.0F, 14.0F, 0.0F, 2, 2, 6);
+        this.field_3378[2].setTextureOffset(25, 19).addBox(1.0F, 10.5F, 3.0F, 1, 9, 9);
+        this.field_3379.addChild(this.field_3378[0]);
+        this.field_3378[0].addChild(this.field_3378[1]);
+        this.field_3378[1].addChild(this.field_3378[2]);
     }
 
-    public Iterable<ModelPart> parts() {
-        return ImmutableList.of(this.head);
+    @Override
+    public void render(T guardianEntity, float f, float g, float h, float i, float j, float k) {
+        this.setAngles(guardianEntity, f, g, h, i, j, k);
+        this.field_3379.render(k);
     }
 
-    public void setupAnim(T guardian, float f, float g, float h, float i, float j) {
-        float k = h - (float) guardian.tickCount;
-        this.head.yRot = i * ((float) Math.PI / 180F);
-        this.head.xRot = j * ((float) Math.PI / 180F);
-        float l = 0.55F;
-        this.setupSpikes(h, l);
-        this.eye.z = -8.25F;
-        Entity entity = Minecraft.getInstance().getCameraEntity();
+    @Override
+    public void setAngles(T guardianEntity, float f, float g, float h, float i, float j, float k) {
+        float l = h - (float) guardianEntity.age;
+        this.field_3379.yaw = i * ((float) Math.PI / 180F);
+        this.field_3379.pitch = j * ((float) Math.PI / 180F);
+        float m = (1.0F - 2 * 0.55F);
+
+        for (int n = 0; n < 12; ++n) {
+            this.field_3380[n].pitch = (float) Math.PI * field_17131[n];
+            this.field_3380[n].yaw = (float) Math.PI * field_17132[n];
+            this.field_3380[n].roll = (float) Math.PI * field_17133[n];
+            this.field_3380[n].rotationPointX = field_17134[n] * (1.0F + MathHelper.cos(h * 1.5F + (float) n) * 0.01F - m);
+            this.field_3380[n].rotationPointY = 16.0F + field_17135[n] * (1.0F + MathHelper.cos(h * 1.5F + (float) n) * 0.01F - m);
+            this.field_3380[n].rotationPointZ = field_17136[n] * (1.0F + MathHelper.cos(h * 1.5F + (float) n) * 0.01F - m);
+        }
+
+        this.field_3381.rotationPointZ = -8.25F;
+        Entity entity = MinecraftClient.getInstance().getCameraEntity();
 
         if (entity != null) {
-            Vec3 vec3 = entity.getEyePosition(0.0F);
-            Vec3 vec32 = guardian.getEyePosition(0.0F);
-            double d = vec3.y - vec32.y;
+            Vec3d vec3d = entity.getCameraPosVec(0.0F);
+            Vec3d vec3d2 = guardianEntity.getCameraPosVec(0.0F);
+            double d = vec3d.y - vec3d2.y;
             if (d > (double) 0.0F) {
-                this.eye.y = 0.0F;
+                this.field_3381.rotationPointY = 0.0F;
             } else {
-                this.eye.y = 1.0F;
+                this.field_3381.rotationPointY = 1.0F;
             }
 
-            Vec3 vec33 = guardian.getViewVector(0.0F);
-            vec33 = new Vec3(vec33.x, 0.0F, vec33.z);
-            Vec3 vec34 = (new Vec3(vec32.x - vec3.x, 0.0F, vec32.z - vec3.z)).normalize().yRot(((float) Math.PI / 2F));
-            double e = vec33.dot(vec34);
-            this.eye.x = Mth.sqrt((float) Math.abs(e)) * 2.0F * (float) Math.signum(e);
+            Vec3d vec3d3 = guardianEntity.getRotationVec(0.0F);
+            vec3d3 = new Vec3d(vec3d3.x, 0.0F, vec3d3.z);
+            Vec3d vec3d4 = (new Vec3d(vec3d2.x - vec3d.x, 0.0F, vec3d2.z - vec3d.z)).normalize().rotateY(((float) Math.PI / 2F));
+            double e = vec3d3.dotProduct(vec3d4);
+            this.field_3381.rotationPointX = MathHelper.sqrt((float) Math.abs(e)) * 2.0F * (float) Math.signum(e);
         }
 
-        this.eye.visible = true;
-        float m = 0;
-        this.tailParts[0].yRot = Mth.sin(m) * (float) Math.PI * 0.05F;
-        this.tailParts[1].yRot = Mth.sin(m) * (float) Math.PI * 0.1F;
-        this.tailParts[1].x = -1.5F;
-        this.tailParts[1].y = 0.5F;
-        this.tailParts[1].z = 14.0F;
-        this.tailParts[2].yRot = Mth.sin(m) * (float) Math.PI * 0.15F;
-        this.tailParts[2].x = 0.5F;
-        this.tailParts[2].y = 0.5F;
-        this.tailParts[2].z = 6.0F;
-    }
-
-    private void setupSpikes(float f, float g) {
-        for (int i = 0; i < 12; ++i) {
-            this.spikeParts[i].xRot = (float) Math.PI * SPIKE_X_ROT[i];
-            this.spikeParts[i].yRot = (float) Math.PI * SPIKE_Y_ROT[i];
-            this.spikeParts[i].zRot = (float) Math.PI * SPIKE_Z_ROT[i];
-            this.spikeParts[i].x = SPIKE_X[i] * (1.0F + Mth.cos(f * 1.5F + (float) i) * 0.01F - g);
-            this.spikeParts[i].y = 16.0F + SPIKE_Y[i] * (1.0F + Mth.cos(f * 1.5F + (float) i) * 0.01F - g);
-            this.spikeParts[i].z = SPIKE_Z[i] * (1.0F + Mth.cos(f * 1.5F + (float) i) * 0.01F - g);
-        }
-
+        this.field_3381.visible = true;
+        float o = 10;
+        this.field_3378[0].yaw = MathHelper.sin(o) * (float) Math.PI * 0.05F;
+        this.field_3378[1].yaw = MathHelper.sin(o) * (float) Math.PI * 0.1F;
+        this.field_3378[1].rotationPointX = -1.5F;
+        this.field_3378[1].rotationPointY = 0.5F;
+        this.field_3378[1].rotationPointZ = 14.0F;
+        this.field_3378[2].yaw = MathHelper.sin(o) * (float) Math.PI * 0.15F;
+        this.field_3378[2].rotationPointX = 0.5F;
+        this.field_3378[2].rotationPointY = 0.5F;
+        this.field_3378[2].rotationPointZ = 6.0F;
     }
 }

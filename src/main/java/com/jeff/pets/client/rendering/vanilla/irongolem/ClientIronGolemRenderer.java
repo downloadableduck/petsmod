@@ -2,17 +2,17 @@ package com.jeff.pets.client.rendering.vanilla.irongolem;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientIronGolem;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientIronGolemRenderer extends PetRenderer<@NotNull ClientIronGolem, @NotNull ClientIronGolemModel<ClientIronGolem>> {
 
-    public ClientIronGolemRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+    public ClientIronGolemRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
         super(context, new ClientIronGolemModel<>(), 0.75f);
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientIronGolem livingEntityRenderState) {
-        return new ResourceLocation("minecraft", "textures/entity/iron_golem/iron_golem.png");
+    public @NotNull Identifier getTexture(ClientIronGolem livingEntityRenderState) {
+        return new Identifier("minecraft", "textures/entity/iron_golem.png");
     }
 }

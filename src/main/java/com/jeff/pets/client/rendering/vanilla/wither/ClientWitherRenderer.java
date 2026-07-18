@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.wither;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.boss.ClientWither;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -11,13 +11,13 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientWitherRenderer extends PetRenderer<@NotNull ClientWither, @NotNull ClientWitherModel<ClientWither>> {
 
-    public ClientWitherRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry.Context context2) {
+    public ClientWitherRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
         super(context, new ClientWitherModel<>(0), 0.75f);
 
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(ClientWither livingEntityRenderState) {
+    public @NotNull Identifier getTexture(ClientWither livingEntityRenderState) {
         String witherTexturePath;
         if (Objects.equals(CONFIG.witherSkin, "normal")) {
             witherTexturePath = "textures/entity/wither/wither.png";
@@ -26,7 +26,7 @@ public class ClientWitherRenderer extends PetRenderer<@NotNull ClientWither, @No
         } else {
             witherTexturePath = "textures/entity/wither/wither.png";
         }
-        return new ResourceLocation("minecraft", witherTexturePath);
+        return new Identifier("minecraft", witherTexturePath);
     }
 
     /*@Override
