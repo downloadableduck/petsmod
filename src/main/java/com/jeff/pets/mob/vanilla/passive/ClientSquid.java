@@ -1,18 +1,17 @@
 package com.jeff.pets.mob.vanilla.passive;
 
-import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.living.effect.StatusEffects;
+import net.minecraft.entity.living.mob.passive.animal.tameable.TameableEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.world.World;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
-@CanFly
+
 public class ClientSquid extends FlyingPet {
 
     public float xBodyRotO;
@@ -67,11 +66,11 @@ public class ClientSquid extends FlyingPet {
                     this.tentacleSpeed = 1.0F / (this.random.nextFloat() + 1.0F) * 0.2F;
                 }
 
-                this.world.sendEntityStatus(this, (byte) 19);
+                this.world.doEntityEvent(this, (byte) 19);
             }
         }
 
-        if (this.isInsideWaterOrBubbleColumn()) {
+        if (this.isInWaterOrInBubbleColumn()) {
             if (this.tentacleMovement < (float) Math.PI) {
                 float f = this.tentacleMovement / (float) Math.PI;
                 this.tentacleAngle = MathHelper.sin(f * f * (float) Math.PI) * (float) Math.PI * 0.25F;
@@ -88,26 +87,26 @@ public class ClientSquid extends FlyingPet {
             }
 
             if (!this.world.isClient) {
-                this.setVelocity(this.tx * this.speed, this.ty * this.speed, this.tz * this.speed);
+                this.m_32166403(this.tx * this.speed, this.ty * this.speed, this.tz * this.speed);
             }
 
-            Vec3d vec3 = this.getVelocity();
+            Vec3d vec3 = this.m_94091929();
             double d = this.horizontalDistance(vec3);
-            this.field_6283 /*bodyYaw*/ += (-((float) MathHelper.atan2(vec3.x, vec3.z)) * (180F / (float) Math.PI) - this.field_6283 /*bodyYaw*/) * 0.1F;
-            this.setYRot(this.field_6283 /*bodyYaw*/);
+            this.bodyYaw /*bodyYaw*/ += (-((float) MathHelper.fastAtan2(vec3.x, vec3.z)) * (180F / (float) Math.PI) - this.bodyYaw /*bodyYaw*/) * 0.1F;
+            this.setYRot(this.bodyYaw /*bodyYaw*/);
             this.zBodyRot += (float) Math.PI * this.rotateSpeed * 1.5F;
-            this.xBodyRot += (-((float) MathHelper.atan2(d, vec3.y)) * (180F / (float) Math.PI) - this.xBodyRot) * 0.1F;
+            this.xBodyRot += (-((float) MathHelper.fastAtan2(d, vec3.y)) * (180F / (float) Math.PI) - this.xBodyRot) * 0.1F;
         } else {
             this.tentacleAngle = MathHelper.abs(MathHelper.sin(this.tentacleMovement)) * (float) Math.PI * 0.25F;
             if (!this.world.isClient) {
-                double e = this.getVelocity().y;
+                double e = this.m_94091929().y;
                 if (this.hasStatusEffect(StatusEffects.LEVITATION)) {
-                    e = 0.05 * (double) (this.getStatusEffect(StatusEffects.LEVITATION).getAmplifier() + 1);
+                    e = 0.05 * (double) (this.getEffectInstance(StatusEffects.LEVITATION).getAmplifier() + 1);
                 } else {
                     e -= 1;
                 }
 
-                this.setVelocity(0.0F, e * (double) 0.98F, 0.0F);
+                this.m_32166403(0.0F, e * (double) 0.98F, 0.0F);
             }
 
             this.xBodyRot += (-90.0F - this.xBodyRot) * 0.02F;
@@ -115,16 +114,16 @@ public class ClientSquid extends FlyingPet {
     }
 
     @Override
-    public void setVelocity(double x, double y, double z) {
-        this.setVelocity(new Vec3d(x, y, z));
+    public void m_32166403(double x, double y, double z) {
+        this.m_28162558(new Vec3d(x, y, z));
         this.tx = (float) x;
         this.ty = (float) y;
         this.tz = (float) z;
     }
 
     @Override
-    public void setVelocity(Vec3d vec3) {
-        super.setVelocity(vec3);
+    public void m_28162558(Vec3d vec3) {
+        super.m_28162558(vec3);
         double x = vec3.x;
         double y = vec3.y;
         double z = vec3.z;

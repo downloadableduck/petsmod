@@ -3,8 +3,8 @@ package com.jeff.pets.client.rendering.vanilla.mooshroom;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.cow.ClientCowModel;
 import com.jeff.pets.mob.vanilla.passive.ClientMooshroom;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.Minecraft;
+import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -15,20 +15,20 @@ public class ClientMooshroomRenderer extends PetRenderer<@NotNull ClientMooshroo
 
     String mooshroomTexturePath;
 
-    public ClientMooshroomRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
+    public ClientMooshroomRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
         super(context, new ClientCowModel<>(), 0.7F);
-        this.addFeature(new ClientMushroomCowMushroomLayer(this, MinecraftClient.getInstance().getBlockRenderManager()));
+        this.addLayer(new ClientMushroomCowMushroomLayer(this, Minecraft.getInstance().getBlockRenderManager()));
     }
 
     @Override
-    protected void scale(ClientMooshroom state, float f) {
+    protected void applyScale(ClientMooshroom state, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull Identifier getTexture(ClientMooshroom cowRenderState) {
+    public @NotNull Identifier getTextureLocation(ClientMooshroom cowRenderState) {
         if (Objects.equals(CONFIG.mooshroomSkin, "red")) {
             mooshroomTexturePath = "textures/entity/cow/red_mooshroom.png";
         } else if (Objects.equals(CONFIG.mooshroomSkin, "brown")) {

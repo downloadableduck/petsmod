@@ -1,14 +1,14 @@
 package com.jeff.pets.mob;
 
 import com.jeff.pets.mob.custom.first.Duck;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MoverType;
+import net.minecraft.entity.living.LivingEntity;
+import net.minecraft.entity.living.mob.passive.animal.tameable.TameableEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MovementType;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.world.World;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -35,9 +35,9 @@ public abstract class SlimeLikePet extends AbstractPet {
         if (owner != null) {
 
             if (owner.hasPassenger(this)) {
-                if (owner.isInSneakingPose() && owner.jumping) {
+                if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
-                    this.setVelocity(this.getVelocity().add(0, -0.04, 0));
+                    this.m_28162558(this.m_94091929().add(0, -0.04, 0));
                 } else {
                     this.setSitting(true);
                 }
@@ -49,30 +49,30 @@ public abstract class SlimeLikePet extends AbstractPet {
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.distanceTo(owner);
-            float rotation = this.getRotationClient().x;
-            float rotationToOwner = rotation + this.getOwner().getRotationClient().x;
-            float bodyYawDiff = MathHelper.wrapDegrees(this.getHeadYaw() - this.field_6283 /*bodyYaw*/);
+            float rotation = this.getRotation().x;
+            float rotationToOwner = rotation + this.getOwner().getRotation().x;
+            float bodyYawDiff = MathHelper.wrapDegrees(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/);
 
             if (rotationToOwner >= 50) {
-                this.field_6283 /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.sign(bodyYawDiff) * 50.0F);
+                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_06800284 /*sign*/(bodyYawDiff) * 50.0F);
             }
 
             if (distance > 4.0) {
 
-                this.limbDistance = (0.5F);
+                this.walkAnimationSpeed = (0.5F);
 
-                Vec3d targetPos = owner.getPos();
+                Vec3d targetPos = new Vec3d(owner.x, owner.y, owner.z);
                 Vec3d dir = targetPos.subtract(this.getPos()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setHeadYaw(this.getYRot());
-                this.field_6283 /*bodyYaw*/ = MathHelper.method_20306(this.field_6283 /*bodyYaw*/, this.headYaw, 50.0f);
+                this.bodyYaw /*bodyYaw*/ = MathHelper.m_82141949(this.bodyYaw /*bodyYaw*/, this.headYaw, 50.0f);
 
-                double speed = owner.getMovementSpeed() * 2;
-                this.setVelocity(dir.x * speed, this.getVelocity().y, dir.z * speed);
+                double speed = owner.getSpeed() * 2;
+                this.m_28162558(new Vec3d(dir.x * speed, this.m_94091929().y, dir.z * speed));
             } else {
-                this.lookAtEntity(owner, 5, 0);
-                this.setVelocity(this.getVelocity().multiply(0.8, 1.0, 0.8));
+                this.lookAt(owner, 5, 0);
+                this.m_28162558(this.m_94091929().m_17023014(0.8, 1.0, 0.8));
             }
 
             int yHeightToOwner = (int) (owner.y - this.y);
@@ -82,14 +82,14 @@ public abstract class SlimeLikePet extends AbstractPet {
             }
 
             if (yHeightToOwner > -1) {
-                this.setVelocity(this.getVelocity().add(0, -0.02, 0));
+                this.m_28162558(this.m_94091929().add(0, -0.02, 0));
             }
 
             if (!this.onGround) {
                 //this.processFlappingMovement();
             }
 
-            if (owner.getVelocity().lengthSquared() < 0.01) {
+            if (owner.m_94091929().squaredDistanceToOrigin() < 0.01) {
                 this.waitingTime++;
                 if (this.waitingTime > 30) this.wander();
             } else {
@@ -100,23 +100,23 @@ public abstract class SlimeLikePet extends AbstractPet {
             this.setHeadYaw(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.field_6283 /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.sign(bodyYawDiff) * 50);
+                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_06800284 /*sign*/(bodyYawDiff) * 50);
             } else {
-                this.field_6283 /*bodyYaw*/ = MathHelper.method_20306(this.field_6283 /*bodyYaw*/, this.getHeadYaw(), 10);
+                this.bodyYaw /*bodyYaw*/ = MathHelper.m_82141949(this.bodyYaw /*bodyYaw*/, this.getHeadYaw(), 10);
             }
 
-            this.move(MovementType.SELF, this.getVelocity());
+            this.move(MoverType.SELF, this.m_94091929());
 
             if (!this.onGround) {
-                this.setVelocity(this.getVelocity().add(0, -0.02, 0));
+                this.m_28162558(this.m_94091929().add(0, -0.02, 0));
             }
         }
         if (owner != null) {
             if (distanceTo(owner) >= 10) {
-                this.requestTeleport(owner.x, owner.y, owner.z);
+                this.teleport(owner.x, owner.y, owner.z);
             }
         }
-        if (this.limbDistance > 0 && this.onGround) {
+        if (this.walkAnimationSpeed > 0 && this.onGround) {
             this.jump();
         }
 

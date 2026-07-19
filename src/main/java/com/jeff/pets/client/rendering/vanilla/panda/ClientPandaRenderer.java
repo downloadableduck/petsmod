@@ -2,26 +2,26 @@ package com.jeff.pets.client.rendering.vanilla.panda;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientPanda;
-import net.minecraft.util.Identifier;
+import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientPandaRenderer extends PetRenderer<@NotNull ClientPanda, @NotNull ClientPandaModel> {
 
-    public ClientPandaRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
+    public ClientPandaRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
         super(context, new ClientPandaModel(9, 0), 0.75f);
     }
 
     @Override
-    protected void scale(ClientPanda state, float f) {
+    protected void applyScale(ClientPanda state, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull Identifier getTexture(ClientPanda livingEntityRenderState) {
+    public @NotNull Identifier getTextureLocation(ClientPanda livingEntityRenderState) {
         String pandaTexturePath;
         if (CONFIG.pandaSkin.equals("normal")) {
             pandaTexturePath = "textures/entity/panda/panda.png";

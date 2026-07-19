@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
-import net.minecraft.util.Identifier;
+import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.PetsInitializer.MOD_ID;
@@ -14,12 +14,12 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
     float direction = 1;
     float speed = 0.5f;
 
-    public DumboOctopusRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
+    public DumboOctopusRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
         super(context, new DumboOctopusModel(), 0.5f);
     }
 
-    @Override
-    public @NotNull Identifier getTexture(@NotNull DumboOctopus state) {
+
+    public @NotNull Identifier getTextureLocation(@NotNull DumboOctopus state) {
         String path;
         String yellow = "textures/entity/dumbo_octopus/yellow.png";
         String red = "textures/entity/dumbo_octopus/red.png";

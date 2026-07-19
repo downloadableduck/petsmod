@@ -2,34 +2,34 @@ package com.jeff.pets.client.rendering.vanilla.wolf;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientWolf;
-import net.minecraft.util.Identifier;
+import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientWolfRenderer extends PetRenderer<@NotNull ClientWolf, @NotNull ClientWolfModel> {
 
-    public ClientWolfRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
+    public ClientWolfRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
         super(context, new ClientWolfModel(), 0.75f);
     }
 
     @Override
-    protected void scale(@NotNull ClientWolf livingEntityRenderState, float f) {
+    protected void applyScale(@NotNull ClientWolf livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull Identifier getTexture(ClientWolf livingEntityRenderState) {
+    public @NotNull Identifier getTextureLocation(ClientWolf livingEntityRenderState) {
         String wolfTexturePath = "textures/entity/wolf/wolf.png";
 
         return new Identifier("minecraft", wolfTexturePath);
     }
 
     @Override
-    public void render(ClientWolf wolf, float f, float g, float h, float i, float j, float k) {
-        super.render(wolf, f, g, h, i, j, k);
-        wolf.setSitting(wolf.hasVehicle());
+    public void renderModel(ClientWolf wolf, float f, float g, float h, float i, float j, float k) {
+        super.renderModel(wolf, f, g, h, i, j, k);
+        wolf.setSitting(wolf.isRiding());
     }
 }

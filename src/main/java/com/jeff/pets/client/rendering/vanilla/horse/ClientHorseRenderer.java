@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.horse;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientHorse;
-import net.minecraft.util.Identifier;
+import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -10,19 +10,19 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientHorseRenderer extends PetRenderer<@NotNull ClientHorse, @NotNull ClientHorseModel<ClientHorse>> {
     public String horseTextureLocation;
 
-    public ClientHorseRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
+    public ClientHorseRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
         super(context, new ClientHorseModel<>(0), 0.5f);
     }
 
     @Override
-    protected void scale(ClientHorse state, float f) {
+    protected void applyScale(ClientHorse state, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull Identifier getTexture(ClientHorse horseRenderState) {
+    public @NotNull Identifier getTextureLocation(ClientHorse horseRenderState) {
         if (CONFIG.horseSkin.equals("black")) {
             horseTextureLocation = "textures/entity/horse/horse_black.png";
         } else if (CONFIG.horseSkin.equals("brown")) {

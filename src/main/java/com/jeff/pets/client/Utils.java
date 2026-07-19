@@ -4,12 +4,12 @@ import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.util.Identifier;
+import net.minecraft.entity.living.player.PlayerEntity;
+import net.minecraft.text.LiteralText;
+import net.minecraft.resource.Identifier;
 import net.minecraft.util.math.Vec3d;
 
 import java.lang.reflect.Field;
@@ -39,7 +39,7 @@ public class Utils {
      */
     public static void summonPet(AbstractPet entity, String entityName) {
 
-        MinecraftClient minecraft = MinecraftClient.getInstance();
+        Minecraft minecraft = Minecraft.getInstance();
         PlayerEntity player = minecraft.player;
         ClientWorld world = minecraft.world;
 
@@ -52,7 +52,7 @@ public class Utils {
         double z = player.z - lookAngle.z * (double) 0.5F;
 
         entity.setPosition(x, y, z);
-        entity.setCustomName(new TextComponent(entityName));
+        entity.setCustomName(new LiteralText(entityName));
         world.addEntityPrivate(entity.getEntityId(), entity);
         entity.setOwner(player);
         Central.summonedEntity.add(entity);

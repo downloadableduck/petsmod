@@ -2,18 +2,18 @@ package com.jeff.pets.client.rendering.vanilla.endermite;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientEndermite;
-import net.minecraft.client.render.entity.model.EndermiteEntityModel;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.render.model.entity.EndermiteModel;
+import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientEndermiteRenderer extends PetRenderer<@NotNull ClientEndermite, @NotNull EndermiteEntityModel<ClientEndermite>> {
+public class ClientEndermiteRenderer extends PetRenderer<@NotNull ClientEndermite, @NotNull EndermiteModel<ClientEndermite>> {
 
-    public ClientEndermiteRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
-        super(context, new EndermiteEntityModel<>(), 0.75f);
+    public ClientEndermiteRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+        super(context, new EndermiteModel<>(), 0.75f);
     }
 
     @Override
-    public @NotNull Identifier getTexture(ClientEndermite livingEntityRenderState) {
+    public @NotNull Identifier getTextureLocation(ClientEndermite livingEntityRenderState) {
         return new Identifier("minecraft", "textures/entity/endermite.png");
     }
 }

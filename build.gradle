@@ -1,26 +1,25 @@
-import com.vanniktech.maven.publish.SonatypeHost
-
 plugins {
-    id 'fabric-loom' version "${loom_version}"
     id 'maven-publish'
-    id "com.modrinth.minotaur" version "2.+"
-    id "com.vanniktech.maven.publish" version "0.28.0"
-    id 'signing'
+    id 'fabric-loom' version '1.17-SNAPSHOT'
+    id 'ploceus' version '1.17-SNAPSHOT'
 }
 
-version = project.mod_version
+base {
+    archivesName = project.archives_base_name
+}
+version = "${project.version}+mc${project.minecraft_version}"
 group = project.maven_group
 
-base {
-    archivesName = project.archives_base_name + "-" + project.mod_version + "-" + project.minecraft_version
+ploceus {
+    setIntermediaryGeneration(2)
+}
+
+loom {
+    accessWidenerPath = file('src/main/resources/pets.accessWidener')
 }
 
 repositories {
     maven { url "https://maven.shedaniel.me/" }
-    maven { url "https://maven.terraformersmc.com/" }
-    maven { url "https://maven.isxander.dev/releases" }
-    maven { url "https://api.modrinth.com/maven" }
-    maven { url = "https://maven.quiltmc.org/repository/release"}
     // Add repositories to retrieve artifacts from in here.
     // You should only use this when depending on other mods because
     // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
@@ -28,116 +27,72 @@ repositories {
     // for more information about repositories.
 }
 
-loom {
-    //splitEnvironmentSourceSets()
-
-    accessWidenerPath = file("src/main/resources/pets.accessWidener")
-
-    mods {
-        "pets-mod" {
-            sourceSet sourceSets.main
-        }
-    }
-}
-
 dependencies {
-    // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_version}"
-    modApi "net.fabricmc:fabric-loader:${project.loader_version}"
-    modApi "maven.modrinth:9s6osm5g:vcrZcwvb"
-    modImplementation files(files('libs/fabric-api.jar'))
-    //modApi("maven.modrinth:mOgUt4GM:${project.modmenu_version}") //modmenu
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+    //exceptions ploceus.raven(project.raven_build)
+    //signatures ploceus.sparrow(project.sparrow_build)
+    //nests ploceus.nests(project.nests_build)
+    mappings ploceus.featherMappings(project.feather_build)
+
+    ploceus.dependOsl(project.osl_version)
+
     implementation("blue.endless:jankson:${rootProject.jankson_version}")
     implementation("com.moandjiezana.toml:toml4j:${rootProject.toml4j_version}")
     modImplementation "me.shedaniel.cloth:basic-math:0.6.1"
-    //include "me.shedaniel:cloth-basic-math:0.6.1"
-    //modApi "dev.isxander:yet-another-config-lib:${project.yacl_version}"
-    //modApi "maven.modrinth:yacl:${project.yacl_version}"
-   // modImplementation "org.quiltmc.parsers:gson:0.2.1"
-    //modImplementation "org.quiltmc.parsers:json:0.2.1"
 }
 
 processResources {
-    inputs.property "version", project.version
+    inputs.property 'version', version
 
-    filesMatching("fabric.mod.json") {
-        expand "version": inputs.properties.version
+    filesMatching('fabric.mod.json') {
+        expand 'version': version
     }
 }
 
 tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = 'UTF-8'
     it.options.release = 8
 }
 
 java {
-    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-    // if it is present.
-    // If you remove this line, sources will not be generated.
-    withSourcesJar()
-    withJavadocJar()
-
+    // Still required by IDEs such as Eclipse and Visual Studio Code
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+
+    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task if it is present.
+    // If you remove this line, sources will not be generated.
+    withSourcesJar()
+
+    // If this mod is going to be a library, then it should also generate Javadocs in order to aid with development.
+    // Uncomment this line to generate them.
+    // withJavadocJar()
 }
 
+// If you plan to use a different file for the license, don't forget to change the file name here!
 jar {
-    inputs.property "archivesName", project.base.archivesName
-    from sourceSets.main.allSource
-
-    from("LICENSE") {
-        rename { "${it}_${inputs.properties.archivesName}" }
-    }
-    tasks.withType(AbstractCopyTask).configureEach {
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from('LICENSE') {
+        rename { "${it}_${base.archivesName.get()}" }
     }
 }
 
-// configure the maven publication
-mavenPublishing {
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
-    signAllPublications()
-    coordinates("io.github.downloadableduck", "petsmod", "0.8.1")
-    pom {
-        name = "Pets Mod"
-        description = "Adds client-sided pets into your game"
-        url = "https://github.com/downloadableduck/petsmod"
-        licenses {
-            license {
-                name = "MIT"
-                url = "https://opensource.org/licenses/MIT"
-            }
-        }
-        developers {
-            developer {
-                id = "jeff"
-                name = "Jeff"
-            }
-        }
-        scm {
-            connection = "scm:git:git://github.com/downloadableduck/petsmod.git"
-            developerConnection = "scm:git:ssh://github.com:downloadableduck/petsmod.git"
-            url = "https://github.com/downloadableduck/petsmod"
+// Configure the maven publication
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
         }
     }
-}
 
-/*modrinth {
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    System.out.println("Enter a Modrinth token: ");
-    token = br.readLine(); // Enter the token you got from the basics part of this tutorial.
-    projectId = "WwqTyEtB" // Enter your Modrinth project ID here.
-    System.out.println("Enter the version number:");
-    versionNumber = project.mod_version;
-    System.out.println("Enter the version name:");
-    versionName = br.readLine();
-    System.out.println("Enter the game version number: (See minotaur docs for valids)");
-    gameVersions = [br.readLine()];
-    System.out.println("Enter changelog:");
-    changelog = br.readLine();
-    additionalFiles = [sourcesJar, javadocJar]
-    loaders = ["fabric"]
-}*/
+    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+    repositories {
+        // Add repositories to publish to here.
+        // Notice: This block does NOT have the same function as the block in the top level.
+        // The repositories here will be used for publishing your artifact, not for
+        // retrieving dependencies.
+    }
+}
 
 tasks.named('jar') {
     archiveBaseName = project.archives_base_name

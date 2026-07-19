@@ -2,20 +2,20 @@ package com.jeff.pets.client.rendering.vanilla.phantom;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientPhantom;
-import net.minecraft.client.render.entity.feature.PhantomEyesFeatureRenderer;
-import net.minecraft.client.render.entity.model.PhantomEntityModel;
-import net.minecraft.util.Identifier;
+import net.minecraft.resource.Identifier;
+import net.minecraft.unmapped.C_15553557;
+import net.minecraft.unmapped.C_58555521;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientPhantomRenderer extends PetRenderer<@NotNull ClientPhantom, @NotNull PhantomEntityModel<ClientPhantom>> {
+public class ClientPhantomRenderer extends PetRenderer<@NotNull ClientPhantom, @NotNull C_58555521<ClientPhantom>> {
 
-    public ClientPhantomRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
-        super(context, new PhantomEntityModel<>(), 0.75f);
-        this.addFeature(new PhantomEyesFeatureRenderer(this));
+    public ClientPhantomRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+        super(context, new C_58555521<>(), 0.75f);
+        this.addLayer(new C_15553557(this));
     }
 
     @Override
-    public @NotNull Identifier getTexture(ClientPhantom livingEntityRenderState) {
+    public @NotNull Identifier getTextureLocation(ClientPhantom livingEntityRenderState) {
         return new Identifier("minecraft", "textures/entity/phantom.png");
     }
 

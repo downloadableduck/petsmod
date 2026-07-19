@@ -2,46 +2,41 @@ package com.jeff.pets.mob.custom.aquatic;
 
 import com.jeff.pets.mob.FlyingPet;
 import com.jeff.pets.mob.custom.first.Duck;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MovementType;
-import net.minecraft.entity.SpawnType;
-import net.minecraft.entity.ai.goal.AnimalMateGoal;
-import net.minecraft.entity.ai.goal.EscapeDangerGoal;
-import net.minecraft.entity.ai.goal.FollowOwnerGoal;
-import net.minecraft.entity.ai.goal.LookAroundGoal;
-import net.minecraft.entity.ai.goal.MoveIntoWaterGoal;
-import net.minecraft.entity.ai.goal.SwimAroundGoal;
-import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.LocalDifficulty;
+import net.minecraft.entity.MoverType;
+import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.pathing.PathBlockingType;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.data.DataAttribute;
+import net.minecraft.entity.data.DataSerializers;
+import net.minecraft.entity.data.SyncedData;
+import net.minecraft.entity.living.LivingEntity;
+import net.minecraft.entity.living.attribute.EntityAttributes;
+import net.minecraft.entity.living.mob.passive.PassiveEntity;
+import net.minecraft.entity.living.mob.passive.animal.tameable.TameableEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.world.World;
-import net.minecraft.world.IWorld;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.ai.pathing.PathNodeType;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.unmapped.C_31453009;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.WorldAccess;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import static com.jeff.pets.PetsInitializer.STINGRAY;
 
 public class Stingray extends FlyingPet {
-    public static final TrackedData<@NotNull Boolean> IS_SERVER_ENTITY =
-            DataTracker.registerData(Stingray.class, TrackedDataHandlerRegistry.BOOLEAN);
+    public static final DataAttribute<@NotNull Boolean> IS_SERVER_ENTITY =
+            SyncedData.registerSerializer(Stingray.class, DataSerializers.BOOLEAN);
     private final float nextFlap = 1.0F;
     public float oFlap;
     public float flap;
@@ -49,39 +44,39 @@ public class Stingray extends FlyingPet {
 
     public Stingray(EntityType<? extends @NotNull TameableEntity> type, World level) {
         super(type, level);
-        this.setPathNodeTypeWeight(PathNodeType.WATER, 0);
+        this.setPathfindingPenalty(PathBlockingType.WATER, 0);
     }
 
     @Override
     public void initAttributes() {
         super.initAttributes();
-        this.getAttributeInstance(EntityAttributes.MOVEMENT_SPEED).setBaseValue(0.25);
+        this.getAttribute(EntityAttributes.MOVEMENT_SPEED).setBase(0.25);
     }
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(IS_SERVER_ENTITY, false);
+    protected void registerSyncedData() {
+        super.registerSyncedData();
+        this.syncedData.register(IS_SERVER_ENTITY, false);
     }
 
     public boolean isServerEntity() {
-        return this.dataTracker.get(IS_SERVER_ENTITY);
+        return this.syncedData.get(IS_SERVER_ENTITY);
     }
 
     public void setServerEntity(Boolean value) {
-        this.dataTracker.set(IS_SERVER_ENTITY, value);
+        this.syncedData.set(IS_SERVER_ENTITY, value);
     }
 
-    public void tickMovement() {
-        super.tickMovement();
+    public void mobTick() {
+        super.mobTick();
         if (!this.onGround && this.flapping < 1.0F) {
             this.flapping = 1.0F;
         }
 
         this.flapping *= 0.9F;
-        Vec3d movement = this.getVelocity();
+        Vec3d movement = this.m_94091929();
         if (!this.onGround && movement.y < (double) 0.0F) {
-            this.setVelocity(movement.multiply(1.0F, 0.6, 1.0F));
+            this.m_28162558(movement.m_17023014(1.0F, 0.6, 1.0F));
         }
 
         this.flap += this.flapping * 2.0F;
@@ -103,19 +98,19 @@ public class Stingray extends FlyingPet {
         this.playSound(SoundEvents.ENTITY_FISH_SWIM, 0.15F, 1.0F);
     }
 
-    public @Nullable Stingray createChild(final @NotNull PassiveEntity partner) {
+    public @Nullable Stingray makeChild(final @NotNull PassiveEntity partner) {
         Stingray stringray = STINGRAY.create(world);
         stringray.setServerEntity(true);
         return stringray;
     }
 
-    public @NotNull EntityData initialize(final @NotNull IWorld level, final @NotNull LocalDifficulty difficulty, final @NotNull SpawnType spawnReason, final @Nullable EntityData groupData, CompoundTag compoundTag) {
+    public @NotNull EntityData initialize(final @NotNull WorldAccess level, final @NotNull LocalDifficulty difficulty, final @NotNull C_31453009 spawnReason, final @Nullable EntityData groupData, NbtCompound NbtCompound) {
         this.setServerEntity(true);
-        return super.initialize(level, difficulty, spawnReason, groupData, compoundTag);
+        return super.initialize(level, difficulty, spawnReason, groupData, NbtCompound);
     }
 
     public boolean isBreedingItem(final @NotNull ItemStack itemStack) {
-        return itemStack.isEqualIgnoreDurability(new ItemStack(Items.TROPICAL_FISH)) || itemStack.isEqualIgnoreDurability(new ItemStack(Items.COD)) || itemStack.isEqualIgnoreDurability(new ItemStack(Items.SALMON));
+        return itemStack.matchesItemIgnoreDamage(new ItemStack(Items.TROPICAL_FISH)) || itemStack.matchesItemIgnoreDamage(new ItemStack(Items.COD)) || itemStack.matchesItemIgnoreDamage(new ItemStack(Items.SALMON));
     }
 
     @Override
@@ -123,28 +118,28 @@ public class Stingray extends FlyingPet {
 
         /**Using false in this statement causes the mob to sink to the bottom and reptitively spin.*/
         //this.moveControl = new SmoothSwimmingMoveControl(this, 10, 10, 1, 1, true);
-        this.getNavigation().setCanSwim(true);
-        this.goalSelector.add(1, new SwimAroundGoal(this, 1, 1));
-        this.goalSelector.add(2, new MoveIntoWaterGoal(this));
+        this.getNavigation().setCanFloat(true);
+        this.goalSelector.addGoal(1, new SwimAroundGoal(this, 1, 1));
+        this.goalSelector.addGoal(2, new TryFindWaterGoal(this));
 
-        this.goalSelector.add(0, new FollowOwnerGoal(this, 1, 2, 10));
-        this.goalSelector.add(9, new AnimalMateGoal(this, 1));
-        this.goalSelector.add(3, new EscapeDangerGoal(this, 1.4d));
-        // this.goalSelector.addGoal(4, new TemptGoal(this, 1.0f, stack -> stack.is(ItemTags.FISHES), false));
+        this.goalSelector.addGoal(0, new FollowOwnerGoal(this, 1, 2, 10));
+        this.goalSelector.addGoal(9, new AnimalBreedGoal(this, 1));
+        this.goalSelector.addGoal(3, new EscapeDangerGoal(this, 1.4d));
+        // this.goalSelector.addGoalGoal(4, new TemptGoal(this, 1.0f, stack -> stack.is(ItemTags.FISHES), false));
 
-        this.goalSelector.add(5, new LookAroundGoal(this));
-        // this.goalSelector.addGoal(8, new FollowOwnerGoal(this, 1, 2, 10));
+        this.goalSelector.addGoal(5, new LookAroundGoal(this));
+        // this.goalSelector.addGoalGoal(8, new FollowOwnerGoal(this, 1, 2, 10));
     }
 
     @Override
-    public void writeCustomDataToTag(@NotNull CompoundTag output) {
-        super.writeCustomDataToTag(output);
+    public void writeCustomNbt(@NotNull NbtCompound output) {
+        super.writeCustomNbt(output);
         output.putBoolean("isServerEntity", true);
     }
 
     @Override
-    public void readCustomDataFromTag(@NotNull CompoundTag input) {
-        super.readCustomDataFromTag(input);
+    public void readCustomNbt(@NotNull NbtCompound input) {
+        super.readCustomNbt(input);
         this.setServerEntity(input.getBoolean("isServerEntity"));
     }
 
@@ -159,7 +154,7 @@ public class Stingray extends FlyingPet {
     }
 
     @Override
-    public boolean canBreatheInWater() {
+    public boolean canBreatheUnderwater() {
         return true;
     }
 
@@ -178,9 +173,9 @@ public class Stingray extends FlyingPet {
         if (owner != null) {
 
             if (owner.hasPassenger(this)) {
-                if (owner.isInSneakingPose() && owner.jumping) {
+                if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
-                    this.setVelocity(this.getVelocity().add(0, 0.1, 0));
+                    this.m_28162558(this.m_94091929().add(0, 0.1, 0));
                 } else {
                     this.setSitting(true);
                 }
@@ -188,51 +183,51 @@ public class Stingray extends FlyingPet {
 
             double dx = owner.x - this.x;
             double dz = owner.z - this.z;
-            Vec3d ownerPos = owner.getPos().add(0, owner.getStandingEyeHeight() * 0.8, 0);
+            Vec3d ownerPos = new Vec3d(owner.x, owner.y, owner.z).add(0, owner.getEyeHeight() * 0.8, 0);
             Vec3d vecToOwner = ownerPos.subtract(this.getPos());
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.distanceTo(owner);
-            float rotation = this.getRotationClient().x;
-            float rotationToOwner = rotation + this.getOwner().getRotationClient().x;
-            float bodyYawDiff = MathHelper.wrapDegrees(this.getHeadYaw() - this.field_6283 /*bodyYaw*/);
+            float rotation = this.getRotation().x;
+            float rotationToOwner = rotation + this.getOwner().getRotation().x;
+            float bodyYawDiff = MathHelper.wrapDegrees(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/);
 
             if (rotationToOwner >= 50) {
-                this.field_6283 /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.sign(bodyYawDiff) * 50.0F);
+                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_06800284 /*sign*/(bodyYawDiff) * 50.0F);
             }
 
             if (distance > 2.0) {
 
-                this.limbDistance = (0.5F);
+                this.walkAnimationSpeed = (0.5F);
 
                 Vec3d dir = vecToOwner.normalize();
                 double speed = 0.2;
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setHeadYaw(this.getYRot());
-                this.field_6283 /*bodyYaw*/ = MathHelper.method_20306(this.field_6283 /*bodyYaw*/, this.headYaw, 50.0f);
+                this.bodyYaw /*bodyYaw*/ = MathHelper.m_82141949(this.bodyYaw /*bodyYaw*/, this.headYaw, 50.0f);
 
-                this.setVelocity(dir.x * speed, dir.y * speed, dir.z * speed);
+                this.m_28162558(new Vec3d(dir.x * speed, dir.y * speed, dir.z * speed));
             } else {
-                this.lookAtEntity(owner, 5, 0);
-                this.setVelocity(this.getVelocity().multiply(0.8));
+                this.lookAt(owner, 5, 0);
+                this.m_28162558(this.m_94091929().scale(0.8));
             }
 
             int yHeightToOwner = (int) (owner.y - this.y);
 
-            if (yHeightToOwner > 1 || this.horizontalCollision) {
+            if (yHeightToOwner > 1 || this.collidingHorizontally) {
                 this.jump();
             }
 
             if (yHeightToOwner > -1) {
-                this.setVelocity(this.getVelocity().add(0, -0.01, 0));
+                this.m_28162558(this.m_94091929().add(0, -0.01, 0));
             }
 
             if (!this.onGround) {
                 //this.processFlappingMovement();
             }
 
-            if (owner.getVelocity().lengthSquared() < 0.01) {
+            if (owner.m_94091929().squaredDistanceToOrigin() < 0.01) {
                 this.waitingTime++;
                 if (this.waitingTime > 30) this.wander();
             } else {
@@ -243,16 +238,16 @@ public class Stingray extends FlyingPet {
             this.setHeadYaw(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.field_6283 /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.sign(bodyYawDiff) * 50);
+                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_06800284 /*sign*/(bodyYawDiff) * 50);
             } else {
-                this.field_6283 /*bodyYaw*/ = MathHelper.method_20306(this.field_6283 /*bodyYaw*/, this.getHeadYaw(), 10);
+                this.bodyYaw /*bodyYaw*/ = MathHelper.m_82141949(this.bodyYaw /*bodyYaw*/, this.getHeadYaw(), 10);
             }
 
-            this.move(MovementType.SELF, this.getVelocity());
+            this.move(MoverType.SELF, this.m_94091929());
         }
         if (owner != null) {
             if (distanceTo(owner) >= 10) {
-                this.requestTeleport(owner.x, owner.y, owner.z);
+                this.teleport(owner.x, owner.y, owner.z);
             }
         }
 

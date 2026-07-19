@@ -2,23 +2,21 @@ package com.jeff.pets.client.rendering.vanilla.sheep;
 
 import com.jeff.pets.mob.vanilla.passive.ClientSheep;
 import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.client.render.entity.feature.FeatureRenderer;
-import net.minecraft.client.render.entity.feature.FeatureRendererContext;
-import net.minecraft.client.render.entity.model.EntityModel;
-import net.minecraft.entity.passive.SheepEntity;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.render.entity.layer.EntityRenderLayer;
+import net.minecraft.client.render.entity.layer.EntityRenderLayerParent;
+import net.minecraft.client.render.model.Model;
+import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSheepWoolLayer extends FeatureRenderer<@NotNull ClientSheep, @NotNull ClientSheepModel> {
-    private final EntityModel<@NotNull ClientSheep> model;
+public class ClientSheepWoolLayer extends EntityRenderLayer<@NotNull ClientSheep, @NotNull ClientSheepModel> {
+    private final Model<@NotNull ClientSheep> model;
     int woolColor;
 
-    public ClientSheepWoolLayer(FeatureRendererContext<@NotNull ClientSheep, @NotNull ClientSheepModel> renderLayerParent) {
+    public ClientSheepWoolLayer(EntityRenderLayerParent<@NotNull ClientSheep, @NotNull ClientSheepModel> renderLayerParent) {
         super(renderLayerParent);
         this.model = new ClientSheepFurModel();
     }
@@ -65,15 +63,15 @@ public class ClientSheepWoolLayer extends FeatureRenderer<@NotNull ClientSheep, 
         float r = (float) (woolColor >> 16 & 255) / 255.0F;
         float g = (float) (woolColor >> 8 & 255) / 255.0F;
         float b = (float) (woolColor & 255) / 255.0F;
-            GlStateManager.color3f(r, g, b);
+            GlStateManager.color(r, g, b);
 
-            (this.getModel()).copyStateTo(this.model);
-            this.model.animateModel(sheep, f, g, h);
+            (this.getModel()).m_95427286(this.model);
+            this.model.prepare(sheep, f, g, h);
             this.model.render(sheep, f, g, i, j, k, l);
     }
 
     @Override
-    public boolean hasHurtOverlay() {
+    public boolean colorsWhenDamaged() {
         return false;
     }
 }

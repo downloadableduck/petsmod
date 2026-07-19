@@ -1,11 +1,11 @@
 package com.jeff.pets.client.rendering.vanilla.cow;
 
-import net.minecraft.client.render.entity.model.CowEntityModel;
+import net.minecraft.client.render.model.entity.CowModel;
 import net.minecraft.entity.Entity;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientCowModel<T extends Entity> extends CowEntityModel<T> {
+public class ClientCowModel<T extends Entity> extends CowModel<T> {
 
     public ClientCowModel() {
         super();
@@ -16,9 +16,9 @@ public class ClientCowModel<T extends Entity> extends CowEntityModel<T> {
         super.render(poseStack, f, g, h, j, k, d);
         com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scalef(2, 2, 2);
+            com.mojang.blaze3d.platform.GlStateManager.scale(2, 2, 2);
         } else {
-            com.mojang.blaze3d.platform.GlStateManager.scalef(1, 1, 1);
+            com.mojang.blaze3d.platform.GlStateManager.scale(1, 1, 1);
         }
         //this.head.rotate(poseStack);
         com.mojang.blaze3d.platform.GlStateManager.popMatrix();

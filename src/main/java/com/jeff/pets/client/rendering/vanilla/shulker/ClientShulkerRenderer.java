@@ -2,19 +2,19 @@ package com.jeff.pets.client.rendering.vanilla.shulker;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientShulker;
-import net.minecraft.util.Identifier;
+import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientShulkerRenderer extends PetRenderer<@NotNull ClientShulker, @NotNull ClientShulkerModel> {
 
-    public ClientShulkerRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
+    public ClientShulkerRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
         super(context, new ClientShulkerModel(), 0.75f);
     }
 
     @Override
-    public @NotNull Identifier getTexture(ClientShulker state) {
+    public @NotNull Identifier getTextureLocation(ClientShulker state) {
         String shulkerFile;
         String folderPath = "textures/entity/shulker/";
         if (CONFIG.shulkerSkin.equals("normal")) {
@@ -52,9 +52,9 @@ public class ClientShulkerRenderer extends PetRenderer<@NotNull ClientShulker, @
     }
 
     @Override
-    public void render(ClientShulker shulker, float f, float g, float h, float i, float j, float k) {
-        super.render(shulker, f, g, h, i, j, k);
-        //shulker.bodyYaw = 180;
+    public void renderModel(ClientShulker shulker, float f, float g, float h, float i, float j, float k) {
+        super.renderModel(shulker, f, g, h, i, j, k);
+        //shulker.bodyrotationY = 180;
         // shulker.peekAmount = 1;
     }
 }

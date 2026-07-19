@@ -1,16 +1,13 @@
 package com.jeff.pets.client.rendering.vanilla.vex;
 
 import com.jeff.pets.mob.vanilla.hostile.ClientVex;
-import net.minecraft.client.model.Cuboid;
-import net.minecraft.client.render.entity.model.BipedEntityModel;
-import net.minecraft.client.render.entity.model.VexEntityModel;
-import net.minecraft.entity.mob.VexEntity;
-import net.minecraft.util.AbsoluteHand;
+import net.minecraft.client.render.model.ModelPart;
+import net.minecraft.client.render.model.entity.HumanoidModel;
 import net.minecraft.util.math.MathHelper;
 
-public class ClientVexModel extends BipedEntityModel<ClientVex> {
-    private final Cuboid field_3601;
-    private final Cuboid field_3602;
+public class ClientVexModel extends HumanoidModel<ClientVex> {
+    private final ModelPart field_3601;
+    private final ModelPart field_3602;
 
     public ClientVexModel() {
         this(0.0F);
@@ -19,14 +16,14 @@ public class ClientVexModel extends BipedEntityModel<ClientVex> {
     public ClientVexModel(float f) {
         super(f, 0.0F, 64, 64);
         this.leftLeg.visible = false;
-        this.headwear.visible = false;
-        this.rightLeg = new Cuboid(this, 32, 0);
+        this.hat.visible = false;
+        this.rightLeg = new ModelPart(this, 32, 0);
         this.rightLeg.addBox(-1.0F, -1.0F, -2.0F, 6, 10, 4, 0.0F);
-        this.rightLeg.setRotationPoint(-1.9F, 12.0F, 0.0F);
-        this.field_3602 = new Cuboid(this, 0, 32);
+        this.rightLeg.setPos(-1.9F, 12.0F, 0.0F);
+        this.field_3602 = new ModelPart(this, 0, 32);
         this.field_3602.addBox(-20.0F, 0.0F, 0.0F, 20, 12, 1);
-        this.field_3601 = new Cuboid(this, 0, 32);
-        this.field_3601.mirror = true;
+        this.field_3601 = new ModelPart(this, 0, 32);
+        this.field_3601.flipped = true;
         this.field_3601.addBox(0.0F, 0.0F, 0.0F, 20, 12, 1);
     }
 
@@ -38,20 +35,20 @@ public class ClientVexModel extends BipedEntityModel<ClientVex> {
     }
 
     @Override
-    public void setAngles(ClientVex vexEntity, float f, float g, float h, float i, float j, float k) {
-        super.method_17087(vexEntity, f, g, h, i, j, k);
+    public void setup(ClientVex vexEntity, float f, float g, float h, float i, float j, float k) {
+        super.setup(vexEntity, f, g, h, i, j, k);
 
-        Cuboid var10000 = this.rightLeg;
-        var10000.pitch += ((float)Math.PI / 5F);
-        this.field_3602.rotationPointZ = 2.0F;
-        this.field_3601.rotationPointZ = 2.0F;
-        this.field_3602.rotationPointY = 1.0F;
-        this.field_3601.rotationPointY = 1.0F;
-        this.field_3602.yaw = 0.47123894F + MathHelper.cos(h * 0.8F) * (float)Math.PI * 0.05F;
-        this.field_3601.yaw = -this.field_3602.yaw;
-        this.field_3601.roll = -0.47123894F;
-        this.field_3601.pitch = 0.47123894F;
-        this.field_3602.pitch = 0.47123894F;
-        this.field_3602.roll = 0.47123894F;
+        ModelPart var10000 = this.rightLeg;
+        var10000.rotationX += ((float)Math.PI / 5F);
+        this.field_3602.z = 2.0F;
+        this.field_3601.z = 2.0F;
+        this.field_3602.y = 1.0F;
+        this.field_3601.y = 1.0F;
+        this.field_3602.rotationY = 0.47123894F + MathHelper.cos(h * 0.8F) * (float)Math.PI * 0.05F;
+        this.field_3601.rotationY = -this.field_3602.rotationY;
+        this.field_3601.rotationZ = -0.47123894F;
+        this.field_3601.rotationX = 0.47123894F;
+        this.field_3602.rotationX = 0.47123894F;
+        this.field_3602.rotationZ = 0.47123894F;
     }
 }

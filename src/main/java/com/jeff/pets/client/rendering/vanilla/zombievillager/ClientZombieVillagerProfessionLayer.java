@@ -1,14 +1,14 @@
 package com.jeff.pets.client.rendering.vanilla.zombievillager;
 
 import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
-import net.minecraft.client.render.entity.feature.FeatureRenderer;
-import net.minecraft.client.render.entity.feature.FeatureRendererContext;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.render.entity.feature.EntityRenderLayerContext;
+import net.minecraft.client.render.entity.layer.EntityRenderLayer;
+import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientZombieVillagerProfessionLayer extends FeatureRenderer<@NotNull ClientZombieVillager, ClientZombieVillagerModel> {
+public class ClientZombieVillagerProfessionLayer extends EntityRenderLayer<@NotNull ClientZombieVillager, ClientZombieVillagerModel> {
 
     public static final Identifier ARMORER_LOCATION = new Identifier("minecraft", "textures/entity/zombie_villager/profession/armorer.png");
     public static final Identifier BUTCHER_LOCATION = new Identifier("minecraft", "textures/entity/zombie_villager/profession/butcher.png");
@@ -25,14 +25,14 @@ public class ClientZombieVillagerProfessionLayer extends FeatureRenderer<@NotNul
     public static final Identifier TOOLSMITH_LOCATION = new Identifier("minecraft", "textures/entity/zombie_villager/profession/toolsmith.png");
     public static final Identifier WEAPONSMITH_LOCATION = new Identifier("minecraft", "textures/entity/zombie_villager/profession/weaponsmith.png");
 
-    public ClientZombieVillagerProfessionLayer(FeatureRendererContext<@NotNull ClientZombieVillager, @NotNull ClientZombieVillagerModel> renderLayerParent) {
+    public ClientZombieVillagerProfessionLayer(EntityRenderLayerContext<@NotNull ClientZombieVillager, @NotNull ClientZombieVillagerModel> renderLayerParent) {
         super(renderLayerParent);
     }
 
     @Override
     public void render(ClientZombieVillager zombieVillager, float f, float g, float h, float k, float l, float u, float v) {
         com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
-        com.mojang.blaze3d.platform.GlStateManager.scalef(1.001f, 1.001f, 1.001f);
+        com.mojang.blaze3d.platform.GlStateManager.scale(1.001f, 1.001f, 1.001f);
         if (CONFIG.zombieVillagerSkin.equals("armorer")) {
             this.bindTexture(ARMORER_LOCATION);
         } else if (CONFIG.zombieVillagerSkin.equals("butcher")) {
@@ -66,7 +66,7 @@ public class ClientZombieVillagerProfessionLayer extends FeatureRenderer<@NotNul
     }
 
     @Override
-    public boolean hasHurtOverlay() {
+    public boolean colorsWhenDamaged() {
         return false;
     }
 }

@@ -1,10 +1,10 @@
 package com.jeff.pets.client.rendering.vanilla.cat;
 
 import com.jeff.pets.mob.vanilla.passive.ClientCat;
-import net.minecraft.client.render.entity.model.OcelotEntityModel;
+import net.minecraft.client.render.model.entity.OcelotModel;
 import net.minecraft.util.math.MathHelper;
 
-public class ClientCatModel extends OcelotEntityModel<ClientCat> {
+public class ClientCatModel extends OcelotModel<ClientCat> {
     private float lieDownAmount;
     private float lieDownAmountTail;
     private float relaxStateOneAmount;
@@ -14,12 +14,12 @@ public class ClientCatModel extends OcelotEntityModel<ClientCat> {
     }
 
     @Override
-    public void setAngles(ClientCat cat, float a, float b, float c, float d, float e, float k) {
-        super.setAngles(cat, a, b, c, d, e, k);
+    public void setup(ClientCat cat, float a, float b, float c, float d, float e, float k) {
+        super.setup(cat, a, b, c, d, e, k);
         float f = cat.getBreedingAge();
-        if (cat.hasVehicle()) {
-            this.body.rotationPointY += f;
-            this.head.rotationPointY += 2.0F * f;
+        if (cat.isRiding()) {
+            this.body.y += f;
+            this.head.y += 2.0F * f;
             //this.tail1.y += 1.0F * f;
             // this.tail2.y += -4.0F * f;
             // this.tail2.z += 2.0F * f;
@@ -29,46 +29,46 @@ public class ClientCatModel extends OcelotEntityModel<ClientCat> {
 
         //this.head.xRot = cat.getXRot() * (float) (Math.PI / 180.0);
         //this.head.yRot = cat.getYRot() * (float) (Math.PI / 180.0);
-        if (!cat.hasVehicle()) {
-            this.body.pitch = (float) (Math.PI / 2);
-            float g = cat.limbDistance;
-            float h = cat.limbAngle;
+        if (!cat.isRiding()) {
+            this.body.rotationX = (float) (Math.PI / 2);
+            float g = cat.walkAnimationSpeed;
+            float h = cat.walkAnimationProgress;
 
-            this.backLegLeft.pitch = MathHelper.cos(h * 0.6662F) * g;
-            this.backLegRight.pitch = MathHelper.cos(h * 0.6662F + (float) Math.PI) * g;
-            this.frontLegLeft.pitch = (MathHelper.cos(h * 0.6662F + (float) Math.PI) * g);
-            this.frontLegRight.pitch = (MathHelper.cos(h * 0.6662F) * g);
-            if (!cat.hasVehicle()) {
-                this.tail2.pitch = 1.7278761F + (float) (Math.PI / 4) * MathHelper.cos(h) * g;
+            this.backLegLeft.rotationX = MathHelper.cos(h * 0.6662F) * g;
+            this.backLegRight.rotationX = MathHelper.cos(h * 0.6662F + (float) Math.PI) * g;
+            this.frontLegLeft.rotationX = (MathHelper.cos(h * 0.6662F + (float) Math.PI) * g);
+            this.frontLegRight.rotationX = (MathHelper.cos(h * 0.6662F) * g);
+            if (!cat.isRiding()) {
+                this.tail2.rotationX = 1.7278761F + (float) (Math.PI / 4) * MathHelper.cos(h) * g;
             } else {
-                this.tail2.pitch = 1.7278761F + 0.47123894F * MathHelper.cos(h) * g;
+                this.tail2.rotationX = 1.7278761F + 0.47123894F * MathHelper.cos(h) * g;
             }
         }
 
-        if (cat.hasVehicle()) {
-            this.body.pitch = (float) (Math.PI / 4);
-            this.body.rotationPointY += -4.0F * f;
-            this.body.rotationPointZ += 5.0F * f;
-            this.head.rotationPointY += -3.3F * f;
-            this.head.rotationPointZ += f;
-            this.tail1.rotationPointY += 8.0F * f;
-            this.tail1.rotationPointZ += -2.0F * f;
-            this.tail2.rotationPointY += 2.0F * f;
-            this.tail2.rotationPointZ += -0.8F * f;
-            this.tail1.pitch = 1.7278761F;
-            this.tail2.pitch = 2.670354F;
-            this.frontLegLeft.pitch = (float) (-Math.PI / 20);
-            this.frontLegLeft.rotationPointY += 2.0F * f;
-            this.frontLegLeft.rotationPointZ -= 2.0F * f;
-            this.frontLegRight.pitch = (float) (-Math.PI / 20);
-            this.frontLegRight.rotationPointY += 2.0F * f;
-            this.frontLegRight.rotationPointZ -= 2.0F * f;
-            this.backLegLeft.pitch = (float) (-Math.PI / 2);
-            this.backLegLeft.rotationPointY += 3.0F * f;
-            this.backLegLeft.rotationPointZ -= 4.0F * f;
-            this.backLegRight.pitch = (float) (-Math.PI / 2);
-            this.backLegRight.rotationPointY += 3.0F * f;
-            this.backLegRight.rotationPointZ -= 4.0F * f;
+        if (cat.isRiding()) {
+            this.body.rotationX = (float) (Math.PI / 4);
+            this.body.y += -4.0F * f;
+            this.body.z += 5.0F * f;
+            this.head.y += -3.3F * f;
+            this.head.z += f;
+            this.tail1.y += 8.0F * f;
+            this.tail1.z += -2.0F * f;
+            this.tail2.y += 2.0F * f;
+            this.tail2.z += -0.8F * f;
+            this.tail1.rotationX = 1.7278761F;
+            this.tail2.rotationX = 2.670354F;
+            this.frontLegLeft.rotationX = (float) (-Math.PI / 20);
+            this.frontLegLeft.y += 2.0F * f;
+            this.frontLegLeft.z -= 2.0F * f;
+            this.frontLegRight.rotationX = (float) (-Math.PI / 20);
+            this.frontLegRight.y += 2.0F * f;
+            this.frontLegRight.z -= 2.0F * f;
+            this.backLegLeft.rotationX = (float) (-Math.PI / 2);
+            this.backLegLeft.y += 3.0F * f;
+            this.backLegLeft.z -= 4.0F * f;
+            this.backLegRight.rotationX = (float) (-Math.PI / 2);
+            this.backLegRight.y += 3.0F * f;
+            this.backLegRight.z -= 4.0F * f;
         }
 
         /*if (cat.lieDownAmount > 0.0F) {

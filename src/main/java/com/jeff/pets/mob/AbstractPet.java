@@ -1,21 +1,21 @@
 package com.jeff.pets.mob;
 
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.network.Packet;
-import net.minecraft.client.network.packet.EntitySpawnS2CPacket;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.Hand;
-import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.data.DataAttribute;
+import net.minecraft.entity.living.attribute.EntityAttributes;
+import net.minecraft.entity.living.mob.passive.PassiveEntity;
+import net.minecraft.entity.living.mob.passive.animal.tameable.TameableEntity;
+import net.minecraft.entity.living.player.PlayerEntity;
+import net.minecraft.entity.particle.ParticleTypes;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.s2c.play.AddEntityS2CPacket;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -40,14 +40,14 @@ public abstract class AbstractPet extends TameableEntity {
 
     protected AbstractPet(EntityType<? extends @NotNull TameableEntity> type, World level) {
         super(type, level);
-        this.setMovementSpeed(0.5f);
+        this.setSpeed(0.5f);
     }
 
     @Override
     public void initAttributes() {
         super.initAttributes();
-        this.getAttributeInstance(EntityAttributes.MAX_HEALTH).setBaseValue(8);
-        this.getAttributeInstance(EntityAttributes.MOVEMENT_SPEED).setBaseValue(0.23);
+        this.getAttribute(EntityAttributes.MAX_HEALTH).setBase(8);
+        this.getAttribute(EntityAttributes.MOVEMENT_SPEED).setBase(0.23);
     }
 
     /**
@@ -104,8 +104,8 @@ public abstract class AbstractPet extends TameableEntity {
      * @return It's super method
      */
     @Override
-    public boolean interactMob(@NotNull PlayerEntity player, @NotNull Hand hand) {
-        ItemStack itemStack = player.getStackInHand(hand);
+    public boolean interactMob(@NotNull PlayerEntity player, @NotNull InteractionHand hand) {
+        ItemStack itemStack = player.getItemInHand(hand);
 
         if (this.isTamed() && itemStack.isEmpty() && !player.isSneaking()) {
             this.world.addParticle(
@@ -119,9 +119,9 @@ public abstract class AbstractPet extends TameableEntity {
         }
 
         if (this.isTamed() && itemStack.isEmpty() && player.isSneaking()) {
-            if (!this.hasVehicle()) {
+            if (!this.isRiding()) {
                 this.startRiding(player);
-                this.lookAtEntity(player, 1f, 1f);
+                this.lookAt(player, 1f, 1f);
                 return true;
             } else {
                 this.stopRiding();
@@ -136,9 +136,9 @@ public abstract class AbstractPet extends TameableEntity {
      * <p> Calls: It's super method, if the level is not client-sided.
      */
     @Override
-    public void onTrackedDataSet(@NotNull TrackedData<?> key) {
+    public void onDataValueChanged(@NotNull DataAttribute<?> key) {
         if (!this.world.isClient()) {
-            super.onTrackedDataSet(key);
+            super.onDataValueChanged(key);
         }
     }
 
@@ -147,11 +147,11 @@ public abstract class AbstractPet extends TameableEntity {
      * Never, under any circumstances, remove this method.
      */
     @Override
-    public @NotNull Packet<?> createSpawnPacket() {
+    public @NotNull Packet<?> m_00781305() {
         if (this.world.isClient()) {
-            return new EntitySpawnS2CPacket(this);
+            return new AddEntityS2CPacket(this);
         } else {
-            return super.createSpawnPacket();
+            return super.m_00781305();
         }
     }
 
@@ -173,7 +173,7 @@ public abstract class AbstractPet extends TameableEntity {
      * @return {@code null}
      */
     @Override
-    public @Nullable PassiveEntity createChild(@NotNull PassiveEntity AgableMob) {
+    public @Nullable PassiveEntity makeChild(@NotNull PassiveEntity AgableMob) {
         return null;
     }
 
@@ -181,16 +181,16 @@ public abstract class AbstractPet extends TameableEntity {
      * Easier way to call {@link TameableEntity#setCustomName} that takes a String rather than a {@link Text}
      */
     public void setName(String string) {
-        this.setCustomName(new TextComponent(string));
+        this.setCustomName(new LiteralText(string));
     }
 
     public void wander() {
-        float speed = (float) (this.getMovementSpeed() - 0.35);
+        float speed = (float) (this.getSpeed() - 0.35);
         Vec3d lookDir;
         float z = speed * this.randomZ;
 
         float distance = this.distanceTo(this.getOwner());
-        float yVelo = (float) this.getVelocity().y;
+        float yVelo = (float) this.m_94091929().y;//this.getVelocity().y;
 
         if (distance > 5) {
             this.reCalcPos();
@@ -201,37 +201,37 @@ public abstract class AbstractPet extends TameableEntity {
         }
 
         if (!this.isReturningToOwner) {
-            this.setVelocity(new Vec3d(speed, yVelo, z));
+            this.m_28162558(new Vec3d(speed, yVelo, z)); //this.setVelocity()
         } else {
-            this.setVelocity(new Vec3d(-speed, yVelo, -z));
+            this.m_28162558(new Vec3d(-speed, yVelo, -z));
         }
 
         //this.lookAt(EntityAnchorArgument.Anchor.EYES, lookDir);
 
-        double moveX = this.getVelocity().x;
-        double moveZ = this.getVelocity().z;
+        double moveX = this.m_94091929().x;
+        double moveZ = this.m_94091929().z;
 
         lookDir = new Vec3d(
                 this.x + (moveX * 2),
-                this.y + this.getStandingEyeHeight(),
+                this.y + this.getEyeHeight(),
                 this.z + (moveZ * 2)
         );
         this.getLookControl().lookAt(lookDir.x, lookDir.y, lookDir.z, 1.0F, (float) this.getLookPitchSpeed());
 
         if (moveX * moveX + moveZ * moveZ > 0.001) {
             float targetYaw = (float) (Math.atan2(-moveX, moveZ) * (180D / Math.PI));
-            float smoothYaw = MathHelper.lerpAngleDegrees(0.2f, this.getYRot(), targetYaw);
+            float smoothYaw = MathHelper.m_41989395(0.2f, this.getYRot(), targetYaw); //lerpAngleDegrees
 
             this.setYRot(smoothYaw);
             this.setHeadYaw(smoothYaw);
-            this.field_6283 /*bodyYaw*/ = smoothYaw;
+            this.bodyYaw /*bodyYaw*/ = smoothYaw;
         }
 
-        if (this.horizontalCollision && this.onGround) {
+        if (this.collidingHorizontally && this.onGround) {
             this.jump();
         }
         if (!this.onGround) {
-            this.setVelocity(this.getVelocity().add(0, -0.04, 0));
+            this.m_28162558(this.m_94091929().add(0, -0.04, 0));
         }
         double dx = lookDir.x - this.x;
         double dz = lookDir.z - this.z;
@@ -239,16 +239,16 @@ public abstract class AbstractPet extends TameableEntity {
 
         this.setYRot(targetYaw);
         this.setHeadYaw(targetYaw);
-        this.field_6283 /*bodyYaw*/ = targetYaw;
+        this.bodyYaw /*bodyYaw*/ = targetYaw;
     }
 
     public float getYRot() {
-        return this.field_6283 /*bodyYaw*/;
+        return this.bodyYaw /*bodyYaw*/;
     }
 
     public void setYRot(float targetYaw) {
         this.setHeadYaw(targetYaw);
-        this.setYaw(targetYaw);
+        this.setBodyYaw(targetYaw);
     }
 
     private void reCalcPos() {
@@ -261,6 +261,10 @@ public abstract class AbstractPet extends TameableEntity {
     }
 
     public boolean isPassenger() {
-        return this.hasVehicle();
+        return this.isRiding();
+    }
+
+    public Vec3d getPos() {
+        return new Vec3d(this.x, this.y, this.z);
     }
 }

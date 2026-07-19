@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.parrot;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientParrot;
-import net.minecraft.util.Identifier;
+import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -13,11 +13,11 @@ public class ClientParrotRenderer extends PetRenderer<@NotNull ClientParrot, @No
 
     String parrotTexturePath;
 
-    public ClientParrotRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
+    public ClientParrotRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
         super(context, new ClientParrotModel(), 0.3F);
     }
 
-    public @NotNull Identifier getTexture(ClientParrot parrotRenderState) {
+    public @NotNull Identifier getTextureLocation(ClientParrot parrotRenderState) {
         if (Objects.equals(CONFIG.parrotSkin, "red")) {
             parrotTexturePath = "textures/entity/parrot/parrot_red_blue.png";
         } else if (Objects.equals(CONFIG.parrotSkin, "blue")) {

@@ -4,25 +4,25 @@ package com.jeff.pets.client.rendering.custom.aprilfools.head;
 
 
 import com.jeff.pets.mob.custom.aprilfools.Head;
-import net.minecraft.client.model.Cuboid;
-import net.minecraft.client.render.entity.model.EntityModel;
+import net.minecraft.client.render.model.Model;
+import net.minecraft.client.render.model.ModelPart;
 
-public class HeadModel extends EntityModel<Head> {
-    private final Cuboid Head;
+public class HeadModel extends Model<Head> {
+    private final ModelPart Head;
 
     public HeadModel() {
-        textureWidth = 64;
-        textureHeight = 64;
+        f_35376783 /*textureWidth*/ = 64;
+        f_50207596 /*textureHeight*/ = 64;
 
-        Head = new Cuboid(this);
-        Head.setRotationPoint(0.0F, 0.0F, 0.0F);
+        Head = new ModelPart(this);
+        Head.setPos(0.0F, 0.0F, 0.0F);
         setRotationAngle(Head, -0.1047F, 0.0873F, 0.0F);
-        Head.setTextureOffset(0, 0).addBox(-8.0F, 16.0F, 0.0F, 8, 8, 8, 0.0F, false);
-        Head.setTextureOffset(32, 0).addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.5F, false);
+        Head.setTextureCoords(0, 0).addBox(-8.0F, 16.0F, 0.0F, 8, 8, 8, 0.0F, false);
+        Head.setTextureCoords(32, 0).addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.5F, false);
     }
 
     @Override
-    public void setAngles(Head entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float s) {
+    public void setup(Head entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadrotationY, float headrotationX, float s) {
         //previously the render function, render code was moved to a method below
     }
 
@@ -31,9 +31,9 @@ public class HeadModel extends EntityModel<Head> {
         Head.render(alpha);
     }
 
-    public void setRotationAngle(Cuboid modelRenderer, float x, float y, float z) {
-        modelRenderer.pitch = x;
-        modelRenderer.yaw = y;
-        modelRenderer.roll = z;
+    public void setRotationAngle(ModelPart modelRenderer, float x, float y, float z) {
+        modelRenderer.rotationX = x;
+        modelRenderer.rotationY = y;
+        modelRenderer.rotationZ = z;
     }
 }

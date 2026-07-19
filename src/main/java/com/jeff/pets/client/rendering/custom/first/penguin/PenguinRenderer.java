@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.custom.first.penguin;
 import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Penguin;
-import net.minecraft.util.Identifier;
+import net.minecraft.resource.Identifier;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,26 +11,26 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class PenguinRenderer extends PetRenderer<@NotNull Penguin, @NotNull PenguinModel> {
 
-    public PenguinRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
+    public PenguinRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
         super(context, new PenguinModel(), 0.5f);
     }
 
     @Override
-    public @NotNull Identifier getTexture(Penguin livingEntityRenderState) {
+    public @NotNull Identifier getTextureLocation(Penguin livingEntityRenderState) {
         return new Identifier(PetsInitializer.MOD_ID, "textures/entity/penguin/penguin.png");
     }
 
     @Override
-    protected void scale(@NotNull Penguin livingEntityRenderState, float f) {
+    protected void applyScale(@NotNull Penguin livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
     public void render(final Penguin penguin, float f, float partialTicks, float h, float i, float j, float k) {
-        penguin.flap = MathHelper.lerp(partialTicks, penguin.oFlap, penguin.flap);
-        penguin.flapSpeed = MathHelper.lerp(partialTicks, penguin.oFlapSpeed, penguin.flapSpeed);
+        penguin.flap = MathHelper.m_23874002 /*lerp*/(partialTicks, penguin.oFlap, penguin.flap);
+        penguin.flapSpeed = MathHelper.m_23874002 /*lerp*/(partialTicks, penguin.oFlapSpeed, penguin.flapSpeed);
         super.render(penguin, f, partialTicks, h, i, j, k);
     }
 }

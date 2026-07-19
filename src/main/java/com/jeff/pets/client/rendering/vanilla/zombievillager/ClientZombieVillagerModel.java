@@ -2,66 +2,67 @@ package com.jeff.pets.client.rendering.vanilla.zombievillager;
 
 import com.jeff.pets.client.rendering.AnimationUtils;
 import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
-import net.minecraft.client.model.Cuboid;
-import net.minecraft.client.render.entity.model.BipedEntityModel;
-import net.minecraft.client.render.entity.model.ModelWithHat;
+import net.minecraft.client.render.model.ModelPart;
+import net.minecraft.client.render.model.entity.HumanoidModel;
+import net.minecraft.unmapped.C_90332747;
 
-public class ClientZombieVillagerModel extends BipedEntityModel<ClientZombieVillager> implements ModelWithHat {
-    private Cuboid hatRim;
+public class ClientZombieVillagerModel extends HumanoidModel<ClientZombieVillager> implements C_90332747 {
+    private ModelPart hatRim;
 
     public ClientZombieVillagerModel(float f, boolean bl) {
         super(f, 0.0F, 64, bl ? 32 : 64);
         if (bl) {
-            this.head = new Cuboid(this, 0, 0);
+            this.head = new ModelPart(this, 0, 0);
             this.head.addBox(-4.0F, -10.0F, -4.0F, 8, 8, 8, f);
-            this.body = new Cuboid(this, 16, 16);
+            this.body = new ModelPart(this, 16, 16);
             this.body.addBox(-4.0F, 0.0F, -2.0F, 8, 12, 4, f + 0.1F);
-            this.rightLeg = new Cuboid(this, 0, 16);
-            this.rightLeg.setRotationPoint(-2.0F, 12.0F, 0.0F);
+            this.rightLeg = new ModelPart(this, 0, 16);
+            this.rightLeg.setPos(-2.0F, 12.0F, 0.0F);
             this.rightLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, f + 0.1F);
-            this.leftLeg = new Cuboid(this, 0, 16);
-            this.leftLeg.mirror = true;
-            this.leftLeg.setRotationPoint(2.0F, 12.0F, 0.0F);
+            this.leftLeg = new ModelPart(this, 0, 16);
+            this.leftLeg.flipped = true;
+            this.leftLeg.setPos(2.0F, 12.0F, 0.0F);
             this.leftLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, f + 0.1F);
         } else {
-            this.head = new Cuboid(this, 0, 0);
-            this.head.setTextureOffset(0, 0).addBox(-4.0F, -10.0F, -4.0F, 8, 10, 8, f);
-            this.head.setTextureOffset(24, 0).addBox(-1.0F, -3.0F, -6.0F, 2, 4, 2, f);
-            this.headwear = new Cuboid(this, 32, 0);
-            this.headwear.addBox(-4.0F, -10.0F, -4.0F, 8, 10, 8, f + 0.5F);
-            this.hatRim = new Cuboid(this);
-            this.hatRim.setTextureOffset(30, 47).addBox(-8.0F, -8.0F, -6.0F, 16, 16, 1, f);
-            this.hatRim.pitch = (-(float) Math.PI / 2F);
-            this.headwear.addChild(this.hatRim);
-            this.body = new Cuboid(this, 16, 20);
+            this.head = new ModelPart(this, 0, 0);
+            this.head.setTextureCoords(0, 0).addBox(-4.0F, -10.0F, -4.0F, 8, 10, 8, f);
+            this.head.setTextureCoords(24, 0).addBox(-1.0F, -3.0F, -6.0F, 2, 4, 2, f);
+            this.hat = new ModelPart(this, 32, 0);
+            this.hat.addBox(-4.0F, -10.0F, -4.0F, 8, 10, 8, f + 0.5F);
+            this.hatRim = new ModelPart(this);
+            this.hatRim.setTextureCoords(30, 47).addBox(-8.0F, -8.0F, -6.0F, 16, 16, 1, f);
+            this.hatRim.rotationX = (-(float) Math.PI / 2F);
+            this.hat.addChild(this.hatRim);
+            this.body = new ModelPart(this, 16, 20);
             this.body.addBox(-4.0F, 0.0F, -3.0F, 8, 12, 6, f);
-            this.body.setTextureOffset(0, 38).addBox(-4.0F, 0.0F, -3.0F, 8, 18, 6, f + 0.05F);
-            this.rightArm = new Cuboid(this, 44, 22);
+            this.body.setTextureCoords(0, 38).addBox(-4.0F, 0.0F, -3.0F, 8, 18, 6, f + 0.05F);
+            this.rightArm = new ModelPart(this, 44, 22);
             this.rightArm.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, f);
-            this.rightArm.setRotationPoint(-5.0F, 2.0F, 0.0F);
-            this.leftArm = new Cuboid(this, 44, 22);
-            this.leftArm.mirror = true;
+            this.rightArm.setPos(-5.0F, 2.0F, 0.0F);
+            this.leftArm = new ModelPart(this, 44, 22);
+            this.leftArm.flipped = true;
             this.leftArm.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, f);
-            this.leftArm.setRotationPoint(5.0F, 2.0F, 0.0F);
-            this.rightLeg = new Cuboid(this, 0, 22);
-            this.rightLeg.setRotationPoint(-2.0F, 12.0F, 0.0F);
+            this.leftArm.setPos(5.0F, 2.0F, 0.0F);
+            this.rightLeg = new ModelPart(this, 0, 22);
+            this.rightLeg.setPos(-2.0F, 12.0F, 0.0F);
             this.rightLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, f);
-            this.leftLeg = new Cuboid(this, 0, 22);
-            this.leftLeg.mirror = true;
-            this.leftLeg.setRotationPoint(2.0F, 12.0F, 0.0F);
+            this.leftLeg = new ModelPart(this, 0, 22);
+            this.leftLeg.flipped = true;
+            this.leftLeg.setPos(2.0F, 12.0F, 0.0F);
             this.leftLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, f);
         }
 
     }
 
-    public void setAngles(ClientZombieVillager zombie, float f, float g, float h, float i, float j, float s) {
-        super.setAngles(zombie, f, g, h, i, j, s);
-        AnimationUtils.animateZombieArms(this.leftArm, this.rightArm, zombie.isAttacking(), this.handSwingProgress, h);
+    @Override
+    public void setup(ClientZombieVillager zombie, float f, float g, float h, float i, float j, float s) {
+        super.setup(zombie, f, g, h, i, j, s);
+        AnimationUtils.animateZombieArms(this.leftArm, this.rightArm, true, this.attackAnimationProgress, h);
     }
 
-    public void setHatVisible(boolean bl) {
+    public void m_11393557(boolean bl) {
         this.head.visible = bl;
-        this.headwear.visible = bl;
+        this.hat.visible = bl;
         this.hatRim.visible = bl;
     }
 }

@@ -1,7 +1,7 @@
 package com.jeff.pets;
 
 import net.minecraft.util.registry.Registry;
-import net.minecraft.util.Identifier;
+import net.minecraft.resource.Identifier;
 import net.minecraft.sound.SoundEvent;
 
 /**

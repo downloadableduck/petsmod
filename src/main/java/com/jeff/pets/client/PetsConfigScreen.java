@@ -6,7 +6,7 @@ import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.clothconfig2.impl.builders.*;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Screen;
 
 import java.util.Objects;
@@ -77,7 +77,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                 .setTitle("Config")
                 .setSavingRunnable(() -> {
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
-                    MinecraftClient.getInstance().openScreen(this.getModConfigScreenFactory());
+                    Minecraft.getInstance().openScreen(this.getModConfigScreenFactory());
                 })
                 .setTransparentBackground(true);
         ConfigCategory general = builder.getOrCreateCategory("Config");

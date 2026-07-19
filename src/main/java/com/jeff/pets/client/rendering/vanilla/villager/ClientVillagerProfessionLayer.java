@@ -1,11 +1,10 @@
 package com.jeff.pets.client.rendering.vanilla.villager;
 
 import com.jeff.pets.mob.vanilla.passive.ClientVillager;
-import net.minecraft.client.render.entity.feature.FeatureRenderer;
-import net.minecraft.client.render.entity.feature.FeatureRendererContext;
-import net.minecraft.client.render.entity.feature.VillagerClothingFeatureRenderer;
-import net.minecraft.client.render.entity.model.VillagerResemblingModel;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.render.entity.layer.EntityRenderLayer;
+import net.minecraft.client.render.entity.layer.EntityRenderLayerParent;
+import net.minecraft.client.render.model.entity.VillagerModel;
+import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -13,7 +12,7 @@ import java.util.Objects;
 import static com.jeff.pets.client.Central.CONFIG;
 
 //villager layer is blue lmao
-public class ClientVillagerProfessionLayer extends FeatureRenderer<@NotNull ClientVillager, @NotNull VillagerResemblingModel<ClientVillager>> {
+public class ClientVillagerProfessionLayer extends EntityRenderLayer<@NotNull ClientVillager, @NotNull VillagerModel<ClientVillager>> {
 
     public static final Identifier ARMORER_LOCATION = new Identifier("minecraft", "textures/entity/villager/profession/armorer.png");
     public static final Identifier BUTCHER_LOCATION = new Identifier("minecraft", "textures/entity/villager/profession/butcher.png");
@@ -30,14 +29,14 @@ public class ClientVillagerProfessionLayer extends FeatureRenderer<@NotNull Clie
     public static final Identifier TOOLSMITH_LOCATION = new Identifier("minecraft", "textures/entity/villager/profession/toolsmith.png");
     public static final Identifier WEAPONSMITH_LOCATION = new Identifier("minecraft", "textures/entity/villager/profession/weaponsmith.png");
 
-    public ClientVillagerProfessionLayer(FeatureRendererContext<@NotNull ClientVillager, @NotNull VillagerResemblingModel<ClientVillager>> renderLayerParent) {
+    public ClientVillagerProfessionLayer(EntityRenderLayerParent<@NotNull ClientVillager, @NotNull VillagerModel<ClientVillager>> renderLayerParent) {
         super(renderLayerParent);
     }
 
     @Override
     public void render(ClientVillager villager, float f, float g, float h, float i, float j, float k, float l) {
         com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
-        com.mojang.blaze3d.platform.GlStateManager.scalef(1.001f, 1.001f, 1.001f);
+        com.mojang.blaze3d.platform.GlStateManager.scale(1.001f, 1.001f, 1.001f);
         if (Objects.equals(CONFIG.villagerSkin, "armorer")) {
             this.bindTexture(ARMORER_LOCATION);
         } else if (Objects.equals(CONFIG.villagerSkin, "butcher")) {
@@ -72,7 +71,7 @@ public class ClientVillagerProfessionLayer extends FeatureRenderer<@NotNull Clie
     }
 
     @Override
-    public boolean hasHurtOverlay() {
+    public boolean colorsWhenDamaged() {
         return false;
     }
 }

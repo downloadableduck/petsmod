@@ -2,100 +2,92 @@ package com.jeff.pets.mob.custom.aprilfools;
 
 import com.jeff.pets.mob.AbstractPet;
 import com.jeff.pets.mob.custom.first.Duck;
+import net.minecraft.crafting.recipe.Ingredient;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MovementType;
-import net.minecraft.entity.SpawnType;
-import net.minecraft.entity.ai.goal.EscapeDangerGoal;
-import net.minecraft.entity.ai.goal.FollowOwnerGoal;
-import net.minecraft.entity.ai.goal.LookAroundGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.TemptGoal;
-import net.minecraft.entity.ai.goal.WanderAroundGoal;
-import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ActionResult;
-
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.MoverType;
+import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.data.DataAttribute;
+import net.minecraft.entity.data.DataSerializers;
+import net.minecraft.entity.data.SyncedData;
+import net.minecraft.entity.living.LivingEntity;
+import net.minecraft.entity.living.mob.passive.PassiveEntity;
+import net.minecraft.entity.living.player.PlayerEntity;
+import net.minecraft.entity.particle.ParticleTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.world.World;
-import net.minecraft.world.IWorld;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.unmapped.C_31453009;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import static com.jeff.pets.PetsInitializer.HEAD;
 
 public class Head extends AbstractPet {
-    public static final TrackedData<@NotNull Boolean> IS_SERVER_ENTITY =
-            DataTracker.registerData(Head.class, TrackedDataHandlerRegistry.BOOLEAN);
+    public static final DataAttribute<@NotNull Boolean> IS_SERVER_ENTITY =
+            SyncedData.registerSerializer(Head.class, DataSerializers.BOOLEAN);
 
     public Head(final EntityType<? extends @NotNull Head> type, final World level) {
         super(type, level);
     }
 
     @Override
-    public @Nullable PassiveEntity createChild(@NotNull PassiveEntity AgableMob) {
+    public @Nullable PassiveEntity makeChild(@NotNull PassiveEntity AgableMob) {
         return HEAD.create(world);
     }
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(IS_SERVER_ENTITY, false);
+    protected void registerSyncedData() {
+        super.registerSyncedData();
+        this.syncedData.register(IS_SERVER_ENTITY, false);
     }
 
     public boolean isServerEntity() {
-        return this.dataTracker.get(IS_SERVER_ENTITY);
+        return this.syncedData.get(IS_SERVER_ENTITY);
     }
 
     public void setServerEntity(Boolean value) {
-        this.dataTracker.set(IS_SERVER_ENTITY, value);
+        this.syncedData.set(IS_SERVER_ENTITY, value);
     }
 
-    public void tickMovement() {
-        super.tickMovement();
+    public void mobTick() {
+        super.mobTick();
 
-        Vec3d movement = this.getVelocity();
+        Vec3d movement = this.m_94091929();
         if (!this.onGround && movement.y < (double) 0.0F) {
-            this.setVelocity(movement.multiply(1.0F, 0.6, 1.0F));
+            this.m_28162558(movement.m_17023014(1.0F, 0.6, 1.0F));
         }
     }
 
     @Override
     public boolean isBreedingItem(@NotNull ItemStack itemStack) {
-        return itemStack.isEqualIgnoreDurability(new ItemStack(Items.CAKE));
+        return itemStack.matchesItemIgnoreDamage(new ItemStack(Items.CAKE));
     }
 
     @Override
-    public EntityData initialize(final @NotNull IWorld level, final @NotNull LocalDifficulty difficulty, SpawnType mobSpawnType, final @Nullable EntityData groupData, CompoundTag compoundTag) {
+    public EntityData initialize(final @NotNull WorldAccess level, final @NotNull LocalDifficulty difficulty, C_31453009 mobC_31453009, final @Nullable EntityData groupData, NbtCompound NbtCompound) {
         this.setServerEntity(true);
-        return super.initialize(level, difficulty, mobSpawnType, groupData, compoundTag);
+        return super.initialize(level, difficulty, mobC_31453009, groupData, NbtCompound);
     }
 
     @Override
     public void initGoals() {
 
-        this.goalSelector.add(2, new SwimGoal(this));
-        this.goalSelector.add(3, new EscapeDangerGoal(this, 1.4d));
-        this.goalSelector.add(4, new TemptGoal(this, 1.0f, Ingredient.ofItems(Items.CAKE), false));
+        this.goalSelector.addGoal(2, new SwimGoal(this));
+        this.goalSelector.addGoal(3, new EscapeDangerGoal(this, 1.4d));
+        this.goalSelector.addGoal(4, new TemptGoal(this, 1.0f, Ingredient.of(Items.CAKE), false));
 
-        this.goalSelector.add(5, new LookAroundGoal(this));
-        this.goalSelector.add(6, new WanderAroundGoal(this, 1.0D));
-        this.goalSelector.add(8, new FollowOwnerGoal(this, 1, 2, 10));
+        this.goalSelector.addGoal(5, new LookAroundGoal(this));
+        this.goalSelector.addGoal(6, new WanderAroundGoal(this, 1.0D));
+        this.goalSelector.addGoal(8, new FollowOwnerGoal(this, 1, 2, 10));
     }
 
     @Override
@@ -114,8 +106,8 @@ public class Head extends AbstractPet {
     }
 
     @Override
-    public boolean interactMob(@NotNull PlayerEntity player, @NotNull Hand hand) {
-        ItemStack itemStack = player.getStackInHand(hand);
+    public boolean interactMob(@NotNull PlayerEntity player, @NotNull InteractionHand hand) {
+        ItemStack itemStack = player.getItemInHand(hand);
 
         double x = this.x;
         double y = this.y;
@@ -124,13 +116,13 @@ public class Head extends AbstractPet {
         if (!this.isTamed() && this.isBreedingItem(itemStack)) {
             if (this.random.nextInt(3) == 0) {
                 this.setOwner(player);
-                this.navigation.stop();
+                this.getNavigation().stop();
                 this.world.addParticle(
                         ParticleTypes.HEART,
 
-                        x + (player.getRand().nextFloat() * 0.4 - 0.25),
-                        y + (player.getRand().nextFloat() * 0.4 - 0.25),
-                        z + (player.getRand().nextFloat() * 0.4 - 0.25),
+                        x + (player.getRandom().nextFloat() * 0.4 - 0.25),
+                        y + (player.getRandom().nextFloat() * 0.4 - 0.25),
+                        z + (player.getRandom().nextFloat() * 0.4 - 0.25),
                         0, 5, 0
                 );
             }
@@ -147,9 +139,9 @@ public class Head extends AbstractPet {
         }
 
         if (this.isTamed() && itemStack.isEmpty() && player.isSneaking()) {
-            if (!this.hasVehicle()) {
+            if (!this.isRiding()) {
                 this.startRiding(player);
-                this.lookAtEntity(player, 1f, 1f);
+                this.lookAt(player, 1f, 1f);
                 this.setSitting(true);
             } else {
                 this.stopRiding();
@@ -165,9 +157,9 @@ public class Head extends AbstractPet {
         if (owner != null) {
 
             if (owner.hasPassenger(this)) {
-                if (owner.isInSneakingPose() && owner.jumping) {
+                if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
-                    this.setVelocity(this.getVelocity().add(0, -0.04, 0));
+                    this.m_28162558(this.m_94091929().add(0, -0.04, 0));
                 } else {
                     this.setSitting(true);
                 }
@@ -179,30 +171,30 @@ public class Head extends AbstractPet {
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.distanceTo(owner);
-            float rotation = this.getRotationClient().x;
-            float rotationToOwner = rotation + this.getOwner().getRotationClient().x;
-            float bodyYawDiff = MathHelper.wrapDegrees(this.getHeadYaw() - this.field_6283 /*bodyYaw*/);
+            float rotation = this.getRotation().x;
+            float rotationToOwner = rotation + this.getOwner().getRotation().x;
+            float bodyYawDiff = MathHelper.wrapDegrees(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/);
 
             if (rotationToOwner >= 50) {
-                this.field_6283 /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.sign(bodyYawDiff) * 50.0F);
+                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_06800284 /*sign*/(bodyYawDiff) * 50.0F);
             }
 
             if (distance > 2.0) {
 
-                this.limbDistance = (0.5F);
+                this.walkAnimationSpeed = (0.5F);
 
-                Vec3d targetPos = owner.getPos();
+                Vec3d targetPos = new Vec3d(owner.x, owner.y, owner.z);
                 Vec3d dir = targetPos.subtract(this.getPos()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setHeadYaw(this.getYRot());
-                this.field_6283 /*bodyYaw*/ = MathHelper.method_20306(this.field_6283 /*bodyYaw*/, this.headYaw, 50.0f);
+                this.bodyYaw /*bodyYaw*/ = MathHelper.m_82141949(this.bodyYaw /*bodyYaw*/, this.headYaw, 50.0f);
 
                 double speed = 0.15;
-                this.setVelocity(dir.x * speed, this.getVelocity().y, dir.z * speed);
+                this.m_28162558(new Vec3d(dir.x * speed, this.m_94091929().y, dir.z * speed));
             } else {
-                this.lookAtEntity(owner, 5, 0);
-                this.setVelocity(this.getVelocity().multiply(0.8, 1.0, 0.8));
+                this.lookAt(owner, 5, 0);
+                this.m_28162558(this.m_94091929().m_17023014(0.8, 1.0, 0.8));
             }
 
             int yHeightToOwner = (int) (owner.y - this.y);
@@ -213,7 +205,7 @@ public class Head extends AbstractPet {
             }
 
             if (yHeightToOwner > -1) {
-                this.setVelocity(this.getVelocity().add(0, -0.01, 0));
+                this.m_28162558(this.m_94091929().add(0, -0.01, 0));
                 // t/his.processFlappingMovement();
             }
 
@@ -224,20 +216,20 @@ public class Head extends AbstractPet {
             this.setHeadYaw(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.field_6283 /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.sign(bodyYawDiff) * 50);
+                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_06800284 /*sign*/(bodyYawDiff) * 50);
             } else {
-                this.field_6283 /*bodyYaw*/ = MathHelper.method_20306(this.field_6283 /*bodyYaw*/, this.getHeadYaw(), 10);
+                this.bodyYaw /*bodyYaw*/ = MathHelper.m_82141949(this.bodyYaw /*bodyYaw*/, this.getHeadYaw(), 10);
             }
 
-            this.move(MovementType.SELF, this.getVelocity());
+            this.move(MoverType.SELF, this.m_94091929());
 
             if (!this.onGround) {
-                this.setVelocity(this.getVelocity().add(0, -0.04, 0));
+                this.m_28162558(this.m_94091929().add(0, -0.04, 0));
             }
         }
         if (owner != null) {
             if (distanceTo(owner) >= 10) {
-                this.requestTeleport(owner.x, owner.y, owner.z);
+                this.teleport(owner.x, owner.y, owner.z);
             }
         }
 
@@ -252,21 +244,21 @@ public class Head extends AbstractPet {
     }
 
     @Override
-    public void onTrackedDataSet(@NotNull TrackedData<?> key) {
+    public void onDataValueChanged(@NotNull DataAttribute<?> key) {
         if (!this.world.isClient()) {
-            super.onTrackedDataSet(key);
+            super.onDataValueChanged(key);
         }
     }
 
     @Override
-    public void writeCustomDataToTag(@NotNull CompoundTag output) {
-        super.writeCustomDataToTag(output);
+    public void writeCustomNbt(@NotNull NbtCompound output) {
+        super.writeCustomNbt(output);
         output.putBoolean("isServerEntity", true);
     }
 
     @Override
-    public void readCustomDataFromTag(@NotNull CompoundTag input) {
-        super.readCustomDataFromTag(input);
+    public void readCustomNbt(@NotNull NbtCompound input) {
+        super.readCustomNbt(input);
         this.setServerEntity(input.getBoolean("isServerEntity"));
     }
 }

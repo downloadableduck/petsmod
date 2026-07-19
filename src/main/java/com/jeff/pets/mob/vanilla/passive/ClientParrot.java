@@ -1,16 +1,15 @@
 package com.jeff.pets.mob.vanilla.passive;
 
-import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.living.mob.passive.animal.tameable.TameableEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
-@CanFly
+
 public class ClientParrot extends FlyingPet {
 
     public float flap;
@@ -41,7 +40,7 @@ public class ClientParrot extends FlyingPet {
     }
 
     @Override
-    public void tickMovement() {
+    public void mobTick() {
         this.oFlap = this.flap;
         this.oFlapSpeed = this.flapSpeed;
         this.flapSpeed += (this.onGround ? -1.0F : 4.0F) * 0.3F;

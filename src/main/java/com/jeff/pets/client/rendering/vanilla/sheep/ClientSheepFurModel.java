@@ -1,40 +1,40 @@
 package com.jeff.pets.client.rendering.vanilla.sheep;
 
 import com.jeff.pets.mob.vanilla.passive.ClientSheep;
-import net.minecraft.client.model.Cuboid;
-import net.minecraft.client.render.entity.model.QuadrupedEntityModel;
+import net.minecraft.client.render.model.ModelPart;
+import net.minecraft.client.render.model.entity.QuadrupedModel;
 
-public class ClientSheepFurModel extends QuadrupedEntityModel<ClientSheep> {
+public class ClientSheepFurModel extends QuadrupedModel<ClientSheep> {
     private float headXRot;
 
     public ClientSheepFurModel() {
         super(12, 0.0F);
-        this.head = new Cuboid(this, 0, 0);
+        this.head = new ModelPart(this, 0, 0);
         this.head.addBox(-3.0F, -4.0F, -4.0F, 6, 6, 6, 0.6F);
-        this.head.setRotationPoint(0.0F, 6.0F, -8.0F);
-        this.body = new Cuboid(this, 28, 8);
+        this.head.setPos(0.0F, 6.0F, -8.0F);
+        this.body = new ModelPart(this, 28, 8);
         this.body.addBox(-4.0F, -10.0F, -7.0F, 8, 16, 6, 1.75F);
-        this.body.setRotationPoint(0.0F, 5.0F, 2.0F);
+        this.body.setPos(0.0F, 5.0F, 2.0F);
         float f = 0.5F;
-        this.leg1 = new Cuboid(this, 0, 16);
-        this.leg1.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
-        this.leg1.setRotationPoint(-3.0F, 12.0F, 7.0F);
-        this.leg2 = new Cuboid(this, 0, 16);
-        this.leg2.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
-        this.leg2.setRotationPoint(3.0F, 12.0F, 7.0F);
-        this.leg3 = new Cuboid(this, 0, 16);
-        this.leg3.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
-        this.leg3.setRotationPoint(-3.0F, 12.0F, -5.0F);
-        this.leg4 = new Cuboid(this, 0, 16);
-        this.leg4.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
-        this.leg4.setRotationPoint(3.0F, 12.0F, -5.0F);
+        this.backRightLeg = new ModelPart(this, 0, 16);
+        this.backRightLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
+        this.backRightLeg.setPos(-3.0F, 12.0F, 7.0F);
+        this.backLeftLeg = new ModelPart(this, 0, 16);
+        this.backLeftLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
+        this.backLeftLeg.setPos(3.0F, 12.0F, 7.0F);
+        this.frontRightLeg = new ModelPart(this, 0, 16);
+        this.frontRightLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
+        this.frontRightLeg.setPos(-3.0F, 12.0F, -5.0F);
+        this.frontLeftLeg = new ModelPart(this, 0, 16);
+        this.frontLeftLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
+        this.frontLeftLeg.setPos(3.0F, 12.0F, -5.0F);
     }
 
-    public void animateModel(ClientSheep sheep, float f, float g, float h) {
-        super.animateModel(sheep, f, g, h);
+    public void prepare(ClientSheep sheep, float f, float g, float h) {
+        super.prepare(sheep, f, g, h);
     }
 
-    public void setAngles(ClientSheep sheep, float f, float g, float h, float i, float j, float s) {
-        super.setAngles(sheep, f, g, h, i, j, s);
+    public void setup(ClientSheep sheep, float f, float g, float h, float i, float j, float s) {
+        super.setup(sheep, f, g, h, i, j, s);
     }
 }

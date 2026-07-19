@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.llama;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientLlama;
-import net.minecraft.util.Identifier;
+import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -11,19 +11,19 @@ public class ClientLlamaRenderer extends PetRenderer<@NotNull ClientLlama, @NotN
 
     public String llamaTexturePath;
 
-    public ClientLlamaRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
+    public ClientLlamaRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
         super(context, new ClientLlamaModel(0), 0.75F);
     }
 
     @Override
-    protected void scale(ClientLlama state, float f) {
+    protected void applyScale(ClientLlama state, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull Identifier getTexture(ClientLlama livingEntityRenderState) {
+    public @NotNull Identifier getTextureLocation(ClientLlama livingEntityRenderState) {
         if (CONFIG.llamaSkin.equals("brown")) {
             llamaTexturePath = "textures/entity/llama/brown.png";
         } else if (CONFIG.llamaSkin.equals("creamy")) {

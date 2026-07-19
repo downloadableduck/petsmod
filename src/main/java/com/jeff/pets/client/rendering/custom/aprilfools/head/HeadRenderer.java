@@ -6,9 +6,9 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import net.minecraft.block.entity.SkullBlockEntity;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.DefaultSkinHelper;
-import net.minecraft.util.Identifier;
+import net.minecraft.resource.Identifier;
 import net.minecraft.util.UserCache;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,7 +23,7 @@ public class HeadRenderer extends PetRenderer<@NotNull Head, @NotNull HeadModel>
 
     private final Map<String, GameProfile> PROFILLES = new ConcurrentHashMap<>();
 
-    public HeadRenderer(final net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
+    public HeadRenderer(final net.minecraft.client.render.entity.EntityRenderDispatcher context) {
         super(context, new HeadModel(), 0.3F);
     }
 
@@ -35,22 +35,22 @@ public class HeadRenderer extends PetRenderer<@NotNull Head, @NotNull HeadModel>
     }
 
     @Override
-    public @NotNull Identifier getTexture(final Head state) {
-        MinecraftClient minecraft = MinecraftClient.getInstance();
+    public @NotNull Identifier getTextureLocation(final Head state) {
+        Minecraft minecraft = Minecraft.getInstance();
         try {
             Optional<GameProfile> gameProfile = fetchGameProfile(CONFIG.headSkin).get();
             if (!PROFILLES.containsKey(CONFIG.headSkin)) {
                 PROFILLES.put(CONFIG.headSkin, gameProfile.get());
-                MinecraftSessionService service = MinecraftClient.getInstance().getSessionService();
+                MinecraftSessionService service = Minecraft.getInstance().getSessionService();
                 service.fillProfileProperties(gameProfile.get(), true);
             }
-            Map<MinecraftProfileTexture.Type, MinecraftProfileTexture> map = minecraft.getSkinProvider().getTextures(gameProfile.get());
+            Map<MinecraftProfileTexture.Type, MinecraftProfileTexture> map = minecraft.getSkinProvider().getTextureLocations(gameProfile.get());
             if (map.containsKey(MinecraftProfileTexture.Type.SKIN)) {
                 return minecraft.getSkinProvider().loadSkin(map.get(MinecraftProfileTexture.Type.SKIN), MinecraftProfileTexture.Type.SKIN);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return DefaultSkinHelper.getTexture();
+        return DefaultSkinHelper.getTextureLocation();
     }
 }

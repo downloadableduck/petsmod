@@ -2,15 +2,15 @@ package com.jeff.pets.client.rendering.vanilla.villager;
 
 import com.jeff.pets.mob.vanilla.passive.ClientVillager;
 import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.client.render.entity.feature.FeatureRenderer;
-import net.minecraft.client.render.entity.feature.FeatureRendererContext;
-import net.minecraft.client.render.entity.model.VillagerResemblingModel;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.render.entity.layer.EntityRenderLayer;
+import net.minecraft.client.render.entity.layer.EntityRenderLayerParent;
+import net.minecraft.client.render.model.entity.VillagerModel;
+import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientVillagerDefaultLayer extends FeatureRenderer<@NotNull ClientVillager, @NotNull VillagerResemblingModel<ClientVillager>> {
+public class ClientVillagerDefaultLayer extends EntityRenderLayer<@NotNull ClientVillager, @NotNull VillagerModel<ClientVillager>> {
 
-    public ClientVillagerDefaultLayer(FeatureRendererContext<@NotNull ClientVillager, @NotNull VillagerResemblingModel<ClientVillager>> renderLayerParent) {
+    public ClientVillagerDefaultLayer(EntityRenderLayerParent<@NotNull ClientVillager, @NotNull VillagerModel<ClientVillager>> renderLayerParent) {
         super(renderLayerParent);
     }
 
@@ -23,7 +23,7 @@ public class ClientVillagerDefaultLayer extends FeatureRenderer<@NotNull ClientV
     }
 
     @Override
-    public boolean hasHurtOverlay() {
+    public boolean colorsWhenDamaged() {
         return false;
     }
 }

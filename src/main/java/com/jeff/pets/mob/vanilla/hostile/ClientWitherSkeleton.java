@@ -1,12 +1,12 @@
 package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.GroundPet;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.living.LivingEntity;
+import net.minecraft.entity.living.mob.monster.RangedAttackMob;
+import net.minecraft.entity.living.mob.passive.animal.tameable.TameableEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,7 +33,7 @@ public class ClientWitherSkeleton extends GroundPet implements RangedAttackMob {
     }
 
     @Override
-    public void attack(LivingEntity livingEntity, float f) {
+    public void doRangedAttack(LivingEntity livingEntity, float f) {
 
     }
 }

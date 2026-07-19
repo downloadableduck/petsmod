@@ -2,27 +2,27 @@ package com.jeff.pets.client.rendering.vanilla.sheep;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientSheep;
-import net.minecraft.util.Identifier;
+import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientSheepRenderer extends PetRenderer<@NotNull ClientSheep, @NotNull ClientSheepModel> {
 
-    public ClientSheepRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.fabricmc.fabric.api.client.render.EntityRendererRegistry.Context context2) {
+    public ClientSheepRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
         super(context, new ClientSheepModel(), 0.7F);
-        this.addFeature(new ClientSheepWoolLayer(this));
+        this.addLayer(new ClientSheepWoolLayer(this));
     }
 
     @Override
-    protected void scale(@NotNull ClientSheep livingEntityRenderState, float f) {
+    protected void applyScale(@NotNull ClientSheep livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull Identifier getTexture(@NotNull ClientSheep livingEntityRenderState) {
+    public @NotNull Identifier getTextureLocation(@NotNull ClientSheep livingEntityRenderState) {
         return new Identifier("minecraft", "textures/entity/sheep/sheep.png");
     }
 
