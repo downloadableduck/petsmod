@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientVexRenderer extends PetRenderer<@NotNull ClientVex, @NotNull ClientVexModel> {
 
-    public ClientVexRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientVexRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientVexModel(), 0.75f);
     }
 

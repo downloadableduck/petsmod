@@ -9,7 +9,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientShulkerRenderer extends PetRenderer<@NotNull ClientShulker, @NotNull ClientShulkerModel> {
 
-    public ClientShulkerRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientShulkerRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientShulkerModel(), 0.75f);
     }
 

@@ -1,6 +1,6 @@
 package com.jeff.pets.client.enums;
 
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.text.LiteralText;
 
 public enum AxolotlSkins implements NameableEnum {
     blue,
@@ -10,7 +10,7 @@ public enum AxolotlSkins implements NameableEnum {
     pink;
 
     @Override
-    public TextComponent getDisplayName() {
-        return new TextComponent(String.valueOf(this).replace("_", " "));
+    public LiteralText getDisplayName() {
+        return new LiteralText(String.valueOf(this).replace("_", " "));
     }
 }

@@ -11,7 +11,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class PenguinRenderer extends PetRenderer<@NotNull Penguin, @NotNull PenguinModel> {
 
-    public PenguinRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public PenguinRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new PenguinModel(), 0.5f);
     }
 
@@ -28,9 +28,9 @@ public class PenguinRenderer extends PetRenderer<@NotNull Penguin, @NotNull Peng
     }
 
     @Override
-    public void render(final Penguin penguin, float f, float partialTicks, float h, float i, float j, float k) {
-        penguin.flap = MathHelper.m_23874002 /*lerp*/(partialTicks, penguin.oFlap, penguin.flap);
-        penguin.flapSpeed = MathHelper.m_23874002 /*lerp*/(partialTicks, penguin.oFlapSpeed, penguin.flapSpeed);
-        super.render(penguin, f, partialTicks, h, i, j, k);
+    public void renderModel(final Penguin penguin, float f, float partialTicks, float h, float i, float j, float k) {
+        penguin.flap = (float) MathHelper.m_23874002 /*lerp*/(partialTicks, penguin.oFlap, penguin.flap);
+        penguin.flapSpeed = (float) MathHelper.m_23874002 /*lerp*/(partialTicks, penguin.oFlapSpeed, penguin.flapSpeed);
+        super.renderModel(penguin, f, partialTicks, h, i, j, k);
     }
 }

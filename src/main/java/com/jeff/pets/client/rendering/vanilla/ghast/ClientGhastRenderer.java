@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientGhastRenderer extends PetRenderer<@NotNull ClientGhast, @NotNull GhastModel<ClientGhast>> {
 
-    public ClientGhastRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientGhastRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new GhastModel<>(), 0.75f);
     }
 

@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientSnowGolemRenderer extends PetRenderer<@NotNull ClientSnowGolem, @NotNull SnowGolemModel<ClientSnowGolem>> {
 
-    public ClientSnowGolemRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientSnowGolemRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new SnowGolemModel<>(), 0.5F);
         this.addLayer(new ClientSnowGolemHeadLayer(this, Minecraft.getInstance().getBlockRenderDispatcher(), Minecraft.getInstance().getItemRenderer()));
     }

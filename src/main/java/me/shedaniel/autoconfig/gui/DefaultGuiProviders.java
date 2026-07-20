@@ -32,10 +32,8 @@ import me.shedaniel.clothconfig2.gui.entries.SelectionListEntry;
 import me.shedaniel.clothconfig2.impl.builders.DropdownMenuBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.Element;
+import net.minecraft.client.gui.GuiEventListener;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.lang.reflect.Array;
@@ -265,7 +263,7 @@ public class DefaultGuiProviders {
                         }
 
                         @Override
-                        public List<? extends Element> children() {
+                        public List<? extends GuiEventListener> children() {
                             return ImmutableList.of();
                         }
                     }
@@ -528,7 +526,7 @@ public class DefaultGuiProviders {
                         }
 
                         @Override
-                        public List<? extends Element> children() {
+                        public List<? extends GuiEventListener> children() {
                             return ImmutableList.of();
                         }
                     }

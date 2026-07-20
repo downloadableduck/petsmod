@@ -26,6 +26,6 @@ public class ClientSnowGolem extends GroundPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_SNOW_GOLEM_AMBIENT;
+        return SoundEvents.ENTITY_SNOWMAN_AMBIENT;
     }
 }

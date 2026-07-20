@@ -40,9 +40,7 @@
     "minecraft": [
       "~1.14"
     ],
-    "java": "*",
-    "cloth-config2": "*",
-    "fabric": "*"
+    "java": "*"
   },
   "custom": {
     "modmenu": {

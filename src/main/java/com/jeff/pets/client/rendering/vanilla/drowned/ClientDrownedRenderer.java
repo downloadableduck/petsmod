@@ -9,9 +9,9 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientDrownedRenderer extends PetRenderer<@NotNull ClientDrowned, @NotNull ClientDrownedModel> {
 
-    public ClientDrownedRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientDrownedRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientDrownedModel(0.0F, 0.0F, 64, 64), 0.75f);
-        this.addLayer(new ClientDrownedOuterLayer(this, context));
+        this.addLayer(new ClientDrownedOuterLayer(this, context, context2));
     }
 
     @Override

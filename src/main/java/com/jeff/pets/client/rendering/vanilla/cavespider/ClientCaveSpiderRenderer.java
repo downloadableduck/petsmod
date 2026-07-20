@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientCaveSpiderRenderer extends PetRenderer<@NotNull ClientCaveSpider, @NotNull SpiderModel<ClientCaveSpider>> {
 
-    public ClientCaveSpiderRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientCaveSpiderRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new SpiderModel<>(), 0.75f);
     }
 

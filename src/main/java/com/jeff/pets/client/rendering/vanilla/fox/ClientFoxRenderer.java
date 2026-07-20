@@ -12,7 +12,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientFoxRenderer extends PetRenderer<@NotNull ClientFox, @NotNull ClientFoxModel> {
     public String foxTexturePath;
 
-    public ClientFoxRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientFoxRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientFoxModel(), 0.75f);
     }
 
@@ -36,8 +36,8 @@ public class ClientFoxRenderer extends PetRenderer<@NotNull ClientFox, @NotNull 
     }
 
     @Override
-    public void render(ClientFox fox, float f, float g, float h, float i, float j, float k) {
-        super.render(fox, f, g, h, i, j, k);
+    public void renderModel(ClientFox fox, float f, float g, float h, float i, float j, float k) {
+        super.renderModel(fox, f, g, h, i, j, k);
         //fox.setPose(fox.isPassenger() ? Pose.SLEEPING  : fox.getPose());
     }
 }

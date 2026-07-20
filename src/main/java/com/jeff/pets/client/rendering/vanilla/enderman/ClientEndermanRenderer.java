@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientEndermanRenderer extends PetRenderer<@NotNull ClientEnderman, @NotNull EndermanModel<ClientEnderman>> {
 
-    public ClientEndermanRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientEndermanRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new EndermanModel<>(0), 0.5f);
         this.addLayer(new EndermanEyesLayer<>(this));
     }

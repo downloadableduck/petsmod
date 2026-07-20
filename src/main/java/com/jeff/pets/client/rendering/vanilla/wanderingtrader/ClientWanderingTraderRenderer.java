@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientWanderingTraderRenderer extends PetRenderer<@NotNull ClientWanderingTrader, @NotNull VillagerModel<ClientWanderingTrader>> {
 
-    public ClientWanderingTraderRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientWanderingTraderRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new VillagerModel<>(0), 0.5F);
     }
 

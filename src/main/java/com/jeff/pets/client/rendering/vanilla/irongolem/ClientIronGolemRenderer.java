@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientIronGolemRenderer extends PetRenderer<@NotNull ClientIronGolem, @NotNull ClientIronGolemModel<ClientIronGolem>> {
 
-    public ClientIronGolemRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientIronGolemRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientIronGolemModel<>(), 0.75f);
     }
 

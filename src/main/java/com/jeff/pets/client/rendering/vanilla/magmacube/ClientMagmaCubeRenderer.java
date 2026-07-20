@@ -10,7 +10,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientMagmaCubeRenderer extends PetRenderer<@NotNull ClientMagmaCube, @NotNull SlimeModel<ClientMagmaCube>> {
 
-    public ClientMagmaCubeRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientMagmaCubeRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new SlimeModel<>(0), 0.75f);
     }
 

@@ -25,6 +25,6 @@ public class ClientEvoker extends GroundPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_EVOKER_AMBIENT;
+        return SoundEvents.ENTITY_EVOCATION_ILLAGER_AMBIENT;
     }
 }

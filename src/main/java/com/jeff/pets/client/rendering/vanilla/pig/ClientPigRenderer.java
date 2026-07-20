@@ -10,7 +10,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientPigRenderer extends PetRenderer<@NotNull ClientPig, @NotNull ClientPigModel> {
     public String pigTexturePath;
 
-    public ClientPigRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientPigRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientPigModel(), 0.7F);
     }
 

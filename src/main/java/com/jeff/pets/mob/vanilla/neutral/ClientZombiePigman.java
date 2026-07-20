@@ -25,6 +25,6 @@ public class ClientZombiePigman extends GroundPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_ZOMBIE_PIGMAN_AMBIENT;
+        return SoundEvents.ENTITY_ZOMBIE_PIG_AMBIENT;
     }
 }

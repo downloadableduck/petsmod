@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientSalmonRenderer extends PetRenderer<@NotNull ClientSalmon, @NotNull SalmonModel<ClientSalmon>> {
 
-    public ClientSalmonRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientSalmonRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new SalmonModel<>(), 0.4F);
     }
 

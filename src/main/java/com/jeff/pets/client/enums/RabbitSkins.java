@@ -12,7 +12,7 @@ public enum RabbitSkins implements NameableEnum {
     white;
 
     @Override
-    public net.minecraft.network.chat.TextComponent getDisplayName() {
-        return new net.minecraft.network.chat.TextComponent(String.valueOf(this).replace("_", " "));
+    public net.minecraft.text.LiteralText getDisplayName() {
+        return new net.minecraft.text.LiteralText(String.valueOf(this).replace("_", " "));
     }
 }

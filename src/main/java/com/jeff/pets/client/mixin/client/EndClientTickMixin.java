@@ -14,7 +14,7 @@ public class EndClientTickMixin {
     @Inject(at = @At("TAIL"), method = "tick")
     private void onEndTick(CallbackInfo ci) {
         Central.createTickWatcher();
-        if (PetsClientInitializer.keyMapping.wasPressed()) {
+        if (PetsClientInitializer.keyMapping.consumeClick()) {
             Minecraft.getInstance().openScreen(PetsConfigScreen.getInstance().getModConfigScreenFactory());
         }
     }

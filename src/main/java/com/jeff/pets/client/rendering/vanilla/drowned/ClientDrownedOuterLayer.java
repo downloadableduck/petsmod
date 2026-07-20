@@ -11,7 +11,7 @@ public class ClientDrownedOuterLayer extends EntityRenderLayer<ClientDrowned, Cl
 
     private final ClientDrownedModel drownedModel;
 
-    public ClientDrownedOuterLayer(EntityRenderLayerParent<@NotNull ClientDrowned, ClientDrownedModel> renderLayerParent, net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientDrownedOuterLayer(EntityRenderLayerParent<@NotNull ClientDrowned, ClientDrownedModel> renderLayerParent, net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(renderLayerParent);
         this.drownedModel = new ClientDrownedModel(0.25F, 0.0F, 64, 64);
     }

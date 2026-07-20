@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientBlazeRenderer extends PetRenderer<@NotNull ClientBlaze, @NotNull BlazeModel<ClientBlaze>> {
 
-    public ClientBlazeRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientBlazeRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new BlazeModel<>(), 0.75f);
     }
 

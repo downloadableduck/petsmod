@@ -24,7 +24,7 @@ public class ClientDrownedModel extends HumanoidModel<ClientDrowned> {
     @Override
     public void setup(@NotNull ClientDrowned state, float f, float g, float h, float i, float k, float s) {
         super.setup(state, f, g, h, i, k, s);
-        AnimationUtils.animateZombieArms(this.leftArm, this.rightArm, true, this.handSwingProgress, h);
+        AnimationUtils.animateZombieArms(this.leftArm, this.rightArm, true, this.attackAnimationProgress, h);
     }
 
     public void prepare(ClientDrowned zombie, float f, float g, float h) {

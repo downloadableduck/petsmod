@@ -10,7 +10,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientHorseRenderer extends PetRenderer<@NotNull ClientHorse, @NotNull ClientHorseModel<ClientHorse>> {
     public String horseTextureLocation;
 
-    public ClientHorseRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientHorseRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientHorseModel<>(0), 0.5f);
     }
 

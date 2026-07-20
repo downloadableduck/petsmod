@@ -14,7 +14,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class DuckRenderer extends PetRenderer<@NotNull Duck, @NotNull DuckModel> {
     public String duckTexturePath;
 
-    public DuckRenderer(final net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public DuckRenderer(final net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new DuckModel(), 0.3F);
     }
 
@@ -26,10 +26,10 @@ public class DuckRenderer extends PetRenderer<@NotNull Duck, @NotNull DuckModel>
     }
 
     @Override
-    public void render(final Duck duck, float f, final float partialTicks, float u, float g, float h, float i) {
-        duck.flap = MathHelper.m_23874002 /*lerp*/(partialTicks, duck.oFlap, duck.flap);
-        duck.flapSpeed = MathHelper.m_23874002 /*lerp*/(partialTicks, duck.oFlapSpeed, duck.flapSpeed);
-        super.render(duck, f, partialTicks, u, g, h, i);
+    public void renderModel(final Duck duck, float f, final float partialTicks, float u, float g, float h, float i) {
+        duck.flap = (float) MathHelper.m_23874002 /*lerp*/(partialTicks, duck.oFlap, duck.flap);
+        duck.flapSpeed = (float) MathHelper.m_23874002 /*lerp*/(partialTicks, duck.oFlapSpeed, duck.flapSpeed);
+        super.renderModel(duck, f, partialTicks, u, g, h, i);
     }
 
     @Override

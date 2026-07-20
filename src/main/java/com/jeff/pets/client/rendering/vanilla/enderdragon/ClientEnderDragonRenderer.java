@@ -10,7 +10,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientEnderDragonRenderer extends PetRenderer<@NotNull ClientEnderDragon, ClientEnderDragonModel> {
 
-    public ClientEnderDragonRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientEnderDragonRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientEnderDragonModel(0), 0.75f);
     }
 

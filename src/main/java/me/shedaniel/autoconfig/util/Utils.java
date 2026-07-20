@@ -19,7 +19,7 @@
 
 package me.shedaniel.autoconfig.util;
 
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -37,7 +37,7 @@ public class Utils {
     }
 
     public static Path getConfigFolder() {
-        return new File(MinecraftClient.getInstance().runDirectory.getAbsolutePath() + "/config/").toPath();
+        return new File(Minecraft.getInstance().gameDir.getAbsolutePath() + "/config/").toPath();
     }
 
     public static <V> V constructUnsafely(Class<V> cls) {

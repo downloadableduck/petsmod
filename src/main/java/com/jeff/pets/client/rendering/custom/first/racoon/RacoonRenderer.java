@@ -1,7 +1,9 @@
 package com.jeff.pets.client.rendering.custom.first.racoon;
 
+import com.jeff.pets.client.PetsClientInitializer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Racoon;
-import net.minecraft.client.render.entity.MobEntityRenderer;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
@@ -10,12 +12,11 @@ import java.util.Objects;
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class RacoonRenderer extends MobEntityRenderer<@NotNull Racoon, @NotNull RacoonModel> {
+public class RacoonRenderer extends PetRenderer<@NotNull Racoon, @NotNull RacoonModel> {
 
-    public RacoonRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public RacoonRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new RacoonModel(), 0.75f);
     }
-
 
     protected void applyScale(@NotNull Racoon livingEntityRenderState, float f) {
         if ((CONFIG.isBaby && !livingEntityRenderState.isServerEntity()) || (livingEntityRenderState.isBaby() && livingEntityRenderState.isServerEntity())) {
@@ -41,8 +42,8 @@ public class RacoonRenderer extends MobEntityRenderer<@NotNull Racoon, @NotNull 
     }
 
     @Override
-    public void render(Racoon racoon, float g, float f, float u, float h, float m, float i) {
-        super.render(racoon, g, f, u, h, m, i);
+    public void renderModel(Racoon racoon, float g, float f, float u, float h, float m, float i) {
+        super.renderModel(racoon, g, f, u, h, m, i);
         racoon.setServerEntity(racoon.getSyncedData().get(Racoon.IS_SERVER_ENTITY));
     }
 }

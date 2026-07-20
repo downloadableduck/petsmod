@@ -3,5 +3,5 @@ mutable field net/minecraft/client/resource/SplashTextResourceSupplier RESOURCE_
 accessible field net/minecraft/client/resource/SplashTextResourceSupplier RESOURCE_ID Lnet/minecraft/util/Identifier;
 accessible field net/minecraft/entity/living/LivingEntity jumping Z
 extendable method net/minecraft/entity/LivingEntity canBreatheInWater ()Z
-accessible method net/minecraft/client/world/ClientWorld addEntityPrivate (ILnet/minecraft/entity/Entity;)V
-accessible field net/minecraft/block/entity/SkullBlockEntity userCache Lnet/minecraft/util/UserCache;
+accessible method net/minecraft/client/world/ClientWorld m_99979799 (ILnet/minecraft/entity/Entity;)V
+accessible field net/minecraft/block/entity/SkullBlockEntity playerCache Lnet/minecraft/server/GameProfileCache;

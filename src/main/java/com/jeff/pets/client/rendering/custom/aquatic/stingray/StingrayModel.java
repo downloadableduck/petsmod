@@ -56,7 +56,7 @@ public class StingrayModel extends PetModel<@NotNull Stingray> {
     @Override
     public void setup(Stingray state, float f, float g, float m, float k, float p, float s) {
         float partialTick = m;
-        float flapTime = MathHelper.m_23874002 /*lerp*/(partialTick, state.oFlap, state.flap);
+        float flapTime = (float) MathHelper.m_23874002 /*lerp*/(partialTick, state.oFlap, state.flap);
         if (state.walkAnimationSpeed > 0) {
             float anim = flapTime * 7.448451F * ((float) Math.PI / 180F);
             this.left_fin.rotationZ = MathHelper.cos(anim) * 16.0F * ((float) Math.PI / 180F);

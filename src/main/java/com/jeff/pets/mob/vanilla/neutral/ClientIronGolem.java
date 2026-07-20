@@ -25,6 +25,6 @@ public class ClientIronGolem extends GroundPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_IRON_GOLEM_STEP;
+        return SoundEvents.ENTITY_IRONGOLEM_STEP;
     }
 }

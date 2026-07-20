@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientElderGuardianRenderer extends PetRenderer<@NotNull ClientElderGuardian, @NotNull ClientGuardianModel<ClientElderGuardian>> {
 
-    public ClientElderGuardianRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientElderGuardianRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientGuardianModel<>(), 0.75f);
     }
 

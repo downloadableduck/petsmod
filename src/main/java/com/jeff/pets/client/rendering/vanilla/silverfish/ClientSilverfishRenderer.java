@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientSilverfishRenderer extends PetRenderer<@NotNull ClientSilverfish, @NotNull SilverfishModel<ClientSilverfish>> {
 
-    public ClientSilverfishRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientSilverfishRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new SilverfishModel<>(), 0.75f);
     }
 

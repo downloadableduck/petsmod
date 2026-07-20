@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientEvokerRenderer extends PetRenderer<@NotNull ClientEvoker, @NotNull ClientEvokerModel<ClientEvoker>> {
 
-    public ClientEvokerRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientEvokerRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientEvokerModel(), 0.75f);
     }
 

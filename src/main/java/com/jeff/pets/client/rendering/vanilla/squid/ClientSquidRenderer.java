@@ -13,7 +13,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientSquidRenderer extends PetRenderer<@NotNull ClientSquid, @NotNull SquidModel<ClientSquid>> {
     String squidTexturePath;
 
-    public ClientSquidRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientSquidRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new SquidModel<>(), 0.7F);
     }
 

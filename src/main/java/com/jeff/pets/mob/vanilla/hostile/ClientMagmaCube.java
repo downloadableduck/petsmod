@@ -26,6 +26,6 @@ public class ClientMagmaCube extends SlimeLikePet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_MAGMA_CUBE_JUMP;
+        return SoundEvents.ENTITY_MAGMACUBE_JUMP;
     }
 }

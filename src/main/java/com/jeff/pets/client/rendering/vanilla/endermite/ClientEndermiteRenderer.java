@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientEndermiteRenderer extends PetRenderer<@NotNull ClientEndermite, @NotNull EndermiteModel<ClientEndermite>> {
 
-    public ClientEndermiteRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientEndermiteRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new EndermiteModel<>(), 0.75f);
     }
 

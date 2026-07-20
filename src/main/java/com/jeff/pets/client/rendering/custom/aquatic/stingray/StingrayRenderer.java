@@ -9,7 +9,7 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
 
 public class StingrayRenderer extends PetRenderer<Stingray, StingrayModel> {
 
-    public StingrayRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public StingrayRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new StingrayModel(), 0.75f);
     }
 
@@ -19,8 +19,8 @@ public class StingrayRenderer extends PetRenderer<Stingray, StingrayModel> {
     }
 
     @Override
-    public void render(Stingray stingray, float f, float partialTick, float g, float h, float i, float j) {
-        super.render(stingray, f, partialTick, g, h, i, j);
+    public void renderModel(Stingray stingray, float f, float partialTick, float g, float h, float i, float j) {
+        super.renderModel(stingray, f, partialTick, g, h, i, j);
         //stingray.flapTime = stingray.flap + state.ageInTicks;
     }
 }

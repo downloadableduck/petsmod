@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientPhantomRenderer extends PetRenderer<@NotNull ClientPhantom, @NotNull C_58555521<ClientPhantom>> {
 
-    public ClientPhantomRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientPhantomRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new C_58555521<>(), 0.75f);
         this.addLayer(new C_15553557(this));
     }

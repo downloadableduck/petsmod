@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientWitchRenderer extends PetRenderer<@NotNull ClientWitch, @NotNull WitchModel<ClientWitch>> {
 
-    public ClientWitchRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientWitchRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new WitchModel<>(0), 0.75f);
     }
 

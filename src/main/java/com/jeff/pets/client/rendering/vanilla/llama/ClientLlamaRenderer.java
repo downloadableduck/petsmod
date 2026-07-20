@@ -11,7 +11,7 @@ public class ClientLlamaRenderer extends PetRenderer<@NotNull ClientLlama, @NotN
 
     public String llamaTexturePath;
 
-    public ClientLlamaRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientLlamaRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientLlamaModel(0), 0.75F);
     }
 

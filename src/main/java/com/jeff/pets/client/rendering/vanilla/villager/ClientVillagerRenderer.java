@@ -10,7 +10,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientVillagerRenderer extends PetRenderer<@NotNull ClientVillager, VillagerModel<ClientVillager>> {
 
-    public ClientVillagerRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientVillagerRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new VillagerModel<>(0), 0.5F);
         this.addLayer(new ClientVillagerDefaultLayer(this));
         this.addLayer(new ClientVillagerProfessionLayer(this));

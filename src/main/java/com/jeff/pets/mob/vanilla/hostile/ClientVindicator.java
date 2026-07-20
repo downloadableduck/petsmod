@@ -26,6 +26,6 @@ public class ClientVindicator extends GroundPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_VINDICATOR_AMBIENT;
+        return SoundEvents.ENTITY_VINDICATION_ILLAGER_AMBIENT;
     }
 }

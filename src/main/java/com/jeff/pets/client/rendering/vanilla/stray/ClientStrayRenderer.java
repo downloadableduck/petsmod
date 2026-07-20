@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientStrayRenderer extends PetRenderer<@NotNull ClientStray, @NotNull SkeletonModel<@NotNull ClientStray>> {
 
-    public ClientStrayRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientStrayRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new SkeletonModel<>(), 0.75f);
         this.addLayer(new StrayOverlayLayer<>(this));
     }

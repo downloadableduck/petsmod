@@ -25,6 +25,6 @@ public class ClientEnderman extends GroundPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_ENDERMAN_AMBIENT;
+        return SoundEvents.ENTITY_ENDERMEN_AMBIENT;
     }
 }

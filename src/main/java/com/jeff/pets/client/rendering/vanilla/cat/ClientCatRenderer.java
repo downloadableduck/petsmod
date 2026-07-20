@@ -9,7 +9,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientCatRenderer extends PetRenderer<@NotNull ClientCat, @NotNull ClientCatModel> {
 
-    public ClientCatRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientCatRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientCatModel(0), 0.7F);
     }
 

@@ -98,7 +98,7 @@ public class PenguinModel extends PetModel<@NotNull Penguin> {
     @Override
     public void setup(Penguin state, float f, float g, float h, float i, float k, float s) {
         float flapAngle = (MathHelper.sin(state.flap) + 1.0F) * state.flapSpeed;
-        this.head.rotationX = state.rotationX * ((float) Math.PI / 180F);
+        this.head.rotationX = state.pitch * ((float) Math.PI / 180F);
         float animationSpeed = state.walkAnimationSpeed;
         float animationPos = state.walkAnimationProgress;
         this.right_foot.rotationZ = MathHelper.cos(animationPos * 0.6662F) * 1.4F * animationSpeed;

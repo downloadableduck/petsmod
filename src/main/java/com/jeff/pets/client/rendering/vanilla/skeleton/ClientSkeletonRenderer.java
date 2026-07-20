@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientSkeletonRenderer extends PetRenderer<@NotNull ClientSkeleton, @NotNull SkeletonModel<@NotNull ClientSkeleton>> {
 
-    public ClientSkeletonRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context) {
+    public ClientSkeletonRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new SkeletonModel<>(), 0.75f);
     }
 

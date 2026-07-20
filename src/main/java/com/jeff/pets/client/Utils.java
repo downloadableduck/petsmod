@@ -45,7 +45,7 @@ public class Utils {
 
         if (entity == null || world == null || player == null) return;
 
-        Vec3d lookAngle = player.getRotationVector();
+        Vec3d lookAngle = player.getLookVector();
 
         double x = player.x - lookAngle.x * (double) 0.5F;
         double y = player.y + (double) 0.5F;
@@ -53,7 +53,7 @@ public class Utils {
 
         entity.setPosition(x, y, z);
         entity.setCustomName(new LiteralText(entityName));
-        world.addEntityPrivate(entity.getEntityId(), entity);
+        world.m_99979799(entity.getNetworkId(), entity);
         entity.setOwner(player);
         Central.summonedEntity.add(entity);
     }

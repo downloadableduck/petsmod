@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.zombievillager;
 
 import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
-import net.minecraft.client.render.entity.feature.EntityRenderLayerContext;
 import net.minecraft.client.render.entity.layer.EntityRenderLayer;
+import net.minecraft.client.render.entity.layer.EntityRenderLayerParent;
 import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,7 +25,7 @@ public class ClientZombieVillagerProfessionLayer extends EntityRenderLayer<@NotN
     public static final Identifier TOOLSMITH_LOCATION = new Identifier("minecraft", "textures/entity/zombie_villager/profession/toolsmith.png");
     public static final Identifier WEAPONSMITH_LOCATION = new Identifier("minecraft", "textures/entity/zombie_villager/profession/weaponsmith.png");
 
-    public ClientZombieVillagerProfessionLayer(EntityRenderLayerContext<@NotNull ClientZombieVillager, @NotNull ClientZombieVillagerModel> renderLayerParent) {
+    public ClientZombieVillagerProfessionLayer(EntityRenderLayerParent<@NotNull ClientZombieVillager, @NotNull ClientZombieVillagerModel> renderLayerParent) {
         super(renderLayerParent);
     }
 
