@@ -12,7 +12,7 @@ version = project.mod_version
 group = project.maven_group
 
 base {
-    archivesName = project.archives_base_name + "-" + project.mod_version + "-" + project.minecraft_version
+    archivesName = project.archives_base_name + "-" + project.mod_version + "-" + project.minecraft_version  + "+" + project.build
 }
 
 repositories {
@@ -59,7 +59,7 @@ dependencies {
 }
 
 processResources {
-    inputs.property "version", project.version
+    inputs.property "version", project.version + "+" + project.build
 
     filesMatching("fabric.mod.json") {
         expand "version": inputs.properties.version
@@ -142,7 +142,7 @@ mavenPublishing {
 tasks.named('jar') {
     archiveBaseName = project.archives_base_name
     archiveVersion = project.mod_version
-    archiveClassifier = project.minecraft_version
+    //archiveClassifier = project.minecraft_version + "+" + project.build
 }
 
 tasks.withType(JavaCompile).configureEach {

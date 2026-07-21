@@ -17,7 +17,7 @@ public abstract class PetRenderer<D extends MobEntity, K extends EntityModel<D>>
     public void render(D entity, float f, float g, float h, float i, float k, float j) {
         com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
         if (entity.hasVehicle()) {
-            com.mojang.blaze3d.platform.GlStateManager.translatef(0, 0.35f, 0);
+            com.mojang.blaze3d.platform.GlStateManager.translatef(0, -0.35f, 0);
         }
         super.render(entity, f, g, h, i, k, j);
         com.mojang.blaze3d.platform.GlStateManager.popMatrix();
