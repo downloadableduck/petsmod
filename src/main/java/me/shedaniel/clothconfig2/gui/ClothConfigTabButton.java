@@ -30,7 +30,7 @@ public class ClothConfigTabButton extends AbstractPressableButtonWidget {
         super.render(int_1, int_2, float_1);
     }
 
-    protected boolean onClick(double double_1, double double_2) {
+    protected boolean clicked(double double_1, double double_2) {
         return visible && active && isMouseOver(double_1, double_2);
     }
     

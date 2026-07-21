@@ -16,7 +16,7 @@ public class ClientCatRenderer extends PetRenderer<@NotNull ClientCat, @NotNull 
     @Override
     protected void applyScale(ClientCat state, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 

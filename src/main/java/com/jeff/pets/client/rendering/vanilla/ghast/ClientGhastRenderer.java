@@ -19,6 +19,6 @@ public class ClientGhastRenderer extends PetRenderer<@NotNull ClientGhast, @NotN
 
     @Override
     public void applyScale(ClientGhast ghast, float f) {
-        com.mojang.blaze3d.platform.GlStateManager.scale(4.5F, 4.5F, 4.5F);
+        com.mojang.blaze3d.platform.GlStateManager.scalef(4.5F, 4.5F, 4.5F);
     }
 }

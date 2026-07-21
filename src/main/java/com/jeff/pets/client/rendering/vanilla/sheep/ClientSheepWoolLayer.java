@@ -63,9 +63,9 @@ public class ClientSheepWoolLayer extends EntityRenderLayer<@NotNull ClientSheep
         float r = (float) (woolColor >> 16 & 255) / 255.0F;
         float g = (float) (woolColor >> 8 & 255) / 255.0F;
         float b = (float) (woolColor & 255) / 255.0F;
-            GlStateManager.color(r, g, b);
+            GlStateManager.color3f(r, g, b);
 
-            (this.getModel()).m_95427286(this.model);
+            (this.getModel()).m_4059110(this.model);
             this.model.prepare(sheep, f, g, h);
             this.model.render(sheep, f, g, i, j, k, l);
     }

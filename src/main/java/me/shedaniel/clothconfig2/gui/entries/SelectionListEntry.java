@@ -33,7 +33,7 @@ public class SelectionListEntry<T> extends TooltipListEntry<T> {
     @ApiStatus.Internal
     @Deprecated
     public SelectionListEntry(String fieldName, T[] valuesArray, T value, Consumer<T> saveConsumer) {
-        this(fieldName, valuesArray, value, "text.cloth-config.reset_value", null, saveConsumer);
+        this(fieldName, valuesArray, value, "text.cloth-config2.reset_value", null, saveConsumer);
     }
     
     @ApiStatus.Internal

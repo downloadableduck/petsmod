@@ -16,8 +16,8 @@ public class ClientPillagerModel extends PetModel<ClientPillager> {
     private final ModelPart LeftArm;
 
     public ClientPillagerModel() {
-        f_35376783 /*textureWidth*/ = 64;
-        f_50207596 /*textureHeight*/ = 64;
+        f_9972380 /*textureWidth*/ = 64;
+        f_9233444 /*textureHeight*/ = 64;
 
         waist = new ModelPart(this);
         waist.setPos(0.0F, 12.0F, 0.0F);

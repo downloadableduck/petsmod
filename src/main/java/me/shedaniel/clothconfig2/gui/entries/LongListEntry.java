@@ -25,7 +25,7 @@ public class LongListEntry extends TextFieldListEntry<Long> {
     private Consumer<Long> saveConsumer;
     
     public LongListEntry(String fieldName, Long value, Consumer<Long> saveConsumer) {
-        this(fieldName, value, "text.cloth-config.reset_value", null, saveConsumer);
+        this(fieldName, value, "text.cloth-config2.reset_value", null, saveConsumer);
     }
     
     public LongListEntry(String fieldName, Long value, String resetButtonKey, Supplier<Long> defaultValue, Consumer<Long> saveConsumer) {

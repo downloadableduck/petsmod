@@ -4,9 +4,8 @@ import com.jeff.pets.client.rendering.AnimationUtils;
 import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.client.render.model.entity.HumanoidModel;
-import net.minecraft.unmapped.C_90332747;
 
-public class ClientZombieVillagerModel extends HumanoidModel<ClientZombieVillager> implements C_90332747 {
+public class ClientZombieVillagerModel extends HumanoidModel<ClientZombieVillager> {
     private ModelPart hatRim;
 
     public ClientZombieVillagerModel(float f, boolean bl) {

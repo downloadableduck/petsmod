@@ -108,7 +108,7 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
         }
         
         @Override
-        public List<? extends GuiEventListener> getChildren() {
+        public List<? extends GuiEventListener> children() {
             return Collections.singletonList(widget);
         }
     }

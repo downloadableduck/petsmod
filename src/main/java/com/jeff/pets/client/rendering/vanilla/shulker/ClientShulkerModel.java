@@ -11,8 +11,8 @@ public class ClientShulkerModel extends Model<ClientShulker> {
     private final ModelPart field_3554;
 
     public ClientShulkerModel() {
-        this.f_50207596 /*textureHeight*/ = 64;
-        this.f_35376783 /*textureWidth*/ = 64;
+        this.f_9233444 /*textureHeight*/ = 64;
+        this.f_9972380 /*textureWidth*/ = 64;
         this.field_3555 = new ModelPart(this);
         this.field_3553 = new ModelPart(this);
         this.field_3554 = new ModelPart(this);

@@ -28,7 +28,7 @@ public class LongSliderEntry extends TooltipListEntry {
     private List<GuiEventListener> widgets;
     
     public LongSliderEntry(String fieldName, long minimum, long maximum, long value, Consumer<Long> saveConsumer) {
-        this(fieldName, minimum, maximum, value, saveConsumer, "text.cloth-config.reset_value", null);
+        this(fieldName, minimum, maximum, value, saveConsumer, "text.cloth-config2.reset_value", null);
     }
     
     public LongSliderEntry(String fieldName, long minimum, long maximum, long value, Consumer<Long> saveConsumer, String resetButtonKey, Supplier<Long> defaultValue) {
@@ -46,7 +46,7 @@ public class LongSliderEntry extends TooltipListEntry {
         this.resetButton = new ButtonWidget(0, 0, Minecraft.getInstance().textRenderer.getWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey), widget -> {
             sliderWidget.setValue((MathHelper.clamp(this.defaultValue.get(), minimum, maximum) - minimum) / (double) Math.abs(maximum - minimum));
             this.value.set(Math.min(Math.max(this.defaultValue.get(), minimum), maximum));
-            sliderWidget.update();
+            sliderWidget.updateMessage();
             getScreen().setEdited(true);
         });
         this.sliderWidget.setMessage(textGetter.apply(LongSliderEntry.this.value.get()));
@@ -127,12 +127,12 @@ public class LongSliderEntry extends TooltipListEntry {
         }
         
         @Override
-        public void update() {
+        public void updateMessage() {
             setMessage(textGetter.apply(LongSliderEntry.this.value.get()));
         }
         
         @Override
-        protected void m_10325391() {
+        protected void applyValue() {
             LongSliderEntry.this.value.set((long) (minimum + Math.abs(maximum - minimum) * value));
             getScreen().setEdited(true);
         }

@@ -17,7 +17,7 @@ public class ClientPigRenderer extends PetRenderer<@NotNull ClientPig, @NotNull 
     @Override
     protected void applyScale(@NotNull ClientPig livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 

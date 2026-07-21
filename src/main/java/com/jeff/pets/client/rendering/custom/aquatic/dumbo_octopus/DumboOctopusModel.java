@@ -21,8 +21,8 @@ public class DumboOctopusModel extends PetModel<@NotNull DumboOctopus> {
     private final ModelPart leg8;
 
     public DumboOctopusModel() {
-        f_35376783 /*textureWidth*/ = 32;
-        f_50207596 /*textureHeight*/ = 32;
+        f_9972380 /*textureWidth*/ = 32;
+        f_9233444 /*textureHeight*/ = 32;
 
         body = new ModelPart(this);
         body.setPos(0.0F, 22.0F, 0.0F);

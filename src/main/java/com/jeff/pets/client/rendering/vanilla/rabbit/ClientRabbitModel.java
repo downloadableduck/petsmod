@@ -96,19 +96,19 @@ public class ClientRabbitModel extends Model<ClientRabbit> {
         if (CONFIG.isBaby) {
             float l = 1.5F;
             com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.56666666F, 0.56666666F, 0.56666666F);
-            com.mojang.blaze3d.platform.GlStateManager.translate(0.0F, 1.375F, 0.125F);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.56666666F, 0.56666666F, 0.56666666F);
+            com.mojang.blaze3d.platform.GlStateManager.translatef(0.0F, 1.375F, 0.125F);
             ImmutableList.of(this.head, this.earLeft, this.earRight, this.nose).forEach((ModelPart) -> ModelPart.render(k));
             com.mojang.blaze3d.platform.GlStateManager.popMatrix();
             com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.4F, 0.4F, 0.4F);
-            com.mojang.blaze3d.platform.GlStateManager.translate(0.0F, 2.25F, 0.0F);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.4F, 0.4F, 0.4F);
+            com.mojang.blaze3d.platform.GlStateManager.translatef(0.0F, 2.25F, 0.0F);
             ImmutableList.of(this.rearFootLeft, this.rearFootRight, this.haunchLeft, this.haunchRight, this.body, this.frontLegLeft, this.frontLegRight, this.tail).forEach((ModelPart) -> ModelPart.render(k));
             com.mojang.blaze3d.platform.GlStateManager.popMatrix();
         } else {
             com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.6F, 0.6F, 0.6F);
-            com.mojang.blaze3d.platform.GlStateManager.translate(0.0F, 1.0F, 0.0F);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.6F, 0.6F, 0.6F);
+            com.mojang.blaze3d.platform.GlStateManager.translatef(0.0F, 1.0F, 0.0F);
             ImmutableList.of(this.rearFootLeft, this.rearFootRight, this.haunchLeft, this.haunchRight, this.body, this.frontLegLeft, this.frontLegRight, this.head, this.earRight, this.earLeft, this.tail, this.nose, new ModelPart[0]).forEach((ModelPart) -> ModelPart.render(k));
             com.mojang.blaze3d.platform.GlStateManager.popMatrix();
         }

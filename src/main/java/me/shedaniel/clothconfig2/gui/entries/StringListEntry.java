@@ -9,7 +9,7 @@ public class StringListEntry extends TextFieldListEntry<String> {
     private Consumer<String> saveConsumer;
     
     public StringListEntry(String fieldName, String value, Consumer<String> saveConsumer) {
-        this(fieldName, value, "text.cloth-config.reset_value", null, saveConsumer);
+        this(fieldName, value, "text.cloth-config2.reset_value", null, saveConsumer);
     }
     
     public StringListEntry(String fieldName, String value, String resetButtonKey, Supplier<String> defaultValue, Consumer<String> saveConsumer) {

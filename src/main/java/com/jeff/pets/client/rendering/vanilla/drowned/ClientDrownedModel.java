@@ -56,9 +56,9 @@ public class ClientDrownedModel extends HumanoidModel<ClientDrowned> {
         super.render(drowned, f, j, h, i, k, l);
         com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(1.5f, 1.5f, 1.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(1.5f, 1.5f, 1.5f);
         } else {
-            com.mojang.blaze3d.platform.GlStateManager.scale(1, 1, 1);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(1, 1, 1);
         }
         com.mojang.blaze3d.platform.GlStateManager.popMatrix();
     }

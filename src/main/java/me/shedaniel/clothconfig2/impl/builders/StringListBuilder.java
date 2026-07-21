@@ -22,7 +22,7 @@ public class StringListBuilder extends FieldBuilder<List<String>, StringListList
     private final List<String> value;
     private boolean expanded = false;
     private Function<StringListListEntry, StringListListEntry.StringListCell> createNewInstance;
-    private String addTooltip = I18n.translate("text.cloth-config.list.add"), removeTooltip = I18n.translate("text.cloth-config.list.remove");
+    private String addTooltip = I18n.translate("text.cloth-config2.list.add"), removeTooltip = I18n.translate("text.cloth-config2.list.remove");
     private boolean deleteButtonEnabled = true, insertInFront = true;
     
     public StringListBuilder(String resetButtonKey, String fieldNameKey, List<String> value) {

@@ -81,8 +81,8 @@ public class MultiElementListEntry<T> extends TooltipListEntry<T> {
         widget.rectangle.height = 24;
         Minecraft.getInstance().getTextureManager().bind(CONFIG_TEX);
         Lighting.turnOff();
-        GlStateManager.color(1, 1, 1, 1);
-        this.drawTexture(x - 15, y + 4, 24, (widget.rectangle.contains(mouseX, mouseY) ? 18 : 0) + (expanded ? 9 : 0), 9, 9);
+        GlStateManager.color4f(1, 1, 1, 1);
+        this.blit(x - 15, y + 4, 24, (widget.rectangle.contains(mouseX, mouseY) ? 18 : 0) + (expanded ? 9 : 0), 9, 9);
         Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(categoryName), x, y + 5, widget.rectangle.contains(mouseX, mouseY) ? 0xffe6fe16 : -1);
         for (AbstractConfigListEntry<?> entry : entries) {
             entry.setParent(getParent());

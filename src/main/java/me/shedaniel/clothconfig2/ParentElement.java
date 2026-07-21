@@ -14,7 +14,7 @@ public interface ParentElement extends GuiEventListener {
 
     default Optional<GuiEventListener> hoveredElement(double d, double e) {
         for(GuiEventListener GuiEventListener : this.children()) {
-            if (GuiEventListener.m_74503738(d, e)) /*isMouseOver*/ {
+            if (GuiEventListener.isMouseOver(d, e)) /*isMouseOver*/ {
                 return Optional.of(GuiEventListener);
             }
         }
@@ -82,7 +82,7 @@ public interface ParentElement extends GuiEventListener {
     default boolean changeFocus(boolean bl) {
         GuiEventListener GuiEventListener = this.getFocused();
         boolean bl2 = GuiEventListener != null;
-        if (bl2 && GuiEventListener.m_92379633(bl)) /*isFocused */ {
+        if (bl2 && GuiEventListener.changeFocus(bl)) /*isFocused */ {
             return true;
         } else {
             List<? extends GuiEventListener> list = this.children();
@@ -102,7 +102,7 @@ public interface ParentElement extends GuiEventListener {
 
             while(booleanSupplier.getAsBoolean()) {
                 GuiEventListener GuiEventListener2 = (GuiEventListener)supplier.get();
-                if (GuiEventListener2.m_92379633(bl)) {
+                if (GuiEventListener2.changeFocus(bl)) {
                     this.setFocused(GuiEventListener2);
                     return true;
                 }

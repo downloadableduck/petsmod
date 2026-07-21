@@ -20,14 +20,6 @@ public class ColorDisplayWidget extends ButtonWidget {
         fillGradient(this.x + 1, this.y + 1, this.x + size - 1, this.y + size - 1, color, color);
     }
     
-    @Override
-    public void m_15978786(double mouseX, double mouseY) {
-    }
-    
-    @Override
-    public void release(double mouseX, double mouseY) {
-    }
-    
     public void setColor(int color) {
         this.color = color;
     }

@@ -17,8 +17,8 @@ public class RacoonModel extends PetModel<@NotNull Racoon> {
     private final ModelPart tail;
 
     public RacoonModel() {
-        f_35376783 /*textureWidth*/ = 64;
-        f_50207596 /*textureHeight*/ = 64;
+        f_9972380 /*textureWidth*/ = 64;
+        f_9233444 /*textureHeight*/ = 64;
 
         root = new ModelPart(this);
         root.setPos(-1.0F, 16.5F, -3.0F);

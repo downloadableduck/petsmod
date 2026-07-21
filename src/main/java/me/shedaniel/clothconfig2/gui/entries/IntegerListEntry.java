@@ -25,7 +25,7 @@ public class IntegerListEntry extends TextFieldListEntry<Integer> {
     private Consumer<Integer> saveConsumer;
     
     public IntegerListEntry(String fieldName, Integer value, Consumer<Integer> saveConsumer) {
-        this(fieldName, value, "text.cloth-config.reset_value", null, saveConsumer);
+        this(fieldName, value, "text.cloth-config2.reset_value", null, saveConsumer);
     }
     
     public IntegerListEntry(String fieldName, Integer value, String resetButtonKey, Supplier<Integer> defaultValue, Consumer<Integer> saveConsumer) {

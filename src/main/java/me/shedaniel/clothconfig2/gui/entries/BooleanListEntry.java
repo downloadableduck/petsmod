@@ -22,7 +22,7 @@ public class BooleanListEntry extends TooltipListEntry {
     private List<GuiEventListener> widgets;
     
     public BooleanListEntry(String fieldName, boolean bool, Consumer<Boolean> saveConsumer) {
-        this(fieldName, bool, "text.cloth-config.reset_value", null, saveConsumer);
+        this(fieldName, bool, "text.cloth-config2.reset_value", null, saveConsumer);
     }
     
     public BooleanListEntry(String fieldName, boolean bool, String resetButtonKey, Supplier<Boolean> defaultValue, Consumer<Boolean> saveConsumer) {

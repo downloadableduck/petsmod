@@ -24,7 +24,7 @@ import net.minecraft.server.entity.living.player.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.unmapped.C_31453009;
+import net.minecraft.unmapped.C_6558498;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -95,9 +95,9 @@ public class Duck extends AbstractPet {
         }
 
         this.flapping *= 0.9F;
-        Vec3d movement = this.m_94091929();
+        Vec3d movement = this.m_9899189();
         if (!this.onGround && movement.y < (double) 0.0F) {
-            this.m_28162558(movement.m_17023014(1.0F, 0.6, 1.0F));
+            this.m_5189207(movement.m_7068480(1.0F, 0.6, 1.0F));
         }
 
         this.flap += this.flapping * 2.0F;
@@ -143,7 +143,7 @@ public class Duck extends AbstractPet {
         return duck;
     }
 
-    public EntityData initialize(final @NotNull WorldAccess level, final @NotNull LocalDifficulty difficulty, final @NotNull C_31453009 spawnReason, final @Nullable EntityData groupData, NbtCompound NbtCompound) {
+    public EntityData initialize(final @NotNull WorldAccess level, final @NotNull LocalDifficulty difficulty, final @NotNull C_6558498 spawnReason, final @Nullable EntityData groupData, NbtCompound NbtCompound) {
         this.setServerEntity(true);
         this.syncedData.set(DUCK_SKIN, this.random.nextInt(2));
         return super.initialize(level, difficulty, spawnReason, groupData, NbtCompound);
@@ -179,7 +179,7 @@ public class Duck extends AbstractPet {
             if (owner.hasPassenger(this)) {
                 if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
-                    this.m_28162558(this.m_94091929().add(0, -0.04, 0));
+                    this.m_5189207(this.m_9899189().add(0, -0.04, 0));
                     this.isOnHead = false;
                 } else {
                     this.setSitting(true);
@@ -197,7 +197,7 @@ public class Duck extends AbstractPet {
             float bodyYawDiff = MathHelper.wrapDegrees(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/);
 
             if (rotationToOwner >= 50) {
-                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_06800284 /*sign*/(bodyYawDiff) * 50.0F);
+                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_4835134 /*sign*/(bodyYawDiff) * 50.0F);
             }
 
             if (distance > 2.0) {
@@ -209,13 +209,13 @@ public class Duck extends AbstractPet {
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setHeadYaw(this.getYRot());
-                this.bodyYaw /*bodyYaw*/ = MathHelper.m_82141949(this.bodyYaw /*bodyYaw*/, this.headYaw, 50.0f);
+                this.bodyYaw /*bodyYaw*/ = MathHelper.m_6033138(this.bodyYaw /*bodyYaw*/, this.headYaw, 50.0f);
 
                 double speed = owner.getSpeed() * 2;
-                this.m_28162558(new Vec3d(dir.x * speed, this.m_94091929().y, dir.z * speed));
+                this.m_5189207(new Vec3d(dir.x * speed, this.m_9899189().y, dir.z * speed));
             } else {
                 this.lookAt(owner, 5, 0);
-                this.m_28162558(this.m_94091929().m_17023014(0.8, 1.0, 0.8));
+                this.m_5189207(this.m_9899189().m_7068480(0.8, 1.0, 0.8));
             }
 
             int yHeightToOwner = (int) (owner.y - this.y);
@@ -226,7 +226,7 @@ public class Duck extends AbstractPet {
             }
 
             if (yHeightToOwner > -1) {
-                this.m_28162558(this.m_94091929().add(0, -0.01, 0));
+                this.m_5189207(this.m_9899189().add(0, -0.01, 0));
                 //this.processFlappingMovement();
             }
 
@@ -234,7 +234,7 @@ public class Duck extends AbstractPet {
                 // this.processFlappingMovement();
             }
 
-            if (owner.m_94091929().squaredDistanceToOrigin() < 0.01) {
+            if (owner.m_9899189().squaredDistanceToOrigin() < 0.01) {
                 this.waitingTime++;
                 if (this.waitingTime > 30) this.wander();
             } else {
@@ -245,15 +245,15 @@ public class Duck extends AbstractPet {
             this.setHeadYaw(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_06800284 /*sign*/(bodyYawDiff) * 50);
+                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_4835134 /*sign*/(bodyYawDiff) * 50);
             } else {
-                this.bodyYaw /*bodyYaw*/ = MathHelper.m_82141949(this.bodyYaw /*bodyYaw*/, this.getHeadYaw(), 10);
+                this.bodyYaw /*bodyYaw*/ = MathHelper.m_6033138(this.bodyYaw /*bodyYaw*/, this.getHeadYaw(), 10);
             }
 
-            this.move(MoverType.SELF, this.m_94091929());
+            this.move(MoverType.SELF, this.m_9899189());
 
             if (!this.onGround) {
-                this.m_28162558(this.m_94091929().add(0, -0.04, 0));
+                this.m_5189207(this.m_9899189().add(0, -0.04, 0));
             }
         }
         if (owner != null) {
@@ -290,11 +290,11 @@ public class Duck extends AbstractPet {
     }
 
     @Override
-    public @NotNull Packet<?> m_00781305() {
+    public @NotNull Packet<?> m_6528338() {
         if (this.world.isClient()) {
             return new AddEntityS2CPacket(this);
         } else {
-            return super.m_00781305();
+            return super.m_6528338();
         }
     }
 }

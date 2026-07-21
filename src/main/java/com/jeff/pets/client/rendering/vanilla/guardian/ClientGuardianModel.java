@@ -21,8 +21,8 @@ public class ClientGuardianModel<T extends AbstractPet> extends Model<T> {
     private final ModelPart[] field_3378;
 
     public ClientGuardianModel() {
-        this.f_35376783 /*textureWidth*/ = 64;
-        this.f_50207596 /*textureHeight*/ = 64;
+        this.f_9972380 /*textureWidth*/ = 64;
+        this.f_9233444 /*textureHeight*/ = 64;
         this.field_3380 = new ModelPart[12];
         this.field_3379 = new ModelPart(this);
         this.field_3379.setTextureCoords(0, 0).addBox(-6.0F, 10.0F, -8.0F, 12, 12, 16);

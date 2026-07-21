@@ -25,7 +25,7 @@ public class FloatListEntry extends TextFieldListEntry<Float> {
     private Consumer<Float> saveConsumer;
     
     public FloatListEntry(String fieldName, Float value, Consumer<Float> saveConsumer) {
-        this(fieldName, value, "text.cloth-config.reset_value", null, saveConsumer);
+        this(fieldName, value, "text.cloth-config2.reset_value", null, saveConsumer);
     }
     
     public FloatListEntry(String fieldName, Float value, String resetButtonKey, Supplier<Float> defaultValue, Consumer<Float> saveConsumer) {

@@ -39,7 +39,7 @@ public class PetsInitializer implements ModInitializer {
             Registry.ENTITY_TYPE,
             new Identifier(MOD_ID, "racoon"),
             EntityType.Builder.of(Racoon::new, MobCategory.CREATURE)
-                    .m_68160660(1.0f, 1.0f)
+                    .m_9770209(1.0f, 1.0f)
                     .build("pets-mod:racoon")
     );
 
@@ -48,7 +48,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientbat"),
             EntityType.Builder.of(ClientBat::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.5f, 0.9f)
+                    .m_9770209(0.5f, 0.9f)
                     .build("clientbat")
     );
 
@@ -56,7 +56,7 @@ public class PetsInitializer implements ModInitializer {
             Registry.ENTITY_TYPE,
             new Identifier(MOD_ID, "duck"),
             EntityType.Builder.of(Duck::new, MobCategory.CREATURE)
-                    .m_68160660(0.4f, 0.7f)
+                    .m_9770209(0.4f, 0.7f)
                     .build("duck")
     );
 
@@ -64,7 +64,7 @@ public class PetsInitializer implements ModInitializer {
             Registry.ENTITY_TYPE,
             new Identifier(MOD_ID, "penguin"),
             EntityType.Builder.of(Penguin::new, MobCategory.AMBIENT)
-                    .m_68160660(1.0f, 1.5f)
+                    .m_9770209(1.0f, 1.5f)
                     .build("penguin")
     );
 
@@ -73,7 +73,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientsheep"),
             EntityType.Builder.of(ClientSheep::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.9f, 1.3f)
+                    .m_9770209(0.9f, 1.3f)
                     .build("clientsheep")
     );
 
@@ -82,7 +82,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientcat"),
             EntityType.Builder.of(ClientCat::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.6f, 0.7f)
+                    .m_9770209(0.6f, 0.7f)
                     .build("clientcat")
     );
 
@@ -91,7 +91,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientchicken"),
             EntityType.Builder.of(ClientChicken::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.4f, 0.7f)
+                    .m_9770209(0.4f, 0.7f)
                     .build("clientchicken")
     );
 
@@ -100,7 +100,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientcod"),
             EntityType.Builder.of(ClientCod::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.5f, 0.3f)
+                    .m_9770209(0.5f, 0.3f)
                     .build("clientcod")
     );
 
@@ -109,7 +109,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientcow"),
             EntityType.Builder.of(ClientCow::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.9f, 1.4f)
+                    .m_9770209(0.9f, 1.4f)
                     .build("clientcow")
     );
 
@@ -118,7 +118,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientdonkey"),
             EntityType.Builder.of(ClientDonkey::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(1.3965f, 1.5f)
+                    .m_9770209(1.3965f, 1.5f)
                     .build("clientdonkey")
     );
 
@@ -127,7 +127,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clienthorse"),
             EntityType.Builder.of(ClientHorse::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(1.3965f, 1.6f)
+                    .m_9770209(1.3965f, 1.6f)
                     .build("clienthorse")
     );
 
@@ -136,7 +136,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientmooshroom"),
             EntityType.Builder.of(ClientMooshroom::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.9f, 1.4f)
+                    .m_9770209(0.9f, 1.4f)
                     .build("clientmooshroom")
     );
 
@@ -145,7 +145,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientparrot"),
             EntityType.Builder.of(ClientParrot::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.5f, 0.9f)
+                    .m_9770209(0.5f, 0.9f)
                     .build("clientparrot")
     );
 
@@ -154,7 +154,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientpig"),
             EntityType.Builder.of(ClientPig::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.9f, 0.9f)
+                    .m_9770209(0.9f, 0.9f)
                     .build("clientpig")
     );
 
@@ -163,7 +163,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientrabbit"),
             EntityType.Builder.of(ClientRabbit::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.4f, 0.5f)
+                    .m_9770209(0.4f, 0.5f)
                     .build("clientrabbit")
     );
 
@@ -172,7 +172,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientsalmon"),
             EntityType.Builder.of(ClientSalmon::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.35f, 0.2f)
+                    .m_9770209(0.35f, 0.2f)
                     .build("clientsalmon")
     );
 
@@ -181,7 +181,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientsnowgolem"),
             EntityType.Builder.of(ClientSnowGolem::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.7f, 1.9f)
+                    .m_9770209(0.7f, 1.9f)
                     .build("clientsnowgolem")
     );
 
@@ -190,7 +190,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientsquid"),
             EntityType.Builder.of(ClientSquid::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.8f, -0.8f)
+                    .m_9770209(0.8f, -0.8f)
                     .build("clientsquid")
     );
 
@@ -199,7 +199,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientturtle"),
             EntityType.Builder.of(ClientTurtle::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(1.2f, 0.4f)
+                    .m_9770209(1.2f, 0.4f)
                     .build("clientturtle")
     );
 
@@ -208,7 +208,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientvillager"),
             EntityType.Builder.of(ClientVillager::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
+                    .m_9770209(0.6f, 1.95f)
                     .build("clientvillager")
     );
 
@@ -217,7 +217,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientwanderingtrader"),
             EntityType.Builder.of(ClientWanderingTrader::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
+                    .m_9770209(0.6f, 1.95f)
                     .build("clientwanderingtrader")
     );
 
@@ -226,7 +226,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientcavespider"),
             EntityType.Builder.of(ClientCaveSpider::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.7f, 0.5f)
+                    .m_9770209(0.7f, 0.5f)
                     .build("clientcavespider")
     );
 
@@ -235,7 +235,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientdolphin"),
             EntityType.Builder.of(ClientDolphin::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.9f, 0.6f)
+                    .m_9770209(0.9f, 0.6f)
                     .build("clientdolphin")
     );
 
@@ -244,7 +244,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientenderman"),
             EntityType.Builder.of(ClientEnderman::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.6f, 2.9f)
+                    .m_9770209(0.6f, 2.9f)
                     .build("clientenderman")
     );
 
@@ -253,7 +253,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientfox"),
             EntityType.Builder.of(ClientFox::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.6f, 0.7f)
+                    .m_9770209(0.6f, 0.7f)
                     .build("clientfox")
     );
 
@@ -262,7 +262,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientirongolem"),
             EntityType.Builder.of(ClientIronGolem::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(1.4f, 2.7f)
+                    .m_9770209(1.4f, 2.7f)
                     .build("clientirongolem")
     );
 
@@ -271,7 +271,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientllama"),
             EntityType.Builder.of(ClientLlama::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.9f, 1.87f)
+                    .m_9770209(0.9f, 1.87f)
                     .build("clientllama")
     );
 
@@ -280,7 +280,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientpanda"),
             EntityType.Builder.of(ClientPanda::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(1.3f, 1.25f)
+                    .m_9770209(1.3f, 1.25f)
                     .build("clientpanda")
     );
 
@@ -289,7 +289,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientpolarbear"),
             EntityType.Builder.of(ClientPolarBear::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(1.4f, 1.4f)
+                    .m_9770209(1.4f, 1.4f)
                     .build("clientpolarbear")
     );
 
@@ -298,7 +298,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientpufferfish"),
             EntityType.Builder.of(ClientPufferFish::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.7f, 0.7f)
+                    .m_9770209(0.7f, 0.7f)
                     .build("clientpufferfish")
     );
 
@@ -307,7 +307,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientspider"),
             EntityType.Builder.of(ClientSpider::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(1.4f, 0.9f)
+                    .m_9770209(1.4f, 0.9f)
                     .build("clientspider")
     );
 
@@ -316,7 +316,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientwolf"),
             EntityType.Builder.of(ClientWolf::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.6f, 0.85f)
+                    .m_9770209(0.6f, 0.85f)
                     .build("clientwolf")
     );
 
@@ -325,7 +325,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientblaze"),
             EntityType.Builder.of(ClientBlaze::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.6f, 1.8f)
+                    .m_9770209(0.6f, 1.8f)
                     .build("clientblaze")
     );
 
@@ -334,7 +334,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientcreeper"),
             EntityType.Builder.of(ClientCreeper::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.6f, 1.7f)
+                    .m_9770209(0.6f, 1.7f)
                     .build("clientcreeper")
     );
     public static final EntityType<ClientElderGuardian> ELDER_GUARDIAN_COOKIE = Registry.register(
@@ -342,7 +342,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientelderguardian"),
             EntityType.Builder.of(ClientElderGuardian::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(1.9975f, 1.9975f)
+                    .m_9770209(1.9975f, 1.9975f)
                     .build("clientelderguardian")
     );
 
@@ -351,7 +351,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientendermite"),
             EntityType.Builder.of(ClientEndermite::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.4f, 0.3f)
+                    .m_9770209(0.4f, 0.3f)
                     .build("clientendermite")
     );
 
@@ -360,7 +360,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientevoker"),
             EntityType.Builder.of(ClientEvoker::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
+                    .m_9770209(0.6f, 1.95f)
                     .build("clientevoker")
     );
 
@@ -369,7 +369,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientghast"),
             EntityType.Builder.of(ClientGhast::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(4f, 4f)
+                    .m_9770209(4f, 4f)
                     .build("clientghast")
     );
 
@@ -378,7 +378,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientguardian"),
             EntityType.Builder.of(ClientGuardian::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.85f, 0.85f)
+                    .m_9770209(0.85f, 0.85f)
                     .build("clientguardian")
     );
 
@@ -387,7 +387,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientmagmacube"),
             EntityType.Builder.of(ClientMagmaCube::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(2f, 2f)
+                    .m_9770209(2f, 2f)
                     .build("clientmagmacube")
     );
 
@@ -396,7 +396,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientphantom"),
             EntityType.Builder.of(ClientPhantom::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.9f, 0.5f)
+                    .m_9770209(0.9f, 0.5f)
                     .build("clientphantom")
     );
 
@@ -405,7 +405,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientpillager"),
             EntityType.Builder.of(ClientPillager::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
+                    .m_9770209(0.6f, 1.95f)
                     .build("clientpillager")
     );
 
@@ -414,7 +414,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientravager"),
             EntityType.Builder.of(ClientRavager::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(1.95f, 2.2f)
+                    .m_9770209(1.95f, 2.2f)
                     .build("clientravager")
     );
 
@@ -423,7 +423,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientshulker"),
             EntityType.Builder.of(ClientShulker::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(1f, 2f)
+                    .m_9770209(1f, 2f)
                     .build("clientshulker")
     );
 
@@ -432,7 +432,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientsilverfish"),
             EntityType.Builder.of(ClientSilverfish::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.4f, 0.3f)
+                    .m_9770209(0.4f, 0.3f)
                     .build("clientsilverfish")
     );
 
@@ -441,7 +441,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientskeleton"),
             EntityType.Builder.of(ClientSkeleton::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
+                    .m_9770209(0.6f, 1.95f)
                     .build("clientskeleton")
     );
 
@@ -450,7 +450,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientslime"),
             EntityType.Builder.of(ClientSlime::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(2f, 2f)
+                    .m_9770209(2f, 2f)
                     .build("clientslime")
     );
 
@@ -459,7 +459,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientvex"),
             EntityType.Builder.of(ClientVex::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.4f, 0.8f)
+                    .m_9770209(0.4f, 0.8f)
                     .build("clientvex")
     );
 
@@ -468,7 +468,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientvindicator"),
             EntityType.Builder.of(ClientVindicator::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
+                    .m_9770209(0.6f, 1.95f)
                     .build("clientvindicator")
     );
 
@@ -477,7 +477,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientwitch"),
             EntityType.Builder.of(ClientWitch::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
+                    .m_9770209(0.6f, 1.95f)
                     .build("clientwitch")
     );
 
@@ -486,7 +486,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientzombie"),
             EntityType.Builder.of(ClientZombie::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
+                    .m_9770209(0.6f, 1.95f)
                     .build("clientzombie")
     );
 
@@ -495,7 +495,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientzombievillager"),
             EntityType.Builder.of(ClientZombieVillager::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
+                    .m_9770209(0.6f, 1.95f)
                     .build("clientzombievillager")
     );
 
@@ -504,7 +504,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clienthusk"),
             EntityType.Builder.of(ClientHusk::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
+                    .m_9770209(0.6f, 1.95f)
                     .build("clienthusk")
     );
 
@@ -513,7 +513,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientdrowned"),
             EntityType.Builder.of(ClientDrowned::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
+                    .m_9770209(0.6f, 1.95f)
                     .build("clientdrowned")
     );
 
@@ -522,7 +522,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientstray"),
             EntityType.Builder.of(ClientStray::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
+                    .m_9770209(0.6f, 1.95f)
                     .build("clientstray")
     );
 
@@ -531,7 +531,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientwitherskeleton"),
             EntityType.Builder.of(ClientWitherSkeleton::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
+                    .m_9770209(0.6f, 1.95f)
                     .build("clientwitherskeleton")
     );
 
@@ -540,7 +540,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientenderdragon"),
             EntityType.Builder.of(ClientEnderDragon::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(16f, 8f)
+                    .m_9770209(16f, 8f)
                     .build("clientenderdragon")
     );
 
@@ -549,7 +549,7 @@ public class PetsInitializer implements ModInitializer {
             new Identifier(MOD_ID, "clientwither"),
             EntityType.Builder.of(ClientWither::new, MobCategory.AMBIENT)
                     .notSummonable()
-                    .m_68160660(2f, 3f)
+                    .m_9770209(2f, 3f)
                     .build("clientwither")
     );
 
@@ -557,7 +557,7 @@ public class PetsInitializer implements ModInitializer {
             Registry.ENTITY_TYPE,
             new Identifier(MOD_ID, "head"),
             EntityType.Builder.of(Head::new, MobCategory.CREATURE)
-                    .m_68160660(0.5f, 0.5f)
+                    .m_9770209(0.5f, 0.5f)
                     .build("head")
     );
 
@@ -565,7 +565,7 @@ public class PetsInitializer implements ModInitializer {
             Registry.ENTITY_TYPE,
             new Identifier(MOD_ID, "dumbo_octopus"),
             EntityType.Builder.of(DumboOctopus::new, MobCategory.AMBIENT)
-                    .m_68160660(0.5f, 0.5f)
+                    .m_9770209(0.5f, 0.5f)
                     .build("dumbo_octopus")
     );
 
@@ -573,7 +573,7 @@ public class PetsInitializer implements ModInitializer {
             Registry.ENTITY_TYPE,
             new Identifier(MOD_ID, "koi"),
             EntityType.Builder.of(Koi::new, MobCategory.AMBIENT)
-                    .m_68160660(0.6f, 0.6f)
+                    .m_9770209(0.6f, 0.6f)
                     .build("koi")
     );
 
@@ -581,7 +581,7 @@ public class PetsInitializer implements ModInitializer {
             Registry.ENTITY_TYPE,
             new Identifier(MOD_ID, "stringray"),
             EntityType.Builder.of(Stingray::new, MobCategory.AMBIENT)
-                    .m_68160660(1.0f, 0.4f)
+                    .m_9770209(1.0f, 0.4f)
                     .build("stingray")
     );
 
@@ -589,7 +589,7 @@ public class PetsInitializer implements ModInitializer {
             Registry.ENTITY_TYPE,
             new Identifier(MOD_ID, "zombie_pigman"),
             EntityType.Builder.of(ClientZombiePigman::new, MobCategory.AMBIENT)
-                    .m_68160660(0.6f, 1.95f)
+                    .m_9770209(0.6f, 1.95f)
                     .build("zombie_pigman")
     );
 

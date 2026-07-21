@@ -17,7 +17,7 @@ public class ClientDrownedRenderer extends PetRenderer<@NotNull ClientDrowned, @
     @Override
     protected void applyScale(ClientDrowned state, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
@@ -30,7 +30,7 @@ public class ClientDrownedRenderer extends PetRenderer<@NotNull ClientDrowned, @
     public void applyRotation(ClientDrowned state, float f, float g, float h) {
         super.applyRotation(state, f, g, h);
         if (state.isRiding()) {
-            com.mojang.blaze3d.platform.GlStateManager.translate(0, -0.5f, 0);
+            com.mojang.blaze3d.platform.GlStateManager.translatef(0, -0.5f, 0);
         }
     }
 }

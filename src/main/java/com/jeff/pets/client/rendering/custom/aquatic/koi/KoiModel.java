@@ -20,8 +20,8 @@ public class KoiModel extends PetModel<@NotNull Koi> {
     private final ModelPart tail_fin;
 
     public KoiModel() {
-        f_35376783 /*textureWidth*/ = 64;
-        f_50207596 /*textureHeight*/ = 64;
+        f_9972380 /*textureWidth*/ = 64;
+        f_9233444 /*textureHeight*/ = 64;
 
         body = new ModelPart(this);
         body.setPos(0.0F, 20.0F, -7.0F);

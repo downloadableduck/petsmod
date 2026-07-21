@@ -79,7 +79,7 @@ public final class NestedListListEntry<T, INNER extends AbstractConfigListEntry<
         }
         
         @Override
-        public List<? extends GuiEventListener> getChildren() {
+        public List<? extends GuiEventListener> children() {
             return Collections.singletonList(nestedEntry);
         }
         

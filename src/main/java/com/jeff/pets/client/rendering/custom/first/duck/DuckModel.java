@@ -19,8 +19,8 @@ public class DuckModel extends PetModel<@NotNull Duck> {
     private final ModelPart tail;
 
     public DuckModel() {
-        f_35376783 /*textureWidth*/ = 64;
-        f_50207596 /*textureHeight*/ = 32;
+        f_9972380 /*textureWidth*/ = 64;
+        f_9233444 /*textureHeight*/ = 32;
 
         root = new ModelPart(this);
         root.setPos(0.0F, 15.0F, -4.0F);

@@ -20,13 +20,13 @@ import java.util.Map;
 public abstract class EntityRenderDispatcherMixin {
 
     @Shadow
-    protected abstract void m_74922622(Class<?> class_, EntityRenderer<?> entityRenderer);
+    protected abstract <T extends Entity> void m_6519441(Class<T> class_, EntityRenderer<? super T> entityRenderer);
 
     @Inject(at = @At("TAIL"), method = "<init>")
     public void onInit(TextureManager textureManager, ItemRenderer itemRenderer, ReloadableResourceManager reloadableResourceManager, CallbackInfo ci) {
         synchronized (PetsClientInitializer.renderManagerMap.keySet()) {
             for (Map.Entry<Class<? extends Entity>, PetsClientInitializer.Factory> entry : PetsClientInitializer.renderSupplierMap.entrySet()) {
-                this.m_74922622((Class) entry.getKey(), entry.getValue().create((EntityRenderDispatcher) (Object) this, new PetsClientInitializer.Context(textureManager, reloadableResourceManager, itemRenderer, new HashMap<>())));
+                this.m_6519441((Class) entry.getKey(), entry.getValue().create((EntityRenderDispatcher) (Object) this, new PetsClientInitializer.Context(textureManager, reloadableResourceManager, itemRenderer, new HashMap<>())));
             }
         }
     }

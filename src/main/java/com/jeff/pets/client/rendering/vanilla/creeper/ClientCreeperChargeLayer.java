@@ -26,14 +26,14 @@ public class ClientCreeperChargeLayer extends EntityRenderLayer<ClientCreeper, C
             GlStateManager.matrixMode(5890);
             GlStateManager.loadIdentity();
             float m = (float)creeperEntity.ticks + h;
-            GlStateManager.translate(m * 0.01F, m * 0.01F, 0.0F);
+            GlStateManager.translatef(m * 0.01F, m * 0.01F, 0.0F);
             GlStateManager.matrixMode(5888);
             GlStateManager.enableBlend();
             float n = 0.5F;
-            GlStateManager.color(0.5F, 0.5F, 0.5F, 1.0F);
+            GlStateManager.color4f(0.5F, 0.5F, 0.5F, 1.0F);
             GlStateManager.disableLighting();
             GlStateManager.blendFunc(1, 1);
-            (this.getModel()).m_95427286(this.getModel());
+            (this.getModel()).m_4059110(this.getModel());
             GameRenderer gameRenderer = Minecraft.getInstance().gameRenderer;
             gameRenderer.resetFogColor(true);
             this.getModel().render(creeperEntity, f, g, i, j, k, l);

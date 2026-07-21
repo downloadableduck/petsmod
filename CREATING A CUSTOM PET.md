@@ -31,7 +31,7 @@ repositories {
 
 ```groovy
 dependencies {
-    implementation "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}"
+    implementation "me.shedaniel.cloth:cloth-config2-fabric:${project.cloth_config_version}"
     implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
     implementation("com.terraformersmc:modmenu:${project.modmenu_version}")
     implementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"

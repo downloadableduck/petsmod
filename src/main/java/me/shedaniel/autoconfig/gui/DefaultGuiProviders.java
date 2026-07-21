@@ -125,7 +125,7 @@ public class DefaultGuiProviders {
         );
 
         registry.registerAnnotationProvider(
-                DefaultGuiProviders::getChildren,
+                DefaultGuiProviders::children,
                 field -> !field.getType().isPrimitive(),
                 ConfigEntry.Gui.TransitiveObject.class
         );
@@ -134,7 +134,7 @@ public class DefaultGuiProviders {
                 (i18n, field, config, defaults, guiProvider) -> Collections.singletonList(
                         ENTRY_BUILDER.startSubCategory(
                                         (i18n),
-                                        getChildren(i18n, field, config, defaults, guiProvider)
+                                        children(i18n, field, config, defaults, guiProvider)
                                 )
                                 .setExpended(field.getAnnotation(ConfigEntry.Gui.CollapsibleObject.class).startExpanded())
                                 .build()
@@ -280,9 +280,9 @@ public class DefaultGuiProviders {
                             (elem, nestedListListEntry) -> {
                                 if (elem == null) {
                                     Object newDefaultElemValue = Utils.constructUnsafely(fieldTypeParam);
-                                    return new MultiElementListEntry<>((classI13n), newDefaultElemValue, (List) getChildren(classI13n, fieldTypeParam, newDefaultElemValue, defaultElemValue, registry1), true);
+                                    return new MultiElementListEntry<>((classI13n), newDefaultElemValue, (List) children(classI13n, fieldTypeParam, newDefaultElemValue, defaultElemValue, registry1), true);
                                 } else
-                                    return new MultiElementListEntry<>((classI13n), elem, (List) getChildren(classI13n, fieldTypeParam, elem, defaultElemValue, registry1), true);
+                                    return new MultiElementListEntry<>((classI13n), elem, (List) children(classI13n, fieldTypeParam, elem, defaultElemValue, registry1), true);
                             }*/
             );
         }, isNotListOfType(Integer.class, Long.class, Float.class, Double.class, String.class));
@@ -299,7 +299,7 @@ public class DefaultGuiProviders {
                                     String key = i18n + ".boolean." + bool;
                                     String translate = I18n.translate(key);
                                     if (translate.equals(key))
-                                        return ("text.cloth-config.boolean.value." + bool);
+                                        return ("text.cloth-config2.boolean.value." + bool);
                                     return translate;
                                 })
                                 .build()
@@ -556,9 +556,9 @@ public class DefaultGuiProviders {
                             (elem, nestedListListEntry) -> {
                                 if (elem == null) {
                                     Object newDefaultElemValue = Utils.constructUnsafely(fieldTypeParam);
-                                    return new MultiElementListEntry<>((classI13n), newDefaultElemValue, (List) getChildren(classI13n, fieldTypeParam, newDefaultElemValue, defaultElemValue, registry1), true);
+                                    return new MultiElementListEntry<>((classI13n), newDefaultElemValue, (List) children(classI13n, fieldTypeParam, newDefaultElemValue, defaultElemValue, registry1), true);
                                 } else
-                                    return new MultiElementListEntry<>((classI13n), elem, (List) getChildren(classI13n, fieldTypeParam, elem, defaultElemValue, registry1), true);
+                                    return new MultiElementListEntry<>((classI13n), elem, (List) children(classI13n, fieldTypeParam, elem, defaultElemValue, registry1), true);
                             }
                     )*/
             );
@@ -573,11 +573,11 @@ public class DefaultGuiProviders {
         return registry;
     }
 
-    private static List<AbstractConfigListEntry> getChildren(String i18n, Field field, Object config, Object defaults, GuiRegistryAccess guiProvider) {
-        return getChildren(i18n, field.getType(), getUnsafely(field, config), getUnsafely(field, defaults), guiProvider);
+    private static List<AbstractConfigListEntry> children(String i18n, Field field, Object config, Object defaults, GuiRegistryAccess guiProvider) {
+        return children(i18n, field.getType(), getUnsafely(field, config), getUnsafely(field, defaults), guiProvider);
     }
 
-    private static List<AbstractConfigListEntry> getChildren(String i18n, Class<?> fieldType, Object iConfig, Object iDefaults, GuiRegistryAccess guiProvider) {
+    private static List<AbstractConfigListEntry> children(String i18n, Class<?> fieldType, Object iConfig, Object iDefaults, GuiRegistryAccess guiProvider) {
         return Arrays.stream(fieldType.getDeclaredFields())
                 .map(
                         iField -> {

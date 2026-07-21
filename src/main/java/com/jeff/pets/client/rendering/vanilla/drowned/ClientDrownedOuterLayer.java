@@ -19,9 +19,9 @@ public class ClientDrownedOuterLayer extends EntityRenderLayer<ClientDrowned, Cl
     @Override
     public void render(ClientDrowned zombieEntity, float f, float g, float h, float i, float j, float k, float l) {
         if (!zombieEntity.isInvisible()) {
-            (this.getModel()).m_64619982(this.drownedModel);
+            (this.getModel()).m_4059110(this.drownedModel);
             this.drownedModel.prepare(zombieEntity, f, g, h);
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             this.bindTexture(new Identifier("textures/entity/zombie/drowned_outer_layer.png"));
             this.drownedModel.render(zombieEntity, f, g, i, j, k, l);
         }

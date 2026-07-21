@@ -23,14 +23,14 @@ public class PenguinRenderer extends PetRenderer<@NotNull Penguin, @NotNull Peng
     @Override
     protected void applyScale(@NotNull Penguin livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
     public void renderModel(final Penguin penguin, float f, float partialTicks, float h, float i, float j, float k) {
-        penguin.flap = (float) MathHelper.m_23874002 /*lerp*/(partialTicks, penguin.oFlap, penguin.flap);
-        penguin.flapSpeed = (float) MathHelper.m_23874002 /*lerp*/(partialTicks, penguin.oFlapSpeed, penguin.flapSpeed);
+        penguin.flap = (float) MathHelper.m_4848186 /*lerp*/(partialTicks, penguin.oFlap, penguin.flap);
+        penguin.flapSpeed = (float) MathHelper.m_4848186 /*lerp*/(partialTicks, penguin.oFlapSpeed, penguin.flapSpeed);
         super.renderModel(penguin, f, partialTicks, h, i, j, k);
     }
 }

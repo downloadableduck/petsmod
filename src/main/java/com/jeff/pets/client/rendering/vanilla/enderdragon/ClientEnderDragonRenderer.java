@@ -18,7 +18,7 @@ public class ClientEnderDragonRenderer extends PetRenderer<@NotNull ClientEnderD
     protected void applyScale(@NotNull ClientEnderDragon livingEntityRenderState, float f) {
         super.applyScale(livingEntityRenderState, f);
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.25f, 0.25f, 0.25f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.25f, 0.25f, 0.25f);
         }
     }
 

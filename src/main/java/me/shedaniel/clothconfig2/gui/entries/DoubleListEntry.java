@@ -25,7 +25,7 @@ public class DoubleListEntry extends TextFieldListEntry<Double> {
     private Consumer<Double> saveConsumer;
     
     public DoubleListEntry(String fieldName, Double value, Consumer<Double> saveConsumer) {
-        this(fieldName, value, "text.cloth-config.reset_value", null, saveConsumer);
+        this(fieldName, value, "text.cloth-config2.reset_value", null, saveConsumer);
     }
     
     public DoubleListEntry(String fieldName, Double value, String resetButtonKey, Supplier<Double> defaultValue, Consumer<Double> saveConsumer) {

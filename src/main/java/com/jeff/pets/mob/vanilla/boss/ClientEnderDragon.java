@@ -45,7 +45,7 @@ public class ClientEnderDragon extends FlyingPet {
     public void tick() {
         super.tick();
         this.oFlapTime = this.flapTime;
-        Vec3d vec3 = this.m_94091929();
+        Vec3d vec3 = this.m_9899189();
         float g = 0.2F / ((float) vec3.y * 10.0F + 1.0F);
         g *= (float) Math.pow(2.0F, vec3.y);
         if (this.isInWall()) {
@@ -70,7 +70,7 @@ public class ClientEnderDragon extends FlyingPet {
         d = this.positions[j][1];
         e = this.positions[k][1] - d;
         ds[1] = d + e * (double) f;
-        ds[2] = MathHelper.m_23874002(f, this.positions[j][2], this.positions[k][2]); //lerp
+        ds[2] = MathHelper.m_4848186(f, this.positions[j][2], this.positions[k][2]); //lerp
         return ds;
     }
 

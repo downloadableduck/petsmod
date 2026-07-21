@@ -170,9 +170,9 @@ public class ClothConfigInitializer implements ClientModInitializer {
     
     @SuppressWarnings("deprecation")
     public static ConfigBuilder getConfigBuilder() {
-        ConfigBuilder builder = ConfigBuilder.create().setParentScreen(Minecraft.getInstance().screen).setTitle("title.cloth-config.config");
+        ConfigBuilder builder = ConfigBuilder.create().setParentScreen(Minecraft.getInstance().screen).setTitle("title.cloth-config2.config");
         builder.setDefaultBackgroundTexture(new Identifier("minecraft:textures/block/oak_planks.png"));
-        ConfigCategory scrolling = builder.getOrCreateCategory("category.cloth-config.scrolling");
+        ConfigCategory scrolling = builder.getOrCreateCategory("category.cloth-config2.scrolling");
         ConfigEntryBuilder entryBuilder = ConfigEntryBuilder.create();
         DropdownBoxEntry<EasingMethod> easingMethodEntry = entryBuilder.startDropdownMenu("Easing Method", DropdownMenuBuilder.TopCellElementBuilder.of(easingMethod, str -> {
             for (EasingMethod m : EasingMethods.getMethods())
@@ -180,11 +180,11 @@ public class ClothConfigInitializer implements ClientModInitializer {
                     return m;
             return null;
         })).setDefaultValue(EasingMethodImpl.LINEAR).setSaveConsumer(o -> easingMethod = o).setSelections(EasingMethods.getMethods()).build();
-        LongSliderEntry scrollDurationEntry = entryBuilder.startLongSlider("option.cloth-config.scrollDuration", scrollDuration, 0, 5000).setTextGetter(integer -> integer <= 0 ? "Value: Disabled" : (integer > 1500 ? String.format("Value: %.1fs", integer / 1000f) : "Value: " + integer + "ms")).setDefaultValue(600).setSaveConsumer(i -> scrollDuration = i).build();
-        DoubleListEntry scrollStepEntry = entryBuilder.startDoubleField("option.cloth-config.scrollStep", scrollStep).setDefaultValue(19).setSaveConsumer(i -> scrollStep = i).build();
-        LongSliderEntry bounceMultiplierEntry = entryBuilder.startLongSlider("option.cloth-config.bounceBackMultiplier", (long) (bounceBackMultiplier * 1000), -10, 750).setTextGetter(integer -> integer < 0 ? "Value: Disabled" : String.format("Value: %s", integer / 1000d)).setDefaultValue(240).setSaveConsumer(i -> bounceBackMultiplier = i / 1000d).build();
+        LongSliderEntry scrollDurationEntry = entryBuilder.startLongSlider("option.cloth-config2.scrollDuration", scrollDuration, 0, 5000).setTextGetter(integer -> integer <= 0 ? "Value: Disabled" : (integer > 1500 ? String.format("Value: %.1fs", integer / 1000f) : "Value: " + integer + "ms")).setDefaultValue(600).setSaveConsumer(i -> scrollDuration = i).build();
+        DoubleListEntry scrollStepEntry = entryBuilder.startDoubleField("option.cloth-config2.scrollStep", scrollStep).setDefaultValue(19).setSaveConsumer(i -> scrollStep = i).build();
+        LongSliderEntry bounceMultiplierEntry = entryBuilder.startLongSlider("option.cloth-config2.bounceBackMultiplier", (long) (bounceBackMultiplier * 1000), -10, 750).setTextGetter(integer -> integer < 0 ? "Value: Disabled" : String.format("Value: %s", integer / 1000d)).setDefaultValue(240).setSaveConsumer(i -> bounceBackMultiplier = i / 1000d).build();
     
-        scrolling.addEntry(new TooltipListEntry<Object>(I18n.translate("option.cloth-config.setDefaultSmoothScroll"), null, false) {
+        scrolling.addEntry(new TooltipListEntry<Object>(I18n.translate("option.cloth-config2.setDefaultSmoothScroll"), null, false) {
             final int width = 220;
             private final ButtonWidget buttonWidget = new AbstractPressableButtonWidget(0, 0, 0, 20, getFieldName()) {
                 @Override
@@ -229,7 +229,7 @@ public class ClothConfigInitializer implements ClientModInitializer {
             }
         });
     
-        scrolling.addEntry(new TooltipListEntry<Object>(I18n.translate("option.cloth-config.disableSmoothScroll"), null, false) {
+        scrolling.addEntry(new TooltipListEntry<Object>(I18n.translate("option.cloth-config2.disableSmoothScroll"), null, false) {
             final int width = 220;
             private final ButtonWidget buttonWidget = new AbstractPressableButtonWidget(0, 0, 0, 20, getFieldName()) {
                 @Override
@@ -285,7 +285,7 @@ public class ClothConfigInitializer implements ClientModInitializer {
     public static ConfigBuilder getConfigBuilderWithDemo() {
         ConfigBuilder builder = getConfigBuilder();
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
-        ConfigCategory testing = builder.getOrCreateCategory("category.cloth-config.testing");
+        ConfigCategory testing = builder.getOrCreateCategory("category.cloth-config2.testing");
 //        testing.addEntry(entryBuilder.startDropdownMenu("lol apple", DropdownMenuBuilder.TopCellElementBuilder.ofItemObject(Items.APPLE), DropdownMenuBuilder.CellCreatorBuilder.ofItemObject()).setDefaultValue(Items.APPLE).setSelections(Registry.ITEM.stream().sorted(Comparator.comparing(Item::toString)).collect(Collectors.toCollection(LinkedHashSet::new))).setSaveConsumer(item -> System.out.println("save this " + item)).build());
         testing.addEntry(entryBuilder.startKeyCodeField("Cool Key", InputConstants.UNKNOWN).setDefaultValue(InputConstants.UNKNOWN).build());
         testing.addEntry(entryBuilder.startModifierKeyCodeField("Cool Modifier Key", ModifierKeyCode.of(InputConstants.Type.KEYSYM.getOrCreate(79), Modifier.of(false, true, false))).setDefaultValue(ModifierKeyCode.of(InputConstants.Type.KEYSYM.getOrCreate(79), Modifier.of(false, true, false))).build());

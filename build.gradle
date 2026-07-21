@@ -11,7 +11,7 @@ version = "${project.version}+mc${project.minecraft_version}"
 group = project.maven_group
 
 ploceus {
-    setIntermediaryGeneration(2)
+    setIntermediaryGeneration(1)
 }
 
 loom {
@@ -41,6 +41,7 @@ dependencies {
     implementation("blue.endless:jankson:${rootProject.jankson_version}")
     implementation("com.moandjiezana.toml:toml4j:${rootProject.toml4j_version}")
     modImplementation "me.shedaniel.cloth:basic-math:0.6.1"
+    include "me.shedaniel.cloth:basic-math:0.6.1"
 }
 
 processResources {
@@ -97,7 +98,7 @@ publishing {
 tasks.named('jar') {
     archiveBaseName = project.archives_base_name
     archiveVersion = project.mod_version
-    archiveClassifier = project.minecraft_version
+    archiveClassifier = project.minecraft_version + "-ornithe"
 }
 
 tasks.withType(JavaCompile).configureEach {

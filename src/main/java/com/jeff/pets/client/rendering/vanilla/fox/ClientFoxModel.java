@@ -20,8 +20,8 @@ public class ClientFoxModel extends Model<ClientFox> {
     private float field_18025;
 
     public ClientFoxModel() {
-        this.f_35376783 /*textureWidth*/ = 48;
-        this.f_50207596 /*textureHeight*/ = 32;
+        this.f_9972380 /*textureWidth*/ = 48;
+        this.f_9233444 /*textureHeight*/ = 32;
         this.head = new ModelPart(this, 1, 5);
         this.head.addBox(-3.0F, -2.0F, -5.0F, 8, 6, 6);
         this.head.setPos(-1.0F, 16.5F, -3.0F);
@@ -120,14 +120,14 @@ public class ClientFoxModel extends Model<ClientFox> {
         if (this.isBaby) {
             GlStateManager.pushMatrix();
             float l = 0.75F;
-            GlStateManager.scale(0.75F, 0.75F, 0.75F);
-            GlStateManager.translate(0.0F, 8.0F * k, 3.35F * k);
+            GlStateManager.scalef(0.75F, 0.75F, 0.75F);
+            GlStateManager.translatef(0.0F, 8.0F * k, 3.35F * k);
             this.head.render(k);
             GlStateManager.popMatrix();
             GlStateManager.pushMatrix();
             float m = 0.5F;
-            GlStateManager.scale(0.5F, 0.5F, 0.5F);
-            GlStateManager.translate(0.0F, 24.0F * k, 0.0F);
+            GlStateManager.scalef(0.5F, 0.5F, 0.5F);
+            GlStateManager.translatef(0.0F, 24.0F * k, 0.0F);
             this.body.render(k);
             this.frontLeftLeg.render(k);
             this.frontRightLeg.render(k);

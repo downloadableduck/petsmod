@@ -14,7 +14,7 @@ public class ClientCaveSpiderRenderer extends PetRenderer<@NotNull ClientCaveSpi
 
     @Override
     protected void applyScale(ClientCaveSpider caveSpider, float f) {
-        com.mojang.blaze3d.platform.GlStateManager.scale(0.7F, 0.7F, 0.7F);
+        com.mojang.blaze3d.platform.GlStateManager.scalef(0.7F, 0.7F, 0.7F);
     }
 
     @Override

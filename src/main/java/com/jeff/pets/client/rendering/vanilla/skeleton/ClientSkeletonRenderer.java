@@ -21,7 +21,7 @@ public class ClientSkeletonRenderer extends PetRenderer<@NotNull ClientSkeleton,
     public void applyRotation(ClientSkeleton state, float f, float g, float h) {
         super.applyRotation(state, f, g, h);
         if (state.isRiding()) {
-            com.mojang.blaze3d.platform.GlStateManager.translate(0, -0.5f, 0);
+            com.mojang.blaze3d.platform.GlStateManager.translatef(0, -0.5f, 0);
         }
     }
 }

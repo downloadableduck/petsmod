@@ -32,7 +32,7 @@ public class ClientZombieVillagerProfessionLayer extends EntityRenderLayer<@NotN
     @Override
     public void render(ClientZombieVillager zombieVillager, float f, float g, float h, float k, float l, float u, float v) {
         com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
-        com.mojang.blaze3d.platform.GlStateManager.scale(1.001f, 1.001f, 1.001f);
+        com.mojang.blaze3d.platform.GlStateManager.scalef(1.001f, 1.001f, 1.001f);
         if (CONFIG.zombieVillagerSkin.equals("armorer")) {
             this.bindTexture(ARMORER_LOCATION);
         } else if (CONFIG.zombieVillagerSkin.equals("butcher")) {

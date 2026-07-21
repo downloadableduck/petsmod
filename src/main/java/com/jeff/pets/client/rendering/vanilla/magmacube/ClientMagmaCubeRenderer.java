@@ -31,7 +31,7 @@ public class ClientMagmaCubeRenderer extends PetRenderer<@NotNull ClientMagmaCub
                 magmaCubeapplyScale = 1;
                 break;
         }
-        com.mojang.blaze3d.platform.GlStateManager.scale(magmaCubeapplyScale, magmaCubeapplyScale, magmaCubeapplyScale);
+        com.mojang.blaze3d.platform.GlStateManager.scalef(magmaCubeapplyScale, magmaCubeapplyScale, magmaCubeapplyScale);
     }
 
     @Override

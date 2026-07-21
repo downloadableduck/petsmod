@@ -26,18 +26,18 @@ public class ClientSquidRenderer extends PetRenderer<@NotNull ClientSquid, @NotN
     @Override
     protected void applyScale(@NotNull ClientSquid livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
     protected void applyRotation(ClientSquid squidEntity, float f, float g, float h) {
         super.applyRotation(squidEntity, f, g, h);
-        float i = (float) MathHelper.m_23874002 /*lerp*/(h, squidEntity.xBodyRotO, squidEntity.xBodyRot);
-        float j = (float) MathHelper.m_23874002 /*lerp*/(h, squidEntity.zBodyRotO, squidEntity.zBodyRot);
-        GlStateManager.translate(0.0F, 0.5F, 0.0F);
-        GlStateManager.rotate(180.0F - g, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(i, 1.0F, 0.0F, 0.0F);
-        GlStateManager.rotate(j, 0.0F, 1.0F, 0.0F);
-        GlStateManager.translate(0.0F, -1.2F, 0.0F);
+        float i = (float) MathHelper.m_4848186 /*lerp*/(h, squidEntity.xBodyRotO, squidEntity.xBodyRot);
+        float j = (float) MathHelper.m_4848186 /*lerp*/(h, squidEntity.zBodyRotO, squidEntity.zBodyRot);
+        GlStateManager.translatef(0.0F, 0.5F, 0.0F);
+        GlStateManager.rotatef(180.0F - g, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotatef(i, 1.0F, 0.0F, 0.0F);
+        GlStateManager.rotatef(j, 0.0F, 1.0F, 0.0F);
+        GlStateManager.translatef(0.0F, -1.2F, 0.0F);
     }
 }

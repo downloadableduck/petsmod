@@ -22,7 +22,7 @@ public class ClientDolphinRenderer extends PetRenderer<@NotNull ClientDolphin, @
     @Override
     protected void applyScale(ClientDolphin state, float i) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 }

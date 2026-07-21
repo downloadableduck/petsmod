@@ -15,8 +15,8 @@ public class ClientBatModel extends Model<ClientBat> {
     private final ModelPart leftWingTip;
 
     public ClientBatModel() {
-        this.f_35376783 /*textureWidth*/ = 64;
-        this.f_50207596 /*textureHeight*/ = 64;
+        this.f_9972380 /*textureWidth*/ = 64;
+        this.f_9233444 /*textureHeight*/ = 64;
         this.head = new ModelPart(this, 0, 0);
         this.head.addBox(-3.0F, -3.0F, -3.0F, 6, 6, 6);
         ModelPart ModelPart = new ModelPart(this, 24, 0);

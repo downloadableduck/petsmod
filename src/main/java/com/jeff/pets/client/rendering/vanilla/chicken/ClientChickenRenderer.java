@@ -21,7 +21,7 @@ public class ClientChickenRenderer extends PetRenderer<@NotNull ClientChicken, @
     @Override
     protected void applyScale(ClientChicken state, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 }

@@ -20,7 +20,7 @@ public class RacoonRenderer extends PetRenderer<@NotNull Racoon, @NotNull Racoon
 
     protected void applyScale(@NotNull Racoon livingEntityRenderState, float f) {
         if ((CONFIG.isBaby && !livingEntityRenderState.isServerEntity()) || (livingEntityRenderState.isBaby() && livingEntityRenderState.isServerEntity())) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 

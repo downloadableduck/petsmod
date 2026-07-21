@@ -21,14 +21,14 @@ public class DuckRenderer extends PetRenderer<@NotNull Duck, @NotNull DuckModel>
     @Override
     protected void applyScale(@NotNull Duck livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.6f, 0.6f, 0.6f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.6f, 0.6f, 0.6f);
         }
     }
 
     @Override
     public void renderModel(final Duck duck, float f, final float partialTicks, float u, float g, float h, float i) {
-        duck.flap = (float) MathHelper.m_23874002 /*lerp*/(partialTicks, duck.oFlap, duck.flap);
-        duck.flapSpeed = (float) MathHelper.m_23874002 /*lerp*/(partialTicks, duck.oFlapSpeed, duck.flapSpeed);
+        duck.flap = (float) MathHelper.m_4848186 /*lerp*/(partialTicks, duck.oFlap, duck.flap);
+        duck.flapSpeed = (float) MathHelper.m_4848186 /*lerp*/(partialTicks, duck.oFlapSpeed, duck.flapSpeed);
         super.renderModel(duck, f, partialTicks, u, g, h, i);
     }
 

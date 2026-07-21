@@ -18,8 +18,8 @@ public class ClientLlamaModel extends Model<ClientLlama> {
     private final boolean child = false;
 
     public ClientLlamaModel(float f) {
-        this.f_35376783 /*textureWidth*/ = 128;
-        this.f_50207596 /*textureHeight*/ = 64;
+        this.f_9972380 /*textureWidth*/ = 128;
+        this.f_9233444 /*textureHeight*/ = 64;
         this.head = new ModelPart(this, 0, 0);
         this.head.addBox(-2.0F, -14.0F, -10.0F, 4, 4, 9, f);
         this.head.setPos(0.0F, 7.0F, -6.0F);
@@ -82,19 +82,19 @@ public class ClientLlamaModel extends Model<ClientLlama> {
             float l = 2.0F;
             com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
             float m = 0.7F;
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.71428573F, 0.64935064F, 0.7936508F);
-            com.mojang.blaze3d.platform.GlStateManager.translate(0.0F, 1.3125F, 0.22F);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.71428573F, 0.64935064F, 0.7936508F);
+            com.mojang.blaze3d.platform.GlStateManager.translatef(0.0F, 1.3125F, 0.22F);
             this.head.render(k);
             com.mojang.blaze3d.platform.GlStateManager.popMatrix();
             com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
             float n = 1.1F;
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.625F, 0.45454544F, 0.45454544F);
-            com.mojang.blaze3d.platform.GlStateManager.translate(0.0F, 2.0625F, 0.0F);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.625F, 0.45454544F, 0.45454544F);
+            com.mojang.blaze3d.platform.GlStateManager.translatef(0.0F, 2.0625F, 0.0F);
             this.body.render(k);
             com.mojang.blaze3d.platform.GlStateManager.popMatrix();
             com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.45454544F, 0.41322312F, 0.45454544F);
-            com.mojang.blaze3d.platform.GlStateManager.translate(0.0F, 2.0625F, 0.0F);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.45454544F, 0.41322312F, 0.45454544F);
+            com.mojang.blaze3d.platform.GlStateManager.translatef(0.0F, 2.0625F, 0.0F);
             ImmutableList.of(this.leg0, this.backRightLeg, this.backLeftLeg, this.frontRightLeg, this.chest1, this.chest2).forEach((ModelPart) -> ModelPart.render(k));
             com.mojang.blaze3d.platform.GlStateManager.popMatrix();
         } else {

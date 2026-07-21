@@ -101,8 +101,8 @@ public class DoubleListListEntry extends AbstractTextFieldListListEntry<Double, 
         }
 
         @Override
-        public List<? extends GuiEventListener> getChildren() {
-            return super.getChildren();
+        public List<? extends GuiEventListener> children() {
+            return super.children();
         }
     }
     

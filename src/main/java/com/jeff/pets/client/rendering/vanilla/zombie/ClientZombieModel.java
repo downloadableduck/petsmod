@@ -5,7 +5,7 @@ import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.client.render.model.Model;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.client.render.model.entity.HumanoidModel;
-import net.minecraft.unmapped.C_83676245;
+import net.minecraft.unmapped.C_3262860;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,8 +26,8 @@ public class ClientZombieModel<T extends AbstractPet> extends Model<@NotNull T> 
     private float itemUseTicks;
 
     public ClientZombieModel() {
-        f_35376783 /*textureWidth*/ = 64;
-        f_50207596 /*textureHeight*/ = 64;
+        f_9972380 /*textureWidth*/ = 64;
+        f_9233444 /*textureHeight*/ = 64;
 
         head = new ModelPart(this);
         head.setPos(0.0F, 0.0F, 0.0F);
@@ -94,7 +94,7 @@ public class ClientZombieModel<T extends AbstractPet> extends Model<@NotNull T> 
         this.left_arm.x = 5.0F;
         float k = 1.0F;
         if (bl) {
-            k = (float) state.m_94091929().squaredDistanceToOrigin();
+            k = (float) state.m_9899189().squaredDistanceToOrigin();
             k /= 0.2F;
             k *= k * k;
         }
@@ -233,21 +233,21 @@ public class ClientZombieModel<T extends AbstractPet> extends Model<@NotNull T> 
             this.left_arm.rotationX = (float) (-Math.PI / 2) + this.head.rotationX;
         }
 
-        float o = C_83676245.m_22569727(state.getItemInUse());
+        float o = C_3262860.m_0975075(state.getItemInUse());
         if (this.rightArmPose == HumanoidModel.ArmPose.CROSSBOW_CHARGE) {
             this.right_arm.rotationY = -0.8F;
             this.right_arm.rotationX = -0.97079635F;
             this.left_arm.rotationX = -0.97079635F;
             float p = MathHelper.clamp(this.itemUseTicks, 0.0F, o);
-            this.left_arm.rotationY = (float) MathHelper.m_23874002 /*lerp*/(p / o, 0.4F, 0.85F);
-            this.left_arm.rotationX = (float) MathHelper.m_23874002 /*lerp*/(p / o, this.left_arm.rotationX, (float) (-Math.PI / 2));
+            this.left_arm.rotationY = (float) MathHelper.m_4848186 /*lerp*/(p / o, 0.4F, 0.85F);
+            this.left_arm.rotationX = (float) MathHelper.m_4848186 /*lerp*/(p / o, this.left_arm.rotationX, (float) (-Math.PI / 2));
         } else if (this.leftArmPose == HumanoidModel.ArmPose.CROSSBOW_CHARGE) {
             this.left_arm.rotationY = 0.8F;
             this.right_arm.rotationX = -0.97079635F;
             this.left_arm.rotationX = -0.97079635F;
             float p = MathHelper.clamp(this.itemUseTicks, 0.0F, o);
-            this.right_arm.rotationY = (float) MathHelper.m_23874002 /*lerp*/(p / o, -0.4F, -0.85F);
-            this.right_arm.rotationX = (float) MathHelper.m_23874002 /*lerp*/(p / o, this.right_arm.rotationX, (float) (-Math.PI / 2));
+            this.right_arm.rotationY = (float) MathHelper.m_4848186 /*lerp*/(p / o, -0.4F, -0.85F);
+            this.right_arm.rotationX = (float) MathHelper.m_4848186 /*lerp*/(p / o, this.right_arm.rotationX, (float) (-Math.PI / 2));
         }
 
         if (this.rightArmPose == HumanoidModel.ArmPose.CROSSBOW_HOLD && this.attackAnimationProgress <= 0.0F) {
@@ -267,35 +267,35 @@ public class ClientZombieModel<T extends AbstractPet> extends Model<@NotNull T> 
             float l = this.attackAnimationProgress > 0.0F ? 0.0F : this.swimAmount;
             if (p < 14.0F) {
                 this.left_arm.rotationX = this.rotlerpRad(this.left_arm.rotationX, 0.0F, this.swimAmount);
-                this.right_arm.rotationX = (float) MathHelper.m_23874002 /*lerp*/(l, this.right_arm.rotationX, 0.0F);
+                this.right_arm.rotationX = (float) MathHelper.m_4848186 /*lerp*/(l, this.right_arm.rotationX, 0.0F);
                 this.left_arm.rotationY = this.rotlerpRad(this.left_arm.rotationY, (float) Math.PI, this.swimAmount);
-                this.right_arm.rotationY = (float) MathHelper.m_23874002 /*lerp*/(l, this.right_arm.rotationY, (float) Math.PI);
+                this.right_arm.rotationY = (float) MathHelper.m_4848186 /*lerp*/(l, this.right_arm.rotationY, (float) Math.PI);
                 this.left_arm.rotationZ = this.rotlerpRad(
                         this.left_arm.rotationZ, (float) Math.PI + 1.8707964F * this.quadraticArmUpdate(p) / this.quadraticArmUpdate(14.0F), this.swimAmount
                 );
-                this.right_arm.rotationZ = (float) MathHelper.m_23874002 /*lerp*/(l, this.right_arm.rotationZ, (float) Math.PI - 1.8707964F * this.quadraticArmUpdate(p) / this.quadraticArmUpdate(14.0F));
+                this.right_arm.rotationZ = (float) MathHelper.m_4848186 /*lerp*/(l, this.right_arm.rotationZ, (float) Math.PI - 1.8707964F * this.quadraticArmUpdate(p) / this.quadraticArmUpdate(14.0F));
             } else if (p >= 14.0F && p < 22.0F) {
                 float m = (p - 14.0F) / 8.0F;
                 this.left_arm.rotationX = this.rotlerpRad(this.left_arm.rotationX, (float) (Math.PI / 2) * m, this.swimAmount);
-                this.right_arm.rotationX = (float) MathHelper.m_23874002 /*lerp*/(l, this.right_arm.rotationX, (float) (Math.PI / 2) * m);
+                this.right_arm.rotationX = (float) MathHelper.m_4848186 /*lerp*/(l, this.right_arm.rotationX, (float) (Math.PI / 2) * m);
                 this.left_arm.rotationY = this.rotlerpRad(this.left_arm.rotationY, (float) Math.PI, this.swimAmount);
-                this.right_arm.rotationY = (float) MathHelper.m_23874002 /*lerp*/(l, this.right_arm.rotationY, (float) Math.PI);
+                this.right_arm.rotationY = (float) MathHelper.m_4848186 /*lerp*/(l, this.right_arm.rotationY, (float) Math.PI);
                 this.left_arm.rotationZ = this.rotlerpRad(this.left_arm.rotationZ, 5.012389F - 1.8707964F * m, this.swimAmount);
-                this.right_arm.rotationZ = (float) MathHelper.m_23874002 /*lerp*/(l, this.right_arm.rotationZ, 1.2707963F + 1.8707964F * m);
+                this.right_arm.rotationZ = (float) MathHelper.m_4848186 /*lerp*/(l, this.right_arm.rotationZ, 1.2707963F + 1.8707964F * m);
             } else if (p >= 22.0F && p < 26.0F) {
                 float m = (p - 22.0F) / 4.0F;
                 this.left_arm.rotationX = this.rotlerpRad(this.left_arm.rotationX, (float) (Math.PI / 2) - (float) (Math.PI / 2) * m, this.swimAmount);
-                this.right_arm.rotationX = (float) MathHelper.m_23874002 /*lerp*/(l, this.right_arm.rotationX, (float) (Math.PI / 2) - (float) (Math.PI / 2) * m);
+                this.right_arm.rotationX = (float) MathHelper.m_4848186 /*lerp*/(l, this.right_arm.rotationX, (float) (Math.PI / 2) - (float) (Math.PI / 2) * m);
                 this.left_arm.rotationY = this.rotlerpRad(this.left_arm.rotationY, (float) Math.PI, this.swimAmount);
-                this.right_arm.rotationY = (float) MathHelper.m_23874002 /*lerp*/(l, this.right_arm.rotationY, (float) Math.PI);
+                this.right_arm.rotationY = (float) MathHelper.m_4848186 /*lerp*/(l, this.right_arm.rotationY, (float) Math.PI);
                 this.left_arm.rotationZ = this.rotlerpRad(this.left_arm.rotationZ, (float) Math.PI, this.swimAmount);
-                this.right_arm.rotationZ = (float) MathHelper.m_23874002 /*lerp*/(l, this.right_arm.rotationZ, (float) Math.PI);
+                this.right_arm.rotationZ = (float) MathHelper.m_4848186 /*lerp*/(l, this.right_arm.rotationZ, (float) Math.PI);
             }
 
             float m = 0.3F;
             float n = 0.33333334F;
-            this.left_leg.rotationX = (float) MathHelper.m_23874002 /*lerp*/(this.swimAmount, this.left_leg.rotationX, 0.3F * MathHelper.cos(f * 0.33333334F + (float) Math.PI));
-            this.right_leg.rotationX = (float) MathHelper.m_23874002 /*lerp*/(this.swimAmount, this.right_leg.rotationX, 0.3F * MathHelper.cos(f * 0.33333334F));
+            this.left_leg.rotationX = (float) MathHelper.m_4848186 /*lerp*/(this.swimAmount, this.left_leg.rotationX, 0.3F * MathHelper.cos(f * 0.33333334F + (float) Math.PI));
+            this.right_leg.rotationX = (float) MathHelper.m_4848186 /*lerp*/(this.swimAmount, this.right_leg.rotationX, 0.3F * MathHelper.cos(f * 0.33333334F));
         }
 
         AnimationUtils.animateZombieArms(this.left_arm, this.right_arm, true, this.attackAnimationProgress, h);
@@ -305,9 +305,9 @@ public class ClientZombieModel<T extends AbstractPet> extends Model<@NotNull T> 
         super.render(zombie, b, j, f, g, h, k);
         com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(1.5f, 1.5f, 1.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(1.5f, 1.5f, 1.5f);
         } else {
-            com.mojang.blaze3d.platform.GlStateManager.scale(1, 1, 1);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(1, 1, 1);
         }
         //this.head.rotate(poseStack);
         com.mojang.blaze3d.platform.GlStateManager.popMatrix();

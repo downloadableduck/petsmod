@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 public class SubCategoryListEntry extends TooltipListEntry {
     
-    private static final Identifier CONFIG_TEX = new Identifier("cloth-config", "textures/gui/cloth_config.png");
+    private static final Identifier CONFIG_TEX = new Identifier("cloth-config2", "textures/gui/cloth_config.png");
     private String categoryName;
     private List<AbstractConfigListEntry> entries;
     private CategoryLabelWidget widget;
@@ -64,8 +64,8 @@ public class SubCategoryListEntry extends TooltipListEntry {
         widget.rectangle.height = 24;
         Minecraft.getInstance().getTextureManager().bind(CONFIG_TEX);
         Lighting.turnOff();
-        GlStateManager.color(1, 1, 1, 1);
-        drawTexture(x - 15, y + 4, 24, expended ? 9 : 0, 9, 9); //blit?
+        GlStateManager.color4f(1, 1, 1, 1);
+        blit(x - 15, y + 4, 24, expended ? 9 : 0, 9, 9); //blit?
         Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(categoryName), x, y + 5, -1);
         for(AbstractConfigListEntry entry : entries) {
             entry.setParent(getParent());

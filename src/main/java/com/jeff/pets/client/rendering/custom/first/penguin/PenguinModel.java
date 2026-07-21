@@ -21,8 +21,8 @@ public class PenguinModel extends PetModel<@NotNull Penguin> {
     private final ModelPart beak;
 
     public PenguinModel() {
-        f_35376783 /*textureWidth*/ = 64;
-        f_50207596 /*textureHeight*/ = 64;
+        f_9972380 /*textureWidth*/ = 64;
+        f_9233444 /*textureHeight*/ = 64;
 
         root = new ModelPart(this);
         root.setPos(0.0F, 28.0F, 0.0F);

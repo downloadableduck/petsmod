@@ -1,7 +1,4 @@
 accessWidener v2 named
-mutable field net/minecraft/client/resource/SplashTextResourceSupplier RESOURCE_ID Lnet/minecraft/util/Identifier;
-accessible field net/minecraft/client/resource/SplashTextResourceSupplier RESOURCE_ID Lnet/minecraft/util/Identifier;
 accessible field net/minecraft/entity/living/LivingEntity jumping Z
-extendable method net/minecraft/entity/LivingEntity canBreatheInWater ()Z
-accessible method net/minecraft/client/world/ClientWorld m_99979799 (ILnet/minecraft/entity/Entity;)V
+accessible method net/minecraft/client/world/ClientWorld m_4719207 (ILnet/minecraft/entity/Entity;)V
 accessible field net/minecraft/block/entity/SkullBlockEntity playerCache Lnet/minecraft/server/GameProfileCache;

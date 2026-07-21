@@ -20,8 +20,8 @@ public class ClientParrotModel extends Model<ClientParrot> {
     private final ModelPart field_3457;
 
     public ClientParrotModel() {
-        this.f_35376783 /*textureWidth*/ = 32;
-        this.f_50207596 /*textureHeight*/ = 32;
+        this.f_9972380 /*textureWidth*/ = 32;
+        this.f_9233444 /*textureHeight*/ = 32;
         this.field_3458 = new ModelPart(this, 2, 8);
         this.field_3458.addBox(-1.5F, 0.0F, -1.5F, 3, 6, 3);
         this.field_3458.setPos(0.0F, 16.5F, -3.0F);

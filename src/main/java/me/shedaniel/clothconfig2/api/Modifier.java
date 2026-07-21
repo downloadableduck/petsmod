@@ -48,7 +48,7 @@ public class Modifier {
     }
     
     public static Modifier current() {
-        return Modifier.of(Screen.isAltDown(), Screen.isControlDown(), Screen.isShiftDown());
+        return Modifier.of(Screen.hasAltDown(), Screen.hasControlDown(), Screen.hasShiftDown());
     }
     
     private static short setFlag(short base, short flag, boolean val) {

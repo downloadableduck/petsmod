@@ -14,7 +14,7 @@ public class ClientElderGuardianRenderer extends PetRenderer<@NotNull ClientElde
 
     @Override
     public void applyScale(ClientElderGuardian elderGuardian, float f) {
-        com.mojang.blaze3d.platform.GlStateManager.scale(2.35f, 2.35f, 2.35f);
+        com.mojang.blaze3d.platform.GlStateManager.scalef(2.35f, 2.35f, 2.35f);
     }
 
     @Override

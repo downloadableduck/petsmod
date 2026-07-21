@@ -27,7 +27,7 @@ public class EnumListEntry<T extends Enum<?>> extends TooltipListEntry {
     private Function<Enum, String> enumNameProvider;
     
     public EnumListEntry(String fieldName, Class<T> clazz, T value, Consumer<T> saveConsumer) {
-        this(fieldName, clazz, value, "text.cloth-config.reset_value", null, saveConsumer);
+        this(fieldName, clazz, value, "text.cloth-config2.reset_value", null, saveConsumer);
     }
     
     public EnumListEntry(String fieldName, Class<T> clazz, T value, String resetButtonKey, Supplier<T> defaultValue, Consumer<T> saveConsumer) {

@@ -14,12 +14,12 @@ public class ClientWitherModel<T extends LivingEntity> extends Model<T> {
     private final ImmutableList<ModelPart> parts;
 
     public ClientWitherModel(float f) {
-        this.f_35376783 /*textureWidth*/ = 64;
-        this.f_50207596 /*textureHeight*/ = 64;
+        this.f_9972380 /*textureWidth*/ = 64;
+        this.f_9233444 /*textureHeight*/ = 64;
         this.upperBodyParts = new ModelPart[3];
         this.upperBodyParts[0] = new ModelPart(this, 0, 16);
         this.upperBodyParts[0].addBox(-10.0F, 3.9F, -0.5F, 20, 3, 3, f);
-        this.upperBodyParts[1] = (new ModelPart(this)).setTextureSize(this.f_35376783 /*textureWidth*/, this.f_50207596 /*textureHeight*/);
+        this.upperBodyParts[1] = (new ModelPart(this)).setTextureSize(this.f_9972380 /*textureWidth*/, this.f_9233444 /*textureHeight*/);
         this.upperBodyParts[1].setPos(-2.0F, 6.9F, -0.5F);
         this.upperBodyParts[1].setTextureCoords(0, 22).addBox(0.0F, 0.0F, 0.0F, 3, 10, 3, f);
         this.upperBodyParts[1].setTextureCoords(24, 22).addBox(-4.0F, 1.5F, 0.5F, 11, 2, 2, f);

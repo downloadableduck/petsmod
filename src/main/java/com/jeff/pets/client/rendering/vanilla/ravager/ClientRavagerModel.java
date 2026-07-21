@@ -17,8 +17,8 @@ public class ClientRavagerModel extends Model<ClientRavager> {
     private final ModelPart neck;
 
     public ClientRavagerModel() {
-        this.f_35376783 /*textureWidth*/ = 128;
-        this.f_50207596 /*textureHeight*/ = 128;
+        this.f_9972380 /*textureWidth*/ = 128;
+        this.f_9233444 /*textureHeight*/ = 128;
         int i = 16;
         float f = 0.0F;
         this.neck = new ModelPart(this);

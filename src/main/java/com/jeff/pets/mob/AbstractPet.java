@@ -147,11 +147,11 @@ public abstract class AbstractPet extends TameableEntity {
      * Never, under any circumstances, remove this method.
      */
     @Override
-    public @NotNull Packet<?> m_00781305() {
+    public @NotNull Packet<?> m_6528338() {
         if (this.world.isClient()) {
             return new AddEntityS2CPacket(this);
         } else {
-            return super.m_00781305();
+            return super.m_6528338();
         }
     }
 
@@ -190,7 +190,7 @@ public abstract class AbstractPet extends TameableEntity {
         float z = speed * this.randomZ;
 
         float distance = this.distanceTo(this.getOwner());
-        float yVelo = (float) this.m_94091929().y;//this.getVelocity().y;
+        float yVelo = (float) this.m_9899189().y;//this.getVelocity().y;
 
         if (distance > 5) {
             this.reCalcPos();
@@ -201,15 +201,15 @@ public abstract class AbstractPet extends TameableEntity {
         }
 
         if (!this.isReturningToOwner) {
-            this.m_28162558(new Vec3d(speed, yVelo, z)); //this.setVelocity()
+            this.m_5189207(new Vec3d(speed, yVelo, z)); //this.setVelocity()
         } else {
-            this.m_28162558(new Vec3d(-speed, yVelo, -z));
+            this.m_5189207(new Vec3d(-speed, yVelo, -z));
         }
 
         //this.lookAt(EntityAnchorArgument.Anchor.EYES, lookDir);
 
-        double moveX = this.m_94091929().x;
-        double moveZ = this.m_94091929().z;
+        double moveX = this.m_9899189().x;
+        double moveZ = this.m_9899189().z;
 
         lookDir = new Vec3d(
                 this.x + (moveX * 2),
@@ -220,7 +220,7 @@ public abstract class AbstractPet extends TameableEntity {
 
         if (moveX * moveX + moveZ * moveZ > 0.001) {
             float targetYaw = (float) (Math.atan2(-moveX, moveZ) * (180D / Math.PI));
-            float smoothYaw = MathHelper.m_41989395(0.2f, this.getYRot(), targetYaw); //lerpAngleDegrees
+            float smoothYaw = MathHelper.m_4818739(0.2f, this.getYRot(), targetYaw); //lerpAngleDegrees
 
             this.setYRot(smoothYaw);
             this.setHeadYaw(smoothYaw);
@@ -231,7 +231,7 @@ public abstract class AbstractPet extends TameableEntity {
             this.jump();
         }
         if (!this.onGround) {
-            this.m_28162558(this.m_94091929().add(0, -0.04, 0));
+            this.m_5189207(this.m_9899189().add(0, -0.04, 0));
         }
         double dx = lookDir.x - this.x;
         double dz = lookDir.z - this.z;

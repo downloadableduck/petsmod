@@ -33,6 +33,10 @@
     {
       "config": "pets.mixins.json",
       "environment": "client"
+    },
+    {
+      "config": "cloth-config.mixins.json",
+      "environment": "client"
     }
   ],
   "depends": {

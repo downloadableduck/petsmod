@@ -10,8 +10,8 @@ public class ClientTurtleModel extends QuadrupedModel<ClientTurtle> {
 
     public ClientTurtleModel(float f) {
         super(12, f);
-        this.f_35376783 /*textureWidth*/ = 128;
-        this.f_50207596 /*textureHeight*/ = 64;
+        this.f_9972380 /*textureWidth*/ = 128;
+        this.f_9233444 /*textureHeight*/ = 64;
         this.head = new ModelPart(this, 3, 0);
         this.head.addBox(-3.0F, -1.0F, -3.0F, 6, 5, 6, 0.0F);
         this.head.setPos(0.0F, 19.0F, -10.0F);
@@ -71,7 +71,7 @@ public class ClientTurtleModel extends QuadrupedModel<ClientTurtle> {
         boolean bl = this.eggBelly.visible;
         if (bl) {
             com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
-            com.mojang.blaze3d.platform.GlStateManager.translate(0.0F, -0.08F, 0.0F);
+            com.mojang.blaze3d.platform.GlStateManager.translatef(0.0F, -0.08F, 0.0F);
         }
 
         super.render(turtle, i, j, f, g, h, k);

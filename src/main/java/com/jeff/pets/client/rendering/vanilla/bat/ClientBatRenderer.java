@@ -14,7 +14,7 @@ public class ClientBatRenderer extends PetRenderer<@NotNull ClientBat, @NotNull 
     @Override
     protected void applyScale(ClientBat bat, float f) {
         super.applyScale(bat, f);
-        com.mojang.blaze3d.platform.GlStateManager.scale(0.35F, 0.35F, 0.35F);
+        com.mojang.blaze3d.platform.GlStateManager.scalef(0.35F, 0.35F, 0.35F);
     }
 
     @Override

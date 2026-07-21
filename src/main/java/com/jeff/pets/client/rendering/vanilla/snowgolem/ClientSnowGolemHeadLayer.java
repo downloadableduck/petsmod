@@ -33,16 +33,16 @@ public class ClientSnowGolemHeadLayer extends EntityRenderLayer<ClientSnowGolem,
                 com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
                 //this.getContextModel().method_2834().rotate(poseStack);
                 float m = 0.625F;
-                GlStateManager.translate(0.0F, -0F, 0.0F);
+                GlStateManager.translatef(0.0F, -0F, 0.0F);
                 //poseStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180.0F));
-                com.mojang.blaze3d.platform.GlStateManager.scale(0.625F, -0.625F, -0.625F);
-                GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
+                com.mojang.blaze3d.platform.GlStateManager.scalef(0.625F, -0.625F, -0.625F);
+                GlStateManager.rotatef(180.0F, 0.0F, 1.0F, 0.0F);
                 ItemStack itemStack = new ItemStack(Blocks.CARVED_PUMPKIN);
                 if (bl) {
                     BlockState blockState = Blocks.CARVED_PUMPKIN.defaultState();
                     BakedModel bakedModel = this.blockRenderer.getModel(blockState);
                     int n = 0;
-                    com.mojang.blaze3d.platform.GlStateManager.translate(-0.5F, -0.5F, -0.5F);
+                    com.mojang.blaze3d.platform.GlStateManager.translatef(-0.5F, -0.5F, -0.5F);
                     this.blockRenderer.getModelRenderer().render(blockState, bakedModel, 0.0F, 0.0F, 0.0F, i);
                 } else {
                     this.itemRenderer.renderItemInHand(itemStack, ModelTransformations.Type.HEAD);

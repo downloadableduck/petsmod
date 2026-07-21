@@ -199,7 +199,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         }
         
         @Override
-        public List<? extends GuiEventListener> getChildren() {
+        public List<? extends GuiEventListener> children() {
             return Lists.newArrayList(topRenderer, menu);
         }
 
@@ -250,7 +250,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         }
         
         @Override
-        public abstract List<SelectionCellElement<R>> getChildren();
+        public abstract List<SelectionCellElement<R>> children();
     }
     
     public static class DefaultDropdownMenuElement<R> extends DropdownMenuElement<R> {
@@ -378,7 +378,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             fill(lastRectangle.x, lastRectangle.y + lastRectangle.height, lastRectangle.x + cWidth, lastRectangle.y + lastRectangle.height + last10Height + 1, -6250336);
             fill(lastRectangle.x + 1, lastRectangle.y + lastRectangle.height + 1, lastRectangle.x + cWidth - 1, lastRectangle.y + lastRectangle.height + last10Height, -16777216);
             GlStateManager.pushMatrix();
-            GlStateManager.translate(0, 0, 300f);
+            GlStateManager.translatef(0, 0, 300f);
             
             ScissorsHandler.INSTANCE.scissor(new Rectangle(lastRectangle.x, lastRectangle.y + lastRectangle.height + 1, cWidth - 6, last10Height - 1));
             double yy = lastRectangle.y + lastRectangle.height - scroll;
@@ -393,12 +393,12 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             
             if (currentElements.isEmpty()) {
                 TextRenderer textRenderer = Minecraft.getInstance().textRenderer;
-                String s = I18n.translate("text.cloth-config.dropdown.value.unknown");
+                String s = I18n.translate("text.cloth-config2.dropdown.value.unknown");
                 textRenderer.drawWithShadow(s, lastRectangle.x + getCellCreator().getCellWidth() / 2f - textRenderer.getWidth(s) / 2f, lastRectangle.y + lastRectangle.height + 3, -1);
             }
             
             if (getMaxScrollPosition() > 6) {
-                GlStateManager.disableBoundTexture();
+                GlStateManager.disableTexture();
                 int scrollbarPositionMinX = lastRectangle.x + getCellCreator().getCellWidth() - 6;
                 int scrollbarPositionMaxX = scrollbarPositionMinX + 6;
                 int height = (int) (((last10Height) * (last10Height)) / this.getMaxScrollPosition());
@@ -427,9 +427,9 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
                 buffer.vertex((scrollbarPositionMaxX - 1), minY, 0.0D).texture(1, 0).color(topc, topc, topc, 255).nextVertex();
                 buffer.vertex(scrollbarPositionMinX, minY, 0.0D).texture(0, 0).color(topc, topc, topc, 255).nextVertex();
                 tessellator.end();
-                GlStateManager.enableBoundTexture();
+                GlStateManager.enableTexture();
             }
-            GlStateManager.translate(0, 0, -300f);
+            GlStateManager.translatef(0, 0, -300f);
             GlStateManager.popMatrix();
         }
         
@@ -475,11 +475,6 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         
         protected void updateScrollingState(double double_1, double double_2, int int_1) {
             this.scrolling = isExpanded() && lastRectangle != null && int_1 == 0 && double_1 >= (double) lastRectangle.x + getCellCreator().getCellWidth() - 6 && double_1 < (double) (lastRectangle.x + getCellCreator().getCellWidth());
-        }
-
-        @Override
-        public List<SelectionCellElement<R>> getChildren() {
-            return this.children();
         }
 
         @Override
@@ -616,7 +611,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         }
         
         @Override
-        public List<? extends GuiEventListener> getChildren() {
+        public List<? extends GuiEventListener> children() {
             return Collections.emptyList();
         }
 
@@ -671,7 +666,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         }
         
         public void selectFirstRecommendation() {
-            List<SelectionCellElement<R>> children = getParent().selectionElement.menu.getChildren();
+            List<SelectionCellElement<R>> children = getParent().selectionElement.menu.children();
             for (SelectionCellElement<R> child : children) {
                 if (child.getSelection() != null) {
                     setValue(child.getSelection());
@@ -697,7 +692,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             textFieldWidget = new TextFieldWidget(Minecraft.getInstance().textRenderer, 0, 0, 148, 18, "") {
                 @Override
                 public void render(int int_1, int int_2, float float_1) {
-                    setFocused(isSuggestionMode() && isSelected && DefaultSelectionTopCellElement.this.getParent().getFocused() == DefaultSelectionTopCellElement.this.getParent().selectionElement && DefaultSelectionTopCellElement.this.getParent().selectionElement.m_47978329() == DefaultSelectionTopCellElement.this && DefaultSelectionTopCellElement.this.m_47978329() == this);
+                    setFocused(isSuggestionMode() && isSelected && DefaultSelectionTopCellElement.this.getParent().getFocused() == DefaultSelectionTopCellElement.this.getParent().selectionElement && DefaultSelectionTopCellElement.this.getParent().selectionElement.getFocused() == DefaultSelectionTopCellElement.this && DefaultSelectionTopCellElement.this.getFocused() == this);
                     super.render(int_1, int_2, float_1);
                 }
                 
@@ -760,7 +755,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         }
         
         @Override
-        public List<? extends GuiEventListener> getChildren() {
+        public List<? extends GuiEventListener> children() {
             return Collections.singletonList(textFieldWidget);
         }
     }

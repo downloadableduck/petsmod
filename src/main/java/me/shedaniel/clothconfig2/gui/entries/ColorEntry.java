@@ -91,7 +91,7 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
     public Optional<String> getError() {
         ColorValue colorValue = getColorValue(this.textFieldWidget.getText());
         if (colorValue.hasError())
-            return Optional.of(I18n.translate("text.cloth-config.error.color." + colorValue.getError().name().toLowerCase(Locale.ROOT)));
+            return Optional.of(I18n.translate("text.cloth-config2.error.color." + colorValue.getError().name().toLowerCase(Locale.ROOT)));
         return super.getError();
     }
     

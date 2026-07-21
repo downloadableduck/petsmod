@@ -13,8 +13,8 @@ public class ClientPandaModel extends QuadrupedModel<ClientPanda> {
 
     public ClientPandaModel(int i, float f) {
         super(i, f);
-        this.f_35376783 /*textureWidth*/ = 64;
-        this.f_50207596 /*textureHeight*/ = 64;
+        this.f_9972380 /*textureWidth*/ = 64;
+        this.f_9233444 /*textureHeight*/ = 64;
         this.head = new ModelPart(this, 0, 6);
         this.head.addBox(-6.5F, -5.0F, -4.0F, 13, 10, 9);
         this.head.setPos(0.0F, 11.5F, -17.0F);

@@ -15,7 +15,7 @@ import java.util.UUID;
 @Environment(EnvType.CLIENT)
 public class ConfigEntryBuilderImpl implements ConfigEntryBuilder {
     
-    private String resetButtonKey = "text.cloth-config.reset_value";
+    private String resetButtonKey = "text.cloth-config2.reset_value";
     
     private ConfigEntryBuilderImpl() {
     }

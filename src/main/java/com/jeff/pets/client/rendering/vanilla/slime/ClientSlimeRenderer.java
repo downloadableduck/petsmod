@@ -33,7 +33,7 @@ public class ClientSlimeRenderer extends PetRenderer<@NotNull ClientSlime, @NotN
                 slimeapplyScale = 1;
                 break;
         }
-        com.mojang.blaze3d.platform.GlStateManager.scale(slimeapplyScale, slimeapplyScale, slimeapplyScale);
+        com.mojang.blaze3d.platform.GlStateManager.scalef(slimeapplyScale, slimeapplyScale, slimeapplyScale);
     }
 
     @Override

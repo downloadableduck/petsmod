@@ -48,7 +48,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
     protected net.minecraft.client.gui.widget.ButtonWidget resetWidget;
     @NotNull protected Function<SELF, C> createNewInstance;
     @NotNull protected Supplier<List<T>> defaultValue;
-    @Nullable protected String addTooltip = I18n.translate("text.cloth-config.list.add"), removeTooltip = I18n.translate("text.cloth-config.list.remove");
+    @Nullable protected String addTooltip = I18n.translate("text.cloth-config2.list.add"), removeTooltip = I18n.translate("text.cloth-config2.list.remove");
     
     @ApiStatus.Internal
     @Deprecated
@@ -167,7 +167,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         labelWidget.rectangle.y = y;
         labelWidget.rectangle.width = entryWidth + 15;
         labelWidget.rectangle.height = 24;
-        return labelWidget.rectangle.contains(mouseX, mouseY) && getParent().isMouseOver(mouseX, mouseY) && !resetWidget.m_74503738(mouseX, mouseY);
+        return labelWidget.rectangle.contains(mouseX, mouseY) && getParent().isMouseOver(mouseX, mouseY) && !resetWidget.isMouseOver(mouseX, mouseY);
     }
     
     protected boolean isInsideCreateNew(double mouseX, double mouseY) {
@@ -201,19 +201,19 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         }
         Minecraft.getInstance().getTextureManager().bind(CONFIG_TEX);
         Lighting.turnOff();
-        GlStateManager.color(1, 1, 1, 1);
+        GlStateManager.color4f(1, 1, 1, 1);
         BaseListCell focused = !expanded || getFocused() == null || !(getFocused() instanceof BaseListCell) ? null : (BaseListCell) getFocused();
         boolean insideCreateNew = isInsideCreateNew(mouseX, mouseY);
         boolean insideDelete = isInsideDelete(mouseX, mouseY);
-        drawTexture(x - 15, y + 4, 24 + 9, (labelWidget.rectangle.contains(mouseX, mouseY) && !insideCreateNew && !insideDelete ? 18 : 0) + (expanded ? 9 : 0), 9, 9);
-        drawTexture(x - 15 + 13, y + 4, 24 + 18, insideCreateNew ? 9 : 0, 9, 9);
+        blit(x - 15, y + 4, 24 + 9, (labelWidget.rectangle.contains(mouseX, mouseY) && !insideCreateNew && !insideDelete ? 18 : 0) + (expanded ? 9 : 0), 9, 9);
+        blit(x - 15 + 13, y + 4, 24 + 18, insideCreateNew ? 9 : 0, 9, 9);
         if (isDeleteButtonEnabled())
-            drawTexture(x - 15 + 26, y + 4, 24 + 27, focused == null ? 0 : insideDelete ? 18 : 9, 9, 9);
+            blit(x - 15 + 26, y + 4, 24 + 27, focused == null ? 0 : insideDelete ? 18 : 9, 9, 9);
         resetWidget.x = x + entryWidth - resetWidget.getWidth();
         resetWidget.y = y;
         resetWidget.active = isEditable() && getDefaultValue().isPresent();
         resetWidget.render(mouseX, mouseY, delta);
-        Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), isDeleteButtonEnabled() ? x + 24 : x + 24 - 9, y + 5, labelWidget.rectangle.contains(mouseX, mouseY) && !resetWidget.m_74503738(mouseX, mouseY) && !insideDelete && !insideCreateNew ? 0xffe6fe16 : getPreferredTextColor());
+        Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), isDeleteButtonEnabled() ? x + 24 : x + 24 - 9, y + 5, labelWidget.rectangle.contains(mouseX, mouseY) && !resetWidget.isMouseOver(mouseX, mouseY) && !insideDelete && !insideCreateNew ? 0xffe6fe16 : getPreferredTextColor());
         if (expanded) {
             int yy = y + 24;
             for (BaseListCell cell : cells) {
@@ -239,7 +239,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         
         @Override
         public boolean mouseClicked(double double_1, double double_2, int int_1) {
-            if (resetWidget.m_74503738(double_1, double_2)) {
+            if (resetWidget.isMouseOver(double_1, double_2)) {
                 return false;
             } else if (isInsideCreateNew(double_1, double_2)) {
                 expanded = true;

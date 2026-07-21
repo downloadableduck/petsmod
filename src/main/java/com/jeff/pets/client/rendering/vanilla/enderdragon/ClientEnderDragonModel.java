@@ -22,8 +22,8 @@ public class ClientEnderDragonModel extends Model<ClientEnderDragon> {
     private float delta;
 
     public ClientEnderDragonModel(float f) {
-        this.f_35376783 /*textureWidth*/ = 256;
-        this.f_50207596 /*textureHeight*/ = 256;
+        this.f_9972380 /*textureWidth*/ = 256;
+        this.f_9233444 /*textureHeight*/ = 256;
         float g = -16.0F;
         this.head = new ModelPart(this, "head");
         this.head.addBox("upperlip", -6.0F, -1.0F, -24.0F, 12, 5, 16, f, 176, 44);
@@ -88,12 +88,12 @@ public class ClientEnderDragonModel extends Model<ClientEnderDragon> {
     @Override
     public void render(ClientEnderDragon enderDragonEntity, float f, float g, float h, float i, float j, float k) {
         GlStateManager.pushMatrix();
-        float l = (float) MathHelper.m_23874002 /*lerp*/(this.delta, enderDragonEntity.oFlapTime, enderDragonEntity.flapTime);
+        float l = (float) MathHelper.m_4848186 /*lerp*/(this.delta, enderDragonEntity.oFlapTime, enderDragonEntity.flapTime);
         this.jaw.rotationX = (float) (Math.sin(l * ((float) Math.PI * 2F)) + (double) 1.0F) * 0.2F;
         float m = (float) (Math.sin(l * ((float) Math.PI * 2F) - 1.0F) + (double) 1.0F);
         m = (m * m + m * 2.0F) * 0.05F;
-        GlStateManager.translate(0.0F, m - 2.0F, -3.0F);
-        GlStateManager.rotate(m * 2.0F, 1.0F, 0.0F, 0.0F);
+        GlStateManager.translatef(0.0F, m - 2.0F, -3.0F);
+        GlStateManager.rotatef(m * 2.0F, 1.0F, 0.0F, 0.0F);
         float n = 0.0F;
         float o = 20.0F;
         float p = -12.0F;
@@ -127,9 +127,9 @@ public class ClientEnderDragonModel extends Model<ClientEnderDragon> {
         this.head.rotationZ = -this.updateRotations(fs[0] - (double) s) * ((float) Math.PI / 180F);
         this.head.render(k);
         GlStateManager.pushMatrix();
-        GlStateManager.translate(0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(-r * 1.5F, 0.0F, 0.0F, 1.0F);
-        GlStateManager.translate(0.0F, -1.0F, 0.0F);
+        GlStateManager.translatef(0.0F, 1.0F, 0.0F);
+        GlStateManager.rotatef(-r * 1.5F, 0.0F, 0.0F, 1.0F);
+        GlStateManager.translatef(0.0F, -1.0F, 0.0F);
         this.body.rotationZ = 0.0F;
         this.body.render(k);
 
@@ -149,14 +149,14 @@ public class ClientEnderDragonModel extends Model<ClientEnderDragon> {
             this.wing.render(k);
             this.frontLeg.render(k);
             this.rearLeg.render(k);
-            GlStateManager.scale(-1.0F, 1.0F, 1.0F);
+            GlStateManager.scalef(-1.0F, 1.0F, 1.0F);
             if (w == 0) {
-                GlStateManager.setCullFace(GlStateManager.CullFace.FRONT);
+                GlStateManager.cullFace(GlStateManager.i.FRONT);
             }
         }
 
         GlStateManager.popMatrix();
-        GlStateManager.setCullFace(GlStateManager.CullFace.BACK);
+        GlStateManager.cullFace(GlStateManager.i.BACK);
         GlStateManager.disableCull();
         float x = -((float) Math.sin(l * ((float) Math.PI * 2F))) * 0.0F;
         t = l * ((float) Math.PI * 2F);

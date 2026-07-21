@@ -11,8 +11,8 @@ public class HeadModel extends Model<Head> {
     private final ModelPart Head;
 
     public HeadModel() {
-        f_35376783 /*textureWidth*/ = 64;
-        f_50207596 /*textureHeight*/ = 64;
+        f_9972380 /*textureWidth*/ = 64;
+        f_9233444 /*textureHeight*/ = 64;
 
         Head = new ModelPart(this);
         Head.setPos(0.0F, 0.0F, 0.0F);

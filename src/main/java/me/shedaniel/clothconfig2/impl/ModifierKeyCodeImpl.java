@@ -48,22 +48,22 @@ public class ModifierKeyCodeImpl implements ModifierKeyCode {
         String string_2 = null;
         switch (this.keyCode.getType()) {
             case KEYSYM:
-                string_2 = InputConstants.m_19489816(int_1);
+                string_2 = InputConstants.m_9860835(int_1);
                 break;
             case SCANCODE:
-                string_2 = InputConstants.m_10205125(int_1);
+                string_2 = InputConstants.m_8224936(int_1);
                 break;
             case MOUSE:
                 String string_3 = I18n.translate(string_1);
-                string_2 = Objects.equals(string_3, string_1) ? I18n.translate(InputConstants.Type.MOUSE.m_03041366(), int_1 + 1) : string_3;
+                string_2 = Objects.equals(string_3, string_1) ? I18n.translate(InputConstants.Type.MOUSE.m_0726303(), int_1 + 1) : string_3;
         }
         String base = string_2 == null ? I18n.translate(string_1) : string_2;
         if (modifier.hasShift())
-            base = I18n.translate("modifier.cloth-config.shift", base);
+            base = I18n.translate("modifier.cloth-config2.shift", base);
         if (modifier.hasControl())
-            base = I18n.translate("modifier.cloth-config.ctrl", base);
+            base = I18n.translate("modifier.cloth-config2.ctrl", base);
         if (modifier.hasAlt())
-            base = I18n.translate("modifier.cloth-config.alt", base);
+            base = I18n.translate("modifier.cloth-config2.alt", base);
         return base;
     }
     

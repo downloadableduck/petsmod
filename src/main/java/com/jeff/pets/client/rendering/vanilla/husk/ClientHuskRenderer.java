@@ -17,7 +17,7 @@ public class ClientHuskRenderer extends PetRenderer<@NotNull ClientHusk, @NotNul
     @Override
     protected void applyScale(ClientHusk state, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
@@ -30,7 +30,7 @@ public class ClientHuskRenderer extends PetRenderer<@NotNull ClientHusk, @NotNul
     public void applyRotation(ClientHusk husk, float f, float g, float i) {
         super.applyRotation(husk, f, g, i);
         if (husk.isRiding()) {
-            com.mojang.blaze3d.platform.GlStateManager.translate(0, -0.5f, 0);
+            com.mojang.blaze3d.platform.GlStateManager.translatef(0, -0.5f, 0);
         }
     }
 }

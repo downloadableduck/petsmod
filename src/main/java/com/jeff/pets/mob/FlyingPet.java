@@ -40,7 +40,7 @@ public abstract class FlyingPet extends AbstractPet {
             if (owner.hasPassenger(this)) {
                 if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
-                    this.m_28162558(this.m_94091929().add(0, 0.1, 0));
+                    this.m_5189207(this.m_9899189().add(0, 0.1, 0));
                 } else {
                     this.setSitting(true);
                 }
@@ -58,7 +58,7 @@ public abstract class FlyingPet extends AbstractPet {
             float bodyYawDiff = MathHelper.wrapDegrees(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/);
 
             if (rotationToOwner >= 50) {
-                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_06800284 /*sign*/(bodyYawDiff) * 50.0F);
+                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_4835134 /*sign*/(bodyYawDiff) * 50.0F);
             }
 
             if (distance > this.stopDistance()) {
@@ -70,12 +70,12 @@ public abstract class FlyingPet extends AbstractPet {
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setHeadYaw(this.getYRot());
-                this.bodyYaw /*bodyYaw*/ = MathHelper.m_82141949(this.bodyYaw /*bodyYaw*/, this.headYaw, 50.0f); //m_82141949
+                this.bodyYaw /*bodyYaw*/ = MathHelper.m_6033138(this.bodyYaw /*bodyYaw*/, this.headYaw, 50.0f); //m_6033138
 
-                this.m_28162558(new Vec3d(dir.x * speed, dir.y * speed, dir.z * speed));
+                this.m_5189207(new Vec3d(dir.x * speed, dir.y * speed, dir.z * speed));
             } else {
                 this.lookAt(owner, 5, 0);
-                this.m_28162558(this.m_94091929().scale(0.8));
+                this.m_5189207(this.m_9899189().scale(0.8));
             }
 
             int yHeightToOwner = (int) (owner.y - this.y);
@@ -88,7 +88,7 @@ public abstract class FlyingPet extends AbstractPet {
                 //this.processFlappingMovement();
             }
 
-            if (owner.m_94091929().squaredDistanceToOrigin() < 0.01) {
+            if (owner.m_9899189().squaredDistanceToOrigin() < 0.01) {
                 this.waitingTime++;
                 if (this.waitingTime > 30) this.wander();
             } else {
@@ -100,12 +100,12 @@ public abstract class FlyingPet extends AbstractPet {
             this.setHeadYaw(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_06800284 /*sign*/(bodyYawDiff) * 50);
+                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_4835134 /*sign*/(bodyYawDiff) * 50);
             } else {
-                this.bodyYaw /*bodyYaw*/ = MathHelper.m_82141949(this.bodyYaw /*bodyYaw*/, this.getHeadYaw(), 10);
+                this.bodyYaw /*bodyYaw*/ = MathHelper.m_6033138(this.bodyYaw /*bodyYaw*/, this.getHeadYaw(), 10);
             }
 
-            this.move(MoverType.SELF, this.m_94091929());
+            this.move(MoverType.SELF, this.m_9899189());
 
             //if (!this.onGround) {
             //  this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));

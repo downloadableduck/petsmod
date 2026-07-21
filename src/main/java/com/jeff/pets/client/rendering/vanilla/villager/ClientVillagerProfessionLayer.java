@@ -36,7 +36,7 @@ public class ClientVillagerProfessionLayer extends EntityRenderLayer<@NotNull Cl
     @Override
     public void render(ClientVillager villager, float f, float g, float h, float i, float j, float k, float l) {
         com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
-        com.mojang.blaze3d.platform.GlStateManager.scale(1.001f, 1.001f, 1.001f);
+        com.mojang.blaze3d.platform.GlStateManager.scalef(1.001f, 1.001f, 1.001f);
         if (Objects.equals(CONFIG.villagerSkin, "armorer")) {
             this.bindTexture(ARMORER_LOCATION);
         } else if (Objects.equals(CONFIG.villagerSkin, "butcher")) {
