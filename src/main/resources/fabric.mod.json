@@ -18,6 +18,9 @@
   "icon": "assets/pets-mod/icon.png",
   "environment": "client",
   "entrypoints": {
+    "preLaunch": [
+      "com.jeff.pets.PreLaunchCheck"
+    ],
     "main": [
       "com.jeff.pets.PetsInitializer"
     ],
@@ -40,7 +43,8 @@
     "minecraft": [
       "~1.14"
     ],
-    "java": "*"
+    "java": "*",
+    "osl-core": "*"
   },
   "custom": {
     "modmenu": {

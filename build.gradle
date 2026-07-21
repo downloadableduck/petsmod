@@ -7,7 +7,7 @@ plugins {
 base {
     archivesName = project.archives_base_name
 }
-version = "${project.version}+mc${project.minecraft_version}"
+version = "${project.mod_version}-${project.minecraft_version}+ornithe"
 group = project.maven_group
 
 ploceus {
@@ -40,14 +40,13 @@ dependencies {
 
     implementation("blue.endless:jankson:${rootProject.jankson_version}")
     implementation("com.moandjiezana.toml:toml4j:${rootProject.toml4j_version}")
-    modImplementation "me.shedaniel.cloth:basic-math:0.6.1"
 }
 
 processResources {
-    inputs.property 'version', version
+    inputs.property 'version', project.mod_version
 
     filesMatching('fabric.mod.json') {
-        expand 'version': version
+        expand 'version': project.mod_version
     }
 }
 

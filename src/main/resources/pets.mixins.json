@@ -17,6 +17,7 @@
   "client": [
     "ClientPlayJoinHandlerMixin",
     "EndClientTickMixin",
-    "EntityRenderDispatcherMixin"
+    "EntityRenderDispatcherMixin",
+    "IntermediaryVerifierMixin"
   ]
 }
