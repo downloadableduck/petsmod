@@ -3,6 +3,7 @@ package com.jeff.pets.client.rendering.custom.first.penguin;
 import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Penguin;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.NotNull;
@@ -29,8 +30,9 @@ public class PenguinRenderer extends PetRenderer<@NotNull Penguin, @NotNull Peng
 
     @Override
     public void render(final Penguin penguin, float f, float partialTicks, float h, float i, float j, float k) {
-        penguin.flap = MathHelper.lerp(partialTicks, penguin.oFlap, penguin.flap);
-        penguin.flapSpeed = MathHelper.lerp(partialTicks, penguin.oFlapSpeed, penguin.flapSpeed);
+        float partialTick = MinecraftClient.getInstance().getTickDelta();
+        //penguin.flap = MathHelper.lerp(partialTick, penguin.oFlap, penguin.flap);
+        //penguin.flapSpeed = MathHelper.lerp(partialTick, penguin.oFlapSpeed, penguin.flapSpeed);
         super.render(penguin, f, partialTicks, h, i, j, k);
     }
 }

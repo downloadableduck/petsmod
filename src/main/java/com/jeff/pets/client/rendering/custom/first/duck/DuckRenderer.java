@@ -3,6 +3,7 @@ package com.jeff.pets.client.rendering.custom.first.duck;
 import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Duck;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.NotNull;
@@ -26,10 +27,11 @@ public class DuckRenderer extends PetRenderer<@NotNull Duck, @NotNull DuckModel>
     }
 
     @Override
-    public void render(final Duck duck, float f, final float partialTicks, float u, float g, float h, float i) {
-        duck.flap = MathHelper.lerp(partialTicks, duck.oFlap, duck.flap);
-        duck.flapSpeed = MathHelper.lerp(partialTicks, duck.oFlapSpeed, duck.flapSpeed);
-        super.render(duck, f, partialTicks, u, g, h, i);
+    public void render(final Duck duck, float f, final float k, float u, float g, float h, float i) {
+        float partialTick = MinecraftClient.getInstance().getTickDelta();
+        duck.flap = MathHelper.lerp(partialTick, duck.oFlap, duck.flap);
+        duck.flapSpeed = MathHelper.lerp(partialTick, duck.oFlapSpeed, duck.flapSpeed);
+        super.render(duck, f, k, u, g, h, i);
     }
 
     @Override
