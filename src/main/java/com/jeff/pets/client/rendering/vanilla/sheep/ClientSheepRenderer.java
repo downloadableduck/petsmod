@@ -8,7 +8,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientSheepRenderer extends PetRenderer<ClientSheep, ClientSheepModel> {
 
-    public ClientSheepRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientSheepRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientSheepModel(), 0.7F);
         this.addLayer(new ClientSheepWoolLayer(this));
     }

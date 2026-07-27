@@ -1,6 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.ravager;
 
 import com.google.common.collect.ImmutableList;
+import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.vanilla.hostile.ClientRavager;
 import net.minecraft.client.renderer.entity.model.SegmentedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -86,7 +87,7 @@ public class ClientRavagerModel extends SegmentedModel<ClientRavager> {
         int l = 0;
         int m = 10;
         if (l > 0) {
-            float n = net.minecraft.util.math.MathHelper.triangleWave((float) l - h, 10.0F);
+            float n = Utils.triangleWave((float) l - h, 10.0F);
             float o = (1.0F + n) * 0.5F;
             float p = o * o * o * 12.0F;
             float q = p * net.minecraft.util.math.MathHelper.sin(this.neck.xRot);

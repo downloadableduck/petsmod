@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientElderGuardianRenderer extends PetRenderer<ClientElderGuardian, ClientGuardianModel<ClientElderGuardian>> {
 
-    public ClientElderGuardianRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientElderGuardianRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientGuardianModel<>(), 0.75f);
     }
 

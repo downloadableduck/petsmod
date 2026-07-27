@@ -20,14 +20,12 @@
 package me.shedaniel.autoconfig.gui;
 
 import blue.endless.jankson.Comment;
-import com.google.common.collect.Lists;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.autoconfig.gui.registry.GuiRegistry;
-import me.shedaniel.clothconfig2.forge.api.AbstractConfigListEntry;
-import me.shedaniel.clothconfig2.forge.api.ConfigEntryBuilder;
-import me.shedaniel.clothconfig2.forge.gui.entries.TextListEntry;
-import me.shedaniel.clothconfig2.forge.gui.entries.TooltipListEntry;
-import net.minecraft.test.ITestCallback;
+import me.shedaniel.forge.clothconfig2.api.AbstractConfigListEntry;
+import me.shedaniel.forge.clothconfig2.api.ConfigEntryBuilder;
+import me.shedaniel.forge.clothconfig2.gui.entries.TextListEntry;
+import me.shedaniel.forge.clothconfig2.gui.entries.TooltipListEntry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -40,14 +38,14 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class DefaultGuiTransformers {
-    
+
     private static final ConfigEntryBuilder ENTRY_BUILDER = ConfigEntryBuilder.create();
-    
+
     private DefaultGuiTransformers() {
     }
-    
+
     public static GuiRegistry apply(GuiRegistry registry) {
-        
+
         registry.registerAnnotationTransformer(
                 (guis, i18n, field, config, defaults, guiProvider) -> guis.stream()
                         .peek(gui -> {
@@ -75,7 +73,7 @@ public class DefaultGuiTransformers {
                         .collect(Collectors.toList()),
                 ConfigEntry.Gui.Tooltip.class
         );
-        
+
         registry.registerAnnotationTransformer(
                 (guis, i18n, field, config, defaults, guiProvider) -> guis.stream()
                         .peek(gui -> {
@@ -89,7 +87,7 @@ public class DefaultGuiTransformers {
                 field -> !field.isAnnotationPresent(ConfigEntry.Gui.Tooltip.class),
                 Comment.class
         );
-        
+
         registry.registerAnnotationTransformer(
                 (guis, i18n, field, config, defaults, guiProvider) -> guis.stream()
                         .peek(gui -> {
@@ -100,12 +98,12 @@ public class DefaultGuiTransformers {
                         .collect(Collectors.toList()),
                 ConfigEntry.Gui.NoTooltip.class
         );
-        
+
         registry.registerAnnotationTransformer(
                 (guis, i18n, field, config, defaults, guiProvider) -> {
                     ArrayList<AbstractConfigListEntry> ret = new ArrayList<>(guis);
                     String text = String.format("%s.%s", i18n, "@PrefixText");
-                    TextListEntry element = ENTRY_BUILDER.startTextDescription(new TranslationTextComponent(text)).build();
+                    TextListEntry element = ENTRY_BUILDER.startTextDescription(new TranslationTextComponent(text).getString()).build();
                     String s = new TranslationTextComponent(i18n).getString().toLowerCase(Locale.ROOT);
                     if (!s.isEmpty()) {
                         //element.appendSearchTags(Lists.newArrayList(s.split(" ")));
@@ -115,7 +113,7 @@ public class DefaultGuiTransformers {
                 },
                 ConfigEntry.Gui.PrefixText.class
         );
-        
+
         registry.registerAnnotationTransformer(
                 (guis, i18n, field, config, defaults, guiProvider) -> {
                     for (AbstractConfigListEntry gui : guis) {
@@ -125,17 +123,17 @@ public class DefaultGuiTransformers {
                 },
                 ConfigEntry.Gui.RequiresRestart.class
         );
-        
+
         return registry;
     }
-    
+
     private static void tryApplyTooltip(AbstractConfigListEntry gui, ITextComponent[] text) {
         if (gui instanceof TooltipListEntry) {
             TooltipListEntry tooltipGui = (TooltipListEntry) gui;
             tooltipGui.setTooltipSupplier(() -> Optional.of(text));
         }
     }
-    
+
     private static void tryRemoveTooltip(AbstractConfigListEntry gui) {
         if (gui instanceof TooltipListEntry) {
             TooltipListEntry tooltipGui = (TooltipListEntry) gui;

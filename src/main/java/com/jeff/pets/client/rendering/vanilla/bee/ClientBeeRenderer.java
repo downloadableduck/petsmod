@@ -12,7 +12,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientBeeRenderer extends PetRenderer<ClientBee, ClientBeeModel> {
     public String beeTexturePath;
 
-    public ClientBeeRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientBeeRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientBeeModel(), 0.4f);
     }
 

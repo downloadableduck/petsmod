@@ -4,10 +4,7 @@ import com.jeff.pets.mob.FlyingPet;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
@@ -21,7 +18,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.server.ServerWorld;
 
-import static com.jeff.pets.PetsInitializer.Entities.STINGRAY;
+import static com.jeff.pets.PetsInitializer.STINGRAY;
 
 public class Stingray extends FlyingPet {
     public static final net.minecraft.network.datasync.DataParameter<Boolean> IS_SERVER_ENTITY =
@@ -36,8 +33,10 @@ public class Stingray extends FlyingPet {
         this.setPathfindingMalus(PathNodeType.WATER, 0);
     }
 
-    public static AttributeModifierMap.MutableAttribute createAttributes() {
-        return AnimalEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 10.0).add(Attributes.MOVEMENT_SPEED, 0.25F);
+    @Override
+    public void registerAttributes() {
+        super.registerAttributes();
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25);
     }
 
     @Override
@@ -61,7 +60,7 @@ public class Stingray extends FlyingPet {
         }
 
         this.flapping *= 0.9F;
-        net.minecraft.util.math.vector.Vector3d movement = this.getDeltaMovement();
+        net.minecraft.util.math.Vec3d movement = this.getDeltaMovement();
         if (!this.onGround && movement.y < (double) 0.0F) {
             this.setDeltaMovement(movement.multiply(1.0F, 0.6, 1.0F));
         }
@@ -86,7 +85,7 @@ public class Stingray extends FlyingPet {
     }
 
     public Stingray getBreedOffspring(final ServerWorld level, final AgeableEntity partner) {
-        Stingray stringray = STINGRAY.get().create(level);
+        Stingray stringray = STINGRAY.create(level);
         stringray.setServerEntity(true);
         return stringray;
     }
@@ -164,14 +163,14 @@ public class Stingray extends FlyingPet {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, 0.1, 0));
                 } else {
-                    this.setOrderedToSit(true);
+                    this.setSitting(true);
                 }
             }
 
             double dx = owner.getX() - this.getX();
             double dz = owner.getZ() - this.getZ();
-            net.minecraft.util.math.vector.Vector3d ownerPos = owner.position().add(0, owner.getEyeHeight() * 0.8, 0);
-            net.minecraft.util.math.vector.Vector3d vecToOwner = ownerPos.subtract(this.position());
+            net.minecraft.util.math.Vec3d ownerPos = owner.position().add(0, owner.getEyeHeight() * 0.8, 0);
+            net.minecraft.util.math.Vec3d vecToOwner = ownerPos.subtract(this.position());
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.distanceTo(owner);
@@ -187,7 +186,7 @@ public class Stingray extends FlyingPet {
 
                 this.animationSpeed = (0.5F);
 
-                net.minecraft.util.math.vector.Vector3d dir = vecToOwner.normalize();
+                net.minecraft.util.math.Vec3d dir = vecToOwner.normalize();
                 double speed = 0.2;
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));

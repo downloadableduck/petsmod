@@ -8,9 +8,73 @@ package com.jeff.pets.client;
 
 import com.google.common.collect.ImmutableList;
 import com.jeff.pets.PetsInitializer;
+import com.jeff.pets.client.Central;
 import com.jeff.pets.client.mixin.client.SplashManagerMixin;
 import com.jeff.pets.client.mixin.client.TitleScreenRenderingMixin;
+import com.jeff.pets.client.rendering.custom.aprilfools.head.HeadRenderer;
 import com.jeff.pets.client.rendering.custom.aprilfools.head.HeadSkin;
+import com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus.DumboOctopusRenderer;
+import com.jeff.pets.client.rendering.custom.aquatic.koi.KoiRenderer;
+import com.jeff.pets.client.rendering.custom.aquatic.stingray.StingrayRenderer;
+import com.jeff.pets.client.rendering.custom.first.duck.DuckRenderer;
+import com.jeff.pets.client.rendering.custom.first.penguin.PenguinRenderer;
+import com.jeff.pets.client.rendering.custom.first.racoon.RacoonRenderer;
+import com.jeff.pets.client.rendering.vanilla.bat.ClientBatRenderer;
+import com.jeff.pets.client.rendering.vanilla.bee.ClientBeeRenderer;
+import com.jeff.pets.client.rendering.vanilla.blaze.ClientBlazeRenderer;
+import com.jeff.pets.client.rendering.vanilla.cat.ClientCatRenderer;
+import com.jeff.pets.client.rendering.vanilla.cavespider.ClientCaveSpiderRenderer;
+import com.jeff.pets.client.rendering.vanilla.chicken.ClientChickenRenderer;
+import com.jeff.pets.client.rendering.vanilla.cod.ClientCodRenderer;
+import com.jeff.pets.client.rendering.vanilla.cow.ClientCowRenderer;
+import com.jeff.pets.client.rendering.vanilla.creeper.ClientCreeperRenderer;
+import com.jeff.pets.client.rendering.vanilla.dolphin.ClientDolphinRenderer;
+import com.jeff.pets.client.rendering.vanilla.donkey.ClientDonkeyRenderer;
+import com.jeff.pets.client.rendering.vanilla.drowned.ClientDrownedRenderer;
+import com.jeff.pets.client.rendering.vanilla.elderguardian.ClientElderGuardianRenderer;
+import com.jeff.pets.client.rendering.vanilla.enderdragon.ClientEnderDragonRenderer;
+import com.jeff.pets.client.rendering.vanilla.enderman.ClientEndermanRenderer;
+import com.jeff.pets.client.rendering.vanilla.endermite.ClientEndermiteRenderer;
+import com.jeff.pets.client.rendering.vanilla.evoker.ClientEvokerRenderer;
+import com.jeff.pets.client.rendering.vanilla.fox.ClientFoxRenderer;
+import com.jeff.pets.client.rendering.vanilla.ghast.ClientGhastRenderer;
+import com.jeff.pets.client.rendering.vanilla.guardian.ClientGuardianRenderer;
+import com.jeff.pets.client.rendering.vanilla.horse.ClientHorseRenderer;
+import com.jeff.pets.client.rendering.vanilla.husk.ClientHuskRenderer;
+import com.jeff.pets.client.rendering.vanilla.irongolem.ClientIronGolemRenderer;
+import com.jeff.pets.client.rendering.vanilla.llama.ClientLlamaRenderer;
+import com.jeff.pets.client.rendering.vanilla.magmacube.ClientMagmaCubeRenderer;
+import com.jeff.pets.client.rendering.vanilla.mooshroom.ClientMooshroomRenderer;
+import com.jeff.pets.client.rendering.vanilla.panda.ClientPandaRenderer;
+import com.jeff.pets.client.rendering.vanilla.parrot.ClientParrotRenderer;
+import com.jeff.pets.client.rendering.vanilla.phantom.ClientPhantomRenderer;
+import com.jeff.pets.client.rendering.vanilla.pig.ClientPigRenderer;
+import com.jeff.pets.client.rendering.vanilla.pillager.ClientPillagerRenderer;
+import com.jeff.pets.client.rendering.vanilla.polarbear.ClientPolarBearRenderer;
+import com.jeff.pets.client.rendering.vanilla.pufferfish.ClientPufferFishRenderer;
+import com.jeff.pets.client.rendering.vanilla.rabbit.ClientRabbitRenderer;
+import com.jeff.pets.client.rendering.vanilla.ravager.ClientRavagerRenderer;
+import com.jeff.pets.client.rendering.vanilla.salmon.ClientSalmonRenderer;
+import com.jeff.pets.client.rendering.vanilla.sheep.ClientSheepRenderer;
+import com.jeff.pets.client.rendering.vanilla.shulker.ClientShulkerRenderer;
+import com.jeff.pets.client.rendering.vanilla.silverfish.ClientSilverfishRenderer;
+import com.jeff.pets.client.rendering.vanilla.skeleton.ClientSkeletonRenderer;
+import com.jeff.pets.client.rendering.vanilla.slime.ClientSlimeRenderer;
+import com.jeff.pets.client.rendering.vanilla.snowgolem.ClientSnowGolemRenderer;
+import com.jeff.pets.client.rendering.vanilla.spider.ClientSpiderRenderer;
+import com.jeff.pets.client.rendering.vanilla.squid.ClientSquidRenderer;
+import com.jeff.pets.client.rendering.vanilla.stray.ClientStrayRenderer;
+import com.jeff.pets.client.rendering.vanilla.turtle.ClientTurtleRenderer;
+import com.jeff.pets.client.rendering.vanilla.vex.ClientVexRenderer;
+import com.jeff.pets.client.rendering.vanilla.villager.ClientVillagerRenderer;
+import com.jeff.pets.client.rendering.vanilla.vindicator.ClientVindicatorRenderer;
+import com.jeff.pets.client.rendering.vanilla.wanderingtrader.ClientWanderingTraderRenderer;
+import com.jeff.pets.client.rendering.vanilla.witch.ClientWitchRenderer;
+import com.jeff.pets.client.rendering.vanilla.wither.ClientWitherRenderer;
+import com.jeff.pets.client.rendering.vanilla.witherskeleton.ClientWitherSkeletonRenderer;
+import com.jeff.pets.client.rendering.vanilla.wolf.ClientWolfRenderer;
+import com.jeff.pets.client.rendering.vanilla.zombie.ClientZombieRenderer;
+import com.jeff.pets.client.rendering.vanilla.zombievillager.ClientZombieVillagerRenderer;
 import com.jeff.pets.mob.custom.aprilfools.Head;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
 import com.jeff.pets.mob.custom.aquatic.Koi;
@@ -23,6 +87,7 @@ import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import com.jeff.pets.mob.vanilla.hostile.*;
 import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
+import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
@@ -39,22 +104,37 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.play.ClientPlayNetHandler;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
-import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.EventBus;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ExtensionPoint;
-import net.minecraftforge.fml.ModContainer;
-import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.*;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.lwjgl.glfw.GLFW;
 
+import java.awt.*;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -62,7 +142,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import static com.jeff.pets.PetsInitializer.MOD_ID;
+import static com.jeff.pets.client.Central.MOD_ID;
+import static com.jeff.pets.client.PetsClientInitializer.openConfigScreen;
 
 /**
  * This class is the "central" of the logic that despawns, spawns, and swaps out pets, as well as creating all of the commands.
@@ -75,8 +156,25 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
  */
 @SuppressWarnings("unchecked")
 @Mod(MOD_ID)
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Central {
+
+    public Central() {
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        bus.register(this);
+       // AutoConfig.register(PetsConfig.class, GsonConfigSerializer::new);
+        CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
+        checkForNullObjects();
+        this.createPetsList();
+        if (Minecraft.getInstance() != null) {
+            updateSuggestions(Minecraft.getInstance());
+        }
+        new PetsConfigScreen<>();
+    }
+
+    public static final String MOD_ID = "pets_mod";
+
+    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     public static final List<Entity> summonedEntity = new ArrayList();
     public static final CopyOnWriteArrayList<String> currentSuggestions = new CopyOnWriteArrayList();
@@ -146,7 +244,6 @@ public class Central {
     public static ClientSalmon salmon;
     public static ClientSnowGolem snowGolem;
     public static ClientSquid squid;
-    public static ClientStrider strider;
     public static ClientTurtle turtle;
     public static ClientVillager villager;
     public static ClientWanderingTrader wanderingTrader;
@@ -158,7 +255,6 @@ public class Central {
     public static ClientIronGolem ironGolem;
     public static ClientLlama llama;
     public static ClientPanda panda;
-    public static ClientPiglin piglin;
     public static ClientPolarBear polarBear;
     public static ClientPufferFish pufferFish;
     public static ClientSpider spider;
@@ -170,7 +266,6 @@ public class Central {
     public static ClientEvoker evoker;
     public static ClientGhast ghast;
     public static ClientGuardian guardian;
-    public static ClientHoglin hoglin;
     public static ClientMagmaCube magmaCube;
     public static ClientPhantom phantom;
     public static ClientPillager pillager;
@@ -195,7 +290,6 @@ public class Central {
     public static Koi koi;
     public static Stingray stingray;
     static int i = 1;
-
     /**
      * Required call to {@link ClientModInitializer#onInitializeClient()} that calls the initial code.
      * <p>- Initializes all of the commands
@@ -204,17 +298,6 @@ public class Central {
      * <p>Do NOT ever call CONFIG before it is called here or in any other {@link ClientModInitializer#onInitializeClient()}
      * implementation, as it will cause a {@code RuntimeException}.
      */
-    public Central() {
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        bus.register(this);
-        AutoConfig.register(PetsConfig.class, GsonConfigSerializer::new);
-        CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
-        checkForNullObjects();
-        this.createPetsList();
-        if (Minecraft.getInstance() != null) {
-            updateSuggestions(Minecraft.getInstance());
-        }
-    }
 
     /**
      * Despawns the entity to ensure that only one is present at a time. For the helper method used,
@@ -239,7 +322,6 @@ public class Central {
         Utils.despawnEntity(salmon);
         Utils.despawnEntity(snowGolem);
         Utils.despawnEntity(squid);
-        Utils.despawnEntity(strider);
         Utils.despawnEntity(turtle);
         Utils.despawnEntity(villager);
         Utils.despawnEntity(wanderingTrader);
@@ -251,7 +333,6 @@ public class Central {
         Utils.despawnEntity(ironGolem);
         Utils.despawnEntity(llama);
         Utils.despawnEntity(panda);
-        Utils.despawnEntity(piglin);
         Utils.despawnEntity(polarBear);
         Utils.despawnEntity(pufferFish);
         Utils.despawnEntity(spider);
@@ -263,7 +344,6 @@ public class Central {
         Utils.despawnEntity(evoker);
         Utils.despawnEntity(ghast);
         Utils.despawnEntity(guardian);
-        Utils.despawnEntity(hoglin);
         Utils.despawnEntity(magmaCube);
         Utils.despawnEntity(phantom);
         Utils.despawnEntity(pillager);
@@ -296,72 +376,69 @@ public class Central {
     public static void summonPet() {
         Minecraft minecraft = Minecraft.getInstance();
         ClientWorld world = minecraft.level;
-        duck = new Duck(PetsInitializer.Entities.DUCK.get(), world);
-        racoon = new Racoon(PetsInitializer.Entities.RACOON.get(), world);
-        penguin = new Penguin(PetsInitializer.Entities.PENGUIN.get(), world);
-        sheep = new ClientSheep(PetsInitializer.Entities.SHEEP.get(), world);
-        cat = new ClientCat(PetsInitializer.Entities.CAT.get(), world);
-        bat = new ClientBat(PetsInitializer.Entities.BAT.get(), world);
-        chicken = new ClientChicken(PetsInitializer.Entities.CHICKEN.get(), world);
-        cod = new ClientCod(PetsInitializer.Entities.COD.get(), world);
-        cow = new ClientCow(PetsInitializer.Entities.COW.get(), world);
-        donkey = new ClientDonkey(PetsInitializer.Entities.DONKEY.get(), world);
-        horse = new ClientHorse(PetsInitializer.Entities.HORSE.get(), world);
-        mooshroom = new ClientMooshroom(PetsInitializer.Entities.MOOSHROOM.get(), world);
-        parrot = new ClientParrot(PetsInitializer.Entities.PARROT.get(), world);
-        pig = new ClientPig(PetsInitializer.Entities.PIG.get(), world);
-        rabbit = new ClientRabbit(PetsInitializer.Entities.RABBIT.get(), world);
-        salmon = new ClientSalmon(PetsInitializer.Entities.SALMON.get(), world);
-        snowGolem = new ClientSnowGolem(PetsInitializer.Entities.SNOW_GOLEM.get(), world);
-        squid = new ClientSquid(PetsInitializer.Entities.SQUID.get(), world);
-        strider = new ClientStrider(PetsInitializer.Entities.STRIDER.get(), world);
-        turtle = new ClientTurtle(PetsInitializer.Entities.TURTLE.get(), world);
-        villager = new ClientVillager(PetsInitializer.Entities.VILLAGER.get(), world);
-        wanderingTrader = new ClientWanderingTrader(PetsInitializer.Entities.WANDERING_TRADER.get(), world);
-        bee = new ClientBee(PetsInitializer.Entities.BEE.get(), world);
-        caveSpider = new ClientCaveSpider(PetsInitializer.Entities.CAVE_SPIDER.get(), world);
-        dolphin = new ClientDolphin(PetsInitializer.Entities.DOLPHIN.get(), world);
-        enderman = new ClientEnderman(PetsInitializer.Entities.ENDERMAN.get(), world);
-        fox = new ClientFox(PetsInitializer.Entities.FOX.get(), world);
-        ironGolem = new ClientIronGolem(PetsInitializer.Entities.IRON_GOLEM.get(), world);
-        llama = new ClientLlama(PetsInitializer.Entities.LLAMA.get(), world);
-        panda = new ClientPanda(PetsInitializer.Entities.PANDA.get(), world);
-        piglin = new ClientPiglin(PetsInitializer.Entities.PIGLIN.get(), world);
-        polarBear = new ClientPolarBear(PetsInitializer.Entities.POLAR_BEAR.get(), world);
-        pufferFish = new ClientPufferFish(PetsInitializer.Entities.PUFFERFISH.get(), world);
-        spider = new ClientSpider(PetsInitializer.Entities.SPIDER.get(), world);
-        wolf = new ClientWolf(PetsInitializer.Entities.WOLF.get(), world);
-        blaze = new ClientBlaze(PetsInitializer.Entities.BLAZE.get(), world);
-        creeper = new ClientCreeper(PetsInitializer.Entities.CREEPER.get(), world);
-        elderGuardian = new ClientElderGuardian(PetsInitializer.Entities.ELDER_GUARDIAN_COOKIE.get(), world);
-        endermite = new ClientEndermite(PetsInitializer.Entities.ENDERMITE.get(), world);
-        evoker = new ClientEvoker(PetsInitializer.Entities.EVOKER.get(), world);
-        ghast = new ClientGhast(PetsInitializer.Entities.GHAST.get(), world);
-        guardian = new ClientGuardian(PetsInitializer.Entities.GUARDIAN.get(), world);
-        hoglin = new ClientHoglin(PetsInitializer.Entities.HOGLIN.get(), world);
-        magmaCube = new ClientMagmaCube(PetsInitializer.Entities.MAGMA_CUBE.get(), world);
-        phantom = new ClientPhantom(PetsInitializer.Entities.PHANTOM.get(), world);
-        pillager = new ClientPillager(PetsInitializer.Entities.PILLAGER.get(), world);
-        ravager = new ClientRavager(PetsInitializer.Entities.RAVAGER.get(), world);
-        shulker = new ClientShulker(PetsInitializer.Entities.SHULKER.get(), world);
-        silverfish = new ClientSilverfish(PetsInitializer.Entities.SILVERFISH.get(), world);
-        skeleton = new ClientSkeleton(PetsInitializer.Entities.SKELETON.get(), world);
-        slime = new ClientSlime(PetsInitializer.Entities.SLIME.get(), world);
-        vex = new ClientVex(PetsInitializer.Entities.VEX.get(), world);
-        vindicator = new ClientVindicator(PetsInitializer.Entities.VINDICATOR.get(), world);
-        witch = new ClientWitch(PetsInitializer.Entities.WITCH.get(), world);
-        zombie = new ClientZombie(PetsInitializer.Entities.ZOMBIE.get(), world);
-        zombieVillager = new ClientZombieVillager(PetsInitializer.Entities.ZOMBIE_VILLAGER.get(), world);
-        husk = new ClientHusk(PetsInitializer.Entities.HUSK.get(), world);
-        drowned = new ClientDrowned(PetsInitializer.Entities.DROWNED.get(), world);
-        stray = new ClientStray(PetsInitializer.Entities.STRAY.get(), world);
-        witherSkeleton = new ClientWitherSkeleton(PetsInitializer.Entities.WITHER_SKELETON.get(), world);
-        enderDragon = new ClientEnderDragon(PetsInitializer.Entities.ENDER_DRAGON.get(), world);
-        wither = new ClientWither(PetsInitializer.Entities.WITHER.get(), world);
-        head = new Head(PetsInitializer.Entities.HEAD.get(), world);
-        dumboOctopus = new DumboOctopus(PetsInitializer.Entities.DUMBO_OCTOPUS.get(), world);
-        koi = new Koi(PetsInitializer.Entities.KOI.get(), world);
-        stingray = new Stingray(PetsInitializer.Entities.STINGRAY.get(), world);
+        duck = new Duck(PetsInitializer.DUCK, world);
+        racoon = new Racoon(PetsInitializer.RACOON, world);
+        penguin = new Penguin(PetsInitializer.PENGUIN, world);
+        sheep = new ClientSheep(PetsInitializer.SHEEP, world);
+        cat = new ClientCat(PetsInitializer.CAT, world);
+        bat = new ClientBat(PetsInitializer.BAT, world);
+        chicken = new ClientChicken(PetsInitializer.CHICKEN, world);
+        cod = new ClientCod(PetsInitializer.COD, world);
+        cow = new ClientCow(PetsInitializer.COW, world);
+        donkey = new ClientDonkey(PetsInitializer.DONKEY, world);
+        horse = new ClientHorse(PetsInitializer.HORSE, world);
+        mooshroom = new ClientMooshroom(PetsInitializer.MOOSHROOM, world);
+        parrot = new ClientParrot(PetsInitializer.PARROT, world);
+        pig = new ClientPig(PetsInitializer.PIG, world);
+        rabbit = new ClientRabbit(PetsInitializer.RABBIT, world);
+        salmon = new ClientSalmon(PetsInitializer.SALMON, world);
+        snowGolem = new ClientSnowGolem(PetsInitializer.SNOW_GOLEM, world);
+        squid = new ClientSquid(PetsInitializer.SQUID, world);
+        turtle = new ClientTurtle(PetsInitializer.TURTLE, world);
+        villager = new ClientVillager(PetsInitializer.VILLAGER, world);
+        wanderingTrader = new ClientWanderingTrader(PetsInitializer.WANDERING_TRADER, world);
+        bee = new ClientBee(PetsInitializer.BEE, world);
+        caveSpider = new ClientCaveSpider(PetsInitializer.CAVE_SPIDER, world);
+        dolphin = new ClientDolphin(PetsInitializer.DOLPHIN, world);
+        enderman = new ClientEnderman(PetsInitializer.ENDERMAN, world);
+        fox = new ClientFox(PetsInitializer.FOX, world);
+        ironGolem = new ClientIronGolem(PetsInitializer.IRON_GOLEM, world);
+        llama = new ClientLlama(PetsInitializer.LLAMA, world);
+        panda = new ClientPanda(PetsInitializer.PANDA, world);
+        polarBear = new ClientPolarBear(PetsInitializer.POLAR_BEAR, world);
+        pufferFish = new ClientPufferFish(PetsInitializer.PUFFERFISH, world);
+        spider = new ClientSpider(PetsInitializer.SPIDER, world);
+        wolf = new ClientWolf(PetsInitializer.WOLF, world);
+        blaze = new ClientBlaze(PetsInitializer.BLAZE, world);
+        creeper = new ClientCreeper(PetsInitializer.CREEPER, world);
+        elderGuardian = new ClientElderGuardian(PetsInitializer.ELDER_GUARDIAN_COOKIE, world);
+        endermite = new ClientEndermite(PetsInitializer.ENDERMITE, world);
+        evoker = new ClientEvoker(PetsInitializer.EVOKER, world);
+        ghast = new ClientGhast(PetsInitializer.GHAST, world);
+        guardian = new ClientGuardian(PetsInitializer.GUARDIAN, world);
+        magmaCube = new ClientMagmaCube(PetsInitializer.MAGMA_CUBE, world);
+        phantom = new ClientPhantom(PetsInitializer.PHANTOM, world);
+        pillager = new ClientPillager(PetsInitializer.PILLAGER, world);
+        ravager = new ClientRavager(PetsInitializer.RAVAGER, world);
+        shulker = new ClientShulker(PetsInitializer.SHULKER, world);
+        silverfish = new ClientSilverfish(PetsInitializer.SILVERFISH, world);
+        skeleton = new ClientSkeleton(PetsInitializer.SKELETON, world);
+        slime = new ClientSlime(PetsInitializer.SLIME, world);
+        vex = new ClientVex(PetsInitializer.VEX, world);
+        vindicator = new ClientVindicator(PetsInitializer.VINDICATOR, world);
+        witch = new ClientWitch(PetsInitializer.WITCH, world);
+        zombie = new ClientZombie(PetsInitializer.ZOMBIE, world);
+        zombieVillager = new ClientZombieVillager(PetsInitializer.ZOMBIE_VILLAGER, world);
+        husk = new ClientHusk(PetsInitializer.HUSK, world);
+        drowned = new ClientDrowned(PetsInitializer.DROWNED, world);
+        stray = new ClientStray(PetsInitializer.STRAY, world);
+        witherSkeleton = new ClientWitherSkeleton(PetsInitializer.WITHER_SKELETON, world);
+        enderDragon = new ClientEnderDragon(PetsInitializer.ENDER_DRAGON, world);
+        wither = new ClientWither(PetsInitializer.WITHER, world);
+        head = new Head(PetsInitializer.HEAD, world);
+        dumboOctopus = new DumboOctopus(PetsInitializer.DUMBO_OCTOPUS, world);
+        koi = new Koi(PetsInitializer.KOI, world);
+        stingray = new Stingray(PetsInitializer.STINGRAY, world);
 
         if (world != null) {
             if (Objects.equals(CONFIG.activePet, "duck")) {
@@ -400,8 +477,6 @@ public class Central {
                 Utils.summonPet(snowGolem, CONFIG.snowGolemName);
             } else if (Objects.equals(CONFIG.activePet, "squid")) {
                 Utils.summonPet(squid, CONFIG.squidName);
-            } else if (Objects.equals(CONFIG.activePet, "strider")) {
-                Utils.summonPet(strider, CONFIG.striderName);
             } else if (Objects.equals(CONFIG.activePet, "turtle")) {
                 Utils.summonPet(turtle, CONFIG.turtleName);
             } else if (Objects.equals(CONFIG.activePet, "villager")) {
@@ -424,8 +499,6 @@ public class Central {
                 Utils.summonPet(llama, CONFIG.llamaName);
             } else if (Objects.equals(CONFIG.activePet, "panda")) {
                 Utils.summonPet(panda, CONFIG.pandaName);
-            } else if (Objects.equals(CONFIG.activePet, "piglin")) {
-                Utils.summonPet(piglin, CONFIG.piglinName);
             } else if (Objects.equals(CONFIG.activePet, "polar_bear")) {
                 Utils.summonPet(polarBear, CONFIG.polarBearName);
             } else if (Objects.equals(CONFIG.activePet, "pufferfish")) {
@@ -448,8 +521,6 @@ public class Central {
                 Utils.summonPet(ghast, CONFIG.ghastName);
             } else if (Objects.equals(CONFIG.activePet, "guardian")) {
                 Utils.summonPet(guardian, CONFIG.guardianName);
-            } else if (Objects.equals(CONFIG.activePet, "hoglin")) {
-                Utils.summonPet(hoglin, CONFIG.hoglinName);
             } else if (Objects.equals(CONFIG.activePet, "magma_cube")) {
                 Utils.summonPet(magmaCube, CONFIG.magmaCubeName);
             } else if (Objects.equals(CONFIG.activePet, "phantom")) {
@@ -525,7 +596,6 @@ public class Central {
         Utils.checkName("salmon", salmon, CONFIG.salmonName);
         Utils.checkName("snow_golem", snowGolem, CONFIG.snowGolemName);
         Utils.checkName("squid", squid, CONFIG.squidName);
-        Utils.checkName("strider", strider, CONFIG.striderName);
         Utils.checkName("turtle", turtle, CONFIG.turtleName);
         Utils.checkName("villager", villager, CONFIG.villagerName);
         Utils.checkName("wandering_trader", wanderingTrader, CONFIG.wanderingTraderName);
@@ -537,7 +607,6 @@ public class Central {
         Utils.checkName("iron_golem", ironGolem, CONFIG.ironGolemName);
         Utils.checkName("llama", llama, CONFIG.llamaName);
         Utils.checkName("panda", panda, CONFIG.pandaName);
-        Utils.checkName("piglin", piglin, CONFIG.piglinName);
         Utils.checkName("polar_bear", polarBear, CONFIG.polarBearName);
         Utils.checkName("pufferfish", pufferFish, CONFIG.pufferFishName);
         Utils.checkName("spider", spider, CONFIG.spiderName);
@@ -549,7 +618,6 @@ public class Central {
         Utils.checkName("evoker", evoker, CONFIG.evokerName);
         Utils.checkName("ghast", ghast, CONFIG.ghastName);
         Utils.checkName("guardian", guardian, CONFIG.guardianName);
-        Utils.checkName("hoglin", hoglin, CONFIG.hoglinName);
         Utils.checkName("magma_cube", magmaCube, CONFIG.magmaCubeName);
         Utils.checkName("phantom", phantom, CONFIG.phantomName);
         Utils.checkName("pillager", pillager, CONFIG.pillagerName);
@@ -748,15 +816,14 @@ public class Central {
      * slightly malformed (specifically the {@code switch} statements) as this file was
      * re-created from an bytecode after a change messed it up around version {@code 0.6.0}
      */
-    @SubscribeEvent
-    public static void createPetSkinCommand(RegisterCommandsEvent event) {
+    public static void createPetSkinCommand(CommandDispatcher event) {
         if (Minecraft.getInstance().getConnection() != null) {
             ClientPlayNetHandler connection = Minecraft.getInstance().getConnection();
             RootCommandNode<ISuggestionProvider> commandRoot = connection.getCommands().getRoot();
             commandRoot.getExamples().clear();
         }
 
-        event.getDispatcher().register(LiteralArgumentBuilder.<CommandSource>literal("petskin").then(RequiredArgumentBuilder.<CommandSource, String>argument("skin", StringArgumentType.greedyString())
+        event.register(LiteralArgumentBuilder.<CommandSource>literal("petskin").then(RequiredArgumentBuilder.<CommandSource, String>argument("skin", StringArgumentType.greedyString())
                 .suggests(SKINS)
                 .executes((context) -> {
                     boolean isValid = true;
@@ -1313,9 +1380,8 @@ public class Central {
     /**
      * Creates the command that allows the user to use {@code /teleportpet}.
      */
-    @SubscribeEvent
-    static void createPetTeleportCommand(RegisterCommandsEvent event) {
-        event.getDispatcher().register(LiteralArgumentBuilder.<CommandSource>literal("teleportpet").executes((context) -> {
+    public static void createPetTeleportCommand(CommandDispatcher event) {
+        event.register(LiteralArgumentBuilder.<CommandSource>literal("teleportpet").executes((context) -> {
             despawnPet();
             summonPet();
             return 1;
@@ -1325,10 +1391,9 @@ public class Central {
     /**
      * Creates the command that allows the user to use {@code /petspecies}.
      */
-    @SubscribeEvent
-    static void createPetSpeciesCommand(RegisterCommandsEvent event) {
+    public static void createPetSpeciesCommand(CommandDispatcher event) {
         createPetsList();
-        event.getDispatcher().register(LiteralArgumentBuilder.<CommandSource>literal("petspecies").then(RequiredArgumentBuilder.<CommandSource, String>argument("species", StringArgumentType.greedyString()).suggests(PETS).executes((context) -> {
+        event.register(LiteralArgumentBuilder.<CommandSource>literal("petspecies").then(RequiredArgumentBuilder.<CommandSource, String>argument("species", StringArgumentType.greedyString()).suggests(PETS).executes((context) -> {
             boolean isValid = true;
             String species = StringArgumentType.getString(context, "species");
 
@@ -1339,7 +1404,7 @@ public class Central {
             } else if (Objects.equals(species, "penguin")) {
                 Utils.setActivePet(penguin, "penguin");
             } else if (Objects.equals(species, "sheep")) {
-                Utils.setActivePet(sheep, "sheep");
+                Utils.setActivePet(sheep, "sheef");
             } else if (Objects.equals(species, "cat")) {
                 Utils.setActivePet(cat, "cat");
             } else if (Objects.equals(species, "bat")) {
@@ -1368,8 +1433,6 @@ public class Central {
                 Utils.setActivePet(snowGolem, "snow_golem");
             } else if (Objects.equals(species, "squid")) {
                 Utils.setActivePet(squid, "squid");
-            } else if (Objects.equals(species, "strider")) {
-                Utils.setActivePet(strider, "strider");
             } else if (Objects.equals(species, "turtle")) {
                 Utils.setActivePet(turtle, "turtle");
             } else if (Objects.equals(species, "villager")) {
@@ -1392,8 +1455,6 @@ public class Central {
                 Utils.setActivePet(llama, "llama");
             } else if (Objects.equals(species, "panda")) {
                 Utils.setActivePet(panda, "panda");
-            } else if (Objects.equals(species, "piglin")) {
-                Utils.setActivePet(piglin, "piglin");
             } else if (Objects.equals(species, "polar_bear") || Objects.equals(species, "polar bear")) {
                 Utils.setActivePet(polarBear, "polar_bear");
             } else if (Objects.equals(species, "pufferfish")) {
@@ -1416,8 +1477,6 @@ public class Central {
                 Utils.setActivePet(ghast, "ghast");
             } else if (Objects.equals(species, "guardian")) {
                 Utils.setActivePet(guardian, "guardian");
-            } else if (Objects.equals(species, "hoglin")) {
-                Utils.setActivePet(hoglin, "hoglin");
             } else if (Objects.equals(species, "magma_cube") || Objects.equals(species, "magma cube")) {
                 Utils.setActivePet(magmaCube, "magma_cube");
             } else if (Objects.equals(species, "phantom")) {
@@ -1482,8 +1541,7 @@ public class Central {
      * - If the user's pet preference is set to {@code on} but no pet exists in the world, and vice versa
      * - Generates a random number for {@link #petSkin}, which used to be used for <a href="https://modrinth.com/mod/pets-natural">Pets Natural</a> and <a href="https://modrinth.com/mod/duck--mod">DuckMod</a>.
      */
-    @SubscribeEvent
-    static void createTickWatcher(TickEvent.ClientTickEvent post) {
+    public static void createTickWatcher() {
         ModContainer container = ModList.get().getModContainerById(MOD_ID).get();
         Minecraft client = Minecraft.getInstance();
         client.execute(() -> {
@@ -1507,8 +1565,8 @@ public class Central {
             refreshPetNames();
 
         });
-        if (PetsClientInitializer.openConfigScreen == null) return;
-        if (PetsClientInitializer.openConfigScreen.consumeClick()) {
+        if (openConfigScreen == null) return;
+        if (openConfigScreen.consumeClick()) {
             client.setScreen(container.getCustomExtension(ExtensionPoint.CONFIGGUIFACTORY).get().apply(Minecraft.getInstance(), client.screen));
         }
     }
@@ -1516,9 +1574,8 @@ public class Central {
     /**
      * Creates a help command to let the user easily view the commands at their disposal.
      */
-    @SubscribeEvent
-    static void createPetHelpCommand(RegisterCommandsEvent event) {
-        event.getDispatcher().register(LiteralArgumentBuilder.<CommandSource>literal("pethelp").executes(context -> {
+    public static void createPetHelpCommand(CommandDispatcher event) {
+        event.register(LiteralArgumentBuilder.<CommandSource>literal("pethelp").executes(context -> {
             Minecraft.getInstance().player.displayClientMessage(new net.minecraft.util.text.StringTextComponent(
                     "§b[PetsMod] §aPossible commands: §a/pethelp: §rdisplays a list of commands §a/pet <on/off> §rtoggles whether your pet will appear or not§a/petspecies <species>: §rchanges the species of your pet§a/petskin <skin>: §rchanges the skin of your selected pet§a/teleportpet: §rteleports your pet to you. will not work if you are not on the ground.§a/petname: §rchanges the name of your currently selected pet"
             ), false);
@@ -1529,10 +1586,9 @@ public class Central {
     /**
      * Creates the command that allows the user to change their pet's name.
      */
-    @SubscribeEvent
-    static void createPetNameCommand(RegisterCommandsEvent event) {
+    public static void createPetNameCommand(CommandDispatcher event) {
 
-        event.getDispatcher().register(LiteralArgumentBuilder.<CommandSource>literal("petname").then(RequiredArgumentBuilder.<CommandSource, String>argument("name", StringArgumentType.greedyString()).executes((context) -> {
+        event.register(LiteralArgumentBuilder.<CommandSource>literal("petname").then(RequiredArgumentBuilder.<CommandSource, String>argument("name", StringArgumentType.greedyString()).executes((context) -> {
             String name = StringArgumentType.getString(context, "name");
             if (!summonedEntity.isEmpty()) {
                 if (CONFIG.activePet.equals("penguin")) {
@@ -1744,9 +1800,8 @@ public class Central {
     /**
      * Creates the command that allows the user to toggle their pet on and off.
      */
-    @SubscribeEvent
-    static void createToggleCommand(RegisterCommandsEvent event) {
-        event.getDispatcher().register(LiteralArgumentBuilder.<CommandSource>literal("pet").then(RequiredArgumentBuilder.<CommandSource, String>argument("preference", StringArgumentType.string()).suggests((CommandContext<CommandSource> context, SuggestionsBuilder builder) -> ON_OFF.getSuggestions((CommandContext<CommandSource>) (CommandContext) context, builder)).executes((context) -> {
+    public static void createToggleCommand(CommandDispatcher event) {
+        event.register(LiteralArgumentBuilder.<CommandSource>literal("pet").then(RequiredArgumentBuilder.<CommandSource, String>argument("preference", StringArgumentType.string()).suggests((CommandContext<CommandSource> context, SuggestionsBuilder builder) -> ON_OFF.getSuggestions((CommandContext<CommandSource>) (CommandContext) context, builder)).executes((context) -> {
             String preference = StringArgumentType.getString(context, "preference");
             if (Objects.equals(preference, "off")) {
                 CONFIG.petOn = false;
@@ -2016,13 +2071,13 @@ public class Central {
                 "elder guardian", "ender dragon", "enderman", "endermite", "evoker",
                 "fox",
                 "ghast", "guardian",
-                "head", "hoglin", "horse",
+                "head", "horse",
                 "husk", "iron golem",
                 "koi", "llama",
                 "magma cube",
                 "mooshroom",
                 "panda", "parrot", "penguin", "phantom",
-                "pig", "piglin", "pillager",
+                "pig", "pillager",
                 "polar bear",
                 "pufferfish", "rabbit",
                 "racoon",
@@ -2031,7 +2086,7 @@ public class Central {
                 "sheep",
                 "shulker",
                 "silverfish", "skeleton", "slime", "snow golem",
-                "spider", "squid", "stingray", "stray", "strider",
+                "spider", "squid", "stingray", "stray",
                 "turtle",
                 "vex", "villager", "vindicator", "wandering trader", "witch", "wither",
                 "wither skeleton", "wolf", "zombie", "zombie villager"};

@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientPhantomRenderer extends PetRenderer<ClientPhantom, PhantomModel<ClientPhantom>> {
 
-    public ClientPhantomRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientPhantomRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new PhantomModel<>(), 0.75f);
         this.addLayer(new PhantomEyesLayer(this));
     }

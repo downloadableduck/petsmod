@@ -1,5 +1,70 @@
 package com.jeff.pets;
 
+import com.jeff.pets.client.Central;
+import com.jeff.pets.client.PetsClientInitializer;
+import com.jeff.pets.client.rendering.custom.aprilfools.head.HeadRenderer;
+import com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus.DumboOctopusRenderer;
+import com.jeff.pets.client.rendering.custom.aquatic.koi.KoiRenderer;
+import com.jeff.pets.client.rendering.custom.aquatic.stingray.StingrayRenderer;
+import com.jeff.pets.client.rendering.custom.first.duck.DuckRenderer;
+import com.jeff.pets.client.rendering.custom.first.penguin.PenguinRenderer;
+import com.jeff.pets.client.rendering.custom.first.racoon.RacoonRenderer;
+import com.jeff.pets.client.rendering.vanilla.bat.ClientBatRenderer;
+import com.jeff.pets.client.rendering.vanilla.bee.ClientBeeRenderer;
+import com.jeff.pets.client.rendering.vanilla.blaze.ClientBlazeRenderer;
+import com.jeff.pets.client.rendering.vanilla.cat.ClientCatRenderer;
+import com.jeff.pets.client.rendering.vanilla.cavespider.ClientCaveSpiderRenderer;
+import com.jeff.pets.client.rendering.vanilla.chicken.ClientChickenRenderer;
+import com.jeff.pets.client.rendering.vanilla.cod.ClientCodRenderer;
+import com.jeff.pets.client.rendering.vanilla.cow.ClientCowRenderer;
+import com.jeff.pets.client.rendering.vanilla.creeper.ClientCreeperRenderer;
+import com.jeff.pets.client.rendering.vanilla.dolphin.ClientDolphinRenderer;
+import com.jeff.pets.client.rendering.vanilla.donkey.ClientDonkeyRenderer;
+import com.jeff.pets.client.rendering.vanilla.drowned.ClientDrownedRenderer;
+import com.jeff.pets.client.rendering.vanilla.elderguardian.ClientElderGuardianRenderer;
+import com.jeff.pets.client.rendering.vanilla.enderdragon.ClientEnderDragonRenderer;
+import com.jeff.pets.client.rendering.vanilla.enderman.ClientEndermanRenderer;
+import com.jeff.pets.client.rendering.vanilla.endermite.ClientEndermiteRenderer;
+import com.jeff.pets.client.rendering.vanilla.evoker.ClientEvokerRenderer;
+import com.jeff.pets.client.rendering.vanilla.fox.ClientFoxRenderer;
+import com.jeff.pets.client.rendering.vanilla.ghast.ClientGhastRenderer;
+import com.jeff.pets.client.rendering.vanilla.guardian.ClientGuardianRenderer;
+import com.jeff.pets.client.rendering.vanilla.horse.ClientHorseRenderer;
+import com.jeff.pets.client.rendering.vanilla.husk.ClientHuskRenderer;
+import com.jeff.pets.client.rendering.vanilla.irongolem.ClientIronGolemRenderer;
+import com.jeff.pets.client.rendering.vanilla.llama.ClientLlamaRenderer;
+import com.jeff.pets.client.rendering.vanilla.magmacube.ClientMagmaCubeRenderer;
+import com.jeff.pets.client.rendering.vanilla.mooshroom.ClientMooshroomRenderer;
+import com.jeff.pets.client.rendering.vanilla.panda.ClientPandaRenderer;
+import com.jeff.pets.client.rendering.vanilla.parrot.ClientParrotRenderer;
+import com.jeff.pets.client.rendering.vanilla.phantom.ClientPhantomRenderer;
+import com.jeff.pets.client.rendering.vanilla.pig.ClientPigRenderer;
+import com.jeff.pets.client.rendering.vanilla.pillager.ClientPillagerRenderer;
+import com.jeff.pets.client.rendering.vanilla.polarbear.ClientPolarBearRenderer;
+import com.jeff.pets.client.rendering.vanilla.pufferfish.ClientPufferFishRenderer;
+import com.jeff.pets.client.rendering.vanilla.rabbit.ClientRabbitRenderer;
+import com.jeff.pets.client.rendering.vanilla.ravager.ClientRavagerRenderer;
+import com.jeff.pets.client.rendering.vanilla.salmon.ClientSalmonRenderer;
+import com.jeff.pets.client.rendering.vanilla.sheep.ClientSheepRenderer;
+import com.jeff.pets.client.rendering.vanilla.shulker.ClientShulkerRenderer;
+import com.jeff.pets.client.rendering.vanilla.silverfish.ClientSilverfishRenderer;
+import com.jeff.pets.client.rendering.vanilla.skeleton.ClientSkeletonRenderer;
+import com.jeff.pets.client.rendering.vanilla.slime.ClientSlimeRenderer;
+import com.jeff.pets.client.rendering.vanilla.snowgolem.ClientSnowGolemRenderer;
+import com.jeff.pets.client.rendering.vanilla.spider.ClientSpiderRenderer;
+import com.jeff.pets.client.rendering.vanilla.squid.ClientSquidRenderer;
+import com.jeff.pets.client.rendering.vanilla.stray.ClientStrayRenderer;
+import com.jeff.pets.client.rendering.vanilla.turtle.ClientTurtleRenderer;
+import com.jeff.pets.client.rendering.vanilla.vex.ClientVexRenderer;
+import com.jeff.pets.client.rendering.vanilla.villager.ClientVillagerRenderer;
+import com.jeff.pets.client.rendering.vanilla.vindicator.ClientVindicatorRenderer;
+import com.jeff.pets.client.rendering.vanilla.wanderingtrader.ClientWanderingTraderRenderer;
+import com.jeff.pets.client.rendering.vanilla.witch.ClientWitchRenderer;
+import com.jeff.pets.client.rendering.vanilla.wither.ClientWitherRenderer;
+import com.jeff.pets.client.rendering.vanilla.witherskeleton.ClientWitherSkeletonRenderer;
+import com.jeff.pets.client.rendering.vanilla.wolf.ClientWolfRenderer;
+import com.jeff.pets.client.rendering.vanilla.zombie.ClientZombieRenderer;
+import com.jeff.pets.client.rendering.vanilla.zombievillager.ClientZombieVillagerRenderer;
 import com.jeff.pets.mob.custom.aprilfools.Head;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
 import com.jeff.pets.mob.custom.aquatic.Koi;
@@ -12,19 +77,22 @@ import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import com.jeff.pets.mob.vanilla.hostile.*;
 import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
-import net.minecraft.world.World;
+import net.minecraft.resources.ResourcePackType;
+import net.minecraft.resources.SimpleReloadableResourceManager;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,644 +101,608 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
 /**
  * Registers all of the blocks and entities used in this mod, as well as providing the {@link #MOD_ID}.
  */
-@Mod("pets_mod")
-@Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod(MOD_ID)
+@Mod.EventBusSubscriber
 public class PetsInitializer {
-    public static final String MOD_ID = "pets_mod";
-
-    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     static {
+        PetsClientInitializer.register();
         MinecraftForge.EVENT_BUS.register(PetsInitializer.class);
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        IEventBus bus = MinecraftForge.EVENT_BUS;
+        PetsSounds.initialize(bus);
         bus.register(PetsInitializer.class);
-        Entities.ENTITY_TYPES.register(bus);
-        RegistryObject<?> ignored = Entities.BAT;
         PetsSounds.initialize(bus);
     }
 
     public PetsInitializer() {
+        PetsClientInitializer.register();
         MinecraftForge.EVENT_BUS.register(this);
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        PetsSounds.initialize(bus);
+        bus.register(Central.class);
+        bus.register(new Central());
         bus.register(PetsInitializer.class);
-        Entities.ENTITY_TYPES.register(bus);
-        RegistryObject<?> ignored = Entities.BAT;
     }
+    public static final String MOD_ID = "pets_mod";
 
+    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+
+    public static final EntityType<Racoon> RACOON = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "racoon"),
+            EntityType.Builder.of(Racoon::new, EntityClassification.CREATURE)
+                    .sized(1.0f, 1.0f)
+                    .build("racoon")
+    );
+
+    public static final EntityType<ClientBat> BAT = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientbat"),
+            EntityType.Builder.of(ClientBat::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.5f, 0.9f)
+                    .build("clientbat")
+    );
+
+    public static final EntityType<Duck> DUCK = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "duck"),
+            EntityType.Builder.of(Duck::new, EntityClassification.CREATURE)
+                    .sized(0.4f, 0.7f)
+                    .build("duck")
+    );
+
+    public static final EntityType<Penguin> PENGUIN = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "penguin"),
+            EntityType.Builder.of(Penguin::new, EntityClassification.AMBIENT)
+                    .sized(1.0f, 1.5f)
+                    .build("penguin")
+    );
+
+    public static final EntityType<ClientSheep> SHEEP = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientsheep"),
+            EntityType.Builder.of(ClientSheep::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.9f, 1.3f)
+                    .build("clientsheep")
+    );
+
+    public static final EntityType<ClientCat> CAT = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientcat"),
+            EntityType.Builder.of(ClientCat::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.6f, 0.7f)
+                    .build("clientcat")
+    );
+
+    public static final EntityType<ClientChicken> CHICKEN = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientchicken"),
+            EntityType.Builder.of(ClientChicken::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.4f, 0.7f)
+                    .build("clientchicken")
+    );
+
+    public static final EntityType<ClientCod> COD = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientcod"),
+            EntityType.Builder.of(ClientCod::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.5f, 0.3f)
+                    .build("clientcod")
+    );
+
+    public static final EntityType<ClientCow> COW = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientcow"),
+            EntityType.Builder.of(ClientCow::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.9f, 1.4f)
+                    .build("clientcow")
+    );
+
+    public static final EntityType<ClientDonkey> DONKEY = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientdonkey"),
+            EntityType.Builder.of(ClientDonkey::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(1.3965f, 1.5f)
+                    .build("clientdonkey")
+    );
+
+    public static final EntityType<ClientHorse> HORSE = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clienthorse"),
+            EntityType.Builder.of(ClientHorse::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(1.3965f, 1.6f)
+                    .build("clienthorse")
+    );
+
+    public static final EntityType<ClientMooshroom> MOOSHROOM = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientmooshroom"),
+            EntityType.Builder.of(ClientMooshroom::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.9f, 1.4f)
+                    .build("clientmooshroom")
+    );
+
+    public static final EntityType<ClientParrot> PARROT = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientparrot"),
+            EntityType.Builder.of(ClientParrot::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.5f, 0.9f)
+                    .build("clientparrot")
+    );
+
+    public static final EntityType<ClientPig> PIG = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientpig"),
+            EntityType.Builder.of(ClientPig::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.9f, 0.9f)
+                    .build("clientpig")
+    );
+
+    public static final EntityType<ClientRabbit> RABBIT = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientrabbit"),
+            EntityType.Builder.of(ClientRabbit::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.4f, 0.5f)
+                    .build("clientrabbit")
+    );
+
+    public static final EntityType<ClientSalmon> SALMON = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientsalmon"),
+            EntityType.Builder.of(ClientSalmon::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.35f, 0.2f)
+                    .build("clientsalmon")
+    );
+
+    public static final EntityType<ClientSnowGolem> SNOW_GOLEM = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientsnowgolem"),
+            EntityType.Builder.of(ClientSnowGolem::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.7f, 1.9f)
+                    .build("clientsnowgolem")
+    );
+
+    public static final EntityType<ClientSquid> SQUID = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientsquid"),
+            EntityType.Builder.of(ClientSquid::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.8f, -0.8f)
+                    .build("clientsquid")
+    );
+
+    public static final EntityType<ClientTurtle> TURTLE = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientturtle"),
+            EntityType.Builder.of(ClientTurtle::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(1.2f, 0.4f)
+                    .build("clientturtle")
+    );
+
+    public static final EntityType<ClientVillager> VILLAGER = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientvillager"),
+            EntityType.Builder.of(ClientVillager::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.6f, 1.95f)
+                    .build("clientvillager")
+    );
+
+    public static final EntityType<ClientWanderingTrader> WANDERING_TRADER = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientwanderingtrader"),
+            EntityType.Builder.of(ClientWanderingTrader::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.6f, 1.95f)
+                    .build("clientwanderingtrader")
+    );
+
+    public static final EntityType<ClientBee> BEE = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientbee"),
+            EntityType.Builder.of(ClientBee::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.7f, 0.6f)
+                    .build("clientbee")
+    );
+
+    public static final EntityType<ClientCaveSpider> CAVE_SPIDER = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientcavespider"),
+            EntityType.Builder.of(ClientCaveSpider::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.7f, 0.5f)
+                    .build("clientcavespider")
+    );
+
+    public static final EntityType<ClientDolphin> DOLPHIN = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientdolphin"),
+            EntityType.Builder.of(ClientDolphin::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.9f, 0.6f)
+                    .build("clientdolphin")
+    );
+
+    public static final EntityType<ClientEnderman> ENDERMAN = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientenderman"),
+            EntityType.Builder.of(ClientEnderman::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.6f, 2.9f)
+                    .build("clientenderman")
+    );
+
+    public static final EntityType<ClientFox> FOX = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientfox"),
+            EntityType.Builder.of(ClientFox::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.6f, 0.7f)
+                    .build("clientfox")
+    );
+
+    public static final EntityType<ClientIronGolem> IRON_GOLEM = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientirongolem"),
+            EntityType.Builder.of(ClientIronGolem::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(1.4f, 2.7f)
+                    .build("clientirongolem")
+    );
+
+    public static final EntityType<ClientLlama> LLAMA = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientllama"),
+            EntityType.Builder.of(ClientLlama::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.9f, 1.87f)
+                    .build("clientllama")
+    );
+
+    public static final EntityType<ClientPanda> PANDA = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientpanda"),
+            EntityType.Builder.of(ClientPanda::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(1.3f, 1.25f)
+                    .build("clientpanda")
+    );
+
+    public static final EntityType<ClientPolarBear> POLAR_BEAR = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientpolarbear"),
+            EntityType.Builder.of(ClientPolarBear::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(1.4f, 1.4f)
+                    .build("clientpolarbear")
+    );
+
+    public static final EntityType<ClientPufferFish> PUFFERFISH = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientpufferfish"),
+            EntityType.Builder.of(ClientPufferFish::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.7f, 0.7f)
+                    .build("clientpufferfish")
+    );
+
+    public static final EntityType<ClientSpider> SPIDER = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientspider"),
+            EntityType.Builder.of(ClientSpider::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(1.4f, 0.9f)
+                    .build("clientspider")
+    );
+
+    public static final EntityType<ClientWolf> WOLF = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientwolf"),
+            EntityType.Builder.of(ClientWolf::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.6f, 0.85f)
+                    .build("clientwolf")
+    );
+
+    public static final EntityType<ClientBlaze> BLAZE = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientblaze"),
+            EntityType.Builder.of(ClientBlaze::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.6f, 1.8f)
+                    .build("clientblaze")
+    );
+
+    public static final EntityType<ClientCreeper> CREEPER = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientcreeper"),
+            EntityType.Builder.of(ClientCreeper::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.6f, 1.7f)
+                    .build("clientcreeper")
+    );
+    public static final EntityType<ClientElderGuardian> ELDER_GUARDIAN_COOKIE = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientelderguardian"),
+            EntityType.Builder.of(ClientElderGuardian::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(1.9975f, 1.9975f)
+                    .build("clientelderguardian")
+    );
+
+    public static final EntityType<ClientEndermite> ENDERMITE = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientendermite"),
+            EntityType.Builder.of(ClientEndermite::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.4f, 0.3f)
+                    .build("clientendermite")
+    );
+
+    public static final EntityType<ClientEvoker> EVOKER = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientevoker"),
+            EntityType.Builder.of(ClientEvoker::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.6f, 1.95f)
+                    .build("clientevoker")
+    );
+
+    public static final EntityType<ClientGhast> GHAST = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientghast"),
+            EntityType.Builder.of(ClientGhast::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(4f, 4f)
+                    .build("clientghast")
+    );
+
+    public static final EntityType<ClientGuardian> GUARDIAN = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientguardian"),
+            EntityType.Builder.of(ClientGuardian::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.85f, 0.85f)
+                    .build("clientguardian")
+    );
+
+    public static final EntityType<ClientMagmaCube> MAGMA_CUBE = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientmagmacube"),
+            EntityType.Builder.of(ClientMagmaCube::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(2f, 2f)
+                    .build("clientmagmacube")
+    );
+
+    public static final EntityType<ClientPhantom> PHANTOM = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientphantom"),
+            EntityType.Builder.of(ClientPhantom::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.9f, 0.5f)
+                    .build("clientphantom")
+    );
+
+    public static final EntityType<ClientPillager> PILLAGER = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientpillager"),
+            EntityType.Builder.of(ClientPillager::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.6f, 1.95f)
+                    .build("clientpillager")
+    );
+
+    public static final EntityType<ClientRavager> RAVAGER = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientravager"),
+            EntityType.Builder.of(ClientRavager::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(1.95f, 2.2f)
+                    .build("clientravager")
+    );
+
+    public static final EntityType<ClientShulker> SHULKER = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientshulker"),
+            EntityType.Builder.of(ClientShulker::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(1f, 2f)
+                    .build("clientshulker")
+    );
+
+    public static final EntityType<ClientSilverfish> SILVERFISH = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientsilverfish"),
+            EntityType.Builder.of(ClientSilverfish::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.4f, 0.3f)
+                    .build("clientsilverfish")
+    );
+
+    public static final EntityType<ClientSkeleton> SKELETON = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientskeleton"),
+            EntityType.Builder.of(ClientSkeleton::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.6f, 1.95f)
+                    .build("clientskeleton")
+    );
+
+    public static final EntityType<ClientSlime> SLIME = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientslime"),
+            EntityType.Builder.of(ClientSlime::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(2f, 2f)
+                    .build("clientslime")
+    );
+
+    public static final EntityType<ClientVex> VEX = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientvex"),
+            EntityType.Builder.of(ClientVex::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.4f, 0.8f)
+                    .build("clientvex")
+    );
+
+    public static final EntityType<ClientVindicator> VINDICATOR = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientvindicator"),
+            EntityType.Builder.of(ClientVindicator::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.6f, 1.95f)
+                    .build("clientvindicator")
+    );
+
+    public static final EntityType<ClientWitch> WITCH = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientwitch"),
+            EntityType.Builder.of(ClientWitch::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.6f, 1.95f)
+                    .build("clientwitch")
+    );
+
+    public static final EntityType<ClientZombie> ZOMBIE = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientzombie"),
+            EntityType.Builder.of(ClientZombie::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.6f, 1.95f)
+                    .build("clientzombie")
+    );
+
+    public static final EntityType<ClientZombieVillager> ZOMBIE_VILLAGER = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientzombievillager"),
+            EntityType.Builder.of(ClientZombieVillager::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.6f, 1.95f)
+                    .build("clientzombievillager")
+    );
+
+    public static final EntityType<ClientHusk> HUSK = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clienthusk"),
+            EntityType.Builder.of(ClientHusk::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.6f, 1.95f)
+                    .build("clienthusk")
+    );
+
+    public static final EntityType<ClientDrowned> DROWNED = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientdrowned"),
+            EntityType.Builder.of(ClientDrowned::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.6f, 1.95f)
+                    .build("clientdrowned")
+    );
+
+    public static final EntityType<ClientStray> STRAY = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientstray"),
+            EntityType.Builder.of(ClientStray::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.6f, 1.95f)
+                    .build("clientstray")
+    );
+
+    public static final EntityType<ClientWitherSkeleton> WITHER_SKELETON = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientwitherskeleton"),
+            EntityType.Builder.of(ClientWitherSkeleton::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(0.6f, 1.95f)
+                    .build("clientwitherskeleton")
+    );
+
+    public static final EntityType<ClientEnderDragon> ENDER_DRAGON = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientenderdragon"),
+            EntityType.Builder.of(ClientEnderDragon::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(16f, 8f)
+                    .build("clientenderdragon")
+    );
+
+    public static final EntityType<ClientWither> WITHER = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "clientwither"),
+            EntityType.Builder.of(ClientWither::new, EntityClassification.AMBIENT)
+                    .noSummon()
+                    .sized(2f, 3f)
+                    .build("clientwither")
+    );
+
+    public static final EntityType<Head> HEAD = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "head"),
+            EntityType.Builder.of(Head::new, EntityClassification.CREATURE)
+                    .sized(0.5f, 0.5f)
+                    .build("head")
+    );
+
+    public static final EntityType<DumboOctopus> DUMBO_OCTOPUS = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "dumbo_octopus"),
+            EntityType.Builder.of(DumboOctopus::new, EntityClassification.AMBIENT)
+                    .sized(0.5f, 0.5f)
+                    .build("dumbo_octopus")
+    );
+
+    public static final EntityType<Koi> KOI = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "koi"),
+            EntityType.Builder.of(Koi::new, EntityClassification.AMBIENT)
+                    .sized(0.6f, 0.6f)
+                    .build("koi")
+    );
+
+    public static final EntityType<Stingray> STINGRAY = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "stringray"),
+            EntityType.Builder.of(Stingray::new, EntityClassification.AMBIENT)
+                    .sized(1.0f, 0.4f)
+                    .build("stingray")
+    );
+
+    /*public static final EntityType<ClientZombiePigman> ZOMBIE_PIGMAN = Registry.register(
+            Registry.ENTITY_TYPE,
+            new ResourceLocation(MOD_ID, "zombie_pigman"),
+            EntityType.Builder.of(ClientZombiePigman::new, EntityClassification.AMBIENT)
+                    .sized(0.6f, 1.95f)
+                    .build("zombie_pigman")
+    );*/
+
+    /**
+     * Registers the entities' attributes. Warns about the call to register not working, but it
+     * ends up working fine in-game - likely a mixup in either the Fabric API or IntelliJ.
+     */
     @SubscribeEvent
     public static void onInitialize(FMLCommonSetupEvent event) {
-
-        //event.enqueueWork(() -> {
-        GlobalEntityTypeAttributes.put(Entities.RACOON.get(), Racoon.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.DUCK.get(), Duck.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.PENGUIN.get(), Penguin.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.SHEEP.get(), ClientSheep.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.CAT.get(), ClientCat.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.BAT.get(), ClientBat.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.CHICKEN.get(), ClientChicken.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.COD.get(), ClientCod.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.COW.get(), ClientCow.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.DONKEY.get(), ClientDonkey.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.HORSE.get(), ClientHorse.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.MOOSHROOM.get(), ClientMooshroom.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.PARROT.get(), ClientParrot.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.PIG.get(), ClientPig.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.RABBIT.get(), ClientRabbit.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.SALMON.get(), ClientSalmon.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.SNOW_GOLEM.get(), ClientSnowGolem.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.SQUID.get(), ClientSquid.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.STRIDER.get(), ClientStrider.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.TURTLE.get(), ClientTurtle.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.VILLAGER.get(), ClientVillager.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.WANDERING_TRADER.get(), ClientWanderingTrader.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.BEE.get(), ClientBee.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.CAVE_SPIDER.get(), ClientCaveSpider.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.DOLPHIN.get(), ClientDolphin.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.ENDERMAN.get(), ClientEnderman.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.FOX.get(), ClientFox.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.IRON_GOLEM.get(), ClientIronGolem.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.LLAMA.get(), ClientLlama.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.PANDA.get(), ClientPanda.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.PIGLIN.get(), ClientPiglin.createAttributes().build()); // Fixed matching target type
-        GlobalEntityTypeAttributes.put(Entities.POLAR_BEAR.get(), ClientPolarBear.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.PUFFERFISH.get(), ClientPufferFish.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.SPIDER.get(), ClientSpider.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.WOLF.get(), ClientWolf.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.BLAZE.get(), ClientBlaze.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.CREEPER.get(), ClientCreeper.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.ELDER_GUARDIAN_COOKIE.get(), ClientElderGuardian.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.ENDERMITE.get(), ClientEndermite.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.EVOKER.get(), ClientEvoker.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.GHAST.get(), ClientGhast.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.GUARDIAN.get(), ClientGuardian.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.HOGLIN.get(), ClientHoglin.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.MAGMA_CUBE.get(), ClientMagmaCube.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.PHANTOM.get(), ClientPhantom.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.PILLAGER.get(), ClientPillager.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.RAVAGER.get(), ClientRavager.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.SHULKER.get(), ClientShulker.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.SILVERFISH.get(), ClientSilverfish.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.SKELETON.get(), ClientSkeleton.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.SLIME.get(), ClientSlime.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.VEX.get(), ClientVex.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.VINDICATOR.get(), ClientVindicator.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.WITCH.get(), ClientWitch.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.ZOMBIE.get(), ClientZombie.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.ZOMBIE_VILLAGER.get(), ClientZombieVillager.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.HUSK.get(), ClientHusk.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.DROWNED.get(), ClientDrowned.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.STRAY.get(), ClientStray.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.WITHER_SKELETON.get(), ClientWitherSkeleton.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.ENDER_DRAGON.get(), ClientEnderDragon.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.WITHER.get(), ClientWither.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.HEAD.get(), Head.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.DUMBO_OCTOPUS.get(), DumboOctopus.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.KOI.get(), Koi.createAttributes().build());
-        GlobalEntityTypeAttributes.put(Entities.STINGRAY.get(), Stingray.createAttributes().build());
-        //});
 
         //DuckSpawns.addDuckSpawn();
 
         LOGGER.info("quack");
-    }
-
-    public static class Entities {
-
-        public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
-                DeferredRegister.create(ForgeRegistries.ENTITIES, MOD_ID);
-
-        public static final RegistryObject<EntityType<Racoon>> RACOON =
-                ENTITY_TYPES.register("racoon", () ->
-                        EntityType.Builder.of((EntityType<Racoon> type, World World) -> new Racoon(type, World), EntityClassification.CREATURE)
-                                .sized(1.0f, 1.0f)
-
-                                .build(("racoon"))
-                );
-
-        public static final RegistryObject<EntityType<ClientBat>> BAT =
-                ENTITY_TYPES.register("clientbat", () ->
-                        EntityType.Builder.of((EntityType<ClientBat> type, World World) -> new ClientBat(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.5f, 0.9f)
-
-                                .build(("clientbat"))
-                );
-
-        public static final RegistryObject<EntityType<Duck>> DUCK =
-                ENTITY_TYPES.register("duck", () ->
-                        EntityType.Builder.of((EntityType<Duck> type, World World) -> new Duck(type, World), EntityClassification.CREATURE)
-                                .sized(0.4f, 0.7f)
-
-                                .build(("duck"))
-                );
-
-        public static final RegistryObject<EntityType<Penguin>> PENGUIN =
-                ENTITY_TYPES.register("penguin", () ->
-                        EntityType.Builder.of((EntityType<Penguin> type, World World) -> new Penguin(type, World), EntityClassification.AMBIENT)
-                                .sized(1.0f, 1.5f)
-
-                                .build(("penguin"))
-                );
-
-        public static final RegistryObject<EntityType<ClientSheep>> SHEEP =
-                ENTITY_TYPES.register("clientsheep", () ->
-                        EntityType.Builder.of((EntityType<ClientSheep> type, World World) -> new ClientSheep(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.9f, 1.3f)
-
-                                .build(("clientsheep"))
-                );
-
-        public static final RegistryObject<EntityType<ClientCat>> CAT =
-                ENTITY_TYPES.register("clientcat", () ->
-                        EntityType.Builder.of((EntityType<ClientCat> type, World World) -> new ClientCat(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.6f, 0.7f)
-
-                                .build(("clientcat"))
-                );
-
-        public static final RegistryObject<EntityType<ClientChicken>> CHICKEN =
-                ENTITY_TYPES.register("clientchicken", () ->
-                        EntityType.Builder.of((EntityType<ClientChicken> type, World World) -> new ClientChicken(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.4f, 0.7f)
-
-                                .build(("clientchicken"))
-                );
-
-        public static final RegistryObject<EntityType<ClientCod>> COD =
-                ENTITY_TYPES.register("clientcod", () ->
-                        EntityType.Builder.of((EntityType<ClientCod> type, World World) -> new ClientCod(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.5f, 0.3f)
-
-                                .build(("clientcod"))
-                );
-
-        public static final RegistryObject<EntityType<ClientCow>> COW =
-                ENTITY_TYPES.register("clientcow", () ->
-                        EntityType.Builder.of((EntityType<ClientCow> type, World World) -> new ClientCow(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.9f, 1.4f)
-
-                                .build(("clientcow"))
-                );
-
-        public static final RegistryObject<EntityType<ClientDonkey>> DONKEY =
-                ENTITY_TYPES.register("clientdonkey", () ->
-                        EntityType.Builder.of((EntityType<ClientDonkey> type, World World) -> new ClientDonkey(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(1.3965f, 1.5f)
-
-                                .build(("clientdonkey"))
-                );
-
-        public static final RegistryObject<EntityType<ClientHorse>> HORSE =
-                ENTITY_TYPES.register("clienthorse", () ->
-                        EntityType.Builder.of((EntityType<ClientHorse> type, World World) -> new ClientHorse(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(1.3965f, 1.6f)
-
-                                .build(("clienthorse"))
-                );
-
-        public static final RegistryObject<EntityType<ClientMooshroom>> MOOSHROOM =
-                ENTITY_TYPES.register("clientmooshroom", () ->
-                        EntityType.Builder.of((EntityType<ClientMooshroom> type, World World) -> new ClientMooshroom(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.9f, 1.4f)
-
-                                .build(("clientmooshroom"))
-                );
-
-        public static final RegistryObject<EntityType<ClientParrot>> PARROT =
-                ENTITY_TYPES.register("clientparrot", () ->
-                        EntityType.Builder.of((EntityType<ClientParrot> type, World World) -> new ClientParrot(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.5f, 0.9f)
-
-                                .build(("clientparrot")));
-
-        public static final RegistryObject<EntityType<ClientPig>> PIG =
-                ENTITY_TYPES.register("clientpig", () ->
-                        EntityType.Builder.of((EntityType<ClientPig> type, World World) -> new ClientPig(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.9f, 0.9f)
-                                .build("clientpig")
-                );
-
-        public static final RegistryObject<EntityType<ClientRabbit>> RABBIT =
-                ENTITY_TYPES.register("clientrabbit", () ->
-                        EntityType.Builder.of((EntityType<ClientRabbit> type, World World) -> new ClientRabbit(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.4f, 0.5f)
-                                .build("clientrabbit")
-                );
-
-        public static final RegistryObject<EntityType<ClientSalmon>> SALMON =
-                ENTITY_TYPES.register("clientsalmon", () ->
-                        EntityType.Builder.of((EntityType<ClientSalmon> type, World World) -> new ClientSalmon(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.35f, 0.2f)
-                                .build("clientsalmon")
-                );
-
-        public static final RegistryObject<EntityType<ClientSnowGolem>> SNOW_GOLEM =
-                ENTITY_TYPES.register("clientsnowgolem", () ->
-                        EntityType.Builder.of((EntityType<ClientSnowGolem> type, World World) -> new ClientSnowGolem(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.7f, 1.9f)
-                                .build("clientsnowgolem")
-                );
-
-        public static final RegistryObject<EntityType<ClientSquid>> SQUID =
-                ENTITY_TYPES.register("clientsquid", () ->
-                        EntityType.Builder.of((EntityType<ClientSquid> type, World World) -> new ClientSquid(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.8f, -0.8f)
-                                .build("clientsquid")
-                );
-
-        public static final RegistryObject<EntityType<ClientStrider>> STRIDER =
-                ENTITY_TYPES.register("clientstrider", () ->
-                        EntityType.Builder.of((EntityType<ClientStrider> type, World World) -> new ClientStrider(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.9f, 1.7f)
-                                .build("clientstrider")
-                );
-
-
-        public static final RegistryObject<EntityType<ClientTurtle>> TURTLE =
-                ENTITY_TYPES.register("clientturtle", () ->
-                        EntityType.Builder.of((EntityType<ClientTurtle> type, World World) -> new ClientTurtle(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(1.2f, 0.4f)
-                                .build("clientturtle")
-                );
-
-        public static final RegistryObject<EntityType<ClientVillager>> VILLAGER =
-                ENTITY_TYPES.register("clientvillager", () ->
-                        EntityType.Builder.of((EntityType<ClientVillager> type, World World) -> new ClientVillager(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.6f, 1.95f)
-                                .build("clientvillager")
-                );
-
-        public static final RegistryObject<EntityType<ClientWanderingTrader>> WANDERING_TRADER =
-                ENTITY_TYPES.register("clientwanderingtrader", () ->
-                        EntityType.Builder.of((EntityType<ClientWanderingTrader> type, World World) -> new ClientWanderingTrader(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.6f, 1.95f)
-                                .build("clientwanderingtrader")
-                );
-
-        public static final RegistryObject<EntityType<ClientBee>> BEE =
-                ENTITY_TYPES.register("clientbee", () ->
-                        EntityType.Builder.of((EntityType<ClientBee> type, World World) -> new ClientBee(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.7f, 0.6f)
-                                .build("clientbee")
-                );
-
-        public static final RegistryObject<EntityType<ClientCaveSpider>> CAVE_SPIDER =
-                ENTITY_TYPES.register("clientcavespider", () ->
-                        EntityType.Builder.of((EntityType<ClientCaveSpider> type, World World) -> new ClientCaveSpider(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.7f, 0.5f)
-                                .build("clientcavespider")
-                );
-
-        public static final RegistryObject<EntityType<ClientDolphin>> DOLPHIN =
-                ENTITY_TYPES.register("clientdolphin", () ->
-                        EntityType.Builder.of((EntityType<ClientDolphin> type, World World) -> new ClientDolphin(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.9f, 0.6f)
-                                .build("clientdolphin")
-                );
-
-        public static final RegistryObject<EntityType<ClientEnderman>> ENDERMAN =
-                ENTITY_TYPES.register("clientenderman", () ->
-                        EntityType.Builder.of((EntityType<ClientEnderman> type, World World) -> new ClientEnderman(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.6f, 2.9f)
-                                .build("clientenderman")
-                );
-
-        public static final RegistryObject<EntityType<ClientFox>> FOX =
-                ENTITY_TYPES.register("clientfox", () ->
-                        EntityType.Builder.of((EntityType<ClientFox> type, World World) -> new ClientFox(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.6f, 0.7f)
-                                .build("clientfox")
-                );
-
-        public static final RegistryObject<EntityType<ClientIronGolem>> IRON_GOLEM =
-                ENTITY_TYPES.register("clientirongolem", () ->
-                        EntityType.Builder.of((EntityType<ClientIronGolem> type, World World) -> new ClientIronGolem(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(1.4f, 2.7f)
-                                .build("clientirongolem")
-                );
-
-        public static final RegistryObject<EntityType<ClientLlama>> LLAMA =
-                ENTITY_TYPES.register("clientllama", () ->
-                        EntityType.Builder.of((EntityType<ClientLlama> type, World World) -> new ClientLlama(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.9f, 1.87f)
-                                .build("clientllama")
-                );
-
-        public static final RegistryObject<EntityType<ClientPanda>> PANDA =
-                ENTITY_TYPES.register("clientpanda", () ->
-                        EntityType.Builder.of((EntityType<ClientPanda> type, World World) -> new ClientPanda(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(1.3f, 1.25f)
-                                .build("clientpanda")
-                );
-
-        public static final RegistryObject<EntityType<ClientPiglin>> PIGLIN =
-                ENTITY_TYPES.register("clientpiglin", () ->
-                        EntityType.Builder.of((EntityType<ClientPiglin> type, World World) -> new ClientPiglin(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.6f, 1.95f)
-                                .build("clientpiglin")
-                );
-
-        public static final RegistryObject<EntityType<ClientPolarBear>> POLAR_BEAR =
-                ENTITY_TYPES.register("clientpolarbear", () ->
-                        EntityType.Builder.of((EntityType<ClientPolarBear> type, World World) -> new ClientPolarBear(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(1.4f, 1.4f)
-                                .build("clientpolarbear")
-                );
-
-        public static final RegistryObject<EntityType<ClientPufferFish>> PUFFERFISH =
-                ENTITY_TYPES.register("clientpufferfish", () ->
-                        EntityType.Builder.of((EntityType<ClientPufferFish> type, World World) -> new ClientPufferFish(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.7f, 0.7f)
-                                .build("clientpufferfish")
-                );
-
-        public static final RegistryObject<EntityType<ClientSpider>> SPIDER =
-                ENTITY_TYPES.register("clientspider", () ->
-                        EntityType.Builder.of((EntityType<ClientSpider> type, World World) -> new ClientSpider(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(1.4f, 0.9f)
-                                .build("clientspider")
-                );
-
-        public static final RegistryObject<EntityType<ClientWolf>> WOLF =
-                ENTITY_TYPES.register("clientwolf", () ->
-                        EntityType.Builder.of((EntityType<ClientWolf> type, World World) -> new ClientWolf(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.6f, 0.85f)
-                                .build("clientwolf")
-                );
-
-        public static final RegistryObject<EntityType<ClientBlaze>> BLAZE =
-                ENTITY_TYPES.register("clientblaze", () ->
-                        EntityType.Builder.of((EntityType<ClientBlaze> type, World World) -> new ClientBlaze(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.6f, 1.8f)
-                                .build("clientblaze")
-                );
-
-        public static final RegistryObject<EntityType<ClientCreeper>> CREEPER =
-                ENTITY_TYPES.register("clientcreeper", () ->
-                        EntityType.Builder.of((EntityType<ClientCreeper> type, World World) -> new ClientCreeper(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.6f, 1.7f)
-                                .build("clientcreeper")
-                );
-
-        public static final RegistryObject<EntityType<ClientElderGuardian>> ELDER_GUARDIAN_COOKIE =
-                ENTITY_TYPES.register("clientelderguardian", () ->
-                        EntityType.Builder.of((EntityType<ClientElderGuardian> type, World World) -> new ClientElderGuardian(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(1.9975f, 1.9975f)
-                                .build("clientelderguardian")
-                );
-
-        public static final RegistryObject<EntityType<ClientEndermite>> ENDERMITE =
-                ENTITY_TYPES.register("clientendermite", () ->
-                        EntityType.Builder.of((EntityType<ClientEndermite> type, World World) -> new ClientEndermite(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.4f, 0.3f)
-                                .build("clientendermite")
-                );
-
-        public static final RegistryObject<EntityType<ClientEvoker>> EVOKER =
-                ENTITY_TYPES.register("clientevoker", () ->
-                        EntityType.Builder.of((EntityType<ClientEvoker> type, World World) -> new ClientEvoker(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.6f, 1.95f)
-                                .build("clientevoker")
-                );
-
-        public static final RegistryObject<EntityType<ClientGhast>> GHAST =
-                ENTITY_TYPES.register("clientghast", () ->
-                        EntityType.Builder.of((EntityType<ClientGhast> type, World World) -> new ClientGhast(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(4.0f, 4.0f)
-                                .build("clientghast")
-                );
-
-        public static final RegistryObject<EntityType<ClientGuardian>> GUARDIAN =
-                ENTITY_TYPES.register("clientguardian", () ->
-                        EntityType.Builder.of((EntityType<ClientGuardian> type, World World) -> new ClientGuardian(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.85f, 0.85f)
-                                .build("clientguardian")
-                );
-
-        public static final RegistryObject<EntityType<ClientHoglin>> HOGLIN =
-                ENTITY_TYPES.register("clienthoglin", () ->
-                        EntityType.Builder.of((EntityType<ClientHoglin> type, World World) -> new ClientHoglin(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(1.3965f, 1.4f)
-                                .build("clienthoglin")
-                );
-
-        public static final RegistryObject<EntityType<ClientMagmaCube>> MAGMA_CUBE =
-                ENTITY_TYPES.register("clientmagmacube", () ->
-                        EntityType.Builder.of((EntityType<ClientMagmaCube> type, World World) -> new ClientMagmaCube(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(2.0f, 2.0f)
-                                .build("clientmagmacube")
-                );
-
-        public static final RegistryObject<EntityType<ClientPhantom>> PHANTOM =
-                ENTITY_TYPES.register("clientphantom", () ->
-                        EntityType.Builder.of((EntityType<ClientPhantom> type, World World) -> new ClientPhantom(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.9f, 0.5f)
-                                .build("clientphantom")
-                );
-
-        public static final RegistryObject<EntityType<ClientPillager>> PILLAGER =
-                ENTITY_TYPES.register("clientpillager", () ->
-                        EntityType.Builder.of((EntityType<ClientPillager> type, World World) -> new ClientPillager(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.6f, 1.95f)
-                                .build("clientpillager")
-                );
-
-        public static final RegistryObject<EntityType<ClientRavager>> RAVAGER =
-                ENTITY_TYPES.register("clientravager", () ->
-                        EntityType.Builder.of((EntityType<ClientRavager> type, World World) -> new ClientRavager(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(1.95f, 2.2f)
-                                .build("clientravager")
-                );
-
-        public static final RegistryObject<EntityType<ClientShulker>> SHULKER =
-                ENTITY_TYPES.register("clientshulker", () ->
-                        EntityType.Builder.of((EntityType<ClientShulker> type, World World) -> new ClientShulker(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(1.0f, 2.0f)
-                                .build("clientshulker")
-                );
-
-        public static final RegistryObject<EntityType<ClientSilverfish>> SILVERFISH =
-                ENTITY_TYPES.register("clientsilverfish", () ->
-                        EntityType.Builder.of((EntityType<ClientSilverfish> type, World World) -> new ClientSilverfish(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.4f, 0.3f)
-                                .build("clientsilverfish")
-                );
-
-        public static final RegistryObject<EntityType<ClientSkeleton>> SKELETON =
-                ENTITY_TYPES.register("clientskeleton", () ->
-                        EntityType.Builder.of((EntityType<ClientSkeleton> type, World World) -> new ClientSkeleton(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.6f, 1.95f)
-                                .build("clientskeleton")
-                );
-
-        public static final RegistryObject<EntityType<ClientSlime>> SLIME =
-                ENTITY_TYPES.register("clientslime", () ->
-                        EntityType.Builder.of((EntityType<ClientSlime> type, World World) -> new ClientSlime(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(2.0f, 2.0f)
-                                .build("clientslime")
-                );
-
-        public static final RegistryObject<EntityType<ClientVex>> VEX =
-                ENTITY_TYPES.register("clientvex", () ->
-                        EntityType.Builder.of((EntityType<ClientVex> type, World World) -> new ClientVex(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.4f, 0.8f)
-                                .build("clientvex")
-                );
-
-        public static final RegistryObject<EntityType<ClientVindicator>> VINDICATOR =
-                ENTITY_TYPES.register("clientvindicator", () ->
-                        EntityType.Builder.of((EntityType<ClientVindicator> type, World World) -> new ClientVindicator(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.6f, 1.95f)
-                                .build("clientvindicator")
-                );
-
-        public static final RegistryObject<EntityType<ClientWitch>> WITCH =
-                ENTITY_TYPES.register("clientwitch", () ->
-                        EntityType.Builder.of((EntityType<ClientWitch> type, World World) -> new ClientWitch(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.6f, 1.95f)
-                                .build("clientwitch")
-                );
-
-        public static final RegistryObject<EntityType<ClientZombie>> ZOMBIE =
-                ENTITY_TYPES.register("clientzombie", () ->
-                        EntityType.Builder.of((EntityType<ClientZombie> type, World World) -> new ClientZombie(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.6f, 1.95f)
-                                .build("clientzombie")
-                );
-
-        public static final RegistryObject<EntityType<ClientZombieVillager>> ZOMBIE_VILLAGER =
-                ENTITY_TYPES.register("clientzombievillager", () ->
-                        EntityType.Builder.of((EntityType<ClientZombieVillager> type, World World) -> new ClientZombieVillager(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.6f, 1.95f)
-                                .build("clientzombievillager")
-                );
-
-        public static final RegistryObject<EntityType<ClientHusk>> HUSK =
-                ENTITY_TYPES.register("clienthusk", () ->
-                        EntityType.Builder.of((EntityType<ClientHusk> type, World World) -> new ClientHusk(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.6f, 1.95f)
-                                .build("clienthusk")
-                );
-
-        public static final RegistryObject<EntityType<ClientDrowned>> DROWNED =
-                ENTITY_TYPES.register("clientdrowned", () ->
-                        EntityType.Builder.of((EntityType<ClientDrowned> type, World World) -> new ClientDrowned(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.6f, 1.95f)
-                                .build("clientdrowned")
-                );
-
-        public static final RegistryObject<EntityType<ClientStray>> STRAY =
-                ENTITY_TYPES.register("clientstray", () ->
-                        EntityType.Builder.of((EntityType<ClientStray> type, World World) -> new ClientStray(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.6f, 1.95f)
-                                .build("clientstray")
-                );
-
-        public static final RegistryObject<EntityType<ClientWitherSkeleton>> WITHER_SKELETON =
-                ENTITY_TYPES.register("clientwitherskeleton", () ->
-                        EntityType.Builder.of((EntityType<ClientWitherSkeleton> type, World World) -> new ClientWitherSkeleton(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(0.6f, 1.95f)
-                                .build("clientwitherskeleton")
-                );
-
-        public static final RegistryObject<EntityType<ClientEnderDragon>> ENDER_DRAGON =
-                ENTITY_TYPES.register("clientenderdragon", () ->
-                        EntityType.Builder.of((EntityType<ClientEnderDragon> type, World World) -> new ClientEnderDragon(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(16.0f, 8.0f)
-                                .build("clientenderdragon")
-                );
-
-        public static final RegistryObject<EntityType<ClientWither>> WITHER =
-                ENTITY_TYPES.register("clientwither", () ->
-                        EntityType.Builder.of((EntityType<ClientWither> type, World World) -> new ClientWither(type, World), EntityClassification.AMBIENT)
-                                .noSummon()
-                                .sized(2.0f, 3.0f)
-                                .build("clientwither")
-                );
-
-        public static final RegistryObject<EntityType<Head>> HEAD =
-                ENTITY_TYPES.register("head", () ->
-                        EntityType.Builder.of((EntityType<Head> type, World World) -> new Head(type, World), EntityClassification.CREATURE)
-                                .sized(0.5f, 0.5f)
-                                .build("head")
-                );
-
-        public static final RegistryObject<EntityType<DumboOctopus>> DUMBO_OCTOPUS =
-                ENTITY_TYPES.register("dumbo_octopus", () ->
-                        EntityType.Builder.of((EntityType<DumboOctopus> type, World World) -> new DumboOctopus(type, World), EntityClassification.WATER_AMBIENT)
-                                .sized(0.5f, 0.5f)
-                                .build("dumbo_octopus")
-                );
-
-        public static final RegistryObject<EntityType<Koi>> KOI =
-                ENTITY_TYPES.register("koi", () ->
-                        EntityType.Builder.of((EntityType<Koi> type, World World) -> new Koi(type, World), EntityClassification.WATER_AMBIENT)
-                                .sized(0.6f, 0.6f)
-                                .build("koi")
-                );
-
-        public static final RegistryObject<EntityType<Stingray>> STINGRAY =
-                ENTITY_TYPES.register("stingray", () ->
-                        EntityType.Builder.of((EntityType<Stingray> type, World World) -> new Stingray(type, World), EntityClassification.WATER_AMBIENT)
-                                .sized(1.0f, 0.4f)
-                                .build("stingray")
-                );
     }
 }

@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 public class ClientVindicatorRenderer extends PetRenderer<ClientVindicator, ClientEvokerModel<ClientVindicator>> {
 
 
-    public ClientVindicatorRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientVindicatorRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientEvokerModel<>(), 0.75f);
     }
 

@@ -34,37 +34,37 @@ public class ConfigManager<T extends ConfigData> implements ConfigHolder<T> {
     private final Config definition;
     private final Class<T> configClass;
     private final ConfigSerializer<T> serializer;
-    
+
     private final List<ConfigSerializeEvent.Save<T>> saveEvent = new ArrayList<>();
     private final List<ConfigSerializeEvent.Load<T>> loadEvent = new ArrayList<>();
-    
+
     private T config;
-    
+
     ConfigManager(Config definition, Class<T> configClass, ConfigSerializer<T> serializer) {
         logger = LogManager.getLogger();
-        
+
         this.definition = definition;
         this.configClass = configClass;
         this.serializer = serializer;
-        
+
         if (load()) {
             save();
         }
     }
-    
+
     public Config getDefinition() {
         return definition;
     }
-    
+
     @Override
     public Class<T> getConfigClass() {
         return configClass;
     }
-    
+
     public ConfigSerializer<T> getSerializer() {
         return serializer;
     }
-    
+
     @Override
     public void save() {
         for (ConfigSerializeEvent.Save<T> save : saveEvent) {
@@ -81,12 +81,12 @@ public class ConfigManager<T extends ConfigData> implements ConfigHolder<T> {
             logger.error("Failed to save config '{}'", configClass, e);
         }
     }
-    
+
     @Override
     public boolean load() {
         try {
             T deserialized = serializer.deserialize();
-            
+
             for (ConfigSerializeEvent.Load<T> load : loadEvent) {
                 ActionResultType result = load.onLoad(this, deserialized);
                 if (result == ActionResultType.FAIL) {
@@ -97,7 +97,7 @@ public class ConfigManager<T extends ConfigData> implements ConfigHolder<T> {
                     break;
                 }
             }
-            
+
             config = deserialized;
             config.validatePostLoad();
             return true;
@@ -107,12 +107,17 @@ public class ConfigManager<T extends ConfigData> implements ConfigHolder<T> {
             return false;
         }
     }
-    
+
     @Override
     public T getConfig() {
         return config;
     }
-    
+
+    @Override
+    public void setConfig(T config) {
+        this.config = config;
+    }
+
     @Override
     public void registerLoadListener(ConfigSerializeEvent.Load<T> load) {
         this.loadEvent.add(load);
@@ -126,11 +131,6 @@ public class ConfigManager<T extends ConfigData> implements ConfigHolder<T> {
         } catch (ConfigData.ValidationException v) {
             throw new RuntimeException("result of createDefault() was invalid!", v);
         }
-    }
-
-    @Override
-    public void setConfig(T config) {
-        this.config = config;
     }
 
     @Override

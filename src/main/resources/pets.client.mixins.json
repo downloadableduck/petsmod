@@ -1,13 +1,21 @@
 {
   "required": true,
   "package": "com.jeff.pets.client.mixin.client",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_6",
+  "minVersion": "0.7",
+  "refmap": "pets_mod.refmap.json",
   "client": [
     "ChatAccessor",
+    "EntityRendererDispatcherMixin",
     "SplashManagerMixin",
+    "TickMixin",
     "TitleScreenRenderingMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "mixins": [
+    "CommandManagerMixin",
+    "SchemaMixin"
+  ]
 }

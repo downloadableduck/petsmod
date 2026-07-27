@@ -9,7 +9,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientRabbitRenderer extends PetRenderer<ClientRabbit, ClientRabbitModel> {
     public String rabbitTextureLocation;
 
-    public ClientRabbitRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientRabbitRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientRabbitModel(), 0.3F);
     }
 

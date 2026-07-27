@@ -3,10 +3,7 @@ package com.jeff.pets.mob.custom.aprilfools;
 import com.jeff.pets.mob.AbstractPet;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -14,15 +11,15 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-import static com.jeff.pets.PetsInitializer.Entities.HEAD;
+import static com.jeff.pets.PetsInitializer.HEAD;
 
 public class Head extends AbstractPet {
     public static final net.minecraft.network.datasync.DataParameter<Boolean> IS_SERVER_ENTITY =
@@ -32,13 +29,15 @@ public class Head extends AbstractPet {
         super(type, level);
     }
 
-    public static AttributeModifierMap.MutableAttribute createAttributes() {
-        return AnimalEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 12.0F).add(Attributes.MOVEMENT_SPEED, 0.25F);
+    @Override
+    public void registerAttributes() {
+        super.registerAttributes();
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25);
     }
 
     @Override
     public AgeableEntity getBreedOffspring(AgeableEntity AgableMob) {
-        return HEAD.get().create(AgableMob.level);
+        return HEAD.create(AgableMob.level);
     }
 
     @Override
@@ -58,7 +57,7 @@ public class Head extends AbstractPet {
     public void aiStep() {
         super.aiStep();
 
-        net.minecraft.util.math.vector.Vector3d movement = this.getDeltaMovement();
+        Vec3d movement = this.getDeltaMovement();
         if (!this.onGround && movement.y < (double) 0.0F) {
             this.setDeltaMovement(movement.multiply(1.0F, 0.6, 1.0F));
         }
@@ -103,7 +102,7 @@ public class Head extends AbstractPet {
     }
 
     @Override
-    public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+    public boolean mobInteract(PlayerEntity player, Hand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
 
         double x = this.getX();
@@ -139,12 +138,12 @@ public class Head extends AbstractPet {
             if (!this.isPassenger()) {
                 this.startRiding(player);
                 this.lookAt(player, 1f, 1f);
-                this.setOrderedToSit(true);
+                this.setSitting(true);
             } else {
                 this.stopRiding();
             }
         }
-        return ActionResultType.SUCCESS;
+        return true;
     }
 
     @Override
@@ -158,7 +157,7 @@ public class Head extends AbstractPet {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
                 } else {
-                    this.setOrderedToSit(true);
+                    this.setSitting(true);
                 }
             }
 
@@ -180,8 +179,8 @@ public class Head extends AbstractPet {
 
                 this.animationSpeed = (0.5F);
 
-                net.minecraft.util.math.vector.Vector3d targetPos = owner.position();
-                net.minecraft.util.math.vector.Vector3d dir = targetPos.subtract(this.position()).normalize();
+                Vec3d targetPos = owner.position();
+                Vec3d dir = targetPos.subtract(this.position()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setYHeadRot(this.getYRot());

@@ -10,7 +10,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientSlimeRenderer extends PetRenderer<ClientSlime, SlimeModel<ClientSlime>> {
 
-    public ClientSlimeRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientSlimeRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new SlimeModel<>(16), 0.75f);
         this.addLayer(new SlimeGelLayer<>(this));
     }

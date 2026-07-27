@@ -4,10 +4,7 @@ import com.jeff.pets.PetsSounds;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -21,7 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 
-import static com.jeff.pets.PetsInitializer.Entities.PENGUIN;
+import static com.jeff.pets.PetsInitializer.PENGUIN;
 
 public class Penguin extends AbstractPet {
     public static final net.minecraft.network.datasync.DataParameter<Boolean> IS_SERVER_ENTITY =
@@ -34,14 +31,16 @@ public class Penguin extends AbstractPet {
     public ServerPlayerEntity owner = (ServerPlayerEntity) this.getOwner();
     public boolean isOnHead;
     private float nextFlap = 1.0F;
-    private boolean isFlapping = !this.isOnGround();
+    private boolean isFlapping = !this.onGround;
 
     public Penguin(EntityType<? extends net.minecraft.entity.passive.TameableEntity> entityType, net.minecraft.world.World level) {
         super(entityType, level);
     }
 
-    public static AttributeModifierMap.MutableAttribute createAttributes() {
-        return AnimalEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0F).add(Attributes.MOVEMENT_SPEED, 0.25F);
+    @Override
+    public void registerAttributes() {
+        super.registerAttributes();
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25);
     }
 
     @Override
@@ -79,7 +78,7 @@ public class Penguin extends AbstractPet {
         }
 
         this.flapping *= 0.9F;
-        net.minecraft.util.math.vector.Vector3d movement = this.getDeltaMovement();
+        net.minecraft.util.math.Vec3d movement = this.getDeltaMovement();
         if (!this.onGround && movement.y < (double) 0.0F) {
             this.setDeltaMovement(movement.multiply(1.0F, 0.6, 1.0F));
         }
@@ -96,15 +95,15 @@ public class Penguin extends AbstractPet {
     }
 
     protected SoundEvent getAmbientSound() {
-        return PetsSounds.PENGUIN_AMBIENT.get();
+        return PetsSounds.PENGUIN_AMBIENT;
     }
 
     protected SoundEvent getHurtSound(final DamageSource source) {
-        return PetsSounds.PENGUIN_AMBIENT.get();
+        return PetsSounds.PENGUIN_AMBIENT;
     }
 
     protected SoundEvent getDeathSound() {
-        return PetsSounds.PENGUIN_AMBIENT.get();
+        return PetsSounds.PENGUIN_AMBIENT;
     }
 
     protected void playStepSound(final BlockPos pos, final BlockState blockState) {
@@ -112,7 +111,7 @@ public class Penguin extends AbstractPet {
     }
 
     public Penguin getBreedOffspring(final AgeableEntity partner) {
-        Penguin penguin = PENGUIN.get().create(level);
+        Penguin penguin = PENGUIN.create(level);
         penguin.setServerEntity(true);
         return penguin;
     }
@@ -152,7 +151,7 @@ public class Penguin extends AbstractPet {
                     this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
                     this.isOnHead = false;
                 } else {
-                    this.setOrderedToSit(true);
+                    this.setSitting(true);
                 }
             }
 
@@ -174,8 +173,8 @@ public class Penguin extends AbstractPet {
 
                 this.animationSpeed = (0.5F);
 
-                net.minecraft.util.math.vector.Vector3d targetPos = owner.position();
-                net.minecraft.util.math.vector.Vector3d dir = targetPos.subtract(this.position()).normalize();
+                net.minecraft.util.math.Vec3d targetPos = owner.position();
+                net.minecraft.util.math.Vec3d dir = targetPos.subtract(this.position()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setYHeadRot(this.getYRot());
@@ -234,7 +233,7 @@ public class Penguin extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level.playLocalSound(this.getX(), this.getY(), this.getZ(), PetsSounds.PENGUIN_AMBIENT.get(), SoundCategory.NEUTRAL, 1.0f, 1.0f, true);
+            level.playLocalSound(this.getX(), this.getY(), this.getZ(), PetsSounds.PENGUIN_AMBIENT, SoundCategory.NEUTRAL, 1.0f, 1.0f, true);
         }
     }
 

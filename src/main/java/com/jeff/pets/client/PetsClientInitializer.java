@@ -28,7 +28,6 @@ import com.jeff.pets.client.rendering.vanilla.evoker.ClientEvokerRenderer;
 import com.jeff.pets.client.rendering.vanilla.fox.ClientFoxRenderer;
 import com.jeff.pets.client.rendering.vanilla.ghast.ClientGhastRenderer;
 import com.jeff.pets.client.rendering.vanilla.guardian.ClientGuardianRenderer;
-import com.jeff.pets.client.rendering.vanilla.hoglin.ClientHoglinRenderer;
 import com.jeff.pets.client.rendering.vanilla.horse.ClientHorseRenderer;
 import com.jeff.pets.client.rendering.vanilla.husk.ClientHuskRenderer;
 import com.jeff.pets.client.rendering.vanilla.irongolem.ClientIronGolemRenderer;
@@ -39,7 +38,6 @@ import com.jeff.pets.client.rendering.vanilla.panda.ClientPandaRenderer;
 import com.jeff.pets.client.rendering.vanilla.parrot.ClientParrotRenderer;
 import com.jeff.pets.client.rendering.vanilla.phantom.ClientPhantomRenderer;
 import com.jeff.pets.client.rendering.vanilla.pig.ClientPigRenderer;
-import com.jeff.pets.client.rendering.vanilla.piglin.ClientPiglinRenderer;
 import com.jeff.pets.client.rendering.vanilla.pillager.ClientPillagerRenderer;
 import com.jeff.pets.client.rendering.vanilla.polarbear.ClientPolarBearRenderer;
 import com.jeff.pets.client.rendering.vanilla.pufferfish.ClientPufferFishRenderer;
@@ -55,7 +53,6 @@ import com.jeff.pets.client.rendering.vanilla.snowgolem.ClientSnowGolemRenderer;
 import com.jeff.pets.client.rendering.vanilla.spider.ClientSpiderRenderer;
 import com.jeff.pets.client.rendering.vanilla.squid.ClientSquidRenderer;
 import com.jeff.pets.client.rendering.vanilla.stray.ClientStrayRenderer;
-import com.jeff.pets.client.rendering.vanilla.strider.ClientStriderRenderer;
 import com.jeff.pets.client.rendering.vanilla.turtle.ClientTurtleRenderer;
 import com.jeff.pets.client.rendering.vanilla.vex.ClientVexRenderer;
 import com.jeff.pets.client.rendering.vanilla.villager.ClientVillagerRenderer;
@@ -69,7 +66,15 @@ import com.jeff.pets.client.rendering.vanilla.zombie.ClientZombieRenderer;
 import com.jeff.pets.client.rendering.vanilla.zombievillager.ClientZombieVillagerRenderer;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.resources.IReloadableResourceManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -80,8 +85,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 
@@ -103,6 +107,9 @@ public class PetsClientInitializer {
 
     public static List<String> ADDONS = new ArrayList<>();
 
+    public static final Map<EntityType, Factory> renderSupplierMap = new HashMap();
+    public static final Map<EntityRendererManager, Context> renderManagerMap = new WeakHashMap();
+
     public static KeyBinding openConfigScreen;
 
     /**
@@ -110,9 +117,13 @@ public class PetsClientInitializer {
      */
     public PetsClientInitializer() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        bus.addListener(PetsClientInitializer::createKeyBinding);
+        openConfigScreen = new KeyBinding("Open Pets Menu", GLFW.GLFW_KEY_P, "petsmod.keymapping");
+
+        ClientRegistry.registerKeyBinding(openConfigScreen);
         //bus.register(this);
         //bus.addListener(PetsClientInitializer::registerModelLayers);
-        bus.addListener(PetsClientInitializer::register);
+       // bus.addListener(PetsClientInitializer::register);
     }
 
     @SubscribeEvent
@@ -210,74 +221,71 @@ public class PetsClientInitializer {
         event.registerLayerDefinition(StingrayRenderer.STINGRAY_LOCATION, StingrayModel::createBodyLayer);
     }*/
 
-    @SubscribeEvent
-    static void register(FMLClientSetupEvent event) {
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.HEAD.get(), (dispatcher) -> new HeadRenderer(dispatcher));
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.DUCK.get(), DuckRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.RACOON.get(), RacoonRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.PENGUIN.get(), PenguinRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.SHEEP.get(), ClientSheepRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.CAT.get(), ClientCatRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.BAT.get(), ClientBatRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.CHICKEN.get(), ClientChickenRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.COD.get(), ClientCodRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.COW.get(), ClientCowRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.DONKEY.get(), ClientDonkeyRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.HORSE.get(), ClientHorseRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.MOOSHROOM.get(), ClientMooshroomRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.PARROT.get(), ClientParrotRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.PIG.get(), ClientPigRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.RABBIT.get(), ClientRabbitRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.SALMON.get(), ClientSalmonRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.SNOW_GOLEM.get(), ClientSnowGolemRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.SQUID.get(), ClientSquidRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.STRIDER.get(), ClientStriderRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.TURTLE.get(), ClientTurtleRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.VILLAGER.get(), ClientVillagerRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.WANDERING_TRADER.get(), ClientWanderingTraderRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.BEE.get(), ClientBeeRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.CAVE_SPIDER.get(), ClientCaveSpiderRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.DOLPHIN.get(), ClientDolphinRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.ENDERMAN.get(), ClientEndermanRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.FOX.get(), ClientFoxRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.IRON_GOLEM.get(), ClientIronGolemRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.LLAMA.get(), ClientLlamaRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.PANDA.get(), ClientPandaRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.PIGLIN.get(), ClientPiglinRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.POLAR_BEAR.get(), ClientPolarBearRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.PUFFERFISH.get(), ClientPufferFishRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.SPIDER.get(), ClientSpiderRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.WOLF.get(), ClientWolfRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.ELDER_GUARDIAN_COOKIE.get(), ClientElderGuardianRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.BLAZE.get(), ClientBlazeRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.CREEPER.get(), ClientCreeperRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.DROWNED.get(), ClientDrownedRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.ENDERMITE.get(), ClientEndermiteRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.EVOKER.get(), ClientEvokerRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.GHAST.get(), ClientGhastRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.GUARDIAN.get(), ClientGuardianRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.HOGLIN.get(), ClientHoglinRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.HUSK.get(), ClientHuskRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.MAGMA_CUBE.get(), ClientMagmaCubeRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.PHANTOM.get(), ClientPhantomRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.PILLAGER.get(), ClientPillagerRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.RAVAGER.get(), ClientRavagerRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.SHULKER.get(), ClientShulkerRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.SILVERFISH.get(), ClientSilverfishRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.SKELETON.get(), ClientSkeletonRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.SLIME.get(), ClientSlimeRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.STRAY.get(), ClientStrayRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.VEX.get(), ClientVexRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.VINDICATOR.get(), ClientVindicatorRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.WITCH.get(), ClientWitchRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.WITHER_SKELETON.get(), ClientWitherSkeletonRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.ZOMBIE.get(), ClientZombieRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.ZOMBIE_VILLAGER.get(), ClientZombieVillagerRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.ENDER_DRAGON.get(), ClientEnderDragonRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.WITHER.get(), ClientWitherRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.DUMBO_OCTOPUS.get(), DumboOctopusRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.KOI.get(), KoiRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(PetsInitializer.Entities.STINGRAY.get(), StingrayRenderer::new);
+    public static void register() {
+        System.out.println("running code");
+        register(PetsInitializer.HEAD, HeadRenderer::new);
+        register(PetsInitializer.DUCK, DuckRenderer::new);
+        register(PetsInitializer.RACOON, RacoonRenderer::new);
+        register(PetsInitializer.PENGUIN, PenguinRenderer::new);
+        register(PetsInitializer.SHEEP, ClientSheepRenderer::new);
+        register(PetsInitializer.CAT, ClientCatRenderer::new);
+        register(PetsInitializer.BAT, ClientBatRenderer::new);
+        register(PetsInitializer.CHICKEN, ClientChickenRenderer::new);
+        register(PetsInitializer.COD, ClientCodRenderer::new);
+        register(PetsInitializer.COW, ClientCowRenderer::new);
+        register(PetsInitializer.DONKEY, ClientDonkeyRenderer::new);
+        register(PetsInitializer.HORSE, ClientHorseRenderer::new);
+        register(PetsInitializer.MOOSHROOM, ClientMooshroomRenderer::new);
+        register(PetsInitializer.PARROT, ClientParrotRenderer::new);
+        register(PetsInitializer.PIG, ClientPigRenderer::new);
+        register(PetsInitializer.RABBIT, ClientRabbitRenderer::new);
+        register(PetsInitializer.SALMON, ClientSalmonRenderer::new);
+        register(PetsInitializer.SNOW_GOLEM, ClientSnowGolemRenderer::new);
+        register(PetsInitializer.SQUID, ClientSquidRenderer::new);
+        register(PetsInitializer.TURTLE, ClientTurtleRenderer::new);
+        register(PetsInitializer.VILLAGER, ClientVillagerRenderer::new);
+        register(PetsInitializer.WANDERING_TRADER, ClientWanderingTraderRenderer::new);
+        register(PetsInitializer.BEE, ClientBeeRenderer::new);
+        register(PetsInitializer.CAVE_SPIDER, ClientCaveSpiderRenderer::new);
+        register(PetsInitializer.DOLPHIN, ClientDolphinRenderer::new);
+        register(PetsInitializer.ENDERMAN, ClientEndermanRenderer::new);
+        register(PetsInitializer.FOX, ClientFoxRenderer::new);
+        register(PetsInitializer.IRON_GOLEM, ClientIronGolemRenderer::new);
+        register(PetsInitializer.LLAMA, ClientLlamaRenderer::new);
+        register(PetsInitializer.PANDA, ClientPandaRenderer::new);
+        register(PetsInitializer.POLAR_BEAR, ClientPolarBearRenderer::new);
+        register(PetsInitializer.PUFFERFISH, ClientPufferFishRenderer::new);
+        register(PetsInitializer.SPIDER, ClientSpiderRenderer::new);
+        register(PetsInitializer.WOLF, ClientWolfRenderer::new);
+        register(PetsInitializer.ELDER_GUARDIAN_COOKIE, ClientElderGuardianRenderer::new);
+        register(PetsInitializer.BLAZE, ClientBlazeRenderer::new);
+        register(PetsInitializer.CREEPER, ClientCreeperRenderer::new);
+        register(PetsInitializer.DROWNED, ClientDrownedRenderer::new);
+        register(PetsInitializer.ENDERMITE, ClientEndermiteRenderer::new);
+        register(PetsInitializer.EVOKER, ClientEvokerRenderer::new);
+        register(PetsInitializer.GHAST, ClientGhastRenderer::new);
+        register(PetsInitializer.GUARDIAN, ClientGuardianRenderer::new);
+        register(PetsInitializer.HUSK, ClientHuskRenderer::new);
+        register(PetsInitializer.MAGMA_CUBE, ClientMagmaCubeRenderer::new);
+        register(PetsInitializer.PHANTOM, ClientPhantomRenderer::new);
+        register(PetsInitializer.PILLAGER, ClientPillagerRenderer::new);
+        register(PetsInitializer.RAVAGER, ClientRavagerRenderer::new);
+        register(PetsInitializer.SHULKER, ClientShulkerRenderer::new);
+        register(PetsInitializer.SILVERFISH, ClientSilverfishRenderer::new);
+        register(PetsInitializer.SKELETON, ClientSkeletonRenderer::new);
+        register(PetsInitializer.SLIME, ClientSlimeRenderer::new);
+        register(PetsInitializer.STRAY, ClientStrayRenderer::new);
+        register(PetsInitializer.VEX, ClientVexRenderer::new);
+        register(PetsInitializer.VINDICATOR, ClientVindicatorRenderer::new);
+        register(PetsInitializer.WITCH, ClientWitchRenderer::new);
+        register(PetsInitializer.WITHER_SKELETON, ClientWitherSkeletonRenderer::new);
+        register(PetsInitializer.ZOMBIE, ClientZombieRenderer::new);
+        register(PetsInitializer.ZOMBIE_VILLAGER, ClientZombieVillagerRenderer::new);
+        register(PetsInitializer.ENDER_DRAGON, ClientEnderDragonRenderer::new);
+        register(PetsInitializer.WITHER, ClientWitherRenderer::new);
+        register(PetsInitializer.DUMBO_OCTOPUS, DumboOctopusRenderer::new);
+        register(PetsInitializer.KOI, KoiRenderer::new);
+        register(PetsInitializer.STINGRAY, StingrayRenderer::new);
     }
 
     /**
@@ -286,11 +294,53 @@ public class PetsClientInitializer {
      */
 
     @SubscribeEvent
-    void createKeyBinding(FMLClientSetupEvent event) {
+    public static void createKeyBinding(FMLClientSetupEvent event) {
         //event.enqueueWork(() -> {
         openConfigScreen = new KeyBinding("Open Pets Menu", GLFW.GLFW_KEY_P, "petsmod.keymapping");
 
         ClientRegistry.registerKeyBinding(openConfigScreen);
         //});
+    }
+
+    public static void register(EntityType entityClass, Factory factory) {
+        synchronized(renderSupplierMap) {
+            renderSupplierMap.put(entityClass, factory);
+
+            for(EntityRendererManager manager : renderManagerMap.keySet()) {
+                renderManagerMap.get(manager).rendererMap.put(entityClass, factory.create(manager, renderManagerMap.get(manager)));
+            }
+        }
+    }
+
+    public static final class Context {
+        private final TextureManager textureManager;
+        private final IReloadableResourceManager resourceManager;
+        private final ItemRenderer itemRenderer;
+        private final Map<EntityType, EntityRenderer<? extends Entity>> rendererMap;
+
+        public Context(TextureManager textureManager, IReloadableResourceManager resourceManager, ItemRenderer itemRenderer, Map<EntityType, EntityRenderer<? extends Entity>> rendererMap) {
+            super();
+            this.textureManager = textureManager;
+            this.resourceManager = resourceManager;
+            this.itemRenderer = itemRenderer;
+            this.rendererMap = rendererMap;
+        }
+
+        public TextureManager getTextureManager() {
+            return this.textureManager;
+        }
+
+        public IReloadableResourceManager getResourceManager() {
+            return this.resourceManager;
+        }
+
+        public ItemRenderer getItemRenderer() {
+            return this.itemRenderer;
+        }
+    }
+
+    @FunctionalInterface
+    public interface Factory {
+        EntityRenderer<? extends Entity> create(EntityRendererManager var1, Context var2);
     }
 }

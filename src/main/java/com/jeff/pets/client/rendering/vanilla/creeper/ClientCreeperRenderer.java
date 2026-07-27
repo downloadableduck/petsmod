@@ -16,7 +16,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientCreeperRenderer extends PetRenderer<ClientCreeper, CreeperModel<ClientCreeper>> {
 
-    public ClientCreeperRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientCreeperRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new CreeperModel<>(), 0.75f);
         this.addLayer((LayerRenderer) new CreeperChargeLayer((IEntityRenderer) this));
     }

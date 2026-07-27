@@ -1,11 +1,13 @@
 package com.jeff.pets.client.rendering.custom.aprilfools.head;
 
+import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.aprilfools.Head;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.server.management.PlayerProfileCache;
 import net.minecraft.tileentity.SkullTileEntity;
@@ -22,7 +24,7 @@ public class HeadRenderer extends PetRenderer<Head, HeadModel> {
 
     private final Map<String, GameProfile> PROFILLES = new ConcurrentHashMap<>();
 
-    public HeadRenderer(final net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public HeadRenderer(final EntityRendererManager context, PetsClientInitializer.Context context2) {
         super(context, new HeadModel(), 0.3F);
     }
 

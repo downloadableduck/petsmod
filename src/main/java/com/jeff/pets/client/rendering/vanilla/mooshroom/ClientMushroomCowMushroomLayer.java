@@ -9,12 +9,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.texture.AtlasTexture;
-import net.minecraft.util.math.vector.Vector3f;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
@@ -31,7 +31,7 @@ public class ClientMushroomCowMushroomLayer extends LayerRenderer<ClientMooshroo
     public void render(MatrixStack poseStack, IRenderTypeBuffer multiBufferSource, int i, ClientMooshroom mushroomCow, float f, float g, float h, float j, float k, float l) {
         if (!mushroomCow.isBaby()) {
             Minecraft minecraft = Minecraft.getInstance();
-            boolean bl = minecraft.shouldEntityAppearGlowing(mushroomCow) && mushroomCow.isInvisible();
+            boolean bl = mushroomCow.isGlowing() && mushroomCow.isInvisible();
             if (!mushroomCow.isInvisible() || bl) {
                 BlockState blockState = CONFIG.mooshroomSkin.equals("brown") ? Blocks.BROWN_MUSHROOM.defaultBlockState() : Blocks.RED_MUSHROOM.defaultBlockState();
                 int m = LivingRenderer.getOverlayCoords(mushroomCow, 0.0F);

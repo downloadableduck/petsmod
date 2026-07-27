@@ -5,6 +5,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.Entity;
@@ -15,7 +16,7 @@ public class ClientDrownedOuterLayer extends LayerRenderer {
 
     private final ClientDrownedModel drownedModel;
 
-    public ClientDrownedOuterLayer(IEntityRenderer<ClientDrowned, ?> renderLayerParent, net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientDrownedOuterLayer(IEntityRenderer<ClientDrowned, ?> renderLayerParent, EntityRendererManager context) {
         super(renderLayerParent);
         this.drownedModel = new ClientDrownedModel(0.25F, 0.0F, 64, 64);
     }

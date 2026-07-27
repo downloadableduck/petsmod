@@ -34,26 +34,26 @@ import java.nio.file.Path;
  */
 @SuppressWarnings("unused")
 public class Toml4jConfigSerializer<T extends ConfigData> implements ConfigSerializer<T> {
-    
+
     private Config definition;
     private Class<T> configClass;
     private TomlWriter tomlWriter;
-    
+
     @SuppressWarnings("WeakerAccess")
     public Toml4jConfigSerializer(Config definition, Class<T> configClass, TomlWriter tomlWriter) {
         this.definition = definition;
         this.configClass = configClass;
         this.tomlWriter = tomlWriter;
     }
-    
+
     public Toml4jConfigSerializer(Config definition, Class<T> configClass) {
         this(definition, configClass, new TomlWriter());
     }
-    
+
     private Path getConfigPath() {
         return Utils.getConfigFolder().resolve(definition.name() + ".toml");
     }
-    
+
     @Override
     public void serialize(T config) throws SerializationException {
         Path configPath = getConfigPath();
@@ -64,7 +64,7 @@ public class Toml4jConfigSerializer<T extends ConfigData> implements ConfigSeria
             throw new SerializationException(e);
         }
     }
-    
+
     @Override
     public T deserialize() throws SerializationException {
         Path configPath = getConfigPath();
@@ -78,7 +78,7 @@ public class Toml4jConfigSerializer<T extends ConfigData> implements ConfigSeria
             return createDefault();
         }
     }
-    
+
     @Override
     public T createDefault() {
         return Utils.constructUnsafely(configClass);

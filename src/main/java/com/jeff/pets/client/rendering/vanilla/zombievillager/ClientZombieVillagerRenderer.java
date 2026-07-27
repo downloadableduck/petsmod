@@ -8,7 +8,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientZombieVillagerRenderer extends PetRenderer<ClientZombieVillager, ClientZombieVillagerModel> {
 
-    public ClientZombieVillagerRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientZombieVillagerRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientZombieVillagerModel(0, false), 0.75f);
         this.addLayer(new ClientZombieVillagerProfessionLayer(this));
     }

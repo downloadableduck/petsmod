@@ -10,7 +10,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientDolphinRenderer extends PetRenderer<ClientDolphin, DolphinModel<ClientDolphin>> {
 
-    public ClientDolphinRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientDolphinRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new DolphinModel(), 0.7f);
     }
 

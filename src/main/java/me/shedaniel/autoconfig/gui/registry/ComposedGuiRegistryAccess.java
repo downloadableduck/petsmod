@@ -20,7 +20,7 @@
 package me.shedaniel.autoconfig.gui.registry;
 
 import me.shedaniel.autoconfig.gui.registry.api.GuiRegistryAccess;
-import me.shedaniel.clothconfig2.forge.api.AbstractConfigListEntry;
+import me.shedaniel.forge.clothconfig2.api.AbstractConfigListEntry;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -28,13 +28,13 @@ import java.util.List;
 import java.util.Objects;
 
 public class ComposedGuiRegistryAccess implements GuiRegistryAccess {
-    
+
     private List<GuiRegistryAccess> children;
-    
+
     public ComposedGuiRegistryAccess(GuiRegistryAccess... children) {
         this.children = Arrays.asList(children);
     }
-    
+
     @Override
     public List<AbstractConfigListEntry> get(
             String i18n,
@@ -48,7 +48,7 @@ public class ComposedGuiRegistryAccess implements GuiRegistryAccess {
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("No ConfigGuiProvider match!"));
     }
-    
+
     @Override
     public List<AbstractConfigListEntry> transform(
             List<AbstractConfigListEntry> guis,

@@ -6,6 +6,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.Objects;
 
@@ -44,7 +45,7 @@ public abstract class GroundPet extends AbstractPet {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
                 } else {
-                    this.setOrderedToSit(true);
+                    this.setSitting(true);
                 }
             }
 
@@ -66,8 +67,8 @@ public abstract class GroundPet extends AbstractPet {
 
                 this.animationSpeed = (0.5F);
 
-                net.minecraft.util.math.vector.Vector3d targetPos = owner.position();
-                net.minecraft.util.math.vector.Vector3d dir = targetPos.subtract(this.position()).normalize();
+                Vec3d targetPos = owner.position();
+                Vec3d dir = targetPos.subtract(this.position()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setYHeadRot(this.getYRot());

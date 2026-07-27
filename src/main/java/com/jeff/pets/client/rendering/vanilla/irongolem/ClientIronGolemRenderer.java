@@ -6,7 +6,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientIronGolemRenderer extends PetRenderer<ClientIronGolem, ClientIronGolemModel<ClientIronGolem>> {
 
-    public ClientIronGolemRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientIronGolemRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientIronGolemModel<>(), 0.75f);
     }
 

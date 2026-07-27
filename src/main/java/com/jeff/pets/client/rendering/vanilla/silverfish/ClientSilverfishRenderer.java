@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientSilverfishRenderer extends PetRenderer<ClientSilverfish, SilverfishModel<ClientSilverfish>> {
 
-    public ClientSilverfishRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientSilverfishRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new SilverfishModel<>(), 0.75f);
     }
 

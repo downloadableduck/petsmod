@@ -1,8 +1,10 @@
 package com.jeff.pets.client.rendering.vanilla.magmacube;
 
+import com.jeff.pets.client.Central;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientMagmaCube;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.model.SlimeModel;
 import net.minecraft.util.ResourceLocation;
 
@@ -10,7 +12,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientMagmaCubeRenderer extends PetRenderer<ClientMagmaCube, SlimeModel<ClientMagmaCube>> {
 
-    public ClientMagmaCubeRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientMagmaCubeRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new SlimeModel<>(0), 0.75f);
     }
 

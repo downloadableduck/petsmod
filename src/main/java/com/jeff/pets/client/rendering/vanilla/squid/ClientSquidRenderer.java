@@ -2,9 +2,9 @@ package com.jeff.pets.client.rendering.vanilla.squid;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientSquid;
+import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.entity.model.SquidModel;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3f;
 
 import java.util.Objects;
 
@@ -13,7 +13,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientSquidRenderer extends PetRenderer<ClientSquid, SquidModel<ClientSquid>> {
     String squidTexturePath;
 
-    public ClientSquidRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientSquidRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new SquidModel<>(), 0.7F);
     }
 

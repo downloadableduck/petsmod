@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientSpiderRenderer extends PetRenderer<ClientSpider, SpiderModel<ClientSpider>> {
 
-    public ClientSpiderRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientSpiderRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new SpiderModel<>(), 0.75f);
     }
 

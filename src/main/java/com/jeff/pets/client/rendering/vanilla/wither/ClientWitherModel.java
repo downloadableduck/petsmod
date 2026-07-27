@@ -5,7 +5,6 @@ import net.minecraft.client.renderer.entity.model.SegmentedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.LivingEntity;
 
-import javax.swing.text.Segment;
 import java.util.Arrays;
 
 public class ClientWitherModel<T extends LivingEntity> extends SegmentedModel<T> {

@@ -67,8 +67,8 @@ public class ClientGuardianModel<T extends AbstractPet> extends SegmentedModel<T
         Entity entity = Minecraft.getInstance().getCameraEntity();
 
         if (entity != null) {
-            net.minecraft.util.math.vector.Vector3d vec3 = entity.getEyePosition(0.0F);
-            net.minecraft.util.math.vector.Vector3d vec32 = guardian.getEyePosition(0.0F);
+            net.minecraft.util.math.Vec3d vec3 = entity.getEyePosition(0.0F);
+            net.minecraft.util.math.Vec3d vec32 = guardian.getEyePosition(0.0F);
             double d = vec3.y - vec32.y;
             if (d > (double) 0.0F) {
                 this.eye.y = 0.0F;
@@ -76,9 +76,9 @@ public class ClientGuardianModel<T extends AbstractPet> extends SegmentedModel<T
                 this.eye.y = 1.0F;
             }
 
-            net.minecraft.util.math.vector.Vector3d vec33 = guardian.getViewVector(0.0F);
-            vec33 = new net.minecraft.util.math.vector.Vector3d(vec33.x, 0.0F, vec33.z);
-            net.minecraft.util.math.vector.Vector3d vec34 = (new net.minecraft.util.math.vector.Vector3d(vec32.x - vec3.x, 0.0F, vec32.z - vec3.z)).normalize().yRot(((float) Math.PI / 2F));
+            net.minecraft.util.math.Vec3d vec33 = guardian.getViewVector(0.0F);
+            vec33 = new net.minecraft.util.math.Vec3d(vec33.x, 0.0F, vec33.z);
+            net.minecraft.util.math.Vec3d vec34 = (new net.minecraft.util.math.Vec3d(vec32.x - vec3.x, 0.0F, vec32.z - vec3.z)).normalize().yRot(((float) Math.PI / 2F));
             double e = vec33.dot(vec34);
             this.eye.x = net.minecraft.util.math.MathHelper.sqrt((float) Math.abs(e)) * 2.0F * (float) Math.signum(e);
         }

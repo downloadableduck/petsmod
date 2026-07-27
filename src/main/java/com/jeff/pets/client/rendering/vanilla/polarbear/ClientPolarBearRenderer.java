@@ -8,7 +8,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientPolarBearRenderer extends PetRenderer<ClientPolarBear, ClientPolarBearModel> {
 
-    public ClientPolarBearRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientPolarBearRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientPolarBearModel(), 0.75f);
     }
 

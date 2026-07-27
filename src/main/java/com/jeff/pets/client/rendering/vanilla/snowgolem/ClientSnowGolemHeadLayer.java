@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
@@ -15,8 +16,6 @@ import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraftforge.client.model.SeparatePerspectiveModel;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
@@ -32,7 +31,7 @@ public class ClientSnowGolemHeadLayer extends LayerRenderer<ClientSnowGolem, Sno
 
     public void render(com.mojang.blaze3d.matrix.MatrixStack poseStack, net.minecraft.client.renderer.IRenderTypeBuffer multiBufferSource, int i, ClientSnowGolem snowGolem, float f, float g, float h, float j, float k, float l) {
         if (CONFIG.snowGolemSkin.equals("pumpkin_on")) {
-            boolean bl = Minecraft.getInstance().shouldEntityAppearGlowing(snowGolem) && snowGolem.isInvisible();
+            boolean bl = snowGolem.isGlowing() && snowGolem.isInvisible();
             if (!snowGolem.isInvisible() || bl) {
                 poseStack.pushPose();
                 this.getParentModel().getHead().translateAndRotate(poseStack);

@@ -10,7 +10,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientDonkeyRenderer extends PetRenderer<ClientDonkey, ClientHorseModel<ClientDonkey>> {
 
-    public ClientDonkeyRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientDonkeyRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientHorseModel<>(0), 0.5f);
     }
 

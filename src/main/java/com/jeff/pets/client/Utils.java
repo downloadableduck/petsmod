@@ -6,11 +6,11 @@ import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.Objects;
 
-import static com.jeff.pets.PetsInitializer.MOD_ID;
+import static com.jeff.pets.client.Central.MOD_ID;
 import static com.jeff.pets.client.Central.CONFIG;
 
 /**
@@ -40,7 +40,7 @@ public class Utils {
 
         if (entity == null || world == null || player == null) return;
 
-        Vector3d lookAngle = player.getLookAngle();
+        Vec3d lookAngle = player.getLookAngle();
 
         double x = player.getX() - lookAngle.x * (double) 0.5F;
         double y = player.getY() + (double) 0.5F;
@@ -109,11 +109,11 @@ public class Utils {
 
     /**
      * Used as a shortcut to {@link ResourceLocation#fromNamespaceAndPath}, and sets the parameter
-     * {@code namespace} with {@link PetsInitializer#MOD_ID}.
+     * {@code namespace} with {@link Central#MOD_ID}.
      *
      * @param path The String that goes in the {@code path} parameter.
      * @return {@link ResourceLocation#fromNamespaceAndPath}, with the parameter {@code namespace} set to
-     * {@link PetsInitializer#MOD_ID} and the parameter {@code path} set to the user's input
+     * {@link Central#MOD_ID} and the parameter {@code path} set to the user's input
      */
     public static ResourceLocation withModNamespace(String path) {
         return new ResourceLocation(MOD_ID, path);
@@ -140,5 +140,9 @@ public class Utils {
         Central.summonedEntity.clear();
         Central.summonedEntity.add(e);
         CONFIG.activePet = s;
+    }
+
+    public static float triangleWave(float p_78172_1_, float p_78172_2_) {
+        return (Math.abs(p_78172_1_ % p_78172_2_ - p_78172_2_ * 0.5F) - p_78172_2_ * 0.25F) / (p_78172_2_ * 0.25F);
     }
 }

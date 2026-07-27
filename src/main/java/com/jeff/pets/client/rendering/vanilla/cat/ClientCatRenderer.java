@@ -8,7 +8,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientCatRenderer extends PetRenderer<ClientCat, ClientCatModel> {
 
-    public ClientCatRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientCatRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientCatModel(0), 0.7F);
     }
 
@@ -54,6 +54,6 @@ public class ClientCatRenderer extends PetRenderer<ClientCat, ClientCatModel> {
     @Override
     public void render(ClientCat cat, float f, float g, com.mojang.blaze3d.matrix.MatrixStack poseStack, net.minecraft.client.renderer.IRenderTypeBuffer source, int i) {
         super.render(cat, f, g, poseStack, source, i);
-        cat.setInSittingPose(cat.isPassenger());
+        cat.setSitting(cat.isPassenger());
     }
 }

@@ -8,5 +8,5 @@
   "entity.pets-mod.head": "Floating Head",
   "sound.pets-mod.duck_ambient": "Duck Quacks",
   "sound.pets-mod.penguin_ambient": "Penguin Chirps",
-  "key.category.pets-mod.petsmod.keymapping": "PetsMod"
+  "petsmod.keymapping": "PetsMod"
 }

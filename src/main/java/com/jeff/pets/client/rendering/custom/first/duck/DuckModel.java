@@ -83,7 +83,7 @@ public class DuckModel extends PetModel<Duck> {
         System.out.println("Y:" + this.root.y);
         System.out.println("X:" + this.root.x);
         System.out.println("Z: " + this.root.z);
-        float flapAngle = state.isOnGround() ? 0 : (net.minecraft.util.math.MathHelper.sin(h) + 1.0F) * state.flapSpeed;
+        float flapAngle = state.onGround ? 0 : (net.minecraft.util.math.MathHelper.sin(h) + 1.0F) * state.flapSpeed;
         this.head.xRot = j * ((float) Math.PI / 180F);
         this.head.yRot = i * ((float) Math.PI / 180F);
         float animationSpeed = state.animationSpeed;

@@ -13,7 +13,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientFoxRenderer extends PetRenderer<ClientFox, ClientFoxModel> {
     public String foxTexturePath;
 
-    public ClientFoxRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientFoxRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientFoxModel(), 0.75f);
     }
 

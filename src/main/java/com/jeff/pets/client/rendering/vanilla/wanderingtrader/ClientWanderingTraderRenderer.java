@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientWanderingTraderRenderer extends PetRenderer<ClientWanderingTrader, VillagerModel<ClientWanderingTrader>> {
 
-    public ClientWanderingTraderRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientWanderingTraderRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new VillagerModel<>(0), 0.5F);
     }
 

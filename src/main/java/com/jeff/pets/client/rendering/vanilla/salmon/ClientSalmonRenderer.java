@@ -2,13 +2,13 @@ package com.jeff.pets.client.rendering.vanilla.salmon;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientSalmon;
+import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.entity.model.SalmonModel;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3f;
 
 public class ClientSalmonRenderer extends PetRenderer<ClientSalmon, SalmonModel<ClientSalmon>> {
 
-    public ClientSalmonRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientSalmonRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new SalmonModel<>(), 0.4F);
     }
 

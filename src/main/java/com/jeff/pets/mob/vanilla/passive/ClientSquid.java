@@ -86,7 +86,7 @@ public class ClientSquid extends FlyingPet {
                 this.setDeltaMovement(this.tx * this.speed, this.ty * this.speed, this.tz * this.speed);
             }
 
-            net.minecraft.util.math.vector.Vector3d vec3 = this.getDeltaMovement();
+            net.minecraft.util.math.Vec3d vec3 = this.getDeltaMovement();
             double d = this.horizontalDistance(vec3);
             this.yBodyRot += (-((float) net.minecraft.util.math.MathHelper.atan2(vec3.x, vec3.z)) * (180F / (float) Math.PI) - this.yBodyRot) * 0.1F;
             this.setYRot(this.yBodyRot);
@@ -111,14 +111,14 @@ public class ClientSquid extends FlyingPet {
 
     @Override
     public void setDeltaMovement(double x, double y, double z) {
-        this.setDeltaMovement(new net.minecraft.util.math.vector.Vector3d(x, y, z));
+        this.setDeltaMovement(new net.minecraft.util.math.Vec3d(x, y, z));
         this.tx = (float) x;
         this.ty = (float) y;
         this.tz = (float) z;
     }
 
     @Override
-    public void setDeltaMovement(net.minecraft.util.math.vector.Vector3d vec3) {
+    public void setDeltaMovement(net.minecraft.util.math.Vec3d vec3) {
         super.setDeltaMovement(vec3);
         double x = vec3.x;
         double y = vec3.y;

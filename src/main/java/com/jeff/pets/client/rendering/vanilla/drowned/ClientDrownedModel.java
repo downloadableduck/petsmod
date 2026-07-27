@@ -1,10 +1,10 @@
 package com.jeff.pets.client.rendering.vanilla.drowned;
 
+import com.jeff.pets.client.rendering.ModelHelper;
 import com.jeff.pets.mob.vanilla.hostile.ClientDrowned;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.client.renderer.model.ModelHelper;
 import net.minecraft.client.renderer.model.ModelRenderer;
 
 import static com.jeff.pets.client.Central.CONFIG;

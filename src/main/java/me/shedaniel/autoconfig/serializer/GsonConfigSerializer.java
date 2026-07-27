@@ -37,26 +37,26 @@ import java.nio.file.Path;
  */
 @SuppressWarnings({"unused", "FieldMayBeFinal"})
 public class GsonConfigSerializer<T extends ConfigData> implements ConfigSerializer<T> {
-    
+
     private Config definition;
     private Class<T> configClass;
     private Gson gson;
-    
+
     @SuppressWarnings("WeakerAccess")
     public GsonConfigSerializer(Config definition, Class<T> configClass, Gson gson) {
         this.definition = definition;
         this.configClass = configClass;
         this.gson = gson;
     }
-    
+
     public GsonConfigSerializer(Config definition, Class<T> configClass) {
         this(definition, configClass, new GsonBuilder().setPrettyPrinting().create());
     }
-    
+
     private Path getConfigPath() {
         return Utils.getConfigFolder().resolve(definition.name() + ".json");
     }
-    
+
     @Override
     public void serialize(T config) throws SerializationException {
         Path configPath = getConfigPath();
@@ -69,7 +69,7 @@ public class GsonConfigSerializer<T extends ConfigData> implements ConfigSeriali
             throw new SerializationException(e);
         }
     }
-    
+
     @Override
     public T deserialize() throws SerializationException {
         Path configPath = getConfigPath();
@@ -86,7 +86,7 @@ public class GsonConfigSerializer<T extends ConfigData> implements ConfigSeriali
             return createDefault();
         }
     }
-    
+
     @Override
     public T createDefault() {
         return Utils.constructUnsafely(configClass);

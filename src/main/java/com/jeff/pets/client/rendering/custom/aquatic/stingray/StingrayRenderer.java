@@ -5,11 +5,11 @@ import com.jeff.pets.mob.custom.aquatic.Stingray;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.util.ResourceLocation;
 
-import static com.jeff.pets.PetsInitializer.MOD_ID;
+import static com.jeff.pets.client.Central.MOD_ID;
 
 public class StingrayRenderer extends PetRenderer<Stingray, StingrayModel> {
 
-    public StingrayRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public StingrayRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new StingrayModel(), 0.75f);
     }
 

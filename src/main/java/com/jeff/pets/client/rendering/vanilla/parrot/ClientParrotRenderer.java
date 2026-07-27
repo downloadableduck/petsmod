@@ -12,7 +12,7 @@ public class ClientParrotRenderer extends PetRenderer<ClientParrot, ClientParrot
 
     String parrotTexturePath;
 
-    public ClientParrotRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientParrotRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientParrotModel(), 0.3F);
     }
 

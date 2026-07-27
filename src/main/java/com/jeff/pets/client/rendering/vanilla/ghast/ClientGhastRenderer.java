@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientGhastRenderer extends PetRenderer<ClientGhast, GhastModel<ClientGhast>> {
 
-    public ClientGhastRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientGhastRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new GhastModel<>(), 0.75f);
     }
 

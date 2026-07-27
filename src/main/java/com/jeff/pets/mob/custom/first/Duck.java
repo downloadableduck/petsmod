@@ -4,10 +4,7 @@ import com.jeff.pets.PetsSounds;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -26,7 +23,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-import static com.jeff.pets.PetsInitializer.Entities.DUCK;
+import static com.jeff.pets.PetsInitializer.DUCK;
 
 public class Duck extends AbstractPet {
 
@@ -48,15 +45,17 @@ public class Duck extends AbstractPet {
         super(type, level);
     }
 
-    public static AttributeModifierMap.MutableAttribute createAttributes() {
-        return AnimalEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0).add(Attributes.MOVEMENT_SPEED, 0.25F);
-    }
-
     public static float rotlerp(float start, float end) {
         float f = net.minecraft.util.math.MathHelper.wrapDegrees(end - start);
         if (f > 10.0f) f = 10.0f;
         if (f < -10.0f) f = -10.0f;
         return start + f;
+    }
+
+    @Override
+    public void registerAttributes() {
+        super.registerAttributes();
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25);
     }
 
     @Override
@@ -85,7 +84,7 @@ public class Duck extends AbstractPet {
         }
 
         this.flapping *= 0.9F;
-        net.minecraft.util.math.vector.Vector3d movement = this.getDeltaMovement();
+        net.minecraft.util.math.Vec3d movement = this.getDeltaMovement();
         if (!this.onGround && movement.y < (double) 0.0F) {
             this.setDeltaMovement(movement.multiply(1.0F, 0.6, 1.0F));
         }
@@ -112,15 +111,15 @@ public class Duck extends AbstractPet {
     }
 
     protected SoundEvent getAmbientSound() {
-        return PetsSounds.DUCK_AMBIENT.get();
+        return PetsSounds.DUCK_AMBIENT;
     }
 
     protected SoundEvent getHurtSound(final DamageSource source) {
-        return PetsSounds.DUCK_AMBIENT.get();
+        return PetsSounds.DUCK_AMBIENT;
     }
 
     protected SoundEvent getDeathSound() {
-        return PetsSounds.DUCK_AMBIENT.get();
+        return PetsSounds.DUCK_AMBIENT;
     }
 
     protected void playStepSound(final BlockPos pos, final BlockState blockState) {
@@ -128,7 +127,7 @@ public class Duck extends AbstractPet {
     }
 
     public Duck getBreedOffspring(final AgeableEntity partner) {
-        Duck duck = DUCK.get().create(level);
+        Duck duck = DUCK.create(level);
         duck.setServerEntity(true);
         return duck;
     }
@@ -172,7 +171,7 @@ public class Duck extends AbstractPet {
                     this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
                     this.isOnHead = false;
                 } else {
-                    this.setOrderedToSit(true);
+                    this.setSitting(true);
                 }
             }
 
@@ -194,8 +193,8 @@ public class Duck extends AbstractPet {
 
                 this.animationSpeed = (0.5F);
 
-                net.minecraft.util.math.vector.Vector3d targetPos = owner.position();
-                net.minecraft.util.math.vector.Vector3d dir = targetPos.subtract(this.position()).normalize();
+                net.minecraft.util.math.Vec3d targetPos = owner.position();
+                net.minecraft.util.math.Vec3d dir = targetPos.subtract(this.position()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setYHeadRot(this.getYRot());
@@ -254,7 +253,7 @@ public class Duck extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level.playLocalSound(this.getX(), this.getY(), this.getZ(), PetsSounds.DUCK_AMBIENT.get(), SoundCategory.NEUTRAL, 1.0f, 1.0f, true);
+            level.playLocalSound(this.getX(), this.getY(), this.getZ(), PetsSounds.DUCK_AMBIENT, SoundCategory.NEUTRAL, 1.0f, 1.0f, true);
         }
     }
 

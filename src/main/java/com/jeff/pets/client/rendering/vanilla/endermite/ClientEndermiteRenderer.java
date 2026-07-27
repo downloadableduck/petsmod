@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientEndermiteRenderer extends PetRenderer<ClientEndermite, EndermiteModel<ClientEndermite>> {
 
-    public ClientEndermiteRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientEndermiteRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new EndermiteModel<>(), 0.75f);
     }
 

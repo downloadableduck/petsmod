@@ -1,0 +1,5 @@
+{
+  "com/jeff/pets/client/mixin/client/TickMixin": {
+    "tick": "Lnet/minecraft/client/Minecraft;func_71407_l()V"
+  }
+}

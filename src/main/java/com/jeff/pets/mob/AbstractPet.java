@@ -2,19 +2,17 @@ package com.jeff.pets.mob;
 
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.play.server.SSpawnObjectPacket;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 
@@ -42,8 +40,11 @@ public abstract class AbstractPet extends TameableEntity {
         this.setSpeed(0.5f);
     }
 
-    public static AttributeModifierMap.MutableAttribute createAttributes() {
-        return AnimalEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0F).add(Attributes.MOVEMENT_SPEED, 0.23F);
+    @Override
+    public void registerAttributes() {
+        super.registerAttributes();
+        this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(8);
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.23);
     }
 
     /**
@@ -100,7 +101,7 @@ public abstract class AbstractPet extends TameableEntity {
      * @return It's super method
      */
     @Override
-    public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+    public boolean mobInteract(PlayerEntity player, Hand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
 
         if (this.isTame() && itemStack.isEmpty() && !player.isShiftKeyDown()) {
@@ -111,18 +112,18 @@ public abstract class AbstractPet extends TameableEntity {
                     this.getZ(),
                     5, 5, 5
             );
-            return ActionResultType.SUCCESS;
+            return true;
         }
 
         if (this.isTame() && itemStack.isEmpty() && player.isShiftKeyDown()) {
             if (!this.isPassenger()) {
                 this.startRiding(player);
                 this.lookAt(player, 1f, 1f);
-                return ActionResultType.SUCCESS;
+                return true;
             } else {
                 this.stopRiding();
             }
-            return ActionResultType.SUCCESS;
+            return true;
         }
         return super.mobInteract(player, hand);
     }
@@ -182,7 +183,6 @@ public abstract class AbstractPet extends TameableEntity {
 
     public void wander() {
         float speed = (float) (this.getSpeed() - 0.35);
-        net.minecraft.util.math.vector.Vector3d lookDir;
         float z = speed * this.randomZ;
 
         float distance = this.distanceTo(this.getOwner());
@@ -197,9 +197,9 @@ public abstract class AbstractPet extends TameableEntity {
         }
 
         if (!this.isReturningToOwner) {
-            this.setDeltaMovement(new net.minecraft.util.math.vector.Vector3d(speed, yVelo, z));
+            this.setDeltaMovement(new Vec3d(speed, yVelo, z));
         } else {
-            this.setDeltaMovement(new net.minecraft.util.math.vector.Vector3d(-speed, yVelo, -z));
+            this.setDeltaMovement(new Vec3d(-speed, yVelo, -z));
         }
 
         //this.lookAt(EntityAnchorArgument.Anchor.EYES, lookDir);
@@ -207,7 +207,7 @@ public abstract class AbstractPet extends TameableEntity {
         double moveX = this.getDeltaMovement().x;
         double moveZ = this.getDeltaMovement().z;
 
-        lookDir = new net.minecraft.util.math.vector.Vector3d(
+        Vec3d lookDir = new Vec3d(
                 this.getX() + (moveX * 2),
                 this.getY() + this.getEyeHeight(),
                 this.getZ() + (moveZ * 2)
@@ -252,7 +252,7 @@ public abstract class AbstractPet extends TameableEntity {
         this.randomZ = (float) (Math.random() - 1);
     }
 
-    public double horizontalDistance(net.minecraft.util.math.vector.Vector3d vec3) {
+    public double horizontalDistance(Vec3d vec3) {
         return Math.sqrt(vec3.x * vec3.x + vec3.z * vec3.z);
     }
 }

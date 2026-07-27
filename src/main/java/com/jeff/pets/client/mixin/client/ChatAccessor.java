@@ -10,7 +10,9 @@ import org.spongepowered.asm.mixin.gen.Accessor;
  * Accesses the {@link ChatScreen#commandSuggestions} field for use in {@link Central#refreshChatSuggestor}
  */
 @Mixin(value = ChatScreen.class)
-public interface ChatAccessor {
-    @Accessor("commandSuggestions")
-    CommandSuggestionHelper getChatInputSuggestor();
+public class ChatAccessor {
+    //@Accessor(value = "commandSuggestions", remap = true)
+    CommandSuggestionHelper getChatInputSuggestor() {
+        return null;
+    }
 }

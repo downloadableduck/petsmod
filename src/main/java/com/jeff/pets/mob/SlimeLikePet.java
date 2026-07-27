@@ -4,8 +4,6 @@ import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MoverType;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.util.SoundCategory;
 
@@ -20,9 +18,9 @@ public abstract class SlimeLikePet extends AbstractPet {
         super(entityType, level);
     }
 
-    public static AttributeModifierMap.MutableAttribute createAttributes() {
-        return AbstractPet.createAttributes().add(Attributes.JUMP_STRENGTH, 0.25f);
-    }
+    //public static AttributeModifierMap.MutableAttribute createAttributes() {
+    //return AbstractPet.createAttributes().add(Attributes.JUMP_STRENGTH, 0.25f);
+    //}
 
     /**
      * Custom ticking logic. Note this logic: <pre>
@@ -41,7 +39,7 @@ public abstract class SlimeLikePet extends AbstractPet {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
                 } else {
-                    this.setOrderedToSit(true);
+                    this.setSitting(true);
                 }
             }
 
@@ -63,8 +61,8 @@ public abstract class SlimeLikePet extends AbstractPet {
 
                 this.animationSpeed = (0.5F);
 
-                net.minecraft.util.math.vector.Vector3d targetPos = owner.position();
-                net.minecraft.util.math.vector.Vector3d dir = targetPos.subtract(this.position()).normalize();
+                net.minecraft.util.math.Vec3d targetPos = owner.position();
+                net.minecraft.util.math.Vec3d dir = targetPos.subtract(this.position()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setYHeadRot(this.getYRot());

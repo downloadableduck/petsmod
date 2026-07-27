@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientCodRenderer extends PetRenderer<ClientCod, CodModel<ClientCod>> {
 
-    public ClientCodRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientCodRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new CodModel(), 0.3F);
     }
 

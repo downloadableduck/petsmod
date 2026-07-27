@@ -1,9 +1,9 @@
 package com.jeff.pets.client.rendering.vanilla.zombievillager;
 
+import com.jeff.pets.client.rendering.ModelHelper;
 import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.IHeadToggle;
-import net.minecraft.client.renderer.model.ModelHelper;
 import net.minecraft.client.renderer.model.ModelRenderer;
 
 public class ClientZombieVillagerModel extends BipedModel<ClientZombieVillager> implements IHeadToggle {

@@ -10,7 +10,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientWitherRenderer extends PetRenderer<ClientWither, ClientWitherModel<ClientWither>> {
 
-    public ClientWitherRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientWitherRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientWitherModel<>(0), 0.75f);
 
     }

@@ -4,10 +4,7 @@ import com.jeff.pets.mob.FlyingPet;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
@@ -21,7 +18,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-import static com.jeff.pets.PetsInitializer.Entities.KOI;
+import static com.jeff.pets.PetsInitializer.KOI;
 
 public class Koi extends FlyingPet {
     public static final net.minecraft.network.datasync.DataParameter<Boolean> IS_SERVER_ENTITY =
@@ -32,8 +29,10 @@ public class Koi extends FlyingPet {
         this.setPathfindingMalus(PathNodeType.WATER, 0);
     }
 
-    public static AttributeModifierMap.MutableAttribute createAttributes() {
-        return AnimalEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 6.0).add(Attributes.MOVEMENT_SPEED, 1.0f);
+    @Override
+    public void registerAttributes() {
+        super.registerAttributes();
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(1);
     }
 
     @Override
@@ -71,7 +70,7 @@ public class Koi extends FlyingPet {
     }
 
     public Koi getBreedOffspring(final AgeableEntity partner) {
-        Koi koi = KOI.get().create(level);
+        Koi koi = KOI.create(level);
         koi.setServerEntity(true);
         return koi;
     }
@@ -141,14 +140,14 @@ public class Koi extends FlyingPet {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, 0.1, 0));
                 } else {
-                    this.setOrderedToSit(true);
+                    this.setSitting(true);
                 }
             }
 
             double dx = owner.getX() - this.getX();
             double dz = owner.getZ() - this.getZ();
-            net.minecraft.util.math.vector.Vector3d ownerPos = owner.position().add(0, owner.getEyeHeight() * 0.8, 0);
-            net.minecraft.util.math.vector.Vector3d vecToOwner = ownerPos.subtract(this.position());
+            net.minecraft.util.math.Vec3d ownerPos = owner.position().add(0, owner.getEyeHeight() * 0.8, 0);
+            net.minecraft.util.math.Vec3d vecToOwner = ownerPos.subtract(this.position());
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.distanceTo(owner);
@@ -164,7 +163,7 @@ public class Koi extends FlyingPet {
 
                 this.animationSpeed = (0.5F);
 
-                net.minecraft.util.math.vector.Vector3d dir = vecToOwner.normalize();
+                net.minecraft.util.math.Vec3d dir = vecToOwner.normalize();
                 double speed = 0.2;
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));

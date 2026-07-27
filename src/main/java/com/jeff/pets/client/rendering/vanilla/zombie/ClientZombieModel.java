@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.zombie;
 
+import com.jeff.pets.client.rendering.ModelHelper;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.client.renderer.model.ModelHelper;
 
 import static com.jeff.pets.client.Central.CONFIG;
 

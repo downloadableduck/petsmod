@@ -15,7 +15,7 @@ public class ClientMooshroomRenderer extends PetRenderer<ClientMooshroom, Client
 
     String mooshroomTexturePath;
 
-    public ClientMooshroomRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientMooshroomRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientCowModel<>(), 0.7F);
         this.addLayer(new ClientMushroomCowMushroomLayer(this, Minecraft.getInstance().getBlockRenderer()));
     }

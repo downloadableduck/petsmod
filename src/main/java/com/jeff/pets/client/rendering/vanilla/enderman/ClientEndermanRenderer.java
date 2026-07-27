@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientEndermanRenderer extends PetRenderer<ClientEnderman, EndermanModel<ClientEnderman>> {
 
-    public ClientEndermanRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientEndermanRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new EndermanModel<>(0), 0.5f);
         this.addLayer(new EndermanEyesLayer<>(this));
     }

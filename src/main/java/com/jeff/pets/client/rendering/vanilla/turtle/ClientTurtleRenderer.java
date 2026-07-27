@@ -6,7 +6,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientTurtleRenderer extends PetRenderer<ClientTurtle, ClientTurtleModel> {
 
-    public ClientTurtleRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientTurtleRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientTurtleModel(0), 0.7F);
     }
 

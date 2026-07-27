@@ -10,7 +10,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientHuskRenderer extends PetRenderer<ClientHusk, ClientZombieModel<ClientHusk>> {
 
-    public ClientHuskRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientHuskRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientZombieModel<>(0), 0.75F);
     }
 

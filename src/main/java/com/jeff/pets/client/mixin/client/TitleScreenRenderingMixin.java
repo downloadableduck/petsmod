@@ -16,8 +16,8 @@ import static com.jeff.pets.client.Central.CONFIG;
  */
 @Mixin(MainMenuScreen.class)
 public class TitleScreenRenderingMixin {
-    @Inject(at = @At("HEAD"), method = "render")
-    private void init(MatrixStack p_96739_, int p_96740_, int p_96741_, float p_96742_, CallbackInfo ci) {
-        Central.reassignLogo(CONFIG.customTitleEnabled);
+    //@Inject(at = @At("HEAD"), method = "render")
+    private void init(int p_render_1_, int p_render_2_, float p_render_3_, CallbackInfo ci) {
+        //Central.reassignLogo(CONFIG.customTitleEnabled);
     }
 }

@@ -6,7 +6,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientVexRenderer extends PetRenderer<ClientVex, ClientVexModel> {
 
-    public ClientVexRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientVexRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientVexModel(), 0.75f);
     }
 

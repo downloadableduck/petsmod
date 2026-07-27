@@ -5,10 +5,7 @@ import com.jeff.pets.mob.FlyingPet;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -26,7 +23,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-import static com.jeff.pets.PetsInitializer.Entities.DUMBO_OCTOPUS;
+import static com.jeff.pets.PetsInitializer.DUMBO_OCTOPUS;
 
 public class DumboOctopus extends FlyingPet {
 
@@ -43,8 +40,10 @@ public class DumboOctopus extends FlyingPet {
         this.setPathfindingMalus(PathNodeType.WATER, 0.0f);
     }
 
-    public static AttributeModifierMap.MutableAttribute createAttributes() {
-        return AnimalEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0).add(Attributes.MOVEMENT_SPEED, 0.25F);
+    @Override
+    public void registerAttributes() {
+        super.registerAttributes();
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25);
     }
 
     @Override
@@ -81,11 +80,11 @@ public class DumboOctopus extends FlyingPet {
     }
 
     protected SoundEvent getHurtSound(final DamageSource source) {
-        return PetsSounds.DUCK_AMBIENT.get();
+        return PetsSounds.DUCK_AMBIENT;
     }
 
     protected SoundEvent getDeathSound() {
-        return PetsSounds.DUCK_AMBIENT.get();
+        return PetsSounds.DUCK_AMBIENT;
     }
 
     protected void playStepSound(final BlockPos pos, final BlockState blockState) {
@@ -93,7 +92,7 @@ public class DumboOctopus extends FlyingPet {
     }
 
     public DumboOctopus getBreedOffspring(final ServerWorld level, final AgeableEntity partner) {
-        DumboOctopus octopus = DUMBO_OCTOPUS.get().create(level);
+        DumboOctopus octopus = DUMBO_OCTOPUS.create(level);
         octopus.setServerEntity(true);
         return octopus;
     }
@@ -137,14 +136,14 @@ public class DumboOctopus extends FlyingPet {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, 0.1, 0));
                 } else {
-                    this.setOrderedToSit(true);
+                    this.setSitting(true);
                 }
             }
 
             double dx = owner.getX() - this.getX();
             double dz = owner.getZ() - this.getZ();
-            net.minecraft.util.math.vector.Vector3d ownerPos = owner.position().add(0, owner.getEyeHeight() * 0.8, 0);
-            net.minecraft.util.math.vector.Vector3d vecToOwner = ownerPos.subtract(this.position());
+            net.minecraft.util.math.Vec3d ownerPos = owner.position().add(0, owner.getEyeHeight() * 0.8, 0);
+            net.minecraft.util.math.Vec3d vecToOwner = ownerPos.subtract(this.position());
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.distanceTo(owner);
@@ -160,7 +159,7 @@ public class DumboOctopus extends FlyingPet {
 
                 this.animationSpeed = (0.5F);
 
-                net.minecraft.util.math.vector.Vector3d dir = vecToOwner.normalize();
+                net.minecraft.util.math.Vec3d dir = vecToOwner.normalize();
                 double speed = 0.2;
 
                 this.setYBodyRot(Duck.rotlerp(this.yBodyRot, (float) targetYaw));

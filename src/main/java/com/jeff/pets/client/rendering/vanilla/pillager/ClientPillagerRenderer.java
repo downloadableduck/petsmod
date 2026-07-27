@@ -6,7 +6,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientPillagerRenderer extends PetRenderer<ClientPillager, ClientPillagerModel> {
 
-    public ClientPillagerRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientPillagerRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientPillagerModel(), 0.75f);
     }
 

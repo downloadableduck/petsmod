@@ -2,10 +2,7 @@ package com.jeff.pets.mob.custom.first;
 
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
@@ -17,7 +14,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 
-import static com.jeff.pets.PetsInitializer.Entities.RACOON;
+import static com.jeff.pets.PetsInitializer.RACOON;
 
 public class Racoon extends AbstractPet {
 
@@ -27,10 +24,6 @@ public class Racoon extends AbstractPet {
 
     public Racoon(EntityType<? extends net.minecraft.entity.passive.TameableEntity> entityType, net.minecraft.world.World level) {
         super(entityType, level);
-    }
-
-    public static AttributeModifierMap.MutableAttribute createAttributes() {
-        return AnimalEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0F).add(Attributes.MOVEMENT_SPEED, 0.23F);
     }
 
     @Override
@@ -99,7 +92,7 @@ public class Racoon extends AbstractPet {
                     this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
                     this.isOnHead = false;
                 } else {
-                    this.setOrderedToSit(true);
+                    this.setSitting(true);
                 }
             }
 
@@ -121,8 +114,8 @@ public class Racoon extends AbstractPet {
 
                 this.animationSpeed = (0.5F);
 
-                net.minecraft.util.math.vector.Vector3d targetPos = owner.position();
-                net.minecraft.util.math.vector.Vector3d dir = targetPos.subtract(this.position()).normalize();
+                net.minecraft.util.math.Vec3d targetPos = owner.position();
+                net.minecraft.util.math.Vec3d dir = targetPos.subtract(this.position()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setYHeadRot(this.getYRot());
@@ -184,7 +177,7 @@ public class Racoon extends AbstractPet {
 
     @Override
     public AgeableEntity getBreedOffspring(AgeableEntity AgableMob) {
-        Racoon racoon = RACOON.get().create(level);
+        Racoon racoon = RACOON.create(level);
         racoon.setServerEntity(false);
         return racoon;
     }

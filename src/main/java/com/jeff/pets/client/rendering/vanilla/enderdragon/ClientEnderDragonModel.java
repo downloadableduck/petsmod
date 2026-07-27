@@ -3,10 +3,10 @@ package com.jeff.pets.client.rendering.vanilla.enderdragon;
 import com.jeff.pets.mob.vanilla.boss.ClientEnderDragon;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
-import net.minecraft.util.math.vector.Vector3f;
 
 public class ClientEnderDragonModel extends EntityModel<ClientEnderDragon> {
     private final ModelRenderer head;

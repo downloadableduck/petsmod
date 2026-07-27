@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientPufferFishRenderer extends PetRenderer<ClientPufferFish, PufferFishBigModel<ClientPufferFish>> {
 
-    public ClientPufferFishRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientPufferFishRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new PufferFishBigModel<>(), 0.75f);
     }
 

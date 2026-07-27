@@ -2,31 +2,45 @@ buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
         maven { url "https://maven.shedaniel.me/" }
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '6+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '6.0.24'
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
+
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
+apply plugin: 'org.spongepowered.mixin'
+
+mixin {
+   add sourceSets.main, 'pets_mod.refmap.json'
+    config 'pets.client.mixins.json'
+}
 
 version = project.version
 group = project.maven_group // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'pets-mod'
+boolean obfuscate = true
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+//sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
+
+    //
+    //
+    // 4reobf(obfuscate)
     // The mappings can be changed at any time, and must be in the following format.
     // snapshot_YYYYMMDD   Snapshot are built nightly.
     // stable_#            Stables are built at the discretion of the MCP team.
     // Use non-default mappings at your own risk. they may not always work.
     // Simply re-run your setup task after changing the mappings to update your workspace.
-    mappings channel: 'official', version: "1.16.1"
+    mappings channel: 'official', version: "${project.minecraft_version}"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
@@ -44,7 +58,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                examplemod {
+                pets_mod {
                     source sourceSets.main
                 }
             }
@@ -60,7 +74,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                examplemod {
+                pets_mod {
                     source sourceSets.main
                 }
             }
@@ -92,9 +106,12 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
 
-    implementation fg.deobf("me.shedaniel.cloth:cloth-config-forge:${project.cloth_config_version}")
+    implementation fg.deobf("maven.modrinth:9s6osm5g:dhr1Royh") // cloth config
     implementation("blue.endless:jankson:${rootProject.jankson_version}")
     implementation("com.moandjiezana.toml:toml4j:${rootProject.toml4j_version}")
+    implementation fg.deobf("maven.modrinth:6a16628x:hOGSWOX8")
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"
@@ -132,7 +149,7 @@ jar {
 
 // Example configuration to allow publishing using the maven-publish task
 // This is the preferred method to reobfuscate your jar file
-jar.finalizedBy('reobfJar')
+//jar.finalizedBy('reobfJar')
 // However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
 //publish.dependsOn('reobfJar')
 
@@ -153,6 +170,8 @@ repositories {
     maven { url = 'https://maven.minecraftforge.net/' }
     mavenCentral()
     maven { url = 'https://maven.shedaniel.me/' }
+    maven { url = 'https://maven.spongepowered.org' }
+    maven {                 url = "https://api.modrinth.com/maven"}
 }
 
 processResources {
@@ -180,5 +199,75 @@ tasks.named('jar') {
     archiveVersion = project.mod_version
     archiveClassifier = project.minecraft_version + "-forge"
 
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
     // This is the preferred method to reobfuscate your jar file
 }
+
+tasks.register('runClient2', JavaExec) {
+
+    obfuscate = false
+
+    dependsOn mods
+
+    javaLauncher = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'net.minecraftforge.userdev.LaunchTesting'
+
+    workingDir = file('run')
+
+    args '--launchTarget', 'fmluserdevclient'
+    args '--version', 'forge'
+    args '--assetIndex', "${project.minecraft_version}"
+    args '--assetsDir', "${gradle.gradleUserHomeDir}/caches/forge_gradle/assets"
+    args '--fml.forgeVersion', "${project.forge_version}"
+    args '--fml.mcVersion', "${project.minecraft_version}"
+
+    doFirst {
+        def classesDir = sourceSets.main.output.classesDirs.asPath
+        def resourcesDir = sourceSets.main.output.resourcesDir.absolutePath
+        def pathSeparator = System.getProperty("path.separator")
+
+        args '--mods', "pets_mod%%${classesDir}${pathSeparator}${resourcesDir}"
+
+        systemProperty 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+        systemProperty 'forge.logging.console.level', 'debug'
+
+        systemProperty 'net.minecraftforge.gradle.GradleStart.srg.srg-to-mcp', 'official'
+    }
+
+    systemProperty 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+    systemProperty 'forge.logging.console.level', 'debug'
+}
+
+tasks.register('mods', Copy) {
+    dependsOn 'build'
+
+    from(jar.archiveFile)
+
+    into file("${System.getProperty('user.home')}/AppData/Roaming/.minecraft/developermods/in progress/pets-mod-forge/run/mods")
+
+    doFirst {
+        def modsDir = file("${System.getProperty('user.home')}/AppData/Roaming/.minecraft/developermods/in progress/pets-mod-forge/run/mods")
+        if (modsDir.exists()) {
+            modsDir.listFiles().each { file ->
+                if (file.name.startsWith("pets-mod") && file.name.endsWith(".jar")) {
+                    file.delete()
+                }
+            }
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes([
+                "MixinConfigs": "pets.client.mixins.json"
+        ])
+    }
+}
+
+//tasks.build.dependsOn tasks.mixin

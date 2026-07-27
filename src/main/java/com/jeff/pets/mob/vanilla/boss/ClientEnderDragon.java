@@ -9,6 +9,8 @@ import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.EndPodiumFeature;
 
@@ -42,7 +44,7 @@ public class ClientEnderDragon extends FlyingPet {
     public void tick() {
         super.tick();
         this.oFlapTime = this.flapTime;
-        net.minecraft.util.math.vector.Vector3d vec3 = this.getDeltaMovement();
+        Vec3d vec3 = this.getDeltaMovement();
         float g = 0.2F / ((float) vec3.y() * 10.0F + 1.0F);
         g *= (float) Math.pow(2.0F, vec3.y);
         if (this.isInWall()) {
@@ -53,7 +55,7 @@ public class ClientEnderDragon extends FlyingPet {
     }
 
     public double[] getLatencyPos(int i, float f) {
-        if (this.isDeadOrDying()) {
+        if (this.dead) {
             f = 0.0F;
         }
 
@@ -82,7 +84,7 @@ public class ClientEnderDragon extends FlyingPet {
             }
         } else {
             BlockPos blockPos = this.level.getHeightmapPos(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, EndPodiumFeature.END_PODIUM_LOCATION);
-            double d = Math.max(Math.sqrt(blockPos.distSqr(new net.minecraft.util.math.vector.Vector3i(this.position().x, this.position().y, this.position().z))) / (double) 4.0F, 1.0F);
+            double d = Math.max(Math.sqrt(blockPos.distSqr(new Vec3i(this.position().x, this.position().y, this.position().z))) / (double) 4.0F, 1.0F);
             e = (double) i / d;
         }
 

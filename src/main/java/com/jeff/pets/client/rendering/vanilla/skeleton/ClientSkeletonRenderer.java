@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientSkeletonRenderer extends PetRenderer<ClientSkeleton, SkeletonModel<ClientSkeleton>> {
 
-    public ClientSkeletonRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientSkeletonRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new SkeletonModel<>(), 0.75f);
     }
 

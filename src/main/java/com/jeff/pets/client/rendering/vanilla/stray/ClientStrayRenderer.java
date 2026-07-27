@@ -1,7 +1,9 @@
 package com.jeff.pets.client.rendering.vanilla.stray;
 
+import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientStray;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.StayClothingLayer;
 import net.minecraft.client.renderer.entity.model.SkeletonModel;
@@ -9,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientStrayRenderer extends PetRenderer<ClientStray, SkeletonModel<ClientStray>> {
 
-    public ClientStrayRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientStrayRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new SkeletonModel<>(), 0.75f);
         this.addLayer(new StayClothingLayer<>((IEntityRenderer) this));
     }

@@ -1,6 +1,6 @@
 package com.jeff.pets.client.rendering.custom.first.duck;
 
-import com.jeff.pets.PetsInitializer;
+import com.jeff.pets.client.Central;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -13,7 +13,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class DuckRenderer extends PetRenderer<Duck, DuckModel> {
     public String duckTexturePath;
 
-    public DuckRenderer(final net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public DuckRenderer(final net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new DuckModel(), 0.3F);
     }
 
@@ -41,7 +41,9 @@ public class DuckRenderer extends PetRenderer<Duck, DuckModel> {
             duckTexturePath = "textures/entity/duck/rubber.png";
         } else if (CONFIG.duckSkin.equals("bronze")) {
             duckTexturePath = "textures/entity/duck/bronze.png";
+        } else {
+            duckTexturePath = "textures/entity/duck/mallard_male.png";
         }
-        return new ResourceLocation(PetsInitializer.MOD_ID, duckTexturePath);
+        return new ResourceLocation(Central.MOD_ID, duckTexturePath);
     }
 }

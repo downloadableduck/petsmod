@@ -5,7 +5,7 @@ import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.util.ResourceLocation;
 
-import static com.jeff.pets.PetsInitializer.MOD_ID;
+import static com.jeff.pets.client.Central.MOD_ID;
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopusModel> {
@@ -14,7 +14,7 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
     float direction = 1;
     float speed = 0.5f;
 
-    public DumboOctopusRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public DumboOctopusRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new DumboOctopusModel(), 0.5f);
     }
 

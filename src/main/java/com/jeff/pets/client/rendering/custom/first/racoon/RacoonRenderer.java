@@ -7,12 +7,12 @@ import net.minecraft.util.ResourceLocation;
 
 import java.util.Objects;
 
-import static com.jeff.pets.PetsInitializer.MOD_ID;
+import static com.jeff.pets.client.Central.MOD_ID;
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class RacoonRenderer extends MobRenderer<Racoon, RacoonModel> {
 
-    public RacoonRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public RacoonRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new RacoonModel(), 0.75f);
     }
 

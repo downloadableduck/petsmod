@@ -6,6 +6,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.Objects;
 
@@ -38,14 +39,14 @@ public abstract class FlyingPet extends AbstractPet {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, 0.1, 0));
                 } else {
-                    this.setOrderedToSit(true);
+                    this.setSitting(true);
                 }
             }
 
             double dx = owner.getX() - this.getX();
             double dz = owner.getZ() - this.getZ();
-            net.minecraft.util.math.vector.Vector3d ownerPos = owner.position().add(0, owner.getEyeHeight() * 0.8, 0);
-            net.minecraft.util.math.vector.Vector3d vecToOwner = ownerPos.subtract(this.position());
+            Vec3d ownerPos = owner.position().add(0, owner.getEyeHeight() * 0.8, 0);
+            Vec3d vecToOwner = ownerPos.subtract(this.position());
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.distanceTo(owner);
@@ -61,7 +62,7 @@ public abstract class FlyingPet extends AbstractPet {
 
                 this.animationSpeed = (0.5F);
 
-                net.minecraft.util.math.vector.Vector3d dir = vecToOwner.normalize();
+                Vec3d dir = vecToOwner.normalize();
                 double speed = owner.getSpeed() * 1.5;
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));

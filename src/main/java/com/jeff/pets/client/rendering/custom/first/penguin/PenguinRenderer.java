@@ -1,6 +1,6 @@
 package com.jeff.pets.client.rendering.custom.first.penguin;
 
-import com.jeff.pets.PetsInitializer;
+import com.jeff.pets.client.Central;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Penguin;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -10,13 +10,13 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class PenguinRenderer extends PetRenderer<Penguin, PenguinModel> {
 
-    public PenguinRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public PenguinRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new PenguinModel(), 0.5f);
     }
 
     @Override
     public ResourceLocation getTextureLocation(Penguin livingEntityRenderState) {
-        return new ResourceLocation(PetsInitializer.MOD_ID, "textures/entity/penguin/penguin.png");
+        return new ResourceLocation(Central.MOD_ID, "textures/entity/penguin/penguin.png");
     }
 
     @Override

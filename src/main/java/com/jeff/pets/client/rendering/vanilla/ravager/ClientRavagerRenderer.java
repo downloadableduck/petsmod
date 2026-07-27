@@ -6,7 +6,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientRavagerRenderer extends PetRenderer<ClientRavager, ClientRavagerModel> {
 
-    public ClientRavagerRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context) {
+    public ClientRavagerRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientRavagerModel(), 0.75f);
     }
 
