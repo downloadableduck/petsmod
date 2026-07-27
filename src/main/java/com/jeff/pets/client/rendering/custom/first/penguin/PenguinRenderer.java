@@ -29,8 +29,8 @@ public class PenguinRenderer extends PetRenderer<@NotNull Penguin, @NotNull Peng
 
     @Override
     public void renderModel(final Penguin penguin, float f, float partialTicks, float h, float i, float j, float k) {
-        penguin.flap = (float) MathHelper.m_23874002 /*lerp*/(partialTicks, penguin.oFlap, penguin.flap);
-        penguin.flapSpeed = (float) MathHelper.m_23874002 /*lerp*/(partialTicks, penguin.oFlapSpeed, penguin.flapSpeed);
+        //penguin.flap = (float) MathHelper.m_23874002 /*lerp*/(partialTicks, penguin.oFlap, penguin.flap);
+        //penguin.flapSpeed = (float) MathHelper.m_23874002 /*lerp*/(partialTicks, penguin.oFlapSpeed, penguin.flapSpeed);
         super.renderModel(penguin, f, partialTicks, h, i, j, k);
     }
 }
