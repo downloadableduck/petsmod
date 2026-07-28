@@ -2,7 +2,6 @@ package com.jeff.pets.client.rendering.vanilla.llama;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientLlama;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -16,9 +15,9 @@ public class ClientLlamaRenderer extends PetRenderer<ClientLlama, ClientLlamaMod
     }
 
     @Override
-    protected void scale(ClientLlama state, MatrixStack poseStack, float f) {
+    protected void scale(ClientLlama state, float f) {
         if (CONFIG.isBaby) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 

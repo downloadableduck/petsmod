@@ -16,9 +16,9 @@ public class ClientVillagerRenderer extends PetRenderer<ClientVillager, Villager
     }
 
     @Override
-    protected void scale(ClientVillager state, com.mojang.blaze3d.matrix.MatrixStack poseStack, float f) {
+    protected void scale(ClientVillager state, float f) {
         if (CONFIG.isBaby) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 

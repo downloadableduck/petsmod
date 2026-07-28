@@ -3,7 +3,6 @@ package com.jeff.pets.client.enums;
 
 public enum PetList implements NameableEnum {
     bat,
-    bee,
     blaze,
     cat,
     cave_spider,
@@ -65,7 +64,8 @@ public enum PetList implements NameableEnum {
     wither,
     wolf,
     zombie,
-    zombie_villager;
+    zombie_villager,
+    zombie_pigman;
 
     @Override
     public net.minecraft.util.text.ITextComponent getDisplayName() {

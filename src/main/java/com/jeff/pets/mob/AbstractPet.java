@@ -73,19 +73,19 @@ public abstract class AbstractPet extends TameableEntity {
      * Custom interactions.
      * - Right clicking on a pet with an empty hand will let make hearts appear above it:
      * <pre>
-     *     {@code if (this.isTame() && itemStack.isEmpty() && !player.isShiftKeyDown()) {
+     *     {@code if (this.isTame() && itemStack.isEmpty() && !player.isSneaking()) {
      *         this.level.addParticle(
      *                 ParticleTypes.HEART,
-     *                 this.getX(),
-     *                 this.getY() + this.heartHeight(),
-     *                 this.getZ(),
+     *                 this.x,
+     *                 this.y + this.heartHeight(),
+     *                 this.z,
      *                 5, 5, 5
      *         );
      *         return ActionResultType.SUCCESS;
      *     }}</pre>
      * - Shifting and right clicking on a pet with an empty hand will pick it up:
      * <pre>
-     *     {@code if (this.isTame() && itemStack.isEmpty() && player.isShiftKeyDown()) {
+     *     {@code if (this.isTame() && itemStack.isEmpty() && player.isSneaking()) {
      *         if (!this.isPassenger()) {
      *             this.startRiding(player);
      *             this.lookAt(player, 1f, 1f);
@@ -104,18 +104,18 @@ public abstract class AbstractPet extends TameableEntity {
     public boolean mobInteract(PlayerEntity player, Hand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
 
-        if (this.isTame() && itemStack.isEmpty() && !player.isShiftKeyDown()) {
+        if (this.isTame() && itemStack.isEmpty() && !player.isSneaking()) {
             this.level.addParticle(
                     ParticleTypes.HEART,
-                    this.getX(),
-                    this.getY() + this.heartHeight(),
-                    this.getZ(),
+                    this.x,
+                    this.y + this.heartHeight(),
+                    this.z,
                     5, 5, 5
             );
             return true;
         }
 
-        if (this.isTame() && itemStack.isEmpty() && player.isShiftKeyDown()) {
+        if (this.isTame() && itemStack.isEmpty() && player.isSneaking()) {
             if (!this.isPassenger()) {
                 this.startRiding(player);
                 this.lookAt(player, 1f, 1f);
@@ -208,9 +208,9 @@ public abstract class AbstractPet extends TameableEntity {
         double moveZ = this.getDeltaMovement().z;
 
         Vec3d lookDir = new Vec3d(
-                this.getX() + (moveX * 2),
-                this.getY() + this.getEyeHeight(),
-                this.getZ() + (moveZ * 2)
+                this.x + (moveX * 2),
+                this.y + this.getEyeHeight(),
+                this.z + (moveZ * 2)
         );
         this.getLookControl().setLookAt(lookDir.x, lookDir.y, lookDir.z, 1.0F, (float) this.getMaxHeadXRot());
 
@@ -229,8 +229,8 @@ public abstract class AbstractPet extends TameableEntity {
         if (!this.onGround) {
             this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
         }
-        double dx = lookDir.x - this.getX();
-        double dz = lookDir.z - this.getZ();
+        double dx = lookDir.x - this.x;
+        double dz = lookDir.z - this.z;
         float targetYaw = (float) (Math.atan2(-dx, dz) * (180D / Math.PI));
 
         this.setYRot(targetYaw);

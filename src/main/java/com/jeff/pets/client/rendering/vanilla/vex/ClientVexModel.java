@@ -4,34 +4,30 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.jeff.pets.mob.vanilla.hostile.ClientVex;
 import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.client.renderer.entity.model.RendererModel;
 
 public class ClientVexModel extends BipedModel<ClientVex> {
-    private final ModelRenderer leftWing;
-    private final ModelRenderer rightWing;
+    private final RendererModel leftWing;
+    private final RendererModel rightWing;
 
     public ClientVexModel() {
         super(0.0F, 0.0F, 64, 64);
         this.leftLeg.visible = false;
         this.hat.visible = false;
-        this.rightLeg = new ModelRenderer(this, 32, 0);
-        this.rightLeg.addBox(-1.0F, -1.0F, -2.0F, 6.0F, 10.0F, 4.0F, 0.0F);
+        this.rightLeg = new RendererModel(this, 32, 0);
+        this.rightLeg.addBox(-1.0F, -1.0F, -2.0F, (int) 6.0, (int) 10.0, (int) 4.0, 0.0F);
         this.rightLeg.setPos(-1.9F, 12.0F, 0.0F);
-        this.rightWing = new ModelRenderer(this, 0, 32);
-        this.rightWing.addBox(-20.0F, 0.0F, 0.0F, 20.0F, 12.0F, 1.0F);
-        this.leftWing = new ModelRenderer(this, 0, 32);
+        this.rightWing = new RendererModel(this, 0, 32);
+        this.rightWing.addBox(-20.0F, 0.0F, 0.0F, (int) 20.0, (int) 12.0, (int) 1.0);
+        this.leftWing = new RendererModel(this, 0, 32);
         this.leftWing.mirror = true;
-        this.leftWing.addBox(0.0F, 0.0F, 0.0F, 20.0F, 12.0F, 1.0F);
+        this.leftWing.addBox(0.0F, 0.0F, 0.0F, (int) 20.0, (int) 12.0, (int) 1.0);
     }
 
-    protected Iterable<ModelRenderer> bodyParts() {
-        return Iterables.concat(super.bodyParts(), ImmutableList.of(this.rightWing, this.leftWing));
-    }
+    public void setupAnim(ClientVex vex, float f, float g, float h, float i, float j, float p) {
+        super.setupAnim(vex, f, g, h, i, j, p);
 
-    public void setupAnim(ClientVex vex, float f, float g, float h, float i, float j) {
-        super.setupAnim(vex, f, g, h, i, j);
-
-        ModelRenderer var10000 = this.rightLeg;
+        RendererModel var10000 = this.rightLeg;
         var10000.xRot += ((float) Math.PI / 5F);
         this.rightWing.z = 2.0F;
         this.leftWing.z = 2.0F;

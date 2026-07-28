@@ -17,7 +17,7 @@ public class ClientGhastRenderer extends PetRenderer<ClientGhast, GhastModel<Cli
     }
 
     @Override
-    public void scale(ClientGhast ghast, com.mojang.blaze3d.matrix.MatrixStack poseStack, float f) {
-        poseStack.scale(4.5F, 4.5F, 4.5F);
+    public void scale(ClientGhast ghast, float f) {
+        com.mojang.blaze3d.platform.GlStateManager.scalef(4.5F, 4.5F, 4.5F);
     }
 }

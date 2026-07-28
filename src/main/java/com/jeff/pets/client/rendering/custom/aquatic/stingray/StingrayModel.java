@@ -2,57 +2,57 @@ package com.jeff.pets.client.rendering.custom.aquatic.stingray;
 
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.aquatic.Stingray;
-import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.client.renderer.entity.model.RendererModel;
 
 public class StingrayModel extends PetModel<Stingray> {
-    private final ModelRenderer root;
-    private final ModelRenderer body;
-    private final ModelRenderer tail;
-    private final ModelRenderer right_fin;
-    private final ModelRenderer left_fin;
+    private final RendererModel root;
+    private final RendererModel body;
+    private final RendererModel tail;
+    private final RendererModel right_fin;
+    private final RendererModel left_fin;
 
     public StingrayModel() {
         texWidth = 64;
         texHeight = 64;
 
-        root = new ModelRenderer(this);
+        root = new RendererModel(this);
         root.setPos(0.0F, 24.0F, 0.0F);
 
 
-        body = new ModelRenderer(this);
+        body = new RendererModel(this);
         body.setPos(0.0F, -2.0F, 0.0F);
         root.addChild(body);
-        body.texOffs(0, 0).addBox(-6.0F, -2.0F, -6.0F, 12.0F, 2.0F, 12.0F, 0.0F, false);
+        body.texOffs(0, 0).addBox(-6.0F, -2.0F, -6.0F, (int) 12.0F, (int) 2.0F, (int) 12.0F, 0.0F, false);
 
-        tail = new ModelRenderer(this);
+        tail = new RendererModel(this);
         tail.setPos(0.0F, -2.0F, 0.0F);
         root.addChild(tail);
-        tail.texOffs(0, 14).addBox(-1.0F, -2.0F, 6.0F, 2.0F, 2.0F, 10.0F, 0.0F, false);
+        tail.texOffs(0, 14).addBox(-1.0F, -2.0F, 6.0F, (int) 2.0F, (int) 2.0F, (int) 10.0F, 0.0F, false);
 
-        right_fin = new ModelRenderer(this);
+        right_fin = new RendererModel(this);
         right_fin.setPos(6.0F, -4.0F, -1.0F);
         root.addChild(right_fin);
-        right_fin.texOffs(24, 14).addBox(0.0F, 0.0F, -3.0F, 4.0F, 2.0F, 6.0F, 0.0F, false);
+        right_fin.texOffs(24, 14).addBox(0.0F, 0.0F, -3.0F, (int) 4.0F, (int) 2.0F, (int) 6.0F, 0.0F, false);
 
-        left_fin = new ModelRenderer(this);
+        left_fin = new RendererModel(this);
         left_fin.setPos(-6.0F, -4.0F, -1.0F);
         root.addChild(left_fin);
-        left_fin.texOffs(24, 22).addBox(-4.0F, 0.0F, -3.0F, 4.0F, 2.0F, 6.0F, 0.0F, false);
+        left_fin.texOffs(24, 22).addBox(-4.0F, 0.0F, -3.0F, (int) 4.0F, (int) 2.0F, (int) 6.0F, 0.0F, false);
     }
 
     @Override
-    public void renderToBuffer(com.mojang.blaze3d.matrix.MatrixStack matrixStack, com.mojang.blaze3d.vertex.IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        root.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+    public void render(Stingray stingray, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
+        root.render(alpha);
     }
 
-    public void setRotationAngle(ModelRenderer ModelRenderer, float x, float y, float z) {
-        ModelRenderer.xRot = x;
-        ModelRenderer.yRot = y;
-        ModelRenderer.zRot = z;
+    public void setRotationAngle(RendererModel RendererModel, float x, float y, float z) {
+        RendererModel.xRot = x;
+        RendererModel.yRot = y;
+        RendererModel.zRot = z;
     }
 
     @Override
-    public void setupAnim(Stingray state, float f, float g, float m, float k, float p) {
+    public void setupAnim(Stingray state, float f, float g, float m, float k, float p, float o) {
         float partialTick = m;
         float flapTime = net.minecraft.util.math.MathHelper.lerp(partialTick, state.oFlap, state.flap);
         if (state.animationSpeed > 0) {

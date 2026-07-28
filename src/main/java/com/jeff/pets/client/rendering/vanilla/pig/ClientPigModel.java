@@ -12,19 +12,19 @@ public class ClientPigModel extends PigModel<ClientPig> {
     }
 
     @Override
-    public void setupAnim(ClientPig state, float f, float g, float h, float i, float k) {
-        super.setupAnim(state, f, g, h, i, k);
+    public void setupAnim(ClientPig state, float f, float g, float h, float i, float k, float j) {
+        super.setupAnim(state, f, g, h, i, k, j);
     }
 
     @Override
-    public void renderToBuffer(com.mojang.blaze3d.matrix.MatrixStack poseStack, com.mojang.blaze3d.vertex.IVertexBuilder vertexConsumer, int i, int j, float f, float g, float h, float k) {
-        poseStack.pushPose();
+    public void render(ClientPig clientPig, float i, float j, float f, float g, float h, float k) {
+        super.render(clientPig, i, j, f, g, h, k);
+        com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
         if (CONFIG.isBaby) {
-            poseStack.scale(1.5f, 1.5f, 1.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(1.5f, 1.5f, 1.5f);
         } else {
-            poseStack.scale(1, 1, 1);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(1, 1, 1);
         }
-        this.head.translateAndRotate(poseStack);
-        poseStack.popPose();
+        com.mojang.blaze3d.platform.GlStateManager.popMatrix();;
     }
 }

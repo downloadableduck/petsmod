@@ -1,6 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.villager;
 
 import com.jeff.pets.mob.vanilla.passive.ClientVillager;
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.VillagerModel;
@@ -13,7 +14,15 @@ public class ClientVillagerDefaultLayer extends LayerRenderer<ClientVillager, Vi
     }
 
     @Override
-    public void render(com.mojang.blaze3d.matrix.MatrixStack poseStack, net.minecraft.client.renderer.IRenderTypeBuffer source, int i, ClientVillager entityRenderState, float f, float g, float h, float j, float k, float l) {
-        renderColoredCutoutModel(this.getParentModel(), new ResourceLocation("minecraft", "textures/entity/villager/type/plains.png"), poseStack, source, i, entityRenderState, 1, 1, 1);
+    public void render(ClientVillager villager, float f, float g, float h, float i, float j, float k, float l) {
+        GlStateManager.pushMatrix();
+        this.bindTexture(new ResourceLocation("minecraft", "textures/entity/villager/type/plains.png"));
+        this.getParentModel().render(villager, f, g, i, j, k, l);
+        GlStateManager.popMatrix();
+    }
+
+    @Override
+    public boolean colorsOnDamage() {
+        return false;
     }
 }

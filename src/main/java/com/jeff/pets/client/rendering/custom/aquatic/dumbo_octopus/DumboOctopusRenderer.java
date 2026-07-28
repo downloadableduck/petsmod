@@ -2,11 +2,10 @@ package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.util.ResourceLocation;
 
-import static com.jeff.pets.client.Central.MOD_ID;
 import static com.jeff.pets.client.Central.CONFIG;
+import static com.jeff.pets.client.Central.MOD_ID;
 
 public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopusModel> {
 
@@ -46,8 +45,8 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
     }
 
     @Override
-    public void render(DumboOctopus octopus, float f, float g, com.mojang.blaze3d.matrix.MatrixStack poseStack, IRenderTypeBuffer source, int i) {
-        super.render(octopus, f, g, poseStack, source, i);
+    public void renderModel(DumboOctopus octopus, float f, float g, float h, float i, float j, float k) {
+        super.renderModel(octopus, f, g, h, i, j, k);
         float currentSpeed;
         if (i > 67.5f) {
             currentSpeed = speed;

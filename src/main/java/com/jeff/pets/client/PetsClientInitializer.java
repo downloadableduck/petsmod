@@ -9,7 +9,6 @@ import com.jeff.pets.client.rendering.custom.first.duck.DuckRenderer;
 import com.jeff.pets.client.rendering.custom.first.penguin.PenguinRenderer;
 import com.jeff.pets.client.rendering.custom.first.racoon.RacoonRenderer;
 import com.jeff.pets.client.rendering.vanilla.bat.ClientBatRenderer;
-import com.jeff.pets.client.rendering.vanilla.bee.ClientBeeRenderer;
 import com.jeff.pets.client.rendering.vanilla.blaze.ClientBlazeRenderer;
 import com.jeff.pets.client.rendering.vanilla.cat.ClientCatRenderer;
 import com.jeff.pets.client.rendering.vanilla.cavespider.ClientCaveSpiderRenderer;
@@ -63,10 +62,19 @@ import com.jeff.pets.client.rendering.vanilla.wither.ClientWitherRenderer;
 import com.jeff.pets.client.rendering.vanilla.witherskeleton.ClientWitherSkeletonRenderer;
 import com.jeff.pets.client.rendering.vanilla.wolf.ClientWolfRenderer;
 import com.jeff.pets.client.rendering.vanilla.zombie.ClientZombieRenderer;
+import com.jeff.pets.client.rendering.vanilla.zombie_pigman.ClientZOmbiePigmanRenderer;
 import com.jeff.pets.client.rendering.vanilla.zombievillager.ClientZombieVillagerRenderer;
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
-import net.minecraft.client.Minecraft;
+import com.jeff.pets.mob.custom.aprilfools.Head;
+import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
+import com.jeff.pets.mob.custom.aquatic.Koi;
+import com.jeff.pets.mob.custom.aquatic.Stingray;
+import com.jeff.pets.mob.custom.first.Duck;
+import com.jeff.pets.mob.custom.first.Penguin;
+import com.jeff.pets.mob.custom.first.Racoon;
+import com.jeff.pets.mob.vanilla.boss.*;
+import com.jeff.pets.mob.vanilla.neutral.*;
+import com.jeff.pets.mob.vanilla.hostile.*;
+import com.jeff.pets.mob.vanilla.passive.*;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -79,7 +87,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -107,7 +114,7 @@ public class PetsClientInitializer {
 
     public static List<String> ADDONS = new ArrayList<>();
 
-    public static final Map<EntityType, Factory> renderSupplierMap = new HashMap();
+    public static final Map<Class, Factory> renderSupplierMap = new HashMap();
     public static final Map<EntityRendererManager, Context> renderManagerMap = new WeakHashMap();
 
     public static KeyBinding openConfigScreen;
@@ -222,70 +229,69 @@ public class PetsClientInitializer {
     }*/
 
     public static void register() {
-        System.out.println("running code");
-        register(PetsInitializer.HEAD, HeadRenderer::new);
-        register(PetsInitializer.DUCK, DuckRenderer::new);
-        register(PetsInitializer.RACOON, RacoonRenderer::new);
-        register(PetsInitializer.PENGUIN, PenguinRenderer::new);
-        register(PetsInitializer.SHEEP, ClientSheepRenderer::new);
-        register(PetsInitializer.CAT, ClientCatRenderer::new);
-        register(PetsInitializer.BAT, ClientBatRenderer::new);
-        register(PetsInitializer.CHICKEN, ClientChickenRenderer::new);
-        register(PetsInitializer.COD, ClientCodRenderer::new);
-        register(PetsInitializer.COW, ClientCowRenderer::new);
-        register(PetsInitializer.DONKEY, ClientDonkeyRenderer::new);
-        register(PetsInitializer.HORSE, ClientHorseRenderer::new);
-        register(PetsInitializer.MOOSHROOM, ClientMooshroomRenderer::new);
-        register(PetsInitializer.PARROT, ClientParrotRenderer::new);
-        register(PetsInitializer.PIG, ClientPigRenderer::new);
-        register(PetsInitializer.RABBIT, ClientRabbitRenderer::new);
-        register(PetsInitializer.SALMON, ClientSalmonRenderer::new);
-        register(PetsInitializer.SNOW_GOLEM, ClientSnowGolemRenderer::new);
-        register(PetsInitializer.SQUID, ClientSquidRenderer::new);
-        register(PetsInitializer.TURTLE, ClientTurtleRenderer::new);
-        register(PetsInitializer.VILLAGER, ClientVillagerRenderer::new);
-        register(PetsInitializer.WANDERING_TRADER, ClientWanderingTraderRenderer::new);
-        register(PetsInitializer.BEE, ClientBeeRenderer::new);
-        register(PetsInitializer.CAVE_SPIDER, ClientCaveSpiderRenderer::new);
-        register(PetsInitializer.DOLPHIN, ClientDolphinRenderer::new);
-        register(PetsInitializer.ENDERMAN, ClientEndermanRenderer::new);
-        register(PetsInitializer.FOX, ClientFoxRenderer::new);
-        register(PetsInitializer.IRON_GOLEM, ClientIronGolemRenderer::new);
-        register(PetsInitializer.LLAMA, ClientLlamaRenderer::new);
-        register(PetsInitializer.PANDA, ClientPandaRenderer::new);
-        register(PetsInitializer.POLAR_BEAR, ClientPolarBearRenderer::new);
-        register(PetsInitializer.PUFFERFISH, ClientPufferFishRenderer::new);
-        register(PetsInitializer.SPIDER, ClientSpiderRenderer::new);
-        register(PetsInitializer.WOLF, ClientWolfRenderer::new);
-        register(PetsInitializer.ELDER_GUARDIAN_COOKIE, ClientElderGuardianRenderer::new);
-        register(PetsInitializer.BLAZE, ClientBlazeRenderer::new);
-        register(PetsInitializer.CREEPER, ClientCreeperRenderer::new);
-        register(PetsInitializer.DROWNED, ClientDrownedRenderer::new);
-        register(PetsInitializer.ENDERMITE, ClientEndermiteRenderer::new);
-        register(PetsInitializer.EVOKER, ClientEvokerRenderer::new);
-        register(PetsInitializer.GHAST, ClientGhastRenderer::new);
-        register(PetsInitializer.GUARDIAN, ClientGuardianRenderer::new);
-        register(PetsInitializer.HUSK, ClientHuskRenderer::new);
-        register(PetsInitializer.MAGMA_CUBE, ClientMagmaCubeRenderer::new);
-        register(PetsInitializer.PHANTOM, ClientPhantomRenderer::new);
-        register(PetsInitializer.PILLAGER, ClientPillagerRenderer::new);
-        register(PetsInitializer.RAVAGER, ClientRavagerRenderer::new);
-        register(PetsInitializer.SHULKER, ClientShulkerRenderer::new);
-        register(PetsInitializer.SILVERFISH, ClientSilverfishRenderer::new);
-        register(PetsInitializer.SKELETON, ClientSkeletonRenderer::new);
-        register(PetsInitializer.SLIME, ClientSlimeRenderer::new);
-        register(PetsInitializer.STRAY, ClientStrayRenderer::new);
-        register(PetsInitializer.VEX, ClientVexRenderer::new);
-        register(PetsInitializer.VINDICATOR, ClientVindicatorRenderer::new);
-        register(PetsInitializer.WITCH, ClientWitchRenderer::new);
-        register(PetsInitializer.WITHER_SKELETON, ClientWitherSkeletonRenderer::new);
-        register(PetsInitializer.ZOMBIE, ClientZombieRenderer::new);
-        register(PetsInitializer.ZOMBIE_VILLAGER, ClientZombieVillagerRenderer::new);
-        register(PetsInitializer.ENDER_DRAGON, ClientEnderDragonRenderer::new);
-        register(PetsInitializer.WITHER, ClientWitherRenderer::new);
-        register(PetsInitializer.DUMBO_OCTOPUS, DumboOctopusRenderer::new);
-        register(PetsInitializer.KOI, KoiRenderer::new);
-        register(PetsInitializer.STINGRAY, StingrayRenderer::new);
+        register(Head.class, HeadRenderer::new);
+        register(Duck.class, (context, context2) -> new DuckRenderer(context, context2));
+        register(Racoon.class, RacoonRenderer::new);
+        register(Penguin.class, PenguinRenderer::new);
+        register(ClientSheep.class, ClientSheepRenderer::new);
+        register(ClientCat.class, ClientCatRenderer::new);
+        register(ClientBat.class, ClientBatRenderer::new);
+        register(ClientChicken.class, ClientChickenRenderer::new);
+        register(ClientCod.class, ClientCodRenderer::new);
+        register(ClientCow.class, ClientCowRenderer::new);
+        register(ClientDonkey.class, ClientDonkeyRenderer::new);
+        register(ClientHorse.class, ClientHorseRenderer::new);
+        register(ClientMooshroom.class, ClientMooshroomRenderer::new);
+        register(ClientParrot.class, ClientParrotRenderer::new);
+        register(ClientPig.class, ClientPigRenderer::new);
+        register(ClientRabbit.class, ClientRabbitRenderer::new);
+        register(ClientSalmon.class, ClientSalmonRenderer::new);
+        register(ClientSnowGolem.class, ClientSnowGolemRenderer::new);
+        register(ClientSquid.class, ClientSquidRenderer::new);
+        register(ClientTurtle.class, ClientTurtleRenderer::new);
+        register(ClientVillager.class, ClientVillagerRenderer::new);
+        register(ClientWanderingTrader.class, ClientWanderingTraderRenderer::new);
+        register(ClientCaveSpider.class, ClientCaveSpiderRenderer::new);
+        register(ClientDolphin.class, ClientDolphinRenderer::new);
+        register(ClientEnderman.class, ClientEndermanRenderer::new);
+        register(ClientFox.class, ClientFoxRenderer::new);
+        register(ClientIronGolem.class, ClientIronGolemRenderer::new);
+        register(ClientLlama.class, ClientLlamaRenderer::new);
+        register(ClientPanda.class, ClientPandaRenderer::new);
+        register(ClientPolarBear.class, ClientPolarBearRenderer::new);
+        register(ClientPufferFish.class, ClientPufferFishRenderer::new);
+        register(ClientSpider.class, ClientSpiderRenderer::new);
+        register(ClientWolf.class, ClientWolfRenderer::new);
+        register(ClientElderGuardian.class, ClientElderGuardianRenderer::new);
+        register(ClientBlaze.class, ClientBlazeRenderer::new);
+        register(ClientCreeper.class, ClientCreeperRenderer::new);
+        register(ClientDrowned.class, ClientDrownedRenderer::new);
+        register(ClientEndermite.class, ClientEndermiteRenderer::new);
+        register(ClientEvoker.class, ClientEvokerRenderer::new);
+        register(ClientGhast.class, ClientGhastRenderer::new);
+        register(ClientGuardian.class, ClientGuardianRenderer::new);
+        register(ClientHusk.class, ClientHuskRenderer::new);
+        register(ClientMagmaCube.class, ClientMagmaCubeRenderer::new);
+        register(ClientPhantom.class, ClientPhantomRenderer::new);
+        register(ClientPillager.class, ClientPillagerRenderer::new);
+        register(ClientRavager.class, ClientRavagerRenderer::new);
+        register(ClientShulker.class, ClientShulkerRenderer::new);
+        register(ClientSilverfish.class, ClientSilverfishRenderer::new);
+        register(ClientSkeleton.class, ClientSkeletonRenderer::new);
+        register(ClientSlime.class, ClientSlimeRenderer::new);
+        register(ClientStray.class, ClientStrayRenderer::new);
+        register(ClientVex.class, ClientVexRenderer::new);
+        register(ClientVindicator.class, ClientVindicatorRenderer::new);
+        register(ClientWitch.class, ClientWitchRenderer::new);
+        register(ClientWitherSkeleton.class, ClientWitherSkeletonRenderer::new);
+        register(ClientZombie.class, ClientZombieRenderer::new);
+        register(ClientZombieVillager.class, ClientZombieVillagerRenderer::new);
+        register(ClientEnderDragon.class, ClientEnderDragonRenderer::new);
+        register(ClientWither.class, ClientWitherRenderer::new);
+        register(DumboOctopus.class, DumboOctopusRenderer::new);
+        register(Koi.class, KoiRenderer::new);
+        register(Stingray.class, StingrayRenderer::new);
+        register(ClientZombiePigman.class, ClientZOmbiePigmanRenderer::new);
     }
 
     /**
@@ -302,7 +308,7 @@ public class PetsClientInitializer {
         //});
     }
 
-    public static void register(EntityType entityClass, Factory factory) {
+    public static void register(Class entityClass, Factory factory) {
         synchronized(renderSupplierMap) {
             renderSupplierMap.put(entityClass, factory);
 
@@ -316,9 +322,9 @@ public class PetsClientInitializer {
         private final TextureManager textureManager;
         private final IReloadableResourceManager resourceManager;
         private final ItemRenderer itemRenderer;
-        private final Map<EntityType, EntityRenderer<? extends Entity>> rendererMap;
+        private final Map<Class, EntityRenderer<? extends Entity>> rendererMap;
 
-        public Context(TextureManager textureManager, IReloadableResourceManager resourceManager, ItemRenderer itemRenderer, Map<EntityType, EntityRenderer<? extends Entity>> rendererMap) {
+        public Context(TextureManager textureManager, IReloadableResourceManager resourceManager, ItemRenderer itemRenderer, Map<Class, EntityRenderer<? extends Entity>> rendererMap) {
             super();
             this.textureManager = textureManager;
             this.resourceManager = resourceManager;

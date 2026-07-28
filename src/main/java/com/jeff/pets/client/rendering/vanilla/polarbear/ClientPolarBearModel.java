@@ -2,41 +2,41 @@ package com.jeff.pets.client.rendering.vanilla.polarbear;
 
 import com.jeff.pets.mob.vanilla.neutral.ClientPolarBear;
 import net.minecraft.client.renderer.entity.model.QuadrupedModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.client.renderer.entity.model.RendererModel;
 
 public class ClientPolarBearModel extends QuadrupedModel<ClientPolarBear> {
     public ClientPolarBearModel() {
-        super(12, 0.0F, true, 16.0F, 4.0F, 2.25F, 2.0F, 24);
+        super(12, 0.0F);
         this.texWidth = 128;
         this.texHeight = 64;
-        this.head = new ModelRenderer(this, 0, 0);
-        this.head.addBox(-3.5F, -3.0F, -3.0F, 7.0F, 7.0F, 7.0F, 0.0F);
+        this.head = new RendererModel(this, 0, 0);
+        this.head.addBox(-3.5F, -3.0F, -3.0F, (int) 7.0, (int) 7.0, (int) 7.0, 0.0F);
         this.head.setPos(0.0F, 10.0F, -16.0F);
-        this.head.texOffs(0, 44).addBox(-2.5F, 1.0F, -6.0F, 5.0F, 3.0F, 3.0F, 0.0F);
-        this.head.texOffs(26, 0).addBox(-4.5F, -4.0F, -1.0F, 2.0F, 2.0F, 1.0F, 0.0F);
-        ModelRenderer modelPart = this.head.texOffs(26, 0);
+        this.head.texOffs(0, 44).addBox(-2.5F, 1.0F, -6.0F, (int) 5.0, (int) 3.0, (int) 3.0, 0.0F);
+        this.head.texOffs(26, 0).addBox(-4.5F, -4.0F, -1.0F, (int) 2.0, (int) 2.0, (int) 1.0, 0.0F);
+        RendererModel modelPart = this.head.texOffs(26, 0);
         modelPart.mirror = true;
-        modelPart.addBox(2.5F, -4.0F, -1.0F, 2.0F, 2.0F, 1.0F, 0.0F);
-        this.body = new ModelRenderer(this);
-        this.body.texOffs(0, 19).addBox(-5.0F, -13.0F, -7.0F, 14.0F, 14.0F, 11.0F, 0.0F);
-        this.body.texOffs(39, 0).addBox(-4.0F, -25.0F, -7.0F, 12.0F, 12.0F, 10.0F, 0.0F);
+        modelPart.addBox(2.5F, -4.0F, -1.0F, (int) 2.0, (int) 2.0, (int) 1.0, 0.0F);
+        this.body = new RendererModel(this);
+        this.body.texOffs(0, 19).addBox(-5.0F, -13.0F, -7.0F, (int) 14.0, (int) 14.0, (int) 11.0, 0.0F);
+        this.body.texOffs(39, 0).addBox(-4.0F, -25.0F, -7.0F, (int) 12.0, (int) 12.0, (int) 10.0, 0.0F);
         this.body.setPos(-2.0F, 9.0F, 12.0F);
         int i = 10;
-        this.leg0 = new ModelRenderer(this, 50, 22);
-        this.leg0.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 10.0F, 8.0F, 0.0F);
+        this.leg0 = new RendererModel(this, 50, 22);
+        this.leg0.addBox(-2.0F, 0.0F, -2.0F, (int) 4.0, (int) 10.0, (int) 8.0, 0.0F);
         this.leg0.setPos(-3.5F, 14.0F, 6.0F);
-        this.leg1 = new ModelRenderer(this, 50, 22);
-        this.leg1.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 10.0F, 8.0F, 0.0F);
+        this.leg1 = new RendererModel(this, 50, 22);
+        this.leg1.addBox(-2.0F, 0.0F, -2.0F, (int) 4.0, (int) 10.0, (int) 8.0, 0.0F);
         this.leg1.setPos(3.5F, 14.0F, 6.0F);
-        this.leg2 = new ModelRenderer(this, 50, 40);
-        this.leg2.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 10.0F, 6.0F, 0.0F);
+        this.leg2 = new RendererModel(this, 50, 40);
+        this.leg2.addBox(-2.0F, 0.0F, -2.0F, (int) 4.0, (int) 10.0, (int) 6.0, 0.0F);
         this.leg2.setPos(-2.5F, 14.0F, -7.0F);
-        this.leg3 = new ModelRenderer(this, 50, 40);
-        this.leg3.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 10.0F, 6.0F, 0.0F);
+        this.leg3 = new RendererModel(this, 50, 40);
+        this.leg3.addBox(-2.0F, 0.0F, -2.0F, (int) 4.0, (int) 10.0, (int) 6.0, 0.0F);
         this.leg3.setPos(2.5F, 14.0F, -7.0F);
         --this.leg0.x;
         ++this.leg1.x;
-        ModelRenderer var10000 = this.leg0;
+        RendererModel var10000 = this.leg0;
         var10000.z += 0.0F;
         var10000 = this.leg1;
         var10000.z += 0.0F;
@@ -46,8 +46,9 @@ public class ClientPolarBearModel extends QuadrupedModel<ClientPolarBear> {
         --this.leg3.z;
     }
 
-    public void setupAnim(ClientPolarBear polarBear, float f, float g, float h, float i, float j) {
-        super.setupAnim(polarBear, f, g, h, i, j);
+    @Override
+    public void setupAnim(ClientPolarBear polarBear, float f, float g, float h, float i, float j, float u) {
+        super.setupAnim(polarBear, f, g, h, i, j, u);
         float k = h - (float) polarBear.tickCount;
         float l = 0;
         l *= l;
@@ -56,7 +57,7 @@ public class ClientPolarBearModel extends QuadrupedModel<ClientPolarBear> {
         this.body.y = 9.0F * m + 11.0F * l;
         this.leg2.y = 14.0F * m - 6.0F * l;
         this.leg2.z = -8.0F * m - 4.0F * l;
-        ModelRenderer var10000 = this.leg2;
+        RendererModel var10000 = this.leg2;
         var10000.xRot -= l * (float) Math.PI * 0.45F;
         this.leg3.y = this.leg2.y;
         this.leg3.z = this.leg2.z;

@@ -2,11 +2,10 @@ package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.GroundPet;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IChargeableMob;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 
-public class ClientCreeper extends GroundPet implements IChargeableMob {
+public class ClientCreeper extends GroundPet {
 
     public boolean isPowered = false;
 
@@ -27,10 +26,5 @@ public class ClientCreeper extends GroundPet implements IChargeableMob {
     @Override
     protected SoundEvent getAmbientSound() {
         return SoundEvents.CREEPER_PRIMED;
-    }
-
-    @Override
-    public boolean isPowered() {
-        return isPowered;
     }
 }

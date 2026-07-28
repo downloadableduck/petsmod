@@ -13,9 +13,9 @@ public class ClientWolfRenderer extends PetRenderer<ClientWolf, ClientWolfModel>
     }
 
     @Override
-    protected void scale(ClientWolf livingEntityRenderState, com.mojang.blaze3d.matrix.MatrixStack poseStack, float f) {
+    protected void scale(ClientWolf livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
@@ -27,8 +27,8 @@ public class ClientWolfRenderer extends PetRenderer<ClientWolf, ClientWolfModel>
     }
 
     @Override
-    public void render(ClientWolf wolf, float f, float g, com.mojang.blaze3d.matrix.MatrixStack poseStack, net.minecraft.client.renderer.IRenderTypeBuffer source, int i) {
-        super.render(wolf, f, g, poseStack, source, i);
+    public void renderModel(ClientWolf wolf, float f, float g, float h, float i, float j, float k) {
+        super.renderModel(wolf, f, g, h, i, j, k);
         wolf.setSitting(wolf.isPassenger());
     }
 }

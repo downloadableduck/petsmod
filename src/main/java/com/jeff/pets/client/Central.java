@@ -8,73 +8,9 @@ package com.jeff.pets.client;
 
 import com.google.common.collect.ImmutableList;
 import com.jeff.pets.PetsInitializer;
-import com.jeff.pets.client.Central;
 import com.jeff.pets.client.mixin.client.SplashManagerMixin;
 import com.jeff.pets.client.mixin.client.TitleScreenRenderingMixin;
-import com.jeff.pets.client.rendering.custom.aprilfools.head.HeadRenderer;
 import com.jeff.pets.client.rendering.custom.aprilfools.head.HeadSkin;
-import com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus.DumboOctopusRenderer;
-import com.jeff.pets.client.rendering.custom.aquatic.koi.KoiRenderer;
-import com.jeff.pets.client.rendering.custom.aquatic.stingray.StingrayRenderer;
-import com.jeff.pets.client.rendering.custom.first.duck.DuckRenderer;
-import com.jeff.pets.client.rendering.custom.first.penguin.PenguinRenderer;
-import com.jeff.pets.client.rendering.custom.first.racoon.RacoonRenderer;
-import com.jeff.pets.client.rendering.vanilla.bat.ClientBatRenderer;
-import com.jeff.pets.client.rendering.vanilla.bee.ClientBeeRenderer;
-import com.jeff.pets.client.rendering.vanilla.blaze.ClientBlazeRenderer;
-import com.jeff.pets.client.rendering.vanilla.cat.ClientCatRenderer;
-import com.jeff.pets.client.rendering.vanilla.cavespider.ClientCaveSpiderRenderer;
-import com.jeff.pets.client.rendering.vanilla.chicken.ClientChickenRenderer;
-import com.jeff.pets.client.rendering.vanilla.cod.ClientCodRenderer;
-import com.jeff.pets.client.rendering.vanilla.cow.ClientCowRenderer;
-import com.jeff.pets.client.rendering.vanilla.creeper.ClientCreeperRenderer;
-import com.jeff.pets.client.rendering.vanilla.dolphin.ClientDolphinRenderer;
-import com.jeff.pets.client.rendering.vanilla.donkey.ClientDonkeyRenderer;
-import com.jeff.pets.client.rendering.vanilla.drowned.ClientDrownedRenderer;
-import com.jeff.pets.client.rendering.vanilla.elderguardian.ClientElderGuardianRenderer;
-import com.jeff.pets.client.rendering.vanilla.enderdragon.ClientEnderDragonRenderer;
-import com.jeff.pets.client.rendering.vanilla.enderman.ClientEndermanRenderer;
-import com.jeff.pets.client.rendering.vanilla.endermite.ClientEndermiteRenderer;
-import com.jeff.pets.client.rendering.vanilla.evoker.ClientEvokerRenderer;
-import com.jeff.pets.client.rendering.vanilla.fox.ClientFoxRenderer;
-import com.jeff.pets.client.rendering.vanilla.ghast.ClientGhastRenderer;
-import com.jeff.pets.client.rendering.vanilla.guardian.ClientGuardianRenderer;
-import com.jeff.pets.client.rendering.vanilla.horse.ClientHorseRenderer;
-import com.jeff.pets.client.rendering.vanilla.husk.ClientHuskRenderer;
-import com.jeff.pets.client.rendering.vanilla.irongolem.ClientIronGolemRenderer;
-import com.jeff.pets.client.rendering.vanilla.llama.ClientLlamaRenderer;
-import com.jeff.pets.client.rendering.vanilla.magmacube.ClientMagmaCubeRenderer;
-import com.jeff.pets.client.rendering.vanilla.mooshroom.ClientMooshroomRenderer;
-import com.jeff.pets.client.rendering.vanilla.panda.ClientPandaRenderer;
-import com.jeff.pets.client.rendering.vanilla.parrot.ClientParrotRenderer;
-import com.jeff.pets.client.rendering.vanilla.phantom.ClientPhantomRenderer;
-import com.jeff.pets.client.rendering.vanilla.pig.ClientPigRenderer;
-import com.jeff.pets.client.rendering.vanilla.pillager.ClientPillagerRenderer;
-import com.jeff.pets.client.rendering.vanilla.polarbear.ClientPolarBearRenderer;
-import com.jeff.pets.client.rendering.vanilla.pufferfish.ClientPufferFishRenderer;
-import com.jeff.pets.client.rendering.vanilla.rabbit.ClientRabbitRenderer;
-import com.jeff.pets.client.rendering.vanilla.ravager.ClientRavagerRenderer;
-import com.jeff.pets.client.rendering.vanilla.salmon.ClientSalmonRenderer;
-import com.jeff.pets.client.rendering.vanilla.sheep.ClientSheepRenderer;
-import com.jeff.pets.client.rendering.vanilla.shulker.ClientShulkerRenderer;
-import com.jeff.pets.client.rendering.vanilla.silverfish.ClientSilverfishRenderer;
-import com.jeff.pets.client.rendering.vanilla.skeleton.ClientSkeletonRenderer;
-import com.jeff.pets.client.rendering.vanilla.slime.ClientSlimeRenderer;
-import com.jeff.pets.client.rendering.vanilla.snowgolem.ClientSnowGolemRenderer;
-import com.jeff.pets.client.rendering.vanilla.spider.ClientSpiderRenderer;
-import com.jeff.pets.client.rendering.vanilla.squid.ClientSquidRenderer;
-import com.jeff.pets.client.rendering.vanilla.stray.ClientStrayRenderer;
-import com.jeff.pets.client.rendering.vanilla.turtle.ClientTurtleRenderer;
-import com.jeff.pets.client.rendering.vanilla.vex.ClientVexRenderer;
-import com.jeff.pets.client.rendering.vanilla.villager.ClientVillagerRenderer;
-import com.jeff.pets.client.rendering.vanilla.vindicator.ClientVindicatorRenderer;
-import com.jeff.pets.client.rendering.vanilla.wanderingtrader.ClientWanderingTraderRenderer;
-import com.jeff.pets.client.rendering.vanilla.witch.ClientWitchRenderer;
-import com.jeff.pets.client.rendering.vanilla.wither.ClientWitherRenderer;
-import com.jeff.pets.client.rendering.vanilla.witherskeleton.ClientWitherSkeletonRenderer;
-import com.jeff.pets.client.rendering.vanilla.wolf.ClientWolfRenderer;
-import com.jeff.pets.client.rendering.vanilla.zombie.ClientZombieRenderer;
-import com.jeff.pets.client.rendering.vanilla.zombievillager.ClientZombieVillagerRenderer;
 import com.jeff.pets.mob.custom.aprilfools.Head;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
 import com.jeff.pets.mob.custom.aquatic.Koi;
@@ -104,37 +40,22 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.play.ClientPlayNetHandler;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.EventBus;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.*;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.ExtensionPoint;
+import net.minecraftforge.fml.ModContainer;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.lwjgl.glfw.GLFW;
 
-import java.awt.*;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -247,7 +168,6 @@ public class Central {
     public static ClientTurtle turtle;
     public static ClientVillager villager;
     public static ClientWanderingTrader wanderingTrader;
-    public static ClientBee bee;
     public static ClientCaveSpider caveSpider;
     public static ClientDolphin dolphin;
     public static ClientEnderman enderman;
@@ -289,6 +209,7 @@ public class Central {
     public static DumboOctopus dumboOctopus;
     public static Koi koi;
     public static Stingray stingray;
+    public static ClientZombiePigman zombiePigman;
     static int i = 1;
     /**
      * Required call to {@link ClientModInitializer#onInitializeClient()} that calls the initial code.
@@ -325,7 +246,6 @@ public class Central {
         Utils.despawnEntity(turtle);
         Utils.despawnEntity(villager);
         Utils.despawnEntity(wanderingTrader);
-        Utils.despawnEntity(bee);
         Utils.despawnEntity(caveSpider);
         Utils.despawnEntity(dolphin);
         Utils.despawnEntity(enderman);
@@ -367,6 +287,7 @@ public class Central {
         Utils.despawnEntity(dumboOctopus);
         Utils.despawnEntity(koi);
         Utils.despawnEntity(stingray);
+        Utils.despawnEntity(zombiePigman);
     }
 
     /**
@@ -397,7 +318,6 @@ public class Central {
         turtle = new ClientTurtle(PetsInitializer.TURTLE, world);
         villager = new ClientVillager(PetsInitializer.VILLAGER, world);
         wanderingTrader = new ClientWanderingTrader(PetsInitializer.WANDERING_TRADER, world);
-        bee = new ClientBee(PetsInitializer.BEE, world);
         caveSpider = new ClientCaveSpider(PetsInitializer.CAVE_SPIDER, world);
         dolphin = new ClientDolphin(PetsInitializer.DOLPHIN, world);
         enderman = new ClientEnderman(PetsInitializer.ENDERMAN, world);
@@ -439,6 +359,7 @@ public class Central {
         dumboOctopus = new DumboOctopus(PetsInitializer.DUMBO_OCTOPUS, world);
         koi = new Koi(PetsInitializer.KOI, world);
         stingray = new Stingray(PetsInitializer.STINGRAY, world);
+        zombiePigman = new ClientZombiePigman(PetsInitializer.ZOMBIE_PIGMAN, world);
 
         if (world != null) {
             if (Objects.equals(CONFIG.activePet, "duck")) {
@@ -483,8 +404,6 @@ public class Central {
                 Utils.summonPet(villager, CONFIG.villagerName);
             } else if (Objects.equals(CONFIG.activePet, "wandering_trader")) {
                 Utils.summonPet(wanderingTrader, CONFIG.wanderingTraderName);
-            } else if (Objects.equals(CONFIG.activePet, "bee")) {
-                Utils.summonPet(bee, CONFIG.beeName);
             } else if (Objects.equals(CONFIG.activePet, "cave_spider")) {
                 Utils.summonPet(caveSpider, CONFIG.caveSpiderName);
             } else if (Objects.equals(CONFIG.activePet, "dolphin")) {
@@ -568,6 +487,8 @@ public class Central {
                 Utils.summonPet(koi, CONFIG.koiName);
             } else if (Objects.equals(CONFIG.activePet, "stingray")) {
                 Utils.summonPet(stingray, CONFIG.stingrayName);
+            } else if (Objects.equals(CONFIG.activePet, "zombie_pigman")) {
+                Utils.summonPet(zombiePigman, CONFIG.zombiePigmanName);
             }
         }
     }
@@ -599,7 +520,6 @@ public class Central {
         Utils.checkName("turtle", turtle, CONFIG.turtleName);
         Utils.checkName("villager", villager, CONFIG.villagerName);
         Utils.checkName("wandering_trader", wanderingTrader, CONFIG.wanderingTraderName);
-        Utils.checkName("bee", bee, CONFIG.beeName);
         Utils.checkName("cave_spider", caveSpider, CONFIG.caveSpiderName);
         Utils.checkName("dolphin", dolphin, CONFIG.dolphinName);
         Utils.checkName("enderman", enderman, CONFIG.endermanName);
@@ -638,6 +558,7 @@ public class Central {
         Utils.checkName("dumbo_octopus", dumboOctopus, CONFIG.dumboOctopusName);
         Utils.checkName("koi", koi, CONFIG.koiName);
         Utils.checkName("stingray", stingray, CONFIG.stingrayName);
+        Utils.checkName("zombie_pigman", zombiePigman, CONFIG.zombiePigmanName);
     }
 
     /**
@@ -770,7 +691,6 @@ public class Central {
         Screen screen = client.screen;
         if ((screen instanceof ChatScreen)) {
             ChatScreen chatScreen = (ChatScreen) screen;
-            chatScreen.commandSuggestions.updateCommandInfo();
         }
     }
 
@@ -1404,7 +1324,7 @@ public class Central {
             } else if (Objects.equals(species, "penguin")) {
                 Utils.setActivePet(penguin, "penguin");
             } else if (Objects.equals(species, "sheep")) {
-                Utils.setActivePet(sheep, "sheef");
+                Utils.setActivePet(sheep, "sheep");
             } else if (Objects.equals(species, "cat")) {
                 Utils.setActivePet(cat, "cat");
             } else if (Objects.equals(species, "bat")) {
@@ -1439,8 +1359,6 @@ public class Central {
                 Utils.setActivePet(villager, "villager");
             } else if (Objects.equals(species, "wandering_trader") || Objects.equals(species, "wandering trader")) {
                 Utils.setActivePet(wanderingTrader, "wandering_trader");
-            } else if (Objects.equals(species, "bee")) {
-                Utils.setActivePet(bee, "bee");
             } else if (Objects.equals(species, "cave_spider") || Objects.equals(species, "cave spider")) {
                 Utils.setActivePet(caveSpider, "cave_spider");
             } else if (Objects.equals(species, "dolphin")) {
@@ -1523,6 +1441,8 @@ public class Central {
                 Utils.setActivePet(koi, "koi");
             } else if (Objects.equals(species, "stingray")) {
                 Utils.setActivePet(stingray, "stingray");
+            } else if (Objects.equals(species, "zombie_pigman") || Objects.equals(species, "zombie pigman")) {
+                Utils.setActivePet(zombiePigman, "zombie_pigman");
             } else {
                 isValid = false;
             }
@@ -1789,6 +1709,8 @@ public class Central {
                     CONFIG.koiName = name;
                 } else if (CONFIG.activePet.equals("stingray")) {
                     CONFIG.stingrayName = name;
+                } else if (CONFIG.activePet.equals("zombie_pigman")) {
+                    CONFIG.zombiePigmanName = name;
                 }
                 AutoConfig.getConfigHolder(PetsConfig.class).save();
             }
@@ -2060,10 +1982,12 @@ public class Central {
         CONFIG.stingrayName = Utils.checkNullString(CONFIG.stingrayName);
 
         CONFIG.headSkin = Utils.checkNullString(CONFIG.headSkin, "downloadableduck");
+
+        CONFIG.zombiePigmanName = Utils.checkNullString(CONFIG.zombiePigmanName);
     }
 
     static void createPetsList() {
-        String[] stuffs = new String[]{"bat", "bee", "blaze",
+        String[] stuffs = new String[]{"bat", "blaze",
                 "cat", "cave spider", "chicken",
                 "cod", "cow",
                 "creeper",
@@ -2089,7 +2013,7 @@ public class Central {
                 "spider", "squid", "stingray", "stray",
                 "turtle",
                 "vex", "villager", "vindicator", "wandering trader", "witch", "wither",
-                "wither skeleton", "wolf", "zombie", "zombie villager"};
+                "wither skeleton", "wolf", "zombie", "zombie villager", "zombie pigman"};
         Collections.addAll(PETS_LIST, stuffs);
     }
 }

@@ -3,7 +3,6 @@ package com.jeff.pets.client.rendering.vanilla.donkey;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.horse.ClientHorseModel;
 import com.jeff.pets.mob.vanilla.passive.ClientDonkey;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -19,9 +18,9 @@ public class ClientDonkeyRenderer extends PetRenderer<ClientDonkey, ClientHorseM
     }
 
     @Override
-    protected void scale(ClientDonkey state, MatrixStack poseStack, float f) {
+    protected void scale(ClientDonkey state, float f) {
         if (CONFIG.isBaby) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 }

@@ -1,143 +1,151 @@
 package com.jeff.pets.client.rendering.vanilla.horse;
 
-import com.google.common.collect.ImmutableList;
-import net.minecraft.client.renderer.entity.model.AgeableModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
+import com.mojang.blaze3d.platform.GlStateManager;
+import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.renderer.entity.model.HorseModel;
+import net.minecraft.client.renderer.entity.model.RendererModel;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.MathHelper;
 
-public class ClientHorseModel<T extends LivingEntity> extends AgeableModel<T> {
-    protected final ModelRenderer body;
-    protected final ModelRenderer headParts;
-    private final ModelRenderer leg1;
-    private final ModelRenderer leg2;
-    private final ModelRenderer leg3;
-    private final ModelRenderer leg4;
-    private final ModelRenderer babyLeg1;
-    private final ModelRenderer babyLeg2;
-    private final ModelRenderer babyLeg3;
-    private final ModelRenderer babyLeg4;
-    private final ModelRenderer tail;
-    private final ModelRenderer[] saddleParts;
-    private final ModelRenderer[] ridingParts;
+public class ClientHorseModel<T extends LivingEntity> extends EntityModel<T> {
+    protected final RendererModel field_3305;
+    protected final RendererModel field_3307;
+    private final RendererModel field_3306;
+    private final RendererModel field_3303;
+    private final RendererModel field_3302;
+    private final RendererModel field_3308;
+    private final RendererModel field_3300;
+    private final RendererModel[] field_3304;
+    private final RendererModel[] field_3301;
 
     public ClientHorseModel(float f) {
-        super(true, 16.2F, 1.36F, 2.7272F, 2.0F, 20.0F);
         this.texWidth = 64;
         this.texHeight = 64;
-        this.body = new ModelRenderer(this, 0, 32);
-        this.body.addBox(-5.0F, -8.0F, -17.0F, 10.0F, 10.0F, 22.0F, 0.05F);
-        this.body.setPos(0.0F, 11.0F, 5.0F);
-        this.headParts = new ModelRenderer(this, 0, 35);
-        this.headParts.addBox(-2.05F, -6.0F, -2.0F, 4.0F, 12.0F, 7.0F);
-        this.headParts.xRot = ((float) Math.PI / 6F);
-        ModelRenderer modelPart = new ModelRenderer(this, 0, 13);
-        modelPart.addBox(-3.0F, -11.0F, -2.0F, 6.0F, 5.0F, 7.0F, f);
-        ModelRenderer modelPart2 = new ModelRenderer(this, 56, 36);
-        modelPart2.addBox(-1.0F, -11.0F, 5.01F, 2.0F, 16.0F, 2.0F, f);
-        ModelRenderer modelPart3 = new ModelRenderer(this, 0, 25);
-        modelPart3.addBox(-2.0F, -11.0F, -7.0F, 4.0F, 5.0F, 5.0F, f);
-        this.headParts.addChild(modelPart);
-        this.headParts.addChild(modelPart2);
-        this.headParts.addChild(modelPart3);
-        this.addEarModels(this.headParts);
-        this.leg1 = new ModelRenderer(this, 48, 21);
-        this.leg1.mirror = true;
-        this.leg1.addBox(-3.0F, -1.01F, -1.0F, 4.0F, 11.0F, 4.0F, f);
-        this.leg1.setPos(4.0F, 14.0F, 7.0F);
-        this.leg2 = new ModelRenderer(this, 48, 21);
-        this.leg2.addBox(-1.0F, -1.01F, -1.0F, 4.0F, 11.0F, 4.0F, f);
-        this.leg2.setPos(-4.0F, 14.0F, 7.0F);
-        this.leg3 = new ModelRenderer(this, 48, 21);
-        this.leg3.mirror = true;
-        this.leg3.addBox(-3.0F, -1.01F, -1.9F, 4.0F, 11.0F, 4.0F, f);
-        this.leg3.setPos(4.0F, 6.0F, -12.0F);
-        this.leg4 = new ModelRenderer(this, 48, 21);
-        this.leg4.addBox(-1.0F, -1.01F, -1.9F, 4.0F, 11.0F, 4.0F, f);
-        this.leg4.setPos(-4.0F, 6.0F, -12.0F);
-        float g = 5.5F;
-        this.babyLeg1 = new ModelRenderer(this, 48, 21);
-        this.babyLeg1.mirror = true;
-        this.babyLeg1.addBox(-3.0F, -1.01F, -1.0F, 4.0F, 11.0F, 4.0F, f, f + 5.5F, f);
-        this.babyLeg1.setPos(4.0F, 14.0F, 7.0F);
-        this.babyLeg2 = new ModelRenderer(this, 48, 21);
-        this.babyLeg2.addBox(-1.0F, -1.01F, -1.0F, 4.0F, 11.0F, 4.0F, f, f + 5.5F, f);
-        this.babyLeg2.setPos(-4.0F, 14.0F, 7.0F);
-        this.babyLeg3 = new ModelRenderer(this, 48, 21);
-        this.babyLeg3.mirror = true;
-        this.babyLeg3.addBox(-3.0F, -1.01F, -1.9F, 4.0F, 11.0F, 4.0F, f, f + 5.5F, f);
-        this.babyLeg3.setPos(4.0F, 6.0F, -12.0F);
-        this.babyLeg4 = new ModelRenderer(this, 48, 21);
-        this.babyLeg4.addBox(-1.0F, -1.01F, -1.9F, 4.0F, 11.0F, 4.0F, f, f + 5.5F, f);
-        this.babyLeg4.setPos(-4.0F, 6.0F, -12.0F);
-        this.tail = new ModelRenderer(this, 42, 36);
-        this.tail.addBox(-1.5F, 0.0F, 0.0F, 3.0F, 14.0F, 4.0F, f);
-        this.tail.setPos(0.0F, -5.0F, 2.0F);
-        this.tail.xRot = ((float) Math.PI / 6F);
-        this.body.addChild(this.tail);
-        ModelRenderer modelPart4 = new ModelRenderer(this, 26, 0);
-        modelPart4.addBox(-5.0F, -8.0F, -9.0F, 10.0F, 9.0F, 9.0F, 0.5F);
-        this.body.addChild(modelPart4);
-        ModelRenderer modelPart5 = new ModelRenderer(this, 29, 5);
-        modelPart5.addBox(2.0F, -9.0F, -6.0F, 1.0F, 2.0F, 2.0F, f);
-        this.headParts.addChild(modelPart5);
-        ModelRenderer modelPart6 = new ModelRenderer(this, 29, 5);
-        modelPart6.addBox(-3.0F, -9.0F, -6.0F, 1.0F, 2.0F, 2.0F, f);
-        this.headParts.addChild(modelPart6);
-        ModelRenderer modelPart7 = new ModelRenderer(this, 32, 2);
-        modelPart7.addBox(3.1F, -6.0F, -8.0F, 0.0F, 3.0F, 16.0F, f);
-        modelPart7.xRot = (-(float) Math.PI / 6F);
-        this.headParts.addChild(modelPart7);
-        ModelRenderer modelPart8 = new ModelRenderer(this, 32, 2);
-        modelPart8.addBox(-3.1F, -6.0F, -8.0F, 0.0F, 3.0F, 16.0F, f);
-        modelPart8.xRot = (-(float) Math.PI / 6F);
-        this.headParts.addChild(modelPart8);
-        ModelRenderer modelPart9 = new ModelRenderer(this, 1, 1);
-        modelPart9.addBox(-3.0F, -11.0F, -1.9F, 6.0F, 5.0F, 6.0F, 0.2F);
-        this.headParts.addChild(modelPart9);
-        ModelRenderer modelPart10 = new ModelRenderer(this, 19, 0);
-        modelPart10.addBox(-2.0F, -11.0F, -4.0F, 4.0F, 5.0F, 2.0F, 0.2F);
-        this.headParts.addChild(modelPart10);
-        this.saddleParts = new ModelRenderer[]{modelPart4, modelPart5, modelPart6, modelPart9, modelPart10};
-        this.ridingParts = new ModelRenderer[]{modelPart7, modelPart8};
+        this.field_3305 = new RendererModel(this, 0, 32);
+        this.field_3305.addBox(-5.0F, -8.0F, -17.0F, 10, 10, 22, 0.05F);
+        this.field_3305.setPos(0.0F, 11.0F, 5.0F);
+        this.field_3307 = new RendererModel(this, 0, 35);
+        this.field_3307.addBox(-2.05F, -6.0F, -2.0F, 4, 12, 7);
+        this.field_3307.xRot = ((float) Math.PI / 6F);
+        RendererModel RendererModel = new RendererModel(this, 0, 13);
+        RendererModel.addBox(-3.0F, -11.0F, -2.0F, 6, 5, 7, f);
+        RendererModel RendererModel2 = new RendererModel(this, 56, 36);
+        RendererModel2.addBox(-1.0F, -11.0F, 5.01F, 2, 16, 2, f);
+        RendererModel RendererModel3 = new RendererModel(this, 0, 25);
+        RendererModel3.addBox(-2.0F, -11.0F, -7.0F, 4, 5, 5, f);
+        this.field_3307.addChild(RendererModel);
+        this.field_3307.addChild(RendererModel2);
+        this.field_3307.addChild(RendererModel3);
+        this.method_2789(this.field_3307);
+        this.field_3306 = new RendererModel(this, 48, 21);
+        this.field_3306.mirror = true;
+        this.field_3306.addBox(-3.0F, -1.01F, -1.0F, 4, 11, 4, f);
+        this.field_3306.setPos(4.0F, 14.0F, 7.0F);
+        this.field_3303 = new RendererModel(this, 48, 21);
+        this.field_3303.addBox(-1.0F, -1.01F, -1.0F, 4, 11, 4, f);
+        this.field_3303.setPos(-4.0F, 14.0F, 7.0F);
+        this.field_3302 = new RendererModel(this, 48, 21);
+        this.field_3302.mirror = true;
+        this.field_3302.addBox(-3.0F, -1.01F, -1.9F, 4, 11, 4, f);
+        this.field_3302.setPos(4.0F, 6.0F, -12.0F);
+        this.field_3308 = new RendererModel(this, 48, 21);
+        this.field_3308.addBox(-1.0F, -1.01F, -1.9F, 4, 11, 4, f);
+        this.field_3308.setPos(-4.0F, 6.0F, -12.0F);
+        this.field_3300 = new RendererModel(this, 42, 36);
+        this.field_3300.addBox(-1.5F, 0.0F, 0.0F, 3, 14, 4, f);
+        this.field_3300.setPos(0.0F, -5.0F, 2.0F);
+        this.field_3300.xRot = ((float) Math.PI / 6F);
+        this.field_3305.addChild(this.field_3300);
+        RendererModel RendererModel4 = new RendererModel(this, 26, 0);
+        RendererModel4.addBox(-5.0F, -8.0F, -9.0F, 10, 9, 9, 0.5F);
+        this.field_3305.addChild(RendererModel4);
+        RendererModel RendererModel5 = new RendererModel(this, 29, 5);
+        RendererModel5.addBox(2.0F, -9.0F, -6.0F, 1, 2, 2, f);
+        this.field_3307.addChild(RendererModel5);
+        RendererModel RendererModel6 = new RendererModel(this, 29, 5);
+        RendererModel6.addBox(-3.0F, -9.0F, -6.0F, 1, 2, 2, f);
+        this.field_3307.addChild(RendererModel6);
+        RendererModel RendererModel7 = new RendererModel(this, 32, 2);
+        RendererModel7.addBox(3.1F, -6.0F, -8.0F, 0, 3, 16, f);
+        RendererModel7.xRot = (-(float) Math.PI / 6F);
+        this.field_3307.addChild(RendererModel7);
+        RendererModel RendererModel8 = new RendererModel(this, 32, 2);
+        RendererModel8.addBox(-3.1F, -6.0F, -8.0F, 0, 3, 16, f);
+        RendererModel8.xRot = (-(float) Math.PI / 6F);
+        this.field_3307.addChild(RendererModel8);
+        RendererModel RendererModel9 = new RendererModel(this, 1, 1);
+        RendererModel9.addBox(-3.0F, -11.0F, -1.9F, 6, 5, 6, 0.2F);
+        this.field_3307.addChild(RendererModel9);
+        RendererModel RendererModel10 = new RendererModel(this, 19, 0);
+        RendererModel10.addBox(-2.0F, -11.0F, -4.0F, 4, 5, 2, 0.2F);
+        this.field_3307.addChild(RendererModel10);
+        this.field_3304 = new RendererModel[]{RendererModel4, RendererModel5, RendererModel6, RendererModel9, RendererModel10};
+        this.field_3301 = new RendererModel[]{RendererModel7, RendererModel8};
     }
 
-    protected void addEarModels(ModelRenderer modelPart) {
-        ModelRenderer modelPart2 = new ModelRenderer(this, 19, 16);
-        modelPart2.addBox(0.55F, -13.0F, 4.0F, 2.0F, 3.0F, 1.0F, -0.001F);
-        ModelRenderer modelPart3 = new ModelRenderer(this, 19, 16);
-        modelPart3.addBox(-2.55F, -13.0F, 4.0F, 2.0F, 3.0F, 1.0F, -0.001F);
-        modelPart.addChild(modelPart2);
-        modelPart.addChild(modelPart3);
+    protected void method_2789(RendererModel RendererModel) {
+        RendererModel RendererModel2 = new RendererModel(this, 19, 16);
+        RendererModel2.addBox(0.55F, -13.0F, 4.0F, 2, 3, 1, -0.001F);
+        RendererModel RendererModel3 = new RendererModel(this, 19, 16);
+        RendererModel3.addBox(-2.55F, -13.0F, 4.0F, 2, 3, 1, -0.001F);
+        RendererModel.addChild(RendererModel2);
+        RendererModel.addChild(RendererModel3);
     }
 
-    public void setupAnim(T abstractHorse, float f, float g, float h, float i, float j) {
-        boolean bl = false;
-        boolean bl2 = abstractHorse.isVehicle();
+    @Override
+    public void render(T horseBaseEntity, float f, float g, float h, float i, float j, float k) {
+        boolean bl = horseBaseEntity.isBaby();
+        float l = horseBaseEntity.getScale();
+        boolean bl2 = false;
+        boolean bl3 = horseBaseEntity.isVehicle();
 
-        for (ModelRenderer modelPart : this.saddleParts) {
-            modelPart.visible = bl;
+        for (RendererModel RendererModel : this.field_3304) {
+            RendererModel.visible = bl2;
         }
 
-        for (ModelRenderer modelPart : this.ridingParts) {
-            modelPart.visible = bl2 && bl;
+        for (RendererModel RendererModel : this.field_3301) {
+            RendererModel.visible = bl3 && bl2;
         }
 
-        this.body.y = 11.0F;
+        if (bl) {
+            GlStateManager.pushMatrix();
+            GlStateManager.scalef(l, 0.5F + l * 0.5F, l);
+            GlStateManager.translatef(0.0F, 0.95F * (1.0F - l), 0.0F);
+        }
+
+        this.field_3306.render(k);
+        this.field_3303.render(k);
+        this.field_3302.render(k);
+        this.field_3308.render(k);
+        if (bl) {
+            GlStateManager.popMatrix();
+            GlStateManager.pushMatrix();
+            GlStateManager.scalef(l, l, l);
+            GlStateManager.translatef(0.0F, 2.3F * (1.0F - l), 0.0F);
+        }
+
+        this.field_3305.render(k);
+        if (bl) {
+            GlStateManager.popMatrix();
+            GlStateManager.pushMatrix();
+            float m = l + 0.1F * l;
+            GlStateManager.scalef(m, m, m);
+            GlStateManager.translatef(0.0F, 2.25F * (1.0F - m), 0.1F * (1.4F - m));
+        }
+
+        this.field_3307.render(k);
+        if (bl) {
+            GlStateManager.popMatrix();
+        }
+
     }
 
-    public Iterable<ModelRenderer> headParts() {
-        return ImmutableList.of(this.headParts);
-    }
-
-    protected Iterable<ModelRenderer> bodyParts() {
-        return ImmutableList.of(this.body, this.leg1, this.leg2, this.leg3, this.leg4, this.babyLeg1, this.babyLeg2, this.babyLeg3, this.babyLeg4);
-    }
-
-    public void prepareMobModel(T abstractHorse, float f, float g, float h) {
-        super.prepareMobModel(abstractHorse, f, g, h);
-        float i = net.minecraft.util.math.MathHelper.rotlerp(abstractHorse.yBodyRotO, abstractHorse.yBodyRot, h);
-        float j = net.minecraft.util.math.MathHelper.rotlerp(abstractHorse.yHeadRotO, abstractHorse.yHeadRot, h);
-        float k = net.minecraft.util.math.MathHelper.lerp(h, abstractHorse.xRotO, abstractHorse.xRot);
+    @Override
+    public void prepareMobModel(T horseBaseEntity, float f, float g, float h) {
+        super.prepareMobModel(horseBaseEntity, f, g, h);
+        float i = this.method_2790(horseBaseEntity.yBodyRotO, horseBaseEntity.yBodyRot, h);
+        float j = this.method_2790(horseBaseEntity.yHeadRotO, horseBaseEntity.yHeadRot, h);
+        float k = MathHelper.lerp(h, horseBaseEntity.xRotO, horseBaseEntity.xRot);
         float l = j - i;
         float m = k * ((float) Math.PI / 180F);
         if (l > 20.0F) {
@@ -149,7 +157,7 @@ public class ClientHorseModel<T extends LivingEntity> extends AgeableModel<T> {
         }
 
         if (g > 0.2F) {
-            m += net.minecraft.util.math.MathHelper.cos(f * 0.4F) * 0.15F * g;
+            m += MathHelper.cos(f * 0.4F) * 0.15F * g;
         }
 
         float n = 0;
@@ -157,63 +165,53 @@ public class ClientHorseModel<T extends LivingEntity> extends AgeableModel<T> {
         float p = 1.0F - o;
         float q = 0;
         boolean bl = true;
-        float r = (float) abstractHorse.tickCount + h;
-        this.headParts.y = 4.0F;
-        this.headParts.z = -12.0F;
-        this.body.xRot = 0.0F;
-        this.headParts.xRot = ((float) Math.PI / 6F) + m;
-        this.headParts.yRot = l * ((float) Math.PI / 180F);
-        float s = abstractHorse.isInWater() ? 0.2F : 1.0F;
-        float t = net.minecraft.util.math.MathHelper.cos(s * f * 0.6662F + (float) Math.PI);
+        float r = (float) horseBaseEntity.tickCount + h;
+        this.field_3307.y = 4.0F;
+        this.field_3307.z = -12.0F;
+        this.field_3305.xRot = 0.0F;
+        this.field_3307.xRot = ((float) Math.PI / 6F) + m;
+        this.field_3307.yRot = l * ((float) Math.PI / 180F);
+        float s = horseBaseEntity.isInWater() ? 0.2F : 1.0F;
+        float t = MathHelper.cos(s * f * 0.6662F + (float) Math.PI);
         float u = t * 0.8F * g;
-        float v = (1.0F - Math.max(o, n)) * (((float) Math.PI / 6F) + m + q * net.minecraft.util.math.MathHelper.sin(r) * 0.05F);
-        this.headParts.xRot = o * (0.2617994F + m) + n * (2.1816616F + net.minecraft.util.math.MathHelper.sin(r) * 0.05F) + v;
-        this.headParts.yRot = o * l * ((float) Math.PI / 180F) + (1.0F - Math.max(o, n)) * this.headParts.yRot;
-        this.headParts.y = o * -4.0F + n * 11.0F + (1.0F - Math.max(o, n)) * this.headParts.y;
-        this.headParts.z = o * -4.0F + n * -12.0F + (1.0F - Math.max(o, n)) * this.headParts.z;
-        this.body.xRot = o * (-(float) Math.PI / 4F) + p * this.body.xRot;
+        float v = (1.0F - Math.max(o, n)) * (((float) Math.PI / 6F) + m + q * MathHelper.sin(r) * 0.05F);
+        this.field_3307.xRot = o * (0.2617994F + m) + n * (2.1816616F + MathHelper.sin(r) * 0.05F) + v;
+        this.field_3307.yRot = o * l * ((float) Math.PI / 180F) + (1.0F - Math.max(o, n)) * this.field_3307.yRot;
+        this.field_3307.y = o * -4.0F + n * 11.0F + (1.0F - Math.max(o, n)) * this.field_3307.y;
+        this.field_3307.z = o * -4.0F + n * -12.0F + (1.0F - Math.max(o, n)) * this.field_3307.z;
+        this.field_3305.xRot = o * (-(float) Math.PI / 4F) + p * this.field_3305.xRot;
         float w = 0.2617994F * o;
-        float x = net.minecraft.util.math.MathHelper.cos(r * 0.6F + (float) Math.PI);
-        this.leg3.y = 2.0F * o + 14.0F * p;
-        this.leg3.z = -6.0F * o - 10.0F * p;
-        this.leg4.y = this.leg3.y;
-        this.leg4.z = this.leg3.z;
+        float x = MathHelper.cos(r * 0.6F + (float) Math.PI);
+        this.field_3302.y = 2.0F * o + 14.0F * p;
+        this.field_3302.z = -6.0F * o - 10.0F * p;
+        this.field_3308.y = this.field_3302.y;
+        this.field_3308.z = this.field_3302.z;
         float y = ((-(float) Math.PI / 3F) + x) * o + u * p;
         float z = ((-(float) Math.PI / 3F) - x) * o - u * p;
-        this.leg1.xRot = w - t * 0.5F * g * p;
-        this.leg2.xRot = w + t * 0.5F * g * p;
-        this.leg3.xRot = y;
-        this.leg4.xRot = z;
-        this.tail.xRot = ((float) Math.PI / 6F) + g * 0.75F;
-        this.tail.y = -5.0F + g;
-        this.tail.z = 2.0F + g * 2.0F;
+        this.field_3306.xRot = w - t * 0.5F * g * p;
+        this.field_3303.xRot = w + t * 0.5F * g * p;
+        this.field_3302.xRot = y;
+        this.field_3308.xRot = z;
+        this.field_3300.xRot = ((float) Math.PI / 6F) + g * 0.75F;
+        this.field_3300.y = -5.0F + g;
+        this.field_3300.z = 2.0F + g * 2.0F;
         if (bl) {
-            this.tail.yRot = net.minecraft.util.math.MathHelper.cos(r * 0.7F);
+            this.field_3300.yRot = MathHelper.cos(r * 0.7F);
         } else {
-            this.tail.yRot = 0.0F;
+            this.field_3300.yRot = 0.0F;
         }
 
-        this.babyLeg1.y = this.leg1.y;
-        this.babyLeg1.z = this.leg1.z;
-        this.babyLeg1.xRot = this.leg1.xRot;
-        this.babyLeg2.y = this.leg2.y;
-        this.babyLeg2.z = this.leg2.z;
-        this.babyLeg2.xRot = this.leg2.xRot;
-        this.babyLeg3.y = this.leg3.y;
-        this.babyLeg3.z = this.leg3.z;
-        this.babyLeg3.xRot = this.leg3.xRot;
-        this.babyLeg4.y = this.leg4.y;
-        this.babyLeg4.z = this.leg4.z;
-        this.babyLeg4.xRot = this.leg4.xRot;
-        boolean bl2 = abstractHorse.isBaby();
-        this.leg1.visible = !bl2;
-        this.leg2.visible = !bl2;
-        this.leg3.visible = !bl2;
-        this.leg4.visible = !bl2;
-        this.babyLeg1.visible = bl2;
-        this.babyLeg2.visible = bl2;
-        this.babyLeg3.visible = bl2;
-        this.babyLeg4.visible = bl2;
-        this.body.y = bl2 ? 10.8F : 0.0F;
+    }
+
+    private float method_2790(float f, float g, float h) {
+        float i;
+        for (i = g - f; i < -180.0F; i += 360.0F) {
+        }
+
+        while (i >= 180.0F) {
+            i -= 360.0F;
+        }
+
+        return f + h * i;
     }
 }

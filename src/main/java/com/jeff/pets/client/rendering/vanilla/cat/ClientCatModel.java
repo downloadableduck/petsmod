@@ -12,8 +12,9 @@ public class ClientCatModel extends OcelotModel<ClientCat> {
         super(f);
     }
 
-    public void setupAnim(ClientCat cat, float a, float b, float c, float d, float e) {
-        super.setupAnim(cat, a, b, c, d, e);
+    @Override
+    public void setupAnim(ClientCat cat, float a, float b, float c, float d, float e, float k) {
+        super.setupAnim(cat, a, b, c, d, e, k);
         float f = cat.getAge();
         if (cat.isPassenger()) {
             this.body.y += f;

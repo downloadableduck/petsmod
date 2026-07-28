@@ -3,8 +3,9 @@ package com.jeff.pets.client.rendering.custom.first.duck;
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 
 import java.util.Objects;
 
@@ -18,17 +19,18 @@ public class DuckRenderer extends PetRenderer<Duck, DuckModel> {
     }
 
     @Override
-    protected void scale(Duck livingEntityRenderState, com.mojang.blaze3d.matrix.MatrixStack poseStack, float f) {
+    protected void scale(Duck livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            poseStack.scale(0.6f, 0.6f, 0.6f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.6f, 0.6f, 0.6f);
         }
     }
 
     @Override
-    public void render(final Duck duck, float f, final float partialTicks, com.mojang.blaze3d.matrix.MatrixStack poseStack, IRenderTypeBuffer source, int i) {
-        duck.flap = net.minecraft.util.math.MathHelper.lerp(partialTicks, duck.oFlap, duck.flap);
-        duck.flapSpeed = net.minecraft.util.math.MathHelper.lerp(partialTicks, duck.oFlapSpeed, duck.flapSpeed);
-        super.render(duck, f, partialTicks, poseStack, source, i);
+    public void renderModel(final Duck duck, float f, final float k, float u, float g, float h, float i) {
+        float partialTick = Minecraft.getInstance().getFrameTime();
+        duck.flap = MathHelper.lerp(partialTick, duck.oFlap, duck.flap);
+        duck.flapSpeed = MathHelper.lerp(partialTick, duck.oFlapSpeed, duck.flapSpeed);
+        super.renderModel(duck, f, k, u, g, h, i);
     }
 
     @Override

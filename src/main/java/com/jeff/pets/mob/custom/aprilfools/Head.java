@@ -83,7 +83,7 @@ public class Head extends AbstractPet {
 
         this.goalSelector.addGoal(5, new LookRandomlyGoal(this));
         this.goalSelector.addGoal(6, new RandomWalkingGoal(this, 1.0D));
-        this.goalSelector.addGoal(8, new FollowOwnerGoal(this, 1, 2, 10, false));
+        this.goalSelector.addGoal(8, new FollowOwnerGoal(this, 1, 2, 10));
     }
 
     @Override
@@ -105,9 +105,9 @@ public class Head extends AbstractPet {
     public boolean mobInteract(PlayerEntity player, Hand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
 
-        double x = this.getX();
-        double y = this.getY();
-        double z = this.getZ();
+        double x = this.x;
+        double y = this.y;
+        double z = this.z;
 
         if (!this.isTame() && this.isFood(itemStack)) {
             if (this.random.nextInt(3) == 0) {
@@ -127,14 +127,14 @@ public class Head extends AbstractPet {
         if (this.isTame() && itemStack.isEmpty()) {
             this.level.addParticle(
                     ParticleTypes.HEART,
-                    this.getX(),
-                    this.getY() + 1,
-                    this.getZ(),
+                    this.x,
+                    this.y + 1,
+                    this.z,
                     5, 5, 5
             );
         }
 
-        if (this.isTame() && itemStack.isEmpty() && player.isShiftKeyDown()) {
+        if (this.isTame() && itemStack.isEmpty() && player.isVisuallySneaking()) {
             if (!this.isPassenger()) {
                 this.startRiding(player);
                 this.lookAt(player, 1f, 1f);
@@ -153,7 +153,7 @@ public class Head extends AbstractPet {
         if (owner != null) {
 
             if (owner.hasPassenger(this)) {
-                if (owner.isCrouching() && owner.jumping) {
+                if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
                 } else {
@@ -161,8 +161,8 @@ public class Head extends AbstractPet {
                 }
             }
 
-            double dx = owner.getX() - this.getX();
-            double dz = owner.getZ() - this.getZ();
+            double dx = owner.x - this.x;
+            double dz = owner.z - this.z;
 
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
@@ -193,7 +193,7 @@ public class Head extends AbstractPet {
                 this.setDeltaMovement(this.getDeltaMovement().multiply(0.8, 1.0, 0.8));
             }
 
-            int yHeightToOwner = (int) (owner.getY() - this.getY());
+            int yHeightToOwner = (int) (owner.y - this.y);
 
             if (yHeightToOwner > 1) {
                 this.jumpFromGround();
@@ -225,7 +225,7 @@ public class Head extends AbstractPet {
         }
         if (owner != null) {
             if (distanceTo(owner) >= 10) {
-                this.teleportTo(owner.getX(), owner.getY(), owner.getZ());
+                this.teleportTo(owner.x, owner.y, owner.z);
             }
         }
 

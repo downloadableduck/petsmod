@@ -57,7 +57,7 @@ public class Racoon extends AbstractPet {
 
         this.goalSelector.addGoal(5, new LookRandomlyGoal(this));
         this.goalSelector.addGoal(6, new RandomWalkingGoal(this, 1.0D));
-        this.goalSelector.addGoal(8, new FollowOwnerGoal(this, 1, 2, 10, false));
+        this.goalSelector.addGoal(8, new FollowOwnerGoal(this, 1, 2, 10));
     }
 
     @Override
@@ -87,7 +87,7 @@ public class Racoon extends AbstractPet {
 
 
             if (owner.hasPassenger(this)) {
-                if (owner.isCrouching() && owner.jumping) {
+                if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
                     this.isOnHead = false;
@@ -96,8 +96,8 @@ public class Racoon extends AbstractPet {
                 }
             }
 
-            double dx = owner.getX() - this.getX();
-            double dz = owner.getZ() - this.getZ();
+            double dx = owner.x - this.x;
+            double dz = owner.z - this.z;
 
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
@@ -128,7 +128,7 @@ public class Racoon extends AbstractPet {
                 this.setDeltaMovement(this.getDeltaMovement().multiply(0.8, 1.0, 0.8));
             }
 
-            int yHeightToOwner = (int) (owner.getY() - this.getY());
+            int yHeightToOwner = (int) (owner.y - this.y);
 
             if (this.horizontalCollision && this.onGround) {
                 this.jumpFromGround();
@@ -165,7 +165,7 @@ public class Racoon extends AbstractPet {
         }
         if (owner != null) {
             if (distanceTo(owner) >= 10) {
-                this.teleportTo(owner.getX(), owner.getY(), owner.getZ());
+                this.teleportTo(owner.x, owner.y, owner.z);
             }
         }
 

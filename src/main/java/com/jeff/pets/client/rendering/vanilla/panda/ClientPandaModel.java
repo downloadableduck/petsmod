@@ -1,9 +1,9 @@
 package com.jeff.pets.client.rendering.vanilla.panda;
 
+import com.jeff.pets.client.rendering.ModelUtils;
 import com.jeff.pets.mob.vanilla.neutral.ClientPanda;
-import net.minecraft.client.renderer.entity.model.ModelUtils;
 import net.minecraft.client.renderer.entity.model.QuadrupedModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.client.renderer.entity.model.RendererModel;
 
 public class ClientPandaModel extends QuadrupedModel<ClientPanda> {
     private float sitAmount;
@@ -11,31 +11,31 @@ public class ClientPandaModel extends QuadrupedModel<ClientPanda> {
     private float rollAmount;
 
     public ClientPandaModel(int i, float f) {
-        super(i, f, true, 23.0F, 4.8F, 2.7F, 3.0F, 49);
+        super(i, f);
         this.texWidth = 64;
         this.texHeight = 64;
-        this.head = new ModelRenderer(this, 0, 6);
-        this.head.addBox(-6.5F, -5.0F, -4.0F, 13.0F, 10.0F, 9.0F);
+        this.head = new RendererModel(this, 0, 6);
+        this.head.addBox(-6.5F, -5.0F, -4.0F, (int) 13.0, (int) 10.0, (int) 9.0);
         this.head.setPos(0.0F, 11.5F, -17.0F);
-        this.head.texOffs(45, 16).addBox(-3.5F, 0.0F, -6.0F, 7.0F, 5.0F, 2.0F);
-        this.head.texOffs(52, 25).addBox(-8.5F, -8.0F, -1.0F, 5.0F, 4.0F, 1.0F);
-        this.head.texOffs(52, 25).addBox(3.5F, -8.0F, -1.0F, 5.0F, 4.0F, 1.0F);
-        this.body = new ModelRenderer(this, 0, 25);
-        this.body.addBox(-9.5F, -13.0F, -6.5F, 19.0F, 26.0F, 13.0F);
+        this.head.texOffs(45, 16).addBox(-3.5F, 0.0F, -6.0F, (int) 7.0, (int) 5.0, (int) 2.0);
+        this.head.texOffs(52, 25).addBox(-8.5F, -8.0F, -1.0F, (int) 5.0, (int) 4.0, (int) 1.0);
+        this.head.texOffs(52, 25).addBox(3.5F, -8.0F, -1.0F, (int) 5.0, (int) 4.0, (int) 1.0);
+        this.body = new RendererModel(this, 0, 25);
+        this.body.addBox(-9.5F, -13.0F, -6.5F, (int) 19.0, (int) 26.0, (int) 13.0);
         this.body.setPos(0.0F, 10.0F, 0.0F);
         int j = 9;
         int k = 6;
-        this.leg0 = new ModelRenderer(this, 40, 0);
-        this.leg0.addBox(-3.0F, 0.0F, -3.0F, 6.0F, 9.0F, 6.0F);
+        this.leg0 = new RendererModel(this, 40, 0);
+        this.leg0.addBox(-3.0F, 0.0F, -3.0F, (int) 6.0, (int) 9.0, (int) 6.0);
         this.leg0.setPos(-5.5F, 15.0F, 9.0F);
-        this.leg1 = new ModelRenderer(this, 40, 0);
-        this.leg1.addBox(-3.0F, 0.0F, -3.0F, 6.0F, 9.0F, 6.0F);
+        this.leg1 = new RendererModel(this, 40, 0);
+        this.leg1.addBox(-3.0F, 0.0F, -3.0F, (int) 6.0, (int) 9.0, (int) 6.0);
         this.leg1.setPos(5.5F, 15.0F, 9.0F);
-        this.leg2 = new ModelRenderer(this, 40, 0);
-        this.leg2.addBox(-3.0F, 0.0F, -3.0F, 6.0F, 9.0F, 6.0F);
+        this.leg2 = new RendererModel(this, 40, 0);
+        this.leg2.addBox(-3.0F, 0.0F, -3.0F, (int) 6.0, (int) 9.0, (int) 6.0);
         this.leg2.setPos(-5.5F, 15.0F, -9.0F);
-        this.leg3 = new ModelRenderer(this, 40, 0);
-        this.leg3.addBox(-3.0F, 0.0F, -3.0F, 6.0F, 9.0F, 6.0F);
+        this.leg3 = new RendererModel(this, 40, 0);
+        this.leg3.addBox(-3.0F, 0.0F, -3.0F, (int) 6.0, (int) 9.0, (int) 6.0);
         this.leg3.setPos(5.5F, 15.0F, -9.0F);
     }
 
@@ -46,8 +46,9 @@ public class ClientPandaModel extends QuadrupedModel<ClientPanda> {
         this.rollAmount = panda.isBaby() ? 0.0F : 0;
     }
 
-    public void setupAnim(ClientPanda panda, float f, float g, float h, float i, float j) {
-        super.setupAnim(panda, f, g, h, i, j);
+    @Override
+    public void setupAnim(ClientPanda panda, float f, float g, float h, float i, float j, float y) {
+        super.setupAnim(panda, f, g, h, i, j, y);
         boolean bl = false;
         boolean bl2 = false;
         int k = 0;

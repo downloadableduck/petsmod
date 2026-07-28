@@ -10,8 +10,8 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.Objects;
 
-import static com.jeff.pets.client.Central.MOD_ID;
 import static com.jeff.pets.client.Central.CONFIG;
+import static com.jeff.pets.client.Central.MOD_ID;
 
 /**
  * A utility class used mainly in {@link Central} and misc rendering classes. Contains various
@@ -42,9 +42,9 @@ public class Utils {
 
         Vec3d lookAngle = player.getLookAngle();
 
-        double x = player.getX() - lookAngle.x * (double) 0.5F;
-        double y = player.getY() + (double) 0.5F;
-        double z = player.getZ() - lookAngle.z * (double) 0.5F;
+        double x = player.x - lookAngle.x * (double) 0.5F;
+        double y = player.y + (double) 0.5F;
+        double z = player.z - lookAngle.z * (double) 0.5F;
 
         entity.setPos(x, y, z);
         entity.setName(entityName);

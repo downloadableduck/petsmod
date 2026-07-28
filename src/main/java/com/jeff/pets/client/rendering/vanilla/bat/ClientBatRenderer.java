@@ -2,7 +2,6 @@ package com.jeff.pets.client.rendering.vanilla.bat;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientBat;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.util.ResourceLocation;
 
 public class ClientBatRenderer extends PetRenderer<ClientBat, ClientBatModel> {
@@ -12,8 +11,8 @@ public class ClientBatRenderer extends PetRenderer<ClientBat, ClientBatModel> {
     }
 
     @Override
-    protected void scale(ClientBat bat, MatrixStack poseStack, float f) {
-        poseStack.scale(0.35F, 0.35F, 0.35F);
+    protected void scale(ClientBat bat, float f) {
+        com.mojang.blaze3d.platform.GlStateManager.scalef(0.35F, 0.35F, 0.35F);
     }
 
     @Override

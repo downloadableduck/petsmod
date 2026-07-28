@@ -16,7 +16,7 @@ public class ClientSlimeRenderer extends PetRenderer<ClientSlime, SlimeModel<Cli
     }
 
     @Override
-    protected void scale(ClientSlime slimeRenderState, com.mojang.blaze3d.matrix.MatrixStack poseStack, float f) {
+    protected void scale(ClientSlime slimeRenderState, float f) {
         int slimeScale;
         switch (CONFIG.slimeSkin) {
             case "small":
@@ -32,7 +32,7 @@ public class ClientSlimeRenderer extends PetRenderer<ClientSlime, SlimeModel<Cli
                 slimeScale = 1;
                 break;
         }
-        poseStack.scale(slimeScale, slimeScale, slimeScale);
+        com.mojang.blaze3d.platform.GlStateManager.scalef(slimeScale, slimeScale, slimeScale);
     }
 
     @Override

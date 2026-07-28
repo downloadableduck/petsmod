@@ -11,7 +11,7 @@ import me.shedaniel.forge.clothconfig2.impl.builders.BooleanToggleBuilder;
 import me.shedaniel.forge.clothconfig2.impl.builders.DropdownMenuBuilder;
 import me.shedaniel.forge.clothconfig2.impl.builders.EnumSelectorBuilder;
 import me.shedaniel.forge.clothconfig2.impl.builders.StringFieldBuilder;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -383,6 +383,9 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
             case "stingray":
                 defaultVal = CONFIG.stingrayName;
                 break;
+            case "zombie_pigman":
+                defaultVal = CONFIG.zombiePigmanName;
+                break;
             default:
                 defaultVal = "";
                 break;
@@ -569,6 +572,8 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         CONFIG.koiName = name;
                     } else if (activePet.equals("stingray")) {
                         CONFIG.stingrayName = name;
+                    } else if (activePet.equals("zombie_pigman")) {
+                        CONFIG.zombiePigmanName = name;
                     }
                     Central.refreshPetNames();
                 });
@@ -1256,5 +1261,24 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
     private BooleanToggleBuilder createBabyOption(ConfigEntryBuilder builder, PetsConfig CONFIG) {
         return builder.startBooleanToggle("Baby?", CONFIG.isBaby)
                 .setSaveConsumer((newVal) -> CONFIG.isBaby = newVal);
+    }
+
+    public Screen build() {
+        PetsConfig CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
+        ConfigBuilder builder = ConfigBuilder.create()
+                .setTitle("Config")
+                .setSavingRunnable(() -> {
+                    AutoConfig.getConfigHolder(PetsConfig.class).save();
+                })
+                .setTransparentBackground(true);
+        ConfigCategory general = builder.getOrCreateCategory("Config");
+        ConfigEntryBuilder entryBuilder = builder.entryBuilder();
+        general.addEntry(this.createPetOnOption(entryBuilder, CONFIG).build());
+        general.addEntry(this.createPetSpeciesOption(entryBuilder, CONFIG).build());
+        general.addEntry(this.createPetNameOption(entryBuilder, CONFIG).build());
+        general.addEntry(this.createPetSkinOption(entryBuilder, CONFIG).build());
+        general.addEntry(this.createBabyOption(entryBuilder, CONFIG).build());
+
+        return builder.build();
     }
 }

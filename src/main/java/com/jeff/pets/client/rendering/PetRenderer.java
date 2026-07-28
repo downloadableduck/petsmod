@@ -1,7 +1,5 @@
 package com.jeff.pets.client.rendering;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.entity.MobEntity;
@@ -16,12 +14,12 @@ public abstract class PetRenderer<D extends MobEntity, K extends EntityModel<D>>
     }
 
     @Override
-    public void render(D entity, float f, float g, MatrixStack poseStack, IRenderTypeBuffer source, int i) {
-        poseStack.pushPose();
+    public void render(D entity, double f, double g, double h, float i, float j) {
+        com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
         if (entity.isPassenger()) {
-            poseStack.translate(0, 0.35, 0);
+            com.mojang.blaze3d.platform.GlStateManager.translatef(0, 0.35f, 0);
         }
-        super.render(entity, f, g, poseStack, source, i);
-        poseStack.popPose();
+        super.render(entity, f, g, h, i, j);
+        com.mojang.blaze3d.platform.GlStateManager.popMatrix();;
     }
 }

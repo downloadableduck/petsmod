@@ -5,35 +5,35 @@ package com.jeff.pets.client.rendering.custom.aprilfools.head;// Made with Block
 
 import com.jeff.pets.mob.custom.aprilfools.Head;
 import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.client.renderer.entity.model.RendererModel;
 
 public class HeadModel extends EntityModel<Head> {
-    private final ModelRenderer Head;
+    private final RendererModel Head;
 
     public HeadModel() {
         texWidth = 64;
         texHeight = 64;
 
-        Head = new ModelRenderer(this);
+        Head = new RendererModel(this);
         Head.setPos(0.0F, 0.0F, 0.0F);
         setRotationAngle(Head, -0.1047F, 0.0873F, 0.0F);
-        Head.texOffs(0, 0).addBox(-8.0F, 16.0F, 0.0F, 8.0F, 8.0F, 8.0F, 0.0F, false);
-        Head.texOffs(32, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, 0.5F, false);
+        Head.texOffs(0, 0).addBox(-8.0F, 16.0F, 0.0F, (int) 8.0F, (int) 8.0F, (int) 8.0F, 0.0F, false);
+        Head.texOffs(32, 0).addBox(-4.0F, -8.0F, -4.0F, (int) 8.0F, (int) 8.0F, (int) 8.0F, 0.5F, false);
     }
 
     @Override
-    public void setupAnim(Head entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(Head entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float f) {
         //previously the render function, render code was moved to a method below
     }
 
     @Override
-    public void renderToBuffer(com.mojang.blaze3d.matrix.MatrixStack matrixStack, com.mojang.blaze3d.vertex.IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        Head.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+    public void render(Head head, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
+        Head.render(alpha);
     }
 
-    public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-        modelRenderer.xRot = x;
-        modelRenderer.yRot = y;
-        modelRenderer.zRot = z;
+    public void setRotationAngle(RendererModel RendererModel, float x, float y, float z) {
+        RendererModel.xRot = x;
+        RendererModel.yRot = y;
+        RendererModel.zRot = z;
     }
 }

@@ -108,7 +108,7 @@ public class Stingray extends FlyingPet {
         this.goalSelector.addGoal(1, new RandomSwimmingGoal(this, 1, 1));
         this.goalSelector.addGoal(2, new FindWaterGoal(this));
 
-        this.goalSelector.addGoal(0, new FollowOwnerGoal(this, 1, 2, 10, false));
+        this.goalSelector.addGoal(0, new FollowOwnerGoal(this, 1, 2, 10));
         this.goalSelector.addGoal(9, new BreedGoal(this, 1));
         this.goalSelector.addGoal(3, new PanicGoal(this, 1.4d));
         // this.goalSelector.addGoal(4, new TemptGoal(this, 1.0f, stack -> stack.is(ItemTags.FISHES), false));
@@ -159,7 +159,7 @@ public class Stingray extends FlyingPet {
         if (owner != null) {
 
             if (owner.hasPassenger(this)) {
-                if (owner.isCrouching() && owner.jumping) {
+                if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, 0.1, 0));
                 } else {
@@ -167,8 +167,8 @@ public class Stingray extends FlyingPet {
                 }
             }
 
-            double dx = owner.getX() - this.getX();
-            double dz = owner.getZ() - this.getZ();
+            double dx = owner.x - this.x;
+            double dz = owner.z - this.z;
             net.minecraft.util.math.Vec3d ownerPos = owner.position().add(0, owner.getEyeHeight() * 0.8, 0);
             net.minecraft.util.math.Vec3d vecToOwner = ownerPos.subtract(this.position());
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
@@ -199,7 +199,7 @@ public class Stingray extends FlyingPet {
                 this.setDeltaMovement(this.getDeltaMovement().scale(0.8));
             }
 
-            int yHeightToOwner = (int) (owner.getY() - this.getY());
+            int yHeightToOwner = (int) (owner.y - this.y);
 
             if (yHeightToOwner > 1 || this.horizontalCollision) {
                 this.jumpFromGround();
@@ -233,13 +233,13 @@ public class Stingray extends FlyingPet {
         }
         if (owner != null) {
             if (distanceTo(owner) >= 10) {
-                this.teleportTo(owner.getX(), owner.getY(), owner.getZ());
+                this.teleportTo(owner.x, owner.y, owner.z);
             }
         }
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level.playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.SQUID_AMBIENT, SoundCategory.AMBIENT, 1.0f, 1.0f, true);
+            level.playLocalSound(this.x, this.y, this.z, SoundEvents.SQUID_AMBIENT, SoundCategory.AMBIENT, 1.0f, 1.0f, true);
         }
     }
 }

@@ -2,7 +2,6 @@ package com.jeff.pets.client.rendering.vanilla.horse;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientHorse;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -15,9 +14,9 @@ public class ClientHorseRenderer extends PetRenderer<ClientHorse, ClientHorseMod
     }
 
     @Override
-    protected void scale(ClientHorse state, MatrixStack poseStack, float f) {
+    protected void scale(ClientHorse state, float f) {
         if (CONFIG.isBaby) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 

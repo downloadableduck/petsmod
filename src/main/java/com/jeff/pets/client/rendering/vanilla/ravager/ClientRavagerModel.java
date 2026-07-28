@@ -3,72 +3,75 @@ package com.jeff.pets.client.rendering.vanilla.ravager;
 import com.google.common.collect.ImmutableList;
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.vanilla.hostile.ClientRavager;
-import net.minecraft.client.renderer.entity.model.SegmentedModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.renderer.entity.model.RavagerModel;
+import net.minecraft.client.renderer.entity.model.RendererModel;
+import net.minecraft.entity.monster.RavagerEntity;
 
-public class ClientRavagerModel extends SegmentedModel<ClientRavager> {
-    private final ModelRenderer head;
-    private final ModelRenderer mouth;
-    private final ModelRenderer body;
-    private final ModelRenderer leg0;
-    private final ModelRenderer leg1;
-    private final ModelRenderer leg2;
-    private final ModelRenderer leg3;
-    private final ModelRenderer neck;
+public class ClientRavagerModel extends EntityModel<ClientRavager> {
+    private final RendererModel head;
+    private final RendererModel mouth;
+    private final RendererModel body;
+    private final RendererModel leg0;
+    private final RendererModel leg1;
+    private final RendererModel leg2;
+    private final RendererModel leg3;
+    private final RendererModel neck;
 
     public ClientRavagerModel() {
         this.texWidth = 128;
         this.texHeight = 128;
         int i = 16;
         float f = 0.0F;
-        this.neck = new ModelRenderer(this);
+        this.neck = new RendererModel(this);
         this.neck.setPos(0.0F, -7.0F, -1.5F);
-        this.neck.texOffs(68, 73).addBox(-5.0F, -1.0F, -18.0F, 10.0F, 10.0F, 18.0F, 0.0F);
-        this.head = new ModelRenderer(this);
+        this.neck.texOffs(68, 73).addBox(-5.0F, -1.0F, -18.0F, (int) 10.0, (int) 10.0, (int) 18.0, 0.0F);
+        this.head = new RendererModel(this);
         this.head.setPos(0.0F, 16.0F, -17.0F);
-        this.head.texOffs(0, 0).addBox(-8.0F, -20.0F, -14.0F, 16.0F, 20.0F, 16.0F, 0.0F);
-        this.head.texOffs(0, 0).addBox(-2.0F, -6.0F, -18.0F, 4.0F, 8.0F, 4.0F, 0.0F);
-        ModelRenderer modelPart = new ModelRenderer(this);
+        this.head.texOffs(0, 0).addBox(-8.0F, -20.0F, -14.0F, (int) 16.0, (int) 20.0, (int) 16.0, 0.0F);
+        this.head.texOffs(0, 0).addBox(-2.0F, -6.0F, -18.0F, (int) 4.0, (int) 8.0, (int) 4.0, 0.0F);
+        RendererModel modelPart = new RendererModel(this);
         modelPart.setPos(-10.0F, -14.0F, -8.0F);
-        modelPart.texOffs(74, 55).addBox(0.0F, -14.0F, -2.0F, 2.0F, 14.0F, 4.0F, 0.0F);
+        modelPart.texOffs(74, 55).addBox(0.0F, -14.0F, -2.0F, (int) 2.0, (int) 14.0, (int) 4.0, 0.0F);
         modelPart.xRot = 1.0995574F;
         this.head.addChild(modelPart);
-        ModelRenderer modelPart2 = new ModelRenderer(this);
+        RendererModel modelPart2 = new RendererModel(this);
         modelPart2.mirror = true;
         modelPart2.setPos(8.0F, -14.0F, -8.0F);
-        modelPart2.texOffs(74, 55).addBox(0.0F, -14.0F, -2.0F, 2.0F, 14.0F, 4.0F, 0.0F);
+        modelPart2.texOffs(74, 55).addBox(0.0F, -14.0F, -2.0F, (int) 2.0, (int) 14.0, (int) 4.0, 0.0F);
         modelPart2.xRot = 1.0995574F;
         this.head.addChild(modelPart2);
-        this.mouth = new ModelRenderer(this);
+        this.mouth = new RendererModel(this);
         this.mouth.setPos(0.0F, -2.0F, 2.0F);
-        this.mouth.texOffs(0, 36).addBox(-8.0F, 0.0F, -16.0F, 16.0F, 3.0F, 16.0F, 0.0F);
+        this.mouth.texOffs(0, 36).addBox(-8.0F, 0.0F, -16.0F, (int) 16.0, (int) 3.0, (int) 16.0, 0.0F);
         this.head.addChild(this.mouth);
         this.neck.addChild(this.head);
-        this.body = new ModelRenderer(this);
-        this.body.texOffs(0, 55).addBox(-7.0F, -10.0F, -7.0F, 14.0F, 16.0F, 20.0F, 0.0F);
-        this.body.texOffs(0, 91).addBox(-6.0F, 6.0F, -7.0F, 12.0F, 13.0F, 18.0F, 0.0F);
+        this.body = new RendererModel(this);
+        this.body.texOffs(0, 55).addBox(-7.0F, -10.0F, -7.0F, (int) 14.0, (int) 16.0, (int) 20.0, 0.0F);
+        this.body.texOffs(0, 91).addBox(-6.0F, 6.0F, -7.0F, (int) 12.0, (int) 13.0, (int) 18.0, 0.0F);
         this.body.setPos(0.0F, 1.0F, 2.0F);
-        this.leg0 = new ModelRenderer(this, 96, 0);
-        this.leg0.addBox(-4.0F, 0.0F, -4.0F, 8.0F, 37.0F, 8.0F, 0.0F);
+        this.leg0 = new RendererModel(this, 96, 0);
+        this.leg0.addBox(-4.0F, 0.0F, -4.0F, (int) 8.0, (int) 37.0, (int) 8.0, 0.0F);
         this.leg0.setPos(-8.0F, -13.0F, 18.0F);
-        this.leg1 = new ModelRenderer(this, 96, 0);
+        this.leg1 = new RendererModel(this, 96, 0);
         this.leg1.mirror = true;
-        this.leg1.addBox(-4.0F, 0.0F, -4.0F, 8.0F, 37.0F, 8.0F, 0.0F);
+        this.leg1.addBox(-4.0F, 0.0F, -4.0F, (int) 8.0, (int) 37.0, (int) 8.0, 0.0F);
         this.leg1.setPos(8.0F, -13.0F, 18.0F);
-        this.leg2 = new ModelRenderer(this, 64, 0);
-        this.leg2.addBox(-4.0F, 0.0F, -4.0F, 8.0F, 37.0F, 8.0F, 0.0F);
+        this.leg2 = new RendererModel(this, 64, 0);
+        this.leg2.addBox(-4.0F, 0.0F, -4.0F, (int) 8.0, (int) 37.0, (int) 8.0, 0.0F);
         this.leg2.setPos(-8.0F, -13.0F, -5.0F);
-        this.leg3 = new ModelRenderer(this, 64, 0);
+        this.leg3 = new RendererModel(this, 64, 0);
         this.leg3.mirror = true;
-        this.leg3.addBox(-4.0F, 0.0F, -4.0F, 8.0F, 37.0F, 8.0F, 0.0F);
+        this.leg3.addBox(-4.0F, 0.0F, -4.0F, (int) 8.0, (int) 37.0, (int) 8.0, 0.0F);
         this.leg3.setPos(8.0F, -13.0F, -5.0F);
     }
 
-    public Iterable<ModelRenderer> parts() {
+    public Iterable<RendererModel> parts() {
         return ImmutableList.of(this.neck, this.body, this.leg0, this.leg1, this.leg2, this.leg3);
     }
 
-    public void setupAnim(ClientRavager ravager, float f, float g, float h, float i, float j) {
+    @Override
+    public void setupAnim(ClientRavager ravager, float f, float g, float h, float i, float j, float u) {
         this.head.xRot = j * ((float) Math.PI / 180F);
         this.head.yRot = i * ((float) Math.PI / 180F);
         this.body.xRot = ((float) Math.PI / 2F);
@@ -118,5 +121,15 @@ public class ClientRavagerModel extends SegmentedModel<ClientRavager> {
             }
         }
 
+    }
+
+    public void render(ClientRavager p_78088_1_, float p_78088_2_, float p_78088_3_, float p_78088_4_, float p_78088_5_, float p_78088_6_, float p_78088_7_) {
+        this.setupAnim(p_78088_1_, p_78088_2_, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_);
+        this.neck.render(p_78088_7_);
+        this.body.render(p_78088_7_);
+        this.leg0.render(p_78088_7_);
+        this.leg1.render(p_78088_7_);
+        this.leg2.render(p_78088_7_);
+        this.leg3.render(p_78088_7_);
     }
 }

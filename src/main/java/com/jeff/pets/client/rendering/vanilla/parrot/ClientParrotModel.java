@@ -2,73 +2,75 @@ package com.jeff.pets.client.rendering.vanilla.parrot;
 
 import com.google.common.collect.ImmutableList;
 import com.jeff.pets.mob.vanilla.passive.ClientParrot;
+import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.entity.model.ParrotModel;
-import net.minecraft.client.renderer.entity.model.SegmentedModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.client.renderer.entity.model.RendererModel;
 
-public class ClientParrotModel extends SegmentedModel<ClientParrot> {
-    private final ModelRenderer body;
-    private final ModelRenderer tail;
-    private final ModelRenderer wingLeft;
-    private final ModelRenderer wingRight;
-    private final ModelRenderer head;
-    private final ModelRenderer head2;
-    private final ModelRenderer beak1;
-    private final ModelRenderer beak2;
-    private final ModelRenderer feather;
-    private final ModelRenderer legLeft;
-    private final ModelRenderer legRight;
+public class ClientParrotModel extends EntityModel<ClientParrot> {
+    private final RendererModel body;
+    private final RendererModel tail;
+    private final RendererModel wingLeft;
+    private final RendererModel wingRight;
+    private final RendererModel head;
+    private final RendererModel head2;
+    private final RendererModel beak1;
+    private final RendererModel beak2;
+    private final RendererModel feather;
+    private final RendererModel legLeft;
+    private final RendererModel legRight;
 
     public ClientParrotModel() {
         this.texWidth = 32;
         this.texHeight = 32;
-        this.body = new ModelRenderer(this, 2, 8);
-        this.body.addBox(-1.5F, 0.0F, -1.5F, 3.0F, 6.0F, 3.0F);
+        this.body = new RendererModel(this, 2, 8);
+        this.body.addBox(-1.5F, 0.0F, -1.5F, (int) 3.0, (int) 6.0, (int) 3.0);
         this.body.setPos(0.0F, 16.5F, -3.0F);
-        this.tail = new ModelRenderer(this, 22, 1);
-        this.tail.addBox(-1.5F, -1.0F, -1.0F, 3.0F, 4.0F, 1.0F);
+        this.tail = new RendererModel(this, 22, 1);
+        this.tail.addBox(-1.5F, -1.0F, -1.0F, (int) 3.0, (int) 4.0, (int) 1.0);
         this.tail.setPos(0.0F, 21.07F, 1.16F);
-        this.wingLeft = new ModelRenderer(this, 19, 8);
-        this.wingLeft.addBox(-0.5F, 0.0F, -1.5F, 1.0F, 5.0F, 3.0F);
+        this.wingLeft = new RendererModel(this, 19, 8);
+        this.wingLeft.addBox(-0.5F, 0.0F, -1.5F, (int) 1.0, (int) 5.0, (int) 3.0);
         this.wingLeft.setPos(1.5F, 16.94F, -2.76F);
-        this.wingRight = new ModelRenderer(this, 19, 8);
-        this.wingRight.addBox(-0.5F, 0.0F, -1.5F, 1.0F, 5.0F, 3.0F);
+        this.wingRight = new RendererModel(this, 19, 8);
+        this.wingRight.addBox(-0.5F, 0.0F, -1.5F, (int) 1.0, (int) 5.0, (int) 3.0);
         this.wingRight.setPos(-1.5F, 16.94F, -2.76F);
-        this.head = new ModelRenderer(this, 2, 2);
-        this.head.addBox(-1.0F, -1.5F, -1.0F, 2.0F, 3.0F, 2.0F);
+        this.head = new RendererModel(this, 2, 2);
+        this.head.addBox(-1.0F, -1.5F, -1.0F, (int) 2.0, (int) 3.0, (int) 2.0);
         this.head.setPos(0.0F, 15.69F, -2.76F);
-        this.head2 = new ModelRenderer(this, 10, 0);
-        this.head2.addBox(-1.0F, -0.5F, -2.0F, 2.0F, 1.0F, 4.0F);
+        this.head2 = new RendererModel(this, 10, 0);
+        this.head2.addBox(-1.0F, -0.5F, -2.0F, (int) 2.0, (int) 1.0, (int) 4.0);
         this.head2.setPos(0.0F, -2.0F, -1.0F);
         this.head.addChild(this.head2);
-        this.beak1 = new ModelRenderer(this, 11, 7);
-        this.beak1.addBox(-0.5F, -1.0F, -0.5F, 1.0F, 2.0F, 1.0F);
+        this.beak1 = new RendererModel(this, 11, 7);
+        this.beak1.addBox(-0.5F, -1.0F, -0.5F, (int) 1.0, (int) 2.0, (int) 1.0);
         this.beak1.setPos(0.0F, -0.5F, -1.5F);
         this.head.addChild(this.beak1);
-        this.beak2 = new ModelRenderer(this, 16, 7);
-        this.beak2.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 2.0F, 1.0F);
+        this.beak2 = new RendererModel(this, 16, 7);
+        this.beak2.addBox(-0.5F, 0.0F, -0.5F, (int) 1.0, (int) 2.0, (int) 1.0);
         this.beak2.setPos(0.0F, -1.75F, -2.45F);
         this.head.addChild(this.beak2);
-        this.feather = new ModelRenderer(this, 2, 18);
-        this.feather.addBox(0.0F, -4.0F, -2.0F, 0.0F, 5.0F, 4.0F);
+        this.feather = new RendererModel(this, 2, 18);
+        this.feather.addBox(0.0F, -4.0F, -2.0F, (int) 0.0, (int) 5.0, (int) 4.0);
         this.feather.setPos(0.0F, -2.15F, 0.15F);
         this.head.addChild(this.feather);
-        this.legLeft = new ModelRenderer(this, 14, 18);
-        this.legLeft.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 2.0F, 1.0F);
+        this.legLeft = new RendererModel(this, 14, 18);
+        this.legLeft.addBox(-0.5F, 0.0F, -0.5F, (int) 1.0, (int) 2.0, (int) 1.0);
         this.legLeft.setPos(1.0F, 22.0F, -1.05F);
-        this.legRight = new ModelRenderer(this, 14, 18);
-        this.legRight.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 2.0F, 1.0F);
+        this.legRight = new RendererModel(this, 14, 18);
+        this.legRight.addBox(-0.5F, 0.0F, -0.5F, (int) 1.0, (int) 2.0, (int) 1.0);
         this.legRight.setPos(-1.0F, 22.0F, -1.05F);
     }
 
-    public Iterable<ModelRenderer> parts() {
+    public Iterable<RendererModel> parts() {
         return ImmutableList.of(this.body, this.wingLeft, this.wingRight, this.tail, this.head, this.legLeft, this.legRight);
     }
 
-    public void setupAnim(ClientParrot parrot, float f, float g, float h, float i, float j) {
+    @Override
+    public void setupAnim(ClientParrot parrot, float f, float g, float h, float i, float j, float u) {
         this.setupAnim(ParrotModel.State.FLYING, parrot.tickCount, f, g, h, i, j);
     }
 
+    @Override
     public void prepareMobModel(ClientParrot parrot, float f, float g, float h) {
         this.prepare(ParrotModel.State.FLYING);
     }
@@ -105,7 +107,7 @@ public class ClientParrotModel extends SegmentedModel<ClientParrot> {
                 this.tail.y = 21.07F + m;
                 break;
             case STANDING:
-                ModelRenderer var10000 = this.legLeft;
+                RendererModel var10000 = this.legLeft;
                 var10000.xRot += net.minecraft.util.math.MathHelper.cos(f * 0.6662F) * 1.4F * g;
                 var10000 = this.legRight;
                 var10000.xRot += net.minecraft.util.math.MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g;
@@ -164,11 +166,22 @@ public class ClientParrotModel extends SegmentedModel<ClientParrot> {
             default:
                 break;
             case FLYING:
-                ModelRenderer var10000 = this.legLeft;
+                RendererModel var10000 = this.legLeft;
                 var10000.xRot += 0.6981317F;
                 var10000 = this.legRight;
                 var10000.xRot += 0.6981317F;
         }
 
+    }
+
+    @Override
+    public void render(ClientParrot parrot, float f, float g, float h, float i, float j, float p_217159_1_) {
+        this.body.render(p_217159_1_);
+        this.wingLeft.render(p_217159_1_);
+        this.wingRight.render(p_217159_1_);
+        this.tail.render(p_217159_1_);
+        this.head.render(p_217159_1_);
+        this.legLeft.render(p_217159_1_);
+        this.legRight.render(p_217159_1_);
     }
 }

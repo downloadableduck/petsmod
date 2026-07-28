@@ -1,14 +1,18 @@
 package com.jeff.pets.client.rendering.vanilla.sheep;
 
 import com.jeff.pets.mob.vanilla.passive.ClientSheep;
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
+import net.minecraft.client.renderer.entity.layers.SheepWoolLayer;
 import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
+
 
 public class ClientSheepWoolLayer extends LayerRenderer<ClientSheep, ClientSheepModel> {
     private final EntityModel<ClientSheep> model;
@@ -20,7 +24,8 @@ public class ClientSheepWoolLayer extends LayerRenderer<ClientSheep, ClientSheep
     }
 
     @Override
-    public void render(com.mojang.blaze3d.matrix.MatrixStack poseStack, net.minecraft.client.renderer.IRenderTypeBuffer source, int i, ClientSheep sheepRenderState, float f, float a, float h, float j, float k, float l) {
+    public void render(ClientSheep sheep, float p_212842_2_, float p_212842_3_, float p_212842_4_, float p_212842_5_, float p_212842_6_, float p_212842_7_, float p_212842_8_) {
+        this.bindTexture(new ResourceLocation("minecraft", "textures/entity/sheep/sheep_fur.png"));
         if (Objects.equals(CONFIG.sheepSkin, "white")) {
             woolColor = 15132390;
         } else if (Objects.equals(CONFIG.sheepSkin, "orange")) {
@@ -60,7 +65,15 @@ public class ClientSheepWoolLayer extends LayerRenderer<ClientSheep, ClientSheep
         float r = (float) (woolColor >> 16 & 255) / 255.0F;
         float g = (float) (woolColor >> 8 & 255) / 255.0F;
         float b = (float) (woolColor & 255) / 255.0F;
+        GlStateManager.color3f(r, g, b);
 
-        coloredCutoutModelCopyLayerRender(this.getParentModel(), this.model, new ResourceLocation("minecraft", "textures/entity/sheep/sheep_fur.png"), poseStack, source, i, sheepRenderState, f, a, j, k, l, h, r, g, b);
+        (this.getParentModel()).copyPropertiesTo(this.model);
+        this.model.prepareMobModel(sheep, p_212842_2_, p_212842_3_, p_212842_4_);
+        this.model.render(sheep, p_212842_2_, p_212842_3_, p_212842_5_, p_212842_6_, p_212842_7_, p_212842_8_);
+    }
+
+    @Override
+    public boolean colorsOnDamage() {
+        return false;
     }
 }

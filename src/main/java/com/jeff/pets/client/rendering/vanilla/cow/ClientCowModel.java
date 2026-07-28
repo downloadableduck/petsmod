@@ -1,7 +1,5 @@
 package com.jeff.pets.client.rendering.vanilla.cow;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.CowModel;
 import net.minecraft.entity.Entity;
 
@@ -14,15 +12,14 @@ public class ClientCowModel<T extends Entity> extends CowModel<T> {
     }
 
     @Override
-    public void renderToBuffer(MatrixStack poseStack, IVertexBuilder vertexConsumer, int i, int j, float f, float g, float h, float k) {
-        super.renderToBuffer(poseStack, vertexConsumer, i, j, f, g, h, k);
-        poseStack.pushPose();
+    public void render(T t, float i, float j, float f, float g, float h, float k) {
+        super.render(t, i, j, f, g, h, k);
+        com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
         if (CONFIG.isBaby) {
-            poseStack.scale(2, 2, 2);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(2, 2, 2);
         } else {
-            poseStack.scale(1, 1, 1);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(1, 1, 1);
         }
-        this.head.translateAndRotate(poseStack);
-        poseStack.popPose();
+        com.mojang.blaze3d.platform.GlStateManager.popMatrix();;
     }
 }

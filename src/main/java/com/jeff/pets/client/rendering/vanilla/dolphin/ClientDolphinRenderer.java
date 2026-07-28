@@ -2,7 +2,6 @@ package com.jeff.pets.client.rendering.vanilla.dolphin;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientDolphin;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.entity.model.DolphinModel;
 import net.minecraft.util.ResourceLocation;
 
@@ -20,9 +19,9 @@ public class ClientDolphinRenderer extends PetRenderer<ClientDolphin, DolphinMod
     }
 
     @Override
-    protected void scale(ClientDolphin state, MatrixStack poseStack, float i) {
+    protected void scale(ClientDolphin state, float i) {
         if (CONFIG.isBaby) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 }

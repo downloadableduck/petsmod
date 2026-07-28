@@ -1,15 +1,15 @@
 package com.jeff.pets.mob.vanilla.neutral;
 
-import com.jeff.pets.CanFly;
-import com.jeff.pets.mob.FlyingPet;
+import com.jeff.pets.mob.GroundPet;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.world.World;
 
-@CanFly
-public class ClientBee extends FlyingPet {
-    public ClientBee(EntityType<? extends net.minecraft.entity.passive.TameableEntity> entityType, net.minecraft.world.World level) {
-        super(entityType, level);
+public class ClientZombiePigman extends GroundPet {
+    public ClientZombiePigman(EntityType<? extends TameableEntity> type, World level) {
+        super(type, level);
     }
 
     @Override
@@ -24,6 +24,6 @@ public class ClientBee extends FlyingPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.BEE_LOOP;
+        return SoundEvents.ZOMBIE_PIGMAN_AMBIENT;
     }
 }

@@ -1,14 +1,13 @@
 package com.jeff.pets.client.rendering.custom.first.racoon;
 
 import com.jeff.pets.mob.custom.first.Racoon;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Objects;
 
-import static com.jeff.pets.client.Central.MOD_ID;
 import static com.jeff.pets.client.Central.CONFIG;
+import static com.jeff.pets.client.Central.MOD_ID;
 
 public class RacoonRenderer extends MobRenderer<Racoon, RacoonModel> {
 
@@ -17,9 +16,9 @@ public class RacoonRenderer extends MobRenderer<Racoon, RacoonModel> {
     }
 
     @Override
-    protected void scale(Racoon livingEntityRenderState, com.mojang.blaze3d.matrix.MatrixStack poseStack, float f) {
+    protected void scale(Racoon livingEntityRenderState, float f) {
         if ((CONFIG.isBaby && !livingEntityRenderState.isServerEntity()) || (livingEntityRenderState.isBaby() && livingEntityRenderState.isServerEntity())) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
@@ -41,8 +40,8 @@ public class RacoonRenderer extends MobRenderer<Racoon, RacoonModel> {
     }
 
     @Override
-    public void render(Racoon racoon, float g, float f, com.mojang.blaze3d.matrix.MatrixStack poseStack, IRenderTypeBuffer source, int i) {
-        super.render(racoon, g, f, poseStack, source, i);
+    public void renderModel(Racoon racoon, float g, float f, float k, float h, float i, float j) {
+        super.renderModel(racoon, g, f, k, h, i, j);
         racoon.setServerEntity(racoon.getEntityData().get(Racoon.IS_SERVER_ENTITY));
     }
 }

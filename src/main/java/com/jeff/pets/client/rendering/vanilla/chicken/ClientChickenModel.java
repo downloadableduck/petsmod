@@ -1,10 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.chicken;
 
 import com.jeff.pets.mob.vanilla.passive.ClientChicken;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.ChickenModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
@@ -15,10 +12,9 @@ public class ClientChickenModel<T extends ClientChicken> extends ChickenModel<T>
     }
 
     @Override
-    public void setupAnim(T state, float f, float g, float h, float i, float j) {
+    public void setupAnim(T state, float f, float g, float h, float i, float j, float s) {
         h = getBob(state, f);
-        ModelRenderer head = this.headParts().iterator().next();
-        super.setupAnim(state, f, g, h, i, j);
+        super.setupAnim(state, f, g, h, i, j, s);
     }
 
     protected float getBob(ClientChicken chicken, float f) {
@@ -28,15 +24,14 @@ public class ClientChickenModel<T extends ClientChicken> extends ChickenModel<T>
     }
 
     @Override
-    public void renderToBuffer(MatrixStack poseStack, IVertexBuilder vertexConsumer, int i, int j, float f, float g, float h, float k) {
-        super.renderToBuffer(poseStack, vertexConsumer, i, j, f, g, h, k);
-        poseStack.pushPose();
+    public void render(T t, float i, float j, float f, float g, float h, float k) {
+        super.render(t, i, j, f, g, h, k);
+        com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
         if (CONFIG.isBaby) {
-            poseStack.scale(2, 2, 2);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(2, 2, 2);
         } else {
-            poseStack.scale(1, 1, 1);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(1, 1, 1);
         }
-        this.headParts().iterator().next().translateAndRotate(poseStack);
-        poseStack.popPose();
+        com.mojang.blaze3d.platform.GlStateManager.popMatrix();;
     }
 }

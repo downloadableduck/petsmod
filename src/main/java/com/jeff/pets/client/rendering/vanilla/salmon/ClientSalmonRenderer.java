@@ -18,12 +18,11 @@ public class ClientSalmonRenderer extends PetRenderer<ClientSalmon, SalmonModel<
     }
 
     @Override
-    protected void setupRotations(ClientSalmon salmonRenderState, com.mojang.blaze3d.matrix.MatrixStack poseStack, float ageInTicks, float g, float a) {
-        super.setupRotations(salmonRenderState, poseStack, ageInTicks, g, a);
+    protected void setupRotations(ClientSalmon salmonRenderState, float ageInTicks, float g, float a) {
+        super.setupRotations(salmonRenderState, ageInTicks, g, a);
         float h = 1.0F;
         float i = 1.0F;
 
         float j = h * 4.3F * net.minecraft.util.math.MathHelper.sin(i * 0.6F * ageInTicks);
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(j));
     }
 }

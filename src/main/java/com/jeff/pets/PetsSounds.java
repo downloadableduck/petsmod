@@ -4,9 +4,6 @@ import com.jeff.pets.client.Central;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Registers the custom sounds for the duck and the penguin. More are likely coming as more

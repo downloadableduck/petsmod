@@ -2,69 +2,6 @@ package com.jeff.pets;
 
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.PetsClientInitializer;
-import com.jeff.pets.client.rendering.custom.aprilfools.head.HeadRenderer;
-import com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus.DumboOctopusRenderer;
-import com.jeff.pets.client.rendering.custom.aquatic.koi.KoiRenderer;
-import com.jeff.pets.client.rendering.custom.aquatic.stingray.StingrayRenderer;
-import com.jeff.pets.client.rendering.custom.first.duck.DuckRenderer;
-import com.jeff.pets.client.rendering.custom.first.penguin.PenguinRenderer;
-import com.jeff.pets.client.rendering.custom.first.racoon.RacoonRenderer;
-import com.jeff.pets.client.rendering.vanilla.bat.ClientBatRenderer;
-import com.jeff.pets.client.rendering.vanilla.bee.ClientBeeRenderer;
-import com.jeff.pets.client.rendering.vanilla.blaze.ClientBlazeRenderer;
-import com.jeff.pets.client.rendering.vanilla.cat.ClientCatRenderer;
-import com.jeff.pets.client.rendering.vanilla.cavespider.ClientCaveSpiderRenderer;
-import com.jeff.pets.client.rendering.vanilla.chicken.ClientChickenRenderer;
-import com.jeff.pets.client.rendering.vanilla.cod.ClientCodRenderer;
-import com.jeff.pets.client.rendering.vanilla.cow.ClientCowRenderer;
-import com.jeff.pets.client.rendering.vanilla.creeper.ClientCreeperRenderer;
-import com.jeff.pets.client.rendering.vanilla.dolphin.ClientDolphinRenderer;
-import com.jeff.pets.client.rendering.vanilla.donkey.ClientDonkeyRenderer;
-import com.jeff.pets.client.rendering.vanilla.drowned.ClientDrownedRenderer;
-import com.jeff.pets.client.rendering.vanilla.elderguardian.ClientElderGuardianRenderer;
-import com.jeff.pets.client.rendering.vanilla.enderdragon.ClientEnderDragonRenderer;
-import com.jeff.pets.client.rendering.vanilla.enderman.ClientEndermanRenderer;
-import com.jeff.pets.client.rendering.vanilla.endermite.ClientEndermiteRenderer;
-import com.jeff.pets.client.rendering.vanilla.evoker.ClientEvokerRenderer;
-import com.jeff.pets.client.rendering.vanilla.fox.ClientFoxRenderer;
-import com.jeff.pets.client.rendering.vanilla.ghast.ClientGhastRenderer;
-import com.jeff.pets.client.rendering.vanilla.guardian.ClientGuardianRenderer;
-import com.jeff.pets.client.rendering.vanilla.horse.ClientHorseRenderer;
-import com.jeff.pets.client.rendering.vanilla.husk.ClientHuskRenderer;
-import com.jeff.pets.client.rendering.vanilla.irongolem.ClientIronGolemRenderer;
-import com.jeff.pets.client.rendering.vanilla.llama.ClientLlamaRenderer;
-import com.jeff.pets.client.rendering.vanilla.magmacube.ClientMagmaCubeRenderer;
-import com.jeff.pets.client.rendering.vanilla.mooshroom.ClientMooshroomRenderer;
-import com.jeff.pets.client.rendering.vanilla.panda.ClientPandaRenderer;
-import com.jeff.pets.client.rendering.vanilla.parrot.ClientParrotRenderer;
-import com.jeff.pets.client.rendering.vanilla.phantom.ClientPhantomRenderer;
-import com.jeff.pets.client.rendering.vanilla.pig.ClientPigRenderer;
-import com.jeff.pets.client.rendering.vanilla.pillager.ClientPillagerRenderer;
-import com.jeff.pets.client.rendering.vanilla.polarbear.ClientPolarBearRenderer;
-import com.jeff.pets.client.rendering.vanilla.pufferfish.ClientPufferFishRenderer;
-import com.jeff.pets.client.rendering.vanilla.rabbit.ClientRabbitRenderer;
-import com.jeff.pets.client.rendering.vanilla.ravager.ClientRavagerRenderer;
-import com.jeff.pets.client.rendering.vanilla.salmon.ClientSalmonRenderer;
-import com.jeff.pets.client.rendering.vanilla.sheep.ClientSheepRenderer;
-import com.jeff.pets.client.rendering.vanilla.shulker.ClientShulkerRenderer;
-import com.jeff.pets.client.rendering.vanilla.silverfish.ClientSilverfishRenderer;
-import com.jeff.pets.client.rendering.vanilla.skeleton.ClientSkeletonRenderer;
-import com.jeff.pets.client.rendering.vanilla.slime.ClientSlimeRenderer;
-import com.jeff.pets.client.rendering.vanilla.snowgolem.ClientSnowGolemRenderer;
-import com.jeff.pets.client.rendering.vanilla.spider.ClientSpiderRenderer;
-import com.jeff.pets.client.rendering.vanilla.squid.ClientSquidRenderer;
-import com.jeff.pets.client.rendering.vanilla.stray.ClientStrayRenderer;
-import com.jeff.pets.client.rendering.vanilla.turtle.ClientTurtleRenderer;
-import com.jeff.pets.client.rendering.vanilla.vex.ClientVexRenderer;
-import com.jeff.pets.client.rendering.vanilla.villager.ClientVillagerRenderer;
-import com.jeff.pets.client.rendering.vanilla.vindicator.ClientVindicatorRenderer;
-import com.jeff.pets.client.rendering.vanilla.wanderingtrader.ClientWanderingTraderRenderer;
-import com.jeff.pets.client.rendering.vanilla.witch.ClientWitchRenderer;
-import com.jeff.pets.client.rendering.vanilla.wither.ClientWitherRenderer;
-import com.jeff.pets.client.rendering.vanilla.witherskeleton.ClientWitherSkeletonRenderer;
-import com.jeff.pets.client.rendering.vanilla.wolf.ClientWolfRenderer;
-import com.jeff.pets.client.rendering.vanilla.zombie.ClientZombieRenderer;
-import com.jeff.pets.client.rendering.vanilla.zombievillager.ClientZombieVillagerRenderer;
 import com.jeff.pets.mob.custom.aprilfools.Head;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
 import com.jeff.pets.mob.custom.aquatic.Koi;
@@ -77,19 +14,13 @@ import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import com.jeff.pets.mob.vanilla.hostile.*;
 import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
-import net.minecraft.resources.ResourcePackType;
-import net.minecraft.resources.SimpleReloadableResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -311,15 +242,6 @@ public class PetsInitializer {
                     .noSummon()
                     .sized(0.6f, 1.95f)
                     .build("clientwanderingtrader")
-    );
-
-    public static final EntityType<ClientBee> BEE = Registry.register(
-            Registry.ENTITY_TYPE,
-            new ResourceLocation(MOD_ID, "clientbee"),
-            EntityType.Builder.of(ClientBee::new, EntityClassification.AMBIENT)
-                    .noSummon()
-                    .sized(0.7f, 0.6f)
-                    .build("clientbee")
     );
 
     public static final EntityType<ClientCaveSpider> CAVE_SPIDER = Registry.register(
@@ -686,13 +608,13 @@ public class PetsInitializer {
                     .build("stingray")
     );
 
-    /*public static final EntityType<ClientZombiePigman> ZOMBIE_PIGMAN = Registry.register(
+    public static final EntityType<ClientZombiePigman> ZOMBIE_PIGMAN = Registry.register(
             Registry.ENTITY_TYPE,
             new ResourceLocation(MOD_ID, "zombie_pigman"),
             EntityType.Builder.of(ClientZombiePigman::new, EntityClassification.AMBIENT)
                     .sized(0.6f, 1.95f)
                     .build("zombie_pigman")
-    );*/
+    );
 
     /**
      * Registers the entities' attributes. Warns about the call to register not working, but it

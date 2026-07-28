@@ -3,6 +3,7 @@ buildscript {
         maven { url = 'https://files.minecraftforge.net/maven' }
         maven { url "https://maven.shedaniel.me/" }
         maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+        maven {                 url = "https://api.modrinth.com/maven"}
         mavenCentral()
     }
     dependencies {
@@ -106,10 +107,11 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
 
-    implementation fg.deobf("maven.modrinth:9s6osm5g:dhr1Royh") // cloth config
+    //implementation fg.deobf("maven.modrinth:9s6osm5g:dhr1Royh") // cloth config
     implementation("blue.endless:jankson:${rootProject.jankson_version}")
     implementation("com.moandjiezana.toml:toml4j:${rootProject.toml4j_version}")
     implementation fg.deobf("maven.modrinth:6a16628x:hOGSWOX8")
+    //include ("maven.modrinth:6a16628x:hOGSWOX8")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     // You may put jars on which you depend on in ./libs or you may define them like so..
@@ -268,6 +270,10 @@ jar {
                 "MixinConfigs": "pets.client.mixins.json"
         ])
     }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs << "-Xmaxerrs" << "5000"
 }
 
 //tasks.build.dependsOn tasks.mixin

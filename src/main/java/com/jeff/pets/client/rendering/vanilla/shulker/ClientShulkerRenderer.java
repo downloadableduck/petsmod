@@ -51,8 +51,8 @@ public class ClientShulkerRenderer extends PetRenderer<ClientShulker, ClientShul
     }
 
     @Override
-    public void render(ClientShulker shulker, float f, float g, com.mojang.blaze3d.matrix.MatrixStack poseStack, net.minecraft.client.renderer.IRenderTypeBuffer source, int i) {
-        super.render(shulker, f, g, poseStack, source, i);
+    public void renderModel(ClientShulker shulker, float f, float g, float i, float j, float k, float l) {
+        super.renderModel(shulker, f, g, i, j, k, l);
         shulker.yBodyRot = 180;
         // shulker.peekAmount = 1;
     }

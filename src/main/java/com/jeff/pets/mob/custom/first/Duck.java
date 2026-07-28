@@ -147,7 +147,7 @@ public class Duck extends AbstractPet {
 
         this.goalSelector.addGoal(1, new RandomWalkingGoal(this, 1.0D));
 
-        this.goalSelector.addGoal(0, new FollowOwnerGoal(this, 1, 2, 10, false));
+        this.goalSelector.addGoal(0, new FollowOwnerGoal(this, 1, 2, 10));
         this.goalSelector.addGoal(9, new BreedGoal(this, 1));
         this.goalSelector.addGoal(2, new SwimGoal(this));
         this.goalSelector.addGoal(3, new PanicGoal(this, 1.4d));
@@ -156,7 +156,7 @@ public class Duck extends AbstractPet {
         this.goalSelector.addGoal(5, new LookRandomlyGoal(this));
         this.goalSelector.addGoal(6, new RandomWalkingGoal(this, 1.0D));
         this.goalSelector.addGoal(7, new EatGrassGoal(this));
-        this.goalSelector.addGoal(8, new FollowOwnerGoal(this, 1, 2, 10, false));
+        this.goalSelector.addGoal(8, new FollowOwnerGoal(this, 1, 2, 10));
     }
 
     @Override
@@ -166,7 +166,7 @@ public class Duck extends AbstractPet {
         if (owner != null) {
 
             if (owner.hasPassenger(this)) {
-                if (owner.isCrouching() && owner.jumping) {
+                if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
                     this.isOnHead = false;
@@ -175,8 +175,8 @@ public class Duck extends AbstractPet {
                 }
             }
 
-            double dx = owner.getX() - this.getX();
-            double dz = owner.getZ() - this.getZ();
+            double dx = owner.x - this.x;
+            double dz = owner.z - this.z;
 
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
@@ -207,7 +207,7 @@ public class Duck extends AbstractPet {
                 this.setDeltaMovement(this.getDeltaMovement().multiply(0.8, 1.0, 0.8));
             }
 
-            int yHeightToOwner = (int) (owner.getY() - this.getY());
+            int yHeightToOwner = (int) (owner.y - this.y);
 
             if (this.horizontalCollision && this.onGround) {
                 this.jumpFromGround();
@@ -247,13 +247,13 @@ public class Duck extends AbstractPet {
         }
         if (owner != null) {
             if (distanceTo(owner) >= 10) {
-                this.teleportTo(owner.getX(), owner.getY(), owner.getZ());
+                this.teleportTo(owner.x, owner.y, owner.z);
             }
         }
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level.playLocalSound(this.getX(), this.getY(), this.getZ(), PetsSounds.DUCK_AMBIENT, SoundCategory.NEUTRAL, 1.0f, 1.0f, true);
+            level.playLocalSound(this.x, this.y, this.z, PetsSounds.DUCK_AMBIENT, SoundCategory.NEUTRAL, 1.0f, 1.0f, true);
         }
     }
 

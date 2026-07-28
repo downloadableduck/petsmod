@@ -2,7 +2,6 @@ package com.jeff.pets.client.rendering.custom.aquatic.stingray;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.aquatic.Stingray;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.MOD_ID;
@@ -19,8 +18,8 @@ public class StingrayRenderer extends PetRenderer<Stingray, StingrayModel> {
     }
 
     @Override
-    public void render(Stingray stingray, float f, float partialTick, com.mojang.blaze3d.matrix.MatrixStack poseStack, IRenderTypeBuffer source, int i) {
-        super.render(stingray, f, partialTick, poseStack, source, i);
+    public void render(Stingray stingray, double f, double partialTick, double h, float i, float j) {
+        super.render(stingray, f, partialTick, h, i, j);
         //stingray.flapTime = stingray.flap + state.ageInTicks;
     }
 }

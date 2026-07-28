@@ -13,9 +13,9 @@ public class ClientCatRenderer extends PetRenderer<ClientCat, ClientCatModel> {
     }
 
     @Override
-    protected void scale(ClientCat state, com.mojang.blaze3d.matrix.MatrixStack poseStack, float f) {
+    protected void scale(ClientCat state, float f) {
         if (CONFIG.isBaby) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
@@ -52,8 +52,8 @@ public class ClientCatRenderer extends PetRenderer<ClientCat, ClientCatModel> {
     }
 
     @Override
-    public void render(ClientCat cat, float f, float g, com.mojang.blaze3d.matrix.MatrixStack poseStack, net.minecraft.client.renderer.IRenderTypeBuffer source, int i) {
-        super.render(cat, f, g, poseStack, source, i);
+    public void renderModel(ClientCat cat, float f, float g, float h, float i, float j, float k) {
+        super.renderModel(cat, f, g, h, i, j, k);
         cat.setSitting(cat.isPassenger());
     }
 }

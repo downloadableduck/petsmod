@@ -13,9 +13,9 @@ public class ClientPolarBearRenderer extends PetRenderer<ClientPolarBear, Client
     }
 
     @Override
-    protected void scale(ClientPolarBear livingEntityRenderState, com.mojang.blaze3d.matrix.MatrixStack poseStack, float f) {
+    protected void scale(ClientPolarBear livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 

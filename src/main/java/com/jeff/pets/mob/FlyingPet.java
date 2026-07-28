@@ -35,7 +35,7 @@ public abstract class FlyingPet extends AbstractPet {
         if (owner != null) {
 
             if (owner.hasPassenger(this)) {
-                if (owner.isCrouching() && owner.jumping) {
+                if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, 0.1, 0));
                 } else {
@@ -43,8 +43,8 @@ public abstract class FlyingPet extends AbstractPet {
                 }
             }
 
-            double dx = owner.getX() - this.getX();
-            double dz = owner.getZ() - this.getZ();
+            double dx = owner.x - this.x;
+            double dz = owner.z - this.z;
             Vec3d ownerPos = owner.position().add(0, owner.getEyeHeight() * 0.8, 0);
             Vec3d vecToOwner = ownerPos.subtract(this.position());
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
@@ -75,7 +75,7 @@ public abstract class FlyingPet extends AbstractPet {
                 this.setDeltaMovement(this.getDeltaMovement().scale(0.8));
             }
 
-            int yHeightToOwner = (int) (owner.getY() - this.getY());
+            int yHeightToOwner = (int) (owner.y - this.y);
 
             if (yHeightToOwner > 1 || this.horizontalCollision) {
                 this.jumpFromGround();
@@ -110,13 +110,13 @@ public abstract class FlyingPet extends AbstractPet {
         }
         if (owner != null) {
             if (distanceTo(owner) >= 10) {
-                this.teleportTo(owner.getX(), owner.getY(), owner.getZ());
+                this.teleportTo(owner.x, owner.y, owner.z);
             }
         }
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level.playLocalSound(this.getX(), this.getY(), this.getZ(), Objects.requireNonNull(this.getAmbientSound()), SoundCategory.AMBIENT, 1.0f, 1.0f, true);
+            level.playLocalSound(this.x, this.y, this.z, Objects.requireNonNull(this.getAmbientSound()), SoundCategory.AMBIENT, 1.0f, 1.0f, true);
         }
     }
 }

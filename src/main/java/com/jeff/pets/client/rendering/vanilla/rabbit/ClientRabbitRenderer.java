@@ -14,9 +14,9 @@ public class ClientRabbitRenderer extends PetRenderer<ClientRabbit, ClientRabbit
     }
 
     @Override
-    protected void scale(ClientRabbit livingEntityRenderState, com.mojang.blaze3d.matrix.MatrixStack poseStack, float f) {
+    protected void scale(ClientRabbit livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 

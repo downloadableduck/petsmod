@@ -12,6 +12,6 @@ public class ClientIronGolemRenderer extends PetRenderer<ClientIronGolem, Client
 
     @Override
     public ResourceLocation getTextureLocation(ClientIronGolem livingEntityRenderState) {
-        return new ResourceLocation("minecraft", "textures/entity/iron_golem/iron_golem.png");
+        return new ResourceLocation("minecraft", "textures/entity/iron_golem.png");
     }
 }

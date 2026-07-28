@@ -9,13 +9,13 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientZombieRenderer extends PetRenderer<ClientZombie, ClientZombieModel<ClientZombie>> {
 
     public ClientZombieRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientZombieModel(0), 0.75f);
+        super(context, new ClientZombieModel(), 0.75f);
     }
 
     @Override
-    protected void scale(ClientZombie livingEntityRenderState, com.mojang.blaze3d.matrix.MatrixStack poseStack, float f) {
+    protected void scale(ClientZombie livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 

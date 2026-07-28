@@ -3,7 +3,6 @@ package com.jeff.pets.client.rendering.vanilla.husk;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.zombie.ClientZombieModel;
 import com.jeff.pets.mob.vanilla.hostile.ClientHusk;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -11,13 +10,13 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientHuskRenderer extends PetRenderer<ClientHusk, ClientZombieModel<ClientHusk>> {
 
     public ClientHuskRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientZombieModel<>(0), 0.75F);
+        super(context, new ClientZombieModel<>(), 0.75F);
     }
 
     @Override
-    protected void scale(ClientHusk state, MatrixStack poseStack, float f) {
+    protected void scale(ClientHusk state, float f) {
         if (CONFIG.isBaby) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
@@ -27,10 +26,10 @@ public class ClientHuskRenderer extends PetRenderer<ClientHusk, ClientZombieMode
     }
 
     @Override
-    public void setupRotations(ClientHusk husk, MatrixStack poseStack, float f, float g, float i) {
-        super.setupRotations(husk, poseStack, f, g, i);
+    public void setupRotations(ClientHusk husk, float f, float g, float i) {
+        super.setupRotations(husk, f, g, i);
         if (husk.isPassenger()) {
-            poseStack.translate(0, -0.5, 0);
+            com.mojang.blaze3d.platform.GlStateManager.translatef(0, -0.5f, 0);
         }
     }
 }

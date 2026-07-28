@@ -2,28 +2,32 @@ package com.jeff.pets.client.rendering.vanilla.shulker;
 
 import com.google.common.collect.ImmutableList;
 import com.jeff.pets.mob.vanilla.hostile.ClientShulker;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.model.SegmentedModel;
-import net.minecraft.client.renderer.entity.model.ShulkerModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.renderer.entity.model.RendererModel;
 
-public class ClientShulkerModel extends SegmentedModel<ClientShulker> {
-    private final ModelRenderer base = new ModelRenderer(64, 64, 0, 28);
-    private final ModelRenderer lid = new ModelRenderer(64, 64, 0, 0);
-    private final ModelRenderer head = new ModelRenderer(64, 64, 0, 52);
+public class ClientShulkerModel extends EntityModel<ClientShulker> {
+    private final RendererModel base;
+    private final RendererModel lid;
+    private final RendererModel head;
 
     public ClientShulkerModel() {
-        this.lid.addBox(-8.0F, -16.0F, -8.0F, 16.0F, 12.0F, 16.0F);
+        this.texHeight = 64;
+        this.texWidth = 64;
+        this.lid = new RendererModel(this);
+        this.base = new RendererModel(this);
+        this.head = new RendererModel(this);
+        this.lid.texOffs(0, 0).addBox(-8.0F, -16.0F, -8.0F, 16, 12, 16);
         this.lid.setPos(0.0F, 24.0F, 0.0F);
-        this.base.addBox(-8.0F, -8.0F, -8.0F, 16.0F, 8.0F, 16.0F);
+        this.base.texOffs(0, 28).addBox(-8.0F, -8.0F, -8.0F, 16, 8, 16);
         this.base.setPos(0.0F, 24.0F, 0.0F);
-        this.head.addBox(-3.0F, 0.0F, -3.0F, 6.0F, 6.0F, 6.0F);
+        this.head.texOffs(0, 52).addBox(-3.0F, 0.0F, -3.0F, 6, 6, 6);
         this.head.setPos(0.0F, 12.0F, 0.0F);
     }
 
-    public void setupAnim(ClientShulker shulker, float f, float g, float h, float i, float j) {
+    @Override
+    public void setupAnim(ClientShulker shulker, float f, float g, float h, float i, float j, float u) {
         float k = h - (float) shulker.tickCount;
-        float l = (0.5F + 1) * (float) Math.PI;
+        float l = (0.5F + 180 * (float) Math.PI);
         float m = -1.0F + net.minecraft.util.math.MathHelper.sin(l);
         float n = 0.0F;
         if (l > (float) Math.PI) {
@@ -38,22 +42,30 @@ public class ClientShulkerModel extends SegmentedModel<ClientShulker> {
         }
 
         this.head.xRot = j * ((float) Math.PI / 180F);
-        this.head.yRot = (shulker.yHeadRot - 180.0F - shulker.yBodyRot) * ((float) Math.PI / 180F);
+        this.head.yRot = i * ((float) Math.PI / 180F);
     }
 
-    public Iterable<ModelRenderer> parts() {
+    public Iterable<RendererModel> parts() {
         return ImmutableList.of(this.base, this.lid);
     }
 
-    public ModelRenderer getBase() {
+    public RendererModel getBase() {
         return this.base;
     }
 
-    public ModelRenderer getLid() {
+    public RendererModel getLid() {
         return this.lid;
     }
 
-    public ModelRenderer getHead() {
+    public RendererModel getHead() {
         return this.head;
+    }
+
+    @Override
+    public void render(ClientShulker shulker, float f, float j, float a, float i, float u, float k) {
+        super.render(shulker, f, j, a, i, u, k);
+        this.base.render(k);
+        this.head.render(k);
+        this.lid.render(k);
     }
 }

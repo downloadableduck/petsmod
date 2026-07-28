@@ -3,7 +3,6 @@ package com.jeff.pets.client.rendering.custom.first.penguin;
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Penguin;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -20,16 +19,16 @@ public class PenguinRenderer extends PetRenderer<Penguin, PenguinModel> {
     }
 
     @Override
-    protected void scale(Penguin livingEntityRenderState, com.mojang.blaze3d.matrix.MatrixStack poseStack, float f) {
+    protected void scale(Penguin livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public void render(final Penguin penguin, float f, float partialTicks, com.mojang.blaze3d.matrix.MatrixStack poseStack, IRenderTypeBuffer source, int i) {
-        penguin.flap = net.minecraft.util.math.MathHelper.lerp(partialTicks, penguin.oFlap, penguin.flap);
-        penguin.flapSpeed = net.minecraft.util.math.MathHelper.lerp(partialTicks, penguin.oFlapSpeed, penguin.flapSpeed);
-        super.render(penguin, f, partialTicks, poseStack, source, i);
+    public void render(final Penguin penguin, double f, double partialTicks, double d, float k, float i) {
+        //penguin.flap = (float) net.minecraft.util.math.MathHelper.lerp(partialTicks, penguin.oFlap, penguin.flap);
+        //penguin.flapSpeed = (float) net.minecraft.util.math.MathHelper.lerp(partialTicks, penguin.oFlapSpeed, penguin.flapSpeed);
+        super.render(penguin, f, partialTicks, d, k, i);
     }
 }

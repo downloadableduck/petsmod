@@ -1,10 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.magmacube;
 
-import com.jeff.pets.client.Central;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientMagmaCube;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.model.SlimeModel;
 import net.minecraft.util.ResourceLocation;
 
@@ -17,7 +14,7 @@ public class ClientMagmaCubeRenderer extends PetRenderer<ClientMagmaCube, SlimeM
     }
 
     @Override
-    protected void scale(ClientMagmaCube slimeRenderState, MatrixStack poseStack, float a) {
+    protected void scale(ClientMagmaCube slimeRenderState, float a) {
         int magmaCubeScale;
         switch (CONFIG.magmaCubeSkin) {
             case "small":
@@ -33,7 +30,7 @@ public class ClientMagmaCubeRenderer extends PetRenderer<ClientMagmaCube, SlimeM
                 magmaCubeScale = 1;
                 break;
         }
-        poseStack.scale(magmaCubeScale, magmaCubeScale, magmaCubeScale);
+        com.mojang.blaze3d.platform.GlStateManager.scalef(magmaCubeScale, magmaCubeScale, magmaCubeScale);
     }
 
     @Override
