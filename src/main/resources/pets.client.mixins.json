@@ -4,8 +4,6 @@
   "compatibilityLevel": "JAVA_21",
   "client": [
     "ChatAccessor",
-    "SplashManagerMixin",
-    "TitleScreenRenderingMixin",
     "ShutUpEntityClientLevelMixin"
   ],
   "injectors": {

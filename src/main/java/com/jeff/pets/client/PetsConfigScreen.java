@@ -1,8 +1,6 @@
 package com.jeff.pets.client;
 
 import com.jeff.pets.client.enums.*;
-import com.jeff.pets.client.mixin.client.SplashManagerMixin;
-import com.jeff.pets.client.mixin.client.TitleScreenRenderingMixin;
 import dev.isxander.yacl3.api.*;
 import dev.isxander.yacl3.api.controller.*;
 import me.shedaniel.autoconfig.AutoConfig;
@@ -970,15 +968,6 @@ public class PetsConfigScreen {
                                                     false,
                                                     () -> CONFIG.isBaby,
                                                     newVal -> CONFIG.isBaby = newVal
-                                            ).controller(TickBoxControllerBuilder::create)
-                                            .build())
-                                    .option(Option.<Boolean>createBuilder()
-                                            .name(Component.literal("Custom Title Enabled"))
-                                            .description(OptionDescription.of(Component.literal("Toggle whether the custom title and splashes are enabled. Due to the way that splashes are loaded they will reload the next time you load the game, but the title screen will reload instantly.")))
-                                            .binding(
-                                                    true,
-                                                    () -> CONFIG.customTitleEnabled,
-                                                    newVal -> CONFIG.customTitleEnabled = newVal
                                             ).controller(TickBoxControllerBuilder::create)
                                             .build())
                                     .build())
