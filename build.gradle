@@ -35,7 +35,7 @@ repositories {
 }
 
 base {
-    archivesName = "pets-mod" + "-" + project.minecraft_version + "-" + "neo"
+    archivesName = "pets-mod" + "-" + project.minecraft_version + "-" + "neo" + "+" + project.build
 }
 
 // Mojang ships Java 25 to end users in 26.1, so mods should target Java 25.
@@ -156,7 +156,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             mod_id                 : mod_id,
             mod_name               : mod_name,
             mod_license            : mod_license,
-            mod_version            : mod_version,
+            mod_version            : mod_version + "+" + project.build,
     ]
     inputs.properties replaceProperties
     expand replaceProperties
@@ -197,5 +197,5 @@ idea {
 tasks.named('jar') {
     archiveBaseName = "pets-mod"
     archiveVersion = project.mod_version
-    archiveClassifier = project.minecraft_version + "-neo"
+    archiveClassifier = project.minecraft_version + "-neo" + "+" + project.build
 }
