@@ -1,8 +1,6 @@
 package com.jeff.pets;
 
 import com.jeff.pets.enums.*;
-import com.jeff.pets.mixin.client.SplashManagerMixin;
-import com.jeff.pets.mixin.client.TitleScreenRenderingMixin;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import dev.isxander.yacl3.api.*;
@@ -977,15 +975,6 @@ public class PetsConfigScreen implements ModMenuApi {
                                                     false,
                                                     () -> CONFIG.isBaby,
                                                     newVal -> CONFIG.isBaby = newVal
-                                            ).controller(TickBoxControllerBuilder::create)
-                                            .build())
-                                    .option(Option.<Boolean>createBuilder()
-                                            .name(Component.literal("Custom Title Enabled"))
-                                            .description(OptionDescription.of(Component.literal("Toggle whether the custom title and splashes are enabled. Due to the way that splashes are loaded they will reload the next time you load the game, but the title screen will reload instantly.")))
-                                            .binding(
-                                                    true,
-                                                    () -> CONFIG.customTitleEnabled,
-                                                    newVal -> CONFIG.customTitleEnabled = newVal
                                             ).controller(TickBoxControllerBuilder::create)
                                             .build())
                                     .build())
