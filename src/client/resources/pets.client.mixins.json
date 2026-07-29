@@ -3,9 +3,7 @@
   "package": "com.jeff.pets.mixin.client",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "ChatAccessor",
-    "SplashManagerMixin",
-    "TitleScreenRenderingMixin"
+    "ChatAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

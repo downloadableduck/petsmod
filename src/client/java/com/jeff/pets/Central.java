@@ -7,8 +7,6 @@
 package com.jeff.pets;
 
 import com.jeff.pets.mixin.client.ChatAccessor;
-import com.jeff.pets.mixin.client.SplashManagerMixin;
-import com.jeff.pets.mixin.client.TitleScreenRenderingMixin;
 import com.jeff.pets.mob.aprilfools.*;
 import com.jeff.pets.mob.custom.aprilfools.Head;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
