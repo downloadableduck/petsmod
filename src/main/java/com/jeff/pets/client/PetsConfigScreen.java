@@ -1,8 +1,6 @@
 package com.jeff.pets.client;
 
 import com.jeff.pets.client.enums.*;
-import com.jeff.pets.client.mixin.client.SplashManagerMixin;
-import com.jeff.pets.client.mixin.client.TitleScreenRenderingMixin;
 import dev.isxander.yacl3.api.*;
 import dev.isxander.yacl3.api.controller.*;
 import me.shedaniel.autoconfig.AutoConfig;
