@@ -1,0 +1,44 @@
+package com.jeff.pets.client.rendering.vanilla.donkey;
+
+import com.jeff.pets.mob.vanilla.passive.ClientDonkey;
+import com.jeff.pets.client.rendering.PetRenderer;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.model.animal.equine.DonkeyModel;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.state.DonkeyRenderState;
+import net.minecraft.resources.Identifier;
+import org.jetbrains.annotations.NotNull;
+
+import static com.jeff.pets.client.Central.CONFIG;
+
+public class ClientDonkeyRenderer extends PetRenderer<@NotNull ClientDonkey, @NotNull DonkeyRenderState, @NotNull DonkeyModel> {
+    public static ModelLayerLocation DONKEY_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientdonkey"), "main");
+
+    public ClientDonkeyRenderer(EntityRendererProvider.Context context) {
+        super(context, new DonkeyModel(context.bakeLayer(ModelLayers.DONKEY)), 0.5f);
+    }
+
+    public static LayerDefinition createBodyLayer() {
+        DonkeyModel.createBodyMesh(CubeDeformation.NONE);
+        return LayerDefinition.create(new MeshDefinition(), 64, 32);
+    }
+
+    public @NotNull Identifier getTextureLocation(DonkeyRenderState donkeyRenderState) {
+        return Identifier.withDefaultNamespace("textures/entity/horse/donkey.png");
+    }
+
+    protected void scale(DonkeyRenderState state, @NotNull PoseStack poseStack) {
+        if (CONFIG.isBaby) {
+            poseStack.scale(0.5f, 0.5f, 0.5f);
+        }
+    }
+
+    public DonkeyRenderState createRenderState() {
+        return new DonkeyRenderState();
+    }
+}

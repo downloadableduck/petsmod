@@ -1,0 +1,24 @@
+{
+  "required": true,
+  "package": "com.jeff.pets.client.mixin.client",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "AttributeSupplierMixin",
+    "ChatAccessor",
+    "CommandManagerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  },
+  "client": [
+    "ClientPlayJoinHandlerMixin",
+    "ClientTickMixin",
+    "EntityRenderersAccessor",
+    "KeyMappingAccessor",
+    "ModelLayersAccessor",
+    "WitherRenderStateAccessor"
+  ]
+}

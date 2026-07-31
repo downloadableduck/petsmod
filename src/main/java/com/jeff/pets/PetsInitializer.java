@@ -13,8 +13,6 @@ import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import com.jeff.pets.mob.vanilla.hostile.*;
 import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -22,20 +20,16 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.function.Function;
+import java.lang.instrument.Instrumentation;
 
 /**
  * Registers all of the blocks and entities used in this mod, as well as providing the {@link #MOD_ID}.
  */
-public class PetsInitializer implements ModInitializer {
+public class PetsInitializer {
     public static final String MOD_ID = "pets-mod";
 
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
@@ -1126,110 +1120,7 @@ public class PetsInitializer implements ModInitializer {
      * Registers the entities' attributes. Warns about the call to register not working, but it
      * ends up working fine in-game - likely a mixup in either the Fabric API or IntelliJ.
      */
-    @Override
-    public void onInitialize() {
-
-        FabricDefaultAttributeRegistry.register(RACOON, Racoon.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(DUCK, Duck.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(PENGUIN, Penguin.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(SHEEP, ClientSheep.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(CAT, ClientCat.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(ALLAY, ClientAllay.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(ARMADILLO, ClientArmadillo.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(AXOLOTL, ClientAxolotl.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(BAT, ClientBat.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(CAMEL, ClientCamel.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(CHICKEN, ClientChicken.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(COD, ClientCod.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(COPPER_GOLEM, ClientCopperGolem.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(COW, ClientCow.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(DONKEY, ClientDonkey.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(FROG, ClientFrog.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(HORSE, ClientHorse.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(MOOSHROOM, ClientMooshroom.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(PARROT, ClientParrot.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(PIG, ClientPig.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(RABBIT, ClientRabbit.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(SALMON, ClientSalmon.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(SNIFFER, ClientSniffer.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(SNOW_GOLEM, ClientSnowGolem.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(SQUID, ClientSquid.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(STRIDER, ClientStrider.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(TADPOLE, ClientTadpole.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(TROPICAL_FISH, ClientTropicalFish.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(TURTLE, ClientTurtle.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(VILLAGER, ClientVillager.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(WANDERING_TRADER, ClientWanderingTrader.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(BEE, ClientBee.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(CAVE_SPIDER, ClientCaveSpider.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(DOLPHIN, ClientDolphin.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(ENDERMAN, ClientEnderman.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(FOX, ClientFox.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(GOAT, ClientGoat.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(IRON_GOLEM, ClientIronGolem.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(LLAMA, ClientLlama.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(NAUTILUS, ClientNautilus.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(PANDA, ClientPanda.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(PIGLIN, ClientWanderingTrader.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(POLAR_BEAR, ClientPolarBear.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(PUFFERFISH, ClientPufferFish.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(SPIDER, ClientSpider.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(WOLF, ClientWolf.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(BLAZE, ClientBlaze.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(BREEZE, ClientBreeze.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(CREAKING, ClientCreaking.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(CREEPER, ClientCreeper.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(ELDER_GUARDIAN_COOKIE, ClientElderGuardian.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(ENDERMITE, ClientEndermite.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(EVOKER, ClientEvoker.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(GHAST, ClientGhast.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(HAPPY_GHAST, ClientHappyGhast.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(GUARDIAN, ClientGuardian.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(HOGLIN, ClientHoglin.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(MAGMA_CUBE, ClientMagmaCube.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(PHANTOM, ClientPhantom.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(PILLAGER, ClientPillager.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(RAVAGER, ClientRavager.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(SHULKER, ClientShulker.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(SILVERFISH, ClientSilverfish.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(SKELETON, ClientSkeleton.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(SLIME, ClientSlime.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(VEX, ClientVex.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(VINDICATOR, ClientVindicator.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(WARDEN, ClientWarden.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(WITCH, ClientWitch.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(ZOMBIE, ClientZombie.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(ZOMBIE_VILLAGER, ClientZombieVillager.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(HUSK, ClientHusk.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(DROWNED, ClientDrowned.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(BOGGED, ClientBogged.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(PARCHED, ClientParched.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(STRAY, ClientStray.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(WITHER_SKELETON, ClientWitherSkeleton.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(ENDER_DRAGON, ClientEnderDragon.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(WITHER, ClientWither.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(ANGRY_GHAST, AngryGhast.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(BATATO, Batato.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(DIAMOND_CHICKEN, DiamondChicken.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(LOVE_GOLEM, LoveGolem.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(MEGA_SPUD, MegaSpud.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(MOON_COW, MoonCow.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(NERD_CREEPER, NerdCreeper.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(PINK_WITHER, PinkWither.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(PLAGUEWHALE_SLAB, PlaguewhaleSlab.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(POISONOUS_POTATO_ZOMBIE, PoisonousPotatoZombie.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(RAY_TRACING, RayTracing.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(REDSTONE_BUG, RedstoneBug.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(SMILING_CREEPER, SmilingCreeper.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(TOXIFIN_SLAB, ToxifinSlab.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(POTATO_HUSK, PotatoHusk.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(HEAD, Head.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(TRAITOR, Traitor.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(DUMBO_OCTOPUS, DumboOctopus.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(KOI, Koi.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(STINGRAY, Stingray.createAttributes().build());
-
-        PetsSounds.initialize();
+    public static void agentmain(String string, Instrumentation instrumentation) {
 
         //DuckSpawns.addDuckSpawn();
 

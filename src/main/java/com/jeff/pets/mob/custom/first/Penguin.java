@@ -105,15 +105,15 @@ public class Penguin extends AbstractPet {
     }
 
     protected SoundEvent getAmbientSound() {
-        return PetsSounds.PENGUIN_AMBIENT;
+        return SoundEvents.CHICKEN_STEP.value();
     }
 
     protected SoundEvent getHurtSound(final @NotNull DamageSource source) {
-        return PetsSounds.PENGUIN_AMBIENT;
+        return SoundEvents.CHICKEN_STEP.value();
     }
 
     protected SoundEvent getDeathSound() {
-        return PetsSounds.PENGUIN_AMBIENT;
+        return SoundEvents.CHICKEN_STEP.value();
     }
 
     protected void playStepSound(final @NotNull BlockPos pos, final @NotNull BlockState blockState) {
@@ -247,7 +247,7 @@ public class Penguin extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level().playLocalSound(this, PetsSounds.PENGUIN_AMBIENT, SoundSource.NEUTRAL, 1.0f, 1.0f);
+            level().playLocalSound(this, SoundEvents.CHICKEN_STEP.value(), SoundSource.NEUTRAL, 1.0f, 1.0f);
         }
     }
 

@@ -30,7 +30,7 @@
     ]
   },
   "mixins": [
-    "pets.mixins.json",
+    "pets.client.mixins.json",
     {
       "config": "pets.client.mixins.json",
       "environment": "client"
