@@ -1,8 +1,5 @@
 package com.jeff.pets.client.mixin.client;
 
-import com.jeff.pets.client.Central;
-import net.minecraft.client.multiplayer.ClientPacketListener;
-import net.minecraft.network.protocol.game.ClientboundLoginPacket;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;

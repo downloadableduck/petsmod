@@ -23,8 +23,6 @@ public class LayerDefinitionsDelegate {
             initialized = true;
         }
 
-        System.out.println("[Agent] Appending custom layers to ImmutableMap.Builder...");
-
         ModelLayersAccessor.CUSTOM_PROVIDERS.forEach((location, provider) -> {
             if (location == null || provider == null) return;
 
@@ -32,19 +30,16 @@ public class LayerDefinitionsDelegate {
                 LayerDefinition definition = provider.createLayerDefinition();
                 if (definition != null) {
                     builder.put(location, definition);
-                    System.out.println("[Agent] Successfully added layer to builder: " + location);
                 } else {
-                    System.err.println("[Agent] Provider returned null for " + location + ", using fallback.");
                     builder.put(location, createFallback());
                 }
             } catch (Throwable t) {
-                System.err.println("[Agent] Error building layer for " + location + ", using fallback.");
                 t.printStackTrace();
                 builder.put(location, createFallback());
             }
         });
 
-        return builder; // Hand the builder back so .build() can run cleanly
+        return builder;
     }
 
     private static LayerDefinition createFallback() {

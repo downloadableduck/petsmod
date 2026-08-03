@@ -32,7 +32,6 @@ public class ClientTickMixin {
 
                         InsnList toInject = new InsnList();
 
-                        // Call static method: PetsClientInitializer.registerRenderers()
                         toInject.add(new MethodInsnNode(
                                 Opcodes.INVOKESTATIC,
                                 "com/jeff/pets/client/PetsClientInitializer",
@@ -41,8 +40,15 @@ public class ClientTickMixin {
                                 false
                         ));
 
+                        toInject.add(new MethodInsnNode(
+                                Opcodes.INVOKESTATIC,
+                                "com/jeff/pets/PetsInitializer",
+                                "onInitialize",
+                                "()V",
+                                false
+                        ));
+
                         method.instructions.insertBefore(insn, toInject);
-                        System.out.println("[Agent] Injected PetsClientInitializer.registerRenderers() into Minecraft.<init>");
                     }
                 }
 

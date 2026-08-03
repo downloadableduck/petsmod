@@ -14,17 +14,14 @@ public class EntityRenderersTransformer {
         reader.accept(classNode, 0);
 
         for (MethodNode method : classNode.methods) {
-            // Target createEntityRenderers(Context context)
             if ("createEntityRenderers".equals(method.name)) {
                 for (AbstractInsnNode insn : method.instructions.toArray()) {
                     if (insn.getOpcode() == Opcodes.ARETURN) {
 
                         InsnList toInject = new InsnList();
 
-                        // ALOAD 0 (Context parameter)
                         toInject.add(new VarInsnNode(Opcodes.ALOAD, 0));
 
-                        // Call EntityRenderersDelegate.appendCustomRenderers(Map vanillaMap, Context context)
                         toInject.add(new MethodInsnNode(
                                 Opcodes.INVOKESTATIC,
                                 "com/jeff/pets/client/mixin/client/EntityRenderersDelegate",
@@ -34,7 +31,6 @@ public class EntityRenderersTransformer {
                         ));
 
                         method.instructions.insertBefore(insn, toInject);
-                        System.out.println("[Agent] Injected renderer hook into EntityRenderers.createEntityRenderers()");
                     }
                 }
                 break;

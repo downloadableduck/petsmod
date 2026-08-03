@@ -1,37 +1,32 @@
 package com.jeff.pets;
 
 import com.jeff.pets.client.Central;
-import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.client.mixin.client.*;
-import com.jeff.pets.client.rendering.custom.first.duck.DuckRenderer;
-import com.jeff.pets.client.rendering.custom.first.penguin.PenguinModel;
-import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.geom.EntityModelSet;
-import net.minecraft.client.renderer.MapRenderer;
-import net.minecraft.client.renderer.block.BlockModelResolver;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.resources.MapTextureManager;
-import net.minecraft.client.resources.model.EquipmentAssetManager;
-import net.minecraft.core.MappedRegistry;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.packs.FilePackResources;
+import net.minecraft.server.packs.PackLocationInfo;
+import net.minecraft.server.packs.PackSelectionConfig;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.repository.KnownPack;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
 
 import java.io.File;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.lang.instrument.Instrumentation;
+import java.lang.reflect.Method;
+import java.nio.file.Path;
 import java.security.ProtectionDomain;
-
-import static com.jeff.pets.PetsInitializer.ALLAY;
-import static com.mojang.text2speech.Narrator.LOGGER;
+import java.util.Optional;
 
 public class Agent {
 
     public static void premain(String agentArgs, Instrumentation inst) {
-        Agent.injectRenderersLive();
+        // Safe worker polling via reflection so premain doesn't crash on startup
+        Agent.checkforNullObjects();
+
         inst.addTransformer(new ClassFileTransformer() {
             @Override
             public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
@@ -49,21 +44,21 @@ public class Agent {
                 }
                 if ("net/minecraft/commands/Commands".equals(className)) {
                     return CommandManagerMixin.transform(classfileBuffer);
-                } if ("net/minecraft/world/entity/EntityType".equals(className)) {
+                }
+                if ("net/minecraft/world/entity/EntityType".equals(className)) {
                     return ASMBootstrap.transform(classfileBuffer);
-                } if ("net/minecraft/client/renderer/entity/EntityRenderers".equals(className)) {
+                }
+                if ("net/minecraft/client/renderer/entity/EntityRenderers".equals(className)) {
                     return EntityRenderersTransformer.transform(classfileBuffer);
-                } if ("net/minecraft/client/model/geom/ModelLayers".equals(className)) {
+                }
+                if ("net/minecraft/client/model/geom/ModelLayers".equals(className)) {
                     return ModelLayersTransformer.transform(classfileBuffer);
                 }
                 if ("net/minecraft/client/model/geom/LayerDefinitions".equals(className)) {
-                    System.out.println("[Agent] FOUND LayerDefinitions! Transforming...");
                     return LayerDefinitionsTransformer.transform(classfileBuffer);
                 }
                 if ("net/minecraft/client/renderer/entity/EntityRenderDispatcher".equals(className)) {
-                    byte[] buffer = EntityRenderDispatcherTransformer.transform(classfileBuffer);
-                    buffer = ShouldRenderTransformer.transform(buffer);
-                    return ExtractEntityTransformer.transform(buffer);
+                    return EntityRenderDispatcherTransformer.transform(classfileBuffer);
                 }
                 return ClassFileTransformer.super.transform(loader, className, classBeingRedefined, protectionDomain, classfileBuffer);
             }
@@ -73,49 +68,53 @@ public class Agent {
             for (Class<?> clazz : inst.getAllLoadedClasses()) {
                 if (clazz.getName().equals("net.minecraft.client.renderer.entity.EntityRenderDispatcher")
                         || clazz.getName().equals("net.minecraft.client.model.geom.LayerDefinitions")) {
-                    LOGGER.info("[Agent] Triggering retransform for: " + clazz.getName());
                     inst.retransformClasses(clazz);
                 }
             }
         } catch (Throwable t) {
-            LOGGER.error("[Agent] Failed to retransform loaded classes:", t);
+            // Silently ignore if classes aren't loaded yet
         }
     }
 
-    public static void injectRenderersLive() {
+    public static void checkforNullObjects() {
         Thread thread = new Thread(() -> {
-            System.out.println("[Agent] Waiting for Minecraft client instance to initialize...");
-
-            // 1. Poll until Minecraft.getInstance() is created
-            while (Minecraft.getInstance() == null) {
+            Class<?> minecraftClass = null;
+            while (minecraftClass == null) {
                 try {
-                    Thread.sleep(100); // Poll every 100ms
-                } catch (InterruptedException ignored) {}
+                    minecraftClass = Class.forName("net.minecraft.client.Minecraft");
+                } catch (ClassNotFoundException ignored) {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ignored2) {}
+                }
             }
-        Minecraft.getInstance().execute(() -> {
             try {
-                Central.checkForNullObjects();
-                var dispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
-                Minecraft minecraft = Minecraft.getInstance();
-                EntityRendererProvider.Context context = new EntityRendererProvider.Context(minecraft.getEntityRenderDispatcher(), new BlockModelResolver(minecraft.getModelManager()), minecraft.getItemModelResolver(), new MapRenderer(minecraft.getAtlasManager(), new MapTextureManager(minecraft.getTextureManager())), minecraft.getResourceManager(), EntityModelSet.vanilla(), new EquipmentAssetManager(), minecraft.getAtlasManager(), minecraft.font, minecraft.playerSkinRenderCache());
+                Method getInstanceMethod = minecraftClass.getMethod("getInstance");
+                Method executeMethod = minecraftClass.getMethod("execute", Runnable.class);
 
-                // Access the 'renderers' field reflectively
-                var field = dispatcher.getClass().getDeclaredField("renderers");
-                field.setAccessible(true);
+                Object mcInstance = null;
+                while (mcInstance == null) {
+                    mcInstance = getInstanceMethod.invoke(null);
+                    if (mcInstance == null) {
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException ignored) {}
+                    }
+                }
 
-                @SuppressWarnings("unchecked")
-                var currentMap = new java.util.HashMap<>((java.util.Map<EntityType<?>, EntityRenderer<?, ?>>) field.get(dispatcher));
+                executeMethod.invoke(mcInstance, (Runnable) () -> {
+                    try {
+                        Central.checkForNullObjects();
+                    } catch (Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
 
-                // Put your custom entity renderers into currentMap
-                currentMap.put(PetsInitializer.DUCK, new DuckRenderer(context));
-
-                field.set(dispatcher, java.util.Map.copyOf(currentMap));
-                LOGGER.info("[Agent] Successfully injected live entity renderers!");
             } catch (Throwable t) {
-                LOGGER.error("[Agent] Failed to inject renderers live:", t);
+                t.printStackTrace();
             }
-        });
-    }, "agent");
+        }, "agent");
+
         thread.setDaemon(true);
         thread.start();
     }

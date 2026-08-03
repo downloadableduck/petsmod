@@ -1,5 +1,7 @@
 package com.jeff.pets;
 
+import com.jeff.pets.client.Central;
+import com.jeff.pets.client.PetsConfig;
 import com.jeff.pets.mob.aprilfools.*;
 import com.jeff.pets.mob.custom.aprilfools.Head;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
@@ -13,18 +15,30 @@ import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import com.jeff.pets.mob.vanilla.hostile.*;
 import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.packs.*;
+import net.minecraft.server.packs.repository.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.lang.instrument.Instrumentation;
+import java.lang.reflect.Field;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.util.*;
 
 /**
  * Registers all of the blocks and entities used in this mod, as well as providing the {@link #MOD_ID}.
@@ -1116,14 +1130,171 @@ public class PetsInitializer {
                     .build(STINGRAY_KEY)
     );
 
+    public static void onInitialize() {
+        try {
+            File jar = new File(Agent.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+
+            Path path;
+            if (jar.isDirectory()) {
+                path = new File(jar.getParentFile().getAbsolutePath().replace("\\classes\\java", ""), "resources/main").toPath();
+            } else {
+                FileSystem zipFs = FileSystems.newFileSystem(jar.toPath(), (ClassLoader) null);
+                path = zipFs.getPath("/");
+            }
+
+            PackLocationInfo locationInfo = new PackLocationInfo(
+                    "pets-mod-resources",
+                    Component.literal("PetsMod Resources"),
+                    PackSource.BUILT_IN,
+                    Optional.empty()
+            );
+
+            Pack pack = Pack.readMetaAndCreate(
+                    locationInfo,
+                    new PathPackResources.PathResourcesSupplier(path),
+                    PackType.CLIENT_RESOURCES,
+                    new PackSelectionConfig(true, Pack.Position.TOP, false)
+            );
+
+            if (pack != null) {
+                PackRepository repo = Minecraft.getInstance().getResourcePackRepository();
+
+                Field sourcesField = PackRepository.class.getDeclaredField("sources");
+                sourcesField.setAccessible(true);
+
+                Set<RepositorySource> sources = (Set<RepositorySource>) sourcesField.get(repo);
+                Set<RepositorySource> mutableSources = new HashSet<>(sources);
+                mutableSources.add((consumer) -> consumer.accept(pack));
+                sourcesField.set(repo, mutableSources);
+                repo.reload();
+
+                List<String> selected = new ArrayList<>(repo.getSelectedIds());
+                if (!selected.contains("pets-mod-resources")) {
+                    selected.add("pets-mod-resources");
+                }
+                repo.setSelected(selected);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Registers the entities' attributes. Warns about the call to register not working, but it
      * ends up working fine in-game - likely a mixup in either the Fabric API or IntelliJ.
      */
     public static void agentmain(String string, Instrumentation instrumentation) {
+        AutoConfig.register(PetsConfig.class, GsonConfigSerializer::new);
+        Central.CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
+
+        Central.checkForNullObjects();
+        Central.createPetsList();
+        Central.updateSuggestions(Minecraft.getInstance());
 
         //DuckSpawns.addDuckSpawn();
 
         LOGGER.info("quack");
+    }
+
+    public static void registerAttributes(Map map) {
+        map.put(RACOON, Racoon.createAttributes().build());
+        map.put(DUCK, Duck.createAttributes().build());
+        map.put(PENGUIN, Penguin.createAttributes().build());
+        map.put(SHEEP, ClientSheep.createAttributes().build());
+        map.put(CAT, ClientCat.createAttributes().build());
+        map.put(ALLAY, ClientAllay.createAttributes().build());
+        map.put(ARMADILLO, ClientArmadillo.createAttributes().build());
+        map.put(AXOLOTL, ClientAxolotl.createAttributes().build());
+        map.put(BAT, ClientBat.createAttributes().build());
+        map.put(CAMEL, ClientCamel.createAttributes().build());
+        map.put(CHICKEN, ClientChicken.createAttributes().build());
+        map.put(COD, ClientCod.createAttributes().build());
+        map.put(COPPER_GOLEM, ClientCopperGolem.createAttributes().build());
+        map.put(COW, ClientCow.createAttributes().build());
+        map.put(DONKEY, ClientDonkey.createAttributes().build());
+        map.put(FROG, ClientFrog.createAttributes().build());
+        map.put(HORSE, ClientHorse.createAttributes().build());
+        map.put(MOOSHROOM, ClientMooshroom.createAttributes().build());
+        map.put(PARROT, ClientParrot.createAttributes().build());
+        map.put(PIG, ClientPig.createAttributes().build());
+        map.put(RABBIT, ClientRabbit.createAttributes().build());
+        map.put(SALMON, ClientSalmon.createAttributes().build());
+        map.put(SNIFFER, ClientSniffer.createAttributes().build());
+        map.put(SNOW_GOLEM, ClientSnowGolem.createAttributes().build());
+        map.put(SQUID, ClientSquid.createAttributes().build());
+        map.put(STRIDER, ClientStrider.createAttributes().build());
+        map.put(TADPOLE, ClientTadpole.createAttributes().build());
+        map.put(TROPICAL_FISH, ClientTropicalFish.createAttributes().build());
+        map.put(TURTLE, ClientTurtle.createAttributes().build());
+        map.put(VILLAGER, ClientVillager.createAttributes().build());
+        map.put(WANDERING_TRADER, ClientWanderingTrader.createAttributes().build());
+        map.put(BEE, ClientBee.createAttributes().build());
+        map.put(CAVE_SPIDER, ClientCaveSpider.createAttributes().build());
+        map.put(DOLPHIN, ClientDolphin.createAttributes().build());
+        map.put(ENDERMAN, ClientEnderman.createAttributes().build());
+        map.put(FOX, ClientFox.createAttributes().build());
+        map.put(GOAT, ClientGoat.createAttributes().build());
+        map.put(IRON_GOLEM, ClientIronGolem.createAttributes().build());
+        map.put(LLAMA, ClientLlama.createAttributes().build());
+        map.put(NAUTILUS, ClientNautilus.createAttributes().build());
+        map.put(PANDA, ClientPanda.createAttributes().build());
+        map.put(PIGLIN, ClientWanderingTrader.createAttributes().build());
+        map.put(POLAR_BEAR, ClientPolarBear.createAttributes().build());
+        map.put(PUFFERFISH, ClientPufferFish.createAttributes().build());
+        map.put(SPIDER, ClientSpider.createAttributes().build());
+        map.put(WOLF, ClientWolf.createAttributes().build());
+        map.put(BLAZE, ClientBlaze.createAttributes().build());
+        map.put(BREEZE, ClientBreeze.createAttributes().build());
+        map.put(CREAKING, ClientCreaking.createAttributes().build());
+        map.put(CREEPER, ClientCreeper.createAttributes().build());
+        map.put(ELDER_GUARDIAN_COOKIE, ClientElderGuardian.createAttributes().build());
+        map.put(ENDERMITE, ClientEndermite.createAttributes().build());
+        map.put(EVOKER, ClientEvoker.createAttributes().build());
+        map.put(GHAST, ClientGhast.createAttributes().build());
+        map.put(HAPPY_GHAST, ClientHappyGhast.createAttributes().build());
+        map.put(GUARDIAN, ClientGuardian.createAttributes().build());
+        map.put(HOGLIN, ClientHoglin.createAttributes().build());
+        map.put(MAGMA_CUBE, ClientMagmaCube.createAttributes().build());
+        map.put(PHANTOM, ClientPhantom.createAttributes().build());
+        map.put(PILLAGER, ClientPillager.createAttributes().build());
+        map.put(RAVAGER, ClientRavager.createAttributes().build());
+        map.put(SHULKER, ClientShulker.createAttributes().build());
+        map.put(SILVERFISH, ClientSilverfish.createAttributes().build());
+        map.put(SKELETON, ClientSkeleton.createAttributes().build());
+        map.put(SLIME, ClientSlime.createAttributes().build());
+        map.put(VEX, ClientVex.createAttributes().build());
+        map.put(VINDICATOR, ClientVindicator.createAttributes().build());
+        map.put(WARDEN, ClientWarden.createAttributes().build());
+        map.put(WITCH, ClientWitch.createAttributes().build());
+        map.put(ZOMBIE, ClientZombie.createAttributes().build());
+        map.put(ZOMBIE_VILLAGER, ClientZombieVillager.createAttributes().build());
+        map.put(HUSK, ClientHusk.createAttributes().build());
+        map.put(DROWNED, ClientDrowned.createAttributes().build());
+        map.put(BOGGED, ClientBogged.createAttributes().build());
+        map.put(PARCHED, ClientParched.createAttributes().build());
+        map.put(STRAY, ClientStray.createAttributes().build());
+        map.put(WITHER_SKELETON, ClientWitherSkeleton.createAttributes().build());
+        map.put(ENDER_DRAGON, ClientEnderDragon.createAttributes().build());
+        map.put(WITHER, ClientWither.createAttributes().build());
+        map.put(ANGRY_GHAST, AngryGhast.createAttributes().build());
+        map.put(BATATO, Batato.createAttributes().build());
+        map.put(DIAMOND_CHICKEN, DiamondChicken.createAttributes().build());
+        map.put(LOVE_GOLEM, LoveGolem.createAttributes().build());
+        map.put(MEGA_SPUD, MegaSpud.createAttributes().build());
+        map.put(MOON_COW, MoonCow.createAttributes().build());
+        map.put(NERD_CREEPER, NerdCreeper.createAttributes().build());
+        map.put(PINK_WITHER, PinkWither.createAttributes().build());
+        map.put(PLAGUEWHALE_SLAB, PlaguewhaleSlab.createAttributes().build());
+        map.put(POISONOUS_POTATO_ZOMBIE, PoisonousPotatoZombie.createAttributes().build());
+        map.put(RAY_TRACING, RayTracing.createAttributes().build());
+        map.put(REDSTONE_BUG, RedstoneBug.createAttributes().build());
+        map.put(SMILING_CREEPER, SmilingCreeper.createAttributes().build());
+        map.put(TOXIFIN_SLAB, ToxifinSlab.createAttributes().build());
+        map.put(POTATO_HUSK, PotatoHusk.createAttributes().build());
+        map.put(HEAD, Head.createAttributes().build());
+        map.put(TRAITOR, Traitor.createAttributes().build());
+        map.put(DUMBO_OCTOPUS, DumboOctopus.createAttributes().build());
+        map.put(KOI, Koi.createAttributes().build());
+        map.put(STINGRAY, Stingray.createAttributes().build());
     }
 }

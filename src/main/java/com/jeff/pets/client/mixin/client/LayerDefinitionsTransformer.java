@@ -12,12 +12,9 @@ public class LayerDefinitionsTransformer {
         ClassNode classNode = new ClassNode();
         reader.accept(classNode, 0);
 
-        boolean hooked = false;
-
         for (MethodNode method : classNode.methods) {
             if ("createRoots".equals(method.name) && "()Ljava/util/Map;".equals(method.desc)) {
                 for (AbstractInsnNode insn : method.instructions.toArray()) {
-                    // Intercept ImmutableMap.Builder.build()
                     if (insn.getOpcode() == Opcodes.INVOKEVIRTUAL) {
                         MethodInsnNode minsn = (MethodInsnNode) insn;
                         if ("com/google/common/collect/ImmutableMap$Builder".equals(minsn.owner)
@@ -25,8 +22,6 @@ public class LayerDefinitionsTransformer {
 
                             InsnList toInject = new InsnList();
 
-                            // Stack top currently has: ImmutableMap.Builder
-                            // Pass the Builder into LayerDefinitionsDelegate.populateBuilder(Builder)
                             toInject.add(new MethodInsnNode(
                                     Opcodes.INVOKESTATIC,
                                     "com/jeff/pets/client/mixin/client/LayerDefinitionsDelegate",
@@ -36,17 +31,11 @@ public class LayerDefinitionsTransformer {
                             ));
 
                             method.instructions.insertBefore(insn, toInject);
-                            hooked = true;
-                            System.out.println("[Agent] Intercepted result.build() inside LayerDefinitions.createRoots()!");
                             break;
                         }
                     }
                 }
             }
-        }
-
-        if (!hooked) {
-            System.err.println("[Agent] FAILED to intercept result.build() in createRoots()");
         }
 
         ClassWriter writer = new ClassWriter(reader, ClassWriter.COMPUTE_FRAMES);

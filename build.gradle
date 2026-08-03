@@ -12,7 +12,7 @@ version = project.mod_version
 group = project.maven_group
 
 base {
-    archivesName = project.archives_base_name + "-" + project.mod_version + "-" + project.minecraft_version + "+" + project.build
+    archivesName = project.archives_base_name + "-" + project.mod_version + "-" + project.minecraft_version + "-java-agent"
 }
 
 repositories {
@@ -34,7 +34,6 @@ dependencies {
     implementation 'org.ow2.asm:asm-tree:9.10'
     implementation 'me.shedaniel.cloth:basic-math:0.6.1'
     implementation("blue.endless:jankson:${rootProject.jankson_version}")
-    implementation 'com.google.guava:guava:33.6.0-jre'
     implementation("com.moandjiezana.toml:toml4j:${rootProject.toml4j_version}")
 }
 
@@ -95,20 +94,19 @@ jar {
     loaders = ["fabric"]
 }*/
 
-tasks.named('jar') {
-    archiveBaseName = project.archives_base_name
-    archiveVersion = project.mod_version
-    archiveClassifier = project.minecraft_version + "+" + project.build
-}
-
 tasks.withType(JavaCompile).configureEach {
     options.compilerArgs << "-Xmaxerrs" << "5000"
 }
 
 shadowJar {
-    //archiveClassifier.set('java-agent')
-
-    exclude 'org/spongepowered/asm/service/mojang/MixinServiceLaunchWrapper*.class'
+    archiveClassifier.set('')
+    relocate 'org.objectweb.asm', 'com.jeff.pets.libs.asm'
+    relocate 'org.objectweb.asm.commons', 'com.jeff.pets.libs.asm.common'
+    relocate 'org.objectweb.asm.tree', 'com.jeff.pets.libs.asm.tree'
+    relocate 'blue.endless.jankson', 'com.jeff.pets.libs.jankson'
+    relocate 'com.moandjiezana.toml', 'com.jeff.pets.libs.toml'
+    relocate 'me.shedaniel.cloth.basic-math', 'com.jeff.pets.libs.cloth-basic-math'
+    relocate 'com.google.errorprone.annotations', 'com.jeff.pets.libs.errorprone.annotations'
 
     manifest {
         attributes(
@@ -134,6 +132,7 @@ tasks.register('runClient', JavaExec) {
     workingDir = file('run')
 
     jvmArgs "-javaagent:${tasks.shadowJar.archiveFile.get().asFile.absolutePath}"
+    System.out.println("-javaagent:${tasks.shadowJar.archiveFile.get().asFile.absolutePath}")
 
     doFirst {
         def classesDir = sourceSets.main.output.classesDirs.asPath
@@ -173,4 +172,8 @@ tasks.register('mods', Copy) {
             }
         }
     }
+}
+
+tasks.withType(Jar).configureEach {
+    archiveVersion = ''
 }

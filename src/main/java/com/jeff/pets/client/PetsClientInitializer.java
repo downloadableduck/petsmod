@@ -201,8 +201,6 @@ public class PetsClientInitializer {
      */
     public static void registerRenderers() {
 
-        System.out.println("registering renderers");
-
         createKeyBinding();
 
         ModelLayersAccessor.registerModelLayer(HeadModel.LAYER_LOCATION, HeadModel::getTexturedModelData);

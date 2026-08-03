@@ -13,7 +13,6 @@ public class EntityRenderDispatcherTransformer {
         reader.accept(classNode, 0);
 
         for (MethodNode method : classNode.methods) {
-            // Hook inside onResourceManagerReload
             if ("onResourceManagerReload".equals(method.name)) {
                 for (AbstractInsnNode insn : method.instructions.toArray()) {
                     if (insn.getOpcode() == Opcodes.PUTFIELD) {
@@ -21,8 +20,6 @@ public class EntityRenderDispatcherTransformer {
                         if ("renderers".equals(finsn.name)) {
                             InsnList toInject = new InsnList();
 
-                            // Stack top has the Map returned by createEntityRenderers
-                            // Pass it through appendCustomRenderers
                             toInject.add(new MethodInsnNode(
                                     Opcodes.INVOKESTATIC,
                                     "com/jeff/pets/client/mixin/client/EntityRenderDispatcherDelegate",
@@ -32,7 +29,6 @@ public class EntityRenderDispatcherTransformer {
                             ));
 
                             method.instructions.insertBefore(insn, toInject);
-                            System.out.println("[Agent] Successfully hooked EntityRenderDispatcher.renderers field assignment!");
                         }
                     }
                 }
@@ -44,7 +40,6 @@ public class EntityRenderDispatcherTransformer {
                         if ("renderers".equals(finsn.name)) {
                             InsnList toInject = new InsnList();
 
-                            // Merge vanilla map with custom map before assignment
                             toInject.add(new MethodInsnNode(
                                     Opcodes.INVOKESTATIC,
                                     "com/jeff/pets/client/mixin/client/EntityRenderDispatcherDelegate",
