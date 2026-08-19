@@ -23,10 +23,11 @@
     ],
     "client": [
       "com.jeff.pets.PetsClientInitializer",
-      "com.jeff.pets.Central"
+      "com.jeff.pets.Central",
+      "com.jeff.pets.network.PetsNetworked"
     ],
     "modmenu": [
-      "com.jeff.pets.PetsConfigScreen"
+      "com.jeff.pets.client.ModMenuEntry"
     ]
   },
   "mixins": [

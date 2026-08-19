@@ -7,3 +7,5 @@ mutable field net/minecraft/client/gui/components/LogoRenderer MINECRAFT_EDITION
 mutable field net/minecraft/client/gui/components/LogoRenderer EASTER_EGG_LOGO Lnet/minecraft/resources/Identifier;
 accessible field net/minecraft/client/resources/SplashManager SPLASHES_LOCATION Lnet/minecraft/resources/Identifier;
 mutable field net/minecraft/client/resources/SplashManager SPLASHES_LOCATION Lnet/minecraft/resources/Identifier;
+accessible method net/minecraft/client/gui/components/EditBox onValueChange (Ljava/lang/String;)V
+extendable method net/minecraft/client/gui/components/EditBox onValueChange (Ljava/lang/String;)V
