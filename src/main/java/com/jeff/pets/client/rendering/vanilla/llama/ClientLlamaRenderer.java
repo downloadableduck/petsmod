@@ -10,19 +10,20 @@ public class ClientLlamaRenderer extends PetRenderer<ClientLlama, ClientLlamaMod
 
     public String llamaTexturePath;
 
-    public ClientLlamaRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+    public ClientLlamaRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientLlamaModel(0), 0.75F);
     }
 
     @Override
-    protected void scale(ClientLlama state, float f) {
+    public void preRenderCallback(ClientLlama state, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
+        
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ClientLlama livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(ClientLlama livingEntityRenderState) {
         if (CONFIG.llamaSkin.equals("brown")) {
             llamaTexturePath = "textures/entity/llama/brown.png";
         } else if (CONFIG.llamaSkin.equals("creamy")) {

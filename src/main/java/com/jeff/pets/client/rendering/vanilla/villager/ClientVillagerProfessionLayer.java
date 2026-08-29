@@ -1,17 +1,15 @@
 package com.jeff.pets.client.rendering.vanilla.villager;
 
 import com.jeff.pets.mob.vanilla.passive.ClientVillager;
-import net.minecraft.client.renderer.entity.IEntityRenderer;
+import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.client.renderer.entity.model.VillagerModel;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-//villager layer is blue lmao
-public class ClientVillagerProfessionLayer extends LayerRenderer<ClientVillager, VillagerModel<ClientVillager>> {
+public class ClientVillagerProfessionLayer implements LayerRenderer<ClientVillager> {
 
     public static final ResourceLocation ARMORER_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/armorer.png");
     public static final ResourceLocation BUTCHER_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/butcher.png");
@@ -28,49 +26,22 @@ public class ClientVillagerProfessionLayer extends LayerRenderer<ClientVillager,
     public static final ResourceLocation TOOLSMITH_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/toolsmith.png");
     public static final ResourceLocation WEAPONSMITH_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/weaponsmith.png");
 
-    public ClientVillagerProfessionLayer(IEntityRenderer<ClientVillager, VillagerModel<ClientVillager>> renderLayerParent) {
-        super(renderLayerParent);
+    private final RenderLivingBase<ClientVillager> renderer;
+
+    public ClientVillagerProfessionLayer(RenderLivingBase<ClientVillager> renderLayerParent) {
+        this.renderer = renderLayerParent;
     }
 
     @Override
     public void render(ClientVillager villager, float f, float g, float h, float i, float j, float k, float l) {
-        com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
-        com.mojang.blaze3d.platform.GlStateManager.scalef(1.001f, 1.001f, 1.001f);
-        if (Objects.equals(CONFIG.villagerSkin, "armorer")) {
-            this.bindTexture(ARMORER_LOCATION);
-        } else if (Objects.equals(CONFIG.villagerSkin, "butcher")) {
-            bindTexture(BUTCHER_LOCATION);
-        } else if (Objects.equals(CONFIG.villagerSkin, "cartographer")) {
-            this.bindTexture(CARTOGRAPHER_LOCATION);
-        } else if (Objects.equals(CONFIG.villagerSkin, "cleric")) {
-            this.bindTexture(CLERIC_LOCATION);
-        } else if (Objects.equals(CONFIG.villagerSkin, "farmer")) {
-            this.bindTexture(FARMER_LOCATION);
-        } else if (Objects.equals(CONFIG.villagerSkin, "fisherman")) {
-            this.bindTexture(FISHERMAN_LOCATION);
-        } else if (Objects.equals(CONFIG.villagerSkin, "fletcher")) {
-            this.bindTexture(FLETCHER_LOCATION);
-        } else if (Objects.equals(CONFIG.villagerSkin, "leatherworker")) {
-            this.bindTexture(LEATHERWORKER_LOCATION);
-        } else if (Objects.equals(CONFIG.villagerSkin, "librarian")) {
-            this.bindTexture(LIBRARIAN_LOCATION);
-        } else if (Objects.equals(CONFIG.villagerSkin, "mason")) {
-            this.bindTexture(MASON_LOCATION);
-        } else if (Objects.equals(CONFIG.villagerSkin, "nitwit")) {
-            this.bindTexture(NITWIT_LOCATION);
-        } else if (Objects.equals(CONFIG.villagerSkin, "shepherd")) {
-            this.bindTexture(SHEPHERD_LOCATION);
-        } else if (Objects.equals(CONFIG.villagerSkin, "toolsmith")) {
-            this.bindTexture(TOOLSMITH_LOCATION);
-        } else if (Objects.equals(CONFIG.villagerSkin, "weaponsmith")) {
-            this.bindTexture(WEAPONSMITH_LOCATION);
-        }
-        this.getParentModel().render(villager, f, g, i, j, k, l);
-        com.mojang.blaze3d.platform.GlStateManager.popMatrix();
+        net.minecraft.client.renderer.GlStateManager.pushMatrix();
+        net.minecraft.client.renderer.GlStateManager.scalef(1.001f, 1.001f, 1.001f);
+        this.renderer.getMainModel().render(villager, f, g, i, j, k, l);
+        net.minecraft.client.renderer.GlStateManager.popMatrix();
     }
 
     @Override
-    public boolean colorsOnDamage() {
+    public boolean shouldCombineTextures() {
         return false;
     }
 }

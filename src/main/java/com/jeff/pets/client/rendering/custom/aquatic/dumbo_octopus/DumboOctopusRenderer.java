@@ -13,12 +13,12 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
     float direction = 1;
     float speed = 0.5f;
 
-    public DumboOctopusRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+    public DumboOctopusRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new DumboOctopusModel(), 0.5f);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(DumboOctopus state) {
+    public ResourceLocation getEntityTexture(DumboOctopus state) {
         String path;
         String yellow = "textures/entity/dumbo_octopus/yellow.png";
         String red = "textures/entity/dumbo_octopus/red.png";
@@ -57,6 +57,6 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
         if (i >= 90 || i <= 45) {
             direction *= -1;
         }
-        octopus.tentacleAngle = (float) (i % 360);
+        octopus.tentacleAngle = i % 360;
     }
 }

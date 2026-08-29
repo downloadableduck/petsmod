@@ -1,110 +1,111 @@
 package com.jeff.pets.client.rendering.vanilla.horse;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.entity.model.HorseModel;
-import net.minecraft.client.renderer.entity.model.RendererModel;
-import net.minecraft.entity.LivingEntity;
+import com.jeff.pets.client.Math2;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.model.ModelBase;
+import net.minecraft.client.renderer.entity.model.ModelRenderer;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.MathHelper;
 
-public class ClientHorseModel<T extends LivingEntity> extends EntityModel<T> {
-    protected final RendererModel field_3305;
-    protected final RendererModel field_3307;
-    private final RendererModel field_3306;
-    private final RendererModel field_3303;
-    private final RendererModel field_3302;
-    private final RendererModel field_3308;
-    private final RendererModel field_3300;
-    private final RendererModel[] field_3304;
-    private final RendererModel[] field_3301;
+public class ClientHorseModel extends ModelBase {
+    protected final ModelRenderer field_3305;
+    protected final ModelRenderer field_3307;
+    private final ModelRenderer field_3306;
+    private final ModelRenderer field_3303;
+    private final ModelRenderer field_3302;
+    private final ModelRenderer field_3308;
+    private final ModelRenderer field_3300;
+    private final ModelRenderer[] field_3304;
+    private final ModelRenderer[] field_3301;
 
     public ClientHorseModel(float f) {
-        this.texWidth = 64;
-        this.texHeight = 64;
-        this.field_3305 = new RendererModel(this, 0, 32);
+        this.textureWidth = 64;
+        this.textureHeight = 64;
+        this.field_3305 = new ModelRenderer(this, 0, 32);
         this.field_3305.addBox(-5.0F, -8.0F, -17.0F, 10, 10, 22, 0.05F);
-        this.field_3305.setPos(0.0F, 11.0F, 5.0F);
-        this.field_3307 = new RendererModel(this, 0, 35);
+        this.field_3305.setRotationPoint(0.0F, 11.0F, 5.0F);
+        this.field_3307 = new ModelRenderer(this, 0, 35);
         this.field_3307.addBox(-2.05F, -6.0F, -2.0F, 4, 12, 7);
-        this.field_3307.xRot = ((float) Math.PI / 6F);
-        RendererModel RendererModel = new RendererModel(this, 0, 13);
-        RendererModel.addBox(-3.0F, -11.0F, -2.0F, 6, 5, 7, f);
-        RendererModel RendererModel2 = new RendererModel(this, 56, 36);
-        RendererModel2.addBox(-1.0F, -11.0F, 5.01F, 2, 16, 2, f);
-        RendererModel RendererModel3 = new RendererModel(this, 0, 25);
-        RendererModel3.addBox(-2.0F, -11.0F, -7.0F, 4, 5, 5, f);
-        this.field_3307.addChild(RendererModel);
-        this.field_3307.addChild(RendererModel2);
-        this.field_3307.addChild(RendererModel3);
+        this.field_3307.rotateAngleX = ((float) Math.PI / 6F);
+        ModelRenderer ModelRenderer = new ModelRenderer(this, 0, 13);
+        ModelRenderer.addBox(-3.0F, -11.0F, -2.0F, 6, 5, 7, f);
+        ModelRenderer ModelRenderer2 = new ModelRenderer(this, 56, 36);
+        ModelRenderer2.addBox(-1.0F, -11.0F, 5.01F, 2, 16, 2, f);
+        ModelRenderer ModelRenderer3 = new ModelRenderer(this, 0, 25);
+        ModelRenderer3.addBox(-2.0F, -11.0F, -7.0F, 4, 5, 5, f);
+        this.field_3307.addChild(ModelRenderer);
+        this.field_3307.addChild(ModelRenderer2);
+        this.field_3307.addChild(ModelRenderer3);
         this.method_2789(this.field_3307);
-        this.field_3306 = new RendererModel(this, 48, 21);
+        this.field_3306 = new ModelRenderer(this, 48, 21);
         this.field_3306.mirror = true;
         this.field_3306.addBox(-3.0F, -1.01F, -1.0F, 4, 11, 4, f);
-        this.field_3306.setPos(4.0F, 14.0F, 7.0F);
-        this.field_3303 = new RendererModel(this, 48, 21);
+        this.field_3306.setRotationPoint(4.0F, 14.0F, 7.0F);
+        this.field_3303 = new ModelRenderer(this, 48, 21);
         this.field_3303.addBox(-1.0F, -1.01F, -1.0F, 4, 11, 4, f);
-        this.field_3303.setPos(-4.0F, 14.0F, 7.0F);
-        this.field_3302 = new RendererModel(this, 48, 21);
+        this.field_3303.setRotationPoint(-4.0F, 14.0F, 7.0F);
+        this.field_3302 = new ModelRenderer(this, 48, 21);
         this.field_3302.mirror = true;
         this.field_3302.addBox(-3.0F, -1.01F, -1.9F, 4, 11, 4, f);
-        this.field_3302.setPos(4.0F, 6.0F, -12.0F);
-        this.field_3308 = new RendererModel(this, 48, 21);
+        this.field_3302.setRotationPoint(4.0F, 6.0F, -12.0F);
+        this.field_3308 = new ModelRenderer(this, 48, 21);
         this.field_3308.addBox(-1.0F, -1.01F, -1.9F, 4, 11, 4, f);
-        this.field_3308.setPos(-4.0F, 6.0F, -12.0F);
-        this.field_3300 = new RendererModel(this, 42, 36);
+        this.field_3308.setRotationPoint(-4.0F, 6.0F, -12.0F);
+        this.field_3300 = new ModelRenderer(this, 42, 36);
         this.field_3300.addBox(-1.5F, 0.0F, 0.0F, 3, 14, 4, f);
-        this.field_3300.setPos(0.0F, -5.0F, 2.0F);
-        this.field_3300.xRot = ((float) Math.PI / 6F);
+        this.field_3300.setRotationPoint(0.0F, -5.0F, 2.0F);
+        this.field_3300.rotateAngleX = ((float) Math.PI / 6F);
         this.field_3305.addChild(this.field_3300);
-        RendererModel RendererModel4 = new RendererModel(this, 26, 0);
-        RendererModel4.addBox(-5.0F, -8.0F, -9.0F, 10, 9, 9, 0.5F);
-        this.field_3305.addChild(RendererModel4);
-        RendererModel RendererModel5 = new RendererModel(this, 29, 5);
-        RendererModel5.addBox(2.0F, -9.0F, -6.0F, 1, 2, 2, f);
-        this.field_3307.addChild(RendererModel5);
-        RendererModel RendererModel6 = new RendererModel(this, 29, 5);
-        RendererModel6.addBox(-3.0F, -9.0F, -6.0F, 1, 2, 2, f);
-        this.field_3307.addChild(RendererModel6);
-        RendererModel RendererModel7 = new RendererModel(this, 32, 2);
-        RendererModel7.addBox(3.1F, -6.0F, -8.0F, 0, 3, 16, f);
-        RendererModel7.xRot = (-(float) Math.PI / 6F);
-        this.field_3307.addChild(RendererModel7);
-        RendererModel RendererModel8 = new RendererModel(this, 32, 2);
-        RendererModel8.addBox(-3.1F, -6.0F, -8.0F, 0, 3, 16, f);
-        RendererModel8.xRot = (-(float) Math.PI / 6F);
-        this.field_3307.addChild(RendererModel8);
-        RendererModel RendererModel9 = new RendererModel(this, 1, 1);
-        RendererModel9.addBox(-3.0F, -11.0F, -1.9F, 6, 5, 6, 0.2F);
-        this.field_3307.addChild(RendererModel9);
-        RendererModel RendererModel10 = new RendererModel(this, 19, 0);
-        RendererModel10.addBox(-2.0F, -11.0F, -4.0F, 4, 5, 2, 0.2F);
-        this.field_3307.addChild(RendererModel10);
-        this.field_3304 = new RendererModel[]{RendererModel4, RendererModel5, RendererModel6, RendererModel9, RendererModel10};
-        this.field_3301 = new RendererModel[]{RendererModel7, RendererModel8};
+        ModelRenderer ModelRenderer4 = new ModelRenderer(this, 26, 0);
+        ModelRenderer4.addBox(-5.0F, -8.0F, -9.0F, 10, 9, 9, 0.5F);
+        this.field_3305.addChild(ModelRenderer4);
+        ModelRenderer ModelRenderer5 = new ModelRenderer(this, 29, 5);
+        ModelRenderer5.addBox(2.0F, -9.0F, -6.0F, 1, 2, 2, f);
+        this.field_3307.addChild(ModelRenderer5);
+        ModelRenderer ModelRenderer6 = new ModelRenderer(this, 29, 5);
+        ModelRenderer6.addBox(-3.0F, -9.0F, -6.0F, 1, 2, 2, f);
+        this.field_3307.addChild(ModelRenderer6);
+        ModelRenderer ModelRenderer7 = new ModelRenderer(this, 32, 2);
+        ModelRenderer7.addBox(3.1F, -6.0F, -8.0F, 0, 3, 16, f);
+        ModelRenderer7.rotateAngleX = (-(float) Math.PI / 6F);
+        this.field_3307.addChild(ModelRenderer7);
+        ModelRenderer ModelRenderer8 = new ModelRenderer(this, 32, 2);
+        ModelRenderer8.addBox(-3.1F, -6.0F, -8.0F, 0, 3, 16, f);
+        ModelRenderer8.rotateAngleX = (-(float) Math.PI / 6F);
+        this.field_3307.addChild(ModelRenderer8);
+        ModelRenderer ModelRenderer9 = new ModelRenderer(this, 1, 1);
+        ModelRenderer9.addBox(-3.0F, -11.0F, -1.9F, 6, 5, 6, 0.2F);
+        this.field_3307.addChild(ModelRenderer9);
+        ModelRenderer ModelRenderer10 = new ModelRenderer(this, 19, 0);
+        ModelRenderer10.addBox(-2.0F, -11.0F, -4.0F, 4, 5, 2, 0.2F);
+        this.field_3307.addChild(ModelRenderer10);
+        this.field_3304 = new ModelRenderer[]{ModelRenderer4, ModelRenderer5, ModelRenderer6, ModelRenderer9, ModelRenderer10};
+        this.field_3301 = new ModelRenderer[]{ModelRenderer7, ModelRenderer8};
     }
 
-    protected void method_2789(RendererModel RendererModel) {
-        RendererModel RendererModel2 = new RendererModel(this, 19, 16);
-        RendererModel2.addBox(0.55F, -13.0F, 4.0F, 2, 3, 1, -0.001F);
-        RendererModel RendererModel3 = new RendererModel(this, 19, 16);
-        RendererModel3.addBox(-2.55F, -13.0F, 4.0F, 2, 3, 1, -0.001F);
-        RendererModel.addChild(RendererModel2);
-        RendererModel.addChild(RendererModel3);
+    protected void method_2789(ModelRenderer ModelRenderer) {
+        ModelRenderer ModelRenderer2 = new ModelRenderer(this, 19, 16);
+        ModelRenderer2.addBox(0.55F, -13.0F, 4.0F, 2, 3, 1, -0.001F);
+        ModelRenderer ModelRenderer3 = new ModelRenderer(this, 19, 16);
+        ModelRenderer3.addBox(-2.55F, -13.0F, 4.0F, 2, 3, 1, -0.001F);
+        ModelRenderer.addChild(ModelRenderer2);
+        ModelRenderer.addChild(ModelRenderer3);
     }
 
     @Override
-    public void render(T horseBaseEntity, float f, float g, float h, float i, float j, float k) {
-        boolean bl = horseBaseEntity.isBaby();
-        float l = horseBaseEntity.getScale();
+    public void render(net.minecraft.entity.Entity horseBaseEntity, float f, float g, float h, float i, float j, float k) {
+        EntityLivingBase horseEntity = (EntityLivingBase) horseBaseEntity;
+        boolean bl = horseEntity.isChild();
+        float l = 1.0F;
         boolean bl2 = false;
-        boolean bl3 = horseBaseEntity.isVehicle();
+        boolean bl3 = horseEntity.isBeingRidden();
 
-        for (RendererModel RendererModel : this.field_3304) {
-            RendererModel.visible = bl2;
+        for (ModelRenderer ModelRenderer : this.field_3304) {
+            ModelRenderer.showModel = bl2;
         }
 
-        for (RendererModel RendererModel : this.field_3301) {
-            RendererModel.visible = bl3 && bl2;
+        for (ModelRenderer ModelRenderer : this.field_3301) {
+            ModelRenderer.showModel = bl3 && bl2;
         }
 
         if (bl) {
@@ -141,11 +142,11 @@ public class ClientHorseModel<T extends LivingEntity> extends EntityModel<T> {
     }
 
     @Override
-    public void prepareMobModel(T horseBaseEntity, float f, float g, float h) {
-        super.prepareMobModel(horseBaseEntity, f, g, h);
-        float i = this.method_2790(horseBaseEntity.yBodyRotO, horseBaseEntity.yBodyRot, h);
-        float j = this.method_2790(horseBaseEntity.yHeadRotO, horseBaseEntity.yHeadRot, h);
-        float k = MathHelper.lerp(h, horseBaseEntity.xRotO, horseBaseEntity.xRot);
+    public void setLivingAnimations(EntityLivingBase horseBaseEntity, float f, float g, float h) {
+        super.setLivingAnimations(horseBaseEntity, f, g, h);
+        float i = this.method_2790(horseBaseEntity.prevRenderYawOffset, horseBaseEntity.renderYawOffset, h);
+        float j = this.method_2790(horseBaseEntity.prevRotationYawHead, horseBaseEntity.rotationYawHead, h);
+        float k = Math2.lerp(h, horseBaseEntity.prevRotationPitch, horseBaseEntity.rotationPitch);
         float l = j - i;
         float m = k * ((float) Math.PI / 180F);
         if (l > 20.0F) {
@@ -165,40 +166,40 @@ public class ClientHorseModel<T extends LivingEntity> extends EntityModel<T> {
         float p = 1.0F - o;
         float q = 0;
         boolean bl = true;
-        float r = (float) horseBaseEntity.tickCount + h;
-        this.field_3307.y = 4.0F;
-        this.field_3307.z = -12.0F;
-        this.field_3305.xRot = 0.0F;
-        this.field_3307.xRot = ((float) Math.PI / 6F) + m;
-        this.field_3307.yRot = l * ((float) Math.PI / 180F);
+        float r = (float) horseBaseEntity.ticksExisted + h;
+        this.field_3307.rotationPointY = 4.0F;
+        this.field_3307.rotationPointZ = -12.0F;
+        this.field_3305.rotateAngleX = 0.0F;
+        this.field_3307.rotateAngleX = ((float) Math.PI / 6F) + m;
+        this.field_3307.rotateAngleY = l * ((float) Math.PI / 180F);
         float s = horseBaseEntity.isInWater() ? 0.2F : 1.0F;
         float t = MathHelper.cos(s * f * 0.6662F + (float) Math.PI);
         float u = t * 0.8F * g;
         float v = (1.0F - Math.max(o, n)) * (((float) Math.PI / 6F) + m + q * MathHelper.sin(r) * 0.05F);
-        this.field_3307.xRot = o * (0.2617994F + m) + n * (2.1816616F + MathHelper.sin(r) * 0.05F) + v;
-        this.field_3307.yRot = o * l * ((float) Math.PI / 180F) + (1.0F - Math.max(o, n)) * this.field_3307.yRot;
-        this.field_3307.y = o * -4.0F + n * 11.0F + (1.0F - Math.max(o, n)) * this.field_3307.y;
-        this.field_3307.z = o * -4.0F + n * -12.0F + (1.0F - Math.max(o, n)) * this.field_3307.z;
-        this.field_3305.xRot = o * (-(float) Math.PI / 4F) + p * this.field_3305.xRot;
+        this.field_3307.rotateAngleX = o * (0.2617994F + m) + n * (2.1816616F + MathHelper.sin(r) * 0.05F) + v;
+        this.field_3307.rotateAngleY = o * l * ((float) Math.PI / 180F) + (1.0F - Math.max(o, n)) * this.field_3307.rotateAngleY;
+        this.field_3307.rotationPointY = o * -4.0F + n * 11.0F + (1.0F - Math.max(o, n)) * this.field_3307.rotationPointY;
+        this.field_3307.rotationPointZ = o * -4.0F + n * -12.0F + (1.0F - Math.max(o, n)) * this.field_3307.rotationPointZ;
+        this.field_3305.rotateAngleX = o * (-(float) Math.PI / 4F) + p * this.field_3305.rotateAngleX;
         float w = 0.2617994F * o;
         float x = MathHelper.cos(r * 0.6F + (float) Math.PI);
-        this.field_3302.y = 2.0F * o + 14.0F * p;
-        this.field_3302.z = -6.0F * o - 10.0F * p;
-        this.field_3308.y = this.field_3302.y;
-        this.field_3308.z = this.field_3302.z;
+        this.field_3302.rotationPointY = 2.0F * o + 14.0F * p;
+        this.field_3302.rotationPointZ = -6.0F * o - 10.0F * p;
+        this.field_3308.rotationPointY = this.field_3302.rotationPointY;
+        this.field_3308.rotationPointZ = this.field_3302.rotationPointZ;
         float y = ((-(float) Math.PI / 3F) + x) * o + u * p;
         float z = ((-(float) Math.PI / 3F) - x) * o - u * p;
-        this.field_3306.xRot = w - t * 0.5F * g * p;
-        this.field_3303.xRot = w + t * 0.5F * g * p;
-        this.field_3302.xRot = y;
-        this.field_3308.xRot = z;
-        this.field_3300.xRot = ((float) Math.PI / 6F) + g * 0.75F;
-        this.field_3300.y = -5.0F + g;
-        this.field_3300.z = 2.0F + g * 2.0F;
+        this.field_3306.rotateAngleX = w - t * 0.5F * g * p;
+        this.field_3303.rotateAngleX = w + t * 0.5F * g * p;
+        this.field_3302.rotateAngleX = y;
+        this.field_3308.rotateAngleX = z;
+        this.field_3300.rotateAngleX = ((float) Math.PI / 6F) + g * 0.75F;
+        this.field_3300.rotationPointY = -5.0F + g;
+        this.field_3300.rotationPointZ = 2.0F + g * 2.0F;
         if (bl) {
-            this.field_3300.yRot = MathHelper.cos(r * 0.7F);
+            this.field_3300.rotateAngleY = MathHelper.cos(r * 0.7F);
         } else {
-            this.field_3300.yRot = 0.0F;
+            this.field_3300.rotateAngleY = 0.0F;
         }
 
     }

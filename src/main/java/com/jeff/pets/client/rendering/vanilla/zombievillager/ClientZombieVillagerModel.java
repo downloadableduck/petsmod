@@ -1,68 +1,86 @@
 package com.jeff.pets.client.rendering.vanilla.zombievillager;
 
 import com.jeff.pets.client.rendering.ModelUtils;
-import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.client.renderer.entity.model.IHeadToggle;
-import net.minecraft.client.renderer.entity.model.RendererModel;
+import net.minecraft.client.renderer.entity.model.ModelBiped;
+import net.minecraft.client.renderer.entity.model.ModelRenderer;
+import net.minecraft.client.renderer.entity.model.ModelZombieVillager;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.util.math.MathHelper;
 
-public class ClientZombieVillagerModel extends BipedModel<ClientZombieVillager> implements IHeadToggle {
-    private RendererModel hatRim;
+public class ClientZombieVillagerModel extends ModelBiped {
+    private ModelRenderer hatRim;
 
-    public ClientZombieVillagerModel(float f, boolean bl) {
-        super(f, 0.0F, 64, bl ? 32 : 64);
-        if (bl) {
-            this.head = new RendererModel(this, 0, 0);
-            this.head.addBox(-4.0F, -10.0F, -4.0F, (int) 8.0, (int) 8.0, (int) 8.0, f);
-            this.body = new RendererModel(this, 16, 16);
-            this.body.addBox(-4.0F, 0.0F, -2.0F, (int) 8.0, (int) 12.0, (int) 4.0, f + 0.1F);
-            this.rightLeg = new RendererModel(this, 0, 16);
-            this.rightLeg.setPos(-2.0F, 12.0F, 0.0F);
-            this.rightLeg.addBox(-2.0F, 0.0F, -2.0F, (int) 4.0, (int) 12.0, (int) 4.0, f + 0.1F);
-            this.leftLeg = new RendererModel(this, 0, 16);
-            this.leftLeg.mirror = true;
-            this.leftLeg.setPos(2.0F, 12.0F, 0.0F);
-            this.leftLeg.addBox(-2.0F, 0.0F, -2.0F, (int) 4.0, (int) 12.0, (int) 4.0, f + 0.1F);
+    public ClientZombieVillagerModel() {
+        this(0.0F, 0.0F, false);
+    }
+
+    public ClientZombieVillagerModel(float p_i1165_1_, float p_i1165_2_, boolean p_i1165_3_) {
+        super(p_i1165_1_, 0.0F, 64, p_i1165_3_ ? 32 : 64);
+        if (p_i1165_3_) {
+            this.bipedHead = new ModelRenderer(this, 0, 0);
+            this.bipedHead.addBox(-4.0F, -10.0F, -4.0F, 8, 8, 8, p_i1165_1_);
+            this.bipedHead.setRotationPoint(0.0F, 0.0F + p_i1165_2_, 0.0F);
+            this.bipedBody = new ModelRenderer(this, 16, 16);
+            this.bipedBody.setRotationPoint(0.0F, 0.0F + p_i1165_2_, 0.0F);
+            this.bipedBody.addBox(-4.0F, 0.0F, -2.0F, 8, 12, 4, p_i1165_1_ + 0.1F);
+            this.bipedRightLeg = new ModelRenderer(this, 0, 16);
+            this.bipedRightLeg.setRotationPoint(-2.0F, 12.0F + p_i1165_2_, 0.0F);
+            this.bipedRightLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, p_i1165_1_ + 0.1F);
+            this.bipedLeftLeg = new ModelRenderer(this, 0, 16);
+            this.bipedLeftLeg.mirror = true;
+            this.bipedLeftLeg.setRotationPoint(2.0F, 12.0F + p_i1165_2_, 0.0F);
+            this.bipedLeftLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, p_i1165_1_ + 0.1F);
         } else {
-            this.head = new RendererModel(this, 0, 0);
-            this.head.texOffs(0, 0).addBox(-4.0F, -10.0F, -4.0F, (int) 8.0, (int) 10.0, (int) 8.0, f);
-            this.head.texOffs(24, 0).addBox(-1.0F, -3.0F, -6.0F, (int) 2.0, (int) 4.0, (int) 2.0, f);
-            this.hat = new RendererModel(this, 32, 0);
-            this.hat.addBox(-4.0F, -10.0F, -4.0F, (int) 8.0, (int) 10.0, (int) 8.0, f + 0.5F);
-            this.hatRim = new RendererModel(this);
-            this.hatRim.texOffs(30, 47).addBox(-8.0F, -8.0F, -6.0F, (int) 16.0, (int) 16.0, (int) 1.0, f);
-            this.hatRim.xRot = (-(float) Math.PI / 2F);
-            this.hat.addChild(this.hatRim);
-            this.body = new RendererModel(this, 16, 20);
-            this.body.addBox(-4.0F, 0.0F, -3.0F, (int) 8.0, (int) 12.0, (int) 6.0, f);
-            this.body.texOffs(0, 38).addBox(-4.0F, 0.0F, -3.0F, (int) 8.0, (int) 18.0, (int) 6.0, f + 0.05F);
-            this.rightArm = new RendererModel(this, 44, 22);
-            this.rightArm.addBox(-3.0F, -2.0F, -2.0F, (int) 4.0, (int) 12.0, (int) 4.0, f);
-            this.rightArm.setPos(-5.0F, 2.0F, 0.0F);
-            this.leftArm = new RendererModel(this, 44, 22);
-            this.leftArm.mirror = true;
-            this.leftArm.addBox(-1.0F, -2.0F, -2.0F, (int) 4.0, (int) 12.0, (int) 4.0, f);
-            this.leftArm.setPos(5.0F, 2.0F, 0.0F);
-            this.rightLeg = new RendererModel(this, 0, 22);
-            this.rightLeg.setPos(-2.0F, 12.0F, 0.0F);
-            this.rightLeg.addBox(-2.0F, 0.0F, -2.0F, (int) 4.0, (int) 12.0, (int) 4.0, f);
-            this.leftLeg = new RendererModel(this, 0, 22);
-            this.leftLeg.mirror = true;
-            this.leftLeg.setPos(2.0F, 12.0F, 0.0F);
-            this.leftLeg.addBox(-2.0F, 0.0F, -2.0F, (int) 4.0, (int) 12.0, (int) 4.0, f);
+            this.bipedHead = new ModelRenderer(this, 0, 0);
+            this.bipedHead.setRotationPoint(0.0F, p_i1165_2_, 0.0F);
+            this.bipedHead.setTextureOffset(0, 0).addBox(-4.0F, -10.0F, -4.0F, 8, 10, 8, p_i1165_1_);
+            this.bipedHead.setTextureOffset(24, 0).addBox(-1.0F, -3.0F, -6.0F, 2, 4, 2, p_i1165_1_);
+            this.bipedBody = new ModelRenderer(this, 16, 20);
+            this.bipedBody.setRotationPoint(0.0F, 0.0F + p_i1165_2_, 0.0F);
+            this.bipedBody.addBox(-4.0F, 0.0F, -3.0F, 8, 12, 6, p_i1165_1_);
+            this.bipedBody.setTextureOffset(0, 38).addBox(-4.0F, 0.0F, -3.0F, 8, 18, 6, p_i1165_1_ + 0.05F);
+            this.bipedRightArm = new ModelRenderer(this, 44, 38);
+            this.bipedRightArm.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, p_i1165_1_);
+            this.bipedRightArm.setRotationPoint(-5.0F, 2.0F + p_i1165_2_, 0.0F);
+            this.bipedLeftArm = new ModelRenderer(this, 44, 38);
+            this.bipedLeftArm.mirror = true;
+            this.bipedLeftArm.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, p_i1165_1_);
+            this.bipedLeftArm.setRotationPoint(5.0F, 2.0F + p_i1165_2_, 0.0F);
+            this.bipedRightLeg = new ModelRenderer(this, 0, 22);
+            this.bipedRightLeg.setRotationPoint(-2.0F, 12.0F + p_i1165_2_, 0.0F);
+            this.bipedRightLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, p_i1165_1_);
+            this.bipedLeftLeg = new ModelRenderer(this, 0, 22);
+            this.bipedLeftLeg.mirror = true;
+            this.bipedLeftLeg.setRotationPoint(2.0F, 12.0F + p_i1165_2_, 0.0F);
+            this.bipedLeftLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, p_i1165_1_);
         }
 
     }
 
-    @Override
-    public void setupAnim(ClientZombieVillager zombie, float f, float g, float h, float i, float j, float r) {
-        super.setupAnim(zombie, f, g, h, i, j, r);
-        ModelUtils.animateZombieArms(this.leftArm, this.rightArm, zombie.isAggressive(), this.attackTime, h);
-    }
-
-    public void hatVisible(boolean bl) {
-        this.head.visible = bl;
-        this.hat.visible = bl;
-        this.hatRim.visible = bl;
+    public void setRotationAngles(float p_78087_1_, float p_78087_2_, float p_78087_3_, float p_78087_4_, float p_78087_5_, float p_78087_6_, Entity p_78087_7_) {
+        super.setRotationAngles(p_78087_1_, p_78087_2_, p_78087_3_, p_78087_4_, p_78087_5_, p_78087_6_, p_78087_7_);
+        float lvt_9_1_ = MathHelper.sin(this.swingProgress * (float)Math.PI);
+        float lvt_10_1_ = MathHelper.sin((1.0F - (1.0F - this.swingProgress) * (1.0F - this.swingProgress)) * (float)Math.PI);
+        this.bipedRightArm.rotateAngleZ = 0.0F;
+        this.bipedLeftArm.rotateAngleZ = 0.0F;
+        this.bipedRightArm.rotateAngleY = -(0.1F - lvt_9_1_ * 0.6F);
+        this.bipedLeftArm.rotateAngleY = 0.1F - lvt_9_1_ * 0.6F;
+        float lvt_11_1_ = -(float)Math.PI / 1.5F;
+        this.bipedRightArm.rotateAngleX = lvt_11_1_;
+        this.bipedLeftArm.rotateAngleX = lvt_11_1_;
+        ModelRenderer var10000 = this.bipedRightArm;
+        var10000.rotateAngleX += lvt_9_1_ * 1.2F - lvt_10_1_ * 0.4F;
+        var10000 = this.bipedLeftArm;
+        var10000.rotateAngleX += lvt_9_1_ * 1.2F - lvt_10_1_ * 0.4F;
+        var10000 = this.bipedRightArm;
+        var10000.rotateAngleZ += MathHelper.cos(p_78087_3_ * 0.09F) * 0.05F + 0.05F;
+        var10000 = this.bipedLeftArm;
+        var10000.rotateAngleZ -= MathHelper.cos(p_78087_3_ * 0.09F) * 0.05F + 0.05F;
+        var10000 = this.bipedRightArm;
+        var10000.rotateAngleX += MathHelper.sin(p_78087_3_ * 0.067F) * 0.05F;
+        var10000 = this.bipedLeftArm;
+        var10000.rotateAngleX -= MathHelper.sin(p_78087_3_ * 0.067F) * 0.05F;
     }
 }

@@ -3,21 +3,22 @@ package me.shedaniel.forge.clothconfig2.gui.entries;
 import com.google.common.collect.Lists;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.IGuiEventListener;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.gui.widget.button.AbstractButton;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.function.Supplier;
 
 @OnlyIn(Dist.CLIENT)
 public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
     
-    protected TextFieldWidget textFieldWidget;
+    protected GuiTextField textFieldWidget;
     protected ResetButton resetButton;
     protected Supplier<T> defaultValue;
     protected T original;
@@ -42,48 +43,49 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
         super(fieldName, tooltipSupplier);
         this.defaultValue = defaultValue;
         this.original = original;
-        this.textFieldWidget = new TextFieldWidget(Minecraft.getInstance().font, 0, 0, 148, 18, "") {
+        this.textFieldWidget = new GuiTextField(0, Minecraft.getInstance().fontRenderer, 0, 0, 148, 20) {
             @Override
-            public void render(int int_1, int int_2, float float_1) {
+            public void drawTextField(int int_1, int int_2, float float_1) {
 //                boolean f = isFocused();
                 setFocused(isSelected);
                 textFieldPreRender(this);
-                super.render(int_1, int_2, float_1);
+                super.drawTextField(int_1, int_2, float_1);
 //                setFocused(f);
             }
             
             @Override
-            public void insertText(String string_1) {
-                super.insertText(stripAddText(string_1));
+            public void writeText(String string_1) {
+                super.writeText(stripAddText(string_1));
             }
         };
-        textFieldWidget.setMaxLength(999999);
-        textFieldWidget.setValue(String.valueOf(original));
-        textFieldWidget.setResponder(s -> {
-            if (getScreen() != null && !original.equals(s))
+        textFieldWidget.setMaxStringLength(999999);
+        textFieldWidget.setText(String.valueOf(original));
+        textFieldWidget.setTextAcceptHandler((i, s) -> {
+            if (getScreen() != null && !original.equals(s)) {
                 getScreen().setEdited(true, isRequiresRestart());
+            }
         });
-        this.resetButton = new ResetButton(0, 0, Minecraft.getInstance().font.width(I18n.get(resetButtonKey)) + 6, 20, I18n.get(resetButtonKey), widget -> {
-            TextFieldListEntry.this.textFieldWidget.setValue(String.valueOf(defaultValue.get()));
+        this.resetButton = new ResetButton(0, 0, Minecraft.getInstance().fontRenderer.getStringWidth(I18n.format(resetButtonKey)) + 6, 20, I18n.format(resetButtonKey), widget -> {
+            TextFieldListEntry.this.textFieldWidget.setText(String.valueOf(defaultValue.get()));
             getScreen().setEdited(true, isRequiresRestart());
         });
-        this.widgets = Lists.newArrayList(textFieldWidget, resetButton);
+        this.widgets = (List) Lists.newArrayList(textFieldWidget, resetButton);
     }
     
-    protected static void setTextFieldWidth(TextFieldWidget widget, int width) {
-        widget.setWidth(width);
+    protected static void setTextFieldWidth(GuiTextField widget, int width) {
+        widget.width = width;
     }
     
     @Deprecated
     public void setValue(String s) {
-        textFieldWidget.setValue(String.valueOf(s));
+        textFieldWidget.setText(String.valueOf(s));
     }
     
     protected String stripAddText(String s) {
         return s;
     }
     
-    protected void textFieldPreRender(TextFieldWidget widget) {
+    protected void textFieldPreRender(GuiTextField widget) {
         
     }
     
@@ -95,23 +97,23 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
     @Override
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-        MainWindow window = Minecraft.getInstance().window;
-        this.resetButton.active = isEditable() && getDefaultValue().isPresent() && !isMatchDefault(textFieldWidget.getMessage());
+        MainWindow window = Minecraft.getInstance().mainWindow;
+        this.resetButton.enabled = isEditable() && getDefaultValue().isPresent() && !isMatchDefault(textFieldWidget.getText());
         this.resetButton.y = y;
-        this.textFieldWidget.setEditable(isEditable());
+        this.textFieldWidget.setEnabled(isEditable());
         this.textFieldWidget.y = y + 1;
-        if (Minecraft.getInstance().font.isBidirectional()) {
-            Minecraft.getInstance().font.drawShadow(I18n.get(getFieldName()), window.getGuiScaledWidth() - x - Minecraft.getInstance().font.width(I18n.get(getFieldName())), y + 5, getPreferredTextColor());
+        if (Minecraft.getInstance().fontRenderer.getBidiFlag()) {
+            Minecraft.getInstance().fontRenderer.drawStringWithShadow(I18n.format(getFieldName()), window.getScaledWidth() - x - Minecraft.getInstance().fontRenderer.getStringWidth(I18n.format(getFieldName())), y + 5, getPreferredTextColor());
             this.resetButton.x = x;
             this.textFieldWidget.x = x + resetButton.getWidth();
         } else {
-            Minecraft.getInstance().font.drawShadow(I18n.get(getFieldName()), x, y + 5, getPreferredTextColor());
+            Minecraft.getInstance().fontRenderer.drawStringWithShadow(I18n.format(getFieldName()), x, y + 5, getPreferredTextColor());
             this.resetButton.x = x + entryWidth - resetButton.getWidth();
             this.textFieldWidget.x = x + entryWidth - 148;
         }
         setTextFieldWidth(textFieldWidget, 148 - resetButton.getWidth() - 4);
         resetButton.render(mouseX, mouseY, delta);
-        textFieldWidget.render(mouseX, mouseY, delta);
+        textFieldWidget.drawTextField(mouseX, mouseY, delta);
     }
     
     protected abstract boolean isMatchDefault(String text);
@@ -122,20 +124,20 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
     }
     
     @Override
-    public List<? extends IGuiEventListener> children() {
+    public List<? extends IGuiEventListener> getChildren() {
         return widgets;
     }
     
-    protected static class ResetButton extends AbstractButton {
+    protected static class ResetButton extends GuiButton {
         private IPressable onPress;
         
         public ResetButton(int widthIn, int heightIn, int width, int height, String text, IPressable onPress) {
-            super(widthIn, heightIn, width, height, text);
+            super(new Random().nextInt(), widthIn, heightIn, width, height, text);
             this.onPress = onPress;
         }
         
         @Override
-        public void onPress() {
+        public void onClick(double d, double u) {
             onPress.onPress(this);
         }
         

@@ -29,8 +29,8 @@ public class ModifierKeyCodeImpl implements ModifierKeyCode {
     
     @Override
     public ModifierKeyCode setKeyCode(InputMappings.Input keyCode) {
-        this.keyCode = keyCode.getType().getOrCreate(keyCode.getValue());
-        if (keyCode.equals(InputMappings.UNKNOWN))
+        this.keyCode = keyCode.getType().getOrMakeInput(keyCode.getKeyCode());
+        if (keyCode.equals(InputMappings.INPUT_INVALID))
             setModifier(Modifier.none());
         return this;
     }
@@ -44,26 +44,26 @@ public class ModifierKeyCodeImpl implements ModifierKeyCode {
     @Override
     public String toString() {
         String string_1 = this.keyCode.getName();
-        int int_1 = this.keyCode.getValue();
+        int int_1 = this.keyCode.getKeyCode();
         String string_2 = null;
         switch (this.keyCode.getType()) {
             case KEYSYM:
-                string_2 = InputMappings.translateKeyCode(int_1);
+                string_2 = InputMappings.Type.KEYSYM.getOrMakeInput(int_1).getName();
                 break;
             case SCANCODE:
-                string_2 = InputMappings.translateScanCode(int_1);
+                string_2 = InputMappings.Type.SCANCODE.getOrMakeInput(int_1).getName();
                 break;
             case MOUSE:
-                String string_3 = I18n.get(string_1);
-                string_2 = Objects.equals(string_3, string_1) ? I18n.get(InputMappings.Type.MOUSE.getDefaultPrefix(), int_1 + 1) : string_3;
+                String string_3 = I18n.format(string_1);
+                string_2 = Objects.equals(string_3, string_1) ? I18n.format(InputMappings.Type.MOUSE.name(), int_1 + 1) : string_3;
         }
-        String base = string_2 == null ? I18n.get(string_1) : string_2;
+        String base = string_2 == null ? I18n.format(string_1) : string_2;
         if (modifier.hasShift())
-            base = I18n.get("modifier.cloth-config.shift", base);
+            base = I18n.format("modifier.cloth-config.shift", base);
         if (modifier.hasControl())
-            base = I18n.get("modifier.cloth-config.ctrl", base);
+            base = I18n.format("modifier.cloth-config.ctrl", base);
         if (modifier.hasAlt())
-            base = I18n.get("modifier.cloth-config.alt", base);
+            base = I18n.format("modifier.cloth-config.alt", base);
         return base;
     }
     

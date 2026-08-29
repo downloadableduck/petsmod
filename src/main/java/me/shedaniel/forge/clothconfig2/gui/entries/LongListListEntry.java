@@ -72,7 +72,7 @@ public class LongListListEntry extends AbstractTextFieldListListEntry<Long, Long
         
         public Long getValue() {
             try {
-                return Long.valueOf(widget.getValue());
+                return Long.valueOf(widget.getText());
             } catch (NumberFormatException e) {
                 return 0L;
             }
@@ -81,13 +81,13 @@ public class LongListListEntry extends AbstractTextFieldListListEntry<Long, Long
         @Override
         public Optional<String> getError() {
             try {
-                long l = Long.parseLong(widget.getValue());
+                long l = Long.parseLong(widget.getText());
                 if (l > listListEntry.maximum)
-                    return Optional.of(I18n.get("text.cloth-config.error.too_large", listListEntry.maximum));
+                    return Optional.of(I18n.format("text.cloth-config.error.too_large", listListEntry.maximum));
                 else if (l < listListEntry.minimum)
-                    return Optional.of(I18n.get("text.cloth-config.error.too_small", listListEntry.minimum));
+                    return Optional.of(I18n.format("text.cloth-config.error.too_small", listListEntry.minimum));
             } catch (NumberFormatException ex) {
-                return Optional.of(I18n.get("text.cloth-config.error.not_valid_number_long"));
+                return Optional.of(I18n.format("text.cloth-config.error.not_valid_number_long"));
             }
             return Optional.empty();
         }

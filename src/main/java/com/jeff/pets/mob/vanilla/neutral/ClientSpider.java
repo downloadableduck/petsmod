@@ -3,11 +3,12 @@ package com.jeff.pets.mob.vanilla.neutral;
 import com.jeff.pets.mob.GroundPet;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.init.SoundEvents;
 
 public class ClientSpider extends GroundPet {
-    public ClientSpider(EntityType<? extends net.minecraft.entity.passive.TameableEntity> entityType, net.minecraft.world.World level) {
+    public ClientSpider(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
         super(entityType, level);
+        this.setSize(1.4f, 0.9f);
     }
 
     @Override
@@ -22,6 +23,6 @@ public class ClientSpider extends GroundPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.SPIDER_AMBIENT;
+        return SoundEvents.ENTITY_SPIDER_AMBIENT;
     }
 }

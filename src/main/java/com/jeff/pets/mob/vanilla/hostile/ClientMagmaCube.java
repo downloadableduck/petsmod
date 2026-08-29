@@ -3,12 +3,13 @@ package com.jeff.pets.mob.vanilla.hostile;
 import com.jeff.pets.mob.SlimeLikePet;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.init.SoundEvents;
 
 public class ClientMagmaCube extends SlimeLikePet {
 
-    public ClientMagmaCube(EntityType<? extends net.minecraft.entity.passive.TameableEntity> entityType, net.minecraft.world.World level) {
+    public ClientMagmaCube(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
         super(entityType, level);
+        this.setSize(2f, 2f);
     }
 
     @Override
@@ -23,6 +24,6 @@ public class ClientMagmaCube extends SlimeLikePet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.MAGMA_CUBE_SQUISH;
+        return SoundEvents.ENTITY_MAGMA_CUBE_SQUISH;
     }
 }

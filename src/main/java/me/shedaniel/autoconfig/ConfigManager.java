@@ -22,7 +22,7 @@ package me.shedaniel.autoconfig;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.event.ConfigSerializeEvent;
 import me.shedaniel.autoconfig.serializer.ConfigSerializer;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.util.EnumActionResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -68,10 +68,10 @@ public class ConfigManager<T extends ConfigData> implements ConfigHolder<T> {
     @Override
     public void save() {
         for (ConfigSerializeEvent.Save<T> save : saveEvent) {
-            ActionResultType result = save.onSave(this, config);
-            if (result == ActionResultType.FAIL) {
+            EnumActionResult result = save.onSave(this, config);
+            if (result == EnumActionResult.FAIL) {
                 return;
-            } else if (result != ActionResultType.PASS) {
+            } else if (result != EnumActionResult.PASS) {
                 break;
             }
         }
@@ -88,12 +88,12 @@ public class ConfigManager<T extends ConfigData> implements ConfigHolder<T> {
             T deserialized = serializer.deserialize();
 
             for (ConfigSerializeEvent.Load<T> load : loadEvent) {
-                ActionResultType result = load.onLoad(this, deserialized);
-                if (result == ActionResultType.FAIL) {
+                EnumActionResult result = load.onLoad(this, deserialized);
+                if (result == EnumActionResult.FAIL) {
                     config = serializer.createDefault();
                     config.validatePostLoad();
                     return false;
-                } else if (result != ActionResultType.PASS) {
+                } else if (result != EnumActionResult.PASS) {
                     break;
                 }
             }

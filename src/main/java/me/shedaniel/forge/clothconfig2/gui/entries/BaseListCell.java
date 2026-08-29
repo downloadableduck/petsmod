@@ -1,6 +1,6 @@
 package me.shedaniel.forge.clothconfig2.gui.entries;
 
-import net.minecraft.client.gui.FocusableGui;
+import net.minecraft.client.gui.GuiEventHandler;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 @OnlyIn(Dist.CLIENT)
-public abstract class BaseListCell extends FocusableGui {
+public abstract class BaseListCell extends GuiEventHandler {
     
     private Supplier<Optional<String>> errorSupplier;
     

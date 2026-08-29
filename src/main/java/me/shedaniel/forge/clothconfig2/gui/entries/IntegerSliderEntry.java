@@ -1,11 +1,12 @@
 package me.shedaniel.forge.clothconfig2.gui.entries;
 
 import com.google.common.collect.Lists;
+import net.minecraft.client.GameSettings;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiOptionSlider;
 import net.minecraft.client.gui.IGuiEventListener;
-import net.minecraft.client.gui.widget.AbstractSlider;
-import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
@@ -13,6 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -22,7 +24,7 @@ import java.util.function.Supplier;
 public class IntegerSliderEntry extends TooltipListEntry<Integer> {
     
     protected Slider sliderWidget;
-    protected Button resetButton;
+    protected GuiButton resetButton;
     protected AtomicInteger value;
     private int minimum, maximum;
     private Consumer<Integer> saveConsumer;
@@ -58,13 +60,17 @@ public class IntegerSliderEntry extends TooltipListEntry<Integer> {
         this.maximum = maximum;
         this.minimum = minimum;
         this.sliderWidget = new Slider(0, 0, 152, 20, ((double) this.value.get() - minimum) / Math.abs(maximum - minimum));
-        this.resetButton = new Button(0, 0, Minecraft.getInstance().font.width(I18n.get(resetButtonKey)) + 6, 20, I18n.get(resetButtonKey), widget -> {
-            sliderWidget.setProgress((MathHelper.clamp(this.defaultValue.get(), minimum, maximum) - minimum) / (double) Math.abs(maximum - minimum));
-            this.value.set(MathHelper.clamp(this.defaultValue.get(), minimum, maximum));
-            sliderWidget.updateMessage();
-            getScreen().setEdited(true, isRequiresRestart());
-        });
-        this.sliderWidget.setMessage(textGetter.apply(IntegerSliderEntry.this.value.get()));
+        this.resetButton = new GuiButton(new Random().nextInt(), 0, 0, Minecraft.getInstance().fontRenderer.getStringWidth(I18n.format(resetButtonKey)) + 6, 20, I18n.format(resetButtonKey)) {
+            @Override
+            public void onClick(double p_194829_1_, double p_194829_3_) {
+                sliderWidget.setProgress((MathHelper.clamp(IntegerSliderEntry.this.defaultValue.get(), minimum, maximum) - minimum) / (double) Math.abs(maximum - minimum));
+                IntegerSliderEntry.this.value.set(MathHelper.clamp(IntegerSliderEntry.this.defaultValue.get(), minimum, maximum));
+                sliderWidget.updateMessage();
+                getScreen().setEdited(true, isRequiresRestart());
+                super.onClick(p_194829_1_, p_194829_3_);
+            }
+        };
+        this.sliderWidget.displayString = (textGetter.apply(IntegerSliderEntry.this.value.get()));
         this.widgets = Lists.newArrayList(sliderWidget, resetButton);
     }
     
@@ -80,7 +86,7 @@ public class IntegerSliderEntry extends TooltipListEntry<Integer> {
     
     public IntegerSliderEntry setTextGetter(Function<Integer, String> textGetter) {
         this.textGetter = textGetter;
-        this.sliderWidget.setMessage(textGetter.apply(IntegerSliderEntry.this.value.get()));
+        this.sliderWidget.displayString = (textGetter.apply(IntegerSliderEntry.this.value.get()));
         return this;
     }
     
@@ -95,7 +101,7 @@ public class IntegerSliderEntry extends TooltipListEntry<Integer> {
     }
     
     @Override
-    public List<? extends IGuiEventListener> children() {
+    public List<? extends IGuiEventListener> getChildren() {
         return widgets;
     }
     
@@ -112,17 +118,17 @@ public class IntegerSliderEntry extends TooltipListEntry<Integer> {
     @Override
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-        MainWindow window = Minecraft.getInstance().window;
-        this.resetButton.active = isEditable() && getDefaultValue().isPresent() && defaultValue.get() != value.get();
+        MainWindow window = Minecraft.getInstance().mainWindow;
+        this.resetButton.enabled = isEditable() && getDefaultValue().isPresent() && defaultValue.get() != value.get();
         this.resetButton.y = y;
-        this.sliderWidget.active = isEditable();
+        this.sliderWidget.enabled = isEditable();
         this.sliderWidget.y = y;
-        if (Minecraft.getInstance().font.isBidirectional()) {
-            Minecraft.getInstance().font.drawShadow(I18n.get(getFieldName()), window.getGuiScaledWidth() - x - Minecraft.getInstance().font.width(I18n.get(getFieldName())), y + 5, getPreferredTextColor());
+        if (Minecraft.getInstance().fontRenderer.getBidiFlag()) {
+            Minecraft.getInstance().fontRenderer.drawStringWithShadow(I18n.format(getFieldName()), window.getScaledWidth() - x - Minecraft.getInstance().fontRenderer.getStringWidth(I18n.format(getFieldName())), y + 5, getPreferredTextColor());
             this.resetButton.x = x;
             this.sliderWidget.x = x + resetButton.getWidth() + 1;
         } else {
-            Minecraft.getInstance().font.drawShadow(I18n.get(getFieldName()), x, y + 5, getPreferredTextColor());
+            Minecraft.getInstance().fontRenderer.drawStringWithShadow(I18n.format(getFieldName()), x, y + 5, getPreferredTextColor());
             this.resetButton.x = x + entryWidth - resetButton.getWidth();
             this.sliderWidget.x = x + entryWidth - 150;
         }
@@ -131,20 +137,20 @@ public class IntegerSliderEntry extends TooltipListEntry<Integer> {
         sliderWidget.render(mouseX, mouseY, delta);
     }
     
-    private class Slider extends AbstractSlider {
+    private class Slider extends GuiOptionSlider {
         protected Slider(int int_1, int int_2, int int_3, int int_4, double double_1) {
-            super(int_1, int_2, int_3, int_4, double_1);
+            super(int_1, int_2, int_3, GameSettings.Options.MIPMAP_LEVELS, int_4, double_1);
         }
-        
-        @Override
+
         public void updateMessage() {
-            setMessage(textGetter.apply(IntegerSliderEntry.this.value.get()));
+            displayString = (textGetter.apply(IntegerSliderEntry.this.value.get()));
         }
         
         @Override
-        protected void applyValue() {
-            IntegerSliderEntry.this.value.set((int) (minimum + Math.abs(maximum - minimum) * value));
+        public boolean mouseClicked(double d, double c, int e) {
+            IntegerSliderEntry.this.value.set((minimum + Math.abs(maximum - minimum) * value.get()));
             getScreen().setEdited(true, isRequiresRestart());
+            return super.mouseClicked(d, c, e);
         }
         
         @Override
@@ -162,11 +168,11 @@ public class IntegerSliderEntry extends TooltipListEntry<Integer> {
         }
         
         public double getProgress() {
-            return value;
+            return value.doubleValue();
         }
         
         public void setProgress(double integer) {
-            this.value = integer;
+            value.set((int) integer);
         }
     }
     

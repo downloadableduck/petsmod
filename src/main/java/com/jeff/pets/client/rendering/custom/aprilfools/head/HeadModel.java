@@ -3,37 +3,35 @@ package com.jeff.pets.client.rendering.custom.aprilfools.head;// Made with Block
 // Paste this class into your mod and generate all required imports
 
 
-import com.jeff.pets.mob.custom.aprilfools.Head;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.entity.model.RendererModel;
+import net.minecraft.client.renderer.entity.model.ModelBase;
+import net.minecraft.client.renderer.entity.model.ModelRenderer;
 
-public class HeadModel extends EntityModel<Head> {
-    private final RendererModel Head;
+public class HeadModel extends ModelBase {
+    private final ModelRenderer Head;
 
     public HeadModel() {
-        texWidth = 64;
-        texHeight = 64;
+        textureWidth = 64;
+        textureHeight = 64;
 
-        Head = new RendererModel(this);
-        Head.setPos(0.0F, 0.0F, 0.0F);
+        Head = new ModelRenderer(this);
+        Head.setRotationPoint(0.0F, 0.0F, 0.0F);
         setRotationAngle(Head, -0.1047F, 0.0873F, 0.0F);
-        Head.texOffs(0, 0).addBox(-8.0F, 16.0F, 0.0F, (int) 8.0F, (int) 8.0F, (int) 8.0F, 0.0F, false);
-        Head.texOffs(32, 0).addBox(-4.0F, -8.0F, -4.0F, (int) 8.0F, (int) 8.0F, (int) 8.0F, 0.5F, false);
+        Head.setTextureOffset(0, 0).addBox(-8.0F, 16.0F, 0.0F, (int) 8.0F, (int) 8.0F, (int) 8.0F, 0.0F, false);
+        Head.setTextureOffset(32, 0).addBox(-4.0F, -8.0F, -4.0F, (int) 8.0F, (int) 8.0F, (int) 8.0F, 0.5F, false);
     }
 
-    @Override
-    public void setupAnim(Head entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float f) {
+    public void setRotationAngles(net.minecraft.entity.Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float f) {
         //previously the render function, render code was moved to a method below
     }
 
     @Override
-    public void render(Head head, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
+    public void render(net.minecraft.entity.Entity entity, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
         Head.render(alpha);
     }
 
-    public void setRotationAngle(RendererModel RendererModel, float x, float y, float z) {
-        RendererModel.xRot = x;
-        RendererModel.yRot = y;
-        RendererModel.zRot = z;
+    public void setRotationAngle(ModelRenderer ModelRenderer, float x, float y, float z) {
+        ModelRenderer.rotateAngleX = x;
+        ModelRenderer.rotateAngleY = y;
+        ModelRenderer.rotateAngleZ = z;
     }
 }

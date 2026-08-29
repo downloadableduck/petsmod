@@ -24,7 +24,6 @@ import com.jeff.pets.client.rendering.vanilla.enderdragon.ClientEnderDragonRende
 import com.jeff.pets.client.rendering.vanilla.enderman.ClientEndermanRenderer;
 import com.jeff.pets.client.rendering.vanilla.endermite.ClientEndermiteRenderer;
 import com.jeff.pets.client.rendering.vanilla.evoker.ClientEvokerRenderer;
-import com.jeff.pets.client.rendering.vanilla.fox.ClientFoxRenderer;
 import com.jeff.pets.client.rendering.vanilla.ghast.ClientGhastRenderer;
 import com.jeff.pets.client.rendering.vanilla.guardian.ClientGuardianRenderer;
 import com.jeff.pets.client.rendering.vanilla.horse.ClientHorseRenderer;
@@ -33,15 +32,12 @@ import com.jeff.pets.client.rendering.vanilla.irongolem.ClientIronGolemRenderer;
 import com.jeff.pets.client.rendering.vanilla.llama.ClientLlamaRenderer;
 import com.jeff.pets.client.rendering.vanilla.magmacube.ClientMagmaCubeRenderer;
 import com.jeff.pets.client.rendering.vanilla.mooshroom.ClientMooshroomRenderer;
-import com.jeff.pets.client.rendering.vanilla.panda.ClientPandaRenderer;
 import com.jeff.pets.client.rendering.vanilla.parrot.ClientParrotRenderer;
 import com.jeff.pets.client.rendering.vanilla.phantom.ClientPhantomRenderer;
 import com.jeff.pets.client.rendering.vanilla.pig.ClientPigRenderer;
-import com.jeff.pets.client.rendering.vanilla.pillager.ClientPillagerRenderer;
 import com.jeff.pets.client.rendering.vanilla.polarbear.ClientPolarBearRenderer;
 import com.jeff.pets.client.rendering.vanilla.pufferfish.ClientPufferFishRenderer;
 import com.jeff.pets.client.rendering.vanilla.rabbit.ClientRabbitRenderer;
-import com.jeff.pets.client.rendering.vanilla.ravager.ClientRavagerRenderer;
 import com.jeff.pets.client.rendering.vanilla.salmon.ClientSalmonRenderer;
 import com.jeff.pets.client.rendering.vanilla.sheep.ClientSheepRenderer;
 import com.jeff.pets.client.rendering.vanilla.shulker.ClientShulkerRenderer;
@@ -56,7 +52,6 @@ import com.jeff.pets.client.rendering.vanilla.turtle.ClientTurtleRenderer;
 import com.jeff.pets.client.rendering.vanilla.vex.ClientVexRenderer;
 import com.jeff.pets.client.rendering.vanilla.villager.ClientVillagerRenderer;
 import com.jeff.pets.client.rendering.vanilla.vindicator.ClientVindicatorRenderer;
-import com.jeff.pets.client.rendering.vanilla.wanderingtrader.ClientWanderingTraderRenderer;
 import com.jeff.pets.client.rendering.vanilla.witch.ClientWitchRenderer;
 import com.jeff.pets.client.rendering.vanilla.wither.ClientWitherRenderer;
 import com.jeff.pets.client.rendering.vanilla.witherskeleton.ClientWitherSkeletonRenderer;
@@ -76,8 +71,9 @@ import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.hostile.*;
 import com.jeff.pets.mob.vanilla.passive.*;
 import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.RenderPhantom;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
@@ -115,7 +111,7 @@ public class PetsClientInitializer {
     public static List<String> ADDONS = new ArrayList<>();
 
     public static final Map<Class, Factory> renderSupplierMap = new HashMap();
-    public static final Map<EntityRendererManager, Context> renderManagerMap = new WeakHashMap();
+    public static final Map<RenderManager, Context> renderManagerMap = new WeakHashMap();
 
     public static KeyBinding openConfigScreen;
 
@@ -250,14 +246,11 @@ public class PetsClientInitializer {
         register(ClientSquid.class, ClientSquidRenderer::new);
         register(ClientTurtle.class, ClientTurtleRenderer::new);
         register(ClientVillager.class, ClientVillagerRenderer::new);
-        register(ClientWanderingTrader.class, ClientWanderingTraderRenderer::new);
         register(ClientCaveSpider.class, ClientCaveSpiderRenderer::new);
         register(ClientDolphin.class, ClientDolphinRenderer::new);
         register(ClientEnderman.class, ClientEndermanRenderer::new);
-        register(ClientFox.class, ClientFoxRenderer::new);
         register(ClientIronGolem.class, ClientIronGolemRenderer::new);
         register(ClientLlama.class, ClientLlamaRenderer::new);
-        register(ClientPanda.class, ClientPandaRenderer::new);
         register(ClientPolarBear.class, ClientPolarBearRenderer::new);
         register(ClientPufferFish.class, ClientPufferFishRenderer::new);
         register(ClientSpider.class, ClientSpiderRenderer::new);
@@ -273,8 +266,6 @@ public class PetsClientInitializer {
         register(ClientHusk.class, ClientHuskRenderer::new);
         register(ClientMagmaCube.class, ClientMagmaCubeRenderer::new);
         register(ClientPhantom.class, ClientPhantomRenderer::new);
-        register(ClientPillager.class, ClientPillagerRenderer::new);
-        register(ClientRavager.class, ClientRavagerRenderer::new);
         register(ClientShulker.class, ClientShulkerRenderer::new);
         register(ClientSilverfish.class, ClientSilverfishRenderer::new);
         register(ClientSkeleton.class, ClientSkeletonRenderer::new);
@@ -312,41 +303,23 @@ public class PetsClientInitializer {
         synchronized(renderSupplierMap) {
             renderSupplierMap.put(entityClass, factory);
 
-            for(EntityRendererManager manager : renderManagerMap.keySet()) {
+            for(RenderManager manager : renderManagerMap.keySet()) {
                 renderManagerMap.get(manager).rendererMap.put(entityClass, factory.create(manager, renderManagerMap.get(manager)));
             }
         }
     }
 
     public static final class Context {
-        private final TextureManager textureManager;
-        private final IReloadableResourceManager resourceManager;
-        private final ItemRenderer itemRenderer;
-        private final Map<Class, EntityRenderer<? extends Entity>> rendererMap;
+        private final Map<Class, RenderLiving<? extends Entity>> rendererMap;
 
-        public Context(TextureManager textureManager, IReloadableResourceManager resourceManager, ItemRenderer itemRenderer, Map<Class, EntityRenderer<? extends Entity>> rendererMap) {
+        public Context(Map<Class, RenderLiving<? extends Entity>> rendererMap) {
             super();
-            this.textureManager = textureManager;
-            this.resourceManager = resourceManager;
-            this.itemRenderer = itemRenderer;
             this.rendererMap = rendererMap;
-        }
-
-        public TextureManager getTextureManager() {
-            return this.textureManager;
-        }
-
-        public IReloadableResourceManager getResourceManager() {
-            return this.resourceManager;
-        }
-
-        public ItemRenderer getItemRenderer() {
-            return this.itemRenderer;
         }
     }
 
     @FunctionalInterface
     public interface Factory {
-        EntityRenderer<? extends Entity> create(EntityRendererManager var1, Context var2);
+        RenderLiving<? extends Entity> create(RenderManager var1, Context var2);
     }
 }

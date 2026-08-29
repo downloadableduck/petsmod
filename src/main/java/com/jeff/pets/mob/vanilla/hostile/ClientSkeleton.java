@@ -3,14 +3,15 @@ package com.jeff.pets.mob.vanilla.hostile;
 import com.jeff.pets.mob.GroundPet;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IRangedAttackMob;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.init.SoundEvents;
 
 public class ClientSkeleton extends GroundPet implements IRangedAttackMob {
 
-    public ClientSkeleton(EntityType<? extends net.minecraft.entity.passive.TameableEntity> entityType, net.minecraft.world.World level) {
+    public ClientSkeleton(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
         super(entityType, level);
+        this.setSize(0.6f, 1.95f);
     }
 
     @Override
@@ -25,11 +26,16 @@ public class ClientSkeleton extends GroundPet implements IRangedAttackMob {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.SKELETON_AMBIENT;
+        return SoundEvents.ENTITY_SKELETON_AMBIENT;
     }
 
     @Override
-    public void performRangedAttack(LivingEntity livingEntity, float f) {
+    public void attackEntityWithRangedAttack(EntityLivingBase livingEntity, float f) {
+
+    }
+
+    @Override
+    public void setSwingingArms(boolean swingingArms) {
 
     }
 }

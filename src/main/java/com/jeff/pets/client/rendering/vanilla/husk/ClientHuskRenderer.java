@@ -7,29 +7,30 @@ import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientHuskRenderer extends PetRenderer<ClientHusk, ClientZombieModel<ClientHusk>> {
+public class ClientHuskRenderer extends PetRenderer<ClientHusk, ClientZombieModel> {
 
-    public ClientHuskRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientZombieModel<>(), 0.75F);
+    public ClientHuskRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+        super(context, new ClientZombieModel(), 0.75F);
     }
 
     @Override
-    protected void scale(ClientHusk state, float f) {
+    public void preRenderCallback(ClientHusk state, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
+        
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ClientHusk livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(ClientHusk livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/zombie/husk.png");
     }
 
     @Override
-    public void setupRotations(ClientHusk husk, float f, float g, float i) {
-        super.setupRotations(husk, f, g, i);
+    public void applyRotations(ClientHusk husk, float f, float g, float i) {
+        super.applyRotations(husk, f, g, i);
         if (husk.isPassenger()) {
-            com.mojang.blaze3d.platform.GlStateManager.translatef(0, -0.5f, 0);
+            net.minecraft.client.renderer.GlStateManager.translatef(0, -0.5f, 0);
         }
     }
 }

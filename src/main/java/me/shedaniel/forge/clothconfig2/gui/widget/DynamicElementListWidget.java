@@ -2,7 +2,6 @@ package me.shedaniel.forge.clothconfig2.gui.widget;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.IGuiEventListener;
-import net.minecraft.client.gui.INestedGuiEventHandler;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -14,19 +13,19 @@ public abstract class DynamicElementListWidget<E extends DynamicElementListWidge
         super(client, width, height, top, bottom, backgroundLocation);
     }
     
-    public boolean changeFocus(boolean boolean_1) {
-        boolean boolean_2 = super.changeFocus(boolean_1);
+    /*public boolean changeFocus(boolean boolean_1) {
+        boolean boolean_2 = super.func(boolean_1);
         if (boolean_2)
             this.ensureVisible(this.getFocused());
         return boolean_2;
-    }
+    }*/
     
     protected boolean isSelected(int int_1) {
         return false;
     }
     
     @OnlyIn(Dist.CLIENT)
-    public abstract static class ElementEntry<E extends ElementEntry<E>> extends Entry<E> implements INestedGuiEventHandler {
+    public abstract static class ElementEntry<E extends ElementEntry<E>> extends Entry<E> implements IGuiEventListener {
         private IGuiEventListener focused;
         private boolean dragging;
         

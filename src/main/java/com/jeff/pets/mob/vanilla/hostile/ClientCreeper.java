@@ -3,14 +3,15 @@ package com.jeff.pets.mob.vanilla.hostile;
 import com.jeff.pets.mob.GroundPet;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.init.SoundEvents;
 
 public class ClientCreeper extends GroundPet {
 
     public boolean isPowered = false;
 
-    public ClientCreeper(EntityType<? extends net.minecraft.entity.passive.TameableEntity> entityType, net.minecraft.world.World level) {
+    public ClientCreeper(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
         super(entityType, level);
+        this.setSize(0.6f, 1.7f);
     }
 
     @Override
@@ -25,6 +26,6 @@ public class ClientCreeper extends GroundPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.CREEPER_PRIMED;
+        return SoundEvents.ENTITY_CREEPER_PRIMED;
     }
 }

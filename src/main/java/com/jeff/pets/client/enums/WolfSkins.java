@@ -14,6 +14,6 @@ public enum WolfSkins implements NameableEnum {
 
     @Override
     public net.minecraft.util.text.ITextComponent getDisplayName() {
-        return new net.minecraft.util.text.StringTextComponent(String.valueOf(this).replace("_", " "));
+        return new net.minecraft.util.text.TextComponentString(String.valueOf(this).replace("_", " "));
     }
 }

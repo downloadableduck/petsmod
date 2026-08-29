@@ -9,18 +9,19 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientPigRenderer extends PetRenderer<ClientPig, ClientPigModel> {
     public String pigTexturePath;
 
-    public ClientPigRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+    public ClientPigRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientPigModel(), 0.7F);
     }
 
     @Override
-    protected void scale(ClientPig livingEntityRenderState, float f) {
+    public void preRenderCallback(ClientPig livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
+        
     }
 
-    public ResourceLocation getTextureLocation(ClientPig pigRenderState) {
+    public ResourceLocation getEntityTexture(ClientPig pigRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/pig/pig.png");
     }
 }

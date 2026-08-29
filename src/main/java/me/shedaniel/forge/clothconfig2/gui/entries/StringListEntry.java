@@ -38,7 +38,7 @@ public class StringListEntry extends TextFieldListEntry<String> {
     
     @Override
     public String getValue() {
-        return textFieldWidget.getValue();
+        return textFieldWidget.getText();
     }
     
     @Override

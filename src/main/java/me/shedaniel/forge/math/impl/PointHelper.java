@@ -9,8 +9,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class PointHelper {
     public static Point ofMouse() {
         Minecraft client = Minecraft.getInstance();
-        double mx = client.mouseHandler.xpos() * (double) client.window.getGuiScaledWidth() / (double) client.window.getWidth();
-        double my = client.mouseHandler.ypos() * (double) client.window.getGuiScaledHeight() / (double) client.window.getHeight();
+        double mx = client.mouseHelper.getMouseX() * (double) client.mainWindow.getScaledWidth() / (double) client.mainWindow.getWidth();
+        double my = client.mouseHelper.getMouseY() * (double) client.mainWindow.getScaledHeight() / (double) client.mainWindow.getHeight();
         return new Point(mx, my);
     }
     

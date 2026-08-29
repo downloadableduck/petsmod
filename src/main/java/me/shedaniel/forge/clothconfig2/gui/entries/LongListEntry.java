@@ -1,6 +1,6 @@
 package me.shedaniel.forge.clothconfig2.gui.entries;
 
-import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -63,9 +63,9 @@ public class LongListEntry extends TextFieldListEntry<Long> {
     }
     
     @Override
-    protected void textFieldPreRender(TextFieldWidget widget) {
+    protected void textFieldPreRender(GuiTextField widget) {
         try {
-            double i = Long.parseLong(textFieldWidget.getValue());
+            double i = Long.parseLong(textFieldWidget.getText());
             if (i < minimum || i > maximum)
                 widget.setTextColor(16733525);
             else
@@ -99,7 +99,7 @@ public class LongListEntry extends TextFieldListEntry<Long> {
     @Override
     public Long getValue() {
         try {
-            return Long.valueOf(textFieldWidget.getValue());
+            return Long.valueOf(textFieldWidget.getText());
         } catch (Exception e) {
             return 0L;
         }
@@ -108,13 +108,13 @@ public class LongListEntry extends TextFieldListEntry<Long> {
     @Override
     public Optional<String> getError() {
         try {
-            long i = Long.parseLong(textFieldWidget.getValue());
+            long i = Long.parseLong(textFieldWidget.getText());
             if (i > maximum)
-                return Optional.of(I18n.get("text.cloth-config.error.too_large", maximum));
+                return Optional.of(I18n.format("text.cloth-config.error.too_large", maximum));
             else if (i < minimum)
-                return Optional.of(I18n.get("text.cloth-config.error.too_small", minimum));
+                return Optional.of(I18n.format("text.cloth-config.error.too_small", minimum));
         } catch (NumberFormatException ex) {
-            return Optional.of(I18n.get("text.cloth-config.error.not_valid_number_long"));
+            return Optional.of(I18n.format("text.cloth-config.error.not_valid_number_long"));
         }
         return super.getError();
     }

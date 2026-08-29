@@ -3,11 +3,12 @@ package com.jeff.pets.mob.vanilla.hostile;
 import com.jeff.pets.mob.FlyingPet;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.init.SoundEvents;
 
 public class ClientVex extends FlyingPet {
-    public ClientVex(EntityType<? extends net.minecraft.entity.passive.TameableEntity> entityType, net.minecraft.world.World level) {
+    public ClientVex(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
         super(entityType, level);
+        this.setSize(0.4f, 0.8f);
     }
 
     @Override
@@ -22,6 +23,6 @@ public class ClientVex extends FlyingPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.VEX_AMBIENT;
+        return SoundEvents.ENTITY_VEX_AMBIENT;
     }
 }

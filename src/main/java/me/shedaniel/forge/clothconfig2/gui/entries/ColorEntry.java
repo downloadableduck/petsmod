@@ -2,7 +2,7 @@ package me.shedaniel.forge.clothconfig2.gui.entries;
 
 import me.shedaniel.forge.clothconfig2.gui.widget.ColorDisplayWidget;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.resources.I18n;
 import org.apache.commons.lang3.StringUtils;
 
@@ -28,11 +28,11 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
             throw new IllegalArgumentException("Invalid Color: " + colorValue.getError().name());
         this.alpha = false;
         this.saveConsumer = saveConsumer;
-        this.textFieldWidget.setValue(getHexColorString(value));
-        this.colorDisplayWidget = new ColorDisplayWidget(0, 0, 20, getColorValueColor(textFieldWidget.getValue()));
+        this.textFieldWidget.setText(getHexColorString(value));
+        this.colorDisplayWidget = new ColorDisplayWidget(0, 0, 20, getColorValueColor(textFieldWidget.getText()));
         this.original = value;
         resetButton.setOnPress(button -> {
-            this.textFieldWidget.setValue(getHexColorString(original));
+            this.textFieldWidget.setText(getHexColorString(original));
             getScreen().setEdited(true, isRequiresRestart());
         });
     }
@@ -41,10 +41,10 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
         this.colorDisplayWidget.y = y;
-        ColorValue value = getColorValue(textFieldWidget.getValue());
+        ColorValue value = getColorValue(textFieldWidget.getText());
         if (!value.hasError())
             colorDisplayWidget.setColor(alpha ? value.getColor() : 0xff000000 | value.getColor());
-        if (Minecraft.getInstance().font.isBidirectional()) {
+        if (Minecraft.getInstance().fontRenderer.getBidiFlag()) {
             this.colorDisplayWidget.x = x + resetButton.getWidth() + textFieldWidget.getWidth();
         } else {
             this.colorDisplayWidget.x = textFieldWidget.x - 23;
@@ -53,7 +53,7 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
     }
     
     @Override
-    protected void textFieldPreRender(TextFieldWidget widget) {
+    protected void textFieldPreRender(GuiTextField widget) {
         if (!getError().isPresent()) {
             widget.setTextColor(14737632);
         } else {
@@ -77,33 +77,33 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
     
     @Override
     public Integer getValue() {
-        return getColorValueColor(textFieldWidget.getValue());
+        return getColorValueColor(textFieldWidget.getText());
     }
     
     @Deprecated
     public void setValue(int color) {
-        textFieldWidget.setValue(getHexColorString(color));
+        textFieldWidget.setText(getHexColorString(color));
     }
     
     @Override
     public Optional<String> getError() {
-        ColorValue colorValue = getColorValue(this.textFieldWidget.getValue());
+        ColorValue colorValue = getColorValue(this.textFieldWidget.getText());
         if (colorValue.hasError())
-            return Optional.of(I18n.get("text.cloth-config.error.color." + colorValue.getError().name().toLowerCase(Locale.ROOT)));
+            return Optional.of(I18n.format("text.cloth-config.error.color." + colorValue.getError().name().toLowerCase(Locale.ROOT)));
         return super.getError();
     }
     
     public void withAlpha() {
         if (!alpha) {
             this.alpha = true;
-            textFieldWidget.setValue(getHexColorString(original));
+            textFieldWidget.setText(getHexColorString(original));
         }
     }
     
     public void withoutAlpha() {
         if (alpha) {
             alpha = false;
-            textFieldWidget.setValue(getHexColorString(original));
+            textFieldWidget.setText(getHexColorString(original));
         }
     }
     

@@ -1,16 +1,16 @@
 package me.shedaniel.forge.clothconfig2.gui.entries;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.platform.GlStateManager;
 import me.shedaniel.forge.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.forge.math.Rectangle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.client.gui.IGuiEventListener;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -78,11 +78,11 @@ public class MultiElementListEntry<T> extends TooltipListEntry<T> {
         widget.rectangle.y = y;
         widget.rectangle.width = entryWidth + 19;
         widget.rectangle.height = 24;
-        Minecraft.getInstance().getTextureManager().bind(CONFIG_TEX);
-        RenderHelper.turnOff();
+        Minecraft.getInstance().getTextureManager().bindTexture(CONFIG_TEX);
+        RenderHelper.disableStandardItemLighting();
         GlStateManager.color4f(1, 1, 1, 1);
-        blit(x - 15, y + 4, 24, (widget.rectangle.contains(mouseX, mouseY) ? 18 : 0) + (expanded ? 9 : 0), 9, 9);
-        Minecraft.getInstance().font.drawShadow(I18n.get(categoryName), x, y + 5, widget.rectangle.contains(mouseX, mouseY) ? 0xffe6fe16 : -1);
+        drawTexturedModalRect(x - 15, y + 4, 24, (widget.rectangle.contains(mouseX, mouseY) ? 18 : 0) + (expanded ? 9 : 0), 9, 9);
+        Minecraft.getInstance().fontRenderer.drawStringWithShadow(I18n.format(categoryName), x, y + 5, widget.rectangle.contains(mouseX, mouseY) ? 0xffe6fe16 : -1);
         for (AbstractConfigListEntry<?> entry : entries) {
             entry.setParent(getParent());
             entry.setScreen(getScreen());
@@ -150,7 +150,7 @@ public class MultiElementListEntry<T> extends TooltipListEntry<T> {
     }
     
     @Override
-    public List<? extends IGuiEventListener> children() {
+    public List<? extends IGuiEventListener> getChildren() {
         return expanded ? children : Collections.singletonList(widget);
     }
     
@@ -164,7 +164,7 @@ public class MultiElementListEntry<T> extends TooltipListEntry<T> {
         List<String> errors = entries.stream().map(AbstractConfigListEntry::getConfigError).filter(Optional::isPresent).map(Optional::get).collect(Collectors.toList());
         
         if (errors.size() > 1)
-            return Optional.of(I18n.get("text.cloth-config.multi_error"));
+            return Optional.of(I18n.format("text.cloth-config.multi_error"));
         else
             return errors.stream().findFirst();
     }
@@ -176,7 +176,7 @@ public class MultiElementListEntry<T> extends TooltipListEntry<T> {
         public boolean mouseClicked(double double_1, double double_2, int int_1) {
             if (rectangle.contains(double_1, double_2)) {
                 expanded = !expanded;
-                Minecraft.getInstance().getSoundManager().play(SimpleSound.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+                Minecraft.getInstance().getSoundHandler().play(SimpleSound.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
                 return true;
             }
             return false;

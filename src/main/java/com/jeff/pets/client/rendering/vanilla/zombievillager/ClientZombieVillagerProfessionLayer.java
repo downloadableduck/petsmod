@@ -1,13 +1,13 @@
 package com.jeff.pets.client.rendering.vanilla.zombievillager;
 
 import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
-import net.minecraft.client.renderer.entity.IEntityRenderer;
+import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientZombieVillagerProfessionLayer extends LayerRenderer<ClientZombieVillager, ClientZombieVillagerModel> {
+public class ClientZombieVillagerProfessionLayer implements LayerRenderer<ClientZombieVillager> {
 
     public static final ResourceLocation ARMORER_LOCATION = new ResourceLocation("minecraft", "textures/entity/zombie_villager/profession/armorer.png");
     public static final ResourceLocation BUTCHER_LOCATION = new ResourceLocation("minecraft", "textures/entity/zombie_villager/profession/butcher.png");
@@ -24,48 +24,50 @@ public class ClientZombieVillagerProfessionLayer extends LayerRenderer<ClientZom
     public static final ResourceLocation TOOLSMITH_LOCATION = new ResourceLocation("minecraft", "textures/entity/zombie_villager/profession/toolsmith.png");
     public static final ResourceLocation WEAPONSMITH_LOCATION = new ResourceLocation("minecraft", "textures/entity/zombie_villager/profession/weaponsmith.png");
 
-    public ClientZombieVillagerProfessionLayer(IEntityRenderer<ClientZombieVillager, ClientZombieVillagerModel> renderLayerParent) {
-        super(renderLayerParent);
+    private final RenderLivingBase<ClientZombieVillager> renderer;
+
+    public ClientZombieVillagerProfessionLayer(RenderLivingBase<ClientZombieVillager> renderLayerParent) {
+        this.renderer = renderLayerParent;
     }
 
     @Override
     public void render(ClientZombieVillager zombieVillager, float f, float g, float h, float k, float l, float u, float v) {
-        com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
-        com.mojang.blaze3d.platform.GlStateManager.scalef(1.001f, 1.001f, 1.001f);
+        net.minecraft.client.renderer.GlStateManager.pushMatrix();
+        net.minecraft.client.renderer.GlStateManager.scalef(1.001f, 1.001f, 1.001f);
         if (CONFIG.zombieVillagerSkin.equals("armorer")) {
-            this.bindTexture(ARMORER_LOCATION);
+            this.renderer.bindTexture(ARMORER_LOCATION);
         } else if (CONFIG.zombieVillagerSkin.equals("butcher")) {
-            this.bindTexture(BUTCHER_LOCATION);
+            this.renderer.bindTexture(BUTCHER_LOCATION);
         } else if (CONFIG.zombieVillagerSkin.equals("cartographer")) {
-            this.bindTexture(CARTOGRAPHER_LOCATION);
+            this.renderer.bindTexture(CARTOGRAPHER_LOCATION);
         } else if (CONFIG.zombieVillagerSkin.equals("cleric")) {
-            this.bindTexture(CLERIC_LOCATION);
+            this.renderer.bindTexture(CLERIC_LOCATION);
         } else if (CONFIG.zombieVillagerSkin.equals("farmer")) {
-            this.bindTexture(FARMER_LOCATION);
+            this.renderer.bindTexture(FARMER_LOCATION);
         } else if (CONFIG.zombieVillagerSkin.equals("fisherman")) {
-            this.bindTexture(FISHERMAN_LOCATION);
+            this.renderer.bindTexture(FISHERMAN_LOCATION);
         } else if (CONFIG.zombieVillagerSkin.equals("fletcher")) {
-            this.bindTexture(FLETCHER_LOCATION);
+            this.renderer.bindTexture(FLETCHER_LOCATION);
         } else if (CONFIG.zombieVillagerSkin.equals("leatherworker")) {
-            this.bindTexture(LEATHERWORKER_LOCATION);
+            this.renderer.bindTexture(LEATHERWORKER_LOCATION);
         } else if (CONFIG.zombieVillagerSkin.equals("librarian")) {
-            this.bindTexture(LIBRARIAN_LOCATION);
+            this.renderer.bindTexture(LIBRARIAN_LOCATION);
         } else if (CONFIG.zombieVillagerSkin.equals("mason")) {
-            this.bindTexture(MASON_LOCATION);
+            this.renderer.bindTexture(MASON_LOCATION);
         } else if (CONFIG.zombieVillagerSkin.equals("nitwit")) {
-            this.bindTexture(NITWIT_LOCATION);
+            this.renderer.bindTexture(NITWIT_LOCATION);
         } else if (CONFIG.zombieVillagerSkin.equals("shepherd")) {
-            this.bindTexture(SHEPHERD_LOCATION);
+            this.renderer.bindTexture(SHEPHERD_LOCATION);
         } else if (CONFIG.zombieVillagerSkin.equals("toolsmith")) {
-            this.bindTexture(TOOLSMITH_LOCATION);
+            this.renderer.bindTexture(TOOLSMITH_LOCATION);
         } else if (CONFIG.zombieVillagerSkin.equals("weaponsmith")) {
-            this.bindTexture(WEAPONSMITH_LOCATION);
+            this.renderer.bindTexture(WEAPONSMITH_LOCATION);
         }
-        com.mojang.blaze3d.platform.GlStateManager.popMatrix();
+        net.minecraft.client.renderer.GlStateManager.popMatrix();
     }
 
     @Override
-    public boolean colorsOnDamage() {
+    public boolean shouldCombineTextures() {
         return false;
     }
 }

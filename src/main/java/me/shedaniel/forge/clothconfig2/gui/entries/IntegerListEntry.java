@@ -1,6 +1,6 @@
 package me.shedaniel.forge.clothconfig2.gui.entries;
 
-import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -63,9 +63,9 @@ public class IntegerListEntry extends TextFieldListEntry<Integer> {
     }
     
     @Override
-    protected void textFieldPreRender(TextFieldWidget widget) {
+    protected void textFieldPreRender(GuiTextField widget) {
         try {
-            double i = Integer.parseInt(textFieldWidget.getValue());
+            double i = Integer.parseInt(textFieldWidget.getText());
             if (i < minimum || i > maximum)
                 widget.setTextColor(16733525);
             else
@@ -99,7 +99,7 @@ public class IntegerListEntry extends TextFieldListEntry<Integer> {
     @Override
     public Integer getValue() {
         try {
-            return Integer.valueOf(textFieldWidget.getValue());
+            return Integer.valueOf(textFieldWidget.getText());
         } catch (Exception e) {
             return 0;
         }
@@ -108,13 +108,13 @@ public class IntegerListEntry extends TextFieldListEntry<Integer> {
     @Override
     public Optional<String> getError() {
         try {
-            int i = Integer.parseInt(textFieldWidget.getValue());
+            int i = Integer.parseInt(textFieldWidget.getText());
             if (i > maximum)
-                return Optional.of(I18n.get("text.cloth-config.error.too_large", maximum));
+                return Optional.of(I18n.format("text.cloth-config.error.too_large", maximum));
             else if (i < minimum)
-                return Optional.of(I18n.get("text.cloth-config.error.too_small", minimum));
+                return Optional.of(I18n.format("text.cloth-config.error.too_small", minimum));
         } catch (NumberFormatException ex) {
-            return Optional.of(I18n.get("text.cloth-config.error.not_valid_number_int"));
+            return Optional.of(I18n.format("text.cloth-config.error.not_valid_number_int"));
         }
         return super.getError();
     }

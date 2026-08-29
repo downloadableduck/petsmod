@@ -8,19 +8,20 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientWolfRenderer extends PetRenderer<ClientWolf, ClientWolfModel> {
 
-    public ClientWolfRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+    public ClientWolfRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientWolfModel(), 0.75f);
     }
 
     @Override
-    protected void scale(ClientWolf livingEntityRenderState, float f) {
+    public void preRenderCallback(ClientWolf livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
+        
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ClientWolf livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(ClientWolf livingEntityRenderState) {
         String wolfTexturePath = "textures/entity/wolf/wolf.png";
 
         return new ResourceLocation("minecraft", wolfTexturePath);

@@ -1,13 +1,14 @@
 package com.jeff.pets.mob.vanilla.boss;
 
 import com.jeff.pets.CanFly;
+import com.jeff.pets.client.Math2;
 import com.jeff.pets.mob.FlyingPet;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.boss.dragon.phase.IPhase;
 import net.minecraft.entity.boss.dragon.phase.PhaseType;
-import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
@@ -21,8 +22,9 @@ public class ClientEnderDragon extends FlyingPet {
     public float flapTime;
     public int posPointer = -1;
 
-    public ClientEnderDragon(EntityType<? extends TameableEntity> entityType, net.minecraft.world.World level) {
+    public ClientEnderDragon(EntityType<? extends EntityTameable> entityType, net.minecraft.world.World level) {
         super(entityType, level);
+        this.setSize(16f, 8f);
     }
 
     @Override
@@ -37,21 +39,16 @@ public class ClientEnderDragon extends FlyingPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENDER_DRAGON_AMBIENT;
+        return SoundEvents.ENTITY_ENDER_DRAGON_FLAP;
     }
 
     @Override
     public void tick() {
         super.tick();
         this.oFlapTime = this.flapTime;
-        Vec3d vec3 = this.getDeltaMovement();
-        float g = 0.2F / ((float) vec3.y() * 10.0F + 1.0F);
-        g *= (float) Math.pow(2.0F, vec3.y);
-        if (this.isInWall()) {
-            this.flapTime += g * 0.5F;
-        } else {
-            this.flapTime += g;
-        }
+        float g = 0.2F / ((float) this.motionY * 10.0F + 1.0F);
+        g *= (float) Math.pow(2.0F, this.motionY);
+        this.flapTime += g;
     }
 
     public double[] getLatencyPos(int i, float f) {
@@ -69,7 +66,7 @@ public class ClientEnderDragon extends FlyingPet {
         d = this.positions[j][1];
         e = this.positions[k][1] - d;
         ds[1] = d + e * (double) f;
-        ds[2] = net.minecraft.util.math.MathHelper.lerp(f, this.positions[j][2], this.positions[k][2]);
+        ds[2] = Math2.lerp(f, this.positions[j][2], this.positions[k][2]);
         return ds;
     }
 
@@ -83,8 +80,8 @@ public class ClientEnderDragon extends FlyingPet {
                 e = es[1] - ds[1];
             }
         } else {
-            BlockPos blockPos = this.level.getHeightmapPos(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, EndPodiumFeature.END_PODIUM_LOCATION);
-            double d = Math.max(Math.sqrt(blockPos.distSqr(new Vec3i(this.position().x, this.position().y, this.position().z))) / (double) 4.0F, 1.0F);
+            BlockPos blockPos = this.world.getHeight(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, EndPodiumFeature.END_PODIUM_LOCATION);
+            double d = Math.max(Math.sqrt(blockPos.distanceSq(new Vec3i(this.getPositionVector().x, this.getPositionVector().y, this.getPositionVector().z))) / (double) 4.0F, 1.0F);
             e = (double) i / d;
         }
 

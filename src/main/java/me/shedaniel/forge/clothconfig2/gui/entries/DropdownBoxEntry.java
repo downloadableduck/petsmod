@@ -2,20 +2,15 @@ package me.shedaniel.forge.clothconfig2.gui.entries;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.platform.GlStateManager;
 import me.shedaniel.forge.clothconfig2.ClothConfigInitializer;
 import me.shedaniel.forge.clothconfig2.api.ScissorsHandler;
 import me.shedaniel.forge.math.Rectangle;
 import me.shedaniel.forge.math.impl.PointHelper;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FocusableGui;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.IGuiEventListener;
-import net.minecraft.client.gui.IRenderable;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
@@ -35,7 +30,7 @@ import static me.shedaniel.forge.clothconfig2.ClothConfigInitializer.handleScrol
 @OnlyIn(Dist.CLIENT)
 public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
     
-    protected Button resetButton;
+    protected GuiButton resetButton;
     protected SelectionElement<T> selectionElement;
     private Supplier<T> defaultValue;
     @Nullable private Consumer<T> saveConsumer;
@@ -46,30 +41,35 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             @Nullable Supplier<Optional<String[]>> tooltipSupplier, boolean requiresRestart,
             @Nullable Supplier<T> defaultValue,
             @Nullable Consumer<T> saveConsumer, @Nullable Iterable<T> selections, SelectionTopCellElement<T> topRenderer, SelectionCellCreator<T> cellCreator) {
-        super(I18n.get(fieldName), tooltipSupplier, requiresRestart);
+        super(I18n.format(fieldName), tooltipSupplier, requiresRestart);
         this.defaultValue = defaultValue;
         this.saveConsumer = saveConsumer;
-        this.resetButton = new Button(0, 0, Minecraft.getInstance().font.width(I18n.get(resetButtonKey)) + 6, 20, I18n.get(resetButtonKey), widget -> {
-            selectionElement.topRenderer.setValue(defaultValue.get());
-            getScreen().setEdited(true, isRequiresRestart());
-        });
+        this.resetButton = new GuiButton(new Random().nextInt(), 0, 0, Minecraft.getInstance().fontRenderer.getStringWidth(I18n.format(resetButtonKey)) + 6, 20, I18n.format(resetButtonKey)) {
+            @Override
+            public void onClick(double i, double j) {
+                selectionElement.topRenderer.setValue(defaultValue.get());
+
+                getScreen().setEdited(true, isRequiresRestart());
+                super.onClick(i, j);
+            }
+        };
         this.selectionElement = new SelectionElement<>(this, new Rectangle(0, 0, 150, 20), new DefaultDropdownMenuElement<>(selections == null ? ImmutableList.of() : ImmutableList.copyOf(selections)), topRenderer, cellCreator);
     }
     
     @Override
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-        MainWindow window = Minecraft.getInstance().window;
-        this.resetButton.active = isEditable() && getDefaultValue().isPresent() && (!defaultValue.get().equals(getValue()) || getConfigError().isPresent());
+        MainWindow window = Minecraft.getInstance().mainWindow;
+        this.resetButton.enabled = isEditable() && getDefaultValue().isPresent() && (!defaultValue.get().equals(getValue()) || getConfigError().isPresent());
         this.resetButton.y = y;
         this.selectionElement.active = isEditable();
         this.selectionElement.bounds.y = y;
-        if (Minecraft.getInstance().font.isBidirectional()) {
-            Minecraft.getInstance().font.drawShadow(I18n.get(getFieldName()), window.getGuiScaledWidth() - x - Minecraft.getInstance().font.width(I18n.get(getFieldName())), y + 5, getPreferredTextColor());
+        if (Minecraft.getInstance().fontRenderer.getBidiFlag()) {
+            Minecraft.getInstance().fontRenderer.drawStringWithShadow(I18n.format(getFieldName()), window.getScaledWidth() - x - Minecraft.getInstance().fontRenderer.getStringWidth(I18n.format(getFieldName())), y + 5, getPreferredTextColor());
             this.resetButton.x = x;
             this.selectionElement.bounds.x = x + resetButton.getWidth() + 1;
         } else {
-            Minecraft.getInstance().font.drawShadow(I18n.get(getFieldName()), x, y + 5, getPreferredTextColor());
+            Minecraft.getInstance().fontRenderer.drawStringWithShadow(I18n.format(getFieldName()), x, y + 5, getPreferredTextColor());
             this.resetButton.x = x + entryWidth - resetButton.getWidth();
             this.selectionElement.bounds.x = x + entryWidth - 150 + 1;
         }
@@ -111,7 +111,8 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
     }
     
     @Override
-    public List<? extends IGuiEventListener> children() {
+    public List<? extends IGuiEventListener> getChildren() {
+        List list = super.getParent().children();
         return Lists.newArrayList(selectionElement, resetButton);
     }
     
@@ -131,11 +132,14 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
     }
     
     @Override
-    public boolean mouseScrolled(double double_1, double double_2, double double_3) {
-        return selectionElement.mouseScrolled(double_1, double_2, double_3);
+    public boolean mouseScrolled(double double_1) {
+        Minecraft client = Minecraft.getInstance();
+        double mouseX = client.mouseHelper.getMouseX() * (double) client.mainWindow.getScaledWidth() / (double) client.mainWindow.getWidth();
+        double mouseY = client.mouseHelper.getMouseY() * (double) client.mainWindow.getScaledHeight() / (double) client.mainWindow.getHeight();
+        return selectionElement.mouseScrolled(double_1);
     }
     
-    public static class SelectionElement<R> extends FocusableGui implements IRenderable {
+    public static class SelectionElement<R> extends GuiEventHandler implements IGuiEventListener {
         protected Rectangle bounds;
         protected boolean active;
         protected SelectionTopCellElement<R> topRenderer;
@@ -154,10 +158,9 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             this.topRenderer.entry = entry;
         }
         
-        @Override
         public void render(int mouseX, int mouseY, float delta) {
-            fill(bounds.x, bounds.y, bounds.x + bounds.width, bounds.y + bounds.height, -6250336);
-            fill(bounds.x + 1, bounds.y + 1, bounds.x + bounds.width - 1, bounds.y + bounds.height - 1, -16777216);
+            drawRect(bounds.x, bounds.y, bounds.x + bounds.width, bounds.y + bounds.height, -6250336);
+            drawRect(bounds.x + 1, bounds.y + 1, bounds.x + bounds.width - 1, bounds.y + bounds.height - 1, -16777216);
             topRenderer.render(mouseX, mouseY, bounds.x, bounds.y, bounds.width, bounds.height, delta);
             if (menu.isExpanded())
                 menu.render(mouseX, mouseY, bounds, delta);
@@ -169,9 +172,9 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         }
         
         @Override
-        public boolean mouseScrolled(double double_1, double double_2, double double_3) {
+        public boolean mouseScrolled(double double_1) {
             if (menu.isExpanded())
-                return menu.mouseScrolled(double_1, double_2, double_3);
+                return menu.mouseScrolled(double_1);
             return false;
         }
         
@@ -191,7 +194,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         }
         
         @Override
-        public List<? extends IGuiEventListener> children() {
+        public List<? extends IGuiEventListener> getChildren() {
             return Lists.newArrayList(topRenderer, menu);
         }
         
@@ -205,9 +208,14 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             }
             return b;
         }
+
+        @Override
+        public void setFocused(IGuiEventListener listener) {
+            super.setFocused(listener);
+        }
     }
     
-    public static abstract class DropdownMenuElement<R> extends FocusableGui {
+    public static abstract class DropdownMenuElement<R> extends GuiEventHandler {
         @Deprecated private SelectionCellCreator<R> cellCreator;
         @Deprecated private DropdownBoxEntry<R> entry;
         private boolean isSelected;
@@ -238,7 +246,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         }
         
         @Override
-        public abstract List<SelectionCellElement<R>> children();
+        public abstract List<? extends IGuiEventListener> getChildren();
     }
     
     public static class DefaultDropdownMenuElement<R> extends DropdownMenuElement<R> {
@@ -358,8 +366,8 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         public void lateRender(int mouseX, int mouseY, float delta) {
             int last10Height = getHeight();
             int cWidth = getCellCreator().getCellWidth();
-            fill(lastRectangle.x, lastRectangle.y + lastRectangle.height, lastRectangle.x + cWidth, lastRectangle.y + lastRectangle.height + last10Height + 1, -6250336);
-            fill(lastRectangle.x + 1, lastRectangle.y + lastRectangle.height + 1, lastRectangle.x + cWidth - 1, lastRectangle.y + lastRectangle.height + last10Height, -16777216);
+            drawRect(lastRectangle.x, lastRectangle.y + lastRectangle.height, lastRectangle.x + cWidth, lastRectangle.y + lastRectangle.height + last10Height + 1, -6250336);
+            drawRect(lastRectangle.x + 1, lastRectangle.y + lastRectangle.height + 1, lastRectangle.x + cWidth - 1, lastRectangle.y + lastRectangle.height + last10Height, -16777216);
             GlStateManager.pushMatrix();
             GlStateManager.translatef(0, 0, 300f);
             
@@ -375,13 +383,13 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             ScissorsHandler.INSTANCE.removeLastScissor();
             
             if (currentElements.isEmpty()) {
-                FontRenderer font = Minecraft.getInstance().font;
-                String s = I18n.get("text.cloth-config.dropdown.value.unknown");
-                font.drawShadow(s, lastRectangle.x + getCellCreator().getCellWidth() / 2f - font.width(s) / 2f, lastRectangle.y + lastRectangle.height + 3, -1);
+                FontRenderer font = Minecraft.getInstance().fontRenderer;
+                String s = I18n.format("text.cloth-config.dropdown.value.unknown");
+                font.drawStringWithShadow(s, lastRectangle.x + getCellCreator().getCellWidth() / 2f - font.getStringWidth(s) / 2f, lastRectangle.y + lastRectangle.height + 3, -1);
             }
             
             if (getMaxScrollPosition() > 6) {
-                GlStateManager.disableTexture();
+                GlStateManager.disableTexture2D();
                 int scrollbarPositionMinX = lastRectangle.x + getCellCreator().getCellWidth() - 6;
                 int scrollbarPositionMaxX = scrollbarPositionMinX + 6;
                 int height = (int) (((last10Height) * (last10Height)) / this.getMaxScrollPosition());
@@ -394,24 +402,24 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
                 int topc = new Rectangle(scrollbarPositionMinX, minY, scrollbarPositionMaxX - scrollbarPositionMinX, height).contains(PointHelper.ofMouse()) ? 222 : 172;
                 
                 Tessellator tessellator = Tessellator.getInstance();
-                BufferBuilder buffer = tessellator.getBuilder();
+                BufferBuilder buffer = tessellator.getBuffer();
                 
                 // Bottom
                 buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-                buffer.vertex(scrollbarPositionMinX, minY + height, 0.0D).uv(0, 1).color(bottomc, bottomc, bottomc, 255).endVertex();
-                buffer.vertex(scrollbarPositionMaxX, minY + height, 0.0D).uv(1, 1).color(bottomc, bottomc, bottomc, 255).endVertex();
-                buffer.vertex(scrollbarPositionMaxX, minY, 0.0D).uv(1, 0).color(bottomc, bottomc, bottomc, 255).endVertex();
-                buffer.vertex(scrollbarPositionMinX, minY, 0.0D).uv(0, 0).color(bottomc, bottomc, bottomc, 255).endVertex();
-                tessellator.end();
+                buffer.pos(scrollbarPositionMinX, minY + height, 0.0D).tex(0, 1).color(bottomc, bottomc, bottomc, 255).endVertex();
+                buffer.pos(scrollbarPositionMaxX, minY + height, 0.0D).tex(1, 1).color(bottomc, bottomc, bottomc, 255).endVertex();
+                buffer.pos(scrollbarPositionMaxX, minY, 0.0D).tex(1, 0).color(bottomc, bottomc, bottomc, 255).endVertex();
+                buffer.pos(scrollbarPositionMinX, minY, 0.0D).tex(0, 0).color(bottomc, bottomc, bottomc, 255).endVertex();
+                tessellator.draw();
                 
                 // Top
                 buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-                buffer.vertex(scrollbarPositionMinX, (minY + height - 1), 0.0D).uv(0, 1).color(topc, topc, topc, 255).endVertex();
-                buffer.vertex((scrollbarPositionMaxX - 1), (minY + height - 1), 0.0D).uv(1, 1).color(topc, topc, topc, 255).endVertex();
-                buffer.vertex((scrollbarPositionMaxX - 1), minY, 0.0D).uv(1, 0).color(topc, topc, topc, 255).endVertex();
-                buffer.vertex(scrollbarPositionMinX, minY, 0.0D).uv(0, 0).color(topc, topc, topc, 255).endVertex();
-                tessellator.end();
-                GlStateManager.enableTexture();
+                buffer.pos(scrollbarPositionMinX, (minY + height - 1), 0.0D).tex(0, 1).color(topc, topc, topc, 255).endVertex();
+                buffer.pos((scrollbarPositionMaxX - 1), (minY + height - 1), 0.0D).tex(1, 1).color(topc, topc, topc, 255).endVertex();
+                buffer.pos((scrollbarPositionMaxX - 1), minY, 0.0D).tex(1, 0).color(topc, topc, topc, 255).endVertex();
+                buffer.pos(scrollbarPositionMinX, minY, 0.0D).tex(0, 0).color(topc, topc, topc, 255).endVertex();
+                tessellator.draw();
+                GlStateManager.enableTexture2D();
             }
             GlStateManager.translatef(0, 0, -300f);
             GlStateManager.popMatrix();
@@ -421,8 +429,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         public int getHeight() {
             return Math.max(Math.min(getCellCreator().getDropBoxMaxHeight(), (int) getMaxScroll()), 14);
         }
-        
-        @Override
+
         public boolean isMouseOver(double mouseX, double mouseY) {
             return isExpanded() && mouseX >= lastRectangle.x && mouseX <= lastRectangle.x + getCellCreator().getCellWidth() && mouseY >= lastRectangle.y + lastRectangle.height && mouseY <= lastRectangle.y + lastRectangle.height + getHeight() + 1;
         }
@@ -450,9 +457,12 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         }
         
         @Override
-        public boolean mouseScrolled(double mouseX, double mouseY, double double_3) {
+        public boolean mouseScrolled(double amount) {
+            Minecraft client = Minecraft.getInstance();
+            double mouseX = client.mouseHelper.getMouseX() * (double) client.mainWindow.getScaledWidth() / (double) client.mainWindow.getWidth();
+            double mouseY = client.mouseHelper.getMouseY() * (double) client.mainWindow.getScaledHeight() / (double) client.mainWindow.getHeight();
             if (isMouseOver(mouseX, mouseY)) {
-                offset(ClothConfigInitializer.getScrollStep() * -double_3, true);
+                offset(ClothConfigInitializer.getScrollStep() * -amount, true);
                 return true;
             }
             return false;
@@ -489,8 +499,8 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         }
         
         @Override
-        public List<SelectionCellElement<R>> children() {
-            return currentElements;
+        public List<? extends IGuiEventListener> getChildren() {
+            return (List) currentElements;
         }
     }
     
@@ -533,7 +543,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         }
     }
     
-    public static abstract class SelectionCellElement<R> extends FocusableGui {
+    public static abstract class SelectionCellElement<R> extends GuiEventHandler implements IGuiEventListener {
         @Deprecated private DropdownBoxEntry<R> entry;
         
         
@@ -575,8 +585,8 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             this.height = height;
             boolean b = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
             if (b)
-                fill(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
-            Minecraft.getInstance().font.drawShadow(toStringFunction.apply(r), x + 6, y + 3, b ? 16777215 : 8947848);
+                drawRect(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
+            Minecraft.getInstance().fontRenderer.drawStringWithShadow(toStringFunction.apply(r), x + 6, y + 3, b ? 16777215 : 8947848);
         }
         
         @Override
@@ -597,7 +607,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         }
         
         @Override
-        public List<? extends IGuiEventListener> children() {
+        public List<? extends IGuiEventListener> getChildren() {
             return Collections.emptyList();
         }
         
@@ -614,7 +624,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         }
     }
     
-    public static abstract class SelectionTopCellElement<R> extends FocusableGui {
+    public static abstract class SelectionTopCellElement<R> extends GuiEventHandler {
         @Deprecated private DropdownBoxEntry<R> entry;
         protected boolean isSelected = false;
         
@@ -643,7 +653,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         }
         
         public void selectFirstRecommendation() {
-            List<SelectionCellElement<R>> children = getParent().selectionElement.menu.children();
+            List<SelectionCellElement<R>> children = (List) getParent().selectionElement.menu.getChildren();
             for (SelectionCellElement<R> child : children) {
                 if (child.getSelection() != null) {
                     setValue(child.getSelection());
@@ -657,7 +667,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
     }
     
     public static class DefaultSelectionTopCellElement<R> extends SelectionTopCellElement<R> {
-        protected TextFieldWidget textFieldWidget;
+        protected GuiTextField textFieldWidget;
         protected Function<String, R> toObjectFunction;
         protected Function<R, String> toStringFunction;
         protected R value;
@@ -666,11 +676,11 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             this.value = Objects.requireNonNull(value);
             this.toObjectFunction = Objects.requireNonNull(toObjectFunction);
             this.toStringFunction = Objects.requireNonNull(toStringFunction);
-            textFieldWidget = new TextFieldWidget(Minecraft.getInstance().font, 0, 0, 148, 18, "") {
+            textFieldWidget = new GuiTextField(new Random().nextInt(), Minecraft.getInstance().fontRenderer, 0, 0, 148, 18) {
                 @Override
-                public void render(int int_1, int int_2, float float_1) {
+                public void drawTextField(int int_1, int int_2, float float_1) {
                     setFocused(isSelected && DefaultSelectionTopCellElement.this.getParent().getFocused() == DefaultSelectionTopCellElement.this.getParent().selectionElement && DefaultSelectionTopCellElement.this.getParent().selectionElement.getFocused() == DefaultSelectionTopCellElement.this && DefaultSelectionTopCellElement.this.getFocused() == this);
-                    super.render(int_1, int_2, float_1);
+                    super.drawTextField(int_1, int_2, float_1);
                 }
                 
                 @Override
@@ -682,10 +692,10 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
                     return super.keyPressed(int_1, int_2, int_3);
                 }
             };
-            textFieldWidget.setBordered(false);
-            textFieldWidget.setMaxLength(999999);
-            textFieldWidget.setValue(toStringFunction.apply(value));
-            textFieldWidget.setResponder(s -> {
+            textFieldWidget.setEnableBackgroundDrawing(false);
+            textFieldWidget.setMaxStringLength(999999);
+            textFieldWidget.setText(toStringFunction.apply(value));
+            textFieldWidget.setTextAcceptHandler((i, s) -> {
                 if (getParent() != null && getParent().getScreen() != null && !toStringFunction.apply(value).equals(s))
                     getParent().getScreen().setEdited(true, getParent().isRequiresRestart());
             });
@@ -695,39 +705,39 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
             textFieldWidget.x = x + 4;
             textFieldWidget.y = y + 6;
-            textFieldWidget.setWidth(width - 8);
-            textFieldWidget.setEditable(getParent().isEditable());
+            textFieldWidget.width = (width - 8);
+            textFieldWidget.setEnabled(getParent().isEditable());
             textFieldWidget.setTextColor(getPreferredTextColor());
-            textFieldWidget.render(mouseX, mouseY, delta);
+            textFieldWidget.drawTextField(mouseX, mouseY, delta);
         }
         
         @Override
         public R getValue() {
             if (hasConfigError())
                 return value;
-            return toObjectFunction.apply(textFieldWidget.getValue());
+            return toObjectFunction.apply(textFieldWidget.getText());
         }
         
         @Override
         public void setValue(R value) {
-            textFieldWidget.setValue(toStringFunction.apply(value));
+            textFieldWidget.setText(toStringFunction.apply(value));
             textFieldWidget.setCursorPosition(0);
         }
         
         @Override
         public String getSearchTerm() {
-            return textFieldWidget.getValue();
+            return textFieldWidget.getText();
         }
         
         @Override
         public Optional<String> getError() {
-            if (toObjectFunction.apply(textFieldWidget.getValue()) != null)
+            if (toObjectFunction.apply(textFieldWidget.getText()) != null)
                 return Optional.empty();
             return Optional.of("Invalid Value!");
         }
         
         @Override
-        public List<? extends IGuiEventListener> children() {
+        public List<? extends IGuiEventListener> getChildren() {
             return Collections.singletonList(textFieldWidget);
         }
     }

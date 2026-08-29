@@ -6,22 +6,23 @@ import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientHorseRenderer extends PetRenderer<ClientHorse, ClientHorseModel<ClientHorse>> {
+public class ClientHorseRenderer extends PetRenderer<ClientHorse, ClientHorseModel> {
     public String horseTextureLocation;
 
-    public ClientHorseRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientHorseModel<>(0), 0.5f);
+    public ClientHorseRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+        super(context, new ClientHorseModel(0), 0.5f);
     }
 
     @Override
-    protected void scale(ClientHorse state, float f) {
+    public void preRenderCallback(ClientHorse state, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
+        
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ClientHorse horseRenderState) {
+    public ResourceLocation getEntityTexture(ClientHorse horseRenderState) {
         if (CONFIG.horseSkin.equals("black")) {
             horseTextureLocation = "textures/entity/horse/horse_black.png";
         } else if (CONFIG.horseSkin.equals("brown")) {

@@ -2,24 +2,23 @@ package com.jeff.pets.client.rendering.vanilla.salmon;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientSalmon;
-import net.minecraft.client.renderer.Vector3f;
-import net.minecraft.client.renderer.entity.model.SalmonModel;
+import net.minecraft.client.renderer.entity.model.ModelSalmon;
 import net.minecraft.util.ResourceLocation;
 
-public class ClientSalmonRenderer extends PetRenderer<ClientSalmon, SalmonModel<ClientSalmon>> {
+public class ClientSalmonRenderer extends PetRenderer<ClientSalmon, ModelSalmon> {
 
-    public ClientSalmonRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new SalmonModel<>(), 0.4F);
+    public ClientSalmonRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+        super(context, new ModelSalmon(), 0.4F);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ClientSalmon salmonRenderState) {
+    public ResourceLocation getEntityTexture(ClientSalmon salmonRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/fish/salmon.png");
     }
 
     @Override
-    protected void setupRotations(ClientSalmon salmonRenderState, float ageInTicks, float g, float a) {
-        super.setupRotations(salmonRenderState, ageInTicks, g, a);
+    protected void applyRotations(ClientSalmon salmonRenderState, float ageInTicks, float g, float a) {
+        super.applyRotations(salmonRenderState, ageInTicks, g, a);
         float h = 1.0F;
         float i = 1.0F;
 

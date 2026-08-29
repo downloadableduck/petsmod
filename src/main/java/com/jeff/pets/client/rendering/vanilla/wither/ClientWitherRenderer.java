@@ -8,15 +8,15 @@ import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientWitherRenderer extends PetRenderer<ClientWither, ClientWitherModel<ClientWither>> {
+public class ClientWitherRenderer extends PetRenderer<ClientWither, ClientWitherModel> {
 
-    public ClientWitherRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientWitherModel<>(0), 0.75f);
+    public ClientWitherRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+        super(context, new ClientWitherModel(0), 0.75f);
 
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ClientWither livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(ClientWither livingEntityRenderState) {
         String witherTexturePath;
         if (Objects.equals(CONFIG.witherSkin, "normal")) {
             witherTexturePath = "textures/entity/wither/wither.png";
@@ -31,6 +31,6 @@ public class ClientWitherRenderer extends PetRenderer<ClientWither, ClientWither
     /*@Override
     public void extractRenderState(ClientWither wither, WitherRenderState state, float f) {
         super.extractRenderState(wither, state, f);
-        state.yHeadRots = new float[]{wither.getYHeadRot(), wither.getYHeadRot(), wither.getYHeadRot()};
+        state.yHeadRots = new float[]{wither.rotationYawHead, wither.rotationYawHead, wither.rotationYawHead};
     }*/
 }

@@ -1,6 +1,6 @@
 package me.shedaniel.forge.clothconfig2.api;
 
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -48,7 +48,7 @@ public class Modifier {
     }
     
     public static Modifier current() {
-        return Modifier.of(Screen.hasAltDown(), Screen.hasControlDown(), Screen.hasShiftDown());
+        return Modifier.of(GuiScreen.isAltKeyDown(), GuiScreen.isCtrlKeyDown(), GuiScreen.isShiftKeyDown());
     }
     
     private static short setFlag(short base, short flag, boolean val) {

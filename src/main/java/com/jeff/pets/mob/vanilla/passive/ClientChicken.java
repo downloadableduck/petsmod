@@ -3,7 +3,7 @@ package com.jeff.pets.mob.vanilla.passive;
 import com.jeff.pets.mob.GroundPet;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.init.SoundEvents;
 
 public class ClientChicken extends GroundPet {
 
@@ -13,8 +13,9 @@ public class ClientChicken extends GroundPet {
     public float flapSpeed;
     public float flapping = 1.0F;
 
-    public ClientChicken(EntityType<? extends net.minecraft.entity.passive.TameableEntity> entityType, net.minecraft.world.World level) {
+    public ClientChicken(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
         super(entityType, level);
+        this.setSize(0.4f, 0.7f);
     }
 
     @Override
@@ -29,7 +30,7 @@ public class ClientChicken extends GroundPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.CHICKEN_AMBIENT;
+        return SoundEvents.ENTITY_CHICKEN_AMBIENT;
     }
 
     @Override

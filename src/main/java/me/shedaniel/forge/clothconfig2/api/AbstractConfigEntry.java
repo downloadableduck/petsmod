@@ -2,6 +2,7 @@ package me.shedaniel.forge.clothconfig2.api;
 
 import me.shedaniel.forge.clothconfig2.gui.ClothConfigScreen;
 import me.shedaniel.forge.clothconfig2.gui.widget.DynamicElementListWidget;
+import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -55,6 +56,66 @@ public abstract class AbstractConfigEntry<T> extends DynamicElementListWidget.El
     }
     
     public abstract void save();
+    
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        for (IGuiEventListener child : getChildren()) {
+            if (child.mouseClicked(mouseX, mouseY, button)) {
+                setFocused(child);
+                return true;
+            }
+        }
+        setFocused(null);
+        return false;
+    }
+    
+    @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        IGuiEventListener focused = getFocused();
+        if (focused != null)
+            return focused.mouseReleased(mouseX, mouseY, button);
+        return false;
+    }
+    
+    @Override
+    public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
+        IGuiEventListener focused = getFocused();
+        if (focused != null)
+            return focused.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
+        return false;
+    }
+    
+    @Override
+    public boolean mouseScrolled(double amount) {
+        IGuiEventListener focused = getFocused();
+        if (focused != null)
+            return focused.mouseScrolled(amount);
+        return false;
+    }
+    
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        IGuiEventListener focused = getFocused();
+        if (focused != null)
+            return focused.keyPressed(keyCode, scanCode, modifiers);
+        return false;
+    }
+    
+    @Override
+    public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+        IGuiEventListener focused = getFocused();
+        if (focused != null)
+            return focused.keyReleased(keyCode, scanCode, modifiers);
+        return false;
+    }
+    
+    @Override
+    public boolean charTyped(char chr, int modifiers) {
+        IGuiEventListener focused = getFocused();
+        if (focused != null)
+            return focused.charTyped(chr, modifiers);
+        return false;
+    }
     
     @Override
     public int getItemHeight() {

@@ -26,10 +26,10 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.autoconfig.gui.registry.api.GuiRegistryAccess;
 import me.shedaniel.forge.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.forge.clothconfig2.api.ConfigCategory;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -41,22 +41,22 @@ import java.util.function.Supplier;
 
 import static java.util.stream.Collectors.*;
 
-public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Screen> {
+public class ConfigScreenProvider<T extends ConfigData> implements Supplier<GuiScreen> {
 
     private static final ResourceLocation TRANSPARENT_BACKGROUND = new ResourceLocation(Config.Gui.Background.TRANSPARENT);
 
     private final ConfigManager<T> manager;
     private final GuiRegistryAccess registry;
-    private final Screen parent;
+    private final GuiScreen parent;
     private Function<ConfigManager<T>, String> i18nFunction = manager -> String.format("text.autoconfig.%s", manager.getDefinition().name());
-    private Function<ConfigBuilder, Screen> buildFunction = ConfigBuilder::build;
+    private Function<ConfigBuilder, GuiScreen> buildFunction = ConfigBuilder::build;
     private BiFunction<String, Field, String> optionFunction = (baseI13n, field) -> String.format("%s.option.%s", baseI13n, field.getName());
     private BiFunction<String, String, String> categoryFunction = (baseI13n, categoryName) -> String.format("%s.category.%s", baseI13n, categoryName);
 
     public ConfigScreenProvider(
             ConfigManager<T> manager,
             GuiRegistryAccess registry,
-            Screen parent
+            GuiScreen parent
     ) {
         this.manager = manager;
         this.registry = registry;
@@ -69,7 +69,7 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
     }
 
     @Deprecated
-    public void setBuildFunction(Function<ConfigBuilder, Screen> buildFunction) {
+    public void setBuildFunction(Function<ConfigBuilder, GuiScreen> buildFunction) {
         this.buildFunction = buildFunction;
     }
 
@@ -84,7 +84,7 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
     }
 
     @Override
-    public Screen get() {
+    public GuiScreen get() {
         T config = manager.getConfig();
         T defaults = manager.getSerializer().createDefault();
 
@@ -96,7 +96,7 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
 
         if (configClass.isAnnotationPresent(Config.Gui.Background.class)) {
             String bg = configClass.getAnnotation(Config.Gui.Background.class).value();
-            ResourceLocation bgId = ResourceLocation.tryParse(bg);
+            ResourceLocation bgId = ResourceLocation.makeResourceLocation(bg);
             if (TRANSPARENT_BACKGROUND.equals(bgId))
                 builder.transparentBackground();
             else
@@ -144,7 +144,7 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
         if (field.isAnnotationPresent(ConfigEntry.Category.class))
             categoryName = field.getAnnotation(ConfigEntry.Category.class).value();
 
-        ITextComponent categoryKey = new TranslationTextComponent(categoryFunction.apply(baseI13n, categoryName));
+        ITextComponent categoryKey = new TextComponentTranslation(categoryFunction.apply(baseI13n, categoryName));
 
         if (!screenBuilder.hasCategory(categoryKey.getString())) {
             ConfigCategory category = screenBuilder.getOrCreateCategory(categoryKey.getString());

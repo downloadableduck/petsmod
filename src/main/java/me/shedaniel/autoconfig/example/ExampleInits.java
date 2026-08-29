@@ -23,7 +23,7 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.serializer.DummyConfigSerializer;
 import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.util.EnumActionResult;
 
 public class ExampleInits {
     public static void exampleCommonInit() {
@@ -40,10 +40,10 @@ public class ExampleInits {
         // this event allows you to change or register specific listeners
         // for when the config has changed
         AutoConfig.getConfigHolder(ExampleConfig.class).registerSaveListener((manager, data) -> {
-            return ActionResultType.SUCCESS;
+            return EnumActionResult.SUCCESS;
         });
         AutoConfig.getConfigHolder(ExampleConfig.class).registerLoadListener((manager, newData) -> {
-            return ActionResultType.SUCCESS;
+            return EnumActionResult.SUCCESS;
         });
     }
 

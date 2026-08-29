@@ -72,7 +72,7 @@ public class FloatListListEntry extends AbstractTextFieldListListEntry<Float, Fl
         
         public Float getValue() {
             try {
-                return Float.valueOf(widget.getValue());
+                return Float.valueOf(widget.getText());
             } catch (NumberFormatException e) {
                 return 0f;
             }
@@ -81,13 +81,13 @@ public class FloatListListEntry extends AbstractTextFieldListListEntry<Float, Fl
         @Override
         public Optional<String> getError() {
             try {
-                float i = Float.parseFloat(widget.getValue());
+                float i = Float.parseFloat(widget.getText());
                 if (i > listListEntry.maximum)
-                    return Optional.of(I18n.get("text.cloth-config.error.too_large", listListEntry.maximum));
+                    return Optional.of(I18n.format("text.cloth-config.error.too_large", listListEntry.maximum));
                 else if (i < listListEntry.minimum)
-                    return Optional.of(I18n.get("text.cloth-config.error.too_small", listListEntry.minimum));
+                    return Optional.of(I18n.format("text.cloth-config.error.too_small", listListEntry.minimum));
             } catch (NumberFormatException ex) {
-                return Optional.of(I18n.get("text.cloth-config.error.not_valid_number_float"));
+                return Optional.of(I18n.format("text.cloth-config.error.not_valid_number_float"));
             }
             return Optional.empty();
         }

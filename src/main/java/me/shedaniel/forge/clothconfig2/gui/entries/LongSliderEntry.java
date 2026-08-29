@@ -1,11 +1,12 @@
 package me.shedaniel.forge.clothconfig2.gui.entries;
 
 import com.google.common.collect.Lists;
+import net.minecraft.client.GameSettings;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiOptionSlider;
 import net.minecraft.client.gui.IGuiEventListener;
-import net.minecraft.client.gui.widget.AbstractSlider;
-import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
@@ -13,6 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -22,7 +24,7 @@ import java.util.function.Supplier;
 public class LongSliderEntry extends TooltipListEntry<Long> {
     
     protected Slider sliderWidget;
-    protected Button resetButton;
+    protected GuiButton resetButton;
     protected AtomicLong value;
     private long minimum, maximum;
     private Consumer<Long> saveConsumer;
@@ -58,11 +60,16 @@ public class LongSliderEntry extends TooltipListEntry<Long> {
         this.maximum = maximum;
         this.minimum = minimum;
         this.sliderWidget = new Slider(0, 0, 152, 20, ((double) LongSliderEntry.this.value.get() - minimum) / Math.abs(maximum - minimum));
-        this.resetButton = new Button(0, 0, Minecraft.getInstance().font.width(I18n.get(resetButtonKey)) + 6, 20, I18n.get(resetButtonKey), widget -> {
-            setValue(defaultValue.get());
-            getScreen().setEdited(true, isRequiresRestart());
-        });
-        this.sliderWidget.setMessage(textGetter.apply(LongSliderEntry.this.value.get()));
+        this.resetButton = new GuiButton(new Random().nextInt(), 0, 0, Minecraft.getInstance().fontRenderer.getStringWidth(I18n.format(resetButtonKey)) + 6, 20, I18n.format(resetButtonKey)) {
+            @Override
+            public void onClick(double p_194829_1_, double p_194829_3_) {
+                setValue(defaultValue.get());
+                getScreen().setEdited(true, isRequiresRestart());
+                super.onClick(p_194829_1_, p_194829_3_);
+            }
+        };
+
+        this.sliderWidget.displayString = (textGetter.apply(LongSliderEntry.this.value.get()));
         this.widgets = Lists.newArrayList(sliderWidget, resetButton);
     }
     
@@ -78,7 +85,7 @@ public class LongSliderEntry extends TooltipListEntry<Long> {
     
     public LongSliderEntry setTextGetter(Function<Long, String> textGetter) {
         this.textGetter = textGetter;
-        this.sliderWidget.setMessage(textGetter.apply(LongSliderEntry.this.value.get()));
+        this.sliderWidget.displayString = (textGetter.apply(LongSliderEntry.this.value.get()));
         return this;
     }
     
@@ -91,7 +98,6 @@ public class LongSliderEntry extends TooltipListEntry<Long> {
     public void setValue(long value) {
         sliderWidget.setValue((MathHelper.clamp(value, minimum, maximum) - minimum) / (double) Math.abs(maximum - minimum));
         this.value.set(Math.min(Math.max(value, minimum), maximum));
-        sliderWidget.updateMessage();
     }
     
     @Override
@@ -100,7 +106,7 @@ public class LongSliderEntry extends TooltipListEntry<Long> {
     }
     
     @Override
-    public List<? extends IGuiEventListener> children() {
+    public List<? extends IGuiEventListener> getChildren() {
         return widgets;
     }
     
@@ -117,17 +123,17 @@ public class LongSliderEntry extends TooltipListEntry<Long> {
     @Override
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-        MainWindow window = Minecraft.getInstance().window;
-        this.resetButton.active = isEditable() && getDefaultValue().isPresent() && defaultValue.get() != value.get();
+        MainWindow window = Minecraft.getInstance().mainWindow;
+        this.resetButton.enabled = isEditable() && getDefaultValue().isPresent() && defaultValue.get() != value.get();
         this.resetButton.y = y;
-        this.sliderWidget.active = isEditable();
+        this.sliderWidget.enabled = isEditable();
         this.sliderWidget.y = y;
-        if (Minecraft.getInstance().font.isBidirectional()) {
-            Minecraft.getInstance().font.drawShadow(I18n.get(getFieldName()), window.getGuiScaledWidth() - x - Minecraft.getInstance().font.width(I18n.get(getFieldName())), y + 5, getPreferredTextColor());
+        if (Minecraft.getInstance().fontRenderer.getBidiFlag()) {
+            Minecraft.getInstance().fontRenderer.drawStringWithShadow(I18n.format(getFieldName()), window.getScaledWidth() - x - Minecraft.getInstance().fontRenderer.getStringWidth(I18n.format(getFieldName())), y + 5, getPreferredTextColor());
             this.resetButton.x = x;
             this.sliderWidget.x = x + resetButton.getWidth() + 1;
         } else {
-            Minecraft.getInstance().font.drawShadow(I18n.get(getFieldName()), x, y + 5, getPreferredTextColor());
+            Minecraft.getInstance().fontRenderer.drawStringWithShadow(I18n.format(getFieldName()), x, y + 5, getPreferredTextColor());
             this.resetButton.x = x + entryWidth - resetButton.getWidth();
             this.sliderWidget.x = x + entryWidth - 150;
         }
@@ -136,21 +142,10 @@ public class LongSliderEntry extends TooltipListEntry<Long> {
         sliderWidget.render(mouseX, mouseY, delta);
     }
     
-    private class Slider extends AbstractSlider {
+    private class Slider extends GuiOptionSlider {
         
         protected Slider(int int_1, int int_2, int int_3, int int_4, double double_1) {
-            super(int_1, int_2, int_3, int_4, double_1);
-        }
-        
-        @Override
-        public void updateMessage() {
-            setMessage(textGetter.apply(LongSliderEntry.this.value.get()));
-        }
-        
-        @Override
-        protected void applyValue() {
-            LongSliderEntry.this.value.set((long) (minimum + Math.abs(maximum - minimum) * value));
-            getScreen().setEdited(true, isRequiresRestart());
+            super(int_1, int_2, int_3, GameSettings.Options.MIPMAP_LEVELS, int_4, double_1);
         }
         
         @Override
@@ -168,11 +163,11 @@ public class LongSliderEntry extends TooltipListEntry<Long> {
         }
         
         public double getValue() {
-            return value;
+            return value.doubleValue();
         }
         
         public void setValue(double integer) {
-            this.value = integer;
+            value.set((long) integer);
         }
     }
     

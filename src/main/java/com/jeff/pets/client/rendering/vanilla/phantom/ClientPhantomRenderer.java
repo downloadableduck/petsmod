@@ -2,19 +2,19 @@ package com.jeff.pets.client.rendering.vanilla.phantom;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientPhantom;
-import net.minecraft.client.renderer.entity.layers.PhantomEyesLayer;
-import net.minecraft.client.renderer.entity.model.PhantomModel;
+import net.minecraft.client.renderer.entity.RenderPhantom;
+import net.minecraft.client.renderer.entity.model.ModelPhantom;
 import net.minecraft.util.ResourceLocation;
 
-public class ClientPhantomRenderer extends PetRenderer<ClientPhantom, PhantomModel<ClientPhantom>> {
+public class ClientPhantomRenderer extends PetRenderer<ClientPhantom, ModelPhantom> {
 
-    public ClientPhantomRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new PhantomModel<>(), 0.75f);
-        this.addLayer(new PhantomEyesLayer(this));
+    public ClientPhantomRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+        super(context, new ModelPhantom(), 0.75f);
+        this.addLayer(new LayerPhantomEyes(this));
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ClientPhantom livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(ClientPhantom livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/phantom.png");
     }
 

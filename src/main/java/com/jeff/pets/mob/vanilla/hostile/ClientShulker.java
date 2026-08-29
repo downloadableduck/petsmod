@@ -3,11 +3,12 @@ package com.jeff.pets.mob.vanilla.hostile;
 import com.jeff.pets.mob.GroundPet;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.init.SoundEvents;
 
 public class ClientShulker extends GroundPet {
-    public ClientShulker(EntityType<? extends net.minecraft.entity.passive.TameableEntity> entityType, net.minecraft.world.World level) {
+    public ClientShulker(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
         super(entityType, level);
+        this.setSize(1f, 2f);
     }
 
     @Override
@@ -22,6 +23,6 @@ public class ClientShulker extends GroundPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.SHULKER_AMBIENT;
+        return SoundEvents.ENTITY_SHULKER_AMBIENT;
     }
 }

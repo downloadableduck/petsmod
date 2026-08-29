@@ -3,12 +3,13 @@ package com.jeff.pets.mob.vanilla.passive;
 import com.jeff.pets.mob.SlimeLikePet;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.init.SoundEvents;
 
 public class ClientRabbit extends SlimeLikePet {
 
-    public ClientRabbit(EntityType<? extends net.minecraft.entity.passive.TameableEntity> entityType, net.minecraft.world.World level) {
+    public ClientRabbit(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
         super(entityType, level);
+        this.setSize(0.4f, 0.5f);
     }
 
     @Override
@@ -23,6 +24,6 @@ public class ClientRabbit extends SlimeLikePet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.RABBIT_AMBIENT;
+        return SoundEvents.ENTITY_RABBIT_AMBIENT;
     }
 }

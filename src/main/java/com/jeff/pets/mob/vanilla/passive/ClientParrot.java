@@ -4,7 +4,7 @@ import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.init.SoundEvents;
 
 @CanFly
 public class ClientParrot extends FlyingPet {
@@ -17,8 +17,9 @@ public class ClientParrot extends FlyingPet {
 
     public boolean isOnHead;
 
-    public ClientParrot(EntityType<? extends net.minecraft.entity.passive.TameableEntity> entityType, net.minecraft.world.World level) {
+    public ClientParrot(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
         super(entityType, level);
+        this.setSize(0.5f, 0.9f);
     }
 
     @Override
@@ -33,11 +34,11 @@ public class ClientParrot extends FlyingPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.PARROT_AMBIENT;
+        return SoundEvents.ENTITY_PARROT_AMBIENT;
     }
 
     @Override
-    public void aiStep() {
+    public void livingTick() {
         this.oFlap = this.flap;
         this.oFlapSpeed = this.flapSpeed;
         this.flapSpeed += (this.onGround ? -1.0F : 4.0F) * 0.3F;

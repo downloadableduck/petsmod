@@ -76,10 +76,10 @@ public interface ConfigEntryBuilder {
     }
     
     default KeyCodeBuilder fillKeybindingField(String fieldNameKey, KeyBinding value) {
-        return startKeyCodeField(fieldNameKey, value.getKey()).setDefaultValue(value.getDefaultKey()).setSaveConsumer(code -> {
+        return startKeyCodeField(fieldNameKey, value.getKey()).setDefaultValue(value.getDefault()).setSaveConsumer(code -> {
             value.setKeyModifierAndCode(KeyModifier.NONE, code);
-            KeyBinding.setAll();
-            Minecraft.getInstance().options.save();
+            KeyBinding.updateKeyBindState();
+            Minecraft.getInstance().gameSettings.saveOptions();
         });
     }
     

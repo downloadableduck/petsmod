@@ -2,10 +2,11 @@ package com.jeff.pets.mob;
 
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
-import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.Objects;
 
@@ -14,82 +15,72 @@ import java.util.Objects;
  * including rabbits.
  */
 public abstract class SlimeLikePet extends AbstractPet {
-    public SlimeLikePet(EntityType<? extends TameableEntity> entityType, net.minecraft.world.World level) {
+    public SlimeLikePet(EntityType<? extends EntityTameable> entityType, net.minecraft.world.World level) {
         super(entityType, level);
     }
 
-    //public static AttributeModifierMap.MutableAttribute createAttributes() {
-    //return AbstractPet.createAttributes().add(Attributes.JUMP_STRENGTH, 0.25f);
-    //}
-
-    /**
-     * Custom ticking logic. Note this logic: <pre>
-     * {@code if (this.walkAnimation.isMoving() && this.onGround) {
-     *     this.jumpFromGround();
-     * }}</pre>
-     */
     @Override
     public void tick() {
         super.tick();
-        LivingEntity owner = this.getOwner();
+        EntityLivingBase owner = this.getOwner();
         if (owner != null) {
 
-            if (owner.hasPassenger(this)) {
-                if (owner.isSneaking() && owner.jumping) {
+            if (owner.isRidingOrBeingRiddenBy(this)) {
+                if (owner.isSneaking() && owner.isJumping) {
                     this.stopRiding();
-                    this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
+                    this.setVelocity(this.motionX, this.motionY - 0.04, this.motionZ);
                 } else {
                     this.setSitting(true);
                 }
             }
 
-            double dx = owner.x - this.x;
-            double dz = owner.z - this.z;
+            double dx = owner.posX - this.posX;
+            double dz = owner.posZ - this.posZ;
 
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
-            double distance = this.distanceTo(owner);
-            float rotation = this.getRotationVector().x;
-            float rotationToOwner = rotation + this.getOwner().getRotationVector().x;
-            float bodyYawDiff = net.minecraft.util.math.MathHelper.wrapDegrees(this.getYHeadRot() - this.yBodyRot);
+            double distance = this.getDistance(owner);
+            float rotation = -this.rotationPitch;
+            float rotationToOwner = rotation + (-this.getOwner().rotationPitch);
+            float bodyYawDiff = net.minecraft.util.math.MathHelper.wrapDegrees(this.rotationYawHead - this.renderYawOffset);
 
             if (rotationToOwner >= 50) {
-                this.yBodyRot = this.getYHeadRot() - (net.minecraft.util.math.MathHelper.sign(bodyYawDiff) * 50.0F);
+                this.renderYawOffset = this.rotationYawHead - ((float)Math.signum(bodyYawDiff) * 50.0F);
             }
 
             if (distance > 4.0) {
 
-                this.animationSpeed = (0.5F);
+                this.limbSwingAmount = (0.5F);
 
-                net.minecraft.util.math.Vec3d targetPos = owner.position();
-                net.minecraft.util.math.Vec3d dir = targetPos.subtract(this.position()).normalize();
+                net.minecraft.util.math.Vec3d targetPos = owner.getPositionVector();
+                net.minecraft.util.math.Vec3d dir = targetPos.subtract(this.getPositionVector()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
-                this.setYHeadRot(this.getYRot());
-                this.yBodyRot = net.minecraft.util.math.MathHelper.rotateIfNecessary(this.yBodyRot, this.yHeadRot, 50.0f);
+                this.setRotationYawHead(this.getYRot());
+                this.renderYawOffset = this.renderYawOffset + net.minecraft.util.math.MathHelper.clamp(this.rotationYawHead - this.renderYawOffset, -50.0f, 50.0f);
 
-                double speed = owner.getSpeed() * 2;
-                this.setDeltaMovement(dir.x * speed, this.getDeltaMovement().y, dir.z * speed);
+                double speed = owner.getAIMoveSpeed() * 2;
+                this.setVelocity(dir.x * speed, this.motionY, dir.z * speed);
             } else {
-                this.lookAt(owner, 5, 0);
-                this.setDeltaMovement(this.getDeltaMovement().multiply(0.8, 1.0, 0.8));
+                
+                this.setVelocity(this.motionX * 0.8, this.motionY * 1.0, this.motionZ * 0.8);
             }
 
-            int yHeightToOwner = (int) (owner.y - this.y);
+            int yHeightToOwner = (int) (owner.posY - this.posY);
 
             if (yHeightToOwner > 1 && this.onGround) {
-                this.jumpFromGround();
+                this.jump();
             }
 
             if (yHeightToOwner > -1) {
-                this.setDeltaMovement(this.getDeltaMovement().add(0, -0.02, 0));
+                this.setVelocity(this.motionX, this.motionY - 0.02, this.motionZ);
             }
 
             if (!this.onGround) {
                 //this.processFlappingMovement();
             }
 
-            if (owner.getDeltaMovement().lengthSqr() < 0.01) {
+            if (owner.motionX * owner.motionX + owner.motionY * owner.motionY + owner.motionZ * owner.motionZ < 0.01) {
                 this.waitingTime++;
                 if (this.waitingTime > 30) this.wander();
             } else {
@@ -97,32 +88,32 @@ public abstract class SlimeLikePet extends AbstractPet {
             }
 
             this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
-            this.setYHeadRot(this.getYRot());
+            this.setRotationYawHead(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.yBodyRot = this.getYHeadRot() - (net.minecraft.util.math.MathHelper.sign(bodyYawDiff) * 50);
+                this.renderYawOffset = this.rotationYawHead - ((float)Math.signum(bodyYawDiff) * 50);
             } else {
-                this.yBodyRot = net.minecraft.util.math.MathHelper.rotateIfNecessary(this.yBodyRot, this.getYHeadRot(), 10);
+                this.renderYawOffset = this.renderYawOffset + net.minecraft.util.math.MathHelper.clamp(this.rotationYawHead - this.renderYawOffset, -10, 10);
             }
 
-            this.move(MoverType.SELF, this.getDeltaMovement());
+            this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
 
             if (!this.onGround) {
-                this.setDeltaMovement(this.getDeltaMovement().add(0, -0.02, 0));
+                this.setVelocity(this.motionX, this.motionY - 0.02, this.motionZ);
             }
         }
         if (owner != null) {
-            if (distanceTo(owner) >= 10) {
-                this.teleportTo(owner.x, owner.y, owner.z);
+            if (getDistance(owner) >= 10) {
+                this.setPositionAndUpdate(owner.posX, owner.posY, owner.posZ);
             }
         }
-        if (this.animationSpeed > 0 && this.onGround) {
-            this.jumpFromGround();
+        if (this.limbSwingAmount > 0 && this.onGround) {
+            this.jump();
         }
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level.playLocalSound(this.x, this.y, this.z, Objects.requireNonNull(this.getAmbientSound()), SoundCategory.AMBIENT, 1.0f, 1.0f, true);
+            //this.world.playLocalSound(this.posX, this.posY, this.posZ, Objects.requireNonNull(this.getAmbientSound()), SoundCategory.AMBIENT, 1.0f, 1.0f, true);
         }
     }
 }

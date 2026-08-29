@@ -21,7 +21,7 @@ public class FloatListBuilder extends FieldBuilder<List<Float>, FloatListListEnt
     private boolean expanded = false;
     private Float min = null, max = null;
     private Function<FloatListListEntry, FloatListListEntry.FloatListCell> createNewInstance;
-    private String addTooltip = I18n.get("text.cloth-config.list.add"), removeTooltip = I18n.get("text.cloth-config.list.remove");
+    private String addTooltip = I18n.format("text.cloth-config.list.add"), removeTooltip = I18n.format("text.cloth-config.list.remove");
     private boolean deleteButtonEnabled = true, insertInFront = true;
     
     public FloatListBuilder(String resetButtonKey, String fieldNameKey, List<Float> value) {

@@ -6,12 +6,12 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientTurtleRenderer extends PetRenderer<ClientTurtle, ClientTurtleModel> {
 
-    public ClientTurtleRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+    public ClientTurtleRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientTurtleModel(0), 0.7F);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ClientTurtle turtleRenderState) {
+    public ResourceLocation getEntityTexture(ClientTurtle turtleRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/turtle/big_sea_turtle.png");
     }
 }

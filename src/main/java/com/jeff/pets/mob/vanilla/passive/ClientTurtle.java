@@ -3,12 +3,13 @@ package com.jeff.pets.mob.vanilla.passive;
 import com.jeff.pets.mob.FlyingPet;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.init.SoundEvents;
 
 public class ClientTurtle extends FlyingPet {
 
-    public ClientTurtle(EntityType<? extends net.minecraft.entity.passive.TameableEntity> entityType, net.minecraft.world.World level) {
+    public ClientTurtle(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
         super(entityType, level);
+        this.setSize(1.2f, 0.4f);
     }
 
     @Override
@@ -23,6 +24,6 @@ public class ClientTurtle extends FlyingPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.TURTLE_AMBIENT_LAND;
+        return SoundEvents.ENTITY_TURTLE_AMBIENT_LAND;
     }
 }

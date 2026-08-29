@@ -1,16 +1,10 @@
 package com.jeff.pets.client.rendering;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.client.renderer.entity.model.ModelBase;
+import net.minecraft.entity.Entity;
 
-public abstract class PetModel<T extends LivingEntity> extends EntityModel<T> {
-
+public abstract class PetModel extends ModelBase {
 
     public PetModel() {
-    }
-
-    @Override
-    public void setupAnim(T entity, float f, float g, float h, float i, float j, float k) {
-
     }
 }

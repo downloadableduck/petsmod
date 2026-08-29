@@ -2,19 +2,19 @@ package com.jeff.pets.client.rendering.vanilla.magmacube;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientMagmaCube;
-import net.minecraft.client.renderer.entity.model.SlimeModel;
+import net.minecraft.client.renderer.entity.model.ModelSlime;
 import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientMagmaCubeRenderer extends PetRenderer<ClientMagmaCube, SlimeModel<ClientMagmaCube>> {
+public class ClientMagmaCubeRenderer extends PetRenderer<ClientMagmaCube, ModelSlime> {
 
-    public ClientMagmaCubeRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new SlimeModel<>(0), 0.75f);
+    public ClientMagmaCubeRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+        super(context, new ModelSlime(0), 0.75f);
     }
 
     @Override
-    protected void scale(ClientMagmaCube slimeRenderState, float a) {
+    public void preRenderCallback(ClientMagmaCube slimeRenderState, float a) {
         int magmaCubeScale;
         switch (CONFIG.magmaCubeSkin) {
             case "small":
@@ -30,11 +30,11 @@ public class ClientMagmaCubeRenderer extends PetRenderer<ClientMagmaCube, SlimeM
                 magmaCubeScale = 1;
                 break;
         }
-        com.mojang.blaze3d.platform.GlStateManager.scalef(magmaCubeScale, magmaCubeScale, magmaCubeScale);
+        net.minecraft.client.renderer.GlStateManager.scalef(magmaCubeScale, magmaCubeScale, magmaCubeScale);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ClientMagmaCube livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(ClientMagmaCube livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/slime/magmacube.png");
     }
 }

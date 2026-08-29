@@ -3,11 +3,12 @@ package com.jeff.pets.mob.vanilla.hostile;
 import com.jeff.pets.mob.GroundPet;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.init.SoundEvents;
 
 public class ClientEvoker extends GroundPet {
-    public ClientEvoker(EntityType<? extends net.minecraft.entity.passive.TameableEntity> entityType, net.minecraft.world.World level) {
+    public ClientEvoker(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
         super(entityType, level);
+        this.setSize(0.6f, 1.95f);
     }
 
     @Override
@@ -22,6 +23,6 @@ public class ClientEvoker extends GroundPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.EVOKER_AMBIENT;
+        return SoundEvents.ENTITY_EVOKER_AMBIENT;
     }
 }

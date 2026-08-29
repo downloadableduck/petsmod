@@ -20,7 +20,6 @@ public enum PetList implements NameableEnum {
     enderman,
     endermite,
     evoker,
-    fox,
     ghast,
     guardian,
     happy_ghast,
@@ -32,17 +31,14 @@ public enum PetList implements NameableEnum {
     llama,
     magma_cube,
     mooshroom,
-    panda,
     parrot,
     penguin,
     phantom,
     pig,
-    pillager,
     polar_bear,
     pufferfish,
     rabbit,
     racoon,
-    ravager,
     salmon,
     sheep,
     shulker,
@@ -59,7 +55,6 @@ public enum PetList implements NameableEnum {
     vex,
     villager,
     vindicator,
-    wandering_trader,
     witch,
     wither,
     wolf,
@@ -69,6 +64,6 @@ public enum PetList implements NameableEnum {
 
     @Override
     public net.minecraft.util.text.ITextComponent getDisplayName() {
-        return new net.minecraft.util.text.StringTextComponent(String.valueOf(this).replace("_", " "));
+        return new net.minecraft.util.text.TextComponentString(String.valueOf(this).replace("_", " "));
     }
 }

@@ -8,12 +8,12 @@ import static com.jeff.pets.client.Central.MOD_ID;
 
 public class KoiRenderer extends PetRenderer<Koi, KoiModel> {
 
-    public KoiRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+    public KoiRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new KoiModel(), 0.5f);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(Koi state) {
+    public ResourceLocation getEntityTexture(Koi state) {
         return new ResourceLocation(MOD_ID, "textures/entity/koi/koi.png");
     }
 }

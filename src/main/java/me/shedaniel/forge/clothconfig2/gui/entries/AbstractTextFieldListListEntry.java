@@ -1,8 +1,8 @@
 package me.shedaniel.forge.clothconfig2.gui.entries;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.IGuiEventListener;
-import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
- * This class represents config entry lists that use one {@link TextFieldWidget} per entry.
+ * This class represents config entry lists that use one {@link GuiTextField} per entry.
  *
  * @param <T>    the configuration object type
  * @param <C>    the cell type
@@ -40,7 +40,7 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
     
     public static abstract class AbstractTextFieldListCell<T, SELF extends AbstractTextFieldListCell<T, SELF, OUTER_SELF>, OUTER_SELF extends AbstractTextFieldListListEntry<T, SELF, OUTER_SELF>> extends AbstractListListEntry.AbstractListCell<T, SELF, OUTER_SELF> {
         
-        protected TextFieldWidget widget;
+        protected GuiTextField widget;
         private boolean isSelected;
         
         public AbstractTextFieldListCell(@Nullable T value, OUTER_SELF listListEntry) {
@@ -48,18 +48,18 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
             
             final T finalValue = substituteDefault(value);
             
-            widget = new TextFieldWidget(Minecraft.getInstance().font, 0, 0, 100, 18, "") {
+            widget = new GuiTextField(0, Minecraft.getInstance().fontRenderer, 0, 100, 18, 0) {
                 @Override
-                public void render(int mouseX, int mouseY, float delta) {
+                public void drawTextField(int mouseX, int mouseY, float delta) {
                     setFocused(isSelected);
-                    super.render(mouseX, mouseY, delta);
+                    super.drawTextField(mouseX, mouseY, delta);
                 }
             };
-            widget.setFilter(this::isValidText);
-            widget.setMaxLength(Integer.MAX_VALUE);
-            widget.setBordered(false);
-            widget.setValue(Objects.toString(finalValue));
-            widget.setResponder(s -> {
+            widget.setValidator(this::isValidText);
+            widget.setMaxStringLength(Integer.MAX_VALUE);
+            widget.setEnableBackgroundDrawing(false);
+            widget.setText(Objects.toString(finalValue));
+            widget.setTextAcceptHandler((i, s) -> {
                 widget.setTextColor(getPreferredTextColor());
                 if (listListEntry.getScreen() != null && !Objects.equals(s, Objects.toString(finalValue))) {
                     this.listListEntry.getScreen().setEdited(true, this.listListEntry.isRequiresRestart());
@@ -96,17 +96,17 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
         
         @Override
         public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
-            widget.setWidth(entryWidth - 12);
+            widget.width = (entryWidth - 12);
             widget.x = x;
             widget.y = y + 1;
-            widget.setEditable(listListEntry.isEditable());
-            widget.render(mouseX, mouseY, delta);
+            widget.setEnabled(listListEntry.isEditable());
+            widget.drawTextField(mouseX, mouseY, delta);
             if (isSelected && listListEntry.isEditable())
-                fill(x, y + 12, x + entryWidth - 12, y + 13, getConfigError().isPresent() ? 0xffff5555 : 0xffe0e0e0);
+                drawRect(x, y + 12, x + entryWidth - 12, y + 13, getConfigError().isPresent() ? 0xffff5555 : 0xffe0e0e0);
         }
         
         @Override
-        public List<? extends IGuiEventListener> children() {
+        public List<? extends IGuiEventListener> getChildren() {
             return Collections.singletonList(widget);
         }
     }

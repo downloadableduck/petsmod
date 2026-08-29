@@ -57,7 +57,7 @@ public class StringListListEntry extends AbstractTextFieldListListEntry<String, 
         
         @Override
         public String getValue() {
-            return widget.getValue();
+            return widget.getText();
         }
         
         @Override

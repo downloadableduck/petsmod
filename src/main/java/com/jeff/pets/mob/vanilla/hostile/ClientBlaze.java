@@ -4,12 +4,13 @@ import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.init.SoundEvents;
 
 @CanFly
 public class ClientBlaze extends FlyingPet {
-    public ClientBlaze(EntityType<? extends net.minecraft.entity.passive.TameableEntity> entityType, net.minecraft.world.World level) {
+    public ClientBlaze(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
         super(entityType, level);
+        this.setSize(0.6f, 1.8f);
     }
 
     @Override
@@ -24,6 +25,6 @@ public class ClientBlaze extends FlyingPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.BLAZE_AMBIENT;
+        return SoundEvents.ENTITY_BLAZE_AMBIENT;
     }
 }

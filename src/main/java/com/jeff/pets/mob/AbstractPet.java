@@ -1,23 +1,23 @@
 package com.jeff.pets.mob;
 
-import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import com.jeff.pets.mob.custom.first.Duck;
+import net.minecraft.command.arguments.EntityArgument;
+import net.minecraft.entity.*;
+import net.minecraft.entity.passive.EntityTameable;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Particles;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.play.server.SSpawnObjectPacket;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.Hand;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.SPacketSpawnObject;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
 /**
- * Abstract class that extends {@link net.minecraft.entity.passive.TameableEntity}, providing multiple utilities
+ * Abstract class that extends {@link net.minecraft.entity.passive.EntityTameable}, providing multiple utilities
  * so that each class doesn't have to define the same logic. <p> When creating a custom entity,
  * always extend either {@link GroundPet}, {@link FlyingPet}, or {@link SlimeLikePet},
  * unless adding custom movement logic,
@@ -28,16 +28,16 @@ import net.minecraft.world.World;
  * @see FlyingPet
  * @see GroundPet
  */
-public abstract class AbstractPet extends TameableEntity {
+public abstract class AbstractPet extends EntityTameable {
 
     protected int waitingTime = 0;
     private boolean isReturningToOwner = false;
     private float randomX = (float) (Math.random() - 1f);
     private float randomZ = (float) (Math.random() - 1);
 
-    protected AbstractPet(EntityType<? extends TameableEntity> type, World level) {
+    protected AbstractPet(EntityType<? extends EntityTameable> type, World level) {
         super(type, level);
-        this.setSpeed(0.5f);
+        this.setAIMoveSpeed(0.5f);
     }
 
     @Override
@@ -73,8 +73,8 @@ public abstract class AbstractPet extends TameableEntity {
      * Custom interactions.
      * - Right clicking on a pet with an empty hand will let make hearts appear above it:
      * <pre>
-     *     {@code if (this.isTame() && itemStack.isEmpty() && !player.isSneaking()) {
-     *         this.level.addParticle(
+     *     {@code if (this.isTamed() && itemStack.isEmpty() && !player.isSneaking()) {
+     *         this.world.addParticle(
      *                 ParticleTypes.HEART,
      *                 this.x,
      *                 this.y + this.heartHeight(),
@@ -85,7 +85,7 @@ public abstract class AbstractPet extends TameableEntity {
      *     }}</pre>
      * - Shifting and right clicking on a pet with an empty hand will pick it up:
      * <pre>
-     *     {@code if (this.isTame() && itemStack.isEmpty() && player.isSneaking()) {
+     *     {@code if (this.isTamed() && itemStack.isEmpty() && player.isSneaking()) {
      *         if (!this.isPassenger()) {
      *             this.startRiding(player);
      *             this.lookAt(player, 1f, 1f);
@@ -101,21 +101,22 @@ public abstract class AbstractPet extends TameableEntity {
      * @return It's super method
      */
     @Override
-    public boolean mobInteract(PlayerEntity player, Hand hand) {
-        ItemStack itemStack = player.getItemInHand(hand);
+    public boolean processInteract(EntityPlayer player, EnumHand hand) {
+        ItemStack itemStack = player.getHeldItem(hand);
 
-        if (this.isTame() && itemStack.isEmpty() && !player.isSneaking()) {
-            this.level.addParticle(
-                    ParticleTypes.HEART,
-                    this.x,
-                    this.y + this.heartHeight(),
-                    this.z,
+        if (this.isTamed() && itemStack.isEmpty() && !player.isSneaking()) {
+            this.world.addParticle(
+                    Particles.HEART,
+                    true,
+                    this.posX,
+                    this.posY + this.heartHeight(),
+                    this.posZ,
                     5, 5, 5
             );
             return true;
         }
 
-        if (this.isTame() && itemStack.isEmpty() && player.isSneaking()) {
+        if (this.isTamed() && itemStack.isEmpty() && player.isSneaking()) {
             if (!this.isPassenger()) {
                 this.startRiding(player);
                 this.lookAt(player, 1f, 1f);
@@ -125,7 +126,7 @@ public abstract class AbstractPet extends TameableEntity {
             }
             return true;
         }
-        return super.mobInteract(player, hand);
+        return super.processInteract(player, hand);
     }
 
     /**
@@ -133,9 +134,9 @@ public abstract class AbstractPet extends TameableEntity {
      * <p> Calls: It's super method, if the level is not client-sided.
      */
     @Override
-    public void onSyncedDataUpdated(net.minecraft.network.datasync.DataParameter<?> key) {
-        if (this.level != null && !this.level.isClientSide()) {
-            super.onSyncedDataUpdated(key);
+    public void notifyDataManagerChange(net.minecraft.network.datasync.DataParameter<?> key) {
+        if (this.world != null && !this.world.isRemote()) {
+            super.notifyDataManagerChange(key);
         }
     }
 
@@ -143,14 +144,14 @@ public abstract class AbstractPet extends TameableEntity {
      * IMPORTANT: Allows the entity to exist on servers, if only in the {@code ClientLevel}.
      * Never, under any circumstances, remove this method.
      */
-    @Override
-    public IPacket<?> getAddEntityPacket() {
-        if (this.level.isClientSide()) {
-            return new SSpawnObjectPacket(this);
+    /*@Override
+    public Packet<?> getAddEntityPacket() {
+        if (this.world.isRemote()) {
+            return new SPacketSpawnObject(this);
         } else {
             return super.getAddEntityPacket();
         }
-    }
+    }*/
 
     /**
      * Calls the previous abstract method so other classes extending this one don't have to.
@@ -159,7 +160,7 @@ public abstract class AbstractPet extends TameableEntity {
      * Make sure to override this when using a custom-made mob.
      */
     @Override
-    public boolean isFood(ItemStack itemStack) {
+    public boolean isBreedingItem(ItemStack itemStack) {
         return false;
     }
 
@@ -170,23 +171,23 @@ public abstract class AbstractPet extends TameableEntity {
      * @return {@code null}
      */
     @Override
-    public AgeableEntity getBreedOffspring(AgeableEntity AgableMob) {
+    public EntityAgeable createChild(EntityAgeable AgableMob) {
         return null;
     }
 
     /**
-     * Easier way to call {@link net.minecraft.entity.passive.TameableEntity#setCustomName} that takes a String rather than a {@link Component}
+     * Easier way to call {@link net.minecraft.entity.passive.EntityTameable#setCustomName} that takes a String rather than a {@link Component}
      */
     public void setName(String string) {
-        this.setCustomName(new StringTextComponent(string));
+        this.setCustomName(new TextComponentString(string));
     }
 
     public void wander() {
-        float speed = (float) (this.getSpeed() - 0.35);
+        float speed = (float) (this.getAIMoveSpeed() - 0.35);
         float z = speed * this.randomZ;
 
-        float distance = this.distanceTo(this.getOwner());
-        float yVelo = (float) this.getDeltaMovement().y;
+        float distance = this.getDistance(this.getOwner());
+        float yVelo = (float) this.motionY;
 
         if (distance > 5) {
             this.reCalcPos();
@@ -197,54 +198,54 @@ public abstract class AbstractPet extends TameableEntity {
         }
 
         if (!this.isReturningToOwner) {
-            this.setDeltaMovement(new Vec3d(speed, yVelo, z));
+            this.setVelocity(speed, yVelo, z);
         } else {
-            this.setDeltaMovement(new Vec3d(-speed, yVelo, -z));
+            this.setVelocity(-speed, yVelo, -z);
         }
 
         //this.lookAt(EntityAnchorArgument.Anchor.EYES, lookDir);
 
-        double moveX = this.getDeltaMovement().x;
-        double moveZ = this.getDeltaMovement().z;
+        double moveX = this.motionX;
+        double moveZ = this.motionZ;
 
         Vec3d lookDir = new Vec3d(
-                this.x + (moveX * 2),
-                this.y + this.getEyeHeight(),
-                this.z + (moveZ * 2)
+                this.posX + (moveX * 2),
+                this.posY + this.getEyeHeight(),
+                this.posZ + (moveZ * 2)
         );
-        this.getLookControl().setLookAt(lookDir.x, lookDir.y, lookDir.z, 1.0F, (float) this.getMaxHeadXRot());
+        this.getLookHelper().setLookPosition(lookDir.x, lookDir.y, lookDir.z, 1.0F, (float) this.getVerticalFaceSpeed());
 
         if (moveX * moveX + moveZ * moveZ > 0.001) {
             float targetYaw = (float) (Math.atan2(-moveX, moveZ) * (180D / Math.PI));
-            float smoothYaw = MathHelper.rotLerp(0.2f, this.getYRot(), targetYaw);
+            float smoothYaw = Duck.rotlerp(0.2f, this.getYRot(), targetYaw);
 
             this.setYRot(smoothYaw);
-            this.setYHeadRot(smoothYaw);
-            this.yBodyRot = smoothYaw;
+            this.setRotationYawHead(smoothYaw);
+            this.renderYawOffset = smoothYaw;
         }
 
-        if (this.horizontalCollision && this.onGround) {
-            this.jumpFromGround();
+        if (this.collidedHorizontally && this.onGround) {
+            this.jump();
         }
         if (!this.onGround) {
-            this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
+            this.setVelocity(this.motionX, this.motionY - 0.04, this.motionZ);
         }
-        double dx = lookDir.x - this.x;
-        double dz = lookDir.z - this.z;
+        double dx = lookDir.x - this.posX;
+        double dz = lookDir.z - this.posZ;
         float targetYaw = (float) (Math.atan2(-dx, dz) * (180D / Math.PI));
 
         this.setYRot(targetYaw);
-        this.setYHeadRot(targetYaw);
-        this.yBodyRot = targetYaw;
+        this.setRotationYawHead(targetYaw);
+        this.renderYawOffset = targetYaw;
     }
 
     public float getYRot() {
-        return this.yBodyRot;
+        return this.renderYawOffset;
     }
 
     public void setYRot(float targetYaw) {
-        this.setYHeadRot(targetYaw);
-        this.setYBodyRot(targetYaw);
+        this.setRotationYawHead(targetYaw);
+        this.setRenderYawOffset(targetYaw);
     }
 
     private void reCalcPos() {
@@ -254,5 +255,32 @@ public abstract class AbstractPet extends TameableEntity {
 
     public double horizontalDistance(Vec3d vec3) {
         return Math.sqrt(vec3.x * vec3.x + vec3.z * vec3.z);
+    }
+
+    public void lookAt(final Entity entity, final float yMax, final float xMax) {
+        double xd = entity.posX - this.posX;
+        double zd = entity.posZ - this.posZ;
+        double yd;
+        if (entity instanceof EntityLiving) {
+            EntityLiving mob = (EntityLiving) entity;
+            yd = mob.getEyeHeight() - this.getEyeHeight();
+        } else {
+            yd = (entity.getBoundingBox().minY + entity.getBoundingBox().maxY) / (double)2.0F - this.getEyeHeight();
+        }
+
+        double sd = Math.sqrt(xd * xd + zd * zd);
+        float yRotD = (float)(MathHelper.atan2(zd, xd) * (double)(180F / (float)Math.PI)) - 90.0F;
+        float xRotD = (float)(-(MathHelper.atan2(yd, sd) * (double)(180F / (float)Math.PI)));
+        this.rotationPitch = rotlerp(this.rotationPitch, xRotD, xMax);
+        this.setYRot(rotlerp(this.getYRot(), yRotD, yMax));
+    }
+
+    public static float rotlerp(float pct, float start, float end) {
+        float diff = end - start;
+
+        while (diff < -180.0F) diff += 360.0F;
+        while (diff >= 180.0F) diff -= 360.0F;
+
+        return start + pct * diff;
     }
 }

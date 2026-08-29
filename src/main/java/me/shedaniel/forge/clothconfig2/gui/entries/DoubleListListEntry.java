@@ -72,7 +72,7 @@ public class DoubleListListEntry extends AbstractTextFieldListListEntry<Double, 
         
         public Double getValue() {
             try {
-                return Double.valueOf(widget.getValue());
+                return Double.valueOf(widget.getText());
             } catch (NumberFormatException e) {
                 return 0d;
             }
@@ -81,13 +81,13 @@ public class DoubleListListEntry extends AbstractTextFieldListListEntry<Double, 
         @Override
         public Optional<String> getError() {
             try {
-                double i = Double.parseDouble(widget.getValue());
+                double i = Double.parseDouble(widget.getText());
                 if (i > listListEntry.maximum)
-                    return Optional.of(I18n.get("text.cloth-config.error.too_large", listListEntry.maximum));
+                    return Optional.of(I18n.format("text.cloth-config.error.too_large", listListEntry.maximum));
                 else if (i < listListEntry.minimum)
-                    return Optional.of(I18n.get("text.cloth-config.error.too_small", listListEntry.minimum));
+                    return Optional.of(I18n.format("text.cloth-config.error.too_small", listListEntry.minimum));
             } catch (NumberFormatException ex) {
-                return Optional.of(I18n.get("text.cloth-config.error.not_valid_number_double"));
+                return Optional.of(I18n.format("text.cloth-config.error.not_valid_number_double"));
             }
             return Optional.empty();
         }

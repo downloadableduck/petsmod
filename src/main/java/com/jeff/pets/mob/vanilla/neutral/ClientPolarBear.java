@@ -3,11 +3,12 @@ package com.jeff.pets.mob.vanilla.neutral;
 import com.jeff.pets.mob.GroundPet;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.init.SoundEvents;
 
 public class ClientPolarBear extends GroundPet {
-    public ClientPolarBear(EntityType<? extends net.minecraft.entity.passive.TameableEntity> entityType, net.minecraft.world.World level) {
+    public ClientPolarBear(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
         super(entityType, level);
+        this.setSize(1.4f, 1.4f);
     }
 
     @Override
@@ -22,6 +23,6 @@ public class ClientPolarBear extends GroundPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.POLAR_BEAR_AMBIENT;
+        return SoundEvents.ENTITY_POLAR_BEAR_AMBIENT;
     }
 }

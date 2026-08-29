@@ -72,7 +72,7 @@ public class IntegerListListEntry extends AbstractTextFieldListListEntry<Integer
         
         public Integer getValue() {
             try {
-                return Integer.valueOf(widget.getValue());
+                return Integer.valueOf(widget.getText());
             } catch (NumberFormatException e) {
                 return 0;
             }
@@ -81,13 +81,13 @@ public class IntegerListListEntry extends AbstractTextFieldListListEntry<Integer
         @Override
         public Optional<String> getError() {
             try {
-                int i = Integer.parseInt(widget.getValue());
+                int i = Integer.parseInt(widget.getText());
                 if (i > listListEntry.maximum)
-                    return Optional.of(I18n.get("text.cloth-config.error.too_large", listListEntry.maximum));
+                    return Optional.of(I18n.format("text.cloth-config.error.too_large", listListEntry.maximum));
                 else if (i < listListEntry.minimum)
-                    return Optional.of(I18n.get("text.cloth-config.error.too_small", listListEntry.minimum));
+                    return Optional.of(I18n.format("text.cloth-config.error.too_small", listListEntry.minimum));
             } catch (NumberFormatException ex) {
-                return Optional.of(I18n.get("text.cloth-config.error.not_valid_number_int"));
+                return Optional.of(I18n.format("text.cloth-config.error.not_valid_number_int"));
             }
             return Optional.empty();
         }

@@ -1,12 +1,10 @@
 package com.jeff.pets.client.rendering.vanilla.sheep;
 
 import com.jeff.pets.mob.vanilla.passive.ClientSheep;
-import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.client.renderer.entity.IEntityRenderer;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.client.renderer.entity.layers.SheepWoolLayer;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.entity.passive.SheepEntity;
+import net.minecraft.client.renderer.entity.model.ModelBase;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Objects;
@@ -14,18 +12,19 @@ import java.util.Objects;
 import static com.jeff.pets.client.Central.CONFIG;
 
 
-public class ClientSheepWoolLayer extends LayerRenderer<ClientSheep, ClientSheepModel> {
-    private final EntityModel<ClientSheep> model;
+public class ClientSheepWoolLayer implements LayerRenderer<ClientSheep> {
+    private final ModelBase model;
+    private final RenderLivingBase<ClientSheep> renderer;
     int woolColor;
 
-    public ClientSheepWoolLayer(IEntityRenderer<ClientSheep, ClientSheepModel> renderLayerParent) {
-        super(renderLayerParent);
+    public ClientSheepWoolLayer(RenderLivingBase<ClientSheep> renderLayerParent) {
+        this.renderer = renderLayerParent;
         this.model = new ClientSheepFurModel();
     }
 
     @Override
     public void render(ClientSheep sheep, float p_212842_2_, float p_212842_3_, float p_212842_4_, float p_212842_5_, float p_212842_6_, float p_212842_7_, float p_212842_8_) {
-        this.bindTexture(new ResourceLocation("minecraft", "textures/entity/sheep/sheep_fur.png"));
+        this.renderer.bindTexture(new ResourceLocation("minecraft", "textures/entity/sheep/sheep_fur.png"));
         if (Objects.equals(CONFIG.sheepSkin, "white")) {
             woolColor = 15132390;
         } else if (Objects.equals(CONFIG.sheepSkin, "orange")) {
@@ -67,13 +66,13 @@ public class ClientSheepWoolLayer extends LayerRenderer<ClientSheep, ClientSheep
         float b = (float) (woolColor & 255) / 255.0F;
         GlStateManager.color3f(r, g, b);
 
-        (this.getParentModel()).copyPropertiesTo(this.model);
-        this.model.prepareMobModel(sheep, p_212842_2_, p_212842_3_, p_212842_4_);
+        this.model.setModelAttributes(this.renderer.getMainModel());
+        this.model.setLivingAnimations(sheep, p_212842_2_, p_212842_3_, p_212842_4_);
         this.model.render(sheep, p_212842_2_, p_212842_3_, p_212842_5_, p_212842_6_, p_212842_7_, p_212842_8_);
     }
 
     @Override
-    public boolean colorsOnDamage() {
+    public boolean shouldCombineTextures() {
         return false;
     }
 }

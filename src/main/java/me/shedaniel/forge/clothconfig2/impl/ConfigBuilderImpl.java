@@ -6,8 +6,8 @@ import me.shedaniel.forge.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.forge.clothconfig2.api.ConfigCategory;
 import me.shedaniel.forge.clothconfig2.api.Pair;
 import me.shedaniel.forge.clothconfig2.gui.ClothConfigScreen;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -23,7 +23,7 @@ import java.util.function.Consumer;
 public class ConfigBuilderImpl implements ConfigBuilder {
     
     private Runnable savingRunnable;
-    private Screen parent;
+    private GuiScreen parent;
     private String title = "text.cloth-config.config";
     private boolean editable = true;
     private boolean tabsSmoothScroll = true;
@@ -31,8 +31,8 @@ public class ConfigBuilderImpl implements ConfigBuilder {
     private boolean doesProcessErrors = true;
     private boolean doesConfirmSave = true;
     private boolean transparentBackground = false;
-    private ResourceLocation defaultBackground = AbstractGui.BACKGROUND_LOCATION;
-    private Consumer<Screen> afterInitConsumer = screen -> {};
+    private ResourceLocation defaultBackground = Gui.OPTIONS_BACKGROUND;
+    private Consumer<GuiScreen> afterInitConsumer = screen -> {};
     private final Map<String, ResourceLocation> categoryBackground = Maps.newHashMap();
     private final Map<String, List<Pair<String, Object>>> dataMap = Maps.newLinkedHashMap();
     private String fallbackCategory = null;
@@ -61,7 +61,7 @@ public class ConfigBuilderImpl implements ConfigBuilder {
     }
     
     @Override
-    public ConfigBuilder setAfterInitConsumer(Consumer<Screen> afterInitConsumer) {
+    public ConfigBuilder setAfterInitConsumer(Consumer<GuiScreen> afterInitConsumer) {
         this.afterInitConsumer = afterInitConsumer;
         return this;
     }
@@ -73,12 +73,12 @@ public class ConfigBuilderImpl implements ConfigBuilder {
     }
     
     @Override
-    public Screen getParentScreen() {
+    public GuiScreen getParentScreen() {
         return parent;
     }
     
     @Override
-    public ConfigBuilder setParentScreen(Screen parent) {
+    public ConfigBuilder setParentScreen(GuiScreen parent) {
         this.parent = parent;
         return this;
     }
@@ -208,15 +208,15 @@ public class ConfigBuilderImpl implements ConfigBuilder {
     }
     
     @Override
-    public Consumer<Screen> getAfterInitConsumer() {
+    public Consumer<GuiScreen> getAfterInitConsumer() {
         return afterInitConsumer;
     }
     
     @Override
-    public Screen build() {
+    public GuiScreen build() {
         if (dataMap.isEmpty() || fallbackCategory == null)
             throw new NullPointerException("There cannot be no categories or fallback category!");
-        ClothConfigScreen screen = new ClothConfigScreen(parent, I18n.get(title), dataMap, doesConfirmSave, doesProcessErrors, listSmoothScroll, defaultBackground, categoryBackground) {
+        ClothConfigScreen screen = new ClothConfigScreen(parent, I18n.format(title), dataMap, doesConfirmSave, doesProcessErrors, listSmoothScroll, defaultBackground, categoryBackground) {
             @Override
             public void save() {
                 if (savingRunnable != null)
@@ -224,8 +224,8 @@ public class ConfigBuilderImpl implements ConfigBuilder {
             }
             
             @Override
-            protected void init() {
-                super.init();
+            public void initGui() {
+                super.initGui();
                 afterInitConsumer.accept(this);
             }
         };

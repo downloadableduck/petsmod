@@ -11,7 +11,7 @@ import me.shedaniel.forge.clothconfig2.impl.builders.BooleanToggleBuilder;
 import me.shedaniel.forge.clothconfig2.impl.builders.DropdownMenuBuilder;
 import me.shedaniel.forge.clothconfig2.impl.builders.EnumSelectorBuilder;
 import me.shedaniel.forge.clothconfig2.impl.builders.StringFieldBuilder;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -85,6 +85,31 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                 general.addEntry(this.createPetNameOption(entryBuilder, CONFIG).build());
                 general.addEntry(this.createPetSkinOption(entryBuilder, CONFIG).build());
                 general.addEntry(this.createBabyOption(entryBuilder, CONFIG).build());
+
+                return builder.build();
+            });
+        });
+    }
+
+    static  {
+        PetsConfigScreen this_ = new PetsConfigScreen();
+        ModContainer modContainer = ModLoadingContext.get().getActiveContainer();
+        modContainer.registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () -> {
+            PetsConfig CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
+            return ((minecraft, s) -> {
+                ConfigBuilder builder = ConfigBuilder.create()
+                        .setTitle("Config")
+                        .setSavingRunnable(() -> {
+                            AutoConfig.getConfigHolder(PetsConfig.class).save();
+                        })
+                        .setTransparentBackground(true);
+                ConfigCategory general = builder.getOrCreateCategory("Config");
+                ConfigEntryBuilder entryBuilder = builder.entryBuilder();
+                general.addEntry(this_.createPetOnOption(entryBuilder, CONFIG).build());
+                general.addEntry(this_.createPetSpeciesOption(entryBuilder, CONFIG).build());
+                general.addEntry(this_.createPetNameOption(entryBuilder, CONFIG).build());
+                general.addEntry(this_.createPetSkinOption(entryBuilder, CONFIG).build());
+                general.addEntry(this_.createBabyOption(entryBuilder, CONFIG).build());
 
                 return builder.build();
             });
@@ -1263,7 +1288,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                 .setSaveConsumer((newVal) -> CONFIG.isBaby = newVal);
     }
 
-    public Screen build() {
+    public GuiScreen build() {
         PetsConfig CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
         ConfigBuilder builder = ConfigBuilder.create()
                 .setTitle("Config")

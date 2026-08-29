@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 @OnlyIn(Dist.CLIENT)
 public class EnumListEntry<T extends Enum<?>> extends SelectionListEntry<T> {
     
-    public static final Function<Enum, String> DEFAULT_NAME_PROVIDER = t -> I18n.get(t instanceof Translatable ? ((Translatable) t).getKey() : t.toString());
+    public static final Function<Enum, String> DEFAULT_NAME_PROVIDER = t -> I18n.format(t instanceof Translatable ? ((Translatable) t).getKey() : t.toString());
     
     
     @Deprecated

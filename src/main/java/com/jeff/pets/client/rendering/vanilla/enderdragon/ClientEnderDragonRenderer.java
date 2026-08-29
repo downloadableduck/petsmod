@@ -9,19 +9,20 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientEnderDragonRenderer extends PetRenderer<ClientEnderDragon, ClientEnderDragonModel> {
 
-    public ClientEnderDragonRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+    public ClientEnderDragonRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientEnderDragonModel(0), 0.75f);
     }
 
     @Override
-    protected void scale(ClientEnderDragon livingEntityRenderState, float f) {
+    public void preRenderCallback(ClientEnderDragon livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scalef(0.25f, 0.25f, 0.25f);
+            net.minecraft.client.renderer.GlStateManager.scalef(0.25f, 0.25f, 0.25f);
         }
+        
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ClientEnderDragon livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(ClientEnderDragon livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/enderdragon/dragon.png");
     }
 }

@@ -21,7 +21,7 @@ package me.shedaniel.autoconfig.event;
 
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.ConfigHolder;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.util.EnumActionResult;
 
 public final class ConfigSerializeEvent {
     private ConfigSerializeEvent() {
@@ -42,7 +42,7 @@ public final class ConfigSerializeEvent {
          * will result in an exception
          * <p>
          */
-        ActionResultType onSave(ConfigHolder<T> manager, T data);
+        EnumActionResult onSave(ConfigHolder<T> manager, T data);
     }
 
     @FunctionalInterface
@@ -62,6 +62,6 @@ public final class ConfigSerializeEvent {
          * Also avoid calling {@link ConfigHolder#load()} in this callback, as it
          * will result in an exception
          */
-        ActionResultType onLoad(ConfigHolder<T> manager, T newData);
+        EnumActionResult onLoad(ConfigHolder<T> manager, T newData);
     }
 }

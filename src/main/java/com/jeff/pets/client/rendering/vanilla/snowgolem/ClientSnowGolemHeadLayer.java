@@ -1,26 +1,25 @@
 package com.jeff.pets.client.rendering.vanilla.snowgolem;
 
 import com.jeff.pets.mob.vanilla.passive.ClientSnowGolem;
-import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.entity.IEntityRenderer;
+import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.client.renderer.entity.model.SnowManModel;
-import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSnowGolemHeadLayer extends LayerRenderer<ClientSnowGolem, SnowManModel<ClientSnowGolem>> {
+public class ClientSnowGolemHeadLayer implements LayerRenderer<ClientSnowGolem> {
     private final BlockRendererDispatcher blockRenderer;
     private final ItemRenderer itemRenderer;
+    private final RenderLivingBase<ClientSnowGolem> renderer;
 
-    public ClientSnowGolemHeadLayer(IEntityRenderer<ClientSnowGolem, SnowManModel<ClientSnowGolem>> renderLayerParent, BlockRendererDispatcher blockRenderDispatcher, ItemRenderer itemRenderer) {
-        super(renderLayerParent);
+    public ClientSnowGolemHeadLayer(RenderLivingBase<ClientSnowGolem> renderLayerParent, BlockRendererDispatcher blockRenderDispatcher, ItemRenderer itemRenderer) {
+        this.renderer = renderLayerParent;
         this.blockRenderer = blockRenderDispatcher;
         this.itemRenderer = itemRenderer;
     }
@@ -29,31 +28,28 @@ public class ClientSnowGolemHeadLayer extends LayerRenderer<ClientSnowGolem, Sno
         if (CONFIG.snowGolemSkin.equals("pumpkin_on")) {
             boolean bl = snowGolem.isGlowing() && snowGolem.isInvisible();
             if (!snowGolem.isInvisible() || bl) {
-                com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
-                //this.getContextModel().method_2834().rotate(poseStack);
+                net.minecraft.client.renderer.GlStateManager.pushMatrix();
+                this.renderer.getMainModel().setRotationAngles(f, g, i, j, k, l, snowGolem);
                 float m = 0.625F;
                 GlStateManager.translatef(0.0F, -0F, 0.0F);
-                //poseStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180.0F));
-                com.mojang.blaze3d.platform.GlStateManager.scalef(0.625F, -0.625F, -0.625F);
+                net.minecraft.client.renderer.GlStateManager.scalef(0.625F, -0.625F, -0.625F);
                 GlStateManager.rotatef(180.0F, 0.0F, 1.0F, 0.0F);
                 ItemStack itemStack = new ItemStack(Blocks.CARVED_PUMPKIN);
                 if (bl) {
-                    BlockState blockState = Blocks.CARVED_PUMPKIN.defaultBlockState();
-                    IBakedModel bakedModel = this.blockRenderer.getBlockModel(blockState);
-                    int n = 0;
-                    com.mojang.blaze3d.platform.GlStateManager.translatef(-0.5F, -0.5F, -0.5F);
-                    this.blockRenderer.getModelRenderer().renderModel(blockState, bakedModel, 0.0F, 0.0F, 0.0F, i);
+                    IBlockState blockState = Blocks.CARVED_PUMPKIN.getDefaultState();
+                    net.minecraft.client.renderer.GlStateManager.translatef(-0.5F, -0.5F, -0.5F);
+                    this.blockRenderer.renderBlockBrightness(blockState, 1.0F);
                 } else {
-                    this.itemRenderer.renderStatic(itemStack, ItemCameraTransforms.TransformType.HEAD);
+                    this.itemRenderer.renderItem(itemStack, ItemCameraTransforms.TransformType.HEAD);
                 }
 
-                com.mojang.blaze3d.platform.GlStateManager.popMatrix();
+                net.minecraft.client.renderer.GlStateManager.popMatrix();
             }
         }
     }
 
     @Override
-    public boolean colorsOnDamage() {
+    public boolean shouldCombineTextures() {
         return false;
     }
 }

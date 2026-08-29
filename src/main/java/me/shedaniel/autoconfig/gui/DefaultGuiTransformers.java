@@ -27,8 +27,8 @@ import me.shedaniel.forge.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.forge.clothconfig2.gui.entries.TextListEntry;
 import me.shedaniel.forge.clothconfig2.gui.entries.TooltipListEntry;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,14 +57,14 @@ public class DefaultGuiTransformers {
                                     tryApplyTooltip(
                                             gui,
                                             new ITextComponent[]{
-                                                    new TranslationTextComponent(String.format("%s.%s", i18n, "@Tooltip"))
+                                                    new TextComponentTranslation(String.format("%s.%s", i18n, "@Tooltip"))
                                             }
                                     );
                                 } else {
                                     tryApplyTooltip(
                                             gui, IntStream.range(0, tooltip.count()).boxed()
                                                     .map(i -> String.format("%s.%s[%d]", i18n, "@Tooltip", i))
-                                                    .map(TranslationTextComponent::new)
+                                                    .map(TextComponentTranslation::new)
                                                     .toArray(ITextComponent[]::new)
                                     );
                                 }
@@ -79,7 +79,7 @@ public class DefaultGuiTransformers {
                         .peek(gui -> {
                             if (!(gui instanceof TextListEntry)) {
                                 Comment tooltip = field.getAnnotation(Comment.class);
-                                ITextComponent[] text = new ITextComponent[]{new StringTextComponent(tooltip.value())};
+                                ITextComponent[] text = new ITextComponent[]{new TextComponentString(tooltip.value())};
                                 tryApplyTooltip(gui, text);
                             }
                         })
@@ -103,8 +103,8 @@ public class DefaultGuiTransformers {
                 (guis, i18n, field, config, defaults, guiProvider) -> {
                     ArrayList<AbstractConfigListEntry> ret = new ArrayList<>(guis);
                     String text = String.format("%s.%s", i18n, "@PrefixText");
-                    TextListEntry element = ENTRY_BUILDER.startTextDescription(new TranslationTextComponent(text).getString()).build();
-                    String s = new TranslationTextComponent(i18n).getString().toLowerCase(Locale.ROOT);
+                    TextListEntry element = ENTRY_BUILDER.startTextDescription(new TextComponentTranslation(text).getString()).build();
+                    String s = new TextComponentTranslation(i18n).getString().toLowerCase(Locale.ROOT);
                     if (!s.isEmpty()) {
                         //element.appendSearchTags(Lists.newArrayList(s.split(" ")));
                     }

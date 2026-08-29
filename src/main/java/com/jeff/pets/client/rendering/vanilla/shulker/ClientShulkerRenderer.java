@@ -8,12 +8,12 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientShulkerRenderer extends PetRenderer<ClientShulker, ClientShulkerModel> {
 
-    public ClientShulkerRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+    public ClientShulkerRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientShulkerModel(), 0.75f);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ClientShulker state) {
+    public ResourceLocation getEntityTexture(ClientShulker state) {
         String shulkerFile;
         String folderPath = "textures/entity/shulker/";
         if (CONFIG.shulkerSkin.equals("normal")) {
@@ -53,7 +53,7 @@ public class ClientShulkerRenderer extends PetRenderer<ClientShulker, ClientShul
     @Override
     public void renderModel(ClientShulker shulker, float f, float g, float i, float j, float k, float l) {
         super.renderModel(shulker, f, g, i, j, k, l);
-        shulker.yBodyRot = 180;
+        shulker.renderYawOffset = 180;
         // shulker.peekAmount = 1;
     }
 }

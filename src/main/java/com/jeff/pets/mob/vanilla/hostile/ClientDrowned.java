@@ -3,14 +3,15 @@ package com.jeff.pets.mob.vanilla.hostile;
 import com.jeff.pets.mob.GroundPet;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.init.SoundEvents;
 
 public class ClientDrowned extends GroundPet {
 
     public boolean isOnHead;
 
-    public ClientDrowned(EntityType<? extends net.minecraft.entity.passive.TameableEntity> entityType, net.minecraft.world.World level) {
+    public ClientDrowned(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
         super(entityType, level);
+        this.setSize(0.6f, 1.95f);
     }
 
     @Override
@@ -25,6 +26,6 @@ public class ClientDrowned extends GroundPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.DROWNED_AMBIENT;
+        return SoundEvents.ENTITY_DROWNED_AMBIENT;
     }
 }

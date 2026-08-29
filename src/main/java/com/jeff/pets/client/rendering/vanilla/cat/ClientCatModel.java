@@ -1,93 +1,202 @@
 package com.jeff.pets.client.rendering.vanilla.cat;
 
 import com.jeff.pets.mob.vanilla.passive.ClientCat;
-import net.minecraft.client.renderer.entity.model.OcelotModel;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.model.ModelBase;
+import net.minecraft.client.renderer.entity.model.ModelOcelot;
+import net.minecraft.client.renderer.entity.model.ModelRenderer;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityOcelot;
+import net.minecraft.util.math.MathHelper;
 
-public class ClientCatModel extends OcelotModel<ClientCat> {
-    private float lieDownAmount;
-    private float lieDownAmountTail;
-    private float relaxStateOneAmount;
+public class ClientCatModel extends ModelBase {
+    /** The back left leg model for the Ocelot. */
+    private final ModelRenderer ocelotBackLeftLeg;
+    /** The back right leg model for the Ocelot. */
+    private final ModelRenderer ocelotBackRightLeg;
+    /** The front left leg model for the Ocelot. */
+    private final ModelRenderer ocelotFrontLeftLeg;
+    /** The front right leg model for the Ocelot. */
+    private final ModelRenderer ocelotFrontRightLeg;
+    /** The tail model for the Ocelot. */
+    private final ModelRenderer ocelotTail;
+    /** The second part of tail model for the Ocelot. */
+    private final ModelRenderer ocelotTail2;
+    /** The head model for the Ocelot. */
+    private final ModelRenderer ocelotHead;
+    /** The body model for the Ocelot. */
+    private final ModelRenderer ocelotBody;
+    private int state = 1;
 
-    public ClientCatModel(float f) {
-        super(f);
+    public ClientCatModel() {
+        this.setTextureOffset("head.main", 0, 0);
+        this.setTextureOffset("head.nose", 0, 24);
+        this.setTextureOffset("head.ear1", 0, 10);
+        this.setTextureOffset("head.ear2", 6, 10);
+        this.ocelotHead = new ModelRenderer(this, "head");
+        this.ocelotHead.addBox("main", -2.5F, -2.0F, -3.0F, 5, 4, 5);
+        this.ocelotHead.addBox("nose", -1.5F, 0.0F, -4.0F, 3, 2, 2);
+        this.ocelotHead.addBox("ear1", -2.0F, -3.0F, 0.0F, 1, 1, 2);
+        this.ocelotHead.addBox("ear2", 1.0F, -3.0F, 0.0F, 1, 1, 2);
+        this.ocelotHead.setRotationPoint(0.0F, 15.0F, -9.0F);
+        this.ocelotBody = new ModelRenderer(this, 20, 0);
+        this.ocelotBody.addBox(-2.0F, 3.0F, -8.0F, 4, 16, 6, 0.0F);
+        this.ocelotBody.setRotationPoint(0.0F, 12.0F, -10.0F);
+        this.ocelotTail = new ModelRenderer(this, 0, 15);
+        this.ocelotTail.addBox(-0.5F, 0.0F, 0.0F, 1, 8, 1);
+        this.ocelotTail.rotateAngleX = 0.9F;
+        this.ocelotTail.setRotationPoint(0.0F, 15.0F, 8.0F);
+        this.ocelotTail2 = new ModelRenderer(this, 4, 15);
+        this.ocelotTail2.addBox(-0.5F, 0.0F, 0.0F, 1, 8, 1);
+        this.ocelotTail2.setRotationPoint(0.0F, 20.0F, 14.0F);
+        this.ocelotBackLeftLeg = new ModelRenderer(this, 8, 13);
+        this.ocelotBackLeftLeg.addBox(-1.0F, 0.0F, 1.0F, 2, 6, 2);
+        this.ocelotBackLeftLeg.setRotationPoint(1.1F, 18.0F, 5.0F);
+        this.ocelotBackRightLeg = new ModelRenderer(this, 8, 13);
+        this.ocelotBackRightLeg.addBox(-1.0F, 0.0F, 1.0F, 2, 6, 2);
+        this.ocelotBackRightLeg.setRotationPoint(-1.1F, 18.0F, 5.0F);
+        this.ocelotFrontLeftLeg = new ModelRenderer(this, 40, 0);
+        this.ocelotFrontLeftLeg.addBox(-1.0F, 0.0F, 0.0F, 2, 10, 2);
+        this.ocelotFrontLeftLeg.setRotationPoint(1.2F, 13.8F, -5.0F);
+        this.ocelotFrontRightLeg = new ModelRenderer(this, 40, 0);
+        this.ocelotFrontRightLeg.addBox(-1.0F, 0.0F, 0.0F, 2, 10, 2);
+        this.ocelotFrontRightLeg.setRotationPoint(-1.2F, 13.8F, -5.0F);
     }
 
-    @Override
-    public void setupAnim(ClientCat cat, float a, float b, float c, float d, float e, float k) {
-        super.setupAnim(cat, a, b, c, d, e, k);
-        float f = cat.getAge();
-        if (cat.isPassenger()) {
-            this.body.y += f;
-            this.head.y += 2.0F * f;
-            //this.tail1.y += 1.0F * f;
-            // this.tail2.y += -4.0F * f;
-            // this.tail2.z += 2.0F * f;
-            //this.tail1.xRot = (float) (Math.PI / 2);
-            //this.tail2.xRot = (float) (Math.PI / 2);
+    /**
+     * Sets the models various rotation angles then renders the model.
+     */
+    public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+        this.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn);
+        if (this.isChild) {
+            float f = 2.0F;
+            GlStateManager.pushMatrix();
+            GlStateManager.scalef(0.75F, 0.75F, 0.75F);
+            GlStateManager.translatef(0.0F, 10.0F * scale, 4.0F * scale);
+            this.ocelotHead.render(scale);
+            GlStateManager.popMatrix();
+            GlStateManager.pushMatrix();
+            GlStateManager.scalef(0.5F, 0.5F, 0.5F);
+            GlStateManager.translatef(0.0F, 24.0F * scale, 0.0F);
+            this.ocelotBody.render(scale);
+            this.ocelotBackLeftLeg.render(scale);
+            this.ocelotBackRightLeg.render(scale);
+            this.ocelotFrontLeftLeg.render(scale);
+            this.ocelotFrontRightLeg.render(scale);
+            this.ocelotTail.render(scale);
+            this.ocelotTail2.render(scale);
+            GlStateManager.popMatrix();
+        } else {
+            this.ocelotHead.render(scale);
+            this.ocelotBody.render(scale);
+            this.ocelotTail.render(scale);
+            this.ocelotTail2.render(scale);
+            this.ocelotBackLeftLeg.render(scale);
+            this.ocelotBackRightLeg.render(scale);
+            this.ocelotFrontLeftLeg.render(scale);
+            this.ocelotFrontRightLeg.render(scale);
         }
 
-        //this.head.xRot = cat.getXRot() * (float) (Math.PI / 180.0);
-        //this.head.yRot = cat.getYRot() * (float) (Math.PI / 180.0);
-        if (!cat.isPassenger()) {
-            this.body.xRot = (float) (Math.PI / 2);
-            float g = cat.animationSpeed;
-            float h = cat.animationPosition;
+    }
 
-            this.backLegL.xRot = net.minecraft.util.math.MathHelper.cos(h * 0.6662F) * g;
-            this.backLegR.xRot = net.minecraft.util.math.MathHelper.cos(h * 0.6662F + (float) Math.PI) * g;
-            this.frontLegL.xRot = (net.minecraft.util.math.MathHelper.cos(h * 0.6662F + (float) Math.PI) * g);
-            this.frontLegR.xRot = (net.minecraft.util.math.MathHelper.cos(h * 0.6662F) * g);
-            if (!cat.isPassenger()) {
-                this.tail2.xRot = 1.7278761F + (float) (Math.PI / 4) * net.minecraft.util.math.MathHelper.cos(h) * g;
+    /**
+     * Sets the model's various rotation angles. For bipeds, par1 and par2 are used for animating the movement of arms
+     * and legs, where par1 represents the time(so that arms and legs swing back and forth) and par2 represents how "far"
+     * arms and legs can swing at most.
+     */
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
+        this.ocelotHead.rotateAngleX = headPitch * ((float)Math.PI / 180F);
+        this.ocelotHead.rotateAngleY = netHeadYaw * ((float)Math.PI / 180F);
+        if (this.state != 3) {
+            this.ocelotBody.rotateAngleX = ((float)Math.PI / 2F);
+            if (this.state == 2) {
+                this.ocelotBackLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * limbSwingAmount;
+                this.ocelotBackRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + 0.3F) * limbSwingAmount;
+                this.ocelotFrontLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI + 0.3F) * limbSwingAmount;
+                this.ocelotFrontRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * limbSwingAmount;
+                this.ocelotTail2.rotateAngleX = 1.7278761F + ((float)Math.PI / 10F) * MathHelper.cos(limbSwing) * limbSwingAmount;
             } else {
-                this.tail2.xRot = 1.7278761F + 0.47123894F * net.minecraft.util.math.MathHelper.cos(h) * g;
+                this.ocelotBackLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * limbSwingAmount;
+                this.ocelotBackRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * limbSwingAmount;
+                this.ocelotFrontLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * limbSwingAmount;
+                this.ocelotFrontRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * limbSwingAmount;
+                if (this.state == 1) {
+                    this.ocelotTail2.rotateAngleX = 1.7278761F + ((float)Math.PI / 4F) * MathHelper.cos(limbSwing) * limbSwingAmount;
+                } else {
+                    this.ocelotTail2.rotateAngleX = 1.7278761F + 0.47123894F * MathHelper.cos(limbSwing) * limbSwingAmount;
+                }
             }
         }
 
-        if (cat.isPassenger()) {
-            this.body.xRot = (float) (Math.PI / 4);
-            this.body.y += -4.0F * f;
-            this.body.z += 5.0F * f;
-            this.head.y += -3.3F * f;
-            this.head.z += f;
-            this.tail1.y += 8.0F * f;
-            this.tail1.z += -2.0F * f;
-            this.tail2.y += 2.0F * f;
-            this.tail2.z += -0.8F * f;
-            this.tail1.xRot = 1.7278761F;
-            this.tail2.xRot = 2.670354F;
-            this.frontLegL.xRot = (float) (-Math.PI / 20);
-            this.frontLegL.y += 2.0F * f;
-            this.frontLegL.z -= 2.0F * f;
-            this.frontLegR.xRot = (float) (-Math.PI / 20);
-            this.frontLegR.y += 2.0F * f;
-            this.frontLegR.z -= 2.0F * f;
-            this.backLegL.xRot = (float) (-Math.PI / 2);
-            this.backLegL.y += 3.0F * f;
-            this.backLegL.z -= 4.0F * f;
-            this.backLegR.xRot = (float) (-Math.PI / 2);
-            this.backLegR.y += 3.0F * f;
-            this.backLegR.z -= 4.0F * f;
-        }
+    }
 
-        /*if (cat.lieDownAmount > 0.0F) {
-            this.head.zRot = net.minecraft.util.math.MathHelper.rotLerp(cat.lieDownAmount, this.head.zRot, -1.2707963F);
-            this.head.yRot = net.minecraft.util.math.MathHelper.rotLerp(cat.lieDownAmount, this.head.yRot, 1.2707963F);
-            this.leftFrontLeg.xRot = -1.2707963F;
-            this.rightFrontLeg.xRot = -0.47079635F;
-            this.rightFrontLeg.zRot = -0.2F;
-            this.rightFrontLeg.x += f;
-            this.leftHindLeg.xRot = -0.4F;
-            this.rightHindLeg.xRot = 0.5F;
-            this.rightHindLeg.zRot = -0.5F;
-            this.rightHindLeg.x += 0.8F * f;
-            this.rightHindLeg.y += 2.0F * f;
-            this.tail1.xRot = net.minecraft.util.math.MathHelper.rotLerp(cat.lieDownAmountTail, this.tail1.xRot, 0.8F);
-            this.tail2.xRot = net.minecraft.util.math.MathHelper.rotLerp(cat.lieDownAmountTail, this.tail2.xRot, -0.4F);
+    /**
+     * Used for easily adding entity-dependent animations. The second and third float params here are the same second and
+     * third as in the setRotationAngles method.
+     */
+    public void setLivingAnimations(EntityLivingBase entitylivingbase, float limbSwing, float limbSwingAmount, float partialTickTime) {
+        ClientCat entitylivingbaseIn = (ClientCat) entitylivingbase;
+        this.ocelotBody.rotationPointY = 12.0F;
+        this.ocelotBody.rotationPointZ = -10.0F;
+        this.ocelotHead.rotationPointY = 15.0F;
+        this.ocelotHead.rotationPointZ = -9.0F;
+        this.ocelotTail.rotationPointY = 15.0F;
+        this.ocelotTail.rotationPointZ = 8.0F;
+        this.ocelotTail2.rotationPointY = 20.0F;
+        this.ocelotTail2.rotationPointZ = 14.0F;
+        this.ocelotFrontLeftLeg.rotationPointY = 13.8F;
+        this.ocelotFrontLeftLeg.rotationPointZ = -5.0F;
+        this.ocelotFrontRightLeg.rotationPointY = 13.8F;
+        this.ocelotFrontRightLeg.rotationPointZ = -5.0F;
+        this.ocelotBackLeftLeg.rotationPointY = 18.0F;
+        this.ocelotBackLeftLeg.rotationPointZ = 5.0F;
+        this.ocelotBackRightLeg.rotationPointY = 18.0F;
+        this.ocelotBackRightLeg.rotationPointZ = 5.0F;
+        this.ocelotTail.rotateAngleX = 0.9F;
+        if (entitylivingbase.isSneaking()) {
+            ++this.ocelotBody.rotationPointY;
+            this.ocelotHead.rotationPointY += 2.0F;
+            ++this.ocelotTail.rotationPointY;
+            this.ocelotTail2.rotationPointY += -4.0F;
+            this.ocelotTail2.rotationPointZ += 2.0F;
+            this.ocelotTail.rotateAngleX = ((float)Math.PI / 2F);
+            this.ocelotTail2.rotateAngleX = ((float)Math.PI / 2F);
+            this.state = 0;
+        } else if (entitylivingbaseIn.isSprinting()) {
+            this.ocelotTail2.rotationPointY = this.ocelotTail.rotationPointY;
+            this.ocelotTail2.rotationPointZ += 2.0F;
+            this.ocelotTail.rotateAngleX = ((float)Math.PI / 2F);
+            this.ocelotTail2.rotateAngleX = ((float)Math.PI / 2F);
+            this.state = 2;
+        } else if (entitylivingbaseIn.getOwner() != null && entitylivingbaseIn.isRidingOrBeingRiddenBy(entitylivingbaseIn.getOwner())) {
+            this.ocelotBody.rotateAngleX = ((float)Math.PI / 4F);
+            this.ocelotBody.rotationPointY += -4.0F;
+            this.ocelotBody.rotationPointZ += 5.0F;
+            this.ocelotHead.rotationPointY += -3.3F;
+            ++this.ocelotHead.rotationPointZ;
+            this.ocelotTail.rotationPointY += 8.0F;
+            this.ocelotTail.rotationPointZ += -2.0F;
+            this.ocelotTail2.rotationPointY += 2.0F;
+            this.ocelotTail2.rotationPointZ += -0.8F;
+            this.ocelotTail.rotateAngleX = 1.7278761F;
+            this.ocelotTail2.rotateAngleX = 2.670354F;
+            this.ocelotFrontLeftLeg.rotateAngleX = -0.15707964F;
+            this.ocelotFrontLeftLeg.rotationPointY = 15.8F;
+            this.ocelotFrontLeftLeg.rotationPointZ = -7.0F;
+            this.ocelotFrontRightLeg.rotateAngleX = -0.15707964F;
+            this.ocelotFrontRightLeg.rotationPointY = 15.8F;
+            this.ocelotFrontRightLeg.rotationPointZ = -7.0F;
+            this.ocelotBackLeftLeg.rotateAngleX = (-(float)Math.PI / 2F);
+            this.ocelotBackLeftLeg.rotationPointY = 21.0F;
+            this.ocelotBackLeftLeg.rotationPointZ = 1.0F;
+            this.ocelotBackRightLeg.rotateAngleX = (-(float)Math.PI / 2F);
+            this.ocelotBackRightLeg.rotationPointY = 21.0F;
+            this.ocelotBackRightLeg.rotationPointZ = 1.0F;
+            this.state = 3;
+        } else {
+            this.state = 1;
         }
-
-        if (cat.relaxStateOneAmount > 0.0F) {
-            this.head.xRot = net.minecraft.util.math.MathHelper.rotLerp(cat.relaxStateOneAmount, this.head.xRot, -0.58177644F);
-        }*/
     }
 }

@@ -10,31 +10,26 @@ import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientMooshroomRenderer extends PetRenderer<ClientMooshroom, ClientCowModel<ClientMooshroom>> {
+public class ClientMooshroomRenderer extends PetRenderer<ClientMooshroom, ClientCowModel> {
 
     String mooshroomTexturePath;
 
-    public ClientMooshroomRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientCowModel<>(), 0.7F);
-        this.addLayer(new ClientMushroomCowMushroomLayer(this, Minecraft.getInstance().getBlockRenderer()));
+    public ClientMooshroomRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+        super(context, new ClientCowModel(), 0.7F);
+        this.addLayer(new ClientMushroomCowMushroomLayer(this, Minecraft.getInstance().getBlockRendererDispatcher()));
     }
 
     @Override
-    protected void scale(ClientMooshroom state, float f) {
+    public void preRenderCallback(ClientMooshroom state, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
+        
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ClientMooshroom cowRenderState) {
-        if (Objects.equals(CONFIG.mooshroomSkin, "red")) {
-            mooshroomTexturePath = "textures/entity/cow/red_mooshroom.png";
-        } else if (Objects.equals(CONFIG.mooshroomSkin, "brown")) {
-            mooshroomTexturePath = "textures/entity/cow/brown_mooshroom.png";
-        } else {
-            mooshroomTexturePath = "textures/entity/cow/red_mooshroom.png";
-        }
+    public ResourceLocation getEntityTexture(ClientMooshroom cowRenderState) {
+            mooshroomTexturePath = "textures/entity/cow/mooshroom.png";
         return new ResourceLocation("minecraft", mooshroomTexturePath);
     }
 }

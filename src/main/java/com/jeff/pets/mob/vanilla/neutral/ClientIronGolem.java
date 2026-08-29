@@ -3,11 +3,12 @@ package com.jeff.pets.mob.vanilla.neutral;
 import com.jeff.pets.mob.GroundPet;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.init.SoundEvents;
 
 public class ClientIronGolem extends GroundPet {
-    public ClientIronGolem(EntityType<? extends net.minecraft.entity.passive.TameableEntity> entityType, net.minecraft.world.World level) {
+    public ClientIronGolem(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
         super(entityType, level);
+        this.setSize(1.4f, 2.7f);
     }
 
     @Override
@@ -22,6 +23,6 @@ public class ClientIronGolem extends GroundPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.IRON_GOLEM_STEP;
+        return SoundEvents.ENTITY_IRON_GOLEM_STEP;
     }
 }

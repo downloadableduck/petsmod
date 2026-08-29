@@ -2,14 +2,15 @@ package com.jeff.pets.mob.vanilla.neutral;
 
 import com.jeff.pets.mob.GroundPet;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.world.World;
 
 public class ClientZombiePigman extends GroundPet {
-    public ClientZombiePigman(EntityType<? extends TameableEntity> type, World level) {
+    public ClientZombiePigman(EntityType<? extends EntityTameable> type, World level) {
         super(type, level);
+        this.setSize(0.6f, 1.95f);
     }
 
     @Override
@@ -24,6 +25,6 @@ public class ClientZombiePigman extends GroundPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ZOMBIE_PIGMAN_AMBIENT;
+        return SoundEvents.ENTITY_ZOMBIE_PIGMAN_AMBIENT;
     }
 }

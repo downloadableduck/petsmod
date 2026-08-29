@@ -17,7 +17,7 @@ public interface ModifierKeyCode {
     }
     
     static ModifierKeyCode unknown() {
-        return of(InputMappings.UNKNOWN, Modifier.none());
+        return of(InputMappings.INPUT_INVALID, Modifier.none());
     }
     
     InputMappings.Input getKeyCode();
@@ -33,35 +33,35 @@ public interface ModifierKeyCode {
     ModifierKeyCode setModifier(Modifier modifier);
     
     default boolean matchesMouse(int button) {
-        return !isUnknown() && getType() == InputMappings.Type.MOUSE && getKeyCode().getValue() == button && getModifier().matchesCurrent();
+        return !isUnknown() && getType() == InputMappings.Type.MOUSE && getKeyCode().getKeyCode() == button && getModifier().matchesCurrent();
     }
     
     default boolean matchesKey(int keyCode, int scanCode) {
         if (isUnknown())
             return false;
-        if (keyCode == InputMappings.UNKNOWN.getValue()) {
-            return getType() == InputMappings.Type.SCANCODE && getKeyCode().getValue() == scanCode && getModifier().matchesCurrent();
+        if (keyCode == InputMappings.INPUT_INVALID.getKeyCode()) {
+            return getType() == InputMappings.Type.SCANCODE && getKeyCode().getKeyCode() == scanCode && getModifier().matchesCurrent();
         } else {
-            return getType() == InputMappings.Type.KEYSYM && getKeyCode().getValue() == keyCode && getModifier().matchesCurrent();
+            return getType() == InputMappings.Type.KEYSYM && getKeyCode().getKeyCode() == keyCode && getModifier().matchesCurrent();
         }
     }
     
     default boolean matchesCurrentMouse() {
         if (!isUnknown() && getType() == InputMappings.Type.MOUSE && getModifier().matchesCurrent()) {
-            switch (getKeyCode().getValue()) {
+            switch (getKeyCode().getKeyCode()) {
                 case 0:
-                    return Minecraft.getInstance().mouseHandler.isLeftPressed();
+                    return Minecraft.getInstance().mouseHelper.isLeftDown();
                 case 1:
-                    return Minecraft.getInstance().mouseHandler.isRightPressed();
+                    return Minecraft.getInstance().mouseHelper.isRightDown();
                 case 2:
-                    return Minecraft.getInstance().mouseHandler.isMiddleDown();
+                    return Minecraft.getInstance().mouseHelper.isMouseGrabbed();
             }
         }
         return false;
     }
     
     default boolean matchesCurrentKey() {
-        return !isUnknown() && getType() == InputMappings.Type.KEYSYM && getModifier().matchesCurrent() && InputMappings.isKeyDown(Minecraft.getInstance().window.getWindow(), getKeyCode().getValue());
+        return !isUnknown() && getType() == InputMappings.Type.KEYSYM && getModifier().matchesCurrent() && InputMappings.isKeyDown(getKeyCode().getKeyCode());
     }
     
     default ModifierKeyCode setKeyCodeAndModifier(InputMappings.Input keyCode, Modifier modifier) {
@@ -81,6 +81,6 @@ public interface ModifierKeyCode {
     }
     
     default boolean isUnknown() {
-        return getKeyCode().equals(InputMappings.UNKNOWN);
+        return getKeyCode().equals(InputMappings.INPUT_INVALID);
     }
 }

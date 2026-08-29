@@ -8,20 +8,21 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientSheepRenderer extends PetRenderer<ClientSheep, ClientSheepModel> {
 
-    public ClientSheepRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+    public ClientSheepRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientSheepModel(), 0.7F);
         this.addLayer(new ClientSheepWoolLayer(this));
     }
 
     @Override
-    protected void scale(ClientSheep livingEntityRenderState, float f) {
+    public void preRenderCallback(ClientSheep livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
+        
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ClientSheep livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(ClientSheep livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/sheep/sheep.png");
     }
 

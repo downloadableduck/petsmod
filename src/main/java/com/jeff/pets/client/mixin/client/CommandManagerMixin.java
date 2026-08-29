@@ -15,15 +15,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class CommandManagerMixin {
     @Shadow
     @Final
-    private CommandDispatcher<CommandSource> dispatcher;
+    private CommandDispatcher<CommandSource> field_197062_b;
 
     @Inject(at = @At("TAIL"), method = "<init>")
     private void onInit(boolean isDedicatedServer, CallbackInfo ci) {
-        Central.createPetSkinCommand(this.dispatcher);
-        Central.createPetNameCommand(this.dispatcher);
-        Central.createPetHelpCommand(this.dispatcher);
-        Central.createPetSpeciesCommand(this.dispatcher);
-        Central.createPetTeleportCommand(this.dispatcher);
-        Central.createToggleCommand(this.dispatcher);
+        Central.createPetSkinCommand(this.field_197062_b);
+        Central.createPetNameCommand(this.field_197062_b);
+        Central.createPetHelpCommand(this.field_197062_b);
+        Central.createPetSpeciesCommand(this.field_197062_b);
+        Central.createPetTeleportCommand(this.field_197062_b);
+        Central.createToggleCommand(this.field_197062_b);
     }
 }

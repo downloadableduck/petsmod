@@ -8,19 +8,19 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientCatRenderer extends PetRenderer<ClientCat, ClientCatModel> {
 
-    public ClientCatRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientCatModel(0), 0.7F);
+    public ClientCatRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+        super(context, new ClientCatModel(), 0.7F);
     }
 
     @Override
-    protected void scale(ClientCat state, float f) {
+    public void preRenderCallback(ClientCat state, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ClientCat livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(ClientCat livingEntityRenderState) {
         switch (CONFIG.catSkin) {
             case "black":
                 return new ResourceLocation("minecraft", "textures/entity/cat/all_black.png");

@@ -3,9 +3,9 @@ package com.jeff.pets.mob.vanilla.passive;
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
 import net.minecraft.entity.EntityType;
-import net.minecraft.potion.Effects;
+import net.minecraft.init.MobEffects;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.init.SoundEvents;
 
 @CanFly
 public class ClientSquid extends FlyingPet {
@@ -26,8 +26,9 @@ public class ClientSquid extends FlyingPet {
     private float tz;
 
 
-    public ClientSquid(EntityType<? extends net.minecraft.entity.passive.TameableEntity> entityType, net.minecraft.world.World level) {
+    public ClientSquid(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
         super(entityType, level);
+        this.setSize(0.8f, 0.8f);
     }
 
     @Override
@@ -42,7 +43,7 @@ public class ClientSquid extends FlyingPet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.SQUID_AMBIENT;
+        return SoundEvents.ENTITY_SQUID_AMBIENT;
     }
 
     @Override
@@ -54,19 +55,19 @@ public class ClientSquid extends FlyingPet {
         this.oldTentacleAngle = this.tentacleAngle;
         this.tentacleMovement += this.tentacleSpeed;
         if ((double) this.tentacleMovement > (Math.PI * 2D)) {
-            if (this.level.isClientSide) {
+            if (this.world.isRemote) {
                 this.tentacleMovement = ((float) Math.PI * 2F);
             } else {
                 this.tentacleMovement -= ((float) Math.PI * 2F);
-                if (this.random.nextInt(10) == 0) {
-                    this.tentacleSpeed = 1.0F / (this.random.nextFloat() + 1.0F) * 0.2F;
+                if (this.rand.nextInt(10) == 0) {
+                    this.tentacleSpeed = 1.0F / (this.rand.nextFloat() + 1.0F) * 0.2F;
                 }
 
-                this.level.broadcastEntityEvent(this, (byte) 19);
+                this.world.setEntityState(this, (byte) 19);
             }
         }
 
-        if (this.isInWaterOrBubble()) {
+        if (this.isInWaterOrBubbleColumn()) {
             if (this.tentacleMovement < (float) Math.PI) {
                 float f = this.tentacleMovement / (float) Math.PI;
                 this.tentacleAngle = net.minecraft.util.math.MathHelper.sin(f * f * (float) Math.PI) * (float) Math.PI * 0.25F;
@@ -82,27 +83,26 @@ public class ClientSquid extends FlyingPet {
                 this.rotateSpeed *= 0.99F;
             }
 
-            if (!this.level.isClientSide) {
-                this.setDeltaMovement(this.tx * this.speed, this.ty * this.speed, this.tz * this.speed);
+            if (!this.world.isRemote) {
+                this.setVelocity(this.tx * this.speed, this.ty * this.speed, this.tz * this.speed);
             }
 
-            net.minecraft.util.math.Vec3d vec3 = this.getDeltaMovement();
-            double d = this.horizontalDistance(vec3);
-            this.yBodyRot += (-((float) net.minecraft.util.math.MathHelper.atan2(vec3.x, vec3.z)) * (180F / (float) Math.PI) - this.yBodyRot) * 0.1F;
-            this.setYRot(this.yBodyRot);
+            double d = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
+            this.renderYawOffset += (-((float) net.minecraft.util.math.MathHelper.atan2(this.motionX, this.motionZ)) * (180F / (float) Math.PI) - this.renderYawOffset) * 0.1F;
+            this.setYRot(this.renderYawOffset);
             this.zBodyRot += (float) Math.PI * this.rotateSpeed * 1.5F;
-            this.xBodyRot += (-((float) net.minecraft.util.math.MathHelper.atan2(d, vec3.y)) * (180F / (float) Math.PI) - this.xBodyRot) * 0.1F;
+            this.xBodyRot += (-((float) net.minecraft.util.math.MathHelper.atan2(d, this.motionY)) * (180F / (float) Math.PI) - this.xBodyRot) * 0.1F;
         } else {
             this.tentacleAngle = net.minecraft.util.math.MathHelper.abs(net.minecraft.util.math.MathHelper.sin(this.tentacleMovement)) * (float) Math.PI * 0.25F;
-            if (!this.level.isClientSide) {
-                double e = this.getDeltaMovement().y;
-                if (this.hasEffect(Effects.LEVITATION)) {
-                    e = 0.05 * (double) (this.getEffect(Effects.LEVITATION).getAmplifier() + 1);
+            if (!this.world.isRemote) {
+                double e = this.motionY;
+                if (this.isPotionActive(MobEffects.LEVITATION)) {
+                    e = 0.05 * (double) (this.getActivePotionEffect(MobEffects.LEVITATION).getAmplifier() + 1);
                 } else {
                     e -= 1;
                 }
 
-                this.setDeltaMovement(0.0F, e * (double) 0.98F, 0.0F);
+                this.setVelocity(0.0F, e * (double) 0.98F, 0.0F);
             }
 
             this.xBodyRot += (-90.0F - this.xBodyRot) * 0.02F;
@@ -110,18 +110,10 @@ public class ClientSquid extends FlyingPet {
     }
 
     @Override
-    public void setDeltaMovement(double x, double y, double z) {
-        this.setDeltaMovement(new net.minecraft.util.math.Vec3d(x, y, z));
+    public void setVelocity(double x, double y, double z) {
+        super.setVelocity(x, y, z);
         this.tx = (float) x;
         this.ty = (float) y;
         this.tz = (float) z;
-    }
-
-    @Override
-    public void setDeltaMovement(net.minecraft.util.math.Vec3d vec3) {
-        super.setDeltaMovement(vec3);
-        double x = vec3.x;
-        double y = vec3.y;
-        double z = vec3.z;
     }
 }

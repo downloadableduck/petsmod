@@ -9,13 +9,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Minecraft.class)
 public class TickMixin {
-    @Inject(at = @At("HEAD"), method = "tick", require = 0) //tick
+    @Inject(at = @At("HEAD"), method = "runTick", require = 0) //tick
     private void onTick(CallbackInfo ci) {
-        Central.createTickWatcher();
+        //Central.createTickWatcher();
     }
 
     @Inject(at = @At("HEAD"), method = "func_71407_l", require = 0) //tick
     private void onFunc_71407_l(CallbackInfo ci) {
-        Central.createTickWatcher();
+        //Central.createTickWatcher();
     }
 }

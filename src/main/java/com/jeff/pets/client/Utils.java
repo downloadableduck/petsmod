@@ -2,8 +2,8 @@ package com.jeff.pets.client;
 
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
@@ -35,21 +35,21 @@ public class Utils {
     public static void summonPet(AbstractPet entity, String entityName) {
 
         Minecraft minecraft = Minecraft.getInstance();
-        ClientPlayerEntity player = minecraft.player;
-        ClientWorld world = minecraft.level;
+        EntityPlayerSP player = minecraft.player;
+        WorldClient world = minecraft.world;
 
         if (entity == null || world == null || player == null) return;
 
-        Vec3d lookAngle = player.getLookAngle();
+        Vec3d lookAngle = player.getLook(1.0f);
 
-        double x = player.x - lookAngle.x * (double) 0.5F;
-        double y = player.y + (double) 0.5F;
-        double z = player.z - lookAngle.z * (double) 0.5F;
+        double x = player.posX - lookAngle.x * (double) 0.5F;
+        double y = player.posY + (double) 0.5F;
+        double z = player.posZ - lookAngle.z * (double) 0.5F;
 
-        entity.setPos(x, y, z);
+        entity.setPosition(x, y, z);
         entity.setName(entityName);
-        world.addEntity(entity.getId(), entity);
-        entity.tame(player);
+        world.addEntityToWorld(entity.getEntityId(), entity);
+        entity.setTamedBy(player);
         Central.summonedEntity.add(entity);
     }
 

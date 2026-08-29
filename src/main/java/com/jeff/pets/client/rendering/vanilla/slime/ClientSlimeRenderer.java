@@ -2,21 +2,21 @@ package com.jeff.pets.client.rendering.vanilla.slime;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
-import net.minecraft.client.renderer.entity.layers.SlimeGelLayer;
-import net.minecraft.client.renderer.entity.model.SlimeModel;
+import net.minecraft.client.renderer.entity.RenderSlime;
+import net.minecraft.client.renderer.entity.model.ModelSlime;
 import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSlimeRenderer extends PetRenderer<ClientSlime, SlimeModel<ClientSlime>> {
+public class ClientSlimeRenderer extends PetRenderer<ClientSlime, ModelSlime> {
 
-    public ClientSlimeRenderer(net.minecraft.client.renderer.entity.EntityRendererManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new SlimeModel<>(16), 0.75f);
-        this.addLayer(new SlimeGelLayer<>(this));
+    public ClientSlimeRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+        super(context, new ModelSlime(16), 0.75f);
+        this.addLayer(new LayerSlimeGel(this));
     }
 
     @Override
-    protected void scale(ClientSlime slimeRenderState, float f) {
+    public void preRenderCallback(ClientSlime slimeRenderState, float f) {
         int slimeScale;
         switch (CONFIG.slimeSkin) {
             case "small":
@@ -32,11 +32,12 @@ public class ClientSlimeRenderer extends PetRenderer<ClientSlime, SlimeModel<Cli
                 slimeScale = 1;
                 break;
         }
-        com.mojang.blaze3d.platform.GlStateManager.scalef(slimeScale, slimeScale, slimeScale);
+        net.minecraft.client.renderer.GlStateManager.scalef(slimeScale, slimeScale, slimeScale);
+        
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ClientSlime livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(ClientSlime livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/slime/slime.png");
     }
 }

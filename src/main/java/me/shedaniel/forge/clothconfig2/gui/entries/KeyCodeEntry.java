@@ -6,13 +6,14 @@ import me.shedaniel.forge.clothconfig2.api.ModifierKeyCode;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.IGuiEventListener;
-import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -21,7 +22,7 @@ import java.util.function.Supplier;
 public class KeyCodeEntry extends TooltipListEntry<ModifierKeyCode> {
     
     private ModifierKeyCode value;
-    private Button buttonWidget, resetButton;
+    private GuiButton buttonWidget, resetButton;
     private Consumer<ModifierKeyCode> saveConsumer;
     private Supplier<ModifierKeyCode> defaultValue;
     private List<IGuiEventListener> widgets;
@@ -32,15 +33,23 @@ public class KeyCodeEntry extends TooltipListEntry<ModifierKeyCode> {
         super(fieldName, tooltipSupplier, requiresRestart);
         this.defaultValue = defaultValue;
         this.value = value;
-        this.buttonWidget = new Button(0, 0, 150, 20, "", widget -> {
-            getScreen().setFocusedBinding(this);
-            getScreen().setEdited(true, isRequiresRestart());
-        });
-        this.resetButton = new Button(0, 0, Minecraft.getInstance().font.width(I18n.get(resetButtonKey)) + 6, 20, I18n.get(resetButtonKey), widget -> {
-            KeyCodeEntry.this.value = getDefaultValue().orElse(null);
-            getScreen().setFocusedBinding(null);
-            getScreen().setEdited(true, isRequiresRestart());
-        });
+        this.buttonWidget = new GuiButton(new Random().nextInt(), 0, 0, 150, 20, "") {
+            @Override
+            public void onClick(double p_194829_1_, double p_194829_3_) {
+                getScreen().setFocusedBinding(KeyCodeEntry.this);
+                getScreen().setEdited(true, isRequiresRestart());
+                super.onClick(p_194829_1_, p_194829_3_);
+            }
+        };
+        this.resetButton = new GuiButton(new Random().nextInt(), 0, 0, Minecraft.getInstance().fontRenderer.getStringWidth(I18n.format(resetButtonKey)) + 6, 20, I18n.format(resetButtonKey)) {
+            @Override
+            public void onClick(double p_194829_1_, double p_194829_3_) {
+                KeyCodeEntry.this.value = getDefaultValue().orElse(null);
+                getScreen().setFocusedBinding(null);
+                getScreen().setEdited(true, isRequiresRestart());
+                super.onClick(p_194829_1_, p_194829_3_);
+            }
+        };
         this.saveConsumer = saveConsumer;
         this.widgets = Lists.newArrayList(buttonWidget, resetButton);
     }
@@ -96,20 +105,20 @@ public class KeyCodeEntry extends TooltipListEntry<ModifierKeyCode> {
     @Override
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-        MainWindow window = Minecraft.getInstance().window;
-        this.resetButton.active = isEditable() && getDefaultValue().isPresent() && !getDefaultValue().get().equals(value);
+        MainWindow window = Minecraft.getInstance().mainWindow;
+        this.resetButton.enabled = isEditable() && getDefaultValue().isPresent() && !getDefaultValue().get().equals(value);
         this.resetButton.y = y;
-        this.buttonWidget.active = isEditable();
+        this.buttonWidget.enabled = isEditable();
         this.buttonWidget.y = y;
-        this.buttonWidget.setMessage(getLocalizedName());
+        this.buttonWidget.displayString = (getLocalizedName());
         if (getScreen().getFocusedBinding() == this)
-            this.buttonWidget.setMessage(ChatFormatting.WHITE + "> " + ChatFormatting.YELLOW + this.buttonWidget.getMessage() + ChatFormatting.WHITE + " <");
-        if (Minecraft.getInstance().font.isBidirectional()) {
-            Minecraft.getInstance().font.drawShadow(I18n.get(getFieldName()), window.getGuiScaledWidth() - x - Minecraft.getInstance().font.width(I18n.get(getFieldName())), y + 5, 16777215);
+            this.buttonWidget.displayString = (ChatFormatting.WHITE + "> " + ChatFormatting.YELLOW + this.buttonWidget.displayString + ChatFormatting.WHITE + " <");
+        if (Minecraft.getInstance().fontRenderer.getBidiFlag()) {
+            Minecraft.getInstance().fontRenderer.drawStringWithShadow(I18n.format(getFieldName()), window.getScaledWidth() - x - Minecraft.getInstance().fontRenderer.getStringWidth(I18n.format(getFieldName())), y + 5, 16777215);
             this.resetButton.x = x;
             this.buttonWidget.x = x + resetButton.getWidth() + 2;
         } else {
-            Minecraft.getInstance().font.drawShadow(I18n.get(getFieldName()), x, y + 5, getPreferredTextColor());
+            Minecraft.getInstance().fontRenderer.drawStringWithShadow(I18n.format(getFieldName()), x, y + 5, getPreferredTextColor());
             this.resetButton.x = x + entryWidth - resetButton.getWidth();
             this.buttonWidget.x = x + entryWidth - 150;
         }
@@ -119,7 +128,7 @@ public class KeyCodeEntry extends TooltipListEntry<ModifierKeyCode> {
     }
     
     @Override
-    public List<? extends IGuiEventListener> children() {
+    public List<? extends IGuiEventListener> getChildren() {
         return widgets;
     }
     
