@@ -120,7 +120,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
         public static final Function<String, Identifier> ITEM_IDENTIFIER_FUNCTION = str -> {
             try {
                 Identifier identifier = new Identifier(str);
-                if (IdRegistry.ITEM.get(identifier) != null)
+                if (Item.REGISTRY.get(identifier) != null)
                     return identifier;
             } catch (Exception ignored) {
             }
@@ -129,7 +129,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
         public static final Function<String, Identifier> BLOCK_IDENTIFIER_FUNCTION = str -> {
             try {
                 Identifier identifier = new Identifier(str);
-                if (IdRegistry.BLOCK.get(identifier) != null)
+                if (Block.REGISTRY.get(identifier) != null)
                     return identifier;
             } catch (Exception ignored) {
             }
@@ -137,14 +137,14 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
         };
         public static final Function<String, Item> ITEM_FUNCTION = str -> {
             try {
-                return IdRegistry.ITEM.get(new Identifier(str));
+                return Item.REGISTRY.get(new Identifier(str));
             } catch (Exception ignored) {
             }
             return null;
         };
         public static final Function<String, Block> BLOCK_FUNCTION = str -> {
             try {
-                return IdRegistry.BLOCK.get(new Identifier(str));
+                return Block.REGISTRY.get(new Identifier(str));
             } catch (Exception ignored) {
             }
             return null;
@@ -160,7 +160,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
         }
         
         public static SelectionTopCellElement<Identifier> ofItemIdentifier(Item item) {
-            return new DefaultSelectionTopCellElement<Identifier>(IdRegistry.ITEM.getKey(item), ITEM_IDENTIFIER_FUNCTION, Identifier::toString) {
+            return new DefaultSelectionTopCellElement<Identifier>(Item.REGISTRY.getKey(item), ITEM_IDENTIFIER_FUNCTION, Identifier::toString) {
                 @Override
                 public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
                     textFieldWidget.x = x + 4;
@@ -170,14 +170,14 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                     textFieldWidget.setEditableColor(getPreferredTextColor());
                     textFieldWidget.render(mouseX, mouseY, delta);
                     ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-                    ItemStack stack = hasConfigError() ? BARRIER : new ItemStack(IdRegistry.ITEM.get(getValue()));
+                    ItemStack stack = hasConfigError() ? BARRIER : new ItemStack(Item.REGISTRY.get(getValue()));
                     itemRenderer.renderGuiItem(stack, x + width - 18, y + 2);
                 }
             };
         }
         
         public static SelectionTopCellElement<Identifier> ofBlockIdentifier(Block block) {
-            return new DefaultSelectionTopCellElement<Identifier>(IdRegistry.BLOCK.getKey(block), BLOCK_IDENTIFIER_FUNCTION, Identifier::toString) {
+            return new DefaultSelectionTopCellElement<Identifier>(Block.REGISTRY.getKey(block), BLOCK_IDENTIFIER_FUNCTION, Identifier::toString) {
                 @Override
                 public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
                     textFieldWidget.x = x + 4;
@@ -187,14 +187,14 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                     textFieldWidget.setEditableColor(getPreferredTextColor());
                     textFieldWidget.render(mouseX, mouseY, delta);
                     ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-                    ItemStack stack = hasConfigError() ? BARRIER : new ItemStack(IdRegistry.BLOCK.get(getValue()));
+                    ItemStack stack = hasConfigError() ? BARRIER : new ItemStack(Block.REGISTRY.get(getValue()));
                     itemRenderer.renderGuiItem(stack, x + width - 18, y + 2);
                 }
             };
         }
         
         public static SelectionTopCellElement<Item> ofItemObject(Item item) {
-            return new DefaultSelectionTopCellElement<Item>(item, ITEM_FUNCTION, i -> IdRegistry.ITEM.getKey(i).toString()) {
+            return new DefaultSelectionTopCellElement<Item>(item, ITEM_FUNCTION, i -> Item.REGISTRY.getKey(i).toString()) {
                 @Override
                 public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
                     textFieldWidget.x = x + 4;
@@ -211,7 +211,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
         }
         
         public static SelectionTopCellElement<Block> ofBlockObject(Block block) {
-            return new DefaultSelectionTopCellElement<Block>(block, BLOCK_FUNCTION, i -> IdRegistry.BLOCK.getKey(i).toString()) {
+            return new DefaultSelectionTopCellElement<Block>(block, BLOCK_FUNCTION, i -> Block.REGISTRY.getKey(i).toString()) {
                 @Override
                 public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
                     textFieldWidget.x = x + 4;
@@ -351,7 +351,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
             return new DefaultSelectionCellCreator<Identifier>() {
                 @Override
                 public DropdownBoxEntry.SelectionCellElement<Identifier> create(Identifier selection) {
-                    ItemStack s = new ItemStack(IdRegistry.ITEM.get(selection));
+                    ItemStack s = new ItemStack(Item.REGISTRY.get(selection));
                     return new DropdownBoxEntry.DefaultSelectionCellElement<Identifier>(selection, toStringFunction) {
                         @Override
                         public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
@@ -400,7 +400,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
             return new DefaultSelectionCellCreator<Identifier>() {
                 @Override
                 public DropdownBoxEntry.SelectionCellElement<Identifier> create(Identifier selection) {
-                    ItemStack s = new ItemStack(IdRegistry.BLOCK.get(selection));
+                    ItemStack s = new ItemStack(Block.REGISTRY.get(selection));
                     return new DropdownBoxEntry.DefaultSelectionCellElement<Identifier>(selection, toStringFunction) {
                         @Override
                         public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
@@ -445,7 +445,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
         }
         
         public static SelectionCellCreator<Item> ofItemObject(int cellHeight, int cellWidth, int maxItems) {
-            return new DefaultSelectionCellCreator<Item>(i -> IdRegistry.ITEM.getKey(i).toString()) {
+            return new DefaultSelectionCellCreator<Item>(i -> Item.REGISTRY.getKey(i).toString()) {
                 @Override
                 public DropdownBoxEntry.SelectionCellElement<Item> create(Item selection) {
                     ItemStack s = new ItemStack(selection);
@@ -493,7 +493,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
         }
         
         public static SelectionCellCreator<Block> ofBlockObject(int cellHeight, int cellWidth, int maxItems) {
-            return new DefaultSelectionCellCreator<Block>(i -> IdRegistry.BLOCK.getKey(i).toString()) {
+            return new DefaultSelectionCellCreator<Block>(i -> Block.REGISTRY.getKey(i).toString()) {
                 @Override
                 public DropdownBoxEntry.SelectionCellElement<Block> create(Block selection) {
                     ItemStack s = new ItemStack(selection);

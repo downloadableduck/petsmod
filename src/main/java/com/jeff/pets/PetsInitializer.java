@@ -444,7 +444,7 @@ public class PetsInitializer implements ModInitializer {
     }
 
     private static <T extends Entity> EntityType<T> register(Identifier id, EntityType<T> type) {
-        IdRegistry.ENTITY_TYPE.register(id, type);
+        EntityType.REGISTRY.put(id, type);
         return type;
     }
 }

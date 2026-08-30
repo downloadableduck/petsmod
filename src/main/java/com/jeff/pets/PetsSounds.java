@@ -16,14 +16,14 @@ public class PetsSounds {
     private static SoundEvent registerSound() {
         Identifier identifier = new Identifier(PetsInitializer.MOD_ID, "duck_ambient");
         SoundEvent event = new SoundEvent(identifier);
-        IdRegistry.SOUND_EVENT.register(identifier, event);
+        SoundEvent.REGISTRY.put(identifier, event);
         return event;
     }
 
     private static SoundEvent registerPenguinSound() {
         Identifier identifier = new Identifier(PetsInitializer.MOD_ID, "penguin_ambient");
         SoundEvent event = new SoundEvent(identifier);
-        IdRegistry.SOUND_EVENT.register(identifier, event);
+        SoundEvent.REGISTRY.put(identifier, event);
         return event;
     }
 
