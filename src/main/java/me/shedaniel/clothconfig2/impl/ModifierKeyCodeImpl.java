@@ -1,6 +1,6 @@
 package me.shedaniel.clothconfig2.impl;
 
-import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.render.platform.InputConstants;
 import me.shedaniel.clothconfig2.api.Modifier;
 import me.shedaniel.clothconfig2.api.ModifierKeyCode;
 import net.fabricmc.api.EnvType;
@@ -48,14 +48,14 @@ public class ModifierKeyCodeImpl implements ModifierKeyCode {
         String string_2 = null;
         switch (this.keyCode.getType()) {
             case KEYSYM:
-                string_2 = InputConstants.m_19489816(int_1);
+                string_2 = string_1;
                 break;
             case SCANCODE:
-                string_2 = InputConstants.m_10205125(int_1);
+                string_2 = string_1;
                 break;
             case MOUSE:
                 String string_3 = I18n.translate(string_1);
-                string_2 = Objects.equals(string_3, string_1) ? I18n.translate(InputConstants.Type.MOUSE.m_03041366(), int_1 + 1) : string_3;
+                string_2 = Objects.equals(string_3, string_1) ? I18n.translate("key.mouse", int_1 + 1) : string_3;
         }
         String base = string_2 == null ? I18n.translate(string_1) : string_2;
         if (modifier.hasShift())

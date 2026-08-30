@@ -3,11 +3,12 @@ package com.jeff.pets.client.rendering.vanilla.shulker;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientShulker;
 import net.minecraft.resource.Identifier;
+
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientShulkerRenderer extends PetRenderer<@NotNull ClientShulker, @NotNull ClientShulkerModel> {
+public class ClientShulkerRenderer extends PetRenderer<ClientShulker> {
 
     public ClientShulkerRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientShulkerModel(), 0.75f);

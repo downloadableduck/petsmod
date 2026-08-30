@@ -6,7 +6,7 @@ import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.NotNull;
 
-public class KoiModel extends PetModel<@NotNull Koi> {
+public class KoiModel extends PetModel {
     private final ModelPart body;
     private final ModelPart top_fin;
     private final ModelPart left_hind_fin;
@@ -20,8 +20,8 @@ public class KoiModel extends PetModel<@NotNull Koi> {
     private final ModelPart tail_fin;
 
     public KoiModel() {
-        f_35376783 /*textureWidth*/ = 64;
-        f_50207596 /*textureHeight*/ = 64;
+        textureWidth /*textureWidth*/ = 64;
+        textureHeight /*textureHeight*/ = 64;
 
         body = new ModelPart(this);
         body.setPos(0.0F, 20.0F, -7.0F);
@@ -83,8 +83,8 @@ public class KoiModel extends PetModel<@NotNull Koi> {
     }
 
     @Override
-    public void render(Koi koi, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
-        super.render(koi, packedLight, packedOverlay, red, green, blue, alpha);
+    public void render(net.minecraft.entity.Entity entity, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
+        super.render(entity, packedLight, packedOverlay, red, green, blue, alpha);
         body.render(alpha);
     }
 
@@ -95,7 +95,7 @@ public class KoiModel extends PetModel<@NotNull Koi> {
     }
 
     @Override
-    public void setup(Koi state, float f, float g, float ageInTicks, float m, float k, float s) {
+    public void setupAnimation(float f, float g, float ageInTicks, float m, float k, float s, net.minecraft.entity.Entity entity) {
         this.body.rotationY = -1.0f * 0.25F * MathHelper.sin(1.0f * 0.6F * ageInTicks);
         this.tail_fin.rotationY = -this.body.rotationY * 1.75f;
     }

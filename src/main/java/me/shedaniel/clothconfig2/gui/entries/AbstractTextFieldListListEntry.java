@@ -50,23 +50,22 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
             
             final T finalValue = substituteDefault(value);
             
-            widget = new TextFieldWidget(Minecraft.getInstance().textRenderer, 0, 0, 100, 18, "") {
+            widget = new TextFieldWidget(0, Minecraft.getInstance().textRenderer, 0, 0, 100, 18) {
                 @Override
                 public void render(int mouseX, int mouseY, float delta) {
-                    setFocused(isSelected);
                     super.render(mouseX, mouseY, delta);
                 }
             };
-            widget.setFilter(this::isValidText);
+            // widget.setFilter(this::isValidText); // Not available in 1.13
             widget.setMaxLength(Integer.MAX_VALUE);
             widget.setHasBorder(false);
             widget.setText(Objects.toString(finalValue));
-            widget.setResponder(s -> {
-                widget.setEditableColor(getPreferredTextColor());
-                if (listListEntry.getScreen() != null && !Objects.equals(s, Objects.toString(finalValue))) {
-                    this.listListEntry.getScreen().setEdited(true, this.listListEntry.isRequiresRestart());
-                }
-            });
+            // widget.setResponder(s -> { // Not available in 1.13
+            //     widget.setEditableColor(getPreferredTextColor());
+            //     if (listListEntry.getScreen() != null && !Objects.equals(s, Objects.toString(finalValue))) {
+            //         this.listListEntry.getScreen().setEdited(true, this.listListEntry.isRequiresRestart());
+            //     }
+            // });
         }
     
         @Override
@@ -98,7 +97,7 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
         
         @Override
         public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
-            widget.setWidth(entryWidth - 12);
+            widget.width = entryWidth - 12;
             widget.x = x;
             widget.y = y + 1;
             widget.setEditable(listListEntry.isEditable());
@@ -108,7 +107,7 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
         }
         
         @Override
-        public List<? extends GuiEventListener> getChildren() {
+        public List<? extends GuiEventListener> children() {
             return Collections.singletonList(widget);
         }
     }

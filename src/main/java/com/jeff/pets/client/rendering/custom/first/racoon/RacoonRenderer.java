@@ -12,7 +12,7 @@ import java.util.Objects;
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class RacoonRenderer extends PetRenderer<@NotNull Racoon, @NotNull RacoonModel> {
+public class RacoonRenderer extends PetRenderer<@NotNull Racoon> {
 
     public RacoonRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new RacoonModel(), 0.75f);
@@ -20,7 +20,7 @@ public class RacoonRenderer extends PetRenderer<@NotNull Racoon, @NotNull Racoon
 
     protected void applyScale(@NotNull Racoon livingEntityRenderState, float f) {
         if ((CONFIG.isBaby && !livingEntityRenderState.isServerEntity()) || (livingEntityRenderState.isBaby() && livingEntityRenderState.isServerEntity())) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
+            net.minecraft.client.render.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 

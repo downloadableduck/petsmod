@@ -8,10 +8,10 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientMagmaCubeRenderer extends PetRenderer<@NotNull ClientMagmaCube, @NotNull SlimeModel<ClientMagmaCube>> {
+public class ClientMagmaCubeRenderer extends PetRenderer<ClientMagmaCube> {
 
     public ClientMagmaCubeRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new SlimeModel<>(0), 0.75f);
+        super(context, new SlimeModel(0), 0.75f);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class ClientMagmaCubeRenderer extends PetRenderer<@NotNull ClientMagmaCub
                 magmaCubeapplyScale = 1;
                 break;
         }
-        com.mojang.blaze3d.platform.GlStateManager.scale(magmaCubeapplyScale, magmaCubeapplyScale, magmaCubeapplyScale);
+        net.minecraft.client.render.platform.GlStateManager.scalef(magmaCubeapplyScale, magmaCubeapplyScale, magmaCubeapplyScale);
     }
 
     @Override

@@ -1,29 +1,30 @@
 package com.jeff.pets.client.rendering.vanilla.sheep;
 
 import com.jeff.pets.mob.vanilla.passive.ClientSheep;
-import com.mojang.blaze3d.platform.GlStateManager;
+import net.minecraft.client.render.entity.layer.SheepFurLayer;
+import net.minecraft.client.render.platform.GlStateManager;
 import net.minecraft.client.render.entity.layer.EntityRenderLayer;
-import net.minecraft.client.render.entity.layer.EntityRenderLayerParent;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.model.Model;
 import net.minecraft.resource.Identifier;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSheepWoolLayer extends EntityRenderLayer<@NotNull ClientSheep, @NotNull ClientSheepModel> {
-    private final Model<@NotNull ClientSheep> model;
+public class ClientSheepWoolLayer implements EntityRenderLayer<ClientSheep> {
+    private final ClientSheepRenderer renderer;
+    private final ClientSheepFurModel model;
     int woolColor;
 
-    public ClientSheepWoolLayer(EntityRenderLayerParent<@NotNull ClientSheep, @NotNull ClientSheepModel> renderLayerParent) {
-        super(renderLayerParent);
+    public ClientSheepWoolLayer(ClientSheepRenderer renderer) {
+        this.renderer = renderer;
         this.model = new ClientSheepFurModel();
     }
 
     @Override
     public void render(ClientSheep sheep, float f, float a, float h, float i, float j, float k, float l) {
-        this.bindTexture(new Identifier("minecraft", "textures/entity/sheep/sheep_fur.png"));
+        this.renderer.bindTexture(new Identifier("minecraft", "textures/entity/sheep/sheep_fur.png"));
         if (Objects.equals(CONFIG.sheepSkin, "white")) {
             woolColor = 15132390;
         } else if (Objects.equals(CONFIG.sheepSkin, "orange")) {
@@ -63,11 +64,12 @@ public class ClientSheepWoolLayer extends EntityRenderLayer<@NotNull ClientSheep
         float r = (float) (woolColor >> 16 & 255) / 255.0F;
         float g = (float) (woolColor >> 8 & 255) / 255.0F;
         float b = (float) (woolColor & 255) / 255.0F;
-            GlStateManager.color(r, g, b);
+            GlStateManager.color4f(r, g, b, 1.0F);
+            this.model.isBaby = false;
 
-            (this.getModel()).m_95427286(this.model);
-            this.model.prepare(sheep, f, g, h);
-            this.model.render(sheep, f, g, i, j, k, l);
+            this.model.copyPropertiesFrom(this.renderer.getModel());
+            this.model.prepare(sheep, f, a, h);
+            this.model.render(sheep, f, a, i, j, k, l);
     }
 
     @Override

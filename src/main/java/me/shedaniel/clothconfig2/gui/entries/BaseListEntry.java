@@ -1,8 +1,7 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.platform.Lighting;
+import net.minecraft.client.render.platform.GlStateManager;
 import me.shedaniel.clothconfig2.ButtonWidget;
 import me.shedaniel.clothconfig2.api.QueuedTooltip;
 import me.shedaniel.math.Point;
@@ -45,7 +44,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
     protected boolean insertInFront;
     @Nullable protected Consumer<List<T>> saveConsumer;
     protected ListLabelWidget labelWidget;
-    protected net.minecraft.client.gui.widget.ButtonWidget resetWidget;
+    protected ButtonWidget resetWidget;
     @NotNull protected Function<SELF, C> createNewInstance;
     @NotNull protected Supplier<List<T>> defaultValue;
     @Nullable protected String addTooltip = I18n.translate("text.cloth-config.list.add"), removeTooltip = I18n.translate("text.cloth-config.list.remove");
@@ -167,7 +166,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         labelWidget.rectangle.y = y;
         labelWidget.rectangle.width = entryWidth + 15;
         labelWidget.rectangle.height = 24;
-        return labelWidget.rectangle.contains(mouseX, mouseY) && getParent().isMouseOver(mouseX, mouseY) && !resetWidget.m_74503738(mouseX, mouseY);
+        return labelWidget.rectangle.contains(mouseX, mouseY) && getParent().isMouseOver(mouseX, mouseY) && !resetWidget.wrapDegrees(mouseX, mouseY);
     }
     
     protected boolean isInsideCreateNew(double mouseX, double mouseY) {
@@ -200,8 +199,8 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
                 getScreen().queueTooltip(QueuedTooltip.create(new Point(mouseX, mouseY), tooltip.get()));
         }
         Minecraft.getInstance().getTextureManager().bind(CONFIG_TEX);
-        Lighting.turnOff();
-        GlStateManager.color(1, 1, 1, 1);
+        // Lighting.turnOff(); // Not available in 1.13
+        GlStateManager.color4f(1, 1, 1, 1);
         BaseListCell focused = !expanded || getFocused() == null || !(getFocused() instanceof BaseListCell) ? null : (BaseListCell) getFocused();
         boolean insideCreateNew = isInsideCreateNew(mouseX, mouseY);
         boolean insideDelete = isInsideDelete(mouseX, mouseY);
@@ -213,7 +212,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         resetWidget.y = y;
         resetWidget.active = isEditable() && getDefaultValue().isPresent();
         resetWidget.render(mouseX, mouseY, delta);
-        Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), isDeleteButtonEnabled() ? x + 24 : x + 24 - 9, y + 5, labelWidget.rectangle.contains(mouseX, mouseY) && !resetWidget.m_74503738(mouseX, mouseY) && !insideDelete && !insideCreateNew ? 0xffe6fe16 : getPreferredTextColor());
+        Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), isDeleteButtonEnabled() ? x + 24 : x + 24 - 9, y + 5, labelWidget.rectangle.contains(mouseX, mouseY) && !resetWidget.wrapDegrees(mouseX, mouseY) && !insideDelete && !insideCreateNew ? 0xffe6fe16 : getPreferredTextColor());
         if (expanded) {
             int yy = y + 24;
             for (BaseListCell cell : cells) {
@@ -239,7 +238,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         
         @Override
         public boolean mouseClicked(double double_1, double double_2, int int_1) {
-            if (resetWidget.m_74503738(double_1, double_2)) {
+            if (resetWidget.wrapDegrees(double_1, double_2)) {
                 return false;
             } else if (isInsideCreateNew(double_1, double_2)) {
                 expanded = true;

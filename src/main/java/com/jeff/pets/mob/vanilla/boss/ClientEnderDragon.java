@@ -1,5 +1,6 @@
 package com.jeff.pets.mob.vanilla.boss;
 
+import com.jeff.pets.client.Math2;
 import com.jeff.pets.mob.FlyingPet;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.living.mob.monster.boss.dragon.EnderDragonPhase;
@@ -45,7 +46,7 @@ public class ClientEnderDragon extends FlyingPet {
     public void tick() {
         super.tick();
         this.oFlapTime = this.flapTime;
-        Vec3d vec3 = this.m_94091929();
+        Vec3d vec3 = this.getVelocity();
         float g = 0.2F / ((float) vec3.y * 10.0F + 1.0F);
         g *= (float) Math.pow(2.0F, vec3.y);
         if (this.isInWall()) {
@@ -70,7 +71,7 @@ public class ClientEnderDragon extends FlyingPet {
         d = this.positions[j][1];
         e = this.positions[k][1] - d;
         ds[1] = d + e * (double) f;
-        ds[2] = MathHelper.m_23874002(f, this.positions[j][2], this.positions[k][2]); //lerp
+        ds[2] = Math2.lerp(f, this.positions[j][2], this.positions[k][2]); //lerp
         return ds;
     }
 
@@ -85,7 +86,7 @@ public class ClientEnderDragon extends FlyingPet {
             }
         } else {
             BlockPos blockPos = this.world.getHeight(HeightMap.Type.MOTION_BLOCKING_NO_LEAVES, BlockPos.ORIGIN);
-            double d = Math.max(Math.sqrt(blockPos.squaredDistanceTo(new Vec3i(this.getPos().x, this.getPos().y, this.getPos().z))) / (double) 4.0F, 1.0F);
+            double d = Math.max(Math.sqrt(blockPos.squaredDistanceTo(new Vec3i(this.getPosVec().x, this.getPosVec().y, this.getPosVec().z))) / (double) 4.0F, 1.0F);
             e = (double) i / d;
         }
 

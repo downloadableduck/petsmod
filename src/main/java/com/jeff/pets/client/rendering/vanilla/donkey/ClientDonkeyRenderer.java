@@ -8,10 +8,10 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientDonkeyRenderer extends PetRenderer<@NotNull ClientDonkey, @NotNull ClientHorseModel<ClientDonkey>> {
+public class ClientDonkeyRenderer extends PetRenderer<ClientDonkey> {
 
     public ClientDonkeyRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientHorseModel<>(0), 0.5f);
+        super(context, new ClientHorseModel(0), 0.5f);
     }
 
     public @NotNull Identifier getTextureLocation(ClientDonkey donkeyRenderState) {
@@ -21,7 +21,7 @@ public class ClientDonkeyRenderer extends PetRenderer<@NotNull ClientDonkey, @No
     @Override
     protected void applyScale(ClientDonkey state, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
+            net.minecraft.client.render.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 }

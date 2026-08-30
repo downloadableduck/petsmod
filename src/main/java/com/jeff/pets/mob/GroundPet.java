@@ -46,7 +46,7 @@ public abstract class GroundPet extends AbstractPet {
             if (owner.hasPassenger(this)) {
                 if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
-                    this.m_28162558(this.m_94091929().add(0, -0.04, 0));
+                    this.lerpVelocity(this.getVelocity().add(0, -0.04, 0));
                 } else {
                     this.setSitting(true);
                 }
@@ -58,12 +58,12 @@ public abstract class GroundPet extends AbstractPet {
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.distanceTo(owner);
-            float rotation = this.getRotation().x;
-            float rotationToOwner = rotation + this.getOwner().getRotation().x;
+            float rotation = -this.pitch;
+            float rotationToOwner = rotation + (-this.getOwner().pitch);
             float bodyYawDiff = MathHelper.wrapDegrees(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/);
 
             if (rotationToOwner >= 50) {
-                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_06800284 /*sign*/(bodyYawDiff) * 50.0F);
+                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (Math.signum(bodyYawDiff) * 50.0F);
             }
 
             if (distance > this.stopDistance()) {
@@ -71,20 +71,19 @@ public abstract class GroundPet extends AbstractPet {
                 this.walkAnimationSpeed = (0.5F);
 
                 Vec3d targetPos = new Vec3d(owner.x, owner.y, owner.z);
-                Vec3d dir = targetPos.subtract(this.getPos()).normalize();
+                Vec3d dir = targetPos.subtract(this.getPosVec()).normalize();
 
-                this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
-                this.setHeadYaw(this.getYRot());
-                this.bodyYaw /*bodyYaw*/ = MathHelper.m_82141949(this.bodyYaw /*bodyYaw*/, this.headYaw, 50.0f);
+                
+                
+                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/, -50, 50);
 
                 double speed = owner.getSpeed() * 2.0;
-                this.m_28162558(new Vec3d(dir.x * speed, this.m_94091929().y, dir.z * speed));
+                this.lerpVelocity(new Vec3d(dir.x * speed, this.getVelocity().y, dir.z * speed));
             } else if (distance < 1.5) {
                 this.walkAnimationSpeed = (0);
             } else {
-                this.lookAt(owner, 5, 0);
-                this.walkAnimationSpeed = (this.walkAnimationSpeed + 0.1f);
-                this.m_28162558(this.m_94091929().m_17023014(0.8, 1.0, 0.8)); //hopefully the right onw
+                                this.walkAnimationSpeed = (this.walkAnimationSpeed + 0.1f);
+                this.lerpVelocity(this.velocityX * 0.8, this.velocityY * 1.0, this.velocityY* 0.8); //hopefully the right onw
             }
 
             int yHeightToOwner = (int) (owner.y - this.y);
@@ -94,14 +93,14 @@ public abstract class GroundPet extends AbstractPet {
             }
 
             if (yHeightToOwner > -1) {
-                this.m_28162558(this.m_94091929().add(0, -0.01, 0));
+                this.lerpVelocity(this.getVelocity().add(0, -0.01, 0));
             }
 
             if (!this.onGround) {
                 //this.processFlappingMovement();
             }
 
-            if (owner.m_94091929().squaredDistanceToOrigin() < 0.01) {
+            if (new Vec3d(owner.velocityX, owner.velocityY, owner.velocityZ).squaredDistanceToOrigin() < 0.01) {
                 this.waitingTime++;
                 if (this.waitingTime > 30) this.wander();
             } else {
@@ -112,18 +111,16 @@ public abstract class GroundPet extends AbstractPet {
             this.setHeadYaw(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_06800284 /*sign*/(bodyYawDiff) * 50);
+                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (Math.signum(bodyYawDiff) * 50);
             } else {
-                this.bodyYaw /*bodyYaw*/ = MathHelper.m_82141949(this.bodyYaw /*bodyYaw*/, this.getHeadYaw(), 10);
+                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/, -10, 10);
             }
 
-            this.move(MoverType.SELF, this.m_94091929());
+            this.move(MoverType.SELF, this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
 
             if (!this.onGround) {
-                this.m_28162558(this.m_94091929().add(0, -0.04, 0));
+                this.lerpVelocity(this.getVelocity().add(0, -0.04, 0));
             }
-        } else {
-            super.tick();
         }
         if (owner != null) {
             if (distanceTo(owner) >= 10) {

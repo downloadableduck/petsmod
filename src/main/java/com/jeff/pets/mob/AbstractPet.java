@@ -8,8 +8,6 @@ import net.minecraft.entity.living.mob.passive.animal.tameable.TameableEntity;
 import net.minecraft.entity.living.player.PlayerEntity;
 import net.minecraft.entity.particle.ParticleTypes;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.s2c.play.AddEntityS2CPacket;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.MathHelper;
@@ -143,19 +141,6 @@ public abstract class AbstractPet extends TameableEntity {
     }
 
     /**
-     * IMPORTANT: Allows the entity to exist on servers, if only in the {@code ClientLevel}.
-     * Never, under any circumstances, remove this method.
-     */
-    @Override
-    public @NotNull Packet<?> m_00781305() {
-        if (this.world.isClient()) {
-            return new AddEntityS2CPacket(this);
-        } else {
-            return super.m_00781305();
-        }
-    }
-
-    /**
      * Calls the previous abstract method so other classes extending this one don't have to.
      *
      * @return False, as breeding and taming is not needed for any {@code Client-} mobs.
@@ -190,7 +175,7 @@ public abstract class AbstractPet extends TameableEntity {
         float z = speed * this.randomZ;
 
         float distance = this.distanceTo(this.getOwner());
-        float yVelo = (float) this.m_94091929().y;//this.getVelocity().y;
+        float yVelo = (float) this.getVelocity().y;//this.getVelocity().y;
 
         if (distance > 5) {
             this.reCalcPos();
@@ -201,15 +186,15 @@ public abstract class AbstractPet extends TameableEntity {
         }
 
         if (!this.isReturningToOwner) {
-            this.m_28162558(new Vec3d(speed, yVelo, z)); //this.setVelocity()
+            this.lerpVelocity(new Vec3d(speed, yVelo, z)); //this.setVelocity()
         } else {
-            this.m_28162558(new Vec3d(-speed, yVelo, -z));
+            this.lerpVelocity(new Vec3d(-speed, yVelo, -z));
         }
 
         //this.lookAt(EntityAnchorArgument.Anchor.EYES, lookDir);
 
-        double moveX = this.m_94091929().x;
-        double moveZ = this.m_94091929().z;
+        double moveX = this.getVelocity().x;
+        double moveZ = this.getVelocity().z;
 
         lookDir = new Vec3d(
                 this.x + (moveX * 2),
@@ -220,7 +205,7 @@ public abstract class AbstractPet extends TameableEntity {
 
         if (moveX * moveX + moveZ * moveZ > 0.001) {
             float targetYaw = (float) (Math.atan2(-moveX, moveZ) * (180D / Math.PI));
-            float smoothYaw = MathHelper.m_41989395(0.2f, this.getYRot(), targetYaw); //lerpAngleDegrees
+            float smoothYaw = MathHelper.clamp(0.2f, this.getYRot(), targetYaw); //lerpAngleDegrees
 
             this.setYRot(smoothYaw);
             this.setHeadYaw(smoothYaw);
@@ -231,7 +216,7 @@ public abstract class AbstractPet extends TameableEntity {
             this.jump();
         }
         if (!this.onGround) {
-            this.m_28162558(this.m_94091929().add(0, -0.04, 0));
+            this.lerpVelocity(this.getVelocity().add(0, -0.04, 0));
         }
         double dx = lookDir.x - this.x;
         double dz = lookDir.z - this.z;
@@ -264,7 +249,15 @@ public abstract class AbstractPet extends TameableEntity {
         return this.isRiding();
     }
 
-    public Vec3d getPos() {
+    public Vec3d getPosVec() {
         return new Vec3d(this.x, this.y, this.z);
+    }
+
+    public void lerpVelocity(Vec3d vec3d) {
+        this.lerpVelocity(vec3d.x, vec3d.y, vec3d.z);
+    }
+
+    public Vec3d getVelocity() {
+        return new Vec3d(this.velocityX, this.velocityY, this.velocityZ);
     }
 }

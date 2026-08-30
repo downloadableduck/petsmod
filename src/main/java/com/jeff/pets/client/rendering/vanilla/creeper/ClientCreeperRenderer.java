@@ -4,16 +4,17 @@ import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientCreeper;
 import net.minecraft.client.render.model.entity.CreeperModel;
 import net.minecraft.resource.Identifier;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientCreeperRenderer extends PetRenderer<@NotNull ClientCreeper, @NotNull CreeperModel<ClientCreeper>> {
+public class ClientCreeperRenderer extends PetRenderer<ClientCreeper> {
 
     public ClientCreeperRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new CreeperModel<>(), 0.75f);
+        super(context, new CreeperModel(), 0.75f);
         this.addLayer(new ClientCreeperChargeLayer(this));
     }
 

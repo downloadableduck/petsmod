@@ -1,13 +1,12 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
 import me.shedaniel.clothconfig2.gui.widget.ColorDisplayWidget;
-import me.shedaniel.clothconfig2.mixin.ButtonWidgetHooks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.resource.language.I18n;
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -33,10 +32,6 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
         this.textFieldWidget.setText(getHexColorString(value));
         this.colorDisplayWidget = new ColorDisplayWidget(0, 0, 20, getColorValueColor(textFieldWidget.getText()));
         this.original = value;
-        ((ButtonWidgetHooks) this.resetButton).setOnPress(button -> {
-            this.textFieldWidget.setText(getHexColorString(original));
-            getScreen().setEdited(true, isRequiresRestart());
-        });
     }
     
     @Override
@@ -47,7 +42,7 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
         if (!value.hasError())
             colorDisplayWidget.setColor(alpha ? value.getColor() : 0xff000000 | value.getColor());
         if (Minecraft.getInstance().textRenderer.isBidirectional()) {
-            this.colorDisplayWidget.x = x + resetButton.getWidth() + textFieldWidget.getWidth();
+            this.colorDisplayWidget.x = x + resetButton.getWidth() + 148;
         } else {
             this.colorDisplayWidget.x = textFieldWidget.x - 23;
         }

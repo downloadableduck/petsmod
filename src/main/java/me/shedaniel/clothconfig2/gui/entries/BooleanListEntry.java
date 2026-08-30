@@ -1,17 +1,28 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.platform.Window;
-import me.shedaniel.clothconfig2.ButtonWidget;
+import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.render.platform.Window;
+import me.shedaniel.clothconfig2.ButtonWidget;
+import net.minecraft.client.render.platform.Window;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.gui.GuiEventListener;
+import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.resource.language.I18n;
+import net.minecraft.client.render.platform.Window;
 
 import java.util.List;
+import net.minecraft.client.render.platform.Window;
 import java.util.Optional;
+import net.minecraft.client.render.platform.Window;
 import java.util.concurrent.atomic.AtomicBoolean;
+import net.minecraft.client.render.platform.Window;
 import java.util.function.Consumer;
+import net.minecraft.client.render.platform.Window;
 import java.util.function.Supplier;
+import net.minecraft.client.render.platform.Window;
 
 public class BooleanListEntry extends TooltipListEntry {
     
@@ -69,17 +80,17 @@ public class BooleanListEntry extends TooltipListEntry {
         this.resetButton.y = y;
         this.buttonWidget.active = isEditable();
         this.buttonWidget.y = y;
-        this.buttonWidget.setMessage(getYesNoText(bool.get()));
+        this.buttonWidget.message = getYesNoText(bool.get());
         if (Minecraft.getInstance().textRenderer.isBidirectional()) {
             Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), window.getGuiScaledWidth() - x - Minecraft.getInstance().textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, 16777215);
             this.resetButton.x = x;
             this.buttonWidget.x = x + resetButton.getWidth() + 2;
-            this.buttonWidget.setWidth(150 - resetButton.getWidth() - 2);
+            // this.buttonWidget.setWidth(150 - resetButton.getWidth() - 2); // Not available in 1.13
         } else {
             Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), x, y + 5, 16777215);
             this.resetButton.x = x + entryWidth - resetButton.getWidth();
             this.buttonWidget.x = x + entryWidth - 150;
-            this.buttonWidget.setWidth(150 - resetButton.getWidth() - 2);
+            // this.buttonWidget.setWidth(150 - resetButton.getWidth() - 2); // Not available in 1.13
         }
         resetButton.render(mouseX, mouseY, delta);
         buttonWidget.render(mouseX, mouseY, delta);

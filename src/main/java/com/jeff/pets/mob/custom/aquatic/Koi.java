@@ -22,7 +22,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.unmapped.C_31453009;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -89,9 +88,9 @@ public class Koi extends FlyingPet {
         return koi;
     }
 
-    public EntityData initialize(final @NotNull WorldAccess level, final @NotNull LocalDifficulty difficulty, final @NotNull C_31453009 spawnReason, final @Nullable EntityData groupData, NbtCompound NbtCompound) {
+    public EntityData initialize(LocalDifficulty difficulty, @Nullable EntityData groupData, NbtCompound NbtCompound) {
         this.setServerEntity(true);
-        return super.initialize(level, difficulty, spawnReason, groupData, NbtCompound);
+        return super.initialize(difficulty, groupData, NbtCompound);
     }
 
     public boolean isBreedingItem(final @NotNull ItemStack itemStack) {
@@ -152,7 +151,7 @@ public class Koi extends FlyingPet {
             if (owner.hasPassenger(this)) {
                 if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
-                    this.m_28162558(this.m_94091929().add(0, 0.1, 0));
+                    this.lerpVelocity(this.getVelocity().add(0, 0.1, 0));
                 } else {
                     this.setSitting(true);
                 }
@@ -161,16 +160,16 @@ public class Koi extends FlyingPet {
             double dx = owner.x - this.x;
             double dz = owner.z - this.z;
             Vec3d ownerPos = new Vec3d(owner.x, owner.y, owner.z).add(0, owner.getEyeHeight() * 0.8, 0);
-            Vec3d vecToOwner = ownerPos.subtract(this.getPos());
+            Vec3d vecToOwner = ownerPos.subtract(this.getPosVec());
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.distanceTo(owner);
-            float rotation = this.getRotation().x;
-            float rotationToOwner = rotation + this.getOwner().getRotation().x;
+            float rotation = -this.pitch;
+            float rotationToOwner = rotation + (-this.getOwner().pitch);
             float bodyYawDiff = MathHelper.wrapDegrees(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/);
 
             if (rotationToOwner >= 50) {
-                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_06800284 /*sign*/(bodyYawDiff) * 50.0F);
+                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (Math.signum(bodyYawDiff) * 50.0F);
             }
 
             if (distance > 2.0) {
@@ -180,14 +179,13 @@ public class Koi extends FlyingPet {
                 Vec3d dir = vecToOwner.normalize();
                 double speed = 0.2;
 
-                this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
-                this.setHeadYaw(this.getYRot());
-                this.bodyYaw /*bodyYaw*/ = MathHelper.m_82141949(this.bodyYaw /*bodyYaw*/, this.headYaw, 50.0f);
+                
+                
+                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/, -50, 50);
 
-                this.m_28162558(new Vec3d(dir.x * speed, dir.y * speed, dir.z * speed));
+                this.lerpVelocity(new Vec3d(dir.x * speed, dir.y * speed, dir.z * speed));
             } else {
-                this.lookAt(owner, 5, 0);
-                this.m_28162558(this.m_94091929().scale(0.8));
+                                this.lerpVelocity(this.getVelocity().scale(0.8));
             }
 
             int yHeightToOwner = (int) (owner.y - this.y);
@@ -197,14 +195,14 @@ public class Koi extends FlyingPet {
             }
 
             if (yHeightToOwner > -1 || this.collidingHorizontally) {
-                this.m_28162558(this.m_94091929().add(0, -0.01, 0));
+                this.lerpVelocity(this.getVelocity().add(0, -0.01, 0));
             }
 
             if (!this.onGround) {
                 // this.processFlappingMovement();
             }
 
-            if (owner.m_94091929().squaredDistanceToOrigin() < 0.01) {
+            if (new Vec3d(owner.velocityX, owner.velocityY, owner.velocityZ).squaredDistanceToOrigin() < 0.01) {
                 this.waitingTime++;
                 if (this.waitingTime > 30) this.wander();
             } else {
@@ -212,15 +210,14 @@ public class Koi extends FlyingPet {
             }
 
             this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
-            this.setHeadYaw(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_06800284 /*sign*/(bodyYawDiff) * 50);
+                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (Math.signum(bodyYawDiff) * 50);
             } else {
-                this.bodyYaw /*bodyYaw*/ = MathHelper.m_82141949(this.bodyYaw /*bodyYaw*/, this.getHeadYaw(), 10);
+                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/, -10, 10);
             }
 
-            this.move(MoverType.SELF, this.m_94091929());
+            this.move(MoverType.SELF, this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
         }
         if (owner != null) {
             if (distanceTo(owner) >= 10) {

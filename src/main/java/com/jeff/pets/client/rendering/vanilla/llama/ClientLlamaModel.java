@@ -6,7 +6,7 @@ import net.minecraft.client.render.model.Model;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.util.math.MathHelper;
 
-public class ClientLlamaModel extends Model<ClientLlama> {
+public class ClientLlamaModel extends Model {
     private final ModelPart head;
     private final ModelPart body;
     private final ModelPart leg0;
@@ -18,8 +18,8 @@ public class ClientLlamaModel extends Model<ClientLlama> {
     private final boolean child = false;
 
     public ClientLlamaModel(float f) {
-        this.f_35376783 /*textureWidth*/ = 128;
-        this.f_50207596 /*textureHeight*/ = 64;
+        this.textureWidth /*textureWidth*/ = 128;
+        this.textureHeight /*textureHeight*/ = 64;
         this.head = new ModelPart(this, 0, 0);
         this.head.addBox(-2.0F, -14.0F, -10.0F, 4, 4, 9, f);
         this.head.setPos(0.0F, 7.0F, -6.0F);
@@ -63,7 +63,8 @@ public class ClientLlamaModel extends Model<ClientLlama> {
         --this.frontRightLeg.z;
     }
 
-    public void setup(ClientLlama abstractChestedHorse, float f, float g, float h, float i, float j, float s) {
+    public void setupAnimation(float f, float g, float h, float i, float j, float s, net.minecraft.entity.Entity entity) {
+        ClientLlama abstractChestedHorse = (ClientLlama) entity;
         this.head.rotationX = j * ((float) Math.PI / 180F);
         this.head.rotationY = i * ((float) Math.PI / 180F);
         this.body.rotationX = ((float) Math.PI / 2F);
@@ -77,26 +78,26 @@ public class ClientLlamaModel extends Model<ClientLlama> {
     }
 
     @Override
-    public void render(ClientLlama llama, float i, float j, float f, float g, float h, float k) {
+    public void render(net.minecraft.entity.Entity entity, float i, float j, float f, float g, float h, float k) {
         if (this.child) {
             float l = 2.0F;
-            com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
+            net.minecraft.client.render.platform.GlStateManager.pushMatrix();
             float m = 0.7F;
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.71428573F, 0.64935064F, 0.7936508F);
-            com.mojang.blaze3d.platform.GlStateManager.translate(0.0F, 1.3125F, 0.22F);
+            net.minecraft.client.render.platform.GlStateManager.scalef(0.71428573F, 0.64935064F, 0.7936508F);
+            net.minecraft.client.render.platform.GlStateManager.translatef(0.0F, 1.3125F, 0.22F);
             this.head.render(k);
-            com.mojang.blaze3d.platform.GlStateManager.popMatrix();
-            com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
+            net.minecraft.client.render.platform.GlStateManager.popMatrix();
+            net.minecraft.client.render.platform.GlStateManager.pushMatrix();
             float n = 1.1F;
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.625F, 0.45454544F, 0.45454544F);
-            com.mojang.blaze3d.platform.GlStateManager.translate(0.0F, 2.0625F, 0.0F);
+            net.minecraft.client.render.platform.GlStateManager.scalef(0.625F, 0.45454544F, 0.45454544F);
+            net.minecraft.client.render.platform.GlStateManager.translatef(0.0F, 2.0625F, 0.0F);
             this.body.render(k);
-            com.mojang.blaze3d.platform.GlStateManager.popMatrix();
-            com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.45454544F, 0.41322312F, 0.45454544F);
-            com.mojang.blaze3d.platform.GlStateManager.translate(0.0F, 2.0625F, 0.0F);
+            net.minecraft.client.render.platform.GlStateManager.popMatrix();
+            net.minecraft.client.render.platform.GlStateManager.pushMatrix();
+            net.minecraft.client.render.platform.GlStateManager.scalef(0.45454544F, 0.41322312F, 0.45454544F);
+            net.minecraft.client.render.platform.GlStateManager.translatef(0.0F, 2.0625F, 0.0F);
             ImmutableList.of(this.leg0, this.backRightLeg, this.backLeftLeg, this.frontRightLeg, this.chest1, this.chest2).forEach((ModelPart) -> ModelPart.render(k));
-            com.mojang.blaze3d.platform.GlStateManager.popMatrix();
+            net.minecraft.client.render.platform.GlStateManager.popMatrix();
         } else {
             ImmutableList.of(this.head, this.body, this.leg0, this.backRightLeg, this.backLeftLeg, this.frontRightLeg, this.chest1, this.chest2).forEach((ModelPart) -> ModelPart.render(k));
         }

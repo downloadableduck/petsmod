@@ -6,7 +6,7 @@ import net.minecraft.client.render.model.Model;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.util.math.MathHelper;
 
-public class ClientBatModel extends Model<ClientBat> {
+public class ClientBatModel extends Model {
     private final ModelPart head;
     private final ModelPart body;
     private final ModelPart rightWing;
@@ -15,8 +15,8 @@ public class ClientBatModel extends Model<ClientBat> {
     private final ModelPart leftWingTip;
 
     public ClientBatModel() {
-        this.f_35376783 /*textureWidth*/ = 64;
-        this.f_50207596 /*textureHeight*/ = 64;
+        this.textureWidth /*textureWidth*/ = 64;
+        this.textureHeight /*textureHeight*/ = 64;
         this.head = new ModelPart(this, 0, 0);
         this.head.addBox(-3.0F, -3.0F, -3.0F, 6, 6, 6);
         ModelPart ModelPart = new ModelPart(this, 24, 0);
@@ -52,7 +52,8 @@ public class ClientBatModel extends Model<ClientBat> {
     }
 
     @Override
-    public void setup(ClientBat bat, float f, float g, float h, float i, float j, float k) {
+    public void setupAnimation(float f, float g, float h, float i, float j, float k, net.minecraft.entity.Entity entity) {
+        ClientBat bat = (ClientBat) entity;
         if (bat.isPassenger()) {
             this.head.rotationX = j * ((float)Math.PI / 180F);
             this.head.rotationY = (float)Math.PI - i * ((float)Math.PI / 180F);
@@ -84,8 +85,8 @@ public class ClientBatModel extends Model<ClientBat> {
     }
 
     @Override
-    public void render(ClientBat bat, float f, float g, float h, float i, float k, float m) {
-        this.setup(bat, f, g, h, i, k, m);
+    public void render(net.minecraft.entity.Entity entity, float f, float g, float h, float i, float k, float m) {
+        this.setupAnimation(f, g, h, i, k, m, entity);
         this.head.render(m);
         this.body.render(m);
     }

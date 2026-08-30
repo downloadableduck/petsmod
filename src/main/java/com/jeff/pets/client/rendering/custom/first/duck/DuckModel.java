@@ -6,7 +6,7 @@ import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.NotNull;
 
-public class DuckModel extends PetModel<@NotNull Duck> {
+public class DuckModel extends PetModel {
 
     private final ModelPart root;
     private final ModelPart head;
@@ -19,8 +19,8 @@ public class DuckModel extends PetModel<@NotNull Duck> {
     private final ModelPart tail;
 
     public DuckModel() {
-        f_35376783 /*textureWidth*/ = 64;
-        f_50207596 /*textureHeight*/ = 32;
+        textureWidth /*textureWidth*/ = 64;
+        textureHeight /*textureHeight*/ = 32;
 
         root = new ModelPart(this);
         root.setPos(0.0F, 15.0F, -4.0F);
@@ -70,7 +70,7 @@ public class DuckModel extends PetModel<@NotNull Duck> {
     }
 
     @Override
-    public void render(Duck duck, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
+    public void render(net.minecraft.entity.Entity entity, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
         root.render(alpha);
     }
 
@@ -81,7 +81,8 @@ public class DuckModel extends PetModel<@NotNull Duck> {
     }
 
     @Override
-    public void setup(final Duck state, float f, float g, float h, float i, float j, float s) {
+    public void setupAnimation(float f, float g, float h, float i, float j, float s, net.minecraft.entity.Entity entity) {
+        Duck state = (Duck) entity;
         float flapAngle = state.onGround ? 0 : (MathHelper.sin(h) + 1.0F) * state.flapSpeed;
         this.head.rotationX = j * ((float) Math.PI / 180F);
         this.head.rotationY = i * ((float) Math.PI / 180F);

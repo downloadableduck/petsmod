@@ -4,10 +4,9 @@ import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.util.math.MathHelper;
-import org.jetbrains.annotations.NotNull;
 
 
-public class ClientEvokerModel<T extends AbstractPet> extends PetModel<@NotNull T> {
+public class ClientEvokerModel extends PetModel {
     private final ModelPart body;
     private final ModelPart Head;
     private final ModelPart nose;
@@ -18,8 +17,8 @@ public class ClientEvokerModel<T extends AbstractPet> extends PetModel<@NotNull 
     private final ModelPart LeftArm;
 
     public ClientEvokerModel() {
-        f_35376783 /*textureWidth*/ = 64;
-        f_50207596 /*textureHeight*/ = 64;
+        textureWidth /*textureWidth*/ = 64;
+        textureHeight /*textureHeight*/ = 64;
 
         body = new ModelPart(this);
         body.setPos(0.0F, 0.0F, 0.0F);
@@ -65,11 +64,12 @@ public class ClientEvokerModel<T extends AbstractPet> extends PetModel<@NotNull 
     }
 
     @Override
-    public void render(T t, float f, float g, float h, float i, float j, float alpha) {
+    public void render(net.minecraft.entity.Entity entity, float f, float g, float h, float i, float j, float alpha) {
         body.render(alpha);
     }
 
-    public void setup(T illagerRenderState, float x, float z, float h, float m, float i, float s) {
+    public void setupAnimation(float x, float z, float h, float m, float i, float s, net.minecraft.entity.Entity entity) {
+        AbstractPet illagerRenderState = (AbstractPet) entity;
         float f = illagerRenderState.walkAnimationSpeed;
         float g = illagerRenderState.walkAnimationProgress;
         this.rightLeg.rotationX = MathHelper.cos(g * 0.6662F) * 1.4F * f * 0.5F;

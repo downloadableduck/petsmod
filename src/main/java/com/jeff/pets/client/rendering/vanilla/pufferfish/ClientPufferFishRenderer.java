@@ -6,10 +6,10 @@ import net.minecraft.client.render.model.entity.LargePufferfishModel;
 import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientPufferFishRenderer extends PetRenderer<@NotNull ClientPufferFish, @NotNull LargePufferfishModel<ClientPufferFish>> {
+public class ClientPufferFishRenderer extends PetRenderer<ClientPufferFish> {
 
     public ClientPufferFishRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new LargePufferfishModel<>(), 0.75f);
+        super(context, new LargePufferfishModel(), 0.75f);
     }
 
     @Override

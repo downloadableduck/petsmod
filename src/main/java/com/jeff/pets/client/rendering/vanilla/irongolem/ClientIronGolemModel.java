@@ -4,7 +4,7 @@ import net.minecraft.client.render.model.Model;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.entity.living.LivingEntity;
 
-public class ClientIronGolemModel<T extends LivingEntity> extends Model<T> {
+public class ClientIronGolemModel extends Model {
     public final ModelPart field_3414;
     private final ModelPart field_3415;
     private final ModelPart field_3413;
@@ -46,8 +46,8 @@ public class ClientIronGolemModel<T extends LivingEntity> extends Model<T> {
         this.field_3416.addBox(-3.5F, -3.0F, -3.0F, 6, 16, 5, f);
     }
 
-    public void render(T ironGolemEntity, float f, float g, float h, float i, float j, float k) {
-        this.setup(ironGolemEntity, f, g, h, i, j, k);
+    public void render(net.minecraft.entity.Entity entity, float f, float g, float h, float i, float j, float k) {
+        this.setupAnimation(f, g, h, i, j, k, entity);
         this.field_3415.render(k);
         this.field_3413.render(k);
         this.field_3411.render(k);
@@ -57,7 +57,7 @@ public class ClientIronGolemModel<T extends LivingEntity> extends Model<T> {
     }
 
     @Override
-    public void setup(T ironGolemEntity, float f, float g, float h, float i, float j, float k) {
+    public void setupAnimation(float f, float g, float h, float i, float j, float k, net.minecraft.entity.Entity entity) {
         this.field_3415.rotationY = i * ((float) Math.PI / 180F);
         this.field_3415.rotationX = j * ((float) Math.PI / 180F);
         this.field_3411.rotationX = -1.5F * this.method_2810(f, 13.0F) * g;
@@ -66,7 +66,7 @@ public class ClientIronGolemModel<T extends LivingEntity> extends Model<T> {
         this.field_3416.rotationY = 0.0F;
     }
 
-    public void prepare(T ironGolemEntity, float f, float g, float h) {
+    public void prepare(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h) {
         int i = 0;
         if (i > 0) {
             this.field_3414.rotationX = -2.0F + 1.5F * this.method_2810((float) i - h, 10.0F);

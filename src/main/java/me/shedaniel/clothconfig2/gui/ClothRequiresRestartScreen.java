@@ -12,12 +12,12 @@ import net.minecraft.text.TranslatableText;
 public class ClothRequiresRestartScreen extends ConfirmScreen {
     
     public ClothRequiresRestartScreen(Screen parent) {
-        super(t -> {
+        super((t, i) -> {
             if (t)
                 Minecraft.getInstance().stop();
             else
                 Minecraft.getInstance().openScreen(parent);
-        }, new TranslatableText("text.cloth-config.restart_required"), new TranslatableText("text.cloth-config.restart_required_sub"), I18n.translate("text.cloth-config.exit_minecraft"), I18n.translate("text.cloth-config.ignore_restart"));
+        }, I18n.translate("text.cloth-config.restart_required"), I18n.translate("text.cloth-config.restart_required_sub"), 0);
     }
     
 }

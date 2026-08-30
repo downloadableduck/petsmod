@@ -8,24 +8,16 @@ public class ColorDisplayWidget extends ButtonWidget {
     protected int size;
     
     public ColorDisplayWidget(int x, int y, int size, int color) {
-        super(x, y, size, size, "");
+        super(x, y, size, size, 20, "");
         this.color = color;
         this.size = size;
     }
     
     @Override
-    public void renderButton(int mouseX, int mouseY, float delta) {
+    public void render(int mouseX, int mouseY, float delta) {
         fillGradient(this.x, this.y, this.x + size, this.y + size, -0x5F5F60, -0x5F5F60);
         fillGradient(this.x + 1, this.y + 1, this.x + size - 1, this.y + size - 1, 0xffffffff, 0xffffffff);
         fillGradient(this.x + 1, this.y + 1, this.x + size - 1, this.y + size - 1, color, color);
-    }
-    
-    @Override
-    public void m_15978786(double mouseX, double mouseY) {
-    }
-    
-    @Override
-    public void release(double mouseX, double mouseY) {
     }
     
     public void setColor(int color) {

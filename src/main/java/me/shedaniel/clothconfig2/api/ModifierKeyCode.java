@@ -1,11 +1,17 @@
 package me.shedaniel.clothconfig2.api;
 
-import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.render.platform.InputConstants;
+import net.minecraft.client.render.platform.Window;
 import me.shedaniel.clothconfig2.impl.ModifierKeyCodeImpl;
+import net.minecraft.client.render.platform.Window;
 import me.shedaniel.clothconfig2.mixin.MouseHooks;
+import net.minecraft.client.render.platform.Window;
 import net.fabricmc.api.EnvType;
+import net.minecraft.client.render.platform.Window;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.render.platform.Window;
 
 @Environment(EnvType.CLIENT)
 public interface ModifierKeyCode {
@@ -62,7 +68,7 @@ public interface ModifierKeyCode {
     }
     
     default boolean matchesCurrentKey() {
-        return !isUnknown() && getType() == InputConstants.Type.KEYSYM && getModifier().matchesCurrent() && InputConstants.getKey(Minecraft.getInstance().window.getWindow(), getKeyCode().getValue());
+        return !isUnknown() && getType() == InputConstants.Type.KEYSYM && getModifier().matchesCurrent() && InputConstants.getKey(getKeyCode().getValue());
     }
     
     default ModifierKeyCode setKeyCodeAndModifier(InputConstants.Key keyCode, Modifier modifier) {

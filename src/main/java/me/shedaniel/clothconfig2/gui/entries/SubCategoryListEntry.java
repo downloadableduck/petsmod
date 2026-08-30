@@ -1,8 +1,8 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.platform.Lighting;
+import net.minecraft.client.render.platform.GlStateManager;
+import net.minecraft.client.render.platform.GlStateManager;
 import me.shedaniel.clothconfig2.api.AbstractConfigEntry;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.clothconfig2.gui.ClothConfigScreen;
@@ -63,8 +63,8 @@ public class SubCategoryListEntry extends TooltipListEntry {
         widget.rectangle.width = entryWidth + 19;
         widget.rectangle.height = 24;
         Minecraft.getInstance().getTextureManager().bind(CONFIG_TEX);
-        Lighting.turnOff();
-        GlStateManager.color(1, 1, 1, 1);
+        // Lighting.turnOff(); // Not available in 1.13
+        GlStateManager.color4f(1, 1, 1, 1);
         drawTexture(x - 15, y + 4, 24, expended ? 9 : 0, 9, 9); //blit?
         Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(categoryName), x, y + 5, -1);
         for(AbstractConfigListEntry entry : entries) {

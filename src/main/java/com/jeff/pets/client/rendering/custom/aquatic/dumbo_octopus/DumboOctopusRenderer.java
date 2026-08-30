@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopusModel> {
+public class DumboOctopusRenderer extends PetRenderer<DumboOctopus> {
 
     double i = 45;
     float direction = 1;

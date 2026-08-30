@@ -6,10 +6,10 @@ import net.minecraft.client.render.model.entity.SpiderModel;
 import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientSpiderRenderer extends PetRenderer<@NotNull ClientSpider, @NotNull SpiderModel<ClientSpider>> {
+public class ClientSpiderRenderer extends PetRenderer<ClientSpider> {
 
     public ClientSpiderRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new SpiderModel<>(), 0.75f);
+        super(context, new SpiderModel(), 0.75f);
     }
 
     @Override

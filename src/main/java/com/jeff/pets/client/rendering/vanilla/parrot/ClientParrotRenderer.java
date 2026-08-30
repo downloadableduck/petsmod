@@ -9,7 +9,7 @@ import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientParrotRenderer extends PetRenderer<@NotNull ClientParrot, @NotNull ClientParrotModel> {
+public class ClientParrotRenderer extends PetRenderer<ClientParrot> {
 
     String parrotTexturePath;
 

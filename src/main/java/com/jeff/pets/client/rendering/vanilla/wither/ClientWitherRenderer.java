@@ -9,10 +9,10 @@ import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientWitherRenderer extends PetRenderer<@NotNull ClientWither, @NotNull ClientWitherModel<ClientWither>> {
+public class ClientWitherRenderer extends PetRenderer<ClientWither> {
 
     public ClientWitherRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientWitherModel<>(0), 0.75f);
+        super(context, new ClientWitherModel(0), 0.75f);
 
     }
 

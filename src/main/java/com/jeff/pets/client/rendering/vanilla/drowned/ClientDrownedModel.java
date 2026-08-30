@@ -5,11 +5,10 @@ import com.jeff.pets.mob.vanilla.hostile.ClientDrowned;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.client.render.model.entity.HumanoidModel;
 import net.minecraft.util.math.MathHelper;
-import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientDrownedModel extends HumanoidModel<ClientDrowned> {
+public class ClientDrownedModel extends HumanoidModel {
 
     public ClientDrownedModel(float f, float g, int i, int j) {
         super(f, g, i, j);
@@ -22,16 +21,16 @@ public class ClientDrownedModel extends HumanoidModel<ClientDrowned> {
     }
 
     @Override
-    public void setup(@NotNull ClientDrowned state, float f, float g, float h, float i, float k, float s) {
-        super.setup(state, f, g, h, i, k, s);
+    public void setupAnimation(float f, float g, float h, float i, float k, float s, net.minecraft.entity.Entity entity) {
+        super.setupAnimation(f, g, h, i, k, s, entity);
         AnimationUtils.animateZombieArms(this.leftArm, this.rightArm, true, this.attackAnimationProgress, h);
     }
 
-    public void prepare(ClientDrowned zombie, float f, float g, float h) {
+    public void prepare(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h) {
         this.rightArmPose = ArmPose.EMPTY;
         this.leftArmPose = ArmPose.EMPTY;
 
-        super.prepare(zombie, f, g, h);
+        super.prepare(entity, f, g, h);
 
         if (this.rightArmPose == ArmPose.THROW_SPEAR) {
             this.rightArm.rotationX = this.rightArm.rotationX * 0.5F - (float) Math.PI;
@@ -52,14 +51,14 @@ public class ClientDrownedModel extends HumanoidModel<ClientDrowned> {
     }
 
     @Override
-    public void render(ClientDrowned drowned, float f, float j, float h, float i, float k, float l) {
-        super.render(drowned, f, j, h, i, k, l);
-        com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
+    public void render(net.minecraft.entity.Entity entity, float f, float j, float h, float i, float k, float l) {
+        super.render(entity, f, j, h, i, k, l);
+        net.minecraft.client.render.platform.GlStateManager.pushMatrix();
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(1.5f, 1.5f, 1.5f);
+            net.minecraft.client.render.platform.GlStateManager.scalef(1.5f, 1.5f, 1.5f);
         } else {
-            com.mojang.blaze3d.platform.GlStateManager.scale(1, 1, 1);
+            net.minecraft.client.render.platform.GlStateManager.scalef(1, 1, 1);
         }
-        com.mojang.blaze3d.platform.GlStateManager.popMatrix();
+        net.minecraft.client.render.platform.GlStateManager.popMatrix();
     }
 }

@@ -3,9 +3,13 @@ package com.jeff.pets.client.rendering.vanilla.sheep;
 import com.jeff.pets.mob.vanilla.passive.ClientSheep;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.client.render.model.entity.QuadrupedModel;
+import net.minecraft.client.render.model.entity.SheepFurModel;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.living.LivingEntity;
+import net.minecraft.entity.living.mob.passive.animal.SheepEntity;
 
-public class ClientSheepFurModel extends QuadrupedModel<ClientSheep> {
-    private float headXRot;
+public class ClientSheepFurModel extends QuadrupedModel {
+    private float headAngle;
 
     public ClientSheepFurModel() {
         super(12, 0.0F);
@@ -30,11 +34,12 @@ public class ClientSheepFurModel extends QuadrupedModel<ClientSheep> {
         this.frontLeftLeg.setPos(3.0F, 12.0F, -5.0F);
     }
 
-    public void prepare(ClientSheep sheep, float f, float g, float h) {
-        super.prepare(sheep, f, g, h);
+    public void prepare(LivingEntity mob, float walkAnimationProgress, float walkAnimationSpeed, float tickDelta) {
+        super.prepare(mob, walkAnimationProgress, walkAnimationSpeed, tickDelta);
     }
 
-    public void setup(ClientSheep sheep, float f, float g, float h, float i, float j, float s) {
-        super.setup(sheep, f, g, h, i, j, s);
+    public void setupAnimation(float walkAnimationProgress, float walkAnimationSpeed, float bob, float yaw, float pitch, float scale, Entity entity) {
+        super.setupAnimation(walkAnimationProgress, walkAnimationSpeed, bob, yaw, pitch, scale, entity);
+        this.head.rotationX = this.headAngle;
     }
 }

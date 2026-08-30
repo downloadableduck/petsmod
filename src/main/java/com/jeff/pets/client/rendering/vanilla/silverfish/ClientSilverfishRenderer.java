@@ -6,10 +6,10 @@ import net.minecraft.client.render.model.entity.SilverfishModel;
 import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientSilverfishRenderer extends PetRenderer<@NotNull ClientSilverfish, @NotNull SilverfishModel<ClientSilverfish>> {
+public class ClientSilverfishRenderer extends PetRenderer<ClientSilverfish> {
 
     public ClientSilverfishRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new SilverfishModel<>(), 0.75f);
+        super(context, new SilverfishModel(), 0.75f);
     }
 
     @Override

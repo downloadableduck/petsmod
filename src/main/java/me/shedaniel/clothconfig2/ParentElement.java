@@ -13,9 +13,12 @@ public interface ParentElement extends GuiEventListener {
     List<? extends GuiEventListener> children();
 
     default Optional<GuiEventListener> hoveredElement(double d, double e) {
-        for(GuiEventListener GuiEventListener : this.children()) {
-            if (GuiEventListener.m_74503738(d, e)) /*isMouseOver*/ {
-                return Optional.of(GuiEventListener);
+        for(GuiEventListener child : this.children()) {
+            if (child instanceof net.minecraft.client.gui.widget.ButtonWidget) {
+                net.minecraft.client.gui.widget.ButtonWidget btn = (net.minecraft.client.gui.widget.ButtonWidget) child;
+                if (d >= btn.x && d <= btn.x + btn.getWidth() && e >= btn.y && e <= btn.y + 20) {
+                    return Optional.of(child);
+                }
             }
         }
 
@@ -23,9 +26,9 @@ public interface ParentElement extends GuiEventListener {
     }
 
     default boolean mouseClicked(double d, double e, int i) {
-        for(GuiEventListener GuiEventListener : this.children()) {
-            if (GuiEventListener.mouseClicked(d, e, i)) {
-                this.setFocused(GuiEventListener);
+        for(GuiEventListener child : this.children()) {
+            if (child.mouseClicked(d, e, i)) {
+                this.setFocused(child);
                 if (i == 0) {
                     this.setDragging(true);
                 }
@@ -39,7 +42,7 @@ public interface ParentElement extends GuiEventListener {
 
     default boolean mouseReleased(double d, double e, int i) {
         this.setDragging(false);
-        return this.hoveredElement(d, e).filter((GuiEventListener) -> GuiEventListener.mouseReleased(d, e, i)).isPresent();
+        return this.hoveredElement(d, e).filter((child) -> child.mouseReleased(d, e, i)).isPresent();
     }
 
     default boolean mouseDragged(double d, double e, int i, double f, double g) {
@@ -50,8 +53,8 @@ public interface ParentElement extends GuiEventListener {
 
     void setDragging(boolean bl);
 
-    default boolean mouseScrolled(double d, double e, double f) {
-        return this.hoveredElement(d, e).filter((GuiEventListener) -> GuiEventListener.mouseScrolled(d, e, f)).isPresent();
+    default boolean mouseScrolled(double d) {
+        return this.hoveredElement(d, 0).filter((child) -> child.mouseScrolled(d)).isPresent();
     }
 
     default boolean keyPressed(int i, int j, int k) {
@@ -79,11 +82,11 @@ public interface ParentElement extends GuiEventListener {
         this.setFocused(GuiEventListener);
     }
 
-    default boolean changeFocus(boolean bl) {
+    default void changeFocus(boolean bl) {
         GuiEventListener GuiEventListener = this.getFocused();
         boolean bl2 = GuiEventListener != null;
-        if (bl2 && GuiEventListener.m_92379633(bl)) /*isFocused */ {
-            return true;
+        if (bl2) {
+            return;
         } else {
             List<? extends GuiEventListener> list = this.children();
             int i = list.indexOf(GuiEventListener);
@@ -101,15 +104,12 @@ public interface ParentElement extends GuiEventListener {
             Supplier<? extends GuiEventListener> supplier = bl ? listIterator::next : listIterator::previous;
 
             while(booleanSupplier.getAsBoolean()) {
-                GuiEventListener GuiEventListener2 = (GuiEventListener)supplier.get();
-                if (GuiEventListener2.m_92379633(bl)) {
-                    this.setFocused(GuiEventListener2);
-                    return true;
-                }
+                GuiEventListener child = (GuiEventListener)supplier.get();
+                this.setFocused(child);
+                return;
             }
 
             this.setFocused((GuiEventListener)null);
-            return false;
         }
     }
 }

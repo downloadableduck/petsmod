@@ -5,22 +5,22 @@ import net.minecraft.entity.Entity;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientCowModel<T extends Entity> extends CowModel<T> {
+public class ClientCowModel extends CowModel {
 
     public ClientCowModel() {
         super();
     }
 
     @Override
-    public void render(T poseStack, float f, float g, float h, float j, float k, float d) {
-        super.render(poseStack, f, g, h, j, k, d);
-        com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
+    public void render(net.minecraft.entity.Entity entity, float f, float g, float h, float j, float k, float d) {
+        super.render(entity, f, g, h, j, k, d);
+        net.minecraft.client.render.platform.GlStateManager.pushMatrix();
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(2, 2, 2);
+            net.minecraft.client.render.platform.GlStateManager.scalef(2, 2, 2);
         } else {
-            com.mojang.blaze3d.platform.GlStateManager.scale(1, 1, 1);
+            net.minecraft.client.render.platform.GlStateManager.scalef(1, 1, 1);
         }
         //this.head.rotate(poseStack);
-        com.mojang.blaze3d.platform.GlStateManager.popMatrix();
+        net.minecraft.client.render.platform.GlStateManager.popMatrix();
     }
 }

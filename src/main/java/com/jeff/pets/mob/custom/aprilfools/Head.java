@@ -19,7 +19,6 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.unmapped.C_31453009;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.InteractionHand;
@@ -61,21 +60,21 @@ public class Head extends AbstractPet {
     public void mobTick() {
         super.mobTick();
 
-        Vec3d movement = this.m_94091929();
+        Vec3d movement = this.getVelocity();
         if (!this.onGround && movement.y < (double) 0.0F) {
-            this.m_28162558(movement.m_17023014(1.0F, 0.6, 1.0F));
+            this.lerpVelocity(this.velocityX * 1.0F, this.velocityY * 0.6, this.velocityZ * 1.0F);
         }
     }
 
     @Override
     public boolean isBreedingItem(@NotNull ItemStack itemStack) {
-        return itemStack.matchesItemIgnoreDamage(new ItemStack(Items.CAKE));
+        return itemStack.matchesItemIgnoreDamage(new ItemStack(Items.CARROT));
     }
 
     @Override
-    public EntityData initialize(final @NotNull WorldAccess level, final @NotNull LocalDifficulty difficulty, C_31453009 mobC_31453009, final @Nullable EntityData groupData, NbtCompound NbtCompound) {
+    public EntityData initialize(LocalDifficulty difficulty, @Nullable EntityData groupData, NbtCompound NbtCompound) {
         this.setServerEntity(true);
-        return super.initialize(level, difficulty, mobC_31453009, groupData, NbtCompound);
+        return super.initialize(difficulty, groupData, NbtCompound);
     }
 
     @Override
@@ -83,7 +82,7 @@ public class Head extends AbstractPet {
 
         this.goalSelector.addGoal(2, new SwimGoal(this));
         this.goalSelector.addGoal(3, new EscapeDangerGoal(this, 1.4d));
-        this.goalSelector.addGoal(4, new TemptGoal(this, 1.0f, Ingredient.of(Items.CAKE), false));
+        this.goalSelector.addGoal(4, new TemptGoal(this, 1.0f, Ingredient.of(Items.CARROT), false));
 
         this.goalSelector.addGoal(5, new LookAroundGoal(this));
         this.goalSelector.addGoal(6, new WanderAroundGoal(this, 1.0D));
@@ -159,7 +158,7 @@ public class Head extends AbstractPet {
             if (owner.hasPassenger(this)) {
                 if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
-                    this.m_28162558(this.m_94091929().add(0, -0.04, 0));
+                    this.lerpVelocity(this.getVelocity().add(0, -0.04, 0));
                 } else {
                     this.setSitting(true);
                 }
@@ -171,12 +170,12 @@ public class Head extends AbstractPet {
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.distanceTo(owner);
-            float rotation = this.getRotation().x;
-            float rotationToOwner = rotation + this.getOwner().getRotation().x;
+            float rotation = -this.pitch;
+            float rotationToOwner = rotation + (-this.getOwner().pitch);
             float bodyYawDiff = MathHelper.wrapDegrees(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/);
 
             if (rotationToOwner >= 50) {
-                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_06800284 /*sign*/(bodyYawDiff) * 50.0F);
+                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (Math.signum(bodyYawDiff) * 50.0F);
             }
 
             if (distance > 2.0) {
@@ -184,17 +183,16 @@ public class Head extends AbstractPet {
                 this.walkAnimationSpeed = (0.5F);
 
                 Vec3d targetPos = new Vec3d(owner.x, owner.y, owner.z);
-                Vec3d dir = targetPos.subtract(this.getPos()).normalize();
+                Vec3d dir = targetPos.subtract(this.getPosVec()).normalize();
 
-                this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
-                this.setHeadYaw(this.getYRot());
-                this.bodyYaw /*bodyYaw*/ = MathHelper.m_82141949(this.bodyYaw /*bodyYaw*/, this.headYaw, 50.0f);
+                
+                
+                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/, -50, 50);
 
                 double speed = 0.15;
-                this.m_28162558(new Vec3d(dir.x * speed, this.m_94091929().y, dir.z * speed));
+                this.lerpVelocity(new Vec3d(dir.x * speed, this.getVelocity().y, dir.z * speed));
             } else {
-                this.lookAt(owner, 5, 0);
-                this.m_28162558(this.m_94091929().m_17023014(0.8, 1.0, 0.8));
+                                this.lerpVelocity(this.velocityX * 0.8, this.velocityY * 1.0, this.velocityY* 0.8);
             }
 
             int yHeightToOwner = (int) (owner.y - this.y);
@@ -205,26 +203,26 @@ public class Head extends AbstractPet {
             }
 
             if (yHeightToOwner > -1) {
-                this.m_28162558(this.m_94091929().add(0, -0.01, 0));
+                this.lerpVelocity(this.getVelocity().add(0, -0.01, 0));
                 // t/his.processFlappingMovement();
             }
 
             if (!this.onGround) {
                 //this.processFlappingMovement();
             }
-            this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
-            this.setHeadYaw(this.getYRot());
+            
+            
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_06800284 /*sign*/(bodyYawDiff) * 50);
+                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (Math.signum(bodyYawDiff) * 50);
             } else {
-                this.bodyYaw /*bodyYaw*/ = MathHelper.m_82141949(this.bodyYaw /*bodyYaw*/, this.getHeadYaw(), 10);
+                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/, -10, 10);
             }
 
-            this.move(MoverType.SELF, this.m_94091929());
+            this.move(MoverType.SELF, this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
 
             if (!this.onGround) {
-                this.m_28162558(this.m_94091929().add(0, -0.04, 0));
+                this.lerpVelocity(this.getVelocity().add(0, -0.04, 0));
             }
         }
         if (owner != null) {

@@ -6,7 +6,7 @@ import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.client.render.model.entity.ParrotModel;
 import net.minecraft.util.math.MathHelper;
 
-public class ClientParrotModel extends Model<ClientParrot> {
+public class ClientParrotModel extends Model {
     private final ModelPart field_3458;
     private final ModelPart field_3460;
     private final ModelPart field_3459;
@@ -20,8 +20,8 @@ public class ClientParrotModel extends Model<ClientParrot> {
     private final ModelPart field_3457;
 
     public ClientParrotModel() {
-        this.f_35376783 /*textureWidth*/ = 32;
-        this.f_50207596 /*textureHeight*/ = 32;
+        this.textureWidth /*textureWidth*/ = 32;
+        this.textureHeight /*textureHeight*/ = 32;
         this.field_3458 = new ModelPart(this, 2, 8);
         this.field_3458.addBox(-1.5F, 0.0F, -1.5F, 3, 6, 3);
         this.field_3458.setPos(0.0F, 16.5F, -3.0F);
@@ -62,7 +62,7 @@ public class ClientParrotModel extends Model<ClientParrot> {
     }
 
     @Override
-    public void render(ClientParrot parrot, float b, float h, float i, float j, float k, float f) {
+    public void render(net.minecraft.entity.Entity entity, float b, float h, float i, float j, float k, float f) {
         this.field_3458.render(f);
         this.field_3459.render(f);
         this.field_3455.render(f);
@@ -73,8 +73,8 @@ public class ClientParrotModel extends Model<ClientParrot> {
     }
 
     @Override
-    public void setup(ClientParrot parrot, float i, float f, float g, float h, float j, float k) {
-        ParrotModel.State pose = parrot.isPassenger() ? ParrotModel.State.ON_SHOULDER : ParrotModel.State.FLYING;
+    public void setupAnimation(float i, float f, float g, float h, float j, float k, net.minecraft.entity.Entity entity) {
+        ClientParrot parrot = (ClientParrot) entity;
         this.field_3452.rotationX = k * ((float) Math.PI / 180F);
         this.field_3452.rotationY = j * ((float) Math.PI / 180F);
         this.field_3452.rotationZ = 0.0F;
@@ -83,93 +83,16 @@ public class ClientParrotModel extends Model<ClientParrot> {
         this.field_3460.x = 0.0F;
         this.field_3455.x = -1.5F;
         this.field_3459.x = 1.5F;
-        switch (pose) {
-            case SITTING:
-                break;
-            case PARTY:
-                float l = MathHelper.cos(i);
-                float m = MathHelper.sin(i);
-                this.field_3452.x = l;
-                this.field_3452.y = 15.69F + m;
-                this.field_3452.rotationX = 0.0F;
-                this.field_3452.rotationY = 0.0F;
-                this.field_3452.rotationZ = MathHelper.sin(i) * 0.4F;
-                this.field_3458.x = l;
-                this.field_3458.y = 16.5F + m;
-                this.field_3459.rotationZ = -0.0873F - h;
-                this.field_3459.x = 1.5F + l;
-                this.field_3459.y = 16.94F + m;
-                this.field_3455.rotationZ = 0.0873F + h;
-                this.field_3455.x = -1.5F + l;
-                this.field_3455.y = 16.94F + m;
-                this.field_3460.x = l;
-                this.field_3460.y = 21.07F + m;
-                break;
-            case STANDING:
-                ModelPart var10000 = this.field_3450;
-                var10000.rotationX += MathHelper.cos(f * 0.6662F) * 1.4F * g;
-                var10000 = this.field_3457;
-                var10000.rotationX += MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g;
-            case FLYING:
-            case ON_SHOULDER:
-            default:
-                float n = h * 0.3F;
-                this.field_3452.y = 15.69F + n;
-                this.field_3460.rotationX = 1.015F + MathHelper.cos(f * 0.6662F) * 0.3F * g;
-                this.field_3460.y = 21.07F + n;
-                this.field_3458.y = 16.5F + n;
-                this.field_3459.rotationZ = -0.0873F - h;
-                this.field_3459.y = 16.94F + n;
-                this.field_3455.rotationZ = 0.0873F + h;
-                this.field_3455.y = 16.94F + n;
-                this.field_3450.y = 22.0F + n;
-                this.field_3457.y = 22.0F + n;
-        }
-
-    }
-
-    private void prepare(ParrotModel.State pose) {
-        this.field_3456.rotationX = -0.2214F;
-        this.field_3458.rotationX = 0.4937F;
-        this.field_3459.rotationX = -0.6981F;
-        this.field_3459.rotationY = -(float) Math.PI;
-        this.field_3455.rotationX = -0.6981F;
-        this.field_3455.rotationY = -(float) Math.PI;
-        this.field_3450.rotationX = -0.0299F;
-        this.field_3457.rotationX = -0.0299F;
-        this.field_3450.y = 22.0F;
-        this.field_3457.y = 22.0F;
-        this.field_3450.rotationZ = 0.0F;
-        this.field_3457.rotationZ = 0.0F;
-        switch (pose) {
-            case SITTING:
-                float f = 1.9F;
-                this.field_3452.y = 17.59F;
-                this.field_3460.rotationX = 1.5388988F;
-                this.field_3460.y = 22.97F;
-                this.field_3458.y = 18.4F;
-                this.field_3459.rotationZ = -0.0873F;
-                this.field_3459.y = 18.84F;
-                this.field_3455.rotationZ = 0.0873F;
-                this.field_3455.y = 18.84F;
-                ++this.field_3450.y;
-                ++this.field_3457.y;
-                ++this.field_3450.rotationX;
-                ++this.field_3457.rotationX;
-                break;
-            case PARTY:
-                this.field_3450.rotationZ = -0.34906584F;
-                this.field_3457.rotationZ = 0.34906584F;
-            case STANDING:
-            case ON_SHOULDER:
-            default:
-                break;
-            case FLYING:
-                ModelPart var10000 = this.field_3450;
-                var10000.rotationX += 0.6981317F;
-                var10000 = this.field_3457;
-                var10000.rotationX += 0.6981317F;
-        }
-
+        float n = h * 0.3F;
+        this.field_3452.y = 15.69F + n;
+        this.field_3460.rotationX = 1.015F + MathHelper.cos(f * 0.6662F) * 0.3F * g;
+        this.field_3460.y = 21.07F + n;
+        this.field_3458.y = 16.5F + n;
+        this.field_3459.rotationZ = -0.0873F - h;
+        this.field_3459.y = 16.94F + n;
+        this.field_3455.rotationZ = 0.0873F + h;
+        this.field_3455.y = 16.94F + n;
+        this.field_3450.y = 22.0F + n;
+        this.field_3457.y = 22.0F + n;
     }
 }

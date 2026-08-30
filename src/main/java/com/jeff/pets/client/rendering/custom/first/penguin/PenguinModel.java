@@ -6,7 +6,7 @@ import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.NotNull;
 
-public class PenguinModel extends PetModel<@NotNull Penguin> {
+public class PenguinModel extends PetModel {
 
     private final ModelPart root;
     private final ModelPart body;
@@ -21,8 +21,8 @@ public class PenguinModel extends PetModel<@NotNull Penguin> {
     private final ModelPart beak;
 
     public PenguinModel() {
-        f_35376783 /*textureWidth*/ = 64;
-        f_50207596 /*textureHeight*/ = 64;
+        textureWidth /*textureWidth*/ = 64;
+        textureHeight /*textureHeight*/ = 64;
 
         root = new ModelPart(this);
         root.setPos(0.0F, 28.0F, 0.0F);
@@ -85,7 +85,7 @@ public class PenguinModel extends PetModel<@NotNull Penguin> {
     }
 
     @Override
-    public void render(Penguin penguin, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
+    public void render(net.minecraft.entity.Entity entity, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
         root.render(alpha);
     }
 
@@ -96,7 +96,8 @@ public class PenguinModel extends PetModel<@NotNull Penguin> {
     }
 
     @Override
-    public void setup(Penguin state, float f, float g, float h, float i, float k, float s) {
+    public void setupAnimation(float f, float g, float h, float i, float k, float s, net.minecraft.entity.Entity entity) {
+        Penguin state = (Penguin) entity;
         float flapAngle = (MathHelper.sin(state.flap) + 1.0F) * state.flapSpeed;
         this.head.rotationX = state.pitch * ((float) Math.PI / 180F);
         float animationSpeed = state.walkAnimationSpeed;

@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 
-public class KoiRenderer extends PetRenderer<Koi, KoiModel> {
+public class KoiRenderer extends PetRenderer<Koi> {
 
     public KoiRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new KoiModel(), 0.5f);

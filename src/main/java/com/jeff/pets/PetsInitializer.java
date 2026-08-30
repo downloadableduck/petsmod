@@ -12,20 +12,14 @@ import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import com.jeff.pets.mob.vanilla.hostile.*;
 import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
-import com.mojang.datafixers.DSL;
-import com.mojang.datafixers.DataFixUtils;
-import com.mojang.datafixers.schemas.Schema;
-import com.mojang.datafixers.types.Type;
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.living.mob.MobCategory;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.resource.Identifier;
+import net.minecraft.util.registry.IdRegistry;
+import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Map;
 
 /**
  * Registers all of the blocks and entities used in this mod, as well as providing the {@link #MOD_ID}.
@@ -35,561 +29,401 @@ public class PetsInitializer implements ModInitializer {
 
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
-    public static final EntityType<Racoon> RACOON = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<Racoon> RACOON = register(
             new Identifier(MOD_ID, "racoon"),
-            EntityType.Builder.of(Racoon::new, MobCategory.CREATURE)
-                    .m_68160660(1.0f, 1.0f)
+            EntityType.Builder.of(Racoon.class, (world) -> new Racoon(PetsInitializer.RACOON, world))
                     .build("pets-mod:racoon")
     );
 
-    public static final EntityType<ClientBat> BAT = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientBat> BAT = register(
             new Identifier(MOD_ID, "clientbat"),
-            EntityType.Builder.of(ClientBat::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientBat.class, (world) -> new ClientBat(PetsInitializer.BAT, world))
                     .notSummonable()
-                    .m_68160660(0.5f, 0.9f)
                     .build("clientbat")
     );
 
-    public static final EntityType<Duck> DUCK = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<Duck> DUCK = register(
             new Identifier(MOD_ID, "duck"),
-            EntityType.Builder.of(Duck::new, MobCategory.CREATURE)
-                    .m_68160660(0.4f, 0.7f)
+            EntityType.Builder.of(Duck.class, (world) -> new Duck(PetsInitializer.DUCK, world))
                     .build("duck")
     );
 
-    public static final EntityType<Penguin> PENGUIN = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<Penguin> PENGUIN = register(
             new Identifier(MOD_ID, "penguin"),
-            EntityType.Builder.of(Penguin::new, MobCategory.AMBIENT)
-                    .m_68160660(1.0f, 1.5f)
+            EntityType.Builder.of(Penguin.class, (world) -> new Penguin(PetsInitializer.PENGUIN, world))
                     .build("penguin")
     );
 
-    public static final EntityType<ClientSheep> SHEEP = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientSheep> SHEEP = register(
             new Identifier(MOD_ID, "clientsheep"),
-            EntityType.Builder.of(ClientSheep::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientSheep.class, (world) -> new ClientSheep(PetsInitializer.SHEEP, world))
                     .notSummonable()
-                    .m_68160660(0.9f, 1.3f)
                     .build("clientsheep")
     );
 
-    public static final EntityType<ClientCat> CAT = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientCat> CAT = register(
             new Identifier(MOD_ID, "clientcat"),
-            EntityType.Builder.of(ClientCat::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientCat.class, (world) -> new ClientCat(PetsInitializer.CAT, world))
                     .notSummonable()
-                    .m_68160660(0.6f, 0.7f)
                     .build("clientcat")
     );
 
-    public static final EntityType<ClientChicken> CHICKEN = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientChicken> CHICKEN = register(
             new Identifier(MOD_ID, "clientchicken"),
-            EntityType.Builder.of(ClientChicken::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientChicken.class, (world) -> new ClientChicken(PetsInitializer.CHICKEN, world))
                     .notSummonable()
-                    .m_68160660(0.4f, 0.7f)
                     .build("clientchicken")
     );
 
-    public static final EntityType<ClientCod> COD = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientCod> COD = register(
             new Identifier(MOD_ID, "clientcod"),
-            EntityType.Builder.of(ClientCod::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientCod.class, (world) -> new ClientCod(PetsInitializer.COD, world))
                     .notSummonable()
-                    .m_68160660(0.5f, 0.3f)
                     .build("clientcod")
     );
 
-    public static final EntityType<ClientCow> COW = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientCow> COW = register(
             new Identifier(MOD_ID, "clientcow"),
-            EntityType.Builder.of(ClientCow::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientCow.class, (world) -> new ClientCow(PetsInitializer.COW, world))
                     .notSummonable()
-                    .m_68160660(0.9f, 1.4f)
                     .build("clientcow")
     );
 
-    public static final EntityType<ClientDonkey> DONKEY = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientDonkey> DONKEY = register(
             new Identifier(MOD_ID, "clientdonkey"),
-            EntityType.Builder.of(ClientDonkey::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientDonkey.class, (world) -> new ClientDonkey(PetsInitializer.DONKEY, world))
                     .notSummonable()
-                    .m_68160660(1.3965f, 1.5f)
                     .build("clientdonkey")
     );
 
-    public static final EntityType<ClientHorse> HORSE = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientHorse> HORSE = register(
             new Identifier(MOD_ID, "clienthorse"),
-            EntityType.Builder.of(ClientHorse::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientHorse.class, (world) -> new ClientHorse(PetsInitializer.HORSE, world))
                     .notSummonable()
-                    .m_68160660(1.3965f, 1.6f)
                     .build("clienthorse")
     );
 
-    public static final EntityType<ClientMooshroom> MOOSHROOM = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientMooshroom> MOOSHROOM = register(
             new Identifier(MOD_ID, "clientmooshroom"),
-            EntityType.Builder.of(ClientMooshroom::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientMooshroom.class, (world) -> new ClientMooshroom(PetsInitializer.MOOSHROOM, world))
                     .notSummonable()
-                    .m_68160660(0.9f, 1.4f)
                     .build("clientmooshroom")
     );
 
-    public static final EntityType<ClientParrot> PARROT = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientParrot> PARROT = register(
             new Identifier(MOD_ID, "clientparrot"),
-            EntityType.Builder.of(ClientParrot::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientParrot.class, (world) -> new ClientParrot(PetsInitializer.PARROT, world))
                     .notSummonable()
-                    .m_68160660(0.5f, 0.9f)
                     .build("clientparrot")
     );
 
-    public static final EntityType<ClientPig> PIG = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientPig> PIG = register(
             new Identifier(MOD_ID, "clientpig"),
-            EntityType.Builder.of(ClientPig::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientPig.class, (world) -> new ClientPig(PetsInitializer.PIG, world))
                     .notSummonable()
-                    .m_68160660(0.9f, 0.9f)
                     .build("clientpig")
     );
 
-    public static final EntityType<ClientRabbit> RABBIT = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientRabbit> RABBIT = register(
             new Identifier(MOD_ID, "clientrabbit"),
-            EntityType.Builder.of(ClientRabbit::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientRabbit.class, (world) -> new ClientRabbit(PetsInitializer.RABBIT, world))
                     .notSummonable()
-                    .m_68160660(0.4f, 0.5f)
                     .build("clientrabbit")
     );
 
-    public static final EntityType<ClientSalmon> SALMON = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientSalmon> SALMON = register(
             new Identifier(MOD_ID, "clientsalmon"),
-            EntityType.Builder.of(ClientSalmon::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientSalmon.class, (world) -> new ClientSalmon(PetsInitializer.SALMON, world))
                     .notSummonable()
-                    .m_68160660(0.35f, 0.2f)
                     .build("clientsalmon")
     );
 
-    public static final EntityType<ClientSnowGolem> SNOW_GOLEM = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientSnowGolem> SNOW_GOLEM = register(
             new Identifier(MOD_ID, "clientsnowgolem"),
-            EntityType.Builder.of(ClientSnowGolem::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientSnowGolem.class, (world) -> new ClientSnowGolem(PetsInitializer.SNOW_GOLEM, world))
                     .notSummonable()
-                    .m_68160660(0.7f, 1.9f)
                     .build("clientsnowgolem")
     );
 
-    public static final EntityType<ClientSquid> SQUID = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientSquid> SQUID = register(
             new Identifier(MOD_ID, "clientsquid"),
-            EntityType.Builder.of(ClientSquid::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientSquid.class, (world) -> new ClientSquid(PetsInitializer.SQUID, world))
                     .notSummonable()
-                    .m_68160660(0.8f, -0.8f)
                     .build("clientsquid")
     );
 
-    public static final EntityType<ClientTurtle> TURTLE = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientTurtle> TURTLE = register(
             new Identifier(MOD_ID, "clientturtle"),
-            EntityType.Builder.of(ClientTurtle::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientTurtle.class, (world) -> new ClientTurtle(PetsInitializer.TURTLE, world))
                     .notSummonable()
-                    .m_68160660(1.2f, 0.4f)
                     .build("clientturtle")
     );
 
-    public static final EntityType<ClientVillager> VILLAGER = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientVillager> VILLAGER = register(
             new Identifier(MOD_ID, "clientvillager"),
-            EntityType.Builder.of(ClientVillager::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientVillager.class, (world) -> new ClientVillager(PetsInitializer.VILLAGER, world))
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
                     .build("clientvillager")
     );
 
-    public static final EntityType<ClientWanderingTrader> WANDERING_TRADER = Registry.register(
-            Registry.ENTITY_TYPE,
-            new Identifier(MOD_ID, "clientwanderingtrader"),
-            EntityType.Builder.of(ClientWanderingTrader::new, MobCategory.AMBIENT)
-                    .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
-                    .build("clientwanderingtrader")
-    );
-
-    public static final EntityType<ClientCaveSpider> CAVE_SPIDER = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientCaveSpider> CAVE_SPIDER = register(
             new Identifier(MOD_ID, "clientcavespider"),
-            EntityType.Builder.of(ClientCaveSpider::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientCaveSpider.class, (world) -> new ClientCaveSpider(PetsInitializer.CAVE_SPIDER, world))
                     .notSummonable()
-                    .m_68160660(0.7f, 0.5f)
                     .build("clientcavespider")
     );
 
-    public static final EntityType<ClientDolphin> DOLPHIN = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientDolphin> DOLPHIN = register(
             new Identifier(MOD_ID, "clientdolphin"),
-            EntityType.Builder.of(ClientDolphin::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientDolphin.class, (world) -> new ClientDolphin(PetsInitializer.DOLPHIN, world))
                     .notSummonable()
-                    .m_68160660(0.9f, 0.6f)
                     .build("clientdolphin")
     );
 
-    public static final EntityType<ClientEnderman> ENDERMAN = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientEnderman> ENDERMAN = register(
             new Identifier(MOD_ID, "clientenderman"),
-            EntityType.Builder.of(ClientEnderman::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientEnderman.class, (world) -> new ClientEnderman(PetsInitializer.ENDERMAN, world))
                     .notSummonable()
-                    .m_68160660(0.6f, 2.9f)
                     .build("clientenderman")
     );
 
-    public static final EntityType<ClientFox> FOX = Registry.register(
-            Registry.ENTITY_TYPE,
-            new Identifier(MOD_ID, "clientfox"),
-            EntityType.Builder.of(ClientFox::new, MobCategory.AMBIENT)
-                    .notSummonable()
-                    .m_68160660(0.6f, 0.7f)
-                    .build("clientfox")
-    );
-
-    public static final EntityType<ClientIronGolem> IRON_GOLEM = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientIronGolem> IRON_GOLEM = register(
             new Identifier(MOD_ID, "clientirongolem"),
-            EntityType.Builder.of(ClientIronGolem::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientIronGolem.class, (world) -> new ClientIronGolem(PetsInitializer.IRON_GOLEM, world))
                     .notSummonable()
-                    .m_68160660(1.4f, 2.7f)
                     .build("clientirongolem")
     );
 
-    public static final EntityType<ClientLlama> LLAMA = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientLlama> LLAMA = register(
             new Identifier(MOD_ID, "clientllama"),
-            EntityType.Builder.of(ClientLlama::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientLlama.class, (world) -> new ClientLlama(PetsInitializer.LLAMA, world))
                     .notSummonable()
-                    .m_68160660(0.9f, 1.87f)
                     .build("clientllama")
     );
 
-    public static final EntityType<ClientPanda> PANDA = Registry.register(
-            Registry.ENTITY_TYPE,
-            new Identifier(MOD_ID, "clientpanda"),
-            EntityType.Builder.of(ClientPanda::new, MobCategory.AMBIENT)
-                    .notSummonable()
-                    .m_68160660(1.3f, 1.25f)
-                    .build("clientpanda")
-    );
-
-    public static final EntityType<ClientPolarBear> POLAR_BEAR = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientPolarBear> POLAR_BEAR = register(
             new Identifier(MOD_ID, "clientpolarbear"),
-            EntityType.Builder.of(ClientPolarBear::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientPolarBear.class, (world) -> new ClientPolarBear(PetsInitializer.POLAR_BEAR, world))
                     .notSummonable()
-                    .m_68160660(1.4f, 1.4f)
                     .build("clientpolarbear")
     );
 
-    public static final EntityType<ClientPufferFish> PUFFERFISH = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientPufferFish> PUFFERFISH = register(
             new Identifier(MOD_ID, "clientpufferfish"),
-            EntityType.Builder.of(ClientPufferFish::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientPufferFish.class, (world) -> new ClientPufferFish(PetsInitializer.PUFFERFISH, world))
                     .notSummonable()
-                    .m_68160660(0.7f, 0.7f)
                     .build("clientpufferfish")
     );
 
-    public static final EntityType<ClientSpider> SPIDER = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientSpider> SPIDER = register(
             new Identifier(MOD_ID, "clientspider"),
-            EntityType.Builder.of(ClientSpider::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientSpider.class, (world) -> new ClientSpider(PetsInitializer.SPIDER, world))
                     .notSummonable()
-                    .m_68160660(1.4f, 0.9f)
                     .build("clientspider")
     );
 
-    public static final EntityType<ClientWolf> WOLF = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientWolf> WOLF = register(
             new Identifier(MOD_ID, "clientwolf"),
-            EntityType.Builder.of(ClientWolf::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientWolf.class, (world) -> new ClientWolf(PetsInitializer.WOLF, world))
                     .notSummonable()
-                    .m_68160660(0.6f, 0.85f)
                     .build("clientwolf")
     );
 
-    public static final EntityType<ClientBlaze> BLAZE = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientBlaze> BLAZE = register(
             new Identifier(MOD_ID, "clientblaze"),
-            EntityType.Builder.of(ClientBlaze::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientBlaze.class, (world) -> new ClientBlaze(PetsInitializer.BLAZE, world))
                     .notSummonable()
-                    .m_68160660(0.6f, 1.8f)
                     .build("clientblaze")
     );
 
-    public static final EntityType<ClientCreeper> CREEPER = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientCreeper> CREEPER = register(
             new Identifier(MOD_ID, "clientcreeper"),
-            EntityType.Builder.of(ClientCreeper::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientCreeper.class, (world) -> new ClientCreeper(PetsInitializer.CREEPER, world))
                     .notSummonable()
-                    .m_68160660(0.6f, 1.7f)
                     .build("clientcreeper")
     );
-    public static final EntityType<ClientElderGuardian> ELDER_GUARDIAN_COOKIE = Registry.register(
-            Registry.ENTITY_TYPE,
+
+    public static final EntityType<ClientElderGuardian> ELDER_GUARDIAN_COOKIE = register(
             new Identifier(MOD_ID, "clientelderguardian"),
-            EntityType.Builder.of(ClientElderGuardian::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientElderGuardian.class, (world) -> new ClientElderGuardian(PetsInitializer.ELDER_GUARDIAN_COOKIE, world))
                     .notSummonable()
-                    .m_68160660(1.9975f, 1.9975f)
                     .build("clientelderguardian")
     );
 
-    public static final EntityType<ClientEndermite> ENDERMITE = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientEndermite> ENDERMITE = register(
             new Identifier(MOD_ID, "clientendermite"),
-            EntityType.Builder.of(ClientEndermite::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientEndermite.class, (world) -> new ClientEndermite(PetsInitializer.ENDERMITE, world))
                     .notSummonable()
-                    .m_68160660(0.4f, 0.3f)
                     .build("clientendermite")
     );
 
-    public static final EntityType<ClientEvoker> EVOKER = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientEvoker> EVOKER = register(
             new Identifier(MOD_ID, "clientevoker"),
-            EntityType.Builder.of(ClientEvoker::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientEvoker.class, (world) -> new ClientEvoker(PetsInitializer.EVOKER, world))
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
                     .build("clientevoker")
     );
 
-    public static final EntityType<ClientGhast> GHAST = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientGhast> GHAST = register(
             new Identifier(MOD_ID, "clientghast"),
-            EntityType.Builder.of(ClientGhast::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientGhast.class, (world) -> new ClientGhast(PetsInitializer.GHAST, world))
                     .notSummonable()
-                    .m_68160660(4f, 4f)
                     .build("clientghast")
     );
 
-    public static final EntityType<ClientGuardian> GUARDIAN = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientGuardian> GUARDIAN = register(
             new Identifier(MOD_ID, "clientguardian"),
-            EntityType.Builder.of(ClientGuardian::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientGuardian.class, (world) -> new ClientGuardian(PetsInitializer.GUARDIAN, world))
                     .notSummonable()
-                    .m_68160660(0.85f, 0.85f)
                     .build("clientguardian")
     );
 
-    public static final EntityType<ClientMagmaCube> MAGMA_CUBE = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientMagmaCube> MAGMA_CUBE = register(
             new Identifier(MOD_ID, "clientmagmacube"),
-            EntityType.Builder.of(ClientMagmaCube::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientMagmaCube.class, (world) -> new ClientMagmaCube(PetsInitializer.MAGMA_CUBE, world))
                     .notSummonable()
-                    .m_68160660(2f, 2f)
                     .build("clientmagmacube")
     );
 
-    public static final EntityType<ClientPhantom> PHANTOM = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientPhantom> PHANTOM = register(
             new Identifier(MOD_ID, "clientphantom"),
-            EntityType.Builder.of(ClientPhantom::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientPhantom.class, (world) -> new ClientPhantom(PetsInitializer.PHANTOM, world))
                     .notSummonable()
-                    .m_68160660(0.9f, 0.5f)
                     .build("clientphantom")
     );
 
-    public static final EntityType<ClientPillager> PILLAGER = Registry.register(
-            Registry.ENTITY_TYPE,
-            new Identifier(MOD_ID, "clientpillager"),
-            EntityType.Builder.of(ClientPillager::new, MobCategory.AMBIENT)
-                    .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
-                    .build("clientpillager")
-    );
-
-    public static final EntityType<ClientRavager> RAVAGER = Registry.register(
-            Registry.ENTITY_TYPE,
-            new Identifier(MOD_ID, "clientravager"),
-            EntityType.Builder.of(ClientRavager::new, MobCategory.AMBIENT)
-                    .notSummonable()
-                    .m_68160660(1.95f, 2.2f)
-                    .build("clientravager")
-    );
-
-    public static final EntityType<ClientShulker> SHULKER = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientShulker> SHULKER = register(
             new Identifier(MOD_ID, "clientshulker"),
-            EntityType.Builder.of(ClientShulker::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientShulker.class, (world) -> new ClientShulker(PetsInitializer.SHULKER, world))
                     .notSummonable()
-                    .m_68160660(1f, 2f)
                     .build("clientshulker")
     );
 
-    public static final EntityType<ClientSilverfish> SILVERFISH = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientSilverfish> SILVERFISH = register(
             new Identifier(MOD_ID, "clientsilverfish"),
-            EntityType.Builder.of(ClientSilverfish::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientSilverfish.class, (world) -> new ClientSilverfish(PetsInitializer.SILVERFISH, world))
                     .notSummonable()
-                    .m_68160660(0.4f, 0.3f)
                     .build("clientsilverfish")
     );
 
-    public static final EntityType<ClientSkeleton> SKELETON = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientSkeleton> SKELETON = register(
             new Identifier(MOD_ID, "clientskeleton"),
-            EntityType.Builder.of(ClientSkeleton::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientSkeleton.class, (world) -> new ClientSkeleton(PetsInitializer.SKELETON, world))
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
                     .build("clientskeleton")
     );
 
-    public static final EntityType<ClientSlime> SLIME = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientSlime> SLIME = register(
             new Identifier(MOD_ID, "clientslime"),
-            EntityType.Builder.of(ClientSlime::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientSlime.class, (world) -> new ClientSlime(PetsInitializer.SLIME, world))
                     .notSummonable()
-                    .m_68160660(2f, 2f)
                     .build("clientslime")
     );
 
-    public static final EntityType<ClientVex> VEX = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientVex> VEX = register(
             new Identifier(MOD_ID, "clientvex"),
-            EntityType.Builder.of(ClientVex::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientVex.class, (world) -> new ClientVex(PetsInitializer.VEX, world))
                     .notSummonable()
-                    .m_68160660(0.4f, 0.8f)
                     .build("clientvex")
     );
 
-    public static final EntityType<ClientVindicator> VINDICATOR = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientVindicator> VINDICATOR = register(
             new Identifier(MOD_ID, "clientvindicator"),
-            EntityType.Builder.of(ClientVindicator::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientVindicator.class, (world) -> new ClientVindicator(PetsInitializer.VINDICATOR, world))
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
                     .build("clientvindicator")
     );
 
-    public static final EntityType<ClientWitch> WITCH = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientWitch> WITCH = register(
             new Identifier(MOD_ID, "clientwitch"),
-            EntityType.Builder.of(ClientWitch::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientWitch.class, (world) -> new ClientWitch(PetsInitializer.WITCH, world))
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
                     .build("clientwitch")
     );
 
-    public static final EntityType<ClientZombie> ZOMBIE = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientZombie> ZOMBIE = register(
             new Identifier(MOD_ID, "clientzombie"),
-            EntityType.Builder.of(ClientZombie::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientZombie.class, (world) -> new ClientZombie(PetsInitializer.ZOMBIE, world))
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
                     .build("clientzombie")
     );
 
-    public static final EntityType<ClientZombieVillager> ZOMBIE_VILLAGER = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientZombieVillager> ZOMBIE_VILLAGER = register(
             new Identifier(MOD_ID, "clientzombievillager"),
-            EntityType.Builder.of(ClientZombieVillager::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientZombieVillager.class, (world) -> new ClientZombieVillager(PetsInitializer.ZOMBIE_VILLAGER, world))
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
                     .build("clientzombievillager")
     );
 
-    public static final EntityType<ClientHusk> HUSK = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientHusk> HUSK = register(
             new Identifier(MOD_ID, "clienthusk"),
-            EntityType.Builder.of(ClientHusk::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientHusk.class, (world) -> new ClientHusk(PetsInitializer.HUSK, world))
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
                     .build("clienthusk")
     );
 
-    public static final EntityType<ClientDrowned> DROWNED = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientDrowned> DROWNED = register(
             new Identifier(MOD_ID, "clientdrowned"),
-            EntityType.Builder.of(ClientDrowned::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientDrowned.class, (world) -> new ClientDrowned(PetsInitializer.DROWNED, world))
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
                     .build("clientdrowned")
     );
 
-    public static final EntityType<ClientStray> STRAY = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientStray> STRAY = register(
             new Identifier(MOD_ID, "clientstray"),
-            EntityType.Builder.of(ClientStray::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientStray.class, (world) -> new ClientStray(PetsInitializer.STRAY, world))
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
                     .build("clientstray")
     );
 
-    public static final EntityType<ClientWitherSkeleton> WITHER_SKELETON = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientWitherSkeleton> WITHER_SKELETON = register(
             new Identifier(MOD_ID, "clientwitherskeleton"),
-            EntityType.Builder.of(ClientWitherSkeleton::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientWitherSkeleton.class, (world) -> new ClientWitherSkeleton(PetsInitializer.WITHER_SKELETON, world))
                     .notSummonable()
-                    .m_68160660(0.6f, 1.95f)
                     .build("clientwitherskeleton")
     );
 
-    public static final EntityType<ClientEnderDragon> ENDER_DRAGON = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientEnderDragon> ENDER_DRAGON = register(
             new Identifier(MOD_ID, "clientenderdragon"),
-            EntityType.Builder.of(ClientEnderDragon::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientEnderDragon.class, (world) -> new ClientEnderDragon(PetsInitializer.ENDER_DRAGON, world))
                     .notSummonable()
-                    .m_68160660(16f, 8f)
                     .build("clientenderdragon")
     );
 
-    public static final EntityType<ClientWither> WITHER = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientWither> WITHER = register(
             new Identifier(MOD_ID, "clientwither"),
-            EntityType.Builder.of(ClientWither::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(ClientWither.class, (world) -> new ClientWither(PetsInitializer.WITHER, world))
                     .notSummonable()
-                    .m_68160660(2f, 3f)
                     .build("clientwither")
     );
 
-    public static final EntityType<Head> HEAD = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<Head> HEAD = register(
             new Identifier(MOD_ID, "head"),
-            EntityType.Builder.of(Head::new, MobCategory.CREATURE)
-                    .m_68160660(0.5f, 0.5f)
+            EntityType.Builder.of(Head.class, (world) -> new Head(PetsInitializer.HEAD, world))
                     .build("head")
     );
 
-    public static final EntityType<DumboOctopus> DUMBO_OCTOPUS = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<DumboOctopus> DUMBO_OCTOPUS = register(
             new Identifier(MOD_ID, "dumbo_octopus"),
-            EntityType.Builder.of(DumboOctopus::new, MobCategory.AMBIENT)
-                    .m_68160660(0.5f, 0.5f)
+            EntityType.Builder.of(DumboOctopus.class, (world) -> new DumboOctopus(PetsInitializer.DUMBO_OCTOPUS, world))
                     .build("dumbo_octopus")
     );
 
-    public static final EntityType<Koi> KOI = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<Koi> KOI = register(
             new Identifier(MOD_ID, "koi"),
-            EntityType.Builder.of(Koi::new, MobCategory.AMBIENT)
-                    .m_68160660(0.6f, 0.6f)
+            EntityType.Builder.of(Koi.class, (world) -> new Koi(PetsInitializer.KOI, world))
                     .build("koi")
     );
 
-    public static final EntityType<Stingray> STINGRAY = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<Stingray> STINGRAY = register(
             new Identifier(MOD_ID, "stringray"),
-            EntityType.Builder.of(Stingray::new, MobCategory.AMBIENT)
-                    .m_68160660(1.0f, 0.4f)
+            EntityType.Builder.of(Stingray.class, (world) -> new Stingray(PetsInitializer.STINGRAY, world))
                     .build("stingray")
     );
 
-    public static final EntityType<ClientZombiePigman> ZOMBIE_PIGMAN = Registry.register(
-            Registry.ENTITY_TYPE,
+    public static final EntityType<ClientZombiePigman> ZOMBIE_PIGMAN = register(
             new Identifier(MOD_ID, "zombie_pigman"),
-            EntityType.Builder.of(ClientZombiePigman::new, MobCategory.AMBIENT)
-                    .m_68160660(0.6f, 1.95f)
+            EntityType.Builder.of(ClientZombiePigman.class, (world) -> new ClientZombiePigman(PetsInitializer.ZOMBIE_PIGMAN, world))
                     .build("zombie_pigman")
     );
 
@@ -607,5 +441,10 @@ public class PetsInitializer implements ModInitializer {
         //DuckSpawns.addDuckSpawn();
 
         LOGGER.info("quack");
+    }
+
+    private static <T extends Entity> EntityType<T> register(Identifier id, EntityType<T> type) {
+        IdRegistry.ENTITY_TYPE.register(id, type);
+        return type;
     }
 }

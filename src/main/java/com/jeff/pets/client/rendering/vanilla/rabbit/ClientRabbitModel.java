@@ -8,7 +8,7 @@ import net.minecraft.util.math.MathHelper;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientRabbitModel extends Model<ClientRabbit> {
+public class ClientRabbitModel extends Model {
     public final ModelPart head;
     private final ModelPart rearFootLeft = new ModelPart(this, 26, 24);
     private final ModelPart rearFootRight;
@@ -92,30 +92,31 @@ public class ClientRabbitModel extends Model<ClientRabbit> {
     }
 
     @Override
-    public void render(ClientRabbit rabbit, float i, float j, float f, float g, float h, float k) {
+    public void render(net.minecraft.entity.Entity entity, float i, float j, float f, float g, float h, float k) {
         if (CONFIG.isBaby) {
             float l = 1.5F;
-            com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.56666666F, 0.56666666F, 0.56666666F);
-            com.mojang.blaze3d.platform.GlStateManager.translate(0.0F, 1.375F, 0.125F);
+            net.minecraft.client.render.platform.GlStateManager.pushMatrix();
+            net.minecraft.client.render.platform.GlStateManager.scalef(0.56666666F, 0.56666666F, 0.56666666F);
+            net.minecraft.client.render.platform.GlStateManager.translatef(0.0F, 1.375F, 0.125F);
             ImmutableList.of(this.head, this.earLeft, this.earRight, this.nose).forEach((ModelPart) -> ModelPart.render(k));
-            com.mojang.blaze3d.platform.GlStateManager.popMatrix();
-            com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.4F, 0.4F, 0.4F);
-            com.mojang.blaze3d.platform.GlStateManager.translate(0.0F, 2.25F, 0.0F);
+            net.minecraft.client.render.platform.GlStateManager.popMatrix();
+            net.minecraft.client.render.platform.GlStateManager.pushMatrix();
+            net.minecraft.client.render.platform.GlStateManager.scalef(0.4F, 0.4F, 0.4F);
+            net.minecraft.client.render.platform.GlStateManager.translatef(0.0F, 2.25F, 0.0F);
             ImmutableList.of(this.rearFootLeft, this.rearFootRight, this.haunchLeft, this.haunchRight, this.body, this.frontLegLeft, this.frontLegRight, this.tail).forEach((ModelPart) -> ModelPart.render(k));
-            com.mojang.blaze3d.platform.GlStateManager.popMatrix();
+            net.minecraft.client.render.platform.GlStateManager.popMatrix();
         } else {
-            com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.6F, 0.6F, 0.6F);
-            com.mojang.blaze3d.platform.GlStateManager.translate(0.0F, 1.0F, 0.0F);
+            net.minecraft.client.render.platform.GlStateManager.pushMatrix();
+            net.minecraft.client.render.platform.GlStateManager.scalef(0.6F, 0.6F, 0.6F);
+            net.minecraft.client.render.platform.GlStateManager.translatef(0.0F, 1.0F, 0.0F);
             ImmutableList.of(this.rearFootLeft, this.rearFootRight, this.haunchLeft, this.haunchRight, this.body, this.frontLegLeft, this.frontLegRight, this.head, this.earRight, this.earLeft, this.tail, this.nose, new ModelPart[0]).forEach((ModelPart) -> ModelPart.render(k));
-            com.mojang.blaze3d.platform.GlStateManager.popMatrix();
+            net.minecraft.client.render.platform.GlStateManager.popMatrix();
         }
 
     }
 
-    public void setup(ClientRabbit rabbit, float f, float g, float h, float i, float j, float s) {
+    public void setupAnimation(float f, float g, float h, float i, float j, float s, net.minecraft.entity.Entity entity) {
+        ClientRabbit rabbit = (ClientRabbit) entity;
         float k = h - (float) rabbit.ticks;
         this.nose.rotationX = j * ((float) Math.PI / 180F);
         this.head.rotationX = j * ((float) Math.PI / 180F);

@@ -6,11 +6,11 @@ import net.minecraft.client.render.model.entity.QuadrupedModel;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientPolarBearModel extends QuadrupedModel<ClientPolarBear> {
+public class ClientPolarBearModel extends QuadrupedModel {
     public ClientPolarBearModel() {
         super(12, 0.0F);
-        this.f_35376783 /*textureWidth*/ = 128;
-        this.f_50207596 /*textureHeight*/ = 64;
+        this.textureWidth /*textureWidth*/ = 128;
+        this.textureHeight /*textureHeight*/ = 64;
         this.head = new ModelPart(this, 0, 0);
         this.head.addBox(-3.5F, -3.0F, -3.0F, 7, 7, 7, 0.0F);
         this.head.setPos(0.0F, 10.0F, -16.0F);
@@ -48,8 +48,9 @@ public class ClientPolarBearModel extends QuadrupedModel<ClientPolarBear> {
         --this.frontLeftLeg.z;
     }
 
-    public void setup(ClientPolarBear polarBear, float f, float g, float h, float i, float j, float s) {
-        super.setup(polarBear, f, g, h, i, j, s);
+    public void setupAnimation(float f, float g, float h, float i, float j, float s, net.minecraft.entity.Entity entity) {
+        ClientPolarBear polarBear = (ClientPolarBear) entity;
+        super.setupAnimation(f, g, h, i, j, s, entity);
         float k = h - (float) polarBear.ticks;
         float l = 0;
         l *= l;

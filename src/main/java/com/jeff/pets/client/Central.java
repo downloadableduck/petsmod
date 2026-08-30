@@ -119,14 +119,11 @@ public class Central implements ClientModInitializer {
     public static ClientSquid squid;
     public static ClientTurtle turtle;
     public static ClientVillager villager;
-    public static ClientWanderingTrader wanderingTrader;
     public static ClientCaveSpider caveSpider;
     public static ClientDolphin dolphin;
     public static ClientEnderman enderman;
-    public static ClientFox fox;
     public static ClientIronGolem ironGolem;
     public static ClientLlama llama;
-    public static ClientPanda panda;
     public static ClientPolarBear polarBear;
     public static ClientPufferFish pufferFish;
     public static ClientSpider spider;
@@ -140,8 +137,6 @@ public class Central implements ClientModInitializer {
     public static ClientGuardian guardian;
     public static ClientMagmaCube magmaCube;
     public static ClientPhantom phantom;
-    public static ClientPillager pillager;
-    public static ClientRavager ravager;
     public static ClientShulker shulker;
     public static ClientSilverfish silverfish;
     public static ClientSkeleton skeleton;
@@ -201,14 +196,11 @@ public class Central implements ClientModInitializer {
         Utils.despawnEntity(squid);
         Utils.despawnEntity(turtle);
         Utils.despawnEntity(villager);
-        Utils.despawnEntity(wanderingTrader);
         Utils.despawnEntity(caveSpider);
         Utils.despawnEntity(dolphin);
         Utils.despawnEntity(enderman);
-        Utils.despawnEntity(fox);
         Utils.despawnEntity(ironGolem);
         Utils.despawnEntity(llama);
-        Utils.despawnEntity(panda);
         Utils.despawnEntity(polarBear);
         Utils.despawnEntity(pufferFish);
         Utils.despawnEntity(spider);
@@ -222,8 +214,6 @@ public class Central implements ClientModInitializer {
         Utils.despawnEntity(guardian);
         Utils.despawnEntity(magmaCube);
         Utils.despawnEntity(phantom);
-        Utils.despawnEntity(pillager);
-        Utils.despawnEntity(ravager);
         Utils.despawnEntity(shulker);
         Utils.despawnEntity(silverfish);
         Utils.despawnEntity(skeleton);
@@ -273,14 +263,11 @@ public class Central implements ClientModInitializer {
         squid = new ClientSquid(PetsInitializer.SQUID, world);
         turtle = new ClientTurtle(PetsInitializer.TURTLE, world);
         villager = new ClientVillager(PetsInitializer.VILLAGER, world);
-        wanderingTrader = new ClientWanderingTrader(PetsInitializer.WANDERING_TRADER, world);
         caveSpider = new ClientCaveSpider(PetsInitializer.CAVE_SPIDER, world);
         dolphin = new ClientDolphin(PetsInitializer.DOLPHIN, world);
         enderman = new ClientEnderman(PetsInitializer.ENDERMAN, world);
-        fox = new ClientFox(PetsInitializer.FOX, world);
         ironGolem = new ClientIronGolem(PetsInitializer.IRON_GOLEM, world);
         llama = new ClientLlama(PetsInitializer.LLAMA, world);
-        panda = new ClientPanda(PetsInitializer.PANDA, world);
         polarBear = new ClientPolarBear(PetsInitializer.POLAR_BEAR, world);
         pufferFish = new ClientPufferFish(PetsInitializer.PUFFERFISH, world);
         spider = new ClientSpider(PetsInitializer.SPIDER, world);
@@ -294,8 +281,6 @@ public class Central implements ClientModInitializer {
         guardian = new ClientGuardian(PetsInitializer.GUARDIAN, world);
         magmaCube = new ClientMagmaCube(PetsInitializer.MAGMA_CUBE, world);
         phantom = new ClientPhantom(PetsInitializer.PHANTOM, world);
-        pillager = new ClientPillager(PetsInitializer.PILLAGER, world);
-        ravager = new ClientRavager(PetsInitializer.RAVAGER, world);
         shulker = new ClientShulker(PetsInitializer.SHULKER, world);
         silverfish = new ClientSilverfish(PetsInitializer.SILVERFISH, world);
         skeleton = new ClientSkeleton(PetsInitializer.SKELETON, world);
@@ -358,22 +343,16 @@ public class Central implements ClientModInitializer {
                 Utils.summonPet(turtle, CONFIG.turtleName);
             } else if (Objects.equals(CONFIG.activePet, "villager")) {
                 Utils.summonPet(villager, CONFIG.villagerName);
-            } else if (Objects.equals(CONFIG.activePet, "wandering_trader")) {
-                Utils.summonPet(wanderingTrader, CONFIG.wanderingTraderName);
             } else if (Objects.equals(CONFIG.activePet, "cave_spider")) {
                 Utils.summonPet(caveSpider, CONFIG.caveSpiderName);
             } else if (Objects.equals(CONFIG.activePet, "dolphin")) {
                 Utils.summonPet(dolphin, CONFIG.dolphinName);
             } else if (Objects.equals(CONFIG.activePet, "enderman")) {
                 Utils.summonPet(enderman, CONFIG.endermanName);
-            } else if (Objects.equals(CONFIG.activePet, "fox")) {
-                Utils.summonPet(fox, CONFIG.foxName);
             } else if (Objects.equals(CONFIG.activePet, "iron_golem")) {
                 Utils.summonPet(ironGolem, CONFIG.ironGolemName);
             } else if (Objects.equals(CONFIG.activePet, "llama")) {
                 Utils.summonPet(llama, CONFIG.llamaName);
-            } else if (Objects.equals(CONFIG.activePet, "panda")) {
-                Utils.summonPet(panda, CONFIG.pandaName);
             } else if (Objects.equals(CONFIG.activePet, "polar_bear")) {
                 Utils.summonPet(polarBear, CONFIG.polarBearName);
             } else if (Objects.equals(CONFIG.activePet, "pufferfish")) {
@@ -400,10 +379,6 @@ public class Central implements ClientModInitializer {
                 Utils.summonPet(magmaCube, CONFIG.magmaCubeName);
             } else if (Objects.equals(CONFIG.activePet, "phantom")) {
                 Utils.summonPet(phantom, CONFIG.phantomName);
-            } else if (Objects.equals(CONFIG.activePet, "pillager")) {
-                Utils.summonPet(pillager, CONFIG.pillagerName);
-            } else if (Objects.equals(CONFIG.activePet, "ravager")) {
-                Utils.summonPet(ravager, CONFIG.ravagerName);
             } else if (Objects.equals(CONFIG.activePet, "shulker")) {
                 Utils.summonPet(shulker, CONFIG.shulkerName);
             } else if (Objects.equals(CONFIG.activePet, "silverfish")) {
@@ -474,14 +449,11 @@ public class Central implements ClientModInitializer {
         Utils.checkName("squid", squid, CONFIG.squidName);
         Utils.checkName("turtle", turtle, CONFIG.turtleName);
         Utils.checkName("villager", villager, CONFIG.villagerName);
-        Utils.checkName("wandering_trader", wanderingTrader, CONFIG.wanderingTraderName);
         Utils.checkName("cave_spider", caveSpider, CONFIG.caveSpiderName);
         Utils.checkName("dolphin", dolphin, CONFIG.dolphinName);
         Utils.checkName("enderman", enderman, CONFIG.endermanName);
-        Utils.checkName("fox", fox, CONFIG.foxName);
         Utils.checkName("iron_golem", ironGolem, CONFIG.ironGolemName);
         Utils.checkName("llama", llama, CONFIG.llamaName);
-        Utils.checkName("panda", panda, CONFIG.pandaName);
         Utils.checkName("polar_bear", polarBear, CONFIG.polarBearName);
         Utils.checkName("pufferfish", pufferFish, CONFIG.pufferFishName);
         Utils.checkName("spider", spider, CONFIG.spiderName);
@@ -495,8 +467,6 @@ public class Central implements ClientModInitializer {
         Utils.checkName("guardian", guardian, CONFIG.guardianName);
         Utils.checkName("magma_cube", magmaCube, CONFIG.magmaCubeName);
         Utils.checkName("phantom", phantom, CONFIG.phantomName);
-        Utils.checkName("pillager", pillager, CONFIG.pillagerName);
-        Utils.checkName("ravager", ravager, CONFIG.ravagerName);
         Utils.checkName("shulker", shulker, CONFIG.shulkerName);
         Utils.checkName("silverfish", silverfish, CONFIG.silverfishName);
         Utils.checkName("skeleton", skeleton, CONFIG.skeletonName);
@@ -691,19 +661,21 @@ public class Central implements ClientModInitializer {
     public static void createTickWatcher() {
         Minecraft minecraft = Minecraft.getInstance();
         ClientWorld world = minecraft.world;
-        petSkin = (int) (Math.random() * (double) 3.0F);
-        if (minecraft.player != null && CONFIG.petOn && summonedEntity.isEmpty()) {
-            summonPet();
-        }
+        minecraft.execute(() -> {
+            petSkin = (int) (Math.random() * (double) 3.0F);
+            if (minecraft.player != null && CONFIG.petOn && summonedEntity.isEmpty()) {
+                summonPet();
+            }
 
-        if (!CONFIG.petOn && !summonedEntity.isEmpty()) {
-            assert world != null;
+            if (!CONFIG.petOn && !summonedEntity.isEmpty()) {
+                assert world != null;
 
-            despawnPet();
-            summonedEntity.clear();
-        }
+                despawnPet();
+                summonedEntity.clear();
+            }
 
-        refreshPetNames();
+            refreshPetNames();
+        });
     }
 
     /**
@@ -749,6 +721,7 @@ public class Central implements ClientModInitializer {
         dispatcher.register(LiteralArgumentBuilder.literal("petskin").then(RequiredArgumentBuilder.argument("skin", StringArgumentType.greedyString())
                 .suggests(this.SKINS)
                 .executes((context) -> {
+                    Minecraft.getInstance().execute(() -> {
                     boolean isValid = true;
                     String skin = StringArgumentType.getString(context, "skin");
 
@@ -1295,6 +1268,7 @@ public class Central implements ClientModInitializer {
                         Minecraft.getInstance().player.addMessage(new LiteralText("§b[PetsMod] §cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else."), false);
                     }
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
+                });
 
                     return 1;
                 })));
@@ -1508,8 +1482,10 @@ public class Central implements ClientModInitializer {
      */
     public void createPetTeleportCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(LiteralArgumentBuilder.<CommandSourceStack>literal("teleportpet").executes((context) -> {
-            despawnPet();
-            summonPet();
+            Minecraft.getInstance().execute(() -> {
+                despawnPet();
+                summonPet();
+            });
             return 1;
         }));
     }
@@ -1562,22 +1538,16 @@ public class Central implements ClientModInitializer {
                 Utils.setActivePet(turtle, "turtle");
             } else if (Objects.equals(species, "villager")) {
                 Utils.setActivePet(villager, "villager");
-            } else if (Objects.equals(species, "wandering_trader") || Objects.equals(species, "wandering trader")) {
-                Utils.setActivePet(wanderingTrader, "wandering_trader");
             } else if (Objects.equals(species, "cave_spider") || Objects.equals(species, "cave spider")) {
                 Utils.setActivePet(caveSpider, "cave_spider");
             } else if (Objects.equals(species, "dolphin")) {
                 Utils.setActivePet(dolphin, "dolphin");
             } else if (Objects.equals(species, "enderman")) {
                 Utils.setActivePet(enderman, "enderman");
-            } else if (Objects.equals(species, "fox")) {
-                Utils.setActivePet(fox, "fox");
             } else if (Objects.equals(species, "iron_golem") || Objects.equals(species, "iron golem")) {
                 Utils.setActivePet(ironGolem, "iron_golem");
             } else if (Objects.equals(species, "llama")) {
                 Utils.setActivePet(llama, "llama");
-            } else if (Objects.equals(species, "panda")) {
-                Utils.setActivePet(panda, "panda");
             } else if (Objects.equals(species, "polar_bear") || Objects.equals(species, "polar bear")) {
                 Utils.setActivePet(polarBear, "polar_bear");
             } else if (Objects.equals(species, "pufferfish")) {
@@ -1604,10 +1574,6 @@ public class Central implements ClientModInitializer {
                 Utils.setActivePet(magmaCube, "magma_cube");
             } else if (Objects.equals(species, "phantom")) {
                 Utils.setActivePet(phantom, "phantom");
-            } else if (Objects.equals(species, "pillager")) {
-                Utils.setActivePet(pillager, "pillager");
-            } else if (Objects.equals(species, "ravager")) {
-                Utils.setActivePet(ravager, "ravager");
             } else if (Objects.equals(species, "shulker")) {
                 Utils.setActivePet(shulker, "shulker");
             } else if (Objects.equals(species, "silverfish")) {
@@ -1665,9 +1631,11 @@ public class Central implements ClientModInitializer {
      */
     public void createPetHelpCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(LiteralArgumentBuilder.<CommandSourceStack>literal("pethelp").executes(context -> {
-            Minecraft.getInstance().player.addMessage(new LiteralText(
-                    "§b[PetsMod] §aPossible commands: §a/pethelp: §rdisplays a list of commands §a/pet <on/off> §rtoggles whether your pet will appear or not§a/petspecies <species>: §rchanges the species of your pet§a/petskin <skin>: §rchanges the skin of your selected pet§a/teleportpet: §rteleports your pet to you. will not work if you are not on the ground.§a/petname: §rchanges the name of your currently selected pet"
-            ), false);
+            Minecraft.getInstance().execute(() -> {
+                Minecraft.getInstance().player.addMessage(new LiteralText(
+                        "§b[PetsMod] §aPossible commands: §a/pethelp: §rdisplays a list of commands §a/pet <on/off> §rtoggles whether your pet will appear or not§a/petspecies <species>: §rchanges the species of your pet§a/petskin <skin>: §rchanges the skin of your selected pet§a/teleportpet: §rteleports your pet to you. will not work if you are not on the ground.§a/petname: §rchanges the name of your currently selected pet"
+                ), false);
+            });
             return 1;
         }));
     }
@@ -1677,6 +1645,7 @@ public class Central implements ClientModInitializer {
      */
     public void createPetNameCommand(CommandDispatcher dispatcher) {
         dispatcher.register(LiteralArgumentBuilder.<ClientSuggestionProvider>literal("petname").then(RequiredArgumentBuilder.<ClientSuggestionProvider, String>argument("name", StringArgumentType.greedyString()).executes((context) -> {
+            Minecraft.getInstance().execute(() -> {
             String name = StringArgumentType.getString(context, "name");
             if (!summonedEntity.isEmpty()) {
                 if (CONFIG.activePet.equals("penguin")) {
@@ -1882,6 +1851,7 @@ public class Central implements ClientModInitializer {
                 }
                 AutoConfig.getConfigHolder(PetsConfig.class).save();
             }
+            });
 
             return 1;
         })));
@@ -1917,40 +1887,40 @@ public class Central implements ClientModInitializer {
                 "creeper",
                 "dolphin", "donkey", "drowned", "duck", "dumbo octopus",
                 "elder guardian", "ender dragon", "enderman", "endermite", "evoker",
-                "fox",
                 "ghast", "guardian",
                 "head", "horse",
                 "husk", "iron golem",
                 "koi", "llama",
                 "magma cube",
                 "mooshroom",
-                "panda", "parrot", "penguin", "phantom",
-                "pig", "pillager",
+                "parrot", "penguin", "phantom",
+                "pig",
                 "polar bear",
                 "pufferfish", "rabbit",
                 "racoon",
-                "ravager",
                 "salmon",
                 "sheep",
                 "shulker",
                 "silverfish", "skeleton", "slime", "snow golem",
                 "spider", "squid", "stingray", "stray",
                 "turtle",
-                "vex", "villager", "vindicator", "wandering trader", "witch", "wither",
+                "vex", "villager", "vindicator", "witch", "wither",
                 "wither skeleton", "wolf", "zombie", "zombie villager", "zombie pigman"};
         Collections.addAll(PETS_LIST, stuffs);
     }
 
     public void checkValidPet(boolean isValid, CommandContext<Object> context, String species) {
-        if (!isValid) {
-            Minecraft.getInstance().player.addMessage(new LiteralText("§b[PetsMod] §cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")"), false);
-        } else if (isValid && CONFIG.petOn) {
-            despawnPet();
-            Minecraft.getInstance().player.addMessage(new LiteralText("§b[PetsMod] §aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + "."), false);
-            summonPet();
-        } else if (isValid && !CONFIG.petOn) {
-            Minecraft.getInstance().player.addMessage(new LiteralText("§b[PetsMod] §cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet enabled. Run §l/pet on§r§c to change this."), false);
-        }
+        Minecraft.getInstance().execute(() -> {
+            if (!isValid) {
+                Minecraft.getInstance().player.addMessage(new LiteralText("§b[PetsMod] §cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")"), false);
+            } else if (isValid && CONFIG.petOn) {
+                    despawnPet();
+                    Minecraft.getInstance().player.addMessage(new LiteralText("§b[PetsMod] §aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + "."), false);
+                    summonPet();
+            } else if (isValid && !CONFIG.petOn) {
+                Minecraft.getInstance().player.addMessage(new LiteralText("§b[PetsMod] §cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet enabled. Run §l/pet on§r§c to change this."), false);
+            }
+        });
     }
 
     public static Central get() {

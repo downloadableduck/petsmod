@@ -19,7 +19,6 @@ import net.minecraft.network.packet.s2c.play.AddEntityS2CPacket;
 import net.minecraft.crafting.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.unmapped.C_31453009;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.WorldAccess;
@@ -56,9 +55,9 @@ public class Racoon extends AbstractPet {
     }
 
     @Override
-    public @Nullable EntityData initialize(@NotNull WorldAccess level, LocalDifficulty difficulty, C_31453009 spawnReason, @Nullable EntityData groupData, NbtCompound NbtCompound) {
+    public @Nullable EntityData initialize(LocalDifficulty difficulty, @Nullable EntityData groupData, NbtCompound NbtCompound) {
         this.setServerEntity(true);
-        return super.initialize(level, difficulty, spawnReason, groupData, NbtCompound);
+        return super.initialize(difficulty, groupData, NbtCompound);
     }
 
     @Override
@@ -103,7 +102,7 @@ public class Racoon extends AbstractPet {
             if (owner.hasPassenger(this)) {
                 if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
-                    this.m_28162558(this.m_94091929().add(0, -0.04, 0));
+                    this.lerpVelocity(this.getVelocity().add(0, -0.04, 0));
                     this.isOnHead = false;
                 } else {
                     this.setSitting(true);
@@ -116,12 +115,12 @@ public class Racoon extends AbstractPet {
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.distanceTo(owner);
-            float rotation = this.getRotation().x;
-            float rotationToOwner = rotation + this.getOwner().getRotation().x;
+            float rotation = -this.pitch;
+            float rotationToOwner = rotation + (-this.getOwner().pitch);
             float bodyYawDiff = MathHelper.wrapDegrees(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/);
 
             if (rotationToOwner >= 50) {
-                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_06800284 /*sign*/(bodyYawDiff) * 50.0F);
+                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (Math.signum(bodyYawDiff) * 50.0F);
             }
 
             if (distance > 2.0) {
@@ -129,17 +128,16 @@ public class Racoon extends AbstractPet {
                 this.walkAnimationSpeed = (0.5F);
 
                 Vec3d targetPos = new Vec3d(owner.x, owner.y, owner.z);
-                Vec3d dir = targetPos.subtract(this.getPos()).normalize();
+                Vec3d dir = targetPos.subtract(this.getPosVec()).normalize();
 
-                this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
-                this.setHeadYaw(this.getYRot());
-                this.bodyYaw /*bodyYaw*/ = MathHelper.m_82141949(this.bodyYaw /*bodyYaw*/, this.headYaw, 50.0f);
+                
+                
+                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/, -50, 50);
 
                 double speed = owner.getSpeed() * 2;
-                this.m_28162558(new Vec3d(dir.x * speed, this.m_94091929().y, dir.z * speed));
+                this.lerpVelocity(new Vec3d(dir.x * speed, this.getVelocity().y, dir.z * speed));
             } else {
-                this.lookAt(owner, 5, 0);
-                this.m_28162558(this.m_94091929().m_17023014(0.8, 1.0, 0.8));
+                                this.lerpVelocity(this.velocityX * 0.8, this.velocityY * 1.0, this.velocityY* 0.8);
             }
 
             int yHeightToOwner = (int) (owner.y - this.y);
@@ -149,10 +147,10 @@ public class Racoon extends AbstractPet {
             }
 
             if (yHeightToOwner > -1) {
-                this.m_28162558(this.m_94091929().add(0, -0.01, 0));
+                this.lerpVelocity(this.getVelocity().add(0, -0.01, 0));
             }
 
-            if (owner.m_94091929().squaredDistanceToOrigin() < 0.01) {
+            if (new Vec3d(owner.velocityX, owner.velocityY, owner.velocityZ).squaredDistanceToOrigin() < 0.01) {
                 this.waitingTime++;
                 if (this.waitingTime > 30) this.wander();
             } else {
@@ -162,19 +160,19 @@ public class Racoon extends AbstractPet {
             if (!this.onGround) {
                 //this.processFlappingMovement();
             }
+
             this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
-            this.setHeadYaw(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_06800284 /*sign*/(bodyYawDiff) * 50);
+                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (Math.signum(bodyYawDiff) * 50);
             } else {
-                this.bodyYaw /*bodyYaw*/ = MathHelper.m_82141949(this.bodyYaw /*bodyYaw*/, this.getHeadYaw(), 10);
+                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/, -10, 10);
             }
 
-            this.move(MoverType.SELF, this.m_94091929());
+            this.move(MoverType.SELF, this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
 
             if (!this.onGround) {
-                this.m_28162558(this.m_94091929().add(0, -0.04, 0));
+                this.lerpVelocity(this.getVelocity().add(0, -0.04, 0));
             }
         }
         if (owner != null) {
@@ -200,15 +198,6 @@ public class Racoon extends AbstractPet {
     public void onDataValueChanged(@NotNull DataAttribute<?> key) {
         if (!this.world.isClient()) {
             super.onDataValueChanged(key);
-        }
-    }
-
-    @Override
-    public @NotNull Packet<?> m_00781305() {
-        if (this.world.isClient()) {
-            return new AddEntityS2CPacket(this);
-        } else {
-            return super.m_00781305();
         }
     }
 }

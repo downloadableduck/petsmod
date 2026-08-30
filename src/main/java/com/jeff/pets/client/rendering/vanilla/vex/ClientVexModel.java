@@ -5,7 +5,7 @@ import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.client.render.model.entity.HumanoidModel;
 import net.minecraft.util.math.MathHelper;
 
-public class ClientVexModel extends HumanoidModel<ClientVex> {
+public class ClientVexModel extends HumanoidModel {
     private final ModelPart field_3601;
     private final ModelPart field_3602;
 
@@ -28,15 +28,15 @@ public class ClientVexModel extends HumanoidModel<ClientVex> {
     }
 
     @Override
-    public void render(ClientVex vexEntity, float f, float g, float h, float i, float j, float k) {
-        super.render(vexEntity, f, g, h, i, j, k);
+    public void render(net.minecraft.entity.Entity entity, float f, float g, float h, float i, float j, float k) {
+        super.render(entity, f, g, h, i, j, k);
         this.field_3602.render(k);
         this.field_3601.render(k);
     }
 
     @Override
-    public void setup(ClientVex vexEntity, float f, float g, float h, float i, float j, float k) {
-        super.setup(vexEntity, f, g, h, i, j, k);
+    public void setupAnimation(float f, float g, float h, float i, float j, float k, net.minecraft.entity.Entity entity) {
+        super.setupAnimation(f, g, h, i, j, k, entity);
 
         ModelPart var10000 = this.rightLeg;
         var10000.rotationX += ((float)Math.PI / 5F);

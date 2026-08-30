@@ -2,18 +2,18 @@ package com.jeff.pets.client.rendering.vanilla.slime;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
-import net.minecraft.client.render.entity.layer.SlimeOuterLayer;
 import net.minecraft.client.render.model.entity.SlimeModel;
 import net.minecraft.resource.Identifier;
+
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSlimeRenderer extends PetRenderer<@NotNull ClientSlime, @NotNull SlimeModel<ClientSlime>> {
+public class ClientSlimeRenderer extends PetRenderer<ClientSlime> {
 
     public ClientSlimeRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new SlimeModel<>(16), 0.75f);
-        this.addLayer(new SlimeOuterLayer<>(this));
+        super(context, new SlimeModel(16), 0.75f);
+        this.addLayer(new SlimeOuterLayer(this));
     }
 
     @Override
@@ -33,7 +33,7 @@ public class ClientSlimeRenderer extends PetRenderer<@NotNull ClientSlime, @NotN
                 slimeapplyScale = 1;
                 break;
         }
-        com.mojang.blaze3d.platform.GlStateManager.scale(slimeapplyScale, slimeapplyScale, slimeapplyScale);
+        net.minecraft.client.render.platform.GlStateManager.scalef(slimeapplyScale, slimeapplyScale, slimeapplyScale);
     }
 
     @Override

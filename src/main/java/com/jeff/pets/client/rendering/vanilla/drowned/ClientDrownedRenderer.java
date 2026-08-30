@@ -7,17 +7,17 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientDrownedRenderer extends PetRenderer<@NotNull ClientDrowned, @NotNull ClientDrownedModel> {
+public class ClientDrownedRenderer extends PetRenderer<ClientDrowned> {
 
     public ClientDrownedRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientDrownedModel(0.0F, 0.0F, 64, 64), 0.75f);
-        this.addLayer(new ClientDrownedOuterLayer(this, context, context2));
+        this.addLayer(new ClientDrownedOuterLayer(this));
     }
 
     @Override
     protected void applyScale(ClientDrowned state, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
+            net.minecraft.client.render.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
@@ -30,7 +30,7 @@ public class ClientDrownedRenderer extends PetRenderer<@NotNull ClientDrowned, @
     public void applyRotation(ClientDrowned state, float f, float g, float h) {
         super.applyRotation(state, f, g, h);
         if (state.isRiding()) {
-            com.mojang.blaze3d.platform.GlStateManager.translate(0, -0.5f, 0);
+            net.minecraft.client.render.platform.GlStateManager.translatef(0, -0.5f, 0);
         }
     }
 }

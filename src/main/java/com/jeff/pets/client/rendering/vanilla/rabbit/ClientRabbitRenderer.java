@@ -3,11 +3,12 @@ package com.jeff.pets.client.rendering.vanilla.rabbit;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientRabbit;
 import net.minecraft.resource.Identifier;
+
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientRabbitRenderer extends PetRenderer<@NotNull ClientRabbit, @NotNull ClientRabbitModel> {
+public class ClientRabbitRenderer extends PetRenderer<ClientRabbit> {
     public String rabbitTextureLocation;
 
     public ClientRabbitRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
@@ -17,7 +18,7 @@ public class ClientRabbitRenderer extends PetRenderer<@NotNull ClientRabbit, @No
     @Override
     protected void applyScale(@NotNull ClientRabbit livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
+            net.minecraft.client.render.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 

@@ -35,4 +35,9 @@ public class ClientSkeleton extends GroundPet implements RangedAttackMob {
     public void doRangedAttack(LivingEntity livingEntity, float f) {
 
     }
+
+    @Override
+    public void setAggressive(boolean aggressive) {
+
+    }
 }

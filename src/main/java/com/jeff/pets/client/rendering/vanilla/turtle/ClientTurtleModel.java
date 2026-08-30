@@ -5,13 +5,13 @@ import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.client.render.model.entity.QuadrupedModel;
 import net.minecraft.util.math.MathHelper;
 
-public class ClientTurtleModel extends QuadrupedModel<ClientTurtle> {
+public class ClientTurtleModel extends QuadrupedModel {
     private final ModelPart eggBelly;
 
     public ClientTurtleModel(float f) {
         super(12, f);
-        this.f_35376783 /*textureWidth*/ = 128;
-        this.f_50207596 /*textureHeight*/ = 64;
+        this.textureWidth /*textureWidth*/ = 128;
+        this.textureHeight /*textureHeight*/ = 64;
         this.head = new ModelPart(this, 3, 0);
         this.head.addBox(-3.0F, -1.0F, -3.0F, 6, 5, 6, 0.0F);
         this.head.setPos(0.0F, 19.0F, -10.0F);
@@ -37,8 +37,9 @@ public class ClientTurtleModel extends QuadrupedModel<ClientTurtle> {
         this.frontLeftLeg.setPos(5.0F, 21.0F, -4.0F);
     }
 
-    public void setup(ClientTurtle turtle, float f, float g, float h, float i, float j, float s) {
-        super.setup(turtle, f, g, h, i, j, s);
+    public void setupAnimation(float f, float g, float h, float i, float j, float s, net.minecraft.entity.Entity entity) {
+        ClientTurtle turtle = (ClientTurtle) entity;
+        super.setupAnimation(f, g, h, i, j, s, entity);
         this.backRightLeg.rotationX = MathHelper.cos(f * 0.6662F * 0.6F) * 0.5F * g;
         this.backLeftLeg.rotationX = MathHelper.cos(f * 0.6662F * 0.6F + (float) Math.PI) * 0.5F * g;
         this.frontRightLeg.rotationZ = MathHelper.cos(f * 0.6662F * 0.6F + (float) Math.PI) * 0.5F * g;
@@ -67,16 +68,16 @@ public class ClientTurtleModel extends QuadrupedModel<ClientTurtle> {
         this.eggBelly.visible = false;
     }
 
-    public void render(ClientTurtle turtle, float i, float j, float f, float g, float h, float k) {
+    public void render(net.minecraft.entity.Entity entity, float i, float j, float f, float g, float h, float k) {
         boolean bl = this.eggBelly.visible;
         if (bl) {
-            com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
-            com.mojang.blaze3d.platform.GlStateManager.translate(0.0F, -0.08F, 0.0F);
+            net.minecraft.client.render.platform.GlStateManager.pushMatrix();
+            net.minecraft.client.render.platform.GlStateManager.translatef(0.0F, -0.08F, 0.0F);
         }
 
-        super.render(turtle, i, j, f, g, h, k);
+        super.render(entity, i, j, f, g, h, k);
         if (bl) {
-            com.mojang.blaze3d.platform.GlStateManager.popMatrix();
+            net.minecraft.client.render.platform.GlStateManager.popMatrix();
         }
 
     }

@@ -7,12 +7,12 @@ import com.jeff.pets.mob.custom.aprilfools.Head;
 import net.minecraft.client.render.model.Model;
 import net.minecraft.client.render.model.ModelPart;
 
-public class HeadModel extends Model<Head> {
+public class HeadModel extends Model {
     private final ModelPart Head;
 
     public HeadModel() {
-        f_35376783 /*textureWidth*/ = 64;
-        f_50207596 /*textureHeight*/ = 64;
+        textureWidth /*textureWidth*/ = 64;
+        textureHeight /*textureHeight*/ = 64;
 
         Head = new ModelPart(this);
         Head.setPos(0.0F, 0.0F, 0.0F);
@@ -22,18 +22,18 @@ public class HeadModel extends Model<Head> {
     }
 
     @Override
-    public void setup(Head entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadrotationY, float headrotationX, float s) {
+    public void setupAnimation(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadrotationY, float headrotationX, float s, net.minecraft.entity.Entity entity) {
         //previously the render function, render code was moved to a method below
     }
 
     @Override
-    public void render(Head head, float f, float g, float h, float i, float j, float alpha) {
+    public void render(net.minecraft.entity.Entity entity, float f, float g, float h, float i, float j, float alpha) {
         Head.render(alpha);
     }
 
-    public void setRotationAngle(ModelPart modelRenderer, float x, float y, float z) {
-        modelRenderer.rotationX = x;
-        modelRenderer.rotationY = y;
-        modelRenderer.rotationZ = z;
+    public void setRotationAngle(ModelPart ModelPart, float x, float y, float z) {
+        ModelPart.rotationX = x;
+        ModelPart.rotationY = y;
+        ModelPart.rotationZ = z;
     }
 }

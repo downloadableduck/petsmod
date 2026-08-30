@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 
-public class StingrayRenderer extends PetRenderer<Stingray, StingrayModel> {
+public class StingrayRenderer extends PetRenderer<Stingray> {
 
     public StingrayRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new StingrayModel(), 0.75f);

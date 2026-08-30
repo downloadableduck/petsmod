@@ -1,6 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.wither;
 
 import com.google.common.collect.ImmutableList;
+import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import net.minecraft.client.render.model.Model;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.entity.living.LivingEntity;
@@ -8,18 +9,18 @@ import net.minecraft.util.math.MathHelper;
 
 import java.util.Arrays;
 
-public class ClientWitherModel<T extends LivingEntity> extends Model<T> {
+public class ClientWitherModel extends Model {
     private final ModelPart[] upperBodyParts;
     private final ModelPart[] heads;
     private final ImmutableList<ModelPart> parts;
 
     public ClientWitherModel(float f) {
-        this.f_35376783 /*textureWidth*/ = 64;
-        this.f_50207596 /*textureHeight*/ = 64;
+        this.textureWidth /*textureWidth*/ = 64;
+        this.textureHeight /*textureHeight*/ = 64;
         this.upperBodyParts = new ModelPart[3];
         this.upperBodyParts[0] = new ModelPart(this, 0, 16);
         this.upperBodyParts[0].addBox(-10.0F, 3.9F, -0.5F, 20, 3, 3, f);
-        this.upperBodyParts[1] = (new ModelPart(this)).setTextureSize(this.f_35376783 /*textureWidth*/, this.f_50207596 /*textureHeight*/);
+        this.upperBodyParts[1] = (new ModelPart(this)).setTextureSize(this.textureWidth /*textureWidth*/, this.textureHeight /*textureHeight*/);
         this.upperBodyParts[1].setPos(-2.0F, 6.9F, -0.5F);
         this.upperBodyParts[1].setTextureCoords(0, 22).addBox(0.0F, 0.0F, 0.0F, 3, 10, 3, f);
         this.upperBodyParts[1].setTextureCoords(24, 22).addBox(-4.0F, 1.5F, 0.5F, 11, 2, 2, f);
@@ -48,7 +49,8 @@ public class ClientWitherModel<T extends LivingEntity> extends Model<T> {
         return this.parts;
     }
 
-    public void setup(T witherBoss, float f, float g, float h, float i, float j, float s) {
+    @Override
+    public void setupAnimation(float f, float g, float h, float i, float j, float s, net.minecraft.entity.Entity entity) {
         float k = MathHelper.cos(h * 0.1F);
         this.upperBodyParts[1].rotationX = (0.065F + 0.05F * k) * (float) Math.PI;
         this.upperBodyParts[2].setPos(-2.0F, 6.9F + MathHelper.cos(this.upperBodyParts[1].rotationX) * 10.0F, -0.5F + MathHelper.sin(this.upperBodyParts[1].rotationX) * 10.0F);
@@ -57,7 +59,9 @@ public class ClientWitherModel<T extends LivingEntity> extends Model<T> {
         this.heads[0].rotationX = j * ((float) Math.PI / 180F);
     }
 
-    public void prepare(T witherBoss, float f, float g, float h) {
+    @Override
+    public void prepare(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h) {
+        ClientWither witherBoss = (ClientWither) entity;
         for (int i = 1; i < 3; ++i) {
             this.heads[i].rotationY = (witherBoss.getHeadYaw() - witherBoss.yaw) * ((float) Math.PI / 180F);
             this.heads[i].rotationX = witherBoss.pitch * ((float) Math.PI / 180F);
@@ -66,8 +70,8 @@ public class ClientWitherModel<T extends LivingEntity> extends Model<T> {
     }
 
     @Override
-    public void render(T t, float f, float g, float h, float i, float j, float k) {
-        super.render(t, f, g, h, i, j, k);
+    public void render(net.minecraft.entity.Entity entity, float f, float g, float h, float i, float j, float k) {
+        super.render(entity, f, g, h, i, j, k);
         for (ModelPart cube : this.parts) {
             cube.render(k);
         }

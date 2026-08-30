@@ -6,10 +6,10 @@ import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 
-public class ClientGuardianRenderer extends PetRenderer<@NotNull ClientGuardian, @NotNull ClientGuardianModel<ClientGuardian>> {
+public class ClientGuardianRenderer extends PetRenderer<ClientGuardian> {
 
     public ClientGuardianRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientGuardianModel<>(), 0.75f);
+        super(context, new ClientGuardianModel(), 0.75f);
     }
 
     @Override

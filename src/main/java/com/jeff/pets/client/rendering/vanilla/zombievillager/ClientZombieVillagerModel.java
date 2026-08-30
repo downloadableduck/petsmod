@@ -4,9 +4,9 @@ import com.jeff.pets.client.rendering.AnimationUtils;
 import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.client.render.model.entity.HumanoidModel;
-import net.minecraft.unmapped.C_90332747;
 
-public class ClientZombieVillagerModel extends HumanoidModel<ClientZombieVillager> implements C_90332747 {
+
+public class ClientZombieVillagerModel extends HumanoidModel {
     private ModelPart hatRim;
 
     public ClientZombieVillagerModel(float f, boolean bl) {
@@ -55,12 +55,12 @@ public class ClientZombieVillagerModel extends HumanoidModel<ClientZombieVillage
     }
 
     @Override
-    public void setup(ClientZombieVillager zombie, float f, float g, float h, float i, float j, float s) {
-        super.setup(zombie, f, g, h, i, j, s);
+    public void setupAnimation(float f, float g, float h, float i, float j, float s, net.minecraft.entity.Entity entity) {
+        super.setupAnimation(f, g, h, i, j, s, entity);
         AnimationUtils.animateZombieArms(this.leftArm, this.rightArm, true, this.attackAnimationProgress, h);
     }
 
-    public void m_11393557(boolean bl) {
+    public void setHatVisible(boolean bl) {
         this.head.visible = bl;
         this.hat.visible = bl;
         this.hatRim.visible = bl;

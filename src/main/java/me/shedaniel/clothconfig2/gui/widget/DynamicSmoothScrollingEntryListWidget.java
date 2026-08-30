@@ -1,8 +1,8 @@
 package me.shedaniel.clothconfig2.gui.widget;
 
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.Tessellator;
+import net.minecraft.client.render.vertex.BufferBuilder;
+import net.minecraft.client.render.vertex.DefaultVertexFormat;
+import net.minecraft.client.render.vertex.Tesselator;
 import me.shedaniel.clothconfig2.api.RunSixtyTimesEverySec;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -78,7 +78,7 @@ public abstract class DynamicSmoothScrollingEntryListWidget<E extends DynamicEnt
     public boolean mouseDragged(double double_1, double double_2, int int_1, double double_3, double double_4) {
         if (!smoothScrolling)
             return super.mouseDragged(double_1, double_2, int_1, double_3, double_4);
-        if ((this.getFocused() != null && this.isDragging() && int_1 == 0) && this.getFocused().mouseDragged(double_1, double_2, int_1, double_3, double_4)) {
+        if ((this.getFocused() != null /* && this.isDragging() */ && int_1 == 0) && this.getFocused().mouseDragged(double_1, double_2, int_1, double_3, double_4)) {
             return true;
         } else if (int_1 == 0 && this.scrolling) {
             if (double_2 < (double) this.top) {
@@ -104,31 +104,31 @@ public abstract class DynamicSmoothScrollingEntryListWidget<E extends DynamicEnt
     }
     
     @Override
-    public boolean mouseScrolled(double double_1, double double_2, double double_3) {
+    public boolean mouseScrolled(double double_1) {
         for (E entry : children()) {
-            if (entry.mouseScrolled(double_1, double_2, double_3)) {
+            if (entry.mouseScrolled(double_1)) {
                 return true;
             }
         }
         if (!smoothScrolling) {
             this.scrollVelocity = 0d;
-            scroll += 16 * -double_3;
+            scroll += 16 * -double_1;
             this.scroll = MathHelper.clamp(double_1, 0.0D, this.getMaxScroll());
             return true;
         }
-        if (scroll <= getMaxScroll() && double_3 < 0)
-            scrollVelocity += 16 * -double_3;
-        if (scroll >= 0 && double_3 > 0)
-            scrollVelocity += 16 * -double_3;
+        if (scroll <= getMaxScroll() && double_1 < 0)
+            scrollVelocity += 16 * -double_1;
+        if (scroll >= 0 && double_1 > 0)
+            scrollVelocity += 16 * -double_1;
         if (!scroller.isRegistered())
             scroller.registerTick();
         return true;
     }
     
     @Override
-    protected void renderScrollBar(Tessellator tessellator, BufferBuilder buffer, int maxScroll, int scrollbarPositionMinX, int scrollbarPositionMaxX) {
+    protected void renderScrollBar(Tesselator Tesselator, BufferBuilder buffer, int maxScroll, int scrollbarPositionMinX, int scrollbarPositionMaxX) {
         if (!smoothScrolling)
-            super.renderScrollBar(tessellator, buffer, maxScroll, scrollbarPositionMinX, scrollbarPositionMaxX);
+            super.renderScrollBar(Tesselator, buffer, maxScroll, scrollbarPositionMinX, scrollbarPositionMaxX);
         else if (maxScroll > 0) {
             int height = ((this.bottom - this.top) * (this.bottom - this.top)) / this.getMaxScrollPosition();
             height = MathHelper.clamp(height, 32, this.bottom - this.top - 8);
@@ -141,7 +141,7 @@ public abstract class DynamicSmoothScrollingEntryListWidget<E extends DynamicEnt
             buffer.vertex(scrollbarPositionMaxX, this.bottom, 0.0D).texture(1, 1).color(0, 0, 0, 255).nextVertex();
             buffer.vertex(scrollbarPositionMaxX, this.top, 0.0D).texture(1, 0).color(0, 0, 0, 255).nextVertex();
             buffer.vertex(scrollbarPositionMinX, this.top, 0.0D).texture(0, 0).color(0, 0, 0, 255).nextVertex();
-            tessellator.end();
+            Tesselator.end();
             
             // Top
             buffer.begin(7, DefaultVertexFormat.POSITION_COLOR);
@@ -149,7 +149,7 @@ public abstract class DynamicSmoothScrollingEntryListWidget<E extends DynamicEnt
             buffer.vertex(scrollbarPositionMaxX, minY + height, 0.0D).texture(1, 1).color(128, 128, 128, 255).nextVertex();
             buffer.vertex(scrollbarPositionMaxX, minY, 0.0D).texture(1, 0).color(128, 128, 128, 255).nextVertex();
             buffer.vertex(scrollbarPositionMinX, minY, 0.0D).texture(0, 0).color(128, 128, 128, 255).nextVertex();
-            tessellator.end();
+            Tesselator.end();
             
             // Bottom
             buffer.begin(7, DefaultVertexFormat.POSITION_COLOR);
@@ -157,7 +157,7 @@ public abstract class DynamicSmoothScrollingEntryListWidget<E extends DynamicEnt
             buffer.vertex((scrollbarPositionMaxX - 1), (minY + height - 1), 0.0D).texture(1, 1).color(192, 192, 192, 255).nextVertex();
             buffer.vertex((scrollbarPositionMaxX - 1), minY, 0.0D).texture(1, 0).color(192, 192, 192, 255).nextVertex();
             buffer.vertex(scrollbarPositionMinX, minY, 0.0D).texture(0, 0).color(192, 192, 192, 255).nextVertex();
-            tessellator.end();
+            Tesselator.end();
         }
     }
     

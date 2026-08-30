@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class HeadRenderer extends PetRenderer<@NotNull Head, @NotNull HeadModel> {
+public class HeadRenderer extends PetRenderer<@NotNull Head> {
 
     private final Map<String, GameProfile> PROFILLES = new ConcurrentHashMap<>();
 

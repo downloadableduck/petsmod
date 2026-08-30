@@ -5,7 +5,7 @@ import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
 import net.minecraft.client.render.model.ModelPart;
 import org.jetbrains.annotations.NotNull;
 
-public class DumboOctopusModel extends PetModel<@NotNull DumboOctopus> {
+public class DumboOctopusModel extends PetModel {
     private final ModelPart body;
     private final ModelPart left_ear;
     private final ModelPart left_ear_r1;
@@ -21,8 +21,8 @@ public class DumboOctopusModel extends PetModel<@NotNull DumboOctopus> {
     private final ModelPart leg8;
 
     public DumboOctopusModel() {
-        f_35376783 /*textureWidth*/ = 32;
-        f_50207596 /*textureHeight*/ = 32;
+        textureWidth /*textureWidth*/ = 32;
+        textureHeight /*textureHeight*/ = 32;
 
         body = new ModelPart(this);
         body.setPos(0.0F, 22.0F, 0.0F);
@@ -93,7 +93,7 @@ public class DumboOctopusModel extends PetModel<@NotNull DumboOctopus> {
     }
 
     @Override
-    public void render(DumboOctopus octopus, float f, float packedLight, float packedOverlay, float red, float green, float alpha) {
+    public void render(net.minecraft.entity.Entity entity, float f, float packedLight, float packedOverlay, float red, float green, float alpha) {
         body.render(alpha);
     }
 
@@ -105,8 +105,9 @@ public class DumboOctopusModel extends PetModel<@NotNull DumboOctopus> {
 
 
     @Override
-    public void setup(DumboOctopus state, float f, float g, float h, float i, float k, float s) {
-        super.setup(state, f, g, h, i, k, s);
+    public void setupAnimation(float f, float g, float h, float i, float k, float s, net.minecraft.entity.Entity entity) {
+        DumboOctopus state = (DumboOctopus) entity;
+        super.setupAnimation(f, g, h, i, k, s, entity);
         if (state.walkAnimationSpeed > 0) {
             leg1.rotationZ = -state.tentacleAngle / 10;
             float rot = leg1.rotationZ;

@@ -7,7 +7,7 @@ plugins {
 base {
     archivesName = project.archives_base_name
 }
-version = "${project.mod_version}-${project.minecraft_version}-ornithe+${project.build}"
+version = "${project.mod_version}-${project.minecraft_version}-ornithe${project.build}"
 group = project.maven_group
 
 ploceus {
@@ -46,7 +46,7 @@ processResources {
     inputs.property 'version', project.mod_version
 
     filesMatching('fabric.mod.json') {
-        expand 'version': project.mod_version + "+" + project.build
+        expand 'version': project.mod_version + project.build
     }
 }
 

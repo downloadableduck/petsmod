@@ -6,10 +6,10 @@ import net.minecraft.client.render.model.entity.EndermiteModel;
 import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientEndermiteRenderer extends PetRenderer<@NotNull ClientEndermite, @NotNull EndermiteModel<ClientEndermite>> {
+public class ClientEndermiteRenderer extends PetRenderer<ClientEndermite> {
 
     public ClientEndermiteRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new EndermiteModel<>(), 0.75f);
+        super(context, new EndermiteModel(), 0.75f);
     }
 
     @Override

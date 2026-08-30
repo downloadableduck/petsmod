@@ -5,14 +5,14 @@ import net.minecraft.client.render.model.Model;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.util.math.MathHelper;
 
-public class ClientShulkerModel extends Model<ClientShulker> {
+public class ClientShulkerModel extends Model {
     private final ModelPart field_3553;
     private final ModelPart field_3555;
     private final ModelPart field_3554;
 
     public ClientShulkerModel() {
-        this.f_50207596 /*textureHeight*/ = 64;
-        this.f_35376783 /*textureWidth*/ = 64;
+        this.textureHeight /*textureHeight*/ = 64;
+        this.textureWidth /*textureWidth*/ = 64;
         this.field_3555 = new ModelPart(this);
         this.field_3553 = new ModelPart(this);
         this.field_3554 = new ModelPart(this);
@@ -25,7 +25,8 @@ public class ClientShulkerModel extends Model<ClientShulker> {
     }
 
     @Override
-    public void setup(ClientShulker shulkerEntity, float f, float g, float h, float i, float j, float k) {
+    public void setupAnimation(float f, float g, float h, float i, float j, float k, net.minecraft.entity.Entity entity) {
+        ClientShulker shulkerEntity = (ClientShulker) entity;
         float l = h - (float) shulkerEntity.ticks;
         float m = (0.5F + 180 * (float) Math.PI);
         float n = -1.0F + MathHelper.sin(m);
@@ -46,7 +47,7 @@ public class ClientShulkerModel extends Model<ClientShulker> {
     }
 
     @Override
-    public void render(ClientShulker shulkerEntity, float f, float g, float h, float i, float j, float k) {
+    public void render(net.minecraft.entity.Entity entity, float f, float g, float h, float i, float j, float k) {
         this.field_3553.render(k);
         this.field_3554.render(k);
         this.field_3555.render(k);

@@ -1,12 +1,14 @@
 package com.jeff.pets.client.rendering.vanilla.horse;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.jeff.pets.client.Math2;
+import com.jeff.pets.mob.AbstractPet;
+import net.minecraft.client.render.platform.GlStateManager;
 import net.minecraft.client.render.model.Model;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.entity.living.LivingEntity;
 import net.minecraft.util.math.MathHelper;
 
-public class ClientHorseModel<T extends LivingEntity> extends Model<T> {
+public class ClientHorseModel extends Model {
     protected final ModelPart field_3305;
     protected final ModelPart field_3307;
     private final ModelPart field_3306;
@@ -18,8 +20,8 @@ public class ClientHorseModel<T extends LivingEntity> extends Model<T> {
     private final ModelPart[] field_3301;
 
     public ClientHorseModel(float f) {
-        this.f_35376783 /*textureWidth*/ = 64;
-        this.f_50207596 /*textureHeight*/ = 64;
+        this.textureWidth /*textureWidth*/ = 64;
+        this.textureHeight /*textureHeight*/ = 64;
         this.field_3305 = new ModelPart(this, 0, 32);
         this.field_3305.addBox(-5.0F, -8.0F, -17.0F, 10, 10, 22, 0.05F);
         this.field_3305.setPos(0.0F, 11.0F, 5.0F);
@@ -92,11 +94,11 @@ public class ClientHorseModel<T extends LivingEntity> extends Model<T> {
     }
 
     @Override
-    public void render(T horseBaseEntity, float f, float g, float h, float i, float j, float k) {
-        boolean bl = horseBaseEntity.isBaby();
+    public void render(net.minecraft.entity.Entity entity, float f, float g, float h, float i, float j, float k) {
+        boolean bl = ((LivingEntity) entity).isBaby();
         float l = 1;
         boolean bl2 = false;
-        boolean bl3 = horseBaseEntity.hasPassengers();
+        boolean bl3 = entity.hasPassengers();
 
         for (ModelPart ModelPart : this.field_3304) {
             ModelPart.visible = bl2;
@@ -108,8 +110,8 @@ public class ClientHorseModel<T extends LivingEntity> extends Model<T> {
 
         if (bl) {
             GlStateManager.pushMatrix();
-            GlStateManager.scale(l, 0.5F + l * 0.5F, l);
-            GlStateManager.translate(0.0F, 0.95F * (1.0F - l), 0.0F);
+            GlStateManager.scalef(l, 0.5F + l * 0.5F, l);
+            GlStateManager.translatef(0.0F, 0.95F * (1.0F - l), 0.0F);
         }
 
         this.field_3306.render(k);
@@ -119,8 +121,8 @@ public class ClientHorseModel<T extends LivingEntity> extends Model<T> {
         if (bl) {
             GlStateManager.popMatrix();
             GlStateManager.pushMatrix();
-            GlStateManager.scale(l, l, l);
-            GlStateManager.translate(0.0F, 2.3F * (1.0F - l), 0.0F);
+            GlStateManager.scalef(l, l, l);
+            GlStateManager.translatef(0.0F, 2.3F * (1.0F - l), 0.0F);
         }
 
         this.field_3305.render(k);
@@ -128,8 +130,8 @@ public class ClientHorseModel<T extends LivingEntity> extends Model<T> {
             GlStateManager.popMatrix();
             GlStateManager.pushMatrix();
             float m = l + 0.1F * l;
-            GlStateManager.scale(m, m, m);
-            GlStateManager.translate(0.0F, 2.25F * (1.0F - m), 0.1F * (1.4F - m));
+            GlStateManager.scalef(m, m, m);
+            GlStateManager.translatef(0.0F, 2.25F * (1.0F - m), 0.1F * (1.4F - m));
         }
 
         this.field_3307.render(k);
@@ -140,11 +142,12 @@ public class ClientHorseModel<T extends LivingEntity> extends Model<T> {
     }
 
     @Override
-    public void prepare(T horseBaseEntity, float f, float g, float h) {
-        super.prepare(horseBaseEntity, f, g, h);
+    public void prepare(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h) {
+        super.prepare(entity, f, g, h);
+        AbstractPet horseBaseEntity = (AbstractPet) entity;
         float i = this.method_2790(horseBaseEntity.lastBodyYaw, horseBaseEntity.bodyYaw, h);
         float j = this.method_2790(horseBaseEntity.lastHeadYaw, horseBaseEntity.headYaw, h);
-        float k = (float) MathHelper.m_23874002 /*lerp*/(h, horseBaseEntity.lastPitch, horseBaseEntity.pitch);
+        float k = (float) Math2.lerp(h, horseBaseEntity.lastPitch, horseBaseEntity.pitch);
         float l = j - i;
         float m = k * ((float) Math.PI / 180F);
         if (l > 20.0F) {

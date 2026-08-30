@@ -1,6 +1,6 @@
 package me.shedaniel.clothconfig2.api;
 
-import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.render.platform.InputConstants;
 import me.shedaniel.clothconfig2.gui.entries.DropdownBoxEntry.DefaultSelectionCellCreator;
 import me.shedaniel.clothconfig2.gui.entries.DropdownBoxEntry.SelectionCellCreator;
 import me.shedaniel.clothconfig2.gui.entries.DropdownBoxEntry.SelectionTopCellElement;

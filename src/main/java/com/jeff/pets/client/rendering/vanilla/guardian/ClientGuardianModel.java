@@ -8,7 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
-public class ClientGuardianModel<T extends AbstractPet> extends Model<T> {
+public class ClientGuardianModel extends Model {
     private static final float[] field_17131 = new float[]{1.75F, 0.25F, 0.0F, 0.0F, 0.5F, 0.5F, 0.5F, 0.5F, 1.25F, 0.75F, 0.0F, 0.0F};
     private static final float[] field_17132 = new float[]{0.0F, 0.0F, 0.0F, 0.0F, 0.25F, 1.75F, 1.25F, 0.75F, 0.0F, 0.0F, 0.0F, 0.0F};
     private static final float[] field_17133 = new float[]{0.0F, 0.0F, 0.25F, 1.75F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.75F, 1.25F};
@@ -21,8 +21,8 @@ public class ClientGuardianModel<T extends AbstractPet> extends Model<T> {
     private final ModelPart[] field_3378;
 
     public ClientGuardianModel() {
-        this.f_35376783 /*textureWidth*/ = 64;
-        this.f_50207596 /*textureHeight*/ = 64;
+        this.textureWidth /*textureWidth*/ = 64;
+        this.textureHeight /*textureHeight*/ = 64;
         this.field_3380 = new ModelPart[12];
         this.field_3379 = new ModelPart(this);
         this.field_3379.setTextureCoords(0, 0).addBox(-6.0F, 10.0F, -8.0F, 12, 12, 16);
@@ -54,13 +54,14 @@ public class ClientGuardianModel<T extends AbstractPet> extends Model<T> {
     }
 
     @Override
-    public void render(T guardianEntity, float f, float g, float h, float i, float j, float k) {
-        this.setup(guardianEntity, f, g, h, i, j, k);
+    public void render(net.minecraft.entity.Entity entity, float f, float g, float h, float i, float j, float k) {
+        this.setupAnimation(f, g, h, i, j, k, entity);
         this.field_3379.render(k);
     }
 
     @Override
-    public void setup(T guardianEntity, float f, float g, float h, float i, float j, float k) {
+    public void setupAnimation(float f, float g, float h, float i, float j, float k, net.minecraft.entity.Entity entity) {
+        AbstractPet guardianEntity = (AbstractPet) entity;
         float l = h - (float) guardianEntity.ticks;
         this.field_3379.rotationY = i * ((float) Math.PI / 180F);
         this.field_3379.rotationX = j * ((float) Math.PI / 180F);
@@ -76,10 +77,10 @@ public class ClientGuardianModel<T extends AbstractPet> extends Model<T> {
         }
 
         this.field_3381.z = -8.25F;
-        Entity entity = Minecraft.getInstance().getCamera();
+        Entity cameraEntity = Minecraft.getInstance().getCamera();
 
-        if (entity != null) {
-            Vec3d vec3d = entity.getEyePosition(0.0F);
+        if (cameraEntity != null) {
+            Vec3d vec3d = cameraEntity.getEyePosition(0.0F);
             Vec3d vec3d2 = guardianEntity.getEyePosition(0.0F);
             double d = vec3d.y - vec3d2.y;
             if (d > (double) 0.0F) {

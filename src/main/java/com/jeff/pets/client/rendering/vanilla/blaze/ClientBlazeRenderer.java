@@ -6,10 +6,10 @@ import net.minecraft.client.render.model.entity.BlazeModel;
 import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientBlazeRenderer extends PetRenderer<@NotNull ClientBlaze, @NotNull BlazeModel<ClientBlaze>> {
+public class ClientBlazeRenderer extends PetRenderer<ClientBlaze> {
 
     public ClientBlazeRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new BlazeModel<>(), 0.75f);
+        super(context, new BlazeModel(), 0.75f);
     }
 
     @Override

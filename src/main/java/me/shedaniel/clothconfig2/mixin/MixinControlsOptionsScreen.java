@@ -19,7 +19,7 @@ import java.util.List;
 @Mixin(ControlsOptionsScreen.class)
 public class MixinControlsOptionsScreen extends Screen {
     public MixinControlsOptionsScreen(Text text_1) {
-        super(text_1);
+        super();
     }
     
     @Inject(method = "init", at = @At("HEAD"))

@@ -5,12 +5,13 @@ import com.jeff.pets.mob.vanilla.passive.ClientSalmon;
 import net.minecraft.client.render.model.entity.SalmonModel;
 import net.minecraft.resource.Identifier;
 import net.minecraft.util.math.MathHelper;
+
 import org.jetbrains.annotations.NotNull;
 
-public class ClientSalmonRenderer extends PetRenderer<@NotNull ClientSalmon, @NotNull SalmonModel<ClientSalmon>> {
+public class ClientSalmonRenderer extends PetRenderer<ClientSalmon> {
 
     public ClientSalmonRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new SalmonModel<>(), 0.4F);
+        super(context, new SalmonModel(), 0.4F);
     }
 
     @Override

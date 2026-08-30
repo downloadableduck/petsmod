@@ -6,7 +6,7 @@ import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.NotNull;
 
-public class RacoonModel extends PetModel<@NotNull Racoon> {
+public class RacoonModel extends PetModel {
     private final ModelPart root;
     private final ModelPart head;
     private final ModelPart body;
@@ -17,8 +17,8 @@ public class RacoonModel extends PetModel<@NotNull Racoon> {
     private final ModelPart tail;
 
     public RacoonModel() {
-        f_35376783 /*textureWidth*/ = 64;
-        f_50207596 /*textureHeight*/ = 64;
+        textureWidth /*textureWidth*/ = 64;
+        textureHeight /*textureHeight*/ = 64;
 
         root = new ModelPart(this);
         root.setPos(-1.0F, 16.5F, -3.0F);
@@ -68,7 +68,7 @@ public class RacoonModel extends PetModel<@NotNull Racoon> {
     }
 
     @Override
-    public void render(Racoon racoon, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
+    public void render(net.minecraft.entity.Entity entity, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
         root.render(alpha);
     }
 
@@ -79,7 +79,8 @@ public class RacoonModel extends PetModel<@NotNull Racoon> {
     }
 
     @Override
-    public void prepare(Racoon fox, float f, float g, float h) {
+    public void prepare(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h) {
+        Racoon fox = (Racoon) entity;
         //this.body.xRot = ((float) Math.PI / 2F);
         this.tail.rotationX = -0.05235988F;
         this.right_hind_leg.rotationX = MathHelper.cos(f * 0.6662F) * 1.4F * g;
@@ -105,7 +106,7 @@ public class RacoonModel extends PetModel<@NotNull Racoon> {
         }
     }
 
-    public void setup(Racoon fox, float f, float g, float h, float i, float j, float s) {
+    public void setupAnimation(float f, float g, float h, float i, float j, float s, net.minecraft.entity.Entity entity) {
         this.head.rotationX = j * ((float) Math.PI / 180F);
         this.head.rotationY = i * ((float) Math.PI / 180F);
     }

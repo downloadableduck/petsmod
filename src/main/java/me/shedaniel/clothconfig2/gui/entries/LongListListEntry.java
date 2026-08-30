@@ -96,8 +96,8 @@ public class LongListListEntry extends AbstractTextFieldListListEntry<Long, Long
         }
 
         @Override
-        public List<? extends GuiEventListener> getChildren() {
-            return super.getChildren();
+        public List<? extends GuiEventListener> children() {
+            return super.children();
         }
     }
     

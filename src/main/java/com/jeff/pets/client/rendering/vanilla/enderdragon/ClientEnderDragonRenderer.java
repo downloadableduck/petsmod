@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.jeff.pets.client.Central.CONFIG;
 
 
-public class ClientEnderDragonRenderer extends PetRenderer<@NotNull ClientEnderDragon, ClientEnderDragonModel> {
+public class ClientEnderDragonRenderer extends PetRenderer<ClientEnderDragon> {
 
     public ClientEnderDragonRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientEnderDragonModel(0), 0.75f);
@@ -18,7 +18,7 @@ public class ClientEnderDragonRenderer extends PetRenderer<@NotNull ClientEnderD
     protected void applyScale(@NotNull ClientEnderDragon livingEntityRenderState, float f) {
         super.applyScale(livingEntityRenderState, f);
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.25f, 0.25f, 0.25f);
+            net.minecraft.client.render.platform.GlStateManager.scalef(0.25f, 0.25f, 0.25f);
         }
     }
 

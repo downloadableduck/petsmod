@@ -2,26 +2,28 @@ package com.jeff.pets.client.rendering.vanilla.cat;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientCat;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.living.LivingEntity;
 import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientCatRenderer extends PetRenderer<@NotNull ClientCat, @NotNull ClientCatModel> {
+public class ClientCatRenderer extends PetRenderer {
 
     public ClientCatRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientCatModel(0), 0.7F);
+        super(context, new ClientCatModel(), 0.7F);
     }
 
     @Override
-    protected void applyScale(ClientCat state, float f) {
+    protected void applyScale(LivingEntity state, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
+            net.minecraft.client.render.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(ClientCat livingEntityRenderState) {
+    public @NotNull Identifier getTextureLocation(Entity livingEntityRenderState) {
         switch (CONFIG.catSkin) {
             case "black":
                 return new Identifier("minecraft", "textures/entity/cat/all_black.png");
@@ -53,8 +55,9 @@ public class ClientCatRenderer extends PetRenderer<@NotNull ClientCat, @NotNull 
     }
 
     @Override
-    public void renderModel(ClientCat cat, float f, float g, float h, float i, float j, float k) {
-        super.renderModel(cat, f, g, h, i, j, k);
+    public void renderModel(LivingEntity entity, float f, float g, float h, float i, float j, float k) {
+        ClientCat cat = (ClientCat) entity;
+        super.renderModel(entity, f, g, h, i, j, k);
         cat.setSitting(cat.isRiding());
     }
 }

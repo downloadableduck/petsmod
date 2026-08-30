@@ -53,7 +53,7 @@ public class Utils {
 
         entity.setPosition(x, y, z);
         entity.setCustomName(new LiteralText(entityName));
-        world.m_99979799(entity.getNetworkId(), entity);
+        world.forceEntity(entity.getNetworkId(), entity);
         entity.setOwner(player);
         Central.summonedEntity.add(entity);
     }

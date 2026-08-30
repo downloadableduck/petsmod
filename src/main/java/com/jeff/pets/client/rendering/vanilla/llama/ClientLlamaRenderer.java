@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientLlamaRenderer extends PetRenderer<@NotNull ClientLlama, @NotNull ClientLlamaModel> {
+public class ClientLlamaRenderer extends PetRenderer<ClientLlama> {
 
     public String llamaTexturePath;
 
@@ -18,7 +18,7 @@ public class ClientLlamaRenderer extends PetRenderer<@NotNull ClientLlama, @NotN
     @Override
     protected void applyScale(ClientLlama state, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
+            net.minecraft.client.render.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 

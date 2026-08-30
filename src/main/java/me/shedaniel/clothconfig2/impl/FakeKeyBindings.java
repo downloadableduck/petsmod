@@ -1,6 +1,6 @@
 package me.shedaniel.clothconfig2.impl;
 
-import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.render.platform.InputConstants;
 import me.shedaniel.clothconfig2.api.Modifier;
 import me.shedaniel.clothconfig2.api.ModifierKeyCode;
 import net.fabricmc.api.EnvType;

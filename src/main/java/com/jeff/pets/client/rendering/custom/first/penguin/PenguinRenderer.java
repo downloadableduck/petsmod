@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class PenguinRenderer extends PetRenderer<@NotNull Penguin, @NotNull PenguinModel> {
+public class PenguinRenderer extends PetRenderer<@NotNull Penguin> {
 
     public PenguinRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new PenguinModel(), 0.5f);
@@ -23,14 +23,14 @@ public class PenguinRenderer extends PetRenderer<@NotNull Penguin, @NotNull Peng
     @Override
     protected void applyScale(@NotNull Penguin livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
+            net.minecraft.client.render.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
     public void renderModel(final Penguin penguin, float f, float partialTicks, float h, float i, float j, float k) {
-        //penguin.flap = (float) MathHelper.m_23874002 /*lerp*/(partialTicks, penguin.oFlap, penguin.flap);
-        //penguin.flapSpeed = (float) MathHelper.m_23874002 /*lerp*/(partialTicks, penguin.oFlapSpeed, penguin.flapSpeed);
+        //penguin.flap = (float) Math2.lerp(partialTicks, penguin.oFlap, penguin.flap);
+        //penguin.flapSpeed = (float) Math2.lerp(partialTicks, penguin.oFlapSpeed, penguin.flapSpeed);
         super.renderModel(penguin, f, partialTicks, h, i, j, k);
     }
 }

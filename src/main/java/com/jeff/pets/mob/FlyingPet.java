@@ -40,7 +40,7 @@ public abstract class FlyingPet extends AbstractPet {
             if (owner.hasPassenger(this)) {
                 if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
-                    this.m_28162558(this.m_94091929().add(0, 0.1, 0));
+                    this.lerpVelocity(this.getVelocity().add(0, 0.1, 0));
                 } else {
                     this.setSitting(true);
                 }
@@ -49,16 +49,16 @@ public abstract class FlyingPet extends AbstractPet {
             double dx = owner.x - this.x;
             double dz = owner.z - this.z;
             Vec3d ownerPos = new Vec3d(owner.x, owner.y, owner.z).add(0, owner.getEyeHeight() * 0.8, 0);
-            Vec3d vecToOwner = ownerPos.subtract(this.getPos());
+            Vec3d vecToOwner = ownerPos.subtract(this.getPosVec());
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.distanceTo(owner);
-            float rotation = this.getRotation().x;
-            float rotationToOwner = rotation + this.getOwner().getRotation().x;
+            float rotation = -this.pitch;
+            float rotationToOwner = rotation + (-this.getOwner().pitch);
             float bodyYawDiff = MathHelper.wrapDegrees(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/);
 
             if (rotationToOwner >= 50) {
-                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_06800284 /*sign*/(bodyYawDiff) * 50.0F);
+                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (Math.signum(bodyYawDiff) * 50.0F);
             }
 
             if (distance > this.stopDistance()) {
@@ -68,14 +68,13 @@ public abstract class FlyingPet extends AbstractPet {
                 Vec3d dir = vecToOwner.normalize();
                 double speed = owner.getSpeed() * 1.5;
 
-                this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
-                this.setHeadYaw(this.getYRot());
-                this.bodyYaw /*bodyYaw*/ = MathHelper.m_82141949(this.bodyYaw /*bodyYaw*/, this.headYaw, 50.0f); //m_82141949
+                
+                
+                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/, -50, 50); //m_82141949
 
-                this.m_28162558(new Vec3d(dir.x * speed, dir.y * speed, dir.z * speed));
+                this.lerpVelocity(new Vec3d(dir.x * speed, dir.y * speed, dir.z * speed));
             } else {
-                this.lookAt(owner, 5, 0);
-                this.m_28162558(this.m_94091929().scale(0.8));
+                                this.lerpVelocity(this.getVelocity().scale(0.8));
             }
 
             int yHeightToOwner = (int) (owner.y - this.y);
@@ -88,7 +87,7 @@ public abstract class FlyingPet extends AbstractPet {
                 //this.processFlappingMovement();
             }
 
-            if (owner.m_94091929().squaredDistanceToOrigin() < 0.01) {
+            if (new Vec3d(owner.velocityX, owner.velocityY, owner.velocityZ).squaredDistanceToOrigin() < 0.01) {
                 this.waitingTime++;
                 if (this.waitingTime > 30) this.wander();
             } else {
@@ -97,15 +96,15 @@ public abstract class FlyingPet extends AbstractPet {
 
 
             this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
-            this.setHeadYaw(this.getYRot());
+
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (MathHelper.m_06800284 /*sign*/(bodyYawDiff) * 50);
+                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (Math.signum(bodyYawDiff) * 50);
             } else {
-                this.bodyYaw /*bodyYaw*/ = MathHelper.m_82141949(this.bodyYaw /*bodyYaw*/, this.getHeadYaw(), 10);
+                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/, -10, 10);
             }
 
-            this.move(MoverType.SELF, this.m_94091929());
+            this.move(MoverType.SELF, this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
 
             //if (!this.onGround) {
             //  this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));

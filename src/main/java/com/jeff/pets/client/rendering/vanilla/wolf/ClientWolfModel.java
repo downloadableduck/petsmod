@@ -6,7 +6,7 @@ import net.minecraft.client.render.model.Model;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.util.math.MathHelper;
 
-public class ClientWolfModel extends Model<ClientWolf> {
+public class ClientWolfModel extends Model {
     private final ModelPart head;
     private final ModelPart realHead;
     private final ModelPart body;
@@ -58,7 +58,8 @@ public class ClientWolfModel extends Model<ClientWolf> {
         return ImmutableList.of(head, body, leg0, backRightLeg, backLeftLeg, frontRightLeg, tail, upperBody);
     }
 
-    public void prepare(ClientWolf wolf, float f, float g, float h) {
+    public void prepare(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h) {
+        ClientWolf wolf = (ClientWolf) entity;
         //this.tail.rotationY = MathHelper.cos(f * 0.6662F) * 1.4F * g;
 
         if (wolf.isRiding()) {
@@ -98,15 +99,15 @@ public class ClientWolfModel extends Model<ClientWolf> {
         //this.realTail.zRot = wolf.getBodyrotationZAngle(h, -0.2F);
     }
 
-    public void setup(ClientWolf wolf, float f, float g, float h, float i, float j, float s) {
+    public void setupAnimation(float f, float g, float h, float i, float j, float s, net.minecraft.entity.Entity entity) {
         this.head.rotationX = j * ((float) Math.PI / 180F);
         this.head.rotationY = i * ((float) Math.PI / 180F);
         this.tail.rotationX = 45;
     }
 
     @Override
-    public void render(ClientWolf wolf, float f,  float g, float h, float i, float j, float k) {
-        super.render(wolf, f, g, h, i, j, k);
+    public void render(net.minecraft.entity.Entity entity, float f,  float g, float h, float i, float j, float k) {
+        super.render(entity, f, g, h, i, j, k);
         for (ModelPart cube : this.getParts()) {
             cube.render(k);
         }

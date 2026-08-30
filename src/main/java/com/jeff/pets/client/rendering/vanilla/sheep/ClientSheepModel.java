@@ -4,7 +4,7 @@ import com.jeff.pets.mob.vanilla.passive.ClientSheep;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.client.render.model.entity.QuadrupedModel;
 
-public class ClientSheepModel extends QuadrupedModel<ClientSheep> {
+public class ClientSheepModel extends QuadrupedModel {
     private float headXRot;
 
     public ClientSheepModel() {
@@ -17,14 +17,14 @@ public class ClientSheepModel extends QuadrupedModel<ClientSheep> {
         this.body.setPos(0.0F, 5.0F, 2.0F);
     }
 
-    public void prepare(ClientSheep sheep, float f, float g, float h) {
-        super.prepare(sheep, f, g, h);
+    public void prepare(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h) {
+        super.prepare(entity, f, g, h);
         //this.head.y = 6.0F * 9.0F;
         //this.headXRot = 0;
     }
 
-    public void setup(ClientSheep sheep, float f, float g, float h, float i, float j, float s) {
-        super.setup(sheep, f, g, h, i, j, s);
+    public void setupAnimation(float f, float g, float h, float i, float j, float s, net.minecraft.entity.Entity entity) {
+        super.setupAnimation(f, g, h, i, j, s, entity);
         //this.head.rotationX = this.headXRot;
     }
 }

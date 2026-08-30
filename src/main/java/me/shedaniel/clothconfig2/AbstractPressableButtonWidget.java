@@ -1,16 +1,14 @@
 package me.shedaniel.clothconfig2;
 
-import net.minecraft.unmapped.C_18392283;
-
-public abstract class AbstractPressableButtonWidget extends C_18392283 {
+public abstract class AbstractPressableButtonWidget extends me.shedaniel.clothconfig2.ButtonWidget {
     public AbstractPressableButtonWidget(int i, int j, int k, int l, String string) {
-        super(i, j, k, l, string);
+        super(i, j, k, l, string, w -> {});
     }
 
     public abstract void onPress();
 
     @Override
-    public void m_83430595() {
+    public void click(double mouseX, double mouseY) {
         this.onPress();
     }
 }

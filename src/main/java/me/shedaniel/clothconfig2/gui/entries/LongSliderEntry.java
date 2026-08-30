@@ -1,20 +1,35 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.platform.Window;
-import me.shedaniel.clothconfig2.ButtonWidget;
+import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.render.platform.Window;
+import me.shedaniel.clothconfig2.ButtonWidget;
+import net.minecraft.client.render.platform.Window;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.gui.GuiEventListener;
+import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.gui.widget.OptionSliderWidget;
+import net.minecraft.client.options.GameOptions;
+import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.resource.language.I18n;
+import net.minecraft.client.render.platform.Window;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.render.platform.Window;
 
 import java.util.List;
+import net.minecraft.client.render.platform.Window;
 import java.util.Optional;
+import net.minecraft.client.render.platform.Window;
 import java.util.concurrent.atomic.AtomicLong;
+import net.minecraft.client.render.platform.Window;
 import java.util.function.Consumer;
+import net.minecraft.client.render.platform.Window;
 import java.util.function.Function;
+import net.minecraft.client.render.platform.Window;
 import java.util.function.Supplier;
+import net.minecraft.client.render.platform.Window;
 
 public class LongSliderEntry extends TooltipListEntry {
     
@@ -49,7 +64,7 @@ public class LongSliderEntry extends TooltipListEntry {
             sliderWidget.update();
             getScreen().setEdited(true);
         });
-        this.sliderWidget.setMessage(textGetter.apply(LongSliderEntry.this.value.get()));
+        this.sliderWidget.message = textGetter.apply(LongSliderEntry.this.value.get());
         this.widgets = Lists.newArrayList(sliderWidget, resetButton);
     }
     
@@ -105,12 +120,12 @@ public class LongSliderEntry extends TooltipListEntry {
             Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), window.getGuiScaledWidth() - x - Minecraft.getInstance().textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, 16777215);
             this.resetButton.x = x;
             this.sliderWidget.x = x + resetButton.getWidth() + 1;
-            this.sliderWidget.setWidth(150 - resetButton.getWidth() - 2);
+            // this.sliderWidget.setWidth(150 - resetButton.getWidth() - 2); // Not available in 1.13
         } else {
             Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), x, y + 5, 16777215);
             this.resetButton.x = x + entryWidth - resetButton.getWidth();
             this.sliderWidget.x = x + entryWidth - 150;
-            this.sliderWidget.setWidth(150 - resetButton.getWidth() - 2);
+            // this.sliderWidget.setWidth(150 - resetButton.getWidth() - 2); // Not available in 1.13
         }
         resetButton.render(mouseX, mouseY, delta);
         sliderWidget.render(mouseX, mouseY, delta);
@@ -121,19 +136,16 @@ public class LongSliderEntry extends TooltipListEntry {
     }
 
     private class Slider extends OptionSliderWidget {
+        private double progress;
         
         protected Slider(int int_1, int int_2, int int_3, int int_4, double double_1) {
-            super(int_1, int_2, int_3, int_4, double_1);
+            super(0, int_2, int_3, GameOptions.Option.FOV, minimum, maximum);
+            this.progress = double_1;
         }
         
-        @Override
         public void update() {
-            setMessage(textGetter.apply(LongSliderEntry.this.value.get()));
-        }
-        
-        @Override
-        protected void m_10325391() {
-            LongSliderEntry.this.value.set((long) (minimum + Math.abs(maximum - minimum) * value));
+            this.message = textGetter.apply(LongSliderEntry.this.value.get());
+            LongSliderEntry.this.value.set((long) (minimum + Math.abs(maximum - minimum) * this.progress));
             getScreen().setEdited(true);
         }
         
@@ -152,11 +164,11 @@ public class LongSliderEntry extends TooltipListEntry {
         }
         
         public double getValue() {
-            return value;
+            return this.progress;
         }
         
         public void setValue(double integer) {
-            this.value = integer;
+            this.progress = integer;
         }
     }
     

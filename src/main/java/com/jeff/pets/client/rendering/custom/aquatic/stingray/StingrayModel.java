@@ -1,12 +1,13 @@
 package com.jeff.pets.client.rendering.custom.aquatic.stingray;
 
+import com.jeff.pets.client.Math2;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.aquatic.Stingray;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.NotNull;
 
-public class StingrayModel extends PetModel<@NotNull Stingray> {
+public class StingrayModel extends PetModel {
     private final ModelPart root;
     private final ModelPart body;
     private final ModelPart tail;
@@ -14,8 +15,8 @@ public class StingrayModel extends PetModel<@NotNull Stingray> {
     private final ModelPart left_fin;
 
     public StingrayModel() {
-        f_35376783 /*textureWidth*/ = 64;
-        f_50207596 /*textureHeight*/ = 64;
+        textureWidth /*textureWidth*/ = 64;
+        textureHeight /*textureHeight*/ = 64;
 
         root = new ModelPart(this);
         root.setPos(0.0F, 24.0F, 0.0F);
@@ -43,7 +44,7 @@ public class StingrayModel extends PetModel<@NotNull Stingray> {
     }
 
     @Override
-    public void render(Stingray stingray, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
+    public void render(net.minecraft.entity.Entity entity, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
         root.render(alpha);
     }
 
@@ -54,9 +55,10 @@ public class StingrayModel extends PetModel<@NotNull Stingray> {
     }
 
     @Override
-    public void setup(Stingray state, float f, float g, float m, float k, float p, float s) {
+    public void setupAnimation(float f, float g, float m, float k, float p, float s, net.minecraft.entity.Entity entity) {
+        Stingray state = (Stingray) entity;
         float partialTick = m;
-        float flapTime = (float) MathHelper.m_23874002 /*lerp*/(partialTick, state.oFlap, state.flap);
+        float flapTime = (float) Math2.lerp(partialTick, state.oFlap, state.flap);
         if (state.walkAnimationSpeed > 0) {
             float anim = flapTime * 7.448451F * ((float) Math.PI / 180F);
             this.left_fin.rotationZ = MathHelper.cos(anim) * 16.0F * ((float) Math.PI / 180F);

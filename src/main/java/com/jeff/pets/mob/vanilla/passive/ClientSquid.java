@@ -87,10 +87,10 @@ public class ClientSquid extends FlyingPet {
             }
 
             if (!this.world.isClient) {
-                this.m_32166403(this.tx * this.speed, this.ty * this.speed, this.tz * this.speed);
+                this.addVelocity(this.tx * this.speed, this.ty * this.speed, this.tz * this.speed);
             }
 
-            Vec3d vec3 = this.m_94091929();
+            Vec3d vec3 = this.getVelocity();
             double d = this.horizontalDistance(vec3);
             this.bodyYaw /*bodyYaw*/ += (-((float) MathHelper.fastAtan2(vec3.x, vec3.z)) * (180F / (float) Math.PI) - this.bodyYaw /*bodyYaw*/) * 0.1F;
             this.setYRot(this.bodyYaw /*bodyYaw*/);
@@ -99,14 +99,14 @@ public class ClientSquid extends FlyingPet {
         } else {
             this.tentacleAngle = MathHelper.abs(MathHelper.sin(this.tentacleMovement)) * (float) Math.PI * 0.25F;
             if (!this.world.isClient) {
-                double e = this.m_94091929().y;
+                double e = this.getVelocity().y;
                 if (this.hasStatusEffect(StatusEffects.LEVITATION)) {
                     e = 0.05 * (double) (this.getEffectInstance(StatusEffects.LEVITATION).getAmplifier() + 1);
                 } else {
                     e -= 1;
                 }
 
-                this.m_32166403(0.0F, e * (double) 0.98F, 0.0F);
+                this.addVelocity(0.0F, e * (double) 0.98F, 0.0F);
             }
 
             this.xBodyRot += (-90.0F - this.xBodyRot) * 0.02F;
@@ -114,18 +114,10 @@ public class ClientSquid extends FlyingPet {
     }
 
     @Override
-    public void m_32166403(double x, double y, double z) {
-        this.m_28162558(new Vec3d(x, y, z));
+    public void addVelocity(double x, double y, double z) {
+        this.lerpVelocity(new Vec3d(x, y, z));
         this.tx = (float) x;
         this.ty = (float) y;
         this.tz = (float) z;
-    }
-
-    @Override
-    public void m_28162558(Vec3d vec3) {
-        super.m_28162558(vec3);
-        double x = vec3.x;
-        double y = vec3.y;
-        double z = vec3.z;
     }
 }

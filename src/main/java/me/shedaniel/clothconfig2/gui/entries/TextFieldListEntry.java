@@ -1,16 +1,26 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.platform.Window;
-import me.shedaniel.clothconfig2.ButtonWidget;
+import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.render.platform.Window;
+import me.shedaniel.clothconfig2.ButtonWidget;
+import net.minecraft.client.render.platform.Window;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.gui.GuiEventListener;
+import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.resource.language.I18n;
+import net.minecraft.client.render.platform.Window;
 
 import java.util.List;
+import net.minecraft.client.render.platform.Window;
 import java.util.Optional;
+import net.minecraft.client.render.platform.Window;
 import java.util.function.Supplier;
+import net.minecraft.client.render.platform.Window;
 
 public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
     
@@ -28,27 +38,19 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
         super(fieldName, tooltipSupplier, false);
         this.defaultValue = defaultValue;
         this.original = original;
-        this.textFieldWidget = new TextFieldWidget(Minecraft.getInstance().textRenderer, 0, 0, 148, 18, "") {
+        this.textFieldWidget = new TextFieldWidget(0, Minecraft.getInstance().textRenderer, 0, 0, 148, 18) {
             @Override
             public void render(int int_1, int int_2, float float_1) {
-                boolean f = m_17837825();
-                setFocused(TextFieldListEntry.this.getParent().getFocused() == TextFieldListEntry.this && TextFieldListEntry.this.getFocused() == this);
                 textFieldPreRender(this);
                 super.render(int_1, int_2, float_1);
-                setFocused(f);
-            }
-            
-            @Override
-            public void setMessage(String string_1) {
-                super.setMessage(stripAddText(string_1));
             }
         };
         textFieldWidget.setMaxLength(999999);
         textFieldWidget.setText(String.valueOf(original));
-        textFieldWidget.setResponder(s -> {
-            if (!original.equals(s))
-                getScreen().setEdited(true);
-        });
+        // textFieldWidget.setResponder(s -> { // Not available in 1.13
+        //     if (!original.equals(s))
+        //         getScreen().setEdited(true);
+        // });
         this.resetButton = new ButtonWidget(0, 0, Minecraft.getInstance().textRenderer.getWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey), widget -> {
             TextFieldListEntry.this.textFieldWidget.setText(String.valueOf(defaultValue.get()));
             getScreen().setEdited(true);
@@ -57,7 +59,7 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
     }
     
     protected static void setTextFieldWidth(TextFieldWidget widget, int width) {
-        widget.setWidth(width);
+        // widget.width = width; // width is private in 1.13 TextFieldWidget, no setter available
     }
     
     protected String stripAddText(String s) {
