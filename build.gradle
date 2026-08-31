@@ -1,0 +1,57 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url 'https://repo.spongepowered.org/repository/maven-public/' }
+        maven { url 'https://www.jitpack.io' }
+        maven { url 'https://files.minecraftforge.net/maven' }
+        maven { url "https://api.modrinth.com/maven"}
+    }
+    dependencies {
+        classpath 'com.github.Chocohead:ForgeGradle:moderniser-SNAPSHOT'
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '2.3-SNAPSHOT'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle.tweaker-client'
+apply plugin: 'java'
+
+group 'org.dimdev.halflogs'
+version '1.2.0'
+archivesBaseName = 'HalfLogs'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.spongepowered.org/repository/maven-public/' }
+    maven { url 'https://www.jitpack.io' }
+    maven { url 'https://files.minecraftforge.net/maven' }
+    maven { url "https://api.modrinth.com/maven"}
+    maven {url 'https://cursemaven.com/'}
+    maven {url 'https://libraries.minecraft.net/'}
+
+}
+
+dependencies {
+    implementation deobfProvided('curse.maven:rift-297501:2610741')
+    implementation("org.spongepowered:mixin:0.8.5")
+    implementation("blue.endless:jankson:1.2.0")
+    implementation("com.moandjiezana.toml:toml4j:0.7.2")
+    implementation 'org.ow2.asm:asm:9.10'
+    implementation 'org.ow2.asm:asm-commons:9.10'
+    implementation 'org.ow2.asm:asm-tree:9.10'
+    //implementation 'net.minecraft:minecraft:1.13'
+}
+
+minecraft {
+    version = '1.13'
+    mappings = 'snapshot_20180826'
+    runDir = 'run'
+    tweakClass = 'org.dimdev.riftloader.launch.RiftLoaderClientTweaker'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs << "-Xmaxerrs" << "5000"
+}

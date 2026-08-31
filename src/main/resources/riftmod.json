@@ -1,0 +1,15 @@
+{
+  "id": "pets_mod",
+  "name": "Pets Mod",
+  "authors": [
+    "The Pets Team",
+    "downloadableduck"
+  ],
+  "listeners": [
+    "com.jeff.pets.MixinAdder",
+    "com.jeff.pets.client.Central",
+    "com.jeff.pets.client.PetsClientInitializer",
+    "com.jeff.pets.client.PetsConfigScreen",
+    "me.shedaniel.forge.clothconfig2.ClothConfigInitializer"
+  ]
+}

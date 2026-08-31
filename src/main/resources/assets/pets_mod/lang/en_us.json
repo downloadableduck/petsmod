@@ -1,0 +1,12 @@
+{
+  "entity.pets-mod.duck": "Duck",
+  "entity.pets-mod.penguin": "Penguin",
+  "entity.pets-mod.racoon": "Racoon",
+  "entity.pets-mod.dumbo_octopus": "Dumbo Octopus",
+  "entity.pets-mod.koi": "Koi Fish",
+  "entity.pets-mod.stingray": "Stingray",
+  "entity.pets-mod.head": "Floating Head",
+  "sound.pets-mod.duck_ambient": "Duck Quacks",
+  "sound.pets-mod.penguin_ambient": "Penguin Chirps",
+  "petsmod.keymapping": "PetsMod"
+}
