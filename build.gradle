@@ -16,9 +16,9 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.tweaker-client'
 apply plugin: 'java'
 
-group 'org.dimdev.halflogs'
-version '1.2.0'
-archivesBaseName = 'HalfLogs'
+group 'com.jeff.pets'
+version '0.7.9-1.13-rift'
+archivesBaseName = 'pets-mod'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
