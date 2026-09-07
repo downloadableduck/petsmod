@@ -1,9 +1,9 @@
 package com.jeff.pets.client.rendering.vanilla.zombie_pigman;
 
 import com.jeff.pets.client.Math2;
-import net.minecraft.client.renderer.entity.model.ModelBase;
-import net.minecraft.client.renderer.entity.model.ModelBiped;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
@@ -21,6 +21,7 @@ public class ClientZombiePigmanModel extends ModelBase {
     public ModelBiped.ArmPose rightArmPose = ModelBiped.ArmPose.EMPTY;
     public boolean crouching;
     public float swimAmount;
+    public float swingProgress = 0.0F;
     private float itemUseTicks;
 
     public ClientZombiePigmanModel() {
@@ -29,37 +30,37 @@ public class ClientZombiePigmanModel extends ModelBase {
 
         head = new ModelRenderer(this);
         head.setRotationPoint(0.0F, 0.0F, 0.0F);
-        head.setTextureOffset(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.0F, false);
+        head.setTextureOffset(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.0F);
 
         headwear = new ModelRenderer(this);
         headwear.setRotationPoint(0.0F, 0.0F, 0.0F);
-        headwear.setTextureOffset(32, 0).addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.5F, false);
+        headwear.setTextureOffset(32, 0).addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.5F);
 
         body = new ModelRenderer(this);
         body.setRotationPoint(0.0F, 0.0F, 0.0F);
-        body.setTextureOffset(16, 16).addBox(-4.0F, 0.0F, -2.0F, 8, 12, 4, 0.0F, false);
+        body.setTextureOffset(16, 16).addBox(-4.0F, 0.0F, -2.0F, 8, 12, 4, 0.0F);
 
         left_arm = new ModelRenderer(this);
         left_arm.setRotationPoint(5.0F, 2.0F, 0.0F);
-        left_arm.setTextureOffset(40, 16).addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F, false);
+        left_arm.setTextureOffset(40, 16).addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F);
 
         right_arm = new ModelRenderer(this);
         right_arm.setRotationPoint(-5.0F, 2.0F, 0.0F);
-        right_arm.setTextureOffset(40, 16).addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F, false);
+        right_arm.setTextureOffset(40, 16).addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F);
 
         left_leg = new ModelRenderer(this);
         left_leg.setRotationPoint(1.9F, 12.0F, 0.0F);
-        left_leg.setTextureOffset(0, 16).addBox(-1.9F, 0.0F, -2.0F, 4, 12, 4, 0.0F, false);
+        left_leg.setTextureOffset(0, 16).addBox(-1.9F, 0.0F, -2.0F, 4, 12, 4, 0.0F);
 
         right_leg = new ModelRenderer(this);
         right_leg.setRotationPoint(-1.9F, 12.0F, 0.0F);
-        right_leg.setTextureOffset(0, 16).addBox(-2.1F, 0.0F, -2.0F, 4, 12, 4, 0.0F, false);
+        right_leg.setTextureOffset(0, 16).addBox(-2.1F, 0.0F, -2.0F, 4, 12, 4, 0.0F);
     }
 
     @Override
     public void setRotationAngles(float f, float g, float h, float i, float j, float s, Entity state) {
         boolean bl = false;
-        boolean bl2 = state.isSwimming();
+        boolean bl2 = state.isInWater();
         this.head.rotateAngleY = i * (float) (Math.PI / 180.0);
         if (bl) {
             this.head.rotateAngleX = (float) (-Math.PI / 4);
@@ -137,18 +138,8 @@ public class ClientZombiePigmanModel extends ModelBase {
                 this.right_arm.rotateAngleX = this.right_arm.rotateAngleX * 0.5F - (float) (Math.PI / 10);
                 this.right_arm.rotateAngleY = 0.0F;
                 break;
-            case THROW_SPEAR:
-                this.right_arm.rotateAngleX = this.right_arm.rotateAngleX * 0.5F - (float) Math.PI;
-                this.right_arm.rotateAngleY = 0.0F;
         }
 
-        if (this.leftArmPose == ModelBiped.ArmPose.THROW_SPEAR
-                && this.rightArmPose != ModelBiped.ArmPose.BLOCK
-                && this.rightArmPose != ModelBiped.ArmPose.THROW_SPEAR
-                && this.rightArmPose != ModelBiped.ArmPose.BOW_AND_ARROW) {
-            this.left_arm.rotateAngleX = this.left_arm.rotateAngleX * 0.5F - (float) Math.PI;
-            this.left_arm.rotateAngleY = 0.0F;
-        }
 
         if (this.swingProgress > 0.0F) {
             ModelRenderer ModelRenderer = right_arm;
@@ -206,89 +197,83 @@ public class ClientZombiePigmanModel extends ModelBase {
             this.left_arm.rotateAngleY = 0.1F + this.head.rotateAngleY + 0.4F;
             this.right_arm.rotateAngleX = (float) (-Math.PI / 2) + this.head.rotateAngleX;
             this.left_arm.rotateAngleX = (float) (-Math.PI / 2) + this.head.rotateAngleX;
-        } else if (this.leftArmPose == ModelBiped.ArmPose.BOW_AND_ARROW
-                && this.rightArmPose != ModelBiped.ArmPose.THROW_SPEAR
-                && this.rightArmPose != ModelBiped.ArmPose.BLOCK) {
-            this.right_arm.rotateAngleY = -0.1F + this.head.rotateAngleY - 0.4F;
-            this.left_arm.rotateAngleY = 0.1F + this.head.rotateAngleY;
-            this.right_arm.rotateAngleX = (float) (-Math.PI / 2) + this.head.rotateAngleX;
-            this.left_arm.rotateAngleX = (float) (-Math.PI / 2) + this.head.rotateAngleX;
+
+            if (this.swimAmount > 0.0F) {
+                float p = f % 26.0F;
+                float l = this.swingProgress > 0.0F ? 0.0F : this.swimAmount;
+                if (p < 14.0F) {
+                    this.left_arm.rotateAngleX = this.rotlerpRad(this.left_arm.rotateAngleX, 0.0F, this.swimAmount);
+                    this.right_arm.rotateAngleX = Math2.lerp(l, this.right_arm.rotateAngleX, 0.0F);
+                    this.left_arm.rotateAngleY = this.rotlerpRad(this.left_arm.rotateAngleY, (float) Math.PI, this.swimAmount);
+                    this.right_arm.rotateAngleY = Math2.lerp(l, this.right_arm.rotateAngleY, (float) Math.PI);
+                    this.left_arm.rotateAngleZ = this.rotlerpRad(
+                            this.left_arm.rotateAngleZ, (float) Math.PI + 1.8707964F * this.quadraticArmUpdate(p) / this.quadraticArmUpdate(14.0F), this.swimAmount
+                    );
+                    this.right_arm.rotateAngleZ = Math2.lerp(l, this.right_arm.rotateAngleZ, (float) Math.PI - 1.8707964F * this.quadraticArmUpdate(p) / this.quadraticArmUpdate(14.0F));
+                } else if (p >= 14.0F && p < 22.0F) {
+                    float m = (p - 14.0F) / 8.0F;
+                    this.left_arm.rotateAngleX = this.rotlerpRad(this.left_arm.rotateAngleX, (float) (Math.PI / 2) * m, this.swimAmount);
+                    this.right_arm.rotateAngleX = Math2.lerp(l, this.right_arm.rotateAngleX, (float) (Math.PI / 2) * m);
+                    this.left_arm.rotateAngleY = this.rotlerpRad(this.left_arm.rotateAngleY, (float) Math.PI, this.swimAmount);
+                    this.right_arm.rotateAngleY = Math2.lerp(l, this.right_arm.rotateAngleY, (float) Math.PI);
+                    this.left_arm.rotateAngleZ = this.rotlerpRad(this.left_arm.rotateAngleZ, 5.012389F - 1.8707964F * m, this.swimAmount);
+                    this.right_arm.rotateAngleZ = Math2.lerp(l, this.right_arm.rotateAngleZ, 1.2707963F + 1.8707964F * m);
+                } else if (p >= 22.0F && p < 26.0F) {
+                    float m = (p - 22.0F) / 4.0F;
+                    this.left_arm.rotateAngleX = this.rotlerpRad(this.left_arm.rotateAngleX, (float) (Math.PI / 2) - (float) (Math.PI / 2) * m, this.swimAmount);
+                    this.right_arm.rotateAngleX = Math2.lerp(l, this.right_arm.rotateAngleX, (float) (Math.PI / 2) - (float) (Math.PI / 2) * m);
+                    this.left_arm.rotateAngleY = this.rotlerpRad(this.left_arm.rotateAngleY, (float) Math.PI, this.swimAmount);
+                    this.right_arm.rotateAngleY = Math2.lerp(l, this.right_arm.rotateAngleY, (float) Math.PI);
+                    this.left_arm.rotateAngleZ = this.rotlerpRad(this.left_arm.rotateAngleZ, (float) Math.PI, this.swimAmount);
+                    this.right_arm.rotateAngleZ = Math2.lerp(l, this.right_arm.rotateAngleZ, (float) Math.PI);
+                }
+
+                float m = 0.3F;
+                float n = 0.33333334F;
+                this.left_leg.rotateAngleX = Math2.lerp(this.swimAmount, this.left_leg.rotateAngleX, 0.3F * MathHelper.cos(f * 0.33333334F + (float) Math.PI));
+                this.right_leg.rotateAngleX = Math2.lerp(this.swimAmount, this.right_leg.rotateAngleX, 0.3F * MathHelper.cos(f * 0.33333334F));
+            }
+        }
+    }
+
+        @Override
+        public void render (Entity entityIn,float packedLight, float packedOverlay, float red, float green, float blue,
+        float alpha){
+            this.render(entityIn, packedLight, packedOverlay, red, blue, green, alpha, 0);
+            head.render(alpha);
+            headwear.render(alpha);
+            body.render(alpha);
+            left_arm.render(alpha);
+            right_arm.render(alpha);
+            left_leg.render(alpha);
+            right_leg.render(alpha);
         }
 
-        if (this.swimAmount > 0.0F) {
-            float p = f % 26.0F;
-            float l = this.swingProgress > 0.0F ? 0.0F : this.swimAmount;
-            if (p < 14.0F) {
-                this.left_arm.rotateAngleX = this.rotlerpRad(this.left_arm.rotateAngleX, 0.0F, this.swimAmount);
-                this.right_arm.rotateAngleX = Math2.lerp(l, this.right_arm.rotateAngleX, 0.0F);
-                this.left_arm.rotateAngleY = this.rotlerpRad(this.left_arm.rotateAngleY, (float) Math.PI, this.swimAmount);
-                this.right_arm.rotateAngleY = Math2.lerp(l, this.right_arm.rotateAngleY, (float) Math.PI);
-                this.left_arm.rotateAngleZ = this.rotlerpRad(
-                        this.left_arm.rotateAngleZ, (float) Math.PI + 1.8707964F * this.quadraticArmUpdate(p) / this.quadraticArmUpdate(14.0F), this.swimAmount
-                );
-                this.right_arm.rotateAngleZ = Math2.lerp(l, this.right_arm.rotateAngleZ, (float) Math.PI - 1.8707964F * this.quadraticArmUpdate(p) / this.quadraticArmUpdate(14.0F));
-            } else if (p >= 14.0F && p < 22.0F) {
-                float m = (p - 14.0F) / 8.0F;
-                this.left_arm.rotateAngleX = this.rotlerpRad(this.left_arm.rotateAngleX, (float) (Math.PI / 2) * m, this.swimAmount);
-                this.right_arm.rotateAngleX = Math2.lerp(l, this.right_arm.rotateAngleX, (float) (Math.PI / 2) * m);
-                this.left_arm.rotateAngleY = this.rotlerpRad(this.left_arm.rotateAngleY, (float) Math.PI, this.swimAmount);
-                this.right_arm.rotateAngleY = Math2.lerp(l, this.right_arm.rotateAngleY, (float) Math.PI);
-                this.left_arm.rotateAngleZ = this.rotlerpRad(this.left_arm.rotateAngleZ, 5.012389F - 1.8707964F * m, this.swimAmount);
-                this.right_arm.rotateAngleZ = Math2.lerp(l, this.right_arm.rotateAngleZ, 1.2707963F + 1.8707964F * m);
-            } else if (p >= 22.0F && p < 26.0F) {
-                float m = (p - 22.0F) / 4.0F;
-                this.left_arm.rotateAngleX = this.rotlerpRad(this.left_arm.rotateAngleX, (float) (Math.PI / 2) - (float) (Math.PI / 2) * m, this.swimAmount);
-                this.right_arm.rotateAngleX = Math2.lerp(l, this.right_arm.rotateAngleX, (float) (Math.PI / 2) - (float) (Math.PI / 2) * m);
-                this.left_arm.rotateAngleY = this.rotlerpRad(this.left_arm.rotateAngleY, (float) Math.PI, this.swimAmount);
-                this.right_arm.rotateAngleY = Math2.lerp(l, this.right_arm.rotateAngleY, (float) Math.PI);
-                this.left_arm.rotateAngleZ = this.rotlerpRad(this.left_arm.rotateAngleZ, (float) Math.PI, this.swimAmount);
-                this.right_arm.rotateAngleZ = Math2.lerp(l, this.right_arm.rotateAngleZ, (float) Math.PI);
+        protected float rotlerpRad ( float f, float g, float h){
+            float i = (g - f) % (float) (Math.PI * 2);
+            if (i < (float) -Math.PI) {
+                i += (float) (Math.PI * 2);
             }
 
-            float m = 0.3F;
-            float n = 0.33333334F;
-            this.left_leg.rotateAngleX = Math2.lerp(this.swimAmount, this.left_leg.rotateAngleX, 0.3F * MathHelper.cos(f * 0.33333334F + (float) Math.PI));
-            this.right_leg.rotateAngleX = Math2.lerp(this.swimAmount, this.right_leg.rotateAngleX, 0.3F * MathHelper.cos(f * 0.33333334F));
-        }
-    }
+            if (i >= (float) Math.PI) {
+                i -= (float) (Math.PI * 2);
+            }
 
-    @Override
-    public void render(Entity entityIn, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
-        this.render(entityIn, packedLight, packedOverlay, red, blue, green, alpha, 0);
-        head.render(alpha);
-        headwear.render(alpha);
-        body.render(alpha);
-        left_arm.render(alpha);
-        right_arm.render(alpha);
-        left_leg.render(alpha);
-        right_leg.render(alpha);
-    }
-
-    protected float rotlerpRad(float f, float g, float h) {
-        float i = (g - f) % (float) (Math.PI * 2);
-        if (i < (float) -Math.PI) {
-            i += (float) (Math.PI * 2);
+            return f + h * i;
         }
 
-        if (i >= (float) Math.PI) {
-            i -= (float) (Math.PI * 2);
+        public void render (Entity zombie,float b, float j, float f, float g, float h, float k, int i){
+            super.render(zombie, b, j, f, g, h, k);
+            net.minecraft.client.renderer.GlStateManager.pushMatrix();
+            if (CONFIG.isBaby) {
+                net.minecraft.client.renderer.GlStateManager.scalef(1.5f, 1.5f, 1.5f);
+            } else {
+                net.minecraft.client.renderer.GlStateManager.scalef(1, 1, 1);
+            }
+            net.minecraft.client.renderer.GlStateManager.popMatrix();
         }
 
-        return f + h * i;
-    }
-
-    public void render(Entity zombie, float b, float j, float f, float g, float h, float k, int i) {
-        super.render(zombie, b, j, f, g, h, k);
-        net.minecraft.client.renderer.GlStateManager.pushMatrix();
-        if (CONFIG.isBaby) {
-            net.minecraft.client.renderer.GlStateManager.scalef(1.5f, 1.5f, 1.5f);
-        } else {
-            net.minecraft.client.renderer.GlStateManager.scalef(1, 1, 1);
+        private float quadraticArmUpdate ( float f){
+            return -65.0F * f + f * f;
         }
-        net.minecraft.client.renderer.GlStateManager.popMatrix();
     }
-
-    private float quadraticArmUpdate(float f) {
-        return -65.0F * f + f * f;
-    }
-}

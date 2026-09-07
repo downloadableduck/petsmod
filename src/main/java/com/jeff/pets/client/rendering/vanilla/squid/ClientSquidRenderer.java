@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.vanilla.squid;
 import com.jeff.pets.client.Math2;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientSquid;
-import net.minecraft.client.renderer.entity.model.ModelSquid;
+import net.minecraft.client.model.ModelSquid;
 import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -26,7 +26,7 @@ public class ClientSquidRenderer extends PetRenderer<ClientSquid, ModelSquid> {
         if (CONFIG.isBaby) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
-        
+
     }
 
     @Override

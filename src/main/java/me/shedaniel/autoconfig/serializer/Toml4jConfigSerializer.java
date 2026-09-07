@@ -19,35 +19,38 @@
 
 package me.shedaniel.autoconfig.serializer;
 
-import com.moandjiezana.toml.Toml;
-import com.moandjiezana.toml.TomlWriter;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.util.Utils;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
- * This serializer serializes configs into Toml files using Toml4j.
+ * This serializer serializes configs into Toml files using Gson.
  */
 @SuppressWarnings("unused")
 public class Toml4jConfigSerializer<T extends ConfigData> implements ConfigSerializer<T> {
 
-    private Config definition;
-    private Class<T> configClass;
-    private TomlWriter tomlWriter;
+    private final Config definition;
+    private final Class<T> configClass;
+    private final Gson gson;
 
     @SuppressWarnings("WeakerAccess")
-    public Toml4jConfigSerializer(Config definition, Class<T> configClass, TomlWriter tomlWriter) {
+    public Toml4jConfigSerializer(Config definition, Class<T> configClass, Gson gson) {
         this.definition = definition;
         this.configClass = configClass;
-        this.tomlWriter = tomlWriter;
+        this.gson = gson;
     }
 
     public Toml4jConfigSerializer(Config definition, Class<T> configClass) {
-        this(definition, configClass, new TomlWriter());
+        this(definition, configClass, new GsonBuilder().setPrettyPrinting().create());
     }
 
     private Path getConfigPath() {
@@ -59,7 +62,9 @@ public class Toml4jConfigSerializer<T extends ConfigData> implements ConfigSeria
         Path configPath = getConfigPath();
         try {
             Files.createDirectories(configPath.getParent());
-            tomlWriter.write(config, configPath.toFile());
+            BufferedWriter writer = Files.newBufferedWriter(configPath);
+            gson.toJson(config, writer);
+            writer.close();
         } catch (IOException e) {
             throw new SerializationException(e);
         }
@@ -70,8 +75,11 @@ public class Toml4jConfigSerializer<T extends ConfigData> implements ConfigSeria
         Path configPath = getConfigPath();
         if (Files.exists(configPath)) {
             try {
-                return new Toml().read(configPath.toFile()).to(configClass);
-            } catch (IllegalStateException e) {
+                BufferedReader reader = Files.newBufferedReader(configPath);
+                T ret = gson.fromJson(reader, configClass);
+                reader.close();
+                return ret;
+            } catch (IOException | JsonParseException e) {
                 throw new SerializationException(e);
             }
         } else {

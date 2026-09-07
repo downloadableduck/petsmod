@@ -1,12 +1,10 @@
 package com.jeff.pets.client.rendering.vanilla.creeper;
 
 import com.jeff.pets.mob.vanilla.hostile.ClientCreeper;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.model.ModelCreeper;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.client.renderer.entity.model.ModelCreeper;
 import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -38,10 +36,7 @@ public class ClientCreeperChargeLayer implements LayerRenderer<ClientCreeper> {
             GlStateManager.disableLighting();
             GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
             this.creeperModel.setModelAttributes(this.renderer.getMainModel());
-            GameRenderer gameRenderer = Minecraft.getInstance().entityRenderer;
-            gameRenderer.setupFogColor(true);
             this.creeperModel.render(creeperEntity, f, g, i, j, k, l);
-            gameRenderer.setupFogColor(false);
             GlStateManager.matrixMode(5890);
             GlStateManager.loadIdentity();
             GlStateManager.matrixMode(5888);

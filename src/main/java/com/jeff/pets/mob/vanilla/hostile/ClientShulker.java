@@ -1,13 +1,12 @@
 package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.util.SoundEvent;
 
 public class ClientShulker extends GroundPet {
-    public ClientShulker(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
-        super(entityType, level);
+    public ClientShulker(net.minecraft.world.World level) {
+        super(level);
         this.setSize(1f, 2f);
     }
 

@@ -1,9 +1,9 @@
 package com.jeff.pets.client.rendering.vanilla.llama;
 
 import com.jeff.pets.mob.vanilla.neutral.ClientLlama;
+import net.minecraft.client.model.ModelQuadruped;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.model.ModelQuadruped;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class ClientLlamaModel extends ModelQuadruped {

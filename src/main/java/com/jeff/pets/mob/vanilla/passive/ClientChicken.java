@@ -1,9 +1,8 @@
 package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.util.SoundEvent;
 
 public class ClientChicken extends GroundPet {
 
@@ -13,8 +12,8 @@ public class ClientChicken extends GroundPet {
     public float flapSpeed;
     public float flapping = 1.0F;
 
-    public ClientChicken(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
-        super(entityType, level);
+    public ClientChicken(net.minecraft.world.World level) {
+        super(level);
         this.setSize(0.4f, 0.7f);
     }
 

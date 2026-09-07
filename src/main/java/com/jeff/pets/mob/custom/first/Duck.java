@@ -1,31 +1,19 @@
 package com.jeff.pets.mob.custom.first;
 
 import com.jeff.pets.PetsSounds;
-import net.minecraft.block.state.IBlockState;
 import com.jeff.pets.mob.AbstractPet;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.*;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.MoverType;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
-import net.minecraft.init.Items;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.Packet;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.network.play.server.SPacketSpawnObject;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-
-import static com.jeff.pets.PetsInitializer.DUCK;
 
 public class Duck extends AbstractPet {
 
@@ -41,10 +29,10 @@ public class Duck extends AbstractPet {
     public float flapping = 1.0F;
     public boolean isOnHead;
     public EntityPlayerMP owner = (EntityPlayerMP) this.getOwner();
-    private float nextFlap = 1.0F;
+    private final float nextFlap = 1.0F;
 
-    public Duck(final EntityType<? extends Duck> type, final World level) {
-        super(type, level);
+    public Duck(final World level) {
+        super(level);
         this.setSize(0.4f, 0.7f);
     }
 
@@ -119,7 +107,7 @@ public class Duck extends AbstractPet {
             float bodyYawDiff = net.minecraft.util.math.MathHelper.wrapDegrees(this.rotationYawHead - this.renderYawOffset);
 
             if (rotationToOwner >= 50) {
-                this.renderYawOffset = this.rotationYawHead - ((float)Math.signum(bodyYawDiff) * 50.0F);
+                this.renderYawOffset = this.rotationYawHead - (Math.signum(bodyYawDiff) * 50.0F);
             }
 
             if (distance > 2.0) {
@@ -136,8 +124,8 @@ public class Duck extends AbstractPet {
                 double speed = owner.getAIMoveSpeed() * 2;
                 this.setVelocity(dir.x * speed, this.motionY, dir.z * speed);
             } else {
-                
-                this.setVelocity(this.motionX * 0.8, this.motionY * 1.0, this.motionZ * 0.8);
+
+                this.setVelocity(this.motionX * 0.8, this.motionY, this.motionZ * 0.8);
             }
 
             int yHeightToOwner = (int) (owner.posY - this.posY);
@@ -167,7 +155,7 @@ public class Duck extends AbstractPet {
             this.setRotationYawHead(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.renderYawOffset = this.rotationYawHead - ((float)Math.signum(bodyYawDiff) * 50);
+                this.renderYawOffset = this.rotationYawHead - (Math.signum(bodyYawDiff) * 50);
             } else {
                 this.renderYawOffset = this.renderYawOffset + MathHelper.clamp(this.rotationYawHead - this.renderYawOffset, -10, 10);
             }
@@ -206,7 +194,7 @@ public class Duck extends AbstractPet {
 
     @Override
     public void notifyDataManagerChange(net.minecraft.network.datasync.DataParameter<?> key) {
-        if (!this.world.isRemote()) {
+        if (!this.world.isRemote) {
             super.notifyDataManagerChange(key);
         }
     }

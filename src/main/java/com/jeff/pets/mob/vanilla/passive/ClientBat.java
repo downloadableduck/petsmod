@@ -2,17 +2,16 @@ package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.util.SoundEvent;
 
 @CanFly
 public class ClientBat extends FlyingPet {
 
     public boolean isOnHead;
 
-    public ClientBat(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
-        super(entityType, level);
+    public ClientBat(net.minecraft.world.World level) {
+        super(level);
         this.setSize(0.5f, 0.9f);
     }
 

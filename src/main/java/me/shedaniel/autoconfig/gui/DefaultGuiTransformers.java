@@ -19,7 +19,6 @@
 
 package me.shedaniel.autoconfig.gui;
 
-import blue.endless.jankson.Comment;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.autoconfig.gui.registry.GuiRegistry;
 import me.shedaniel.forge.clothconfig2.api.AbstractConfigListEntry;
@@ -27,7 +26,6 @@ import me.shedaniel.forge.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.forge.clothconfig2.gui.entries.TextListEntry;
 import me.shedaniel.forge.clothconfig2.gui.entries.TooltipListEntry;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 
 import java.util.ArrayList;
@@ -78,20 +76,6 @@ public class DefaultGuiTransformers {
                 (guis, i18n, field, config, defaults, guiProvider) -> guis.stream()
                         .peek(gui -> {
                             if (!(gui instanceof TextListEntry)) {
-                                Comment tooltip = field.getAnnotation(Comment.class);
-                                ITextComponent[] text = new ITextComponent[]{new TextComponentString(tooltip.value())};
-                                tryApplyTooltip(gui, text);
-                            }
-                        })
-                        .collect(Collectors.toList()),
-                field -> !field.isAnnotationPresent(ConfigEntry.Gui.Tooltip.class),
-                Comment.class
-        );
-
-        registry.registerAnnotationTransformer(
-                (guis, i18n, field, config, defaults, guiProvider) -> guis.stream()
-                        .peek(gui -> {
-                            if (!(gui instanceof TextListEntry)) {
                                 tryRemoveTooltip(gui);
                             }
                         })
@@ -103,8 +87,8 @@ public class DefaultGuiTransformers {
                 (guis, i18n, field, config, defaults, guiProvider) -> {
                     ArrayList<AbstractConfigListEntry> ret = new ArrayList<>(guis);
                     String text = String.format("%s.%s", i18n, "@PrefixText");
-                    TextListEntry element = ENTRY_BUILDER.startTextDescription(new TextComponentTranslation(text).getString()).build();
-                    String s = new TextComponentTranslation(i18n).getString().toLowerCase(Locale.ROOT);
+                    TextListEntry element = ENTRY_BUILDER.startTextDescription(new TextComponentTranslation(text).getUnformattedComponentText()).build();
+                    String s = new TextComponentTranslation(i18n).getUnformattedComponentText().toLowerCase(Locale.ROOT);
                     if (!s.isEmpty()) {
                         //element.appendSearchTags(Lists.newArrayList(s.split(" ")));
                     }

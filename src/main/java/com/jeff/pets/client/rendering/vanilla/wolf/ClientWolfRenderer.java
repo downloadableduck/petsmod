@@ -17,7 +17,7 @@ public class ClientWolfRenderer extends PetRenderer<ClientWolf, ClientWolfModel>
         if (CONFIG.isBaby) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
-        
+
     }
 
     @Override

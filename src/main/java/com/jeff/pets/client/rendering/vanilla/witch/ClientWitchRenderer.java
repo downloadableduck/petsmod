@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.witch;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientWitch;
-import net.minecraft.client.renderer.entity.model.ModelWitch;
+import net.minecraft.client.model.ModelWitch;
 import net.minecraft.util.ResourceLocation;
 
 public class ClientWitchRenderer extends PetRenderer<ClientWitch, ModelWitch> {

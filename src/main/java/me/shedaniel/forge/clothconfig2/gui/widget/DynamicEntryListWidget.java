@@ -5,8 +5,6 @@ import me.shedaniel.forge.clothconfig2.api.ScissorsHandler;
 import me.shedaniel.forge.math.Rectangle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiEventHandler;
-import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
@@ -14,16 +12,17 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.input.Mouse;
 
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@OnlyIn(Dist.CLIENT)
-public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.Entry<E>> extends GuiEventHandler implements IGuiEventListener {
+@SideOnly(Side.CLIENT)
+public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.Entry<E>> {
     protected static final int DRAG_OUTSIDE = -2;
     protected final Minecraft client;
     private final List<E> entries = new Entries();
@@ -41,8 +40,10 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
     protected double scroll;
     protected boolean scrolling;
     protected E selectedItem;
+    protected E focused;
+    protected boolean dragging;
     protected ResourceLocation backgroundLocation;
-    
+
     public DynamicEntryListWidget(Minecraft client, int width, int height, int top, int bottom, ResourceLocation backgroundLocation) {
         this.client = client;
         this.width = width;
@@ -53,59 +54,71 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
         this.right = width;
         this.backgroundLocation = backgroundLocation;
     }
-    
+
+    public E getFocused() {
+        return this.focused;
+    }
+
+    public void setFocused(E focused) {
+        this.focused = focused;
+    }
+
+    public boolean isDragging() {
+        return this.dragging;
+    }
+
+    public void setDragging(boolean dragging) {
+        this.dragging = dragging;
+    }
+
     public void setRenderSelection(boolean boolean_1) {
         this.visible = boolean_1;
     }
-    
+
     protected void setRenderHeader(boolean boolean_1, int headerHeight) {
         this.renderSelection = boolean_1;
         this.headerHeight = headerHeight;
         if (!boolean_1)
             this.headerHeight = 0;
     }
-    
+
     public int getItemWidth() {
         return 220;
     }
-    
+
     public E getSelectedItem() {
         return this.selectedItem;
     }
-    
+
     public void selectItem(E item) {
         this.selectedItem = item;
     }
-    
-    public E getFocused() {
-        return (E) super.getFocused();
-    }
-    
+
     public List<E> children() {
         return this.entries;
     }
-    
+
     protected final void clearItems() {
         this.entries.clear();
     }
-    
+
     protected E getItem(int index) {
         return this.children().get(index);
     }
-    
+
     protected int addItem(E item) {
         this.entries.add(item);
         return this.entries.size() - 1;
     }
-    
+
     protected int getItemCount() {
         return this.children().size();
     }
-    
+
     protected boolean isSelected(int index) {
         return Objects.equals(this.getSelectedItem(), this.children().get(index));
     }
-    
+
     protected final E getItemAtPosition(double mouseX, double mouseY) {
         int listMiddleX = this.left + this.width / 2;
         int minX = listMiddleX - this.getItemWidth() / 2;
@@ -123,7 +136,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
         }
         return mouseX < (double) this.getScrollbarPosition() && mouseX >= minX && mouseX <= maxX && itemIndex >= 0 && currentY >= 0 && itemIndex < this.getItemCount() ? this.children().get(itemIndex) : null;
     }
-    
+
     public void updateSize(int width, int height, int top, int bottom) {
         this.width = width;
         this.height = height;
@@ -132,12 +145,12 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
         this.left = 0;
         this.right = width;
     }
-    
+
     public void setLeftPos(int left) {
         this.left = left;
         this.right = left + this.width;
     }
-    
+
     protected int getMaxScrollPosition() {
         List<Integer> list = new ArrayList<>();
         int i = headerHeight;
@@ -150,19 +163,19 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
         list.add(i);
         return list.stream().max(Integer::compare).orElse(0);
     }
-    
+
     protected void clickedHeader(int int_1, int int_2) {
     }
-    
+
     protected void renderHeader(int int_1, int int_2, Tessellator tessellator) {
     }
-    
+
     protected void endBackground() {
     }
-    
+
     protected void renderDecorations(int int_1, int int_2) {
     }
-    
+
     @Deprecated
     protected void renderBackBackground(BufferBuilder buffer, Tessellator tessellator) {
         this.client.getTextureManager().bindTexture(backgroundLocation);
@@ -175,7 +188,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
         buffer.pos(this.left, this.top, 0.0D).tex(this.left / 32.0F, ((this.top + (int) this.getScroll()) / 32.0F)).color(32, 32, 32, 255).endVertex();
         tessellator.draw();
     }
-    
+
     @SuppressWarnings("deprecation")
     public void render(int mouseX, int mouseY, float delta) {
         this.endBackground();
@@ -215,14 +228,14 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
         tessellator.draw();
         int maxScroll = this.getMaxScroll();
         renderScrollBar(tessellator, buffer, maxScroll, scrollbarPosition, int_4);
-        
+
         this.renderDecorations(mouseX, mouseY);
         GlStateManager.enableTexture2D();
         GlStateManager.shadeModel(7424);
         GlStateManager.enableAlphaTest();
         GlStateManager.disableBlend();
     }
-    
+
     @SuppressWarnings("deprecation")
     protected void renderScrollBar(Tessellator tessellator, BufferBuilder buffer, int maxScroll, int scrollbarPositionMinX, int scrollbarPositionMaxX) {
         if (maxScroll > 0) {
@@ -232,7 +245,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
             if (int_10 < this.top) {
                 int_10 = this.top;
             }
-            
+
             buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
             buffer.pos(scrollbarPositionMinX, this.bottom, 0.0D).tex(0, 1).color(0, 0, 0, 255).endVertex();
             buffer.pos(scrollbarPositionMaxX, this.bottom, 0.0D).tex(1, 1).color(0, 0, 0, 255).endVertex();
@@ -253,14 +266,14 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
             tessellator.draw();
         }
     }
-    
+
     protected void centerScrollOn(E item) {
         double d = (this.bottom - this.top) / -2d;
         for (int i = 0; i < this.children().indexOf(item) && i < this.getItemCount(); i++)
             d += getItem(i).getItemHeight();
         this.capYPosition(d);
     }
-    
+
     protected void ensureVisible(E item) {
         int rowTop = this.getRowTop(this.children().indexOf(item));
         int int_2 = rowTop - this.top - 4 - item.getItemHeight();
@@ -270,36 +283,36 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
         if (int_3 < 0)
             this.scroll(-int_3);
     }
-    
+
     protected void scroll(int int_1) {
         this.capYPosition(this.getScroll() + (double) int_1);
         this.yDrag = -2;
     }
-    
+
     public double getScroll() {
         return this.scroll;
     }
-    
+
     public void capYPosition(double double_1) {
         this.scroll = MathHelper.clamp(double_1, 0.0D, this.getMaxScroll());
     }
-    
+
     protected int getMaxScroll() {
         return Math.max(0, this.getMaxScrollPosition() - (this.bottom - this.top - 4));
     }
-    
+
     public int getScrollBottom() {
         return (int) this.getScroll() - this.height - this.headerHeight;
     }
-    
+
     protected void updateScrollingState(double double_1, double double_2, int int_1) {
         this.scrolling = int_1 == 0 && double_1 >= (double) this.getScrollbarPosition() && double_1 < (double) (this.getScrollbarPosition() + 6);
     }
-    
+
     protected int getScrollbarPosition() {
         return this.width / 2 + 124;
     }
-    
+
     public boolean mouseClicked(double double_1, double double_2, int int_1) {
         this.updateScrollingState(double_1, double_2, int_1);
         if (!this.isMouseOver(double_1, double_2)) {
@@ -307,7 +320,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
         } else {
             E item = this.getItemAtPosition(double_1, double_2);
             if (item != null) {
-                if (item.mouseClicked(double_1, double_2, int_1)) {
+                if (item.mouseClicked((int) double_1, (int) double_2, int_1)) {
                     this.setFocused(item);
                     this.setDragging(true);
                     return true;
@@ -316,23 +329,21 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
                 this.clickedHeader((int) (double_1 - (double) (this.left + this.width / 2 - this.getItemWidth() / 2)), (int) (double_2 - (double) this.top) + (int) this.getScroll() - 4);
                 return true;
             }
-            
+
             return this.scrolling;
         }
     }
-    
+
     public boolean mouseReleased(double double_1, double double_2, int int_1) {
         if (this.getFocused() != null) {
-            this.getFocused().mouseReleased(double_1, double_2, int_1);
+            this.getFocused().mouseReleased((int) double_1, (int) double_2, int_1);
         }
-        
+
         return false;
     }
-    
+
     public boolean mouseDragged(double double_1, double double_2, int int_1, double double_3, double double_4) {
-        if (super.mouseDragged(double_1, double_2, int_1, double_3, double_4)) {
-            return true;
-        } else if (int_1 == 0 && this.scrolling) {
+        if (int_1 == 0 && this.scrolling) {
             if (double_2 < (double) this.top) {
                 this.capYPosition(0.0D);
             } else if (double_2 > (double) this.bottom) {
@@ -344,38 +355,21 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
                 double double_6 = Math.max(1.0D, double_5 / (double) (int_2 - int_3));
                 this.capYPosition(this.getScroll() + double_4 * double_6);
             }
-            
+
             return true;
         } else {
             return false;
         }
     }
-    
-    @Override
-    public boolean mouseScrolled(double double_1) {
-        for (E entry : entries) {
-            if (entry.mouseScrolled(double_1)) {
-                return true;
-            }
-        }
-        this.capYPosition(this.getScroll() - double_1 * (double) (getMaxScroll() / getItemCount()) / 2.0D);
-        return true;
-    }
-    
-    public boolean keyPressed(int int_1, int int_2, int int_3) {
-        if (super.keyPressed(int_1, int_2, int_3)) {
-            return true;
-        } else if (int_1 == 264) {
-            this.moveSelection(1);
-            return true;
-        } else if (int_1 == 265) {
-            this.moveSelection(-1);
-            return true;
-        } else {
-            return false;
+
+    public void handleMouseInput() {
+        int dwheel = Mouse.getEventDWheel();
+        if (dwheel != 0) {
+            double amount = dwheel > 0 ? 1d : -1d;
+            this.capYPosition(this.getScroll() - amount * (double) (getMaxScroll() / Math.max(1, getItemCount())) / 2.0D);
         }
     }
-    
+
     protected void moveSelection(int int_1) {
         if (!this.children().isEmpty()) {
             int int_2 = this.children().indexOf(this.getSelectedItem());
@@ -384,18 +378,18 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
             this.selectItem(itemListWidget$Item_1);
             this.ensureVisible(itemListWidget$Item_1);
         }
-        
+
     }
-    
+
     public boolean isMouseOver(double double_1, double double_2) {
         return double_2 >= (double) this.top && double_2 <= (double) this.bottom && double_1 >= (double) this.left && double_1 <= (double) this.right;
     }
-    
+
     protected void renderList(int startX, int startY, int int_3, int int_4, float float_1) {
         int itemCount = this.getItemCount();
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder buffer = tessellator.getBuffer();
-        
+
         for (int renderIndex = 0; renderIndex < itemCount; ++renderIndex) {
             E item = this.getItem(renderIndex);
             int itemY = startY + headerHeight;
@@ -425,34 +419,34 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
                 tessellator.draw();
                 GlStateManager.enableTexture2D();
             }
-            
+
             int y = this.getRowTop(renderIndex);
             int x = this.getRowLeft();
             RenderHelper.disableStandardItemLighting();
             renderItem(item, renderIndex, y, x, itemWidth, itemHeight, int_3, int_4, this.isMouseOver(int_3, int_4) && Objects.equals(this.getItemAtPosition(int_3, int_4), item), float_1);
         }
-        
+
     }
-    
+
     protected void renderItem(E item, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         item.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
     }
-    
+
     protected int getRowLeft() {
         return this.left + this.width / 2 - this.getItemWidth() / 2 + 2;
     }
-    
+
     protected int getRowTop(int index) {
         int integer = top + 4 - (int) this.getScroll() + headerHeight;
         for (int i = 0; i < entries.size() && i < index; i++)
             integer += entries.get(i).getItemHeight();
         return integer;
     }
-    
+
     protected boolean isFocused() {
         return false;
     }
-    
+
     @SuppressWarnings("deprecation")
     protected void renderHoleBackground(int int_1, int int_2, int int_3, int int_4) {
         Tessellator tessellator = Tessellator.getInstance();
@@ -467,100 +461,119 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
         buffer.pos(this.left, int_1, 0.0D).tex(0, ((float) int_1 / 32.0F)).color(64, 64, 64, int_3).endVertex();
         tessellator.draw();
     }
-    
+
     protected E remove(int int_1) {
         E itemListWidget$Item_1 = this.entries.get(int_1);
         return this.removeEntry(this.entries.get(int_1)) ? itemListWidget$Item_1 : null;
     }
-    
+
     protected boolean removeEntry(E itemListWidget$Item_1) {
         boolean boolean_1 = this.entries.remove(itemListWidget$Item_1);
         if (boolean_1 && itemListWidget$Item_1 == this.getSelectedItem()) {
             this.selectItem(null);
         }
-        
+
         return boolean_1;
     }
-    
+
+    public void tick() {
+        for (E entry : entries)
+            entry.tick();
+    }
+
     public static final class SmoothScrollingSettings {
         public static final double CLAMP_EXTENSION = 200;
-        
-        private SmoothScrollingSettings() {}
+
+        private SmoothScrollingSettings() {
+        }
     }
-    
-    @OnlyIn(Dist.CLIENT)
-    public abstract static class Entry<E extends Entry<E>> extends Gui implements IGuiEventListener {
-        @Deprecated DynamicEntryListWidget<E> parent;
-        
+
+    @SideOnly(Side.CLIENT)
+    public abstract static class Entry<E extends Entry<E>> extends Gui {
+        @Deprecated
+        DynamicEntryListWidget<E> parent;
+
         public Entry() {
         }
-        
+
         public abstract void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isHovered, float delta);
-        
+
         public boolean isMouseOver(double double_1, double double_2) {
             return Objects.equals(this.parent.getItemAtPosition(double_1, double_2), this);
         }
-        
+
         public DynamicEntryListWidget<E> getParent() {
             return parent;
         }
-        
+
         public void setParent(DynamicEntryListWidget<E> parent) {
             this.parent = parent;
         }
-        
+
         public abstract int getItemHeight();
-        
+
         @Deprecated
         public int getMorePossibleHeight() {
             return -1;
         }
 
-        public List<? extends IGuiEventListener> getChildren() {
-            return this.getParent().getChildren();
+        public void tick() {
+        }
+
+        public boolean mouseClicked(int mouseX, int mouseY, int button) {
+            return false;
+        }
+
+        public boolean keyTyped(char typedChar, int keyCode) {
+            return false;
+        }
+
+        public void mouseReleased(int mouseX, int mouseY, int button) {
+        }
+
+        public void updateScreen() {
         }
     }
-    
-    @OnlyIn(Dist.CLIENT)
+
+    @SideOnly(Side.CLIENT)
     class Entries extends AbstractList<E> {
         private final ArrayList<E> items;
-        
+
         private Entries() {
             this.items = Lists.newArrayList();
         }
-        
+
         @Override
         public void clear() {
             items.clear();
         }
-        
+
         @Override
         public E get(int int_1) {
             return this.items.get(int_1);
         }
-        
+
         @Override
         public int size() {
             return this.items.size();
         }
-        
+
         @Override
         public E set(int int_1, E itemListWidget$Item_1) {
             E itemListWidget$Item_2 = this.items.set(int_1, itemListWidget$Item_1);
             itemListWidget$Item_1.parent = DynamicEntryListWidget.this;
             return itemListWidget$Item_2;
         }
-        
+
         @Override
         public void add(int int_1, E itemListWidget$Item_1) {
             this.items.add(int_1, itemListWidget$Item_1);
             itemListWidget$Item_1.parent = DynamicEntryListWidget.this;
         }
-        
+
         @Override
         public E remove(int int_1) {
             return this.items.remove(int_1);
         }
     }
 }
-

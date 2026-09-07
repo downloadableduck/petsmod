@@ -5,10 +5,6 @@ import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 
-import java.util.Objects;
-
-import static com.jeff.pets.client.Central.CONFIG;
-
 public class ClientVillagerProfessionLayer implements LayerRenderer<ClientVillager> {
 
     public static final ResourceLocation ARMORER_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/armorer.png");

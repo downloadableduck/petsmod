@@ -3,17 +3,18 @@ package com.jeff.pets.mob.vanilla.boss;
 import com.jeff.pets.CanFly;
 import com.jeff.pets.client.Math2;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.entity.EntityType;
+import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.boss.dragon.phase.IPhase;
-import net.minecraft.entity.boss.dragon.phase.PhaseType;
-import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.entity.boss.dragon.phase.PhaseList;
+import net.minecraft.entity.boss.dragon.phase.PhaseManager;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.EndPodiumFeature;
+import net.minecraft.world.end.DragonFightManager;
+import net.minecraft.world.gen.feature.WorldGenEndPodium;
 
 @CanFly
 public class ClientEnderDragon extends FlyingPet {
@@ -21,10 +22,12 @@ public class ClientEnderDragon extends FlyingPet {
     public float oFlapTime;
     public float flapTime;
     public int posPointer = -1;
+    private PhaseManager phaseManager;
 
-    public ClientEnderDragon(EntityType<? extends EntityTameable> entityType, net.minecraft.world.World level) {
-        super(entityType, level);
+    public ClientEnderDragon(net.minecraft.world.World level) {
+        super(level);
         this.setSize(16f, 8f);
+        this.phaseManager = new PhaseManager(new EntityDragon(level));
     }
 
     @Override
@@ -71,20 +74,51 @@ public class ClientEnderDragon extends FlyingPet {
     }
 
     public float getHeadPartYOffset(int i, double[] ds, double[] es) {
-        PhaseType<? extends IPhase> enderDragonPhase = PhaseType.HOLDING_PATTERN;
-        double e;
-        if (enderDragonPhase != PhaseType.LANDING && enderDragonPhase != PhaseType.TAKEOFF) {
-            if (i == 6) {
-                e = 0.0F;
+        IPhase iphase = this.phaseManager.getCurrentPhase();
+        PhaseList<? extends IPhase> phaselist = iphase.getType();
+        double d0;
+        if (phaselist != PhaseList.LANDING && phaselist != PhaseList.TAKEOFF) {
+            if (iphase.getIsStationary()) {
+                d0 = (double)i;
+            } else if (i == 6) {
+                d0 = (double)0.0F;
             } else {
-                e = es[1] - ds[1];
+                d0 = ds[1] - es[1];
             }
         } else {
-            BlockPos blockPos = this.world.getHeight(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, EndPodiumFeature.END_PODIUM_LOCATION);
-            double d = Math.max(Math.sqrt(blockPos.distanceSq(new Vec3i(this.getPositionVector().x, this.getPositionVector().y, this.getPositionVector().z))) / (double) 4.0F, 1.0F);
-            e = (double) i / d;
+            BlockPos blockpos = this.world.func_175672_r(WorldGenEndPodium.END_PODIUM_LOCATION);
+            float f = Math.max(MathHelper.sqrt(this.getDistanceSqToCenter(blockpos)) / 4.0F, 1.0F);
+            d0 = (double)((float)i / f);
         }
 
-        return (float) e;
+        return (float)d0;
+    }
+
+    public Vec3d getHeadLookVec(float p_184665_1_) {
+        IPhase iphase = this.phaseManager.getCurrentPhase();
+        PhaseList<? extends IPhase> phaselist = iphase.getType();
+        Vec3d vec3d;
+        if (phaselist != PhaseList.LANDING && phaselist != PhaseList.TAKEOFF) {
+            if (iphase.getIsStationary()) {
+                float f4 = this.rotationPitch;
+                float f5 = 1.5F;
+                this.rotationPitch = -45.0F;
+                vec3d = this.getLook(p_184665_1_);
+                this.rotationPitch = f4;
+            } else {
+                vec3d = this.getLook(p_184665_1_);
+            }
+        } else {
+            BlockPos blockpos = this.world.func_175672_r(WorldGenEndPodium.END_PODIUM_LOCATION);
+            float f = Math.max(MathHelper.sqrt(this.getDistanceSqToCenter(blockpos)) / 4.0F, 1.0F);
+            float f1 = 6.0F / f;
+            float f2 = this.rotationPitch;
+            float f3 = 1.5F;
+            this.rotationPitch = -f1 * 1.5F * 5.0F;
+            vec3d = this.getLook(p_184665_1_);
+            this.rotationPitch = f2;
+        }
+
+        return vec3d;
     }
 }

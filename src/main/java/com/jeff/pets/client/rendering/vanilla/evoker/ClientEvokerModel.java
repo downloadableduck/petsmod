@@ -2,11 +2,8 @@ package com.jeff.pets.client.rendering.vanilla.evoker;
 
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.vanilla.hostile.ClientEvoker;
-import net.minecraft.client.renderer.entity.model.ModelIllager;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.AbstractIllager;
 import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.math.MathHelper;
 
@@ -74,13 +71,13 @@ public class ClientEvokerModel extends PetModel {
 
     @Override
     public void setRotationAngles(float p_78087_1_, float p_78087_2_, float p_78087_3_, float p_78087_4_, float p_78087_5_, float p_78087_6_, Entity p_78087_7_) {
-        this.head.rotateAngleY = p_78087_4_ * ((float)Math.PI / 180F);
-        this.head.rotateAngleX = p_78087_5_ * ((float)Math.PI / 180F);
+        this.head.rotateAngleY = p_78087_4_ * ((float) Math.PI / 180F);
+        this.head.rotateAngleX = p_78087_5_ * ((float) Math.PI / 180F);
         this.arms.rotationPointY = 3.0F;
         this.arms.rotationPointZ = -1.0F;
         this.arms.rotateAngleX = -0.75F;
         this.leg0.rotateAngleX = MathHelper.cos(p_78087_1_ * 0.6662F) * 1.4F * p_78087_2_ * 0.5F;
-        this.leg1.rotateAngleX = MathHelper.cos(p_78087_1_ * 0.6662F + (float)Math.PI) * 1.4F * p_78087_2_ * 0.5F;
+        this.leg1.rotateAngleX = MathHelper.cos(p_78087_1_ * 0.6662F + (float) Math.PI) * 1.4F * p_78087_2_ * 0.5F;
         this.leg0.rotateAngleY = 0.0F;
         this.leg1.rotateAngleY = 0.0F;
     }

@@ -1,14 +1,13 @@
 package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.mob.SlimeLikePet;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.util.SoundEvent;
 
 public class ClientRabbit extends SlimeLikePet {
 
-    public ClientRabbit(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
-        super(entityType, level);
+    public ClientRabbit(net.minecraft.world.World level) {
+        super(level);
         this.setSize(0.4f, 0.5f);
     }
 

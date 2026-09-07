@@ -2,7 +2,6 @@ package com.jeff.pets.client.rendering.vanilla.evoker;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientEvoker;
-import net.minecraft.client.renderer.entity.RenderEvoker;
 import net.minecraft.util.ResourceLocation;
 
 public class ClientEvokerRenderer extends PetRenderer<ClientEvoker, ClientEvokerModel> {

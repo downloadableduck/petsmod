@@ -2,27 +2,27 @@ package me.shedaniel.forge.math;
 
 public final class Color {
     private final int color;
-    
+
     private Color(int color) {
         this.color = color;
     }
-    
+
     public static Color ofTransparent(int color) {
         return new Color(color);
     }
-    
+
     public static Color ofOpaque(int color) {
         return new Color(0xFF000000 | color);
     }
-    
+
     public static Color ofRGB(float r, float b, float g) {
         return ofRGBA(r, g, b, 1f);
     }
-    
+
     public static Color ofRGB(int r, int b, int g) {
         return ofRGBA(r, g, b, 255);
     }
-    
+
     public static Color ofRGBA(float r, float b, float g, float a) {
         return ofRGBA(
                 (int) (r * 255 + 0.5),
@@ -31,20 +31,20 @@ public final class Color {
                 (int) (a * 255 + 0.5)
         );
     }
-    
+
     public static Color ofRGBA(int r, int b, int g, int a) {
         return new Color(
                 ((a & 0xFF) << 24) |
-                ((r & 0xFF) << 16) |
-                ((g & 0xFF) << 8) |
-                (b & 0xFF)
+                        ((r & 0xFF) << 16) |
+                        ((g & 0xFF) << 8) |
+                        (b & 0xFF)
         );
     }
-    
+
     public static Color ofHSB(float hue, float saturation, float brightness) {
         return ofOpaque(HSBtoRGB(hue, saturation, brightness));
     }
-    
+
     public static int HSBtoRGB(float hue, float saturation, float brightness) {
         int r = 0, g = 0, b = 0;
         if (saturation == 0) {
@@ -90,27 +90,27 @@ public final class Color {
         }
         return 0xff000000 | (r << 16) | (g << 8) | b;
     }
-    
+
     public int getColor() {
         return color;
     }
-    
+
     public int getAlpha() {
         return color >> 24 & 0xFF;
     }
-    
+
     public int getRed() {
         return color >> 16 & 0xFF;
     }
-    
+
     public int getGreen() {
         return color >> 8 & 0xFF;
     }
-    
+
     public int getBlue() {
         return color & 0xFF;
     }
-    
+
     /**
      * Returns a brighter color
      *
@@ -131,7 +131,7 @@ public final class Color {
                 Math.min((int) (b / (1 / factor)), 255),
                 getAlpha());
     }
-    
+
     /**
      * Returns a darker color
      *
@@ -144,25 +144,25 @@ public final class Color {
                 Math.max((int) (getBlue() * (1 / factor)), 0),
                 getAlpha());
     }
-    
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
         if (other == null || getClass() != other.getClass()) return false;
         return color == ((Color) other).color;
     }
-    
+
     @Override
     public int hashCode() {
         return color;
     }
-    
+
     @Override
     public String toString() {
         return "Color{" +
-               "r=" + getRed() +
-               "g=" + getGreen() +
-               "b=" + getBlue() +
-               '}';
+                "r=" + getRed() +
+                "g=" + getGreen() +
+                "b=" + getBlue() +
+                '}';
     }
 }

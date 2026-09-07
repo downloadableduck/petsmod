@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.ghast;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientGhast;
-import net.minecraft.client.renderer.entity.model.ModelGhast;
+import net.minecraft.client.model.ModelGhast;
 import net.minecraft.util.ResourceLocation;
 
 public class ClientGhastRenderer extends PetRenderer<ClientGhast, ModelGhast> {
@@ -19,6 +19,6 @@ public class ClientGhastRenderer extends PetRenderer<ClientGhast, ModelGhast> {
     @Override
     public void preRenderCallback(ClientGhast ghast, float f) {
         net.minecraft.client.renderer.GlStateManager.scalef(4.5F, 4.5F, 4.5F);
-        
+
     }
 }

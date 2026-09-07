@@ -1,14 +1,13 @@
 package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.util.SoundEvent;
 
 public class ClientVindicator extends GroundPet {
 
-    public ClientVindicator(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
-        super(entityType, level);
+    public ClientVindicator(net.minecraft.world.World level) {
+        super(level);
         this.setSize(0.6f, 1.95f);
     }
 

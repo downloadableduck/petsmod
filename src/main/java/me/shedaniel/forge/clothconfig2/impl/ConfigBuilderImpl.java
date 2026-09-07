@@ -10,8 +10,8 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 import java.util.Map;
@@ -19,9 +19,11 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 @Deprecated
-@OnlyIn(Dist.CLIENT)
+@SideOnly(Side.CLIENT)
 public class ConfigBuilderImpl implements ConfigBuilder {
-    
+
+    private final Map<String, ResourceLocation> categoryBackground = Maps.newHashMap();
+    private final Map<String, List<Pair<String, Object>>> dataMap = Maps.newLinkedHashMap();
     private Runnable savingRunnable;
     private GuiScreen parent;
     private String title = "text.cloth-config.config";
@@ -32,79 +34,78 @@ public class ConfigBuilderImpl implements ConfigBuilder {
     private boolean doesConfirmSave = true;
     private boolean transparentBackground = false;
     private ResourceLocation defaultBackground = Gui.OPTIONS_BACKGROUND;
-    private Consumer<GuiScreen> afterInitConsumer = screen -> {};
-    private final Map<String, ResourceLocation> categoryBackground = Maps.newHashMap();
-    private final Map<String, List<Pair<String, Object>>> dataMap = Maps.newLinkedHashMap();
+    private Consumer<GuiScreen> afterInitConsumer = screen -> {
+    };
     private String fallbackCategory = null;
     private boolean alwaysShowTabs = false;
-    
+
     @Deprecated
     public ConfigBuilderImpl() {
-        
+
     }
-    
+
     @Override
     public boolean isAlwaysShowTabs() {
         return alwaysShowTabs;
     }
-    
+
     @Override
     public ConfigBuilder setAlwaysShowTabs(boolean alwaysShowTabs) {
         this.alwaysShowTabs = alwaysShowTabs;
         return this;
     }
-    
+
     @Override
     public ConfigBuilder setTransparentBackground(boolean transparentBackground) {
         this.transparentBackground = transparentBackground;
         return this;
     }
-    
+
     @Override
     public ConfigBuilder setAfterInitConsumer(Consumer<GuiScreen> afterInitConsumer) {
         this.afterInitConsumer = afterInitConsumer;
         return this;
     }
-    
+
     @Override
     public ConfigBuilder setFallbackCategory(ConfigCategory fallbackCategory) {
         this.fallbackCategory = Objects.requireNonNull(fallbackCategory).getCategoryKey();
         return this;
     }
-    
+
     @Override
     public GuiScreen getParentScreen() {
         return parent;
     }
-    
+
     @Override
     public ConfigBuilder setParentScreen(GuiScreen parent) {
         this.parent = parent;
         return this;
     }
-    
+
     @Override
     public String getTitle() {
         return title;
     }
-    
+
     @Override
     public ConfigBuilder setTitle(String title) {
         this.title = title;
         return this;
     }
-    
+
     @Override
     public boolean isEditable() {
         return editable;
     }
-    
+
     @Override
     public ConfigBuilder setEditable(boolean editable) {
         this.editable = editable;
         return this;
     }
-    
+
     @Override
     public ConfigCategory getOrCreateCategory(String categoryKey) {
         if (dataMap.containsKey(categoryKey))
@@ -122,7 +123,7 @@ public class ConfigBuilderImpl implements ConfigBuilder {
             categoryBackground.put(categoryKey, identifier);
         }, () -> dataMap.get(categoryKey), () -> removeCategory(categoryKey));
     }
-    
+
     @Override
     public ConfigBuilder removeCategory(String category) {
         if (dataMap.containsKey(category) && fallbackCategory.equals(category))
@@ -132,7 +133,7 @@ public class ConfigBuilderImpl implements ConfigBuilder {
         dataMap.remove(category);
         return this;
     }
-    
+
     @Override
     public ConfigBuilder removeCategoryIfExists(String category) {
         if (dataMap.containsKey(category) && fallbackCategory.equals(category))
@@ -140,78 +141,78 @@ public class ConfigBuilderImpl implements ConfigBuilder {
         dataMap.remove(category);
         return this;
     }
-    
+
     @Override
     public boolean hasCategory(String category) {
         return dataMap.containsKey(category);
     }
-    
+
     @Override
     public ConfigBuilder setShouldTabsSmoothScroll(boolean shouldTabsSmoothScroll) {
         this.tabsSmoothScroll = shouldTabsSmoothScroll;
         return this;
     }
-    
+
     @Override
     public boolean isTabsSmoothScrolling() {
         return tabsSmoothScroll;
     }
-    
+
     @Override
     public ConfigBuilder setShouldListSmoothScroll(boolean shouldListSmoothScroll) {
         this.listSmoothScroll = shouldListSmoothScroll;
         return this;
     }
-    
+
     @Override
     public boolean isListSmoothScrolling() {
         return listSmoothScroll;
     }
-    
+
     @Override
     public ConfigBuilder setDoesConfirmSave(boolean confirmSave) {
         this.doesConfirmSave = confirmSave;
         return this;
     }
-    
+
     @Override
     public boolean doesConfirmSave() {
         return doesConfirmSave;
     }
-    
+
     @Override
     public ConfigBuilder setDoesProcessErrors(boolean processErrors) {
         this.doesProcessErrors = processErrors;
         return this;
     }
-    
+
     @Override
     public boolean doesProcessErrors() {
         return doesProcessErrors;
     }
-    
+
     @Override
     public ResourceLocation getDefaultBackgroundTexture() {
         return defaultBackground;
     }
-    
+
     @Override
     public ConfigBuilder setDefaultBackgroundTexture(ResourceLocation texture) {
         this.defaultBackground = texture;
         return this;
     }
-    
+
     @Override
     public ConfigBuilder setSavingRunnable(Runnable runnable) {
         this.savingRunnable = runnable;
         return this;
     }
-    
+
     @Override
     public Consumer<GuiScreen> getAfterInitConsumer() {
         return afterInitConsumer;
     }
-    
+
     @Override
     public GuiScreen build() {
         if (dataMap.isEmpty() || fallbackCategory == null)
@@ -222,7 +223,7 @@ public class ConfigBuilderImpl implements ConfigBuilder {
                 if (savingRunnable != null)
                     savingRunnable.run();
             }
-            
+
             @Override
             public void initGui() {
                 super.initGui();
@@ -236,10 +237,10 @@ public class ConfigBuilderImpl implements ConfigBuilder {
         screen.setAlwaysShowTabs(alwaysShowTabs);
         return screen;
     }
-    
+
     @Override
     public Runnable getSavingRunnable() {
         return savingRunnable;
     }
-    
+
 }

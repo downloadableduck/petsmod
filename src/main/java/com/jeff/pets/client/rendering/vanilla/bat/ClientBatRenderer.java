@@ -2,7 +2,6 @@ package com.jeff.pets.client.rendering.vanilla.bat;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientBat;
-import net.minecraft.client.renderer.entity.RenderBat;
 import net.minecraft.util.ResourceLocation;
 
 public class ClientBatRenderer extends PetRenderer<ClientBat, ClientBatModel> {

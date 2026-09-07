@@ -2,14 +2,13 @@ package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.util.SoundEvent;
 
 @CanFly
 public class ClientGuardian extends GroundPet {
-    public ClientGuardian(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
-        super(entityType, level);
+    public ClientGuardian(net.minecraft.world.World level) {
+        super(level);
         this.setSize(0.85f, 0.85f);
     }
 

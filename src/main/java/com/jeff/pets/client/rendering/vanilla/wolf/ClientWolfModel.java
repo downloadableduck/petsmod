@@ -2,8 +2,8 @@ package com.jeff.pets.client.rendering.vanilla.wolf;
 
 import com.google.common.collect.ImmutableList;
 import com.jeff.pets.mob.vanilla.neutral.ClientWolf;
-import net.minecraft.client.renderer.entity.model.ModelBase;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
 
 import java.util.List;
 

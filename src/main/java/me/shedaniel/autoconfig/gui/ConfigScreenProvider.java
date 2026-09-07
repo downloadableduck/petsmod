@@ -96,7 +96,7 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<GuiS
 
         if (configClass.isAnnotationPresent(Config.Gui.Background.class)) {
             String bg = configClass.getAnnotation(Config.Gui.Background.class).value();
-            ResourceLocation bgId = ResourceLocation.makeResourceLocation(bg);
+            ResourceLocation bgId = new ResourceLocation(bg);
             if (TRANSPARENT_BACKGROUND.equals(bgId))
                 builder.transparentBackground();
             else
@@ -146,14 +146,14 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<GuiS
 
         ITextComponent categoryKey = new TextComponentTranslation(categoryFunction.apply(baseI13n, categoryName));
 
-        if (!screenBuilder.hasCategory(categoryKey.getString())) {
-            ConfigCategory category = screenBuilder.getOrCreateCategory(categoryKey.getString());
+        if (!screenBuilder.hasCategory(categoryKey.getUnformattedComponentText())) {
+            ConfigCategory category = screenBuilder.getOrCreateCategory(categoryKey.getUnformattedComponentText());
             if (backgroundMap.containsKey(categoryName)) {
                 category.setCategoryBackground(backgroundMap.get(categoryName));
             }
             return category;
         }
 
-        return screenBuilder.getOrCreateCategory(categoryKey.getString());
+        return screenBuilder.getOrCreateCategory(categoryKey.getUnformattedComponentText());
     }
 }

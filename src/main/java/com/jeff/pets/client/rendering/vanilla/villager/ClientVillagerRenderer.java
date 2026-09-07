@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.villager;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientVillager;
-import net.minecraft.client.renderer.entity.model.ModelVillager;
+import net.minecraft.client.model.ModelVillager;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Objects;
@@ -26,7 +26,7 @@ public class ClientVillagerRenderer extends PetRenderer<ClientVillager, ModelVil
         if (CONFIG.isBaby) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
-        
+
     }
 
     @Override

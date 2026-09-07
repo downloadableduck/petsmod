@@ -2,9 +2,8 @@ package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.util.SoundEvent;
 
 @CanFly
 public class ClientParrot extends FlyingPet {
@@ -17,8 +16,8 @@ public class ClientParrot extends FlyingPet {
 
     public boolean isOnHead;
 
-    public ClientParrot(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
-        super(entityType, level);
+    public ClientParrot(net.minecraft.world.World level) {
+        super(level);
         this.setSize(0.5f, 0.9f);
     }
 
@@ -38,7 +37,7 @@ public class ClientParrot extends FlyingPet {
     }
 
     @Override
-    public void livingTick() {
+    public void tick() {
         this.oFlap = this.flap;
         this.oFlapSpeed = this.flapSpeed;
         this.flapSpeed += (this.onGround ? -1.0F : 4.0F) * 0.3F;

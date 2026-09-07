@@ -6,18 +6,16 @@
 package com.jeff.pets.client.rendering.vanilla.slime;
 
 import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelSlime;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
-import net.minecraft.client.renderer.entity.RenderSlime;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.client.renderer.entity.model.ModelBase;
-import net.minecraft.client.renderer.entity.model.ModelSlime;
-import net.minecraft.entity.monster.EntitySlime;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-@OnlyIn(Dist.CLIENT)
+@SideOnly(Side.CLIENT)
 public class LayerSlimeGel implements LayerRenderer<ClientSlime> {
     private final ClientSlimeRenderer slimeRenderer;
     private final ModelBase slimeModel = new ModelSlime(0);

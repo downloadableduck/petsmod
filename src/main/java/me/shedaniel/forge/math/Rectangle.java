@@ -5,90 +5,90 @@ public class Rectangle implements Cloneable {
     public int y;
     public int width;
     public int height;
-    
+
     public Rectangle() {
         this(0, 0, 0, 0);
     }
-    
+
     public Rectangle(Rectangle r) {
         this(r.x, r.y, r.width, r.height);
     }
-    
+
     public Rectangle(int width, int height) {
         this(0, 0, width, height);
     }
-    
+
     public Rectangle(Point p, Dimension d) {
         this(p.x, p.y, d.width, d.height);
     }
-    
+
     public Rectangle(Point p) {
         this(p.x, p.y, 0, 0);
     }
-    
+
     public Rectangle(Dimension d) {
         this(0, 0, d.width, d.height);
     }
-    
+
     public Rectangle(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
     }
-    
+
     public int getX() {
         return x;
     }
-    
+
     public int getMinX() {
         return x;
     }
-    
+
     public int getMaxX() {
         return x + width;
     }
-    
+
     public int getCenterX() {
         return x + width / 2;
     }
-    
+
     public int getY() {
         return y;
     }
-    
+
     public int getMinY() {
         return y;
     }
-    
+
     public int getMaxY() {
         return y + height;
     }
-    
+
     public int getCenterY() {
         return y + height / 2;
     }
-    
+
     public int getWidth() {
         return width;
     }
-    
+
     public int getHeight() {
         return height;
     }
-    
+
     public Rectangle getBounds() {
         return new Rectangle(x, y, width, height);
     }
-    
+
     public void setBounds(Rectangle r) {
         setBounds(r.x, r.y, r.width, r.height);
     }
-    
+
     public void setBounds(int x, int y, int width, int height) {
         reshape(x, y, width, height);
     }
-    
+
     @Deprecated
     public void reshape(int x, int y, int width, int height) {
         this.x = x;
@@ -96,69 +96,69 @@ public class Rectangle implements Cloneable {
         this.width = width;
         this.height = height;
     }
-    
+
     public Point getLocation() {
         return new Point(x, y);
     }
-    
+
     public void setLocation(Point p) {
         setLocation(p.x, p.y);
     }
-    
+
     public void setLocation(int x, int y) {
         move(x, y);
     }
-    
+
     @Deprecated
     public void move(int x, int y) {
         this.x = x;
         this.y = y;
     }
-    
+
     public void translate(int dx, int dy) {
         this.x += dx;
         this.y += dy;
     }
-    
+
     @Override
     public Rectangle clone() {
         return getBounds();
     }
-    
+
     public Dimension getSize() {
         return new Dimension(width, height);
     }
-    
+
     public void setSize(Dimension d) {
         setSize(d.width, d.height);
     }
-    
+
     public void setSize(int width, int height) {
         resize(width, height);
     }
-    
+
     @Deprecated
     public void resize(int width, int height) {
         this.width = width;
         this.height = height;
     }
-    
+
     public boolean contains(Point p) {
         return contains(p.x, p.y);
     }
-    
+
     public boolean contains(int x, int y) {
         return inside(x, y);
     }
-    
+
     public boolean contains(double x, double y) {
         return inside((int) x, (int) y);
     }
-    
+
     public boolean contains(Rectangle r) {
         return contains(r.x, r.y, r.width, r.height);
     }
-    
+
     public boolean contains(int X, int Y, int W, int H) {
         int w = this.width;
         int h = this.height;
@@ -196,7 +196,7 @@ public class Rectangle implements Cloneable {
             return h < y || H <= h;
         }
     }
-    
+
     @Deprecated
     public boolean inside(int X, int Y) {
         int w = this.width;
@@ -216,7 +216,7 @@ public class Rectangle implements Cloneable {
         //    overflow || intersect
         return ((w < x || w > X) && (h < y || h > Y));
     }
-    
+
     public boolean intersects(Rectangle r) {
         int tw = this.width;
         int th = this.height;
@@ -236,7 +236,7 @@ public class Rectangle implements Cloneable {
         //      overflow || intersect
         return ((rw < rx || rw > tx) && (rh < ry || rh > ty) && (tw < tx || tw > rx) && (th < ty || th > ry));
     }
-    
+
     public Rectangle intersection(Rectangle r) {
         int tx1 = this.x;
         int ty1 = this.y;
@@ -269,7 +269,7 @@ public class Rectangle implements Cloneable {
             ty2 = Integer.MIN_VALUE;
         return new Rectangle(tx1, ty1, (int) tx2, (int) ty2);
     }
-    
+
     public Rectangle union(Rectangle r) {
         long tx2 = this.width;
         long ty2 = this.height;
@@ -314,7 +314,7 @@ public class Rectangle implements Cloneable {
             ty2 = Integer.MAX_VALUE;
         return new Rectangle(tx1, ty1, (int) tx2, (int) ty2);
     }
-    
+
     public void add(int newx, int newy) {
         if ((width | height) < 0) {
             this.x = newx;
@@ -344,11 +344,11 @@ public class Rectangle implements Cloneable {
             y2 = Integer.MAX_VALUE;
         reshape(x1, y1, (int) x2, (int) y2);
     }
-    
+
     public void add(Point pt) {
         add(pt.x, pt.y);
     }
-    
+
     public void add(Rectangle r) {
         long tx2 = this.width;
         long ty2 = this.height;
@@ -387,7 +387,7 @@ public class Rectangle implements Cloneable {
             ty2 = Integer.MAX_VALUE;
         reshape(tx1, ty1, (int) tx2, (int) ty2);
     }
-    
+
     public void grow(int h, int v) {
         long x0 = this.x;
         long y0 = this.y;
@@ -395,12 +395,12 @@ public class Rectangle implements Cloneable {
         long y1 = this.height;
         x1 += x0;
         y1 += y0;
-        
+
         x0 -= h;
         y0 -= v;
         x1 += h;
         y1 += v;
-        
+
         if (x1 < x0) {
             // Non-existant in X direction
             // Final width must remain negative so subtract x0 before
@@ -430,7 +430,7 @@ public class Rectangle implements Cloneable {
             else if (x1 > Integer.MAX_VALUE)
                 x1 = Integer.MAX_VALUE;
         }
-        
+
         if (y1 < y0) {
             // Non-existant in Y direction
             y1 -= y0;
@@ -451,14 +451,14 @@ public class Rectangle implements Cloneable {
             else if (y1 > Integer.MAX_VALUE)
                 y1 = Integer.MAX_VALUE;
         }
-        
+
         reshape((int) x0, (int) y0, (int) x1, (int) y1);
     }
-    
+
     public boolean isEmpty() {
         return (width <= 0) || (height <= 0);
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Rectangle) {
@@ -467,12 +467,12 @@ public class Rectangle implements Cloneable {
         }
         return super.equals(obj);
     }
-    
+
     @Override
     public String toString() {
         return getClass().getName() + "[x=" + x + ",y=" + y + ",width=" + width + ",height=" + height + "]";
     }
-    
+
     @Override
     public int hashCode() {
         int result = 1;

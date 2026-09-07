@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.vanilla.snowgolem;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientSnowGolem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.model.ModelSnowMan;
+import net.minecraft.client.model.ModelSnowMan;
 import net.minecraft.util.ResourceLocation;
 
 public class ClientSnowGolemRenderer extends PetRenderer<ClientSnowGolem, ModelSnowMan> {

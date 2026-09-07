@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.custom.aquatic.stingray;
 
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.aquatic.Stingray;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class StingrayModel extends PetModel {
@@ -23,22 +23,22 @@ public class StingrayModel extends PetModel {
         body = new ModelRenderer(this);
         body.setRotationPoint(0.0F, -2.0F, 0.0F);
         root.addChild(body);
-        body.setTextureOffset(0, 0).addBox(-6.0F, -2.0F, -6.0F, (int) 12.0F, (int) 2.0F, (int) 12.0F, 0.0F, false);
+        body.setTextureOffset(0, 0).addBox(-6.0F, -2.0F, -6.0F, (int) 12.0F, (int) 2.0F, (int) 12.0F, 0.0F);
 
         tail = new ModelRenderer(this);
         tail.setRotationPoint(0.0F, -2.0F, 0.0F);
         root.addChild(tail);
-        tail.setTextureOffset(0, 14).addBox(-1.0F, -2.0F, 6.0F, (int) 2.0F, (int) 2.0F, (int) 10.0F, 0.0F, false);
+        tail.setTextureOffset(0, 14).addBox(-1.0F, -2.0F, 6.0F, (int) 2.0F, (int) 2.0F, (int) 10.0F, 0.0F);
 
         right_fin = new ModelRenderer(this);
         right_fin.setRotationPoint(6.0F, -4.0F, -1.0F);
         root.addChild(right_fin);
-        right_fin.setTextureOffset(24, 14).addBox(0.0F, 0.0F, -3.0F, (int) 4.0F, (int) 2.0F, (int) 6.0F, 0.0F, false);
+        right_fin.setTextureOffset(24, 14).addBox(0.0F, 0.0F, -3.0F, (int) 4.0F, (int) 2.0F, (int) 6.0F, 0.0F);
 
         left_fin = new ModelRenderer(this);
         left_fin.setRotationPoint(-6.0F, -4.0F, -1.0F);
         root.addChild(left_fin);
-        left_fin.setTextureOffset(24, 22).addBox(-4.0F, 0.0F, -3.0F, (int) 4.0F, (int) 2.0F, (int) 6.0F, 0.0F, false);
+        left_fin.setTextureOffset(24, 22).addBox(-4.0F, 0.0F, -3.0F, (int) 4.0F, (int) 2.0F, (int) 6.0F, 0.0F);
     }
 
     @Override

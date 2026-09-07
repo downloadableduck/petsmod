@@ -3,11 +3,11 @@ package com.jeff.pets.client.rendering.vanilla.mooshroom;
 import com.jeff.pets.mob.vanilla.passive.ClientMooshroom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelCow;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.client.renderer.entity.model.ModelCow;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.init.Blocks;
 
@@ -44,7 +44,7 @@ public class ClientMushroomCowMushroomLayer implements LayerRenderer<ClientMoosh
             GlStateManager.popMatrix();
             GlStateManager.popMatrix();
             GlStateManager.pushMatrix();
-            ((ModelCow) this.renderer.getMainModel()).getHead().postRender(0.0625F);
+            ((ModelCow) this.renderer.getMainModel()).head.postRender(0.0625F);
             GlStateManager.scalef(1.0F, -1.0F, 1.0F);
             GlStateManager.translatef(0.0F, 0.7F, -0.2F);
             GlStateManager.rotatef(12.0F, 0.0F, 1.0F, 0.0F);

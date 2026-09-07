@@ -1,14 +1,9 @@
 package com.jeff.pets.mob;
 
 import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
-import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
-
-import java.util.Objects;
 
 /**
  * Abstract representing any pet that cannot fly (ducks, chickens, etc).
@@ -19,8 +14,8 @@ import java.util.Objects;
 public abstract class GroundPet extends AbstractPet {
     private int waitingTime;
 
-    public GroundPet(EntityType<? extends EntityTameable> type, net.minecraft.world.World level) {
-        super(type, level);
+    public GroundPet(net.minecraft.world.World level) {
+        super(level);
     }
 
     @Override
@@ -49,7 +44,7 @@ public abstract class GroundPet extends AbstractPet {
             float bodyYawDiff = net.minecraft.util.math.MathHelper.wrapDegrees(this.rotationYawHead - this.renderYawOffset);
 
             if (rotationToOwner >= 50) {
-                this.renderYawOffset = this.rotationYawHead - ((float)Math.signum(bodyYawDiff) * 50.0F);
+                this.renderYawOffset = this.rotationYawHead - (Math.signum(bodyYawDiff) * 50.0F);
             }
 
             if (distance > this.stopDistance()) {
@@ -68,9 +63,9 @@ public abstract class GroundPet extends AbstractPet {
             } else if (distance < 1.5) {
                 this.limbSwingAmount = (0);
             } else {
-                
+
                 this.limbSwingAmount = (this.limbSwingAmount + 0.1f);
-                this.setVelocity(this.motionX * 0.8, this.motionY * 1.0, this.motionZ * 0.8);
+                this.setVelocity(this.motionX * 0.8, this.motionY, this.motionZ * 0.8);
             }
 
             int yHeightToOwner = (int) (owner.posY - this.posY);
@@ -98,7 +93,7 @@ public abstract class GroundPet extends AbstractPet {
             this.setRotationYawHead(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.renderYawOffset = this.rotationYawHead - ((float)Math.signum(bodyYawDiff) * 50);
+                this.renderYawOffset = this.rotationYawHead - (Math.signum(bodyYawDiff) * 50);
             } else {
                 this.renderYawOffset = this.renderYawOffset + net.minecraft.util.math.MathHelper.clamp(this.rotationYawHead - this.renderYawOffset, -10, 10);
             }

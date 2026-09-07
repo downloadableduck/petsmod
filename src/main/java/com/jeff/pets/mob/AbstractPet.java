@@ -1,15 +1,15 @@
 package com.jeff.pets.mob;
 
 import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.command.arguments.EntityArgument;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Particles;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.SPacketSpawnObject;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -35,9 +35,18 @@ public abstract class AbstractPet extends EntityTameable {
     private float randomX = (float) (Math.random() - 1f);
     private float randomZ = (float) (Math.random() - 1);
 
-    protected AbstractPet(EntityType<? extends EntityTameable> type, World level) {
-        super(type, level);
+    protected AbstractPet(World level) {
+        super(level);
         this.setAIMoveSpeed(0.5f);
+    }
+
+    public static float rotlerp(float pct, float start, float end) {
+        float diff = end - start;
+
+        while (diff < -180.0F) diff += 360.0F;
+        while (diff >= 180.0F) diff -= 360.0F;
+
+        return start + pct * diff;
     }
 
     @Override
@@ -105,13 +114,13 @@ public abstract class AbstractPet extends EntityTameable {
         ItemStack itemStack = player.getHeldItem(hand);
 
         if (this.isTamed() && itemStack.isEmpty() && !player.isSneaking()) {
-            this.world.addParticle(
-                    Particles.HEART,
-                    true,
+            this.world.func_175682_a(
+                    EnumParticleTypes.HEART,
+                    false,
                     this.posX,
                     this.posY + this.heartHeight(),
                     this.posZ,
-                    5, 5, 5
+                    0.0D, 0.0D, 0.0D
             );
             return true;
         }
@@ -119,7 +128,7 @@ public abstract class AbstractPet extends EntityTameable {
         if (this.isTamed() && itemStack.isEmpty() && player.isSneaking()) {
             if (!this.isPassenger()) {
                 this.startRiding(player);
-                this.lookAt(player, 1f, 1f);
+                //this.lookAt(player, 1f, 1f);
                 return true;
             } else {
                 this.stopRiding();
@@ -127,17 +136,6 @@ public abstract class AbstractPet extends EntityTameable {
             return true;
         }
         return super.processInteract(player, hand);
-    }
-
-    /**
-     * Custom method required for making the mob work on servers.
-     * <p> Calls: It's super method, if the level is not client-sided.
-     */
-    @Override
-    public void notifyDataManagerChange(net.minecraft.network.datasync.DataParameter<?> key) {
-        if (this.world != null && !this.world.isRemote()) {
-            super.notifyDataManagerChange(key);
-        }
     }
 
     /**
@@ -152,6 +150,17 @@ public abstract class AbstractPet extends EntityTameable {
             return super.getAddEntityPacket();
         }
     }*/
+
+    /**
+     * Custom method required for making the mob work on servers.
+     * <p> Calls: It's super method, if the level is not client-sided.
+     */
+    @Override
+    public void notifyDataManagerChange(net.minecraft.network.datasync.DataParameter<?> key) {
+        if (this.world != null && !this.world.isRemote) {
+            super.notifyDataManagerChange(key);
+        }
+    }
 
     /**
      * Calls the previous abstract method so other classes extending this one don't have to.
@@ -179,7 +188,7 @@ public abstract class AbstractPet extends EntityTameable {
      * Easier way to call {@link net.minecraft.entity.passive.EntityTameable#setCustomName} that takes a String rather than a {@link Component}
      */
     public void setName(String string) {
-        this.setCustomName(new TextComponentString(string));
+        this.func_96094_a((string));
     }
 
     public void wander() {
@@ -213,7 +222,7 @@ public abstract class AbstractPet extends EntityTameable {
                 this.posY + this.getEyeHeight(),
                 this.posZ + (moveZ * 2)
         );
-        this.getLookHelper().setLookPosition(lookDir.x, lookDir.y, lookDir.z, 1.0F, (float) this.getVerticalFaceSpeed());
+        this.getLookHelper().setLookPosition(lookDir.x, lookDir.y, lookDir.z, 1.0F, 10.0F);
 
         if (moveX * moveX + moveZ * moveZ > 0.001) {
             float targetYaw = (float) (Math.atan2(-moveX, moveZ) * (180D / Math.PI));
@@ -265,22 +274,13 @@ public abstract class AbstractPet extends EntityTameable {
             EntityLiving mob = (EntityLiving) entity;
             yd = mob.getEyeHeight() - this.getEyeHeight();
         } else {
-            yd = (entity.getBoundingBox().minY + entity.getBoundingBox().maxY) / (double)2.0F - this.getEyeHeight();
+            yd = (entity.getBoundingBox().minY + entity.getBoundingBox().maxY) / 2.0F - this.getEyeHeight();
         }
 
         double sd = Math.sqrt(xd * xd + zd * zd);
-        float yRotD = (float)(MathHelper.atan2(zd, xd) * (double)(180F / (float)Math.PI)) - 90.0F;
-        float xRotD = (float)(-(MathHelper.atan2(yd, sd) * (double)(180F / (float)Math.PI)));
+        float yRotD = (float) (MathHelper.atan2(zd, xd) * (double) (180F / (float) Math.PI)) - 90.0F;
+        float xRotD = (float) (-(MathHelper.atan2(yd, sd) * (double) (180F / (float) Math.PI)));
         this.rotationPitch = rotlerp(this.rotationPitch, xRotD, xMax);
         this.setYRot(rotlerp(this.getYRot(), yRotD, yMax));
-    }
-
-    public static float rotlerp(float pct, float start, float end) {
-        float diff = end - start;
-
-        while (diff < -180.0F) diff += 360.0F;
-        while (diff >= 180.0F) diff -= 360.0F;
-
-        return start + pct * diff;
     }
 }

@@ -13,12 +13,9 @@ import com.jeff.pets.client.rendering.vanilla.blaze.ClientBlazeRenderer;
 import com.jeff.pets.client.rendering.vanilla.cat.ClientCatRenderer;
 import com.jeff.pets.client.rendering.vanilla.cavespider.ClientCaveSpiderRenderer;
 import com.jeff.pets.client.rendering.vanilla.chicken.ClientChickenRenderer;
-import com.jeff.pets.client.rendering.vanilla.cod.ClientCodRenderer;
 import com.jeff.pets.client.rendering.vanilla.cow.ClientCowRenderer;
 import com.jeff.pets.client.rendering.vanilla.creeper.ClientCreeperRenderer;
-import com.jeff.pets.client.rendering.vanilla.dolphin.ClientDolphinRenderer;
 import com.jeff.pets.client.rendering.vanilla.donkey.ClientDonkeyRenderer;
-import com.jeff.pets.client.rendering.vanilla.drowned.ClientDrownedRenderer;
 import com.jeff.pets.client.rendering.vanilla.elderguardian.ClientElderGuardianRenderer;
 import com.jeff.pets.client.rendering.vanilla.enderdragon.ClientEnderDragonRenderer;
 import com.jeff.pets.client.rendering.vanilla.enderman.ClientEndermanRenderer;
@@ -33,12 +30,9 @@ import com.jeff.pets.client.rendering.vanilla.llama.ClientLlamaRenderer;
 import com.jeff.pets.client.rendering.vanilla.magmacube.ClientMagmaCubeRenderer;
 import com.jeff.pets.client.rendering.vanilla.mooshroom.ClientMooshroomRenderer;
 import com.jeff.pets.client.rendering.vanilla.parrot.ClientParrotRenderer;
-import com.jeff.pets.client.rendering.vanilla.phantom.ClientPhantomRenderer;
 import com.jeff.pets.client.rendering.vanilla.pig.ClientPigRenderer;
 import com.jeff.pets.client.rendering.vanilla.polarbear.ClientPolarBearRenderer;
-import com.jeff.pets.client.rendering.vanilla.pufferfish.ClientPufferFishRenderer;
 import com.jeff.pets.client.rendering.vanilla.rabbit.ClientRabbitRenderer;
-import com.jeff.pets.client.rendering.vanilla.salmon.ClientSalmonRenderer;
 import com.jeff.pets.client.rendering.vanilla.sheep.ClientSheepRenderer;
 import com.jeff.pets.client.rendering.vanilla.shulker.ClientShulkerRenderer;
 import com.jeff.pets.client.rendering.vanilla.silverfish.ClientSilverfishRenderer;
@@ -48,7 +42,6 @@ import com.jeff.pets.client.rendering.vanilla.snowgolem.ClientSnowGolemRenderer;
 import com.jeff.pets.client.rendering.vanilla.spider.ClientSpiderRenderer;
 import com.jeff.pets.client.rendering.vanilla.squid.ClientSquidRenderer;
 import com.jeff.pets.client.rendering.vanilla.stray.ClientStrayRenderer;
-import com.jeff.pets.client.rendering.vanilla.turtle.ClientTurtleRenderer;
 import com.jeff.pets.client.rendering.vanilla.vex.ClientVexRenderer;
 import com.jeff.pets.client.rendering.vanilla.villager.ClientVillagerRenderer;
 import com.jeff.pets.client.rendering.vanilla.vindicator.ClientVindicatorRenderer;
@@ -66,27 +59,20 @@ import com.jeff.pets.mob.custom.aquatic.Stingray;
 import com.jeff.pets.mob.custom.first.Duck;
 import com.jeff.pets.mob.custom.first.Penguin;
 import com.jeff.pets.mob.custom.first.Racoon;
-import com.jeff.pets.mob.vanilla.boss.*;
-import com.jeff.pets.mob.vanilla.neutral.*;
+import com.jeff.pets.mob.vanilla.boss.ClientEnderDragon;
+import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import com.jeff.pets.mob.vanilla.hostile.*;
+import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
-import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.RenderPhantom;
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.resources.IReloadableResourceManager;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.lwjgl.glfw.GLFW;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import org.lwjgl.input.Keyboard;
 
 import java.util.*;
 
@@ -104,36 +90,26 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
  * @see PetsInitializer
  * @see Central
  */
-@Mod(MOD_ID)
-@Mod.EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = MOD_ID, value = Side.CLIENT)
 public class PetsClientInitializer {
-
-    public static List<String> ADDONS = new ArrayList<>();
 
     public static final Map<Class, Factory> renderSupplierMap = new HashMap();
     public static final Map<RenderManager, Context> renderManagerMap = new WeakHashMap();
-
+    public static List<String> ADDONS = new ArrayList<>();
     public static KeyBinding openConfigScreen;
 
     /**
      * Misc rendering stuff
      */
     public PetsClientInitializer() {
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        bus.addListener(PetsClientInitializer::createKeyBinding);
-        openConfigScreen = new KeyBinding("Open Pets Menu", GLFW.GLFW_KEY_P, "petsmod.keymapping");
+        openConfigScreen = new KeyBinding("Open Pets Menu", Keyboard.KEY_P, "petsmod.keymapping");
 
         ClientRegistry.registerKeyBinding(openConfigScreen);
-        //bus.register(this);
-        //bus.addListener(PetsClientInitializer::registerModelLayers);
-       // bus.addListener(PetsClientInitializer::register);
+        printAddons();
     }
 
-    @SubscribeEvent
-    public static void printAddons(FMLClientSetupEvent event) {
-        //event.enqueueWork(() -> {
+    public static void printAddons() {
         PetsInitializer.LOGGER.info("PetsMod addons loaded:{}", ADDONS);
-        //});
     }
 
     /*
@@ -233,7 +209,6 @@ public class PetsClientInitializer {
         register(ClientCat.class, ClientCatRenderer::new);
         register(ClientBat.class, ClientBatRenderer::new);
         register(ClientChicken.class, ClientChickenRenderer::new);
-        register(ClientCod.class, ClientCodRenderer::new);
         register(ClientCow.class, ClientCowRenderer::new);
         register(ClientDonkey.class, ClientDonkeyRenderer::new);
         register(ClientHorse.class, ClientHorseRenderer::new);
@@ -241,31 +216,25 @@ public class PetsClientInitializer {
         register(ClientParrot.class, ClientParrotRenderer::new);
         register(ClientPig.class, ClientPigRenderer::new);
         register(ClientRabbit.class, ClientRabbitRenderer::new);
-        register(ClientSalmon.class, ClientSalmonRenderer::new);
         register(ClientSnowGolem.class, ClientSnowGolemRenderer::new);
         register(ClientSquid.class, ClientSquidRenderer::new);
-        register(ClientTurtle.class, ClientTurtleRenderer::new);
         register(ClientVillager.class, ClientVillagerRenderer::new);
         register(ClientCaveSpider.class, ClientCaveSpiderRenderer::new);
-        register(ClientDolphin.class, ClientDolphinRenderer::new);
         register(ClientEnderman.class, ClientEndermanRenderer::new);
         register(ClientIronGolem.class, ClientIronGolemRenderer::new);
         register(ClientLlama.class, ClientLlamaRenderer::new);
         register(ClientPolarBear.class, ClientPolarBearRenderer::new);
-        register(ClientPufferFish.class, ClientPufferFishRenderer::new);
         register(ClientSpider.class, ClientSpiderRenderer::new);
         register(ClientWolf.class, ClientWolfRenderer::new);
         register(ClientElderGuardian.class, ClientElderGuardianRenderer::new);
         register(ClientBlaze.class, ClientBlazeRenderer::new);
         register(ClientCreeper.class, ClientCreeperRenderer::new);
-        register(ClientDrowned.class, ClientDrownedRenderer::new);
         register(ClientEndermite.class, ClientEndermiteRenderer::new);
         register(ClientEvoker.class, ClientEvokerRenderer::new);
         register(ClientGhast.class, ClientGhastRenderer::new);
         register(ClientGuardian.class, ClientGuardianRenderer::new);
         register(ClientHusk.class, ClientHuskRenderer::new);
         register(ClientMagmaCube.class, ClientMagmaCubeRenderer::new);
-        register(ClientPhantom.class, ClientPhantomRenderer::new);
         register(ClientShulker.class, ClientShulkerRenderer::new);
         register(ClientSilverfish.class, ClientSilverfishRenderer::new);
         register(ClientSkeleton.class, ClientSkeletonRenderer::new);
@@ -289,24 +258,25 @@ public class PetsClientInitializer {
      * Registers the key binding and an {@code END_CLIENT_TICK} event to check if the key
      * is pressed
      */
-
-    @SubscribeEvent
-    public static void createKeyBinding(FMLClientSetupEvent event) {
-        //event.enqueueWork(() -> {
-        openConfigScreen = new KeyBinding("Open Pets Menu", GLFW.GLFW_KEY_P, "petsmod.keymapping");
+    public static void createKeyBinding() {
+        openConfigScreen = new KeyBinding("Open Pets Menu", Keyboard.KEY_P, "petsmod.keymapping");
 
         ClientRegistry.registerKeyBinding(openConfigScreen);
-        //});
     }
 
     public static void register(Class entityClass, Factory factory) {
-        synchronized(renderSupplierMap) {
+        synchronized (renderSupplierMap) {
             renderSupplierMap.put(entityClass, factory);
 
-            for(RenderManager manager : renderManagerMap.keySet()) {
+            for (RenderManager manager : renderManagerMap.keySet()) {
                 renderManagerMap.get(manager).rendererMap.put(entityClass, factory.create(manager, renderManagerMap.get(manager)));
             }
         }
+    }
+
+    @FunctionalInterface
+    public interface Factory {
+        RenderLiving<? extends Entity> create(RenderManager var1, Context var2);
     }
 
     public static final class Context {
@@ -316,10 +286,5 @@ public class PetsClientInitializer {
             super();
             this.rendererMap = rendererMap;
         }
-    }
-
-    @FunctionalInterface
-    public interface Factory {
-        RenderLiving<? extends Entity> create(RenderManager var1, Context var2);
     }
 }

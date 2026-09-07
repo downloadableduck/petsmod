@@ -1,15 +1,14 @@
 package com.jeff.pets.client.rendering.vanilla.enderman;
 
 import com.jeff.pets.mob.vanilla.neutral.ClientEnderman;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-@OnlyIn(Dist.CLIENT)
+@SideOnly(Side.CLIENT)
 public class LayerEndermanEyes implements LayerRenderer<ClientEnderman> {
     private static final ResourceLocation RES_ENDERMAN_EYES = new ResourceLocation("textures/entity/enderman/enderman_eyes.png");
     private final ClientEndermanRenderer endermanRenderer;
@@ -31,9 +30,7 @@ public class LayerEndermanEyes implements LayerRenderer<ClientEnderman> {
         OpenGlHelper.glMultiTexCoord2f(OpenGlHelper.GL_TEXTURE1, 61680.0F, 0.0F);
         GlStateManager.enableLighting();
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        Minecraft.getInstance().entityRenderer.setupFogColor(true);
         this.endermanRenderer.getMainModel().render(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-        Minecraft.getInstance().entityRenderer.setupFogColor(false);
         this.endermanRenderer.setLightmap(entitylivingbaseIn);
         GlStateManager.depthMask(true);
         GlStateManager.disableBlend();

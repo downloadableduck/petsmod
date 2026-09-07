@@ -1,16 +1,15 @@
 package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.util.SoundEvent;
 
 public class ClientStray extends GroundPet implements IRangedAttackMob {
 
-    public ClientStray(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
-        super(entityType, level);
+    public ClientStray(net.minecraft.world.World level) {
+        super(level);
         this.setSize(0.6f, 1.95f);
     }
 

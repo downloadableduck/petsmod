@@ -14,7 +14,7 @@ public class ClientElderGuardianRenderer extends PetRenderer<ClientElderGuardian
     @Override
     public void preRenderCallback(ClientElderGuardian elderGuardian, float f) {
         net.minecraft.client.renderer.GlStateManager.scalef(2.35f, 2.35f, 2.35f);
-        
+
     }
 
     @Override

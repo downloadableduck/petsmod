@@ -18,7 +18,7 @@ public class ClientHuskRenderer extends PetRenderer<ClientHusk, ClientZombieMode
         if (CONFIG.isBaby) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
-        
+
     }
 
     @Override

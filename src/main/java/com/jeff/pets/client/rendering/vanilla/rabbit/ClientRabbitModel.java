@@ -2,8 +2,8 @@ package com.jeff.pets.client.rendering.vanilla.rabbit;
 
 import com.google.common.collect.ImmutableList;
 import com.jeff.pets.mob.vanilla.passive.ClientRabbit;
-import net.minecraft.client.renderer.entity.model.ModelBase;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class ClientRabbitModel extends ModelBase {

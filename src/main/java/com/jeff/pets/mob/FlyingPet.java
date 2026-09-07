@@ -1,14 +1,11 @@
 package com.jeff.pets.mob;
 
 import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
-import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-
-import java.util.Objects;
 
 /**
  * Abstract class representing any pet tht can fly (ghasts, vexes, etc). Contains custom movement
@@ -19,8 +16,8 @@ import java.util.Objects;
  */
 public abstract class FlyingPet extends AbstractPet {
 
-    protected FlyingPet(EntityType<? extends EntityTameable> type, net.minecraft.world.World level) {
-        super(type, level);
+    protected FlyingPet(net.minecraft.world.World level) {
+        super(level);
     }
 
     @Override
@@ -40,9 +37,11 @@ public abstract class FlyingPet extends AbstractPet {
 
             double dx = owner.posX - this.posX;
             double dz = owner.posZ - this.posZ;
-            Vec3d ownerPos = owner.getPositionVector().add(0, owner.getEyeHeight() * 0.8, 0);
-            Vec3d vecToOwner = ownerPos.subtract(this.getPositionVector());
-            double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
+            net.minecraft.util.math.Vec3d ownerPos = owner.getPositionVector().add(0, owner.getEyeHeight() * 0.8, 0);
+            net.minecraft.util.math.Vec3d vecToOwner = ownerPos.subtract(this.getPositionVector());
+            Vec3d dir = vecToOwner.normalize();
+
+            float targetYaw = (float) (Math.atan2(dz, dx) * (180.0 / Math.PI)) - 90.0F;
 
             double distance = this.getDistance(owner);
             float rotation = -this.rotationPitch;
@@ -50,23 +49,22 @@ public abstract class FlyingPet extends AbstractPet {
             float bodyYawDiff = net.minecraft.util.math.MathHelper.wrapDegrees(this.rotationYawHead - this.renderYawOffset);
 
             if (rotationToOwner >= 50) {
-                this.renderYawOffset = this.rotationYawHead - ((float)Math.signum(bodyYawDiff) * 50.0F);
+                this.renderYawOffset = this.rotationYawHead - (Math.signum(bodyYawDiff) * 50.0F);
             }
 
-            if (distance > this.stopDistance()) {
+            if (distance > 2.0) {
 
                 this.limbSwingAmount = (0.5F);
 
-                Vec3d dir = vecToOwner.normalize();
-                double speed = owner.getAIMoveSpeed() * 1.5;
+                double speed = 0.2;
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setRotationYawHead(this.getYRot());
-                this.renderYawOffset = this.renderYawOffset + net.minecraft.util.math.MathHelper.clamp(this.rotationYawHead - this.renderYawOffset, -50.0f, 50.0f);
+                this.renderYawOffset = this.renderYawOffset + MathHelper.clamp(this.rotationYawHead - this.renderYawOffset, -50.0f, 50.0f);
 
                 this.setVelocity(dir.x * speed, dir.y * speed, dir.z * speed);
             } else {
-                
+
                 this.setVelocity(this.motionX * 0.8, this.motionY * 0.8, this.motionZ * 0.8);
             }
 
@@ -74,6 +72,10 @@ public abstract class FlyingPet extends AbstractPet {
 
             if (yHeightToOwner > 1 || this.collidedHorizontally) {
                 this.jump();
+            }
+
+            if (yHeightToOwner > -1) {
+                this.setVelocity(this.motionX, this.motionY - 0.01, this.motionZ);
             }
 
             if (!this.onGround) {
@@ -87,21 +89,16 @@ public abstract class FlyingPet extends AbstractPet {
                 this.waitingTime = 0;
             }
 
-
             this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
             this.setRotationYawHead(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.renderYawOffset = this.rotationYawHead - ((float)Math.signum(bodyYawDiff) * 50);
+                this.renderYawOffset = this.rotationYawHead - (Math.signum(bodyYawDiff) * 50);
             } else {
-                this.renderYawOffset = this.renderYawOffset + net.minecraft.util.math.MathHelper.clamp(this.rotationYawHead - this.renderYawOffset, -10, 10);
+                this.renderYawOffset = this.renderYawOffset + MathHelper.clamp(this.rotationYawHead - this.renderYawOffset, -10, 10);
             }
 
             this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
-
-            //if (!this.onGround) {
-            //  this.setVelocity(this.motionX, this.motionY - 0.04, this.motionZ);
-            //}
         }
         if (owner != null) {
             if (getDistance(owner) >= 10) {
@@ -111,7 +108,7 @@ public abstract class FlyingPet extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            //this.world.playLocalSound(this.posX, this.posY, this.posZ, Objects.requireNonNull(this.getAmbientSound()), SoundCategory.AMBIENT, 1.0f, 1.0f, true);
+            this.playSound(SoundEvents.ENTITY_SQUID_AMBIENT, 1.0f, 1.0f);
         }
     }
 }

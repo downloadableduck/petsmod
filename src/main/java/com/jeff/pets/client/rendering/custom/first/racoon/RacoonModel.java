@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.custom.first.racoon;
 
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.first.Racoon;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 
@@ -27,44 +27,44 @@ public class RacoonModel extends PetModel {
         head = new ModelRenderer(this);
         head.setRotationPoint(0.0F, 0.0F, 0.0F);
         root.addChild(head);
-        head.setTextureOffset(0, 15).addBox(-2.5F, -7.0F, -2.0F, (int) 7.0F, (int) 5.0F, (int) 5.0F, 0.0F, false);
-        head.setTextureOffset(28, 28).addBox(1.5F, -9.0F, 1.0F, (int) 2.0F, (int) 2.0F, (int) 1.0F, 0.0F, false);
-        head.setTextureOffset(0, 30).addBox(-1.5F, -9.0F, 1.0F, (int) 2.0F, (int) 2.0F, (int) 1.0F, 0.0F, false);
-        head.setTextureOffset(1, 26).addBox(-0.5F, -4.0F, -4.0F, (int) 3.0F, (int) 2.0F, (int) 2.0F, 0.0F, false);
-        head.setTextureOffset(24, 12).addBox(-3.5F, -5.0F, -2.0F, (int) 1.0F, (int) 3.0F, (int) 5.0F, 0.0F, false);
-        head.setTextureOffset(24, 20).addBox(4.5F, -5.0F, -2.0F, (int) 1.0F, (int) 3.0F, (int) 5.0F, 0.0F, false);
+        head.setTextureOffset(0, 15).addBox(-2.5F, -7.0F, -2.0F, (int) 7.0F, (int) 5.0F, (int) 5.0F, 0.0F);
+        head.setTextureOffset(28, 28).addBox(1.5F, -9.0F, 1.0F, (int) 2.0F, (int) 2.0F, (int) 1.0F, 0.0F);
+        head.setTextureOffset(0, 30).addBox(-1.5F, -9.0F, 1.0F, (int) 2.0F, (int) 2.0F, (int) 1.0F, 0.0F);
+        head.setTextureOffset(1, 26).addBox(-0.5F, -4.0F, -4.0F, (int) 3.0F, (int) 2.0F, (int) 2.0F, 0.0F);
+        head.setTextureOffset(24, 12).addBox(-3.5F, -5.0F, -2.0F, (int) 1.0F, (int) 3.0F, (int) 5.0F, 0.0F);
+        head.setTextureOffset(24, 20).addBox(4.5F, -5.0F, -2.0F, (int) 1.0F, (int) 3.0F, (int) 5.0F, 0.0F);
 
         body = new ModelRenderer(this);
         body.setRotationPoint(1.0F, -0.5F, -3.0F);
         head.addChild(body);
         setRotationAngle(body, 1.5708F, 0.0F, 0.0F);
-        body.setTextureOffset(0, 0).addBox(-3.0F, 4.0F, -3.5F, (int) 6.0F, (int) 9.0F, (int) 6.0F, 0.0F, false);
+        body.setTextureOffset(0, 0).addBox(-3.0F, 4.0F, -3.5F, (int) 6.0F, (int) 9.0F, (int) 6.0F, 0.0F);
 
         left_hind_leg = new ModelRenderer(this);
         left_hind_leg.setRotationPoint(-4.0F, 1.0F, 10.0F);
         root.addChild(left_hind_leg);
-        left_hind_leg.setTextureOffset(12, 25).addBox(2.5F, 2.0F, -2.0F, (int) 2.0F, (int) 4.0F, (int) 2.0F, 0.0F, false);
+        left_hind_leg.setTextureOffset(12, 25).addBox(2.5F, 2.0F, -2.0F, (int) 2.0F, (int) 4.0F, (int) 2.0F, 0.0F);
 
         right_hind_leg = new ModelRenderer(this);
         right_hind_leg.setRotationPoint(0.0F, 1.0F, 10.0F);
         root.addChild(right_hind_leg);
-        right_hind_leg.setTextureOffset(20, 28).addBox(1.5F, 2.0F, -2.0F, (int) 2.0F, (int) 4.0F, (int) 2.0F, 0.0F, false);
+        right_hind_leg.setTextureOffset(20, 28).addBox(1.5F, 2.0F, -2.0F, (int) 2.0F, (int) 4.0F, (int) 2.0F, 0.0F);
 
         left_front_leg = new ModelRenderer(this);
         left_front_leg.setRotationPoint(-4.0F, 1.0F, 3.0F);
         root.addChild(left_front_leg);
-        left_front_leg.setTextureOffset(12, 25).addBox(2.5F, 2.0F, -1.0F, (int) 2.0F, (int) 4.0F, (int) 2.0F, 0.0F, false);
+        left_front_leg.setTextureOffset(12, 25).addBox(2.5F, 2.0F, -1.0F, (int) 2.0F, (int) 4.0F, (int) 2.0F, 0.0F);
 
         right_front_leg = new ModelRenderer(this);
         right_front_leg.setRotationPoint(0.0F, 1.0F, 3.0F);
         root.addChild(right_front_leg);
-        right_front_leg.setTextureOffset(20, 28).addBox(1.5F, 2.0F, -1.0F, (int) 2.0F, (int) 4.0F, (int) 2.0F, 0.0F, false);
+        right_front_leg.setTextureOffset(20, 28).addBox(1.5F, 2.0F, -1.0F, (int) 2.0F, (int) 4.0F, (int) 2.0F, 0.0F);
 
         tail = new ModelRenderer(this);
         tail.setRotationPoint(-3.0F, 0.5F, 12.0F);
         root.addChild(tail);
         setRotationAngle(tail, 1.5708F, 0.0F, 0.0F);
-        tail.setTextureOffset(24, 0).addBox(2.0F, -2.0F, -1.0F, (int) 4.0F, (int) 8.0F, (int) 4.0F, 0.0F, false);
+        tail.setTextureOffset(24, 0).addBox(2.0F, -2.0F, -1.0F, (int) 4.0F, (int) 8.0F, (int) 4.0F, 0.0F);
     }
 
     @Override

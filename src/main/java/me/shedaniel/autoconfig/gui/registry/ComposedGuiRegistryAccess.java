@@ -29,7 +29,7 @@ import java.util.Objects;
 
 public class ComposedGuiRegistryAccess implements GuiRegistryAccess {
 
-    private List<GuiRegistryAccess> children;
+    private final List<GuiRegistryAccess> children;
 
     public ComposedGuiRegistryAccess(GuiRegistryAccess... children) {
         this.children = Arrays.asList(children);

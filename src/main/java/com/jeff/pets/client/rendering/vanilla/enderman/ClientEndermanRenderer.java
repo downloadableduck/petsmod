@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.enderman;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientEnderman;
-import net.minecraft.client.renderer.entity.model.ModelEnderman;
+import net.minecraft.client.model.ModelEnderman;
 import net.minecraft.util.ResourceLocation;
 
 public class ClientEndermanRenderer extends PetRenderer<ClientEnderman, ModelEnderman> {

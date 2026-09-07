@@ -2,8 +2,6 @@ package com.jeff.pets.client.rendering.vanilla.parrot;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientParrot;
-import net.minecraft.client.renderer.entity.RenderParrot;
-import net.minecraft.entity.passive.EntityParrot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 

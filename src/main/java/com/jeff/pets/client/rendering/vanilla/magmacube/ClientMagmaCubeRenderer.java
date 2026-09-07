@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.magmacube;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientMagmaCube;
-import net.minecraft.client.renderer.entity.model.ModelSlime;
+import net.minecraft.client.model.ModelSlime;
 import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;

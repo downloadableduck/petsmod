@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.polarbear;
 
-import net.minecraft.client.renderer.entity.model.ModelQuadruped;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
+import net.minecraft.client.model.ModelQuadruped;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class ClientPolarBearModel extends ModelQuadruped {

@@ -1,21 +1,18 @@
 package com.jeff.pets.mob.custom.first;
 
 import com.jeff.pets.mob.AbstractPet;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.ai.*;
-import net.minecraft.item.ItemStack;
 import net.minecraft.init.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.SPacketSpawnObject;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
-
-import static com.jeff.pets.PetsInitializer.RACOON;
+import net.minecraft.world.World;
 
 public class Racoon extends AbstractPet {
 
@@ -23,8 +20,8 @@ public class Racoon extends AbstractPet {
             net.minecraft.network.datasync.EntityDataManager.createKey(Racoon.class, net.minecraft.network.datasync.DataSerializers.BOOLEAN);
     public boolean isOnHead;
 
-    public Racoon(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
-        super(entityType, level);
+    public Racoon(World level) {
+        super(level);
         this.setSize(1.0f, 1.0f);
     }
 
@@ -44,9 +41,9 @@ public class Racoon extends AbstractPet {
     }
 
     @Override
-    public IEntityLivingData onInitialSpawn(final DifficultyInstance difficulty, final IEntityLivingData groupData, NBTTagCompound compoundTag) {
+    public IEntityLivingData func_180482_a(DifficultyInstance difficulty, IEntityLivingData groupData) {
         this.setServerEntity(true);
-        return super.onInitialSpawn(difficulty, groupData, compoundTag);
+        return super.func_180482_a(difficulty, groupData);
     }
 
     @Override
@@ -55,7 +52,7 @@ public class Racoon extends AbstractPet {
         this.tasks.addTask(1, new EntityAIMate(this, 1));
         this.tasks.addTask(2, new EntityAISwimming(this));
         this.tasks.addTask(3, new EntityAIPanic(this, 1.4d));
-        this.tasks.addTask(4, new EntityAITempt(this, 1.0f, Ingredient.fromItems(Items.SKELETON_SKULL, Items.WITHER_SKELETON_SKULL), false));
+        this.tasks.addTask(4, new EntityAITempt(this, 1.0f, Items.field_151115_aP, false));
 
         this.tasks.addTask(5, new EntityAILookIdle(this));
         this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
@@ -121,13 +118,13 @@ public class Racoon extends AbstractPet {
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setRotationYawHead(this.getYRot());
-                this.renderYawOffset = net.minecraft.util.math.MathHelper.approachDegrees(this.renderYawOffset, this.rotationYawHead, 50.0f);
+                this.renderYawOffset = net.minecraft.util.math.MathHelper.clamp(this.renderYawOffset, this.rotationYawHead, 50.0f);
 
                 double speed = owner.getAIMoveSpeed() * 2;
                 this.setVelocity(dir.x * speed, this.motionY, dir.z * speed);
             } else {
-                
-                this.setVelocity(this.motionX * 0.8, this.motionY * 1.0, this.motionZ * 0.8);
+
+                this.setVelocity(this.motionX * 0.8, this.motionY, this.motionZ * 0.8);
             }
 
             int yHeightToOwner = (int) (owner.posY - this.posY);
@@ -157,7 +154,7 @@ public class Racoon extends AbstractPet {
             if (Math.abs(bodyYawDiff) > 50) {
                 this.renderYawOffset = this.rotationYawHead - (Math.signum(bodyYawDiff) * 50);
             } else {
-                this.renderYawOffset = net.minecraft.util.math.MathHelper.approachDegrees(this.renderYawOffset, this.rotationYawHead, 10);
+                this.renderYawOffset = net.minecraft.util.math.MathHelper.clamp(this.renderYawOffset, this.rotationYawHead, 10);
             }
             //
 
@@ -181,14 +178,14 @@ public class Racoon extends AbstractPet {
 
     @Override
     public EntityAgeable createChild(EntityAgeable AgableMob) {
-        Racoon racoon = RACOON.create(this.world);
+        Racoon racoon = new Racoon(this.world);
         racoon.setServerEntity(false);
         return racoon;
     }
 
     @Override
     public void notifyDataManagerChange(net.minecraft.network.datasync.DataParameter<?> key) {
-        if (!this.world.isRemote()) {
+        if (!this.world.isRemote) {
             super.notifyDataManagerChange(key);
         }
     }

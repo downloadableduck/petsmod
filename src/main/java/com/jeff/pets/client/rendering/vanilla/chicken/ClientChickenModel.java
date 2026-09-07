@@ -1,10 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.chicken;
 
 import com.jeff.pets.mob.vanilla.passive.ClientChicken;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.model.ModelChicken;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.model.ModelChicken;
 
 import static com.jeff.pets.client.Central.CONFIG;
 

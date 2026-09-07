@@ -6,21 +6,18 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
-
-import static com.jeff.pets.PetsInitializer.PENGUIN;
+import net.minecraft.world.World;
 
 public class Penguin extends AbstractPet {
     public static final net.minecraft.network.datasync.DataParameter<Boolean> IS_SERVER_ENTITY =
@@ -32,11 +29,11 @@ public class Penguin extends AbstractPet {
     public float flapping = 1.0F;
     public EntityPlayerMP owner = (EntityPlayerMP) this.getOwner();
     public boolean isOnHead;
-    private float nextFlap = 1.0F;
+    private final float nextFlap = 1.0F;
     private boolean isFlapping = !this.onGround;
 
-    public Penguin(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
-        super(entityType, level);
+    public Penguin(World level) {
+        super(level);
         this.setSize(1.0f, 1.5f);
     }
 
@@ -70,8 +67,9 @@ public class Penguin extends AbstractPet {
         this.dataManager.set(IS_SERVER_ENTITY, value);
     }
 
-    public void livingTick() {
-        super.livingTick();
+    @Override
+    public void tick() {
+        super.tick();
         this.oFlap = this.flap;
         this.oFlapSpeed = this.flapSpeed;
         this.flapSpeed += (this.onGround ? -1.0F : 4.0F) * 0.3F;
@@ -87,63 +85,6 @@ public class Penguin extends AbstractPet {
         }
 
         this.flap += this.flapping * 2.0F;
-    }
-
-    protected boolean isFlapping() {
-        return isFlapping;
-    }
-
-    protected void onFlap() {
-        //this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
-    }
-
-    protected SoundEvent getAmbientSound() {
-        return PetsSounds.PENGUIN_AMBIENT;
-    }
-
-    protected SoundEvent getHurtSound(final DamageSource source) {
-        return PetsSounds.PENGUIN_AMBIENT;
-    }
-
-    protected SoundEvent getDeathSound() {
-        return PetsSounds.PENGUIN_AMBIENT;
-    }
-
-    protected void playStepSound(final BlockPos pos, final IBlockState blockState) {
-        this.playSound(SoundEvents.ENTITY_CHICKEN_STEP, 0.15F, 1.0F);
-    }
-
-    public Penguin createChild(final EntityAgeable partner) {
-        Penguin penguin = PENGUIN.create(this.world);
-        penguin.setServerEntity(true);
-        return penguin;
-    }
-
-    public IEntityLivingData onInitialSpawn(final DifficultyInstance difficulty, final IEntityLivingData groupData, NBTTagCompound compoundTag) {
-        this.setServerEntity(true);
-        return super.onInitialSpawn(difficulty, groupData, compoundTag);
-    }
-
-    public boolean isBreedingItem(final ItemStack itemStack) {
-        return itemStack.isItemEqual(new ItemStack(Items.COD)) || itemStack.isItemEqual(new ItemStack(Items.SALMON)) || itemStack.isItemEqual(new ItemStack(Items.TROPICAL_FISH));
-    }
-
-    @Override
-    public void initEntityAI() {
-
-        this.tasks.addTask(1, new EntityAIMate(this, 1));
-        this.tasks.addTask(2, new EntityAISwimming(this));
-        this.tasks.addTask(3, new EntityAIPanic(this, 1.4d));
-        this.tasks.addTask(4, new EntityAITempt(this, 1.0f, Ingredient.fromItems(Items.SKELETON_SKULL, Items.WITHER_SKELETON_SKULL), false));
-
-        this.tasks.addTask(5, new EntityAILookIdle(this));
-        this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
-        this.tasks.addTask(8, new EntityAIFollowOwner(this, 1, 2, 10));
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
         EntityLivingBase owner = this.getOwner();
         if (owner != null) {
 
@@ -169,7 +110,7 @@ public class Penguin extends AbstractPet {
             float bodyYawDiff = net.minecraft.util.math.MathHelper.wrapDegrees(this.rotationYawHead - this.renderYawOffset);
 
             if (rotationToOwner >= 50) {
-                this.renderYawOffset = this.rotationYawHead - ((float)Math.signum(bodyYawDiff) * 50.0F);
+                this.renderYawOffset = this.rotationYawHead - (Math.signum(bodyYawDiff) * 50.0F);
             }
 
             if (distance > 2.0) {
@@ -186,8 +127,8 @@ public class Penguin extends AbstractPet {
                 double speed = owner.getAIMoveSpeed() * 2;
                 this.setVelocity(dir.x * speed, this.motionY, dir.z * speed);
             } else {
-                
-                this.setVelocity(this.motionX * 0.8, this.motionY * 1.0, this.motionZ * 0.8);
+
+                this.setVelocity(this.motionX * 0.8, this.motionY, this.motionZ * 0.8);
             }
 
             int yHeightToOwner = (int) (owner.posY - this.posY);
@@ -217,7 +158,7 @@ public class Penguin extends AbstractPet {
             this.setRotationYawHead(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.renderYawOffset = this.rotationYawHead - ((float)Math.signum(bodyYawDiff) * 50);
+                this.renderYawOffset = this.rotationYawHead - (Math.signum(bodyYawDiff) * 50);
             } else {
                 this.renderYawOffset = this.renderYawOffset + MathHelper.clamp(this.rotationYawHead - this.renderYawOffset, -10, 10);
             }
@@ -240,9 +181,61 @@ public class Penguin extends AbstractPet {
         }
     }
 
+    protected boolean isFlapping() {
+        return isFlapping;
+    }
+
+    protected void onFlap() {
+        //this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
+    }
+
+    protected SoundEvent getAmbientSound() {
+        return PetsSounds.PENGUIN_AMBIENT;
+    }
+
+    protected SoundEvent getHurtSound(final DamageSource source) {
+        return PetsSounds.PENGUIN_AMBIENT;
+    }
+
+    protected SoundEvent getDeathSound() {
+        return PetsSounds.PENGUIN_AMBIENT;
+    }
+
+    protected void playStepSound(final BlockPos pos, final IBlockState blockState) {
+        this.playSound(SoundEvents.ENTITY_CHICKEN_STEP, 0.15F, 1.0F);
+    }
+
+    public Penguin createChild(final EntityAgeable partner) {
+        Penguin penguin = new Penguin(this.world);
+        penguin.setServerEntity(true);
+        return penguin;
+    }
+
+    public IEntityLivingData func_180482_a(DifficultyInstance difficulty, IEntityLivingData groupData) {
+        this.setServerEntity(true);
+        return super.func_180482_a(difficulty, groupData);
+    }
+
+    public boolean isBreedingItem(final ItemStack itemStack) {
+        return false;
+    }
+
+    @Override
+    public void initEntityAI() {
+
+        this.tasks.addTask(1, new EntityAIMate(this, 1));
+        this.tasks.addTask(2, new EntityAISwimming(this));
+        this.tasks.addTask(3, new EntityAIPanic(this, 1.4d));
+        this.tasks.addTask(4, new EntityAITempt(this, 1.0D, Items.field_151115_aP, false));
+
+        this.tasks.addTask(5, new EntityAILookIdle(this));
+        this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
+        this.tasks.addTask(8, new EntityAIFollowOwner(this, 1, 2, 10));
+    }
+
     @Override
     public void notifyDataManagerChange(net.minecraft.network.datasync.DataParameter<?> key) {
-        if (!this.world.isRemote()) {
+        if (!this.world.isRemote) {
             super.notifyDataManagerChange(key);
         }
     }

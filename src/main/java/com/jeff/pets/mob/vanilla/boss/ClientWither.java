@@ -2,13 +2,12 @@ package com.jeff.pets.mob.vanilla.boss;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.entity.EntityType;
 import net.minecraft.init.SoundEvents;
 
 @CanFly
 public class ClientWither extends FlyingPet {
-    public ClientWither(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
-        super(entityType, level);
+    public ClientWither(net.minecraft.world.World level) {
+        super(level);
         this.setSize(2f, 3f);
     }
 

@@ -1,9 +1,7 @@
 package com.jeff.pets;
 
-import com.jeff.pets.client.Central;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
 
 /**
  * Registers the custom sounds for the duck and the penguin. More are likely coming as more
@@ -11,14 +9,13 @@ import net.minecraftforge.eventbus.api.IEventBus;
  */
 public class PetsSounds {
 
-    public static final SoundEvent DUCK_AMBIENT = new SoundEvent(new ResourceLocation(Central.MOD_ID, "duck_ambient"));
+    public static final SoundEvent DUCK_AMBIENT = new SoundEvent(new ResourceLocation("pets_mod", "duck_ambient"));
 
-    public static final SoundEvent PENGUIN_AMBIENT = new SoundEvent(new ResourceLocation(Central.MOD_ID, "penguin_ambient"));
+    public static final SoundEvent PENGUIN_AMBIENT = new SoundEvent(new ResourceLocation("pets_mod", "penguin_ambient"));
 
     /**
      * Static initializer
      */
-    public static void initialize(IEventBus bus) {
-
+    public static void initialize() {
     }
 }

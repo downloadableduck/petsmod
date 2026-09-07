@@ -23,7 +23,7 @@ public class DuckRenderer extends PetRenderer<Duck, DuckModel> {
         if (CONFIG.isBaby) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.6f, 0.6f, 0.6f);
         }
-        
+
     }
 
     @Override

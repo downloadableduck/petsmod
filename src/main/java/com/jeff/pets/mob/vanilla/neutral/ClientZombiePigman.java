@@ -1,15 +1,12 @@
 package com.jeff.pets.mob.vanilla.neutral;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.world.World;
+import net.minecraft.util.SoundEvent;
 
 public class ClientZombiePigman extends GroundPet {
-    public ClientZombiePigman(EntityType<? extends EntityTameable> type, World level) {
-        super(type, level);
+    public ClientZombiePigman(net.minecraft.world.World level) {
+        super(level);
         this.setSize(0.6f, 1.95f);
     }
 

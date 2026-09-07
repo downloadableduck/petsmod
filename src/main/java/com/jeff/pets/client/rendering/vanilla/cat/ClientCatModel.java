@@ -1,32 +1,45 @@
 package com.jeff.pets.client.rendering.vanilla.cat;
 
 import com.jeff.pets.mob.vanilla.passive.ClientCat;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.model.ModelBase;
-import net.minecraft.client.renderer.entity.model.ModelOcelot;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.util.math.MathHelper;
 
 public class ClientCatModel extends ModelBase {
-    /** The back left leg model for the Ocelot. */
+    /**
+     * The back left leg model for the Ocelot.
+     */
     private final ModelRenderer ocelotBackLeftLeg;
-    /** The back right leg model for the Ocelot. */
+    /**
+     * The back right leg model for the Ocelot.
+     */
     private final ModelRenderer ocelotBackRightLeg;
-    /** The front left leg model for the Ocelot. */
+    /**
+     * The front left leg model for the Ocelot.
+     */
     private final ModelRenderer ocelotFrontLeftLeg;
-    /** The front right leg model for the Ocelot. */
+    /**
+     * The front right leg model for the Ocelot.
+     */
     private final ModelRenderer ocelotFrontRightLeg;
-    /** The tail model for the Ocelot. */
+    /**
+     * The tail model for the Ocelot.
+     */
     private final ModelRenderer ocelotTail;
-    /** The second part of tail model for the Ocelot. */
+    /**
+     * The second part of tail model for the Ocelot.
+     */
     private final ModelRenderer ocelotTail2;
-    /** The head model for the Ocelot. */
+    /**
+     * The head model for the Ocelot.
+     */
     private final ModelRenderer ocelotHead;
-    /** The body model for the Ocelot. */
+    /**
+     * The body model for the Ocelot.
+     */
     private final ModelRenderer ocelotBody;
     private int state = 1;
 
@@ -107,23 +120,23 @@ public class ClientCatModel extends ModelBase {
      * arms and legs can swing at most.
      */
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
-        this.ocelotHead.rotateAngleX = headPitch * ((float)Math.PI / 180F);
-        this.ocelotHead.rotateAngleY = netHeadYaw * ((float)Math.PI / 180F);
+        this.ocelotHead.rotateAngleX = headPitch * ((float) Math.PI / 180F);
+        this.ocelotHead.rotateAngleY = netHeadYaw * ((float) Math.PI / 180F);
         if (this.state != 3) {
-            this.ocelotBody.rotateAngleX = ((float)Math.PI / 2F);
+            this.ocelotBody.rotateAngleX = ((float) Math.PI / 2F);
             if (this.state == 2) {
                 this.ocelotBackLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * limbSwingAmount;
                 this.ocelotBackRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + 0.3F) * limbSwingAmount;
-                this.ocelotFrontLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI + 0.3F) * limbSwingAmount;
-                this.ocelotFrontRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * limbSwingAmount;
-                this.ocelotTail2.rotateAngleX = 1.7278761F + ((float)Math.PI / 10F) * MathHelper.cos(limbSwing) * limbSwingAmount;
+                this.ocelotFrontLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI + 0.3F) * limbSwingAmount;
+                this.ocelotFrontRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * limbSwingAmount;
+                this.ocelotTail2.rotateAngleX = 1.7278761F + ((float) Math.PI / 10F) * MathHelper.cos(limbSwing) * limbSwingAmount;
             } else {
                 this.ocelotBackLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * limbSwingAmount;
-                this.ocelotBackRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * limbSwingAmount;
-                this.ocelotFrontLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * limbSwingAmount;
+                this.ocelotBackRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * limbSwingAmount;
+                this.ocelotFrontLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * limbSwingAmount;
                 this.ocelotFrontRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * limbSwingAmount;
                 if (this.state == 1) {
-                    this.ocelotTail2.rotateAngleX = 1.7278761F + ((float)Math.PI / 4F) * MathHelper.cos(limbSwing) * limbSwingAmount;
+                    this.ocelotTail2.rotateAngleX = 1.7278761F + ((float) Math.PI / 4F) * MathHelper.cos(limbSwing) * limbSwingAmount;
                 } else {
                     this.ocelotTail2.rotateAngleX = 1.7278761F + 0.47123894F * MathHelper.cos(limbSwing) * limbSwingAmount;
                 }
@@ -161,17 +174,17 @@ public class ClientCatModel extends ModelBase {
             ++this.ocelotTail.rotationPointY;
             this.ocelotTail2.rotationPointY += -4.0F;
             this.ocelotTail2.rotationPointZ += 2.0F;
-            this.ocelotTail.rotateAngleX = ((float)Math.PI / 2F);
-            this.ocelotTail2.rotateAngleX = ((float)Math.PI / 2F);
+            this.ocelotTail.rotateAngleX = ((float) Math.PI / 2F);
+            this.ocelotTail2.rotateAngleX = ((float) Math.PI / 2F);
             this.state = 0;
         } else if (entitylivingbaseIn.isSprinting()) {
             this.ocelotTail2.rotationPointY = this.ocelotTail.rotationPointY;
             this.ocelotTail2.rotationPointZ += 2.0F;
-            this.ocelotTail.rotateAngleX = ((float)Math.PI / 2F);
-            this.ocelotTail2.rotateAngleX = ((float)Math.PI / 2F);
+            this.ocelotTail.rotateAngleX = ((float) Math.PI / 2F);
+            this.ocelotTail2.rotateAngleX = ((float) Math.PI / 2F);
             this.state = 2;
         } else if (entitylivingbaseIn.getOwner() != null && entitylivingbaseIn.isRidingOrBeingRiddenBy(entitylivingbaseIn.getOwner())) {
-            this.ocelotBody.rotateAngleX = ((float)Math.PI / 4F);
+            this.ocelotBody.rotateAngleX = ((float) Math.PI / 4F);
             this.ocelotBody.rotationPointY += -4.0F;
             this.ocelotBody.rotationPointZ += 5.0F;
             this.ocelotHead.rotationPointY += -3.3F;
@@ -188,10 +201,10 @@ public class ClientCatModel extends ModelBase {
             this.ocelotFrontRightLeg.rotateAngleX = -0.15707964F;
             this.ocelotFrontRightLeg.rotationPointY = 15.8F;
             this.ocelotFrontRightLeg.rotationPointZ = -7.0F;
-            this.ocelotBackLeftLeg.rotateAngleX = (-(float)Math.PI / 2F);
+            this.ocelotBackLeftLeg.rotateAngleX = (-(float) Math.PI / 2F);
             this.ocelotBackLeftLeg.rotationPointY = 21.0F;
             this.ocelotBackLeftLeg.rotationPointZ = 1.0F;
-            this.ocelotBackRightLeg.rotateAngleX = (-(float)Math.PI / 2F);
+            this.ocelotBackRightLeg.rotateAngleX = (-(float) Math.PI / 2F);
             this.ocelotBackRightLeg.rotationPointY = 21.0F;
             this.ocelotBackRightLeg.rotationPointZ = 1.0F;
             this.state = 3;

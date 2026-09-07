@@ -1,12 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.zombievillager;
 
-import com.jeff.pets.client.rendering.ModelUtils;
-import net.minecraft.client.renderer.entity.model.ModelBiped;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
-import net.minecraft.client.renderer.entity.model.ModelZombieVillager;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.util.math.MathHelper;
 
 public class ClientZombieVillagerModel extends ModelBiped {
@@ -61,13 +57,13 @@ public class ClientZombieVillagerModel extends ModelBiped {
 
     public void setRotationAngles(float p_78087_1_, float p_78087_2_, float p_78087_3_, float p_78087_4_, float p_78087_5_, float p_78087_6_, Entity p_78087_7_) {
         super.setRotationAngles(p_78087_1_, p_78087_2_, p_78087_3_, p_78087_4_, p_78087_5_, p_78087_6_, p_78087_7_);
-        float lvt_9_1_ = MathHelper.sin(this.swingProgress * (float)Math.PI);
-        float lvt_10_1_ = MathHelper.sin((1.0F - (1.0F - this.swingProgress) * (1.0F - this.swingProgress)) * (float)Math.PI);
+        float lvt_9_1_ = MathHelper.sin(this.swingProgress * (float) Math.PI);
+        float lvt_10_1_ = MathHelper.sin((1.0F - (1.0F - this.swingProgress) * (1.0F - this.swingProgress)) * (float) Math.PI);
         this.bipedRightArm.rotateAngleZ = 0.0F;
         this.bipedLeftArm.rotateAngleZ = 0.0F;
         this.bipedRightArm.rotateAngleY = -(0.1F - lvt_9_1_ * 0.6F);
         this.bipedLeftArm.rotateAngleY = 0.1F - lvt_9_1_ * 0.6F;
-        float lvt_11_1_ = -(float)Math.PI / 1.5F;
+        float lvt_11_1_ = -(float) Math.PI / 1.5F;
         this.bipedRightArm.rotateAngleX = lvt_11_1_;
         this.bipedLeftArm.rotateAngleX = lvt_11_1_;
         ModelRenderer var10000 = this.bipedRightArm;

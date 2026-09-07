@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.guardian;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.model.ModelBase;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -26,7 +26,7 @@ public class ClientGuardianModel extends ModelBase {
         this.field_3379 = new ModelRenderer(this);
         this.field_3379.setTextureOffset(0, 0).addBox(-6.0F, 10.0F, -8.0F, 12, 12, 16);
         this.field_3379.setTextureOffset(0, 28).addBox(-8.0F, 10.0F, -6.0F, 2, 12, 12);
-        this.field_3379.setTextureOffset(0, 28).addBox(6.0F, 10.0F, -6.0F, 2, 12, 12, true);
+        this.field_3379.setTextureOffset(0, 28).addBox(6.0F, 10.0F, -6.0F, 2, 12, 12);
         this.field_3379.setTextureOffset(16, 40).addBox(-6.0F, 8.0F, -6.0F, 12, 2, 12);
         this.field_3379.setTextureOffset(16, 40).addBox(-6.0F, 22.0F, -6.0F, 12, 2, 12);
 
@@ -75,7 +75,7 @@ public class ClientGuardianModel extends ModelBase {
         }
 
         this.field_3381.rotationPointZ = -8.25F;
-        Entity entity = Minecraft.getInstance().pointedEntity;
+        Entity entity = Minecraft.getInstance().getRenderViewEntity();
 
         if (entity != null) {
             Vec3d vec3d = entity.getEyePosition(0.0F);
@@ -87,7 +87,7 @@ public class ClientGuardianModel extends ModelBase {
                 this.field_3381.rotationPointY = 1.0F;
             }
 
-            Vec3d vec3d3 = entity2.getLook(0.0F);
+            Vec3d vec3d3 = entity2.getLookVec();
             vec3d3 = new Vec3d(vec3d3.x, 0.0F, vec3d3.z);
             Vec3d vec3d4 = (new Vec3d(vec3d2.x - vec3d.x, 0.0F, vec3d2.z - vec3d.z)).normalize().rotateYaw(((float) Math.PI / 2F));
             double e = vec3d3.dotProduct(vec3d4);

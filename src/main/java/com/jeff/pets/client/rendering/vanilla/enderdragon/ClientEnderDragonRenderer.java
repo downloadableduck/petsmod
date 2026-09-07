@@ -18,7 +18,7 @@ public class ClientEnderDragonRenderer extends PetRenderer<ClientEnderDragon, Cl
         if (CONFIG.isBaby) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.25f, 0.25f, 0.25f);
         }
-        
+
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.vex;
 
 import com.jeff.pets.mob.vanilla.hostile.ClientVex;
-import net.minecraft.client.renderer.entity.model.ModelBiped;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.model.ModelRenderer;
 
 public class ClientVexModel extends ModelBiped {
     private final ModelRenderer leftWing;

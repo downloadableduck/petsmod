@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.silverfish;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientSilverfish;
-import net.minecraft.client.renderer.entity.model.ModelSilverfish;
+import net.minecraft.client.model.ModelSilverfish;
 import net.minecraft.util.ResourceLocation;
 
 public class ClientSilverfishRenderer extends PetRenderer<ClientSilverfish, ModelSilverfish> {

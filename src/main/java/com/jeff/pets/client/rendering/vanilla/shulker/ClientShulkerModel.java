@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.shulker;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.client.renderer.entity.model.ModelBase;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class ClientShulkerModel extends ModelBase {

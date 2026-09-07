@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.zombie;
 
 import com.jeff.pets.client.rendering.ModelUtils;
-import net.minecraft.client.renderer.entity.model.ModelBiped;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 

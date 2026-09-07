@@ -65,7 +65,7 @@ public class Utils {
      *                  current name is checked off of.
      */
     public static void checkName(String activePet, AbstractPet entity, String petName) {
-        if (Objects.equals(CONFIG.activePet, activePet) && entity != null && !entity.getName().getString().equals(petName)) {
+        if (Objects.equals(CONFIG.activePet, activePet) && entity != null && !entity.func_95999_t().equals(petName)) {
             entity.setName(petName);
         }
     }

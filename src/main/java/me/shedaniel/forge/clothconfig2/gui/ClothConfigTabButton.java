@@ -1,45 +1,37 @@
 package me.shedaniel.forge.clothconfig2.gui;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
-@OnlyIn(Dist.CLIENT)
+@SideOnly(Side.CLIENT)
 public class ClothConfigTabButton extends GuiButton {
-    
+
     private final int index;
     private final ClothConfigScreen screen;
-    
+
     public ClothConfigTabButton(ClothConfigScreen screen, int index, int int_1, int int_2, int int_3, int int_4, String string_1) {
         super(new Random().nextInt(), int_1, int_2, int_3, int_4, string_1);
         this.index = index;
         this.screen = screen;
     }
-    
-    @Override
-    public boolean mouseClicked(double d, double u, int v) {
-        return visible && enabled && isMouseOver(d, u);
+
+    public void render(int mouseX, int mouseY, float delta) {
+        enabled = index != screen.selectedTabIndex;
+        this.func_191745_a(Minecraft.getInstance(), mouseX, mouseY, delta);
     }
 
-    @Override
-    public void onClick(double d, double u) {
+    public void onClick() {
         if (index != -1)
             screen.nextTabIndex = index;
         screen.tabsScrollVelocity = 0d;
         screen.initGui();
-        super.onClick(d, u);
-    }
-    
-    @Override
-    public void render(int int_1, int int_2, float float_1) {
-        enabled = index != screen.selectedTabIndex;
-        super.render(int_1, int_2, float_1);
     }
 
-
-    public boolean isMouseOver(double double_1, double double_2) {
-        return this.enabled && this.visible && double_1 >= this.x && double_2 >= this.y && double_1 < this.x + this.width && double_2 < this.y + this.height && double_1 >= 20 && double_1 < screen.width - 20;
+    public boolean isMouseOver(int mouseX, int mouseY) {
+        return this.enabled && this.visible && mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height && mouseX >= 20 && mouseX < screen.width - 20;
     }
 }

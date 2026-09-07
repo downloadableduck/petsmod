@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.creeper;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientCreeper;
-import net.minecraft.client.renderer.entity.model.ModelCreeper;
+import net.minecraft.client.model.ModelCreeper;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Objects;

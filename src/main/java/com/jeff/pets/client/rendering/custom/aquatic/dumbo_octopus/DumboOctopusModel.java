@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class DumboOctopusModel extends PetModel {
@@ -27,7 +27,7 @@ public class DumboOctopusModel extends PetModel {
         body = new ModelRenderer(this);
         body.setRotationPoint(0.0F, 22.0F, 0.0F);
         setRotationAngle(body, 0.0F, -1.5708F, 0.0F);
-        body.setTextureOffset(0, 0).addBox(-4.0F, -5.0F, -3.0F, (int) 6.0F, (int) 6.0F, (int) 6.0F, 0.0F, false);
+        body.setTextureOffset(0, 0).addBox(-4.0F, -5.0F, -3.0F, (int) 6.0F, (int) 6.0F, (int) 6.0F, 0.0F);
 
         left_ear = new ModelRenderer(this);
         left_ear.setRotationPoint(-1.0F, 2.0F, 2.0F);
@@ -38,7 +38,7 @@ public class DumboOctopusModel extends PetModel {
         left_ear_r1.setRotationPoint(-1.0F, -7.0F, 1.0F);
         left_ear.addChild(left_ear_r1);
         setRotationAngle(left_ear_r1, -0.5236F, 0.0F, 0.0F);
-        left_ear_r1.setTextureOffset(8, 12).addBox(-1.0F, -2.0F, -0.5F, (int) 2.0F, (int) 2.0F, (int) 1.0F, 0.0F, false);
+        left_ear_r1.setTextureOffset(8, 12).addBox(-1.0F, -2.0F, -0.5F, (int) 2.0F, (int) 2.0F, (int) 1.0F, 0.0F);
 
         right_ear = new ModelRenderer(this);
         right_ear.setRotationPoint(-2.0F, -5.0F, 3.0F);
@@ -49,47 +49,47 @@ public class DumboOctopusModel extends PetModel {
         right_ear_r1.setRotationPoint(0.0F, 0.0F, -6.0F);
         right_ear.addChild(right_ear_r1);
         setRotationAngle(right_ear_r1, 0.5236F, 0.0F, 0.0F);
-        right_ear_r1.setTextureOffset(8, 12).addBox(-1.0F, -2.0F, -0.5F, (int) 2.0F, (int) 2.0F, (int) 1.0F, 0.0F, false);
+        right_ear_r1.setTextureOffset(8, 12).addBox(-1.0F, -2.0F, -0.5F, (int) 2.0F, (int) 2.0F, (int) 1.0F, 0.0F);
 
         leg1 = new ModelRenderer(this);
         leg1.setRotationPoint(-4.0F, 1.0F, 2.0F);
         body.addChild(leg1);
-        leg1.setTextureOffset(0, 12).addBox(-2.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F, false);
+        leg1.setTextureOffset(0, 12).addBox(-2.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
 
         leg2 = new ModelRenderer(this);
         leg2.setRotationPoint(-4.0F, 1.0F, -1.0F);
         body.addChild(leg2);
-        leg2.setTextureOffset(0, 12).addBox(-2.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F, false);
+        leg2.setTextureOffset(0, 12).addBox(-2.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
 
         leg3 = new ModelRenderer(this);
         leg3.setRotationPoint(-3.0F, 1.0F, -3.0F);
         body.addChild(leg3);
-        leg3.setTextureOffset(0, 12).addBox(-1.0F, -1.0F, -2.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F, false);
+        leg3.setTextureOffset(0, 12).addBox(-1.0F, -1.0F, -2.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
 
         leg4 = new ModelRenderer(this);
         leg4.setRotationPoint(0.0F, 1.0F, -3.0F);
         body.addChild(leg4);
-        leg4.setTextureOffset(0, 12).addBox(-1.0F, -1.0F, -2.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F, false);
+        leg4.setTextureOffset(0, 12).addBox(-1.0F, -1.0F, -2.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
 
         leg5 = new ModelRenderer(this);
         leg5.setRotationPoint(2.0F, 1.0F, -2.0F);
         body.addChild(leg5);
-        leg5.setTextureOffset(0, 12).addBox(0.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F, false);
+        leg5.setTextureOffset(0, 12).addBox(0.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
 
         leg6 = new ModelRenderer(this);
         leg6.setRotationPoint(2.0F, 1.0F, 1.0F);
         body.addChild(leg6);
-        leg6.setTextureOffset(0, 12).addBox(0.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F, false);
+        leg6.setTextureOffset(0, 12).addBox(0.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
 
         leg7 = new ModelRenderer(this);
         leg7.setRotationPoint(1.0F, 1.0F, 3.0F);
         body.addChild(leg7);
-        leg7.setTextureOffset(0, 12).addBox(-1.0F, -1.0F, 0.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F, false);
+        leg7.setTextureOffset(0, 12).addBox(-1.0F, -1.0F, 0.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
 
         leg8 = new ModelRenderer(this);
         leg8.setRotationPoint(-2.0F, 1.0F, 3.0F);
         body.addChild(leg8);
-        leg8.setTextureOffset(0, 12).addBox(-1.0F, -1.0F, 0.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F, false);
+        leg8.setTextureOffset(0, 12).addBox(-1.0F, -1.0F, 0.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
     }
 
     @Override

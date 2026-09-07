@@ -34,8 +34,8 @@ import java.util.stream.Stream;
 
 public final class GuiRegistry implements GuiRegistryAccess {
 
-    private Map<Priority, List<ProviderEntry>> providers = new HashMap<>();
-    private List<TransformerEntry> transformers = new ArrayList<>();
+    private final Map<Priority, List<ProviderEntry>> providers = new HashMap<>();
+    private final List<TransformerEntry> transformers = new ArrayList<>();
 
     public GuiRegistry() {
         for (Priority priority : Priority.values()) {
@@ -97,13 +97,13 @@ public final class GuiRegistry implements GuiRegistryAccess {
         providers.computeIfAbsent(priority, p -> new ArrayList<>()).add(new ProviderEntry(predicate, provider));
     }
 
-    public final void registerTypeProvider(GuiProvider provider, Class... types) {
+    public void registerTypeProvider(GuiProvider provider, Class... types) {
         for (Class type : types) {
             registerProvider(Priority.LAST, provider, field -> type == field.getType());
         }
     }
 
-    public final void registerPredicateProvider(GuiProvider provider, Predicate<Field> predicate) {
+    public void registerPredicateProvider(GuiProvider provider, Predicate<Field> predicate) {
         registerProvider(Priority.NORMAL, provider, predicate);
     }
 

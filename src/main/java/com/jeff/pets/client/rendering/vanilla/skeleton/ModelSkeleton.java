@@ -5,21 +5,18 @@
 
 package com.jeff.pets.client.rendering.vanilla.skeleton;
 
-import net.minecraft.client.renderer.entity.model.ModelBiped;
-import net.minecraft.client.renderer.entity.model.ModelBiped.ArmPose;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.AbstractSkeleton;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-@OnlyIn(Dist.CLIENT)
+@SideOnly(Side.CLIENT)
 public class ModelSkeleton extends ModelBiped {
     public ModelSkeleton() {
         this(0.0F, false);
@@ -56,16 +53,16 @@ public class ModelSkeleton extends ModelBiped {
     @Override
     public void setRotationAngles(float p_78087_1_, float p_78087_2_, float p_78087_3_, float p_78087_4_, float p_78087_5_, float p_78087_6_, Entity p_78087_7_) {
         super.setRotationAngles(p_78087_1_, p_78087_2_, p_78087_3_, p_78087_4_, p_78087_5_, p_78087_6_, p_78087_7_);
-        ItemStack itemstack = ((EntityLivingBase)p_78087_7_).getHeldItemMainhand();
+        ItemStack itemstack = ((EntityLivingBase) p_78087_7_).getHeldItemMainhand();
         if (((EntityLivingBase) p_78087_7_).isSwingInProgress && (itemstack.isEmpty() || !(itemstack.getItem() instanceof ItemBow))) {
-            float f = MathHelper.sin(this.swingProgress * (float)Math.PI);
-            float f1 = MathHelper.sin((1.0F - (1.0F - this.swingProgress) * (1.0F - this.swingProgress)) * (float)Math.PI);
+            float f = MathHelper.sin(this.swingProgress * (float) Math.PI);
+            float f1 = MathHelper.sin((1.0F - (1.0F - this.swingProgress) * (1.0F - this.swingProgress)) * (float) Math.PI);
             this.bipedRightArm.rotateAngleZ = 0.0F;
             this.bipedLeftArm.rotateAngleZ = 0.0F;
             this.bipedRightArm.rotateAngleY = -(0.1F - f * 0.6F);
             this.bipedLeftArm.rotateAngleY = 0.1F - f * 0.6F;
-            this.bipedRightArm.rotateAngleX = (-(float)Math.PI / 2F);
-            this.bipedLeftArm.rotateAngleX = (-(float)Math.PI / 2F);
+            this.bipedRightArm.rotateAngleX = (-(float) Math.PI / 2F);
+            this.bipedLeftArm.rotateAngleX = (-(float) Math.PI / 2F);
             ModelRenderer var10000 = this.bipedRightArm;
             var10000.rotateAngleX -= f * 1.2F - f1 * 0.4F;
             var10000 = this.bipedLeftArm;

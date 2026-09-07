@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.endermite;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientEndermite;
-import net.minecraft.client.renderer.entity.model.ModelEnderMite;
+import net.minecraft.client.model.ModelEnderMite;
 import net.minecraft.util.ResourceLocation;
 
 public class ClientEndermiteRenderer extends PetRenderer<ClientEndermite, ModelEnderMite> {

@@ -6,8 +6,6 @@ import com.jeff.pets.mob.vanilla.passive.ClientMooshroom;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
-import java.util.Objects;
-
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientMooshroomRenderer extends PetRenderer<ClientMooshroom, ClientCowModel> {
@@ -24,12 +22,12 @@ public class ClientMooshroomRenderer extends PetRenderer<ClientMooshroom, Client
         if (CONFIG.isBaby) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
-        
+
     }
 
     @Override
     public ResourceLocation getEntityTexture(ClientMooshroom cowRenderState) {
-            mooshroomTexturePath = "textures/entity/cow/mooshroom.png";
+        mooshroomTexturePath = "textures/entity/cow/mooshroom.png";
         return new ResourceLocation("minecraft", mooshroomTexturePath);
     }
 }

@@ -12,10 +12,9 @@ import me.shedaniel.forge.clothconfig2.impl.builders.DropdownMenuBuilder;
 import me.shedaniel.forge.clothconfig2.impl.builders.EnumSelectorBuilder;
 import me.shedaniel.forge.clothconfig2.impl.builders.StringFieldBuilder;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraftforge.fml.ExtensionPoint;
-import net.minecraftforge.fml.ModContainer;
-import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.ModContainer;
 
 import java.util.Objects;
 
@@ -27,10 +26,35 @@ import static com.jeff.pets.client.Central.MOD_ID;
  *
  * @see Central
  */
-@Mod(MOD_ID)
+//@Mod(modid = MOD_ID)
 @Mod.EventBusSubscriber
 public class PetsConfigScreen<T extends Enum & NameableEnum> {
 
+
+    static {
+        PetsConfigScreen this_ = new PetsConfigScreen();
+        ModContainer modContainer = ForgeModContainer.getInstance();
+        /*modContainer.bindMetadata(ExtensionPoint.CONFIGGUIFACTORY, () -> {
+            PetsConfig CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
+            return ((minecraft, s) -> {
+                ConfigBuilder builder = ConfigBuilder.create()
+                        .setTitle("Config")
+                        .setSavingRunnable(() -> {
+                            AutoConfig.getConfigHolder(PetsConfig.class).save();
+                        })
+                        .setTransparentBackground(true);
+                ConfigCategory general = builder.getOrCreateCategory("Config");
+                ConfigEntryBuilder entryBuilder = builder.entryBuilder();
+                general.addEntry(this_.createPetOnOption(entryBuilder, CONFIG).build());
+                general.addEntry(this_.createPetSpeciesOption(entryBuilder, CONFIG).build());
+                general.addEntry(this_.createPetNameOption(entryBuilder, CONFIG).build());
+                general.addEntry(this_.createPetSkinOption(entryBuilder, CONFIG).build());
+                general.addEntry(this_.createBabyOption(entryBuilder, CONFIG).build());
+
+                return builder.build();
+            });
+        });*/
+    }
 
     /**
      * This is one of the most important values in this class. It allows the easy swapping out
@@ -68,7 +92,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
      * @see TitleScreenRenderingMixin
      */
     public PetsConfigScreen() {
-        ModContainer modContainer = ModLoadingContext.get().getActiveContainer();
+        /*ModContainer modContainer = ModLoadingContext.get().getActiveContainer();
         modContainer.registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () -> {
             PetsConfig CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
             return ((minecraft, s) -> {
@@ -88,37 +112,12 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
 
                 return builder.build();
             });
-        });
-    }
-
-    static  {
-        PetsConfigScreen this_ = new PetsConfigScreen();
-        ModContainer modContainer = ModLoadingContext.get().getActiveContainer();
-        modContainer.registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () -> {
-            PetsConfig CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
-            return ((minecraft, s) -> {
-                ConfigBuilder builder = ConfigBuilder.create()
-                        .setTitle("Config")
-                        .setSavingRunnable(() -> {
-                            AutoConfig.getConfigHolder(PetsConfig.class).save();
-                        })
-                        .setTransparentBackground(true);
-                ConfigCategory general = builder.getOrCreateCategory("Config");
-                ConfigEntryBuilder entryBuilder = builder.entryBuilder();
-                general.addEntry(this_.createPetOnOption(entryBuilder, CONFIG).build());
-                general.addEntry(this_.createPetSpeciesOption(entryBuilder, CONFIG).build());
-                general.addEntry(this_.createPetNameOption(entryBuilder, CONFIG).build());
-                general.addEntry(this_.createPetSkinOption(entryBuilder, CONFIG).build());
-                general.addEntry(this_.createBabyOption(entryBuilder, CONFIG).build());
-
-                return builder.build();
-            });
-        });
+        });*/
     }
 
     private static String getInstalledAddons() {
         //if (Central.ADDONS.isEmpty()) {
-            return "none";
+        return "none";
         //}
         //return String.join(", \n", Central.ADDONS);
     }
@@ -718,7 +717,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
         }
         return builder.startEnumSelector("Pet Skin", enumClass, initialValue)
                 .setSaveConsumer((value) -> {
-                    String val = value.getDisplayName().getString().replace(" ", "_");
+                    String val = value.getDisplayName().func_150260_c().replace(" ", "_");
                     switch (CONFIG.activePet) {
                         case "duck":
                             enumClass = (Class<T>) DuckSkins.class;

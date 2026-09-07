@@ -1,16 +1,13 @@
 package com.jeff.pets.client.rendering.vanilla.parrot;
 
-import com.google.common.collect.ImmutableList;
-import com.jeff.pets.mob.vanilla.passive.ClientParrot;
-import net.minecraft.client.renderer.entity.model.ModelBase;
-import net.minecraft.client.renderer.entity.model.ModelParrot;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityParrot;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ClientParrotModel extends ModelBase {
     private final ModelRenderer body;
@@ -83,8 +80,8 @@ public class ClientParrotModel extends ModelBase {
     @Override
     public void setRotationAngles(float p_78087_1_, float p_78087_2_, float p_78087_3_, float p_78087_4_, float p_78087_5_, float p_78087_6_, Entity p_78087_7_) {
         float lvt_8_1_ = p_78087_3_ * 0.3F;
-        this.head.rotateAngleX = p_78087_5_ * ((float)Math.PI / 180F);
-        this.head.rotateAngleY = p_78087_4_ * ((float)Math.PI / 180F);
+        this.head.rotateAngleX = p_78087_5_ * ((float) Math.PI / 180F);
+        this.head.rotateAngleY = p_78087_4_ * ((float) Math.PI / 180F);
         this.head.rotateAngleZ = 0.0F;
         this.head.rotationPointX = 0.0F;
         this.body.rotationPointX = 0.0F;
@@ -93,13 +90,13 @@ public class ClientParrotModel extends ModelBase {
         this.wingLeft.rotationPointX = 1.5F;
         if (this.state != State.SITTING) {
             if (this.state == State.PARTY) {
-                float lvt_9_1_ = MathHelper.cos((float)p_78087_7_.ticksExisted);
-                float lvt_10_1_ = MathHelper.sin((float)p_78087_7_.ticksExisted);
+                float lvt_9_1_ = MathHelper.cos((float) p_78087_7_.ticksExisted);
+                float lvt_10_1_ = MathHelper.sin((float) p_78087_7_.ticksExisted);
                 this.head.rotationPointX = lvt_9_1_;
                 this.head.rotationPointY = 15.69F + lvt_10_1_;
                 this.head.rotateAngleX = 0.0F;
                 this.head.rotateAngleY = 0.0F;
-                this.head.rotateAngleZ = MathHelper.sin((float)p_78087_7_.ticksExisted) * 0.4F;
+                this.head.rotateAngleZ = MathHelper.sin((float) p_78087_7_.ticksExisted) * 0.4F;
                 this.body.rotationPointX = lvt_9_1_;
                 this.body.rotationPointY = 16.5F + lvt_10_1_;
                 this.wingLeft.rotateAngleZ = -0.0873F - p_78087_3_;
@@ -115,7 +112,7 @@ public class ClientParrotModel extends ModelBase {
                     ModelRenderer var10000 = this.legLeft;
                     var10000.rotateAngleX += MathHelper.cos(p_78087_1_ * 0.6662F) * 1.4F * p_78087_2_;
                     var10000 = this.legRight;
-                    var10000.rotateAngleX += MathHelper.cos(p_78087_1_ * 0.6662F + (float)Math.PI) * 1.4F * p_78087_2_;
+                    var10000.rotateAngleX += MathHelper.cos(p_78087_1_ * 0.6662F + (float) Math.PI) * 1.4F * p_78087_2_;
                 }
 
                 this.head.rotationPointY = 15.69F + lvt_8_1_;
@@ -137,15 +134,15 @@ public class ClientParrotModel extends ModelBase {
         this.feather.rotateAngleX = -0.2214F;
         this.body.rotateAngleX = 0.4937F;
         this.wingLeft.rotateAngleX = -0.6981F;
-        this.wingLeft.rotateAngleY = -(float)Math.PI;
+        this.wingLeft.rotateAngleY = -(float) Math.PI;
         this.wingRight.rotateAngleX = -0.6981F;
-        this.wingRight.rotateAngleY = -(float)Math.PI;
+        this.wingRight.rotateAngleY = -(float) Math.PI;
         this.legLeft.rotateAngleX = -0.0299F;
         this.legRight.rotateAngleX = -0.0299F;
         this.legLeft.rotationPointY = 22.0F;
         this.legRight.rotationPointY = 22.0F;
         if (p_78086_1_ instanceof EntityParrot) {
-            EntityParrot lvt_5_1_ = (EntityParrot)p_78086_1_;
+            EntityParrot lvt_5_1_ = (EntityParrot) p_78086_1_;
             if (lvt_5_1_.isPartying()) {
                 this.legLeft.rotateAngleZ = -0.34906584F;
                 this.legRight.rotateAngleZ = 0.34906584F;
@@ -186,12 +183,12 @@ public class ClientParrotModel extends ModelBase {
 
     }
 
-    @OnlyIn(Dist.CLIENT)
-    static enum State {
+    @SideOnly(Side.CLIENT)
+    enum State {
         FLYING,
         STANDING,
         SITTING,
         PARTY,
-        ON_SHOULDER;
+        ON_SHOULDER
     }
 }

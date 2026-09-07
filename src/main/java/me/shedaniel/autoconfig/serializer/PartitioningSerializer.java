@@ -39,8 +39,8 @@ import java.util.stream.Collectors;
  */
 public final class PartitioningSerializer<T extends PartitioningSerializer.GlobalData, M extends ConfigData> implements ConfigSerializer<T> {
 
-    private Class<T> configClass;
-    private Map<Field, ConfigSerializer<M>> serializers;
+    private final Class<T> configClass;
+    private final Map<Field, ConfigSerializer<M>> serializers;
 
     private PartitioningSerializer(Config definition, Class<T> configClass, ConfigSerializer.Factory<M> factory) {
         this.configClass = configClass;

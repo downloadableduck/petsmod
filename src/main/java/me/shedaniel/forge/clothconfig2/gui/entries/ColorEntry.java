@@ -13,12 +13,12 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class ColorEntry extends TextFieldListEntry<Integer> {
-    
-    private ColorDisplayWidget colorDisplayWidget;
-    private Consumer<Integer> saveConsumer;
+
+    private final ColorDisplayWidget colorDisplayWidget;
+    private final Consumer<Integer> saveConsumer;
     private boolean alpha;
-    
-    
+
+
     @Deprecated
     public ColorEntry(String fieldName, int value, String resetButtonKey, Supplier<Integer> defaultValue, Consumer<Integer> saveConsumer, Supplier<Optional<String[]>> tooltipSupplier, boolean requiresRestart) {
         super(fieldName, 0, resetButtonKey, defaultValue, tooltipSupplier, requiresRestart);
@@ -36,7 +36,7 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
             getScreen().setEdited(true, isRequiresRestart());
         });
     }
-    
+
     @Override
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
@@ -51,7 +51,7 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
         }
         colorDisplayWidget.render(mouseX, mouseY, delta);
     }
-    
+
     @Override
     protected void textFieldPreRender(GuiTextField widget) {
         if (!getError().isPresent()) {
@@ -60,13 +60,13 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
             widget.setTextColor(16733525);
         }
     }
-    
+
     @Override
     public void save() {
         if (saveConsumer != null)
             saveConsumer.accept(getValue());
     }
-    
+
     @Override
     protected boolean isMatchDefault(String text) {
         if (!getDefaultValue().isPresent())
@@ -74,17 +74,17 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
         ColorValue colorValue = getColorValue(text);
         return colorValue.hasError() && colorValue.color == getDefaultValue().get();
     }
-    
+
     @Override
     public Integer getValue() {
         return getColorValueColor(textFieldWidget.getText());
     }
-    
+
     @Deprecated
     public void setValue(int color) {
         textFieldWidget.setText(getHexColorString(color));
     }
-    
+
     @Override
     public Optional<String> getError() {
         ColorValue colorValue = getColorValue(this.textFieldWidget.getText());
@@ -92,35 +92,35 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
             return Optional.of(I18n.format("text.cloth-config.error.color." + colorValue.getError().name().toLowerCase(Locale.ROOT)));
         return super.getError();
     }
-    
+
     public void withAlpha() {
         if (!alpha) {
             this.alpha = true;
             textFieldWidget.setText(getHexColorString(original));
         }
     }
-    
+
     public void withoutAlpha() {
         if (alpha) {
             alpha = false;
             textFieldWidget.setText(getHexColorString(original));
         }
     }
-    
+
     protected String stripHexStarter(String hex) {
         if (hex.startsWith("#")) {
             return hex.substring(1);
         } else return hex;
     }
-    
+
     protected boolean isValidColorString(String str) {
         return !getColorValue(str).hasError();
     }
-    
+
     protected int getColorValueColor(String str) {
         return getColorValue(str).getColor();
     }
-    
+
     protected ColorValue getColorValue(String str) {
         try {
             int color;
@@ -151,11 +151,11 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
             return ColorError.INVALID_COLOR.toValue();
         }
     }
-    
+
     protected String getHexColorString(int color) {
         return "#" + StringUtils.leftPad(Integer.toHexString(color), alpha ? 8 : 6, '0');
     }
-    
+
     protected enum ColorError {
         NO_ALPHA_ALLOWED,
         INVALID_ALPHA,
@@ -163,40 +163,40 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
         INVALID_GREEN,
         INVALID_BLUE,
         INVALID_COLOR;
-        
-        private ColorValue value;
-        
+
+        private final ColorValue value;
+
         ColorError() {
             this.value = new ColorValue(this);
         }
-        
+
         public ColorValue toValue() {
             return value;
         }
     }
-    
+
     protected static class ColorValue {
         private int color = -1;
         @Nullable
         private ColorError error = null;
-        
+
         public ColorValue(int color) {
             this.color = color;
         }
-        
+
         public ColorValue(ColorError error) {
             this.error = error;
         }
-        
+
         public int getColor() {
             return color;
         }
-        
+
         @Nullable
         public ColorError getError() {
             return error;
         }
-        
+
         public boolean hasError() {
             return getError() != null;
         }

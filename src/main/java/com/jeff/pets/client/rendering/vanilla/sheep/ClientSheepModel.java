@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.sheep;
 
-import net.minecraft.client.renderer.entity.model.ModelQuadruped;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
+import net.minecraft.client.model.ModelQuadruped;
+import net.minecraft.client.model.ModelRenderer;
 
 public class ClientSheepModel extends ModelQuadruped {
     private float headXRot;

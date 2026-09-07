@@ -18,7 +18,7 @@ public class ClientPigRenderer extends PetRenderer<ClientPig, ClientPigModel> {
         if (CONFIG.isBaby) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
-        
+
     }
 
     public ResourceLocation getEntityTexture(ClientPig pigRenderState) {

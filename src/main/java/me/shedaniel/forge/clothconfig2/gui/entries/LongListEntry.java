@@ -2,38 +2,38 @@ package me.shedaniel.forge.clothconfig2.gui.entries;
 
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.resources.I18n;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-@OnlyIn(Dist.CLIENT)
+@SideOnly(Side.CLIENT)
 public class LongListEntry extends TextFieldListEntry<Long> {
-    
-    private static Function<String, String> stripCharacters = s -> {
+
+    private static final Function<String, String> stripCharacters = s -> {
         StringBuilder stringBuilder_1 = new StringBuilder();
         char[] var2 = s.toCharArray();
         int var3 = var2.length;
-        
+
         for (char c : var2)
             if (Character.isDigit(c) || c == '-')
                 stringBuilder_1.append(c);
-        
+
         return stringBuilder_1.toString();
     };
     private long minimum, maximum;
-    private Consumer<Long> saveConsumer;
-    
-    
+    private final Consumer<Long> saveConsumer;
+
+
     @Deprecated
     public LongListEntry(String fieldName, Long value, Consumer<Long> saveConsumer) {
         this(fieldName, value, "text.cloth-config.reset_value", null, saveConsumer);
     }
-    
-    
+
+
     @Deprecated
     public LongListEntry(String fieldName, Long value, String resetButtonKey, Supplier<Long> defaultValue, Consumer<Long> saveConsumer) {
         super(fieldName, value, resetButtonKey, defaultValue);
@@ -41,14 +41,14 @@ public class LongListEntry extends TextFieldListEntry<Long> {
         this.maximum = Long.MAX_VALUE;
         this.saveConsumer = saveConsumer;
     }
-    
-    
+
+
     @Deprecated
     public LongListEntry(String fieldName, Long value, String resetButtonKey, Supplier<Long> defaultValue, Consumer<Long> saveConsumer, Supplier<Optional<String[]>> tooltipSupplier) {
         this(fieldName, value, resetButtonKey, defaultValue, saveConsumer, tooltipSupplier, false);
     }
-    
-    
+
+
     @Deprecated
     public LongListEntry(String fieldName, Long value, String resetButtonKey, Supplier<Long> defaultValue, Consumer<Long> saveConsumer, Supplier<Optional<String[]>> tooltipSupplier, boolean requiresRestart) {
         super(fieldName, value, resetButtonKey, defaultValue, tooltipSupplier, requiresRestart);
@@ -56,12 +56,12 @@ public class LongListEntry extends TextFieldListEntry<Long> {
         this.maximum = Long.MAX_VALUE;
         this.saveConsumer = saveConsumer;
     }
-    
+
     @Override
     protected String stripAddText(String s) {
         return stripCharacters.apply(s);
     }
-    
+
     @Override
     protected void textFieldPreRender(GuiTextField widget) {
         try {
@@ -74,28 +74,28 @@ public class LongListEntry extends TextFieldListEntry<Long> {
             widget.setTextColor(16733525);
         }
     }
-    
+
     @Override
     public void save() {
         if (saveConsumer != null)
             saveConsumer.accept(getValue());
     }
-    
+
     @Override
     protected boolean isMatchDefault(String text) {
         return getDefaultValue().isPresent() && text.equals(defaultValue.get().toString());
     }
-    
+
     public LongListEntry setMinimum(long minimum) {
         this.minimum = minimum;
         return this;
     }
-    
+
     public LongListEntry setMaximum(long maximum) {
         this.maximum = maximum;
         return this;
     }
-    
+
     @Override
     public Long getValue() {
         try {
@@ -104,7 +104,7 @@ public class LongListEntry extends TextFieldListEntry<Long> {
             return 0L;
         }
     }
-    
+
     @Override
     public Optional<String> getError() {
         try {

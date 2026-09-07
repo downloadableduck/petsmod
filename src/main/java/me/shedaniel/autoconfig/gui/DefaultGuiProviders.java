@@ -171,7 +171,7 @@ public class DefaultGuiProviders {
                     List<Enum<?>> enums = Arrays.asList(((Class<? extends Enum<?>>) field.getType()).getEnumConstants());
                     return Collections.singletonList(
                             ENTRY_BUILDER.startDropdownMenu(
-                                    i18n,
+                                            i18n,
                                             (DropdownBoxEntry.SelectionTopCellElement) DropdownMenuBuilder.TopCellElementBuilder.of(
                                                     getUnsafely(field, config, getUnsafely(field, defaults)),
                                                     str -> {
@@ -184,7 +184,7 @@ public class DefaultGuiProviders {
                                                         return null;
                                                     }
                                             ),
-                                    (DropdownBoxEntry.SelectionCellCreator) DropdownMenuBuilder.CellCreatorBuilder.of(DEFAULT_NAME_PROVIDER)
+                                            (DropdownBoxEntry.SelectionCellCreator) DropdownMenuBuilder.CellCreatorBuilder.of(DEFAULT_NAME_PROVIDER)
                                     )
                                     .setSelections(enums)
                                     .setDefaultValue(() -> getUnsafely(field, defaults))

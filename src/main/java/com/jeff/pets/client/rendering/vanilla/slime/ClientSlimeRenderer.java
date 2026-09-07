@@ -2,8 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.slime;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
-import net.minecraft.client.renderer.entity.RenderSlime;
-import net.minecraft.client.renderer.entity.model.ModelSlime;
+import net.minecraft.client.model.ModelSlime;
 import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -33,7 +32,7 @@ public class ClientSlimeRenderer extends PetRenderer<ClientSlime, ModelSlime> {
                 break;
         }
         net.minecraft.client.renderer.GlStateManager.scalef(slimeScale, slimeScale, slimeScale);
-        
+
     }
 
     @Override

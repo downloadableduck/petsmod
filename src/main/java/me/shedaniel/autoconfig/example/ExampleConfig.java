@@ -19,7 +19,6 @@
 
 package me.shedaniel.autoconfig.example;
 
-import blue.endless.jankson.Comment;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
@@ -63,7 +62,6 @@ public class ExampleConfig extends PartitioningSerializer.GlobalData {
         @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
         public ExampleEnum anEnumWithButton = ExampleEnum.FOO;
 
-        @Comment("This tooltip was automatically applied from a Jankson @Comment")
         public String aString = "hello";
 
         @ConfigEntry.Gui.CollapsibleObject(startExpanded = true)

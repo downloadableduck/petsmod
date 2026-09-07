@@ -2,14 +2,13 @@ package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.util.SoundEvent;
 
 @CanFly
 public class ClientBlaze extends FlyingPet {
-    public ClientBlaze(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
-        super(entityType, level);
+    public ClientBlaze(net.minecraft.world.World level) {
+        super(level);
         this.setSize(0.6f, 1.8f);
     }
 

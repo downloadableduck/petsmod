@@ -1,14 +1,13 @@
 package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.util.SoundEvent;
 
 public class ClientHorse extends GroundPet {
 
-    public ClientHorse(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
-        super(entityType, level);
+    public ClientHorse(net.minecraft.world.World level) {
+        super(level);
         this.setSize(1.3965f, 1.6f);
     }
 

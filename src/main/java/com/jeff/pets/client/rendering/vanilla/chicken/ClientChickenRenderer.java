@@ -2,8 +2,6 @@ package com.jeff.pets.client.rendering.vanilla.chicken;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientChicken;
-import net.minecraft.client.renderer.entity.RenderChicken;
-import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 

@@ -3,61 +3,68 @@ package me.shedaniel.forge.clothconfig2.impl;
 import me.shedaniel.forge.clothconfig2.api.Modifier;
 import me.shedaniel.forge.clothconfig2.api.ModifierKeyCode;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.client.util.InputMappings;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.input.Keyboard;
 
-import java.util.Objects;
-
-@OnlyIn(Dist.CLIENT)
+@SideOnly(Side.CLIENT)
 public class ModifierKeyCodeImpl implements ModifierKeyCode {
-    private InputMappings.Input keyCode;
+    private KeyInput keyCode;
     private Modifier modifier;
-    
+
     public ModifierKeyCodeImpl() {
     }
-    
+
+    private static String getKeyTranslationKey(KeyInput keyCode) {
+        String name = Keyboard.getKeyName(keyCode.getKeyCode());
+        if (name != null) {
+            name = name.toLowerCase();
+            if (name.startsWith("key."))
+                name = name.substring(4);
+        } else {
+            name = "unknown";
+        }
+        return "key.keyboard." + name;
+    }
+
     @Override
-    public InputMappings.Input getKeyCode() {
+    public KeyInput getKeyCode() {
         return keyCode;
     }
-    
+
     @Override
     public Modifier getModifier() {
         return modifier;
     }
-    
+
     @Override
-    public ModifierKeyCode setKeyCode(InputMappings.Input keyCode) {
-        this.keyCode = keyCode.getType().getOrMakeInput(keyCode.getKeyCode());
-        if (keyCode.equals(InputMappings.INPUT_INVALID))
+    public ModifierKeyCode setKeyCode(KeyInput keyCode) {
+        this.keyCode = KeyInput.of(keyCode.getType(), keyCode.getKeyCode());
+        if (keyCode.equals(KeyInput.INVALID))
             setModifier(Modifier.none());
         return this;
     }
-    
+
     @Override
     public ModifierKeyCode setModifier(Modifier modifier) {
         this.modifier = Modifier.of(modifier.getValue());
         return this;
     }
-    
+
     @Override
     public String toString() {
-        String string_1 = this.keyCode.getName();
         int int_1 = this.keyCode.getKeyCode();
-        String string_2 = null;
+        String base;
         switch (this.keyCode.getType()) {
-            case KEYSYM:
-                string_2 = InputMappings.Type.KEYSYM.getOrMakeInput(int_1).getName();
+            case MOUSE:
+                base = I18n.format("key.mouse", int_1 + 1);
                 break;
             case SCANCODE:
-                string_2 = InputMappings.Type.SCANCODE.getOrMakeInput(int_1).getName();
+            case KEYSYM:
+            default:
+                base = I18n.format(getKeyTranslationKey(this.keyCode));
                 break;
-            case MOUSE:
-                String string_3 = I18n.format(string_1);
-                string_2 = Objects.equals(string_3, string_1) ? I18n.format(InputMappings.Type.MOUSE.name(), int_1 + 1) : string_3;
         }
-        String base = string_2 == null ? I18n.format(string_1) : string_2;
         if (modifier.hasShift())
             base = I18n.format("modifier.cloth-config.shift", base);
         if (modifier.hasControl())
@@ -66,7 +73,7 @@ public class ModifierKeyCodeImpl implements ModifierKeyCode {
             base = I18n.format("modifier.cloth-config.alt", base);
         return base;
     }
-    
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -76,7 +83,7 @@ public class ModifierKeyCodeImpl implements ModifierKeyCode {
         ModifierKeyCode that = (ModifierKeyCode) o;
         return keyCode.equals(that.getKeyCode()) && modifier.equals(that.getModifier());
     }
-    
+
     @Override
     public int hashCode() {
         int result = keyCode != null ? keyCode.hashCode() : 0;

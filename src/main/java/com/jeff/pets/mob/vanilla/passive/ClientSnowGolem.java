@@ -1,14 +1,13 @@
 package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.util.SoundEvent;
 
 public class ClientSnowGolem extends GroundPet {
 
-    public ClientSnowGolem(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
-        super(entityType, level);
+    public ClientSnowGolem(net.minecraft.world.World level) {
+        super(level);
         this.setSize(0.7f, 1.9f);
     }
 

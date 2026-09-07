@@ -4,29 +4,28 @@ import com.jeff.pets.mob.FlyingPet;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.*;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.ai.EntityAIFollowOwner;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIMate;
+import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-
-import static com.jeff.pets.PetsInitializer.KOI;
 
 public class Koi extends FlyingPet {
     public static final net.minecraft.network.datasync.DataParameter<Boolean> IS_SERVER_ENTITY =
             net.minecraft.network.datasync.EntityDataManager.createKey(Koi.class, net.minecraft.network.datasync.DataSerializers.BOOLEAN);
 
-    public Koi(EntityType<Koi> type, World level) {
-        super(type, level);
+    public Koi(World level) {
+        super(level);
         this.setSize(0.6f, 0.6f);
         this.setPathPriority(PathNodeType.WATER, 0.0f);
     }
@@ -51,39 +50,35 @@ public class Koi extends FlyingPet {
         this.dataManager.set(IS_SERVER_ENTITY, value);
     }
 
-    public void livingTick() {
-        super.livingTick();
-    }
-
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_TROPICAL_FISH_AMBIENT;
+        return SoundEvents.ENTITY_SQUID_AMBIENT;
     }
 
     protected SoundEvent getHurtSound(final DamageSource source) {
-        return SoundEvents.ENTITY_TROPICAL_FISH_HURT;
+        return SoundEvents.ENTITY_SQUID_HURT;
     }
 
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_TROPICAL_FISH_DEATH;
+        return SoundEvents.ENTITY_SQUID_DEATH;
     }
 
     protected void playStepSound(final BlockPos pos, final IBlockState blockState) {
-        this.playSound(SoundEvents.ENTITY_FISH_SWIM, 0.15F, 1.0F);
+        this.playSound(SoundEvents.ENTITY_GENERIC_SPLASH, 0.15F, 1.0F);
     }
 
     public Koi createChild(final EntityAgeable partner) {
-        Koi koi = KOI.create(this.world);
+        Koi koi = new Koi(this.world);
         koi.setServerEntity(true);
         return koi;
     }
 
-    public IEntityLivingData onInitialSpawn(final DifficultyInstance difficulty, final IEntityLivingData groupData, NBTTagCompound compoundTag) {
+    public IEntityLivingData func_180482_a(DifficultyInstance difficulty, IEntityLivingData groupData) {
         this.setServerEntity(true);
-        return super.onInitialSpawn(difficulty, groupData, compoundTag);
+        return super.func_180482_a(difficulty, groupData);
     }
 
     public boolean isBreedingItem(final ItemStack itemStack) {
-        return itemStack.isItemEqual(new ItemStack(Items.COD)) || itemStack.isItemEqual(new ItemStack(Items.SALMON)) || itemStack.isItemEqual(new ItemStack(Items.TROPICAL_FISH));
+        return false;
     }
 
     @Override
@@ -91,9 +86,9 @@ public class Koi extends FlyingPet {
 
         /**Using false in this statement causes the mob to sink to the bottom and reptitively spin.*/
         //this.moveControl = new SmoothSwimmingMoveControl(this, 10, 10, 1, 1, true);
-        this.navigator.setCanSwim(true);
-        this.tasks.addTask(1, new EntityAIWanderSwim(this, 1, 1));
-        this.tasks.addTask(2, new EntityAIFindWater(this));
+        //this.navigator.setCanSwim(true);
+       // this.tasks.addTask(1, new EntityAIWanderSwim(this, 1, 1));
+        //this.tasks.addTask(2, new EntityAIFindWater(this));
 
         this.tasks.addTask(0, new EntityAIFollowOwner(this, 1, 2, 10));
         this.tasks.addTask(9, new EntityAIMate(this, 1));
@@ -158,7 +153,7 @@ public class Koi extends FlyingPet {
             float bodyYawDiff = net.minecraft.util.math.MathHelper.wrapDegrees(this.rotationYawHead - this.renderYawOffset);
 
             if (rotationToOwner >= 50) {
-                this.renderYawOffset = this.rotationYawHead - ((float)Math.signum(bodyYawDiff) * 50.0F);
+                this.renderYawOffset = this.rotationYawHead - (Math.signum(bodyYawDiff) * 50.0F);
             }
 
             if (distance > 2.0) {
@@ -174,7 +169,7 @@ public class Koi extends FlyingPet {
 
                 this.setVelocity(dir.x * speed, dir.y * speed, dir.z * speed);
             } else {
-                
+
                 this.setVelocity(this.motionX * 0.8, this.motionY * 0.8, this.motionZ * 0.8);
             }
 
@@ -203,7 +198,7 @@ public class Koi extends FlyingPet {
             this.setRotationYawHead(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.renderYawOffset = this.rotationYawHead - ((float)Math.signum(bodyYawDiff) * 50);
+                this.renderYawOffset = this.rotationYawHead - (Math.signum(bodyYawDiff) * 50);
             } else {
                 this.renderYawOffset = this.renderYawOffset + MathHelper.clamp(this.rotationYawHead - this.renderYawOffset, -10, 10);
             }
@@ -218,7 +213,7 @@ public class Koi extends FlyingPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            this.world.playSound(this.posX, this.posY, this.posZ, SoundEvents.ENTITY_SQUID_AMBIENT, SoundCategory.AMBIENT, 1.0f, 1.0f, true);
+            this.playSound(SoundEvents.ENTITY_SQUID_AMBIENT, 1.0f, 1.0f);
         }
     }
 }

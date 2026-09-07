@@ -2,10 +2,9 @@ package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.entity.EntityType;
 import net.minecraft.init.MobEffects;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.util.SoundEvent;
 
 @CanFly
 public class ClientSquid extends FlyingPet {
@@ -26,8 +25,8 @@ public class ClientSquid extends FlyingPet {
     private float tz;
 
 
-    public ClientSquid(EntityType<? extends net.minecraft.entity.passive.EntityTameable> entityType, net.minecraft.world.World level) {
-        super(entityType, level);
+    public ClientSquid(net.minecraft.world.World level) {
+        super(level);
         this.setSize(0.8f, 0.8f);
     }
 
@@ -67,7 +66,7 @@ public class ClientSquid extends FlyingPet {
             }
         }
 
-        if (this.isInWaterOrBubbleColumn()) {
+        if (this.isInWater()) {
             if (this.tentacleMovement < (float) Math.PI) {
                 float f = this.tentacleMovement / (float) Math.PI;
                 this.tentacleAngle = net.minecraft.util.math.MathHelper.sin(f * f * (float) Math.PI) * (float) Math.PI * 0.25F;

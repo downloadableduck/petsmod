@@ -19,34 +19,37 @@
 
 package me.shedaniel.autoconfig.serializer;
 
-import blue.endless.jankson.Jankson;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.util.Utils;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
- * This serializer serializes configs into Json5 files using Jankson.
+ * This serializer serializes configs into Json5 files using Gson.
  */
 @SuppressWarnings("unused")
 public class JanksonConfigSerializer<T extends ConfigData> implements ConfigSerializer<T> {
 
-    private Config definition;
-    private Class<T> configClass;
-    private Jankson jankson;
+    private final Config definition;
+    private final Class<T> configClass;
+    private final Gson gson;
 
-    public JanksonConfigSerializer(Config definition, Class<T> configClass, Jankson jankson) {
+    public JanksonConfigSerializer(Config definition, Class<T> configClass, Gson gson) {
         this.definition = definition;
         this.configClass = configClass;
-        this.jankson = jankson;
+        this.gson = gson;
     }
 
     public JanksonConfigSerializer(Config definition, Class<T> configClass) {
-        this(definition, configClass, Jankson.builder().build());
+        this(definition, configClass, new GsonBuilder().setPrettyPrinting().create());
     }
 
     private Path getConfigPath() {
@@ -59,7 +62,7 @@ public class JanksonConfigSerializer<T extends ConfigData> implements ConfigSeri
         try {
             Files.createDirectories(configPath.getParent());
             BufferedWriter writer = Files.newBufferedWriter(configPath);
-            writer.write(jankson.toJson(config).toJson(true, true));
+            gson.toJson(config, writer);
             writer.close();
         } catch (IOException e) {
             throw new SerializationException(e);
@@ -71,8 +74,11 @@ public class JanksonConfigSerializer<T extends ConfigData> implements ConfigSeri
         Path configPath = getConfigPath();
         if (Files.exists(configPath)) {
             try {
-                return jankson.fromJson(jankson.load(getConfigPath().toFile()), configClass);
-            } catch (Throwable e) {
+                BufferedReader reader = Files.newBufferedReader(configPath);
+                T ret = gson.fromJson(reader, configClass);
+                reader.close();
+                return ret;
+            } catch (IOException | JsonParseException e) {
                 throw new SerializationException(e);
             }
         } else {
