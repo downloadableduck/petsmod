@@ -1,0 +1,92 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+        maven {
+            name = "forge"
+            url = "https://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = 'sponge'
+            url = 'https://repo.spongepowered.org/maven'
+        }
+        maven {
+            name = 'liteloader'
+            url = 'https://repo.mumfrey.com/content/repositories/releases/'
+        }
+        maven {
+            name = 'sponge'
+            url = 'https://repo.spongepowered.org/repository/maven-public/'
+        }
+        maven {
+            name = 'minecraft'
+            url = 'https://libraries.minecraft.net/'
+        }
+        maven {
+            name = 'forge'
+            url = 'https://maven.minecraftforge.net/'
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:' + project.forgeGradleVersion
+        classpath 'org.spongepowered:mixingradle:0.5-SNAPSHOT'
+    }
+}
+
+configurations {
+    compile
+}
+
+apply plugin: 'net.minecraftforge.gradle.liteloader'
+apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'idea'
+
+group = "com.jeff.pets" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "pets-mod"
+
+dependencies {
+    compile 'org.ow2.asm:asm-debug-all:5.2'
+}
+
+idea {
+    module {
+        inheritOutputDirs = true
+    }
+}
+
+minecraft {
+    accessTransformers.add(file('src/main/resources/META-INF/accesstransformer.cfg'))
+    // these values are defined in the gradle.properties file, so that this file does not need to be altered
+    version = project.mcVersion
+    mappings = project.mcMappings
+    runDir = "run"
+}
+
+sourceSets {
+    main {
+        // Refmap declaration must match the refmap name specified in the json config
+        ext.refMap = "mixins.example.refmap.json"
+    }
+}
+
+mixin {
+    // liteloader does not do runtime deobfuscation, so in production we use "notch names", mixin needs to know this
+    defaultObfuscationEnv notch
+}
+
+litemod {
+}
+
+jar {
+    // The litemod task above generates the litemod.json dynamically, you can replace it with a resource if you want more control
+    from(sourceSets.main.resources.srcDirs) {
+        include 'litemod.json'
+        include 'pets.client.mixins.json'
+    }
+    archiveName = "pets-mod-" + project.version + "-" + project.mcVersion + "-lite.litemod"
+    archivesBaseName = "pets-mod"
+}
