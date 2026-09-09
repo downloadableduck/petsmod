@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.aprilfools.angryghast;
 
-import com.jeff.pets.mob.aprilfools.AngryGhast;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.aprilfools.AngryGhast;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.monster.ghast.GhastModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

@@ -1,7 +1,9 @@
 package com.jeff.pets.mob.custom.aquatic;
 
+import com.jeff.pets.client.network.NetworkManager;
 import com.jeff.pets.mob.FlyingPet;
 import com.jeff.pets.mob.custom.first.Duck;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -31,7 +33,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
 
-import static com.jeff.pets.PetsInitializer.Entities.STINGRAY;
+import static com.jeff.pets.PetsInitializer.STINGRAY;
 
 public class Stingray extends FlyingPet {
     public static final EntityDataAccessor<@NotNull Boolean> IS_SERVER_ENTITY =
@@ -164,6 +166,7 @@ public class Stingray extends FlyingPet {
                 if (owner.isCrouching() && owner.isJumping()) {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, 0.1, 0));
+                    NetworkManager.get().broadcastHeadPayload(Minecraft.getInstance().player.getStringUUID(), false);
                 } else {
                     this.setOrderedToSit(true);
                 }

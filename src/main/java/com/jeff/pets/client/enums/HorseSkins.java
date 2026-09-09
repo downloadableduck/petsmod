@@ -1,9 +1,10 @@
 package com.jeff.pets.client.enums;
 
-import dev.isxander.yacl3.api.NameableEnum;
 import net.minecraft.network.chat.Component;
 
-public enum HorseSkins implements NameableEnum {
+import java.util.List;
+
+public enum HorseSkins implements NameableEnum, EnumImpl {
     black,
     brown,
     chestnut,
@@ -17,5 +18,10 @@ public enum HorseSkins implements NameableEnum {
     @Override
     public Component getDisplayName() {
         return Component.literal(String.valueOf(this).replace("_", " "));
+    }
+
+    @Override
+    public List<Enum> getAllValues() {
+        return List.of(black, brown, chestnut, creamy, dark_brown, gray, skeleton, white, zombie);
     }
 }

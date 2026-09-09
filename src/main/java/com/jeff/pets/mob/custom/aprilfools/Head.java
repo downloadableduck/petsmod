@@ -1,7 +1,9 @@
 package com.jeff.pets.mob.custom.aprilfools;
 
+import com.jeff.pets.client.network.NetworkManager;
 import com.jeff.pets.mob.AbstractPet;
 import com.jeff.pets.mob.custom.first.Duck;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -29,7 +31,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
 
-import static com.jeff.pets.PetsInitializer.Entities.HEAD;
+import static com.jeff.pets.PetsInitializer.HEAD;
 
 public class Head extends AbstractPet {
     public static final EntityDataAccessor<@NotNull Boolean> IS_SERVER_ENTITY =
@@ -146,6 +148,7 @@ public class Head extends AbstractPet {
             if (!this.isPassenger()) {
                 this.startRiding(player);
                 this.lookAt(player, 1f, 1f);
+                NetworkManager.get().broadcastHeadPayload(Minecraft.getInstance().player.getStringUUID(), true);
                 this.setOrderedToSit(true);
             } else {
                 this.stopRiding();
@@ -164,6 +167,7 @@ public class Head extends AbstractPet {
                 if (owner.isCrouching() && owner.isJumping()) {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
+                    NetworkManager.get().broadcastHeadPayload(Minecraft.getInstance().player.getStringUUID(), false);
                 } else {
                     this.setOrderedToSit(true);
                 }
@@ -249,7 +253,7 @@ public class Head extends AbstractPet {
 
     @Override
     public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
-        if (!this.level().isClientSide()) {
+        if (this.level() != null && !this.level().isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
     }

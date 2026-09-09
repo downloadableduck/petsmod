@@ -1,9 +1,10 @@
 package com.jeff.pets.client.enums;
 
-import dev.isxander.yacl3.api.NameableEnum;
 import net.minecraft.network.chat.Component;
 
-public enum DumboOctopusSkins implements NameableEnum {
+import java.util.List;
+
+public enum DumboOctopusSkins implements NameableEnum, EnumImpl {
     blue,
     green,
     orange,
@@ -14,5 +15,10 @@ public enum DumboOctopusSkins implements NameableEnum {
     @Override
     public Component getDisplayName() {
         return Component.literal(String.valueOf(this));
+    }
+
+    @Override
+    public List<Enum> getAllValues() {
+        return List.of(blue, green, orange, pink, red, yellow);
     }
 }

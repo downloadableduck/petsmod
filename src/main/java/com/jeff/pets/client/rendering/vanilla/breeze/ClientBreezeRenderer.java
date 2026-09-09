@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.breeze;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientBreeze;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientBreeze;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

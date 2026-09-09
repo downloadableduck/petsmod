@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.happyghast;
 
-import com.jeff.pets.mob.vanilla.passive.ClientHappyGhast;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientHappyGhast;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.animal.ghast.HappyGhastModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;

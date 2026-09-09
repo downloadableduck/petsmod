@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.dolphin;
 
-import com.jeff.pets.mob.vanilla.neutral.ClientDolphin;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.neutral.ClientDolphin;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.animal.dolphin.DolphinModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -25,7 +25,9 @@ public class ClientDolphinRenderer extends PetRenderer<@NotNull ClientDolphin, @
 
     @Override
     protected void scale(DolphinRenderState state, @NotNull PoseStack poseStack) {
-        poseStack.scale(0.5f, 0.5f, 0.5f);
+        if (state.isBaby) {
+            poseStack.scale(0.5f, 0.5f, 0.5f);
+        }
     }
 
     @Override

@@ -1,9 +1,10 @@
 package com.jeff.pets.client.enums;
 
-import dev.isxander.yacl3.api.NameableEnum;
 import net.minecraft.network.chat.Component;
 
-public enum NautilusSkins implements NameableEnum {
+import java.util.List;
+
+public enum NautilusSkins implements NameableEnum, EnumImpl {
     nautilus,
     coral_zombie,
     zombie;
@@ -11,5 +12,10 @@ public enum NautilusSkins implements NameableEnum {
     @Override
     public Component getDisplayName() {
         return Component.literal(String.valueOf(this).replace("_", " "));
+    }
+
+    @Override
+    public List<Enum> getAllValues() {
+        return List.of(nautilus, coral_zombie, zombie);
     }
 }

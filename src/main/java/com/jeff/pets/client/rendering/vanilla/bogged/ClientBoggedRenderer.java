@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.bogged;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientBogged;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientBogged;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;

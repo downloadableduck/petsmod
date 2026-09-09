@@ -1,7 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.slime;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
+import com.jeff.pets.client.rendering.IPetRenderState;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -13,8 +14,6 @@ import net.minecraft.client.renderer.entity.state.SlimeRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.client.Central.CONFIG;
-
 public class ClientSlimeRenderer extends PetRenderer<@NotNull ClientSlime, @NotNull SlimeRenderState, @NotNull SlimeModel> {
 
     public static final ModelLayerLocation SLIME_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientslime"), "main");
@@ -22,12 +21,12 @@ public class ClientSlimeRenderer extends PetRenderer<@NotNull ClientSlime, @NotN
     public ClientSlimeRenderer(EntityRendererProvider.Context context) {
         super(context, new SlimeModel(context.bakeLayer(ModelLayers.SLIME)), 0.75f);
         this.addLayer(new SlimeOuterLayer(this, EntityModelSet.vanilla()));
-        this.scale(new SlimeRenderState(), new PoseStack());
     }
 
     @Override
     protected void scale(SlimeRenderState slimeRenderState, @NotNull PoseStack poseStack) {
-        int slimeScale = switch (CONFIG.slimeSkin) {
+        String skin = ((IPetRenderState) slimeRenderState).pets$getPetSkin();
+        int slimeScale = switch (skin) {
             case "small" -> 1;
             case "medium" -> 2;
             case "large" -> 4;

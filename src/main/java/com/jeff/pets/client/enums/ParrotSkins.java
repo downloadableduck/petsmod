@@ -1,9 +1,10 @@
 package com.jeff.pets.client.enums;
 
-import dev.isxander.yacl3.api.NameableEnum;
 import net.minecraft.network.chat.Component;
 
-public enum ParrotSkins implements NameableEnum {
+import java.util.List;
+
+public enum ParrotSkins implements NameableEnum, EnumImpl {
     blue,
     cyan,
     gray,
@@ -13,5 +14,10 @@ public enum ParrotSkins implements NameableEnum {
     @Override
     public Component getDisplayName() {
         return Component.literal(String.valueOf(this).replace("_", " "));
+    }
+
+    @Override
+    public List<Enum> getAllValues() {
+        return List.of(blue, cyan, gray, green, red);
     }
 }

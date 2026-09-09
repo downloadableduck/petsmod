@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.goat;
 
-import com.jeff.pets.mob.vanilla.neutral.ClientGoat;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.neutral.ClientGoat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -20,7 +20,9 @@ public class ClientGoatRenderer extends PetRenderer<@NotNull ClientGoat, @NotNul
 
     @Override
     protected void scale(@NotNull GoatRenderState livingEntityRenderState, @NotNull PoseStack poseStack) {
-        poseStack.scale(0.5F, 0.5F, 0.5F);
+        if (livingEntityRenderState.isBaby) {
+            poseStack.scale(0.5F, 0.5F, 0.5F);
+        }
     }
 
     @Override

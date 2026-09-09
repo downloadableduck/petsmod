@@ -1,6 +1,8 @@
 package com.jeff.pets.mob;
 
+import com.jeff.pets.client.network.NetworkManager;
 import com.jeff.pets.mob.custom.first.Duck;
+import net.minecraft.client.Minecraft;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
@@ -38,7 +40,9 @@ public abstract class GroundPet extends AbstractPet {
      */
     @Override
     public void tick() {
-        super.tick();
+        try {
+            super.tick();
+        } catch (Exception e) {}
         LivingEntity owner = this.getOwner();
         if (owner != null) {
 
@@ -46,6 +50,7 @@ public abstract class GroundPet extends AbstractPet {
                 if (owner.isCrouching() && owner.isJumping()) {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
+                    NetworkManager.get().broadcastHeadPayload(Minecraft.getInstance().player.getStringUUID(), false);
                 } else {
                     this.setOrderedToSit(true);
                 }
@@ -131,7 +136,7 @@ public abstract class GroundPet extends AbstractPet {
         }
 
         int ambient = (int) (Math.random() * (60 * 20));
-        if (ambient == 1) {
+        if (ambient == 1 && this.level() != null) {
             level().playLocalSound(this, Objects.requireNonNull(this.getAmbientSound()), SoundSource.NEUTRAL, 1.0f, 1.0f);
         }
     }

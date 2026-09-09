@@ -1,14 +1,20 @@
 package com.jeff.pets.client.enums;
 
-import dev.isxander.yacl3.api.NameableEnum;
 import net.minecraft.network.chat.Component;
 
-public enum SnowGolemSkins implements NameableEnum {
+import java.util.List;
+
+public enum SnowGolemSkins implements NameableEnum, EnumImpl {
     pumpkin_on,
     pumpkin_off;
 
     @Override
     public Component getDisplayName() {
         return Component.literal(String.valueOf(this).replace("_", " "));
+    }
+
+    @Override
+    public List<Enum> getAllValues() {
+        return List.of(pumpkin_on, pumpkin_off);
     }
 }

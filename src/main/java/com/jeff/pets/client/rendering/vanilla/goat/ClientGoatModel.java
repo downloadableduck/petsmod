@@ -5,8 +5,6 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.GoatRenderState;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.client.Central.CONFIG;
-
 public class ClientGoatModel extends GoatModel {
 
     private final ModelPart head;
@@ -23,7 +21,7 @@ public class ClientGoatModel extends GoatModel {
     @Override
     public void setupAnim(@NotNull GoatRenderState state) {
         super.setupAnim(state);
-        if (CONFIG.isBaby) {
+        if (state.isBaby) {
             this.leftHorn.visible = false;
             this.rightHorn.visible = false;
         }

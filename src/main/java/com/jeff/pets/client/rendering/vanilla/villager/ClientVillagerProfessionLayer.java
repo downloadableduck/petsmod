@@ -1,10 +1,10 @@
 package com.jeff.pets.client.rendering.vanilla.villager;
 
+import com.jeff.pets.client.rendering.IPetRenderState;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.npc.VillagerModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.VillagerRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -12,8 +12,6 @@ import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
-
-import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientVillagerProfessionLayer extends RenderLayer<@NotNull VillagerRenderState, @NotNull VillagerModel> {
 
@@ -31,42 +29,45 @@ public class ClientVillagerProfessionLayer extends RenderLayer<@NotNull Villager
     public static final ModelLayerLocation SHEPHERD_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/villager/profession/shepherd.png"), "main");
     public static final ModelLayerLocation TOOLSMITH_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/villager/profession/toolsmith.png"), "main");
     public static final ModelLayerLocation WEAPONSMITH_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/villager/profession/weaponsmith.png"), "main");
+    private ClientVillagerRenderer renderer;
 
-    public ClientVillagerProfessionLayer(RenderLayerParent<@NotNull VillagerRenderState, @NotNull VillagerModel> renderLayerParent) {
+    public ClientVillagerProfessionLayer(ClientVillagerRenderer renderLayerParent) {
         super(renderLayerParent);
+        this.renderer = renderLayerParent;
     }
 
     @Override
     public void submit(@NotNull PoseStack poseStack, @NotNull SubmitNodeCollector submitNodeCollector, int i, VillagerRenderState entityRenderState, float f, float g) {
         poseStack.pushPose();
         poseStack.scale(1.001f, 1.001f, 1.001f);
-        if (Objects.equals(CONFIG.villagerSkin, "armorer")) {
+        String skin = ((IPetRenderState) entityRenderState).pets$getPetSkin();
+        if (Objects.equals(skin, "armorer")) {
             renderColoredCutoutModel(this.getParentModel(), ARMORER_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
-        } else if (Objects.equals(CONFIG.villagerSkin, "butcher")) {
+        } else if (Objects.equals(skin, "butcher")) {
             renderColoredCutoutModel(this.getParentModel(), BUTCHER_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
-        } else if (Objects.equals(CONFIG.villagerSkin, "cartographer")) {
+        } else if (Objects.equals(skin, "cartographer")) {
             renderColoredCutoutModel(this.getParentModel(), CARTOGRAPHER_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
-        } else if (Objects.equals(CONFIG.villagerSkin, "cleric")) {
+        } else if (Objects.equals(skin, "cleric")) {
             renderColoredCutoutModel(this.getParentModel(), CLERIC_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
-        } else if (Objects.equals(CONFIG.villagerSkin, "farmer")) {
+        } else if (Objects.equals(skin, "farmer")) {
             renderColoredCutoutModel(this.getParentModel(), FARMER_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
-        } else if (Objects.equals(CONFIG.villagerSkin, "fisherman")) {
+        } else if (Objects.equals(skin, "fisherman")) {
             renderColoredCutoutModel(this.getParentModel(), FISHERMAN_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
-        } else if (Objects.equals(CONFIG.villagerSkin, "fletcher")) {
+        } else if (Objects.equals(skin, "fletcher")) {
             renderColoredCutoutModel(this.getParentModel(), FLETCHER_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
-        } else if (Objects.equals(CONFIG.villagerSkin, "leatherworker")) {
+        } else if (Objects.equals(skin, "leatherworker")) {
             renderColoredCutoutModel(this.getParentModel(), LEATHERWORKER_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
-        } else if (Objects.equals(CONFIG.villagerSkin, "librarian")) {
+        } else if (Objects.equals(skin, "librarian")) {
             renderColoredCutoutModel(this.getParentModel(), LIBRARIAN_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
-        } else if (Objects.equals(CONFIG.villagerSkin, "mason")) {
+        } else if (Objects.equals(skin, "mason")) {
             renderColoredCutoutModel(this.getParentModel(), MASON_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
-        } else if (Objects.equals(CONFIG.villagerSkin, "nitwit")) {
+        } else if (Objects.equals(skin, "nitwit")) {
             renderColoredCutoutModel(this.getParentModel(), NITWIT_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
-        } else if (Objects.equals(CONFIG.villagerSkin, "shepherd")) {
+        } else if (Objects.equals(skin, "shepherd")) {
             renderColoredCutoutModel(this.getParentModel(), SHEPHERD_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
-        } else if (Objects.equals(CONFIG.villagerSkin, "toolsmith")) {
+        } else if (Objects.equals(skin, "toolsmith")) {
             renderColoredCutoutModel(this.getParentModel(), TOOLSMITH_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
-        } else if (Objects.equals(CONFIG.villagerSkin, "weaponsmith")) {
+        } else if (Objects.equals(skin, "weaponsmith")) {
             renderColoredCutoutModel(this.getParentModel(), WEAPONSMITH_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
         }
         poseStack.popPose();

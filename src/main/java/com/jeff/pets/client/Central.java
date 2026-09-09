@@ -8,6 +8,7 @@ package com.jeff.pets.client;
 
 import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.client.mixin.client.ChatAccessor;
+import com.jeff.pets.client.network.NetworkManager;
 import com.jeff.pets.mob.aprilfools.*;
 import com.jeff.pets.mob.custom.aprilfools.Head;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
@@ -45,6 +46,7 @@ import net.minecraft.commands.synchronization.SuggestionProviders;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.api.distmarker.Dist;
@@ -59,6 +61,7 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.loading.NeoForgeLoadingOverlay;
+import net.neoforged.neoforge.event.level.LevelEvent;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -347,104 +350,104 @@ public class Central {
     public static void summonPet() {
         Minecraft minecraft = Minecraft.getInstance();
         ClientLevel world = minecraft.level;
-        duck = new Duck(PetsInitializer.Entities.DUCK.get(), world);
-        racoon = new Racoon(PetsInitializer.Entities.RACOON.get(), world);
-        penguin = new Penguin(PetsInitializer.Entities.PENGUIN.get(), world);
-        sheep = new ClientSheep(PetsInitializer.Entities.SHEEP.get(), world);
-        cat = new ClientCat(PetsInitializer.Entities.CAT.get(), world);
-        allay = new ClientAllay(PetsInitializer.Entities.ALLAY.get(), world);
-        armadillo = new ClientArmadillo(PetsInitializer.Entities.ARMADILLO.get(), world);
-        axolotl = new ClientAxolotl(PetsInitializer.Entities.AXOLOTL.get(), world);
-        bat = new ClientBat(PetsInitializer.Entities.BAT.get(), world);
-        camel = new ClientCamel(PetsInitializer.Entities.CAMEL.get(), world);
-        chicken = new ClientChicken(PetsInitializer.Entities.CHICKEN.get(), world);
-        cod = new ClientCod(PetsInitializer.Entities.COD.get(), world);
-        copperGolem = new ClientCopperGolem(PetsInitializer.Entities.COPPER_GOLEM.get(), world);
-        cow = new ClientCow(PetsInitializer.Entities.COW.get(), world);
-        donkey = new ClientDonkey(PetsInitializer.Entities.DONKEY.get(), world);
-        frog = new ClientFrog(PetsInitializer.Entities.FROG.get(), world);
-        horse = new ClientHorse(PetsInitializer.Entities.HORSE.get(), world);
-        mooshroom = new ClientMooshroom(PetsInitializer.Entities.MOOSHROOM.get(), world);
-        parrot = new ClientParrot(PetsInitializer.Entities.PARROT.get(), world);
-        pig = new ClientPig(PetsInitializer.Entities.PIG.get(), world);
-        rabbit = new ClientRabbit(PetsInitializer.Entities.RABBIT.get(), world);
-        salmon = new ClientSalmon(PetsInitializer.Entities.SALMON.get(), world);
-        sniffer = new ClientSniffer(PetsInitializer.Entities.SNIFFER.get(), world);
-        snowGolem = new ClientSnowGolem(PetsInitializer.Entities.SNOW_GOLEM.get(), world);
-        squid = new ClientSquid(PetsInitializer.Entities.SQUID.get(), world);
-        strider = new ClientStrider(PetsInitializer.Entities.STRIDER.get(), world);
-        tadpole = new ClientTadpole(PetsInitializer.Entities.TADPOLE.get(), world);
-        turtle = new ClientTurtle(PetsInitializer.Entities.TURTLE.get(), world);
-        villager = new ClientVillager(PetsInitializer.Entities.VILLAGER.get(), world);
-        wanderingTrader = new ClientWanderingTrader(PetsInitializer.Entities.WANDERING_TRADER.get(), world);
-        bee = new ClientBee(PetsInitializer.Entities.BEE.get(), world);
-        caveSpider = new ClientCaveSpider(PetsInitializer.Entities.CAVE_SPIDER.get(), world);
-        dolphin = new ClientDolphin(PetsInitializer.Entities.DOLPHIN.get(), world);
-        enderman = new ClientEnderman(PetsInitializer.Entities.ENDERMAN.get(), world);
-        fox = new ClientFox(PetsInitializer.Entities.FOX.get(), world);
-        goat = new ClientGoat(PetsInitializer.Entities.GOAT.get(), world);
-        ironGolem = new ClientIronGolem(PetsInitializer.Entities.IRON_GOLEM.get(), world);
-        llama = new ClientLlama(PetsInitializer.Entities.LLAMA.get(), world);
-        nautilus = new ClientNautilus(PetsInitializer.Entities.NAUTILUS.get(), world);
-        panda = new ClientPanda(PetsInitializer.Entities.PANDA.get(), world);
-        piglin = new ClientPiglin(PetsInitializer.Entities.PIGLIN.get(), world);
-        polarBear = new ClientPolarBear(PetsInitializer.Entities.POLAR_BEAR.get(), world);
-        pufferFish = new ClientPufferFish(PetsInitializer.Entities.PUFFERFISH.get(), world);
-        spider = new ClientSpider(PetsInitializer.Entities.SPIDER.get(), world);
-        wolf = new ClientWolf(PetsInitializer.Entities.WOLF.get(), world);
-        blaze = new ClientBlaze(PetsInitializer.Entities.BLAZE.get(), world);
-        breeze = new ClientBreeze(PetsInitializer.Entities.BREEZE.get(), world);
-        creaking = new ClientCreaking(PetsInitializer.Entities.CREAKING.get(), world);
-        creeper = new ClientCreeper(PetsInitializer.Entities.CREEPER.get(), world);
-        elderGuardian = new ClientElderGuardian(PetsInitializer.Entities.ELDER_GUARDIAN_COOKIE.get(), world);
-        endermite = new ClientEndermite(PetsInitializer.Entities.ENDERMITE.get(), world);
-        evoker = new ClientEvoker(PetsInitializer.Entities.EVOKER.get(), world);
-        ghast = new ClientGhast(PetsInitializer.Entities.GHAST.get(), world);
-        happyGhast = new ClientHappyGhast(PetsInitializer.Entities.HAPPY_GHAST.get(), world);
-        guardian = new ClientGuardian(PetsInitializer.Entities.GUARDIAN.get(), world);
-        hoglin = new ClientHoglin(PetsInitializer.Entities.HOGLIN.get(), world);
-        magmaCube = new ClientMagmaCube(PetsInitializer.Entities.MAGMA_CUBE.get(), world);
-        phantom = new ClientPhantom(PetsInitializer.Entities.PHANTOM.get(), world);
-        pillager = new ClientPillager(PetsInitializer.Entities.PILLAGER.get(), world);
-        ravager = new ClientRavager(PetsInitializer.Entities.RAVAGER.get(), world);
-        shulker = new ClientShulker(PetsInitializer.Entities.SHULKER.get(), world);
-        silverfish = new ClientSilverfish(PetsInitializer.Entities.SILVERFISH.get(), world);
-        skeleton = new ClientSkeleton(PetsInitializer.Entities.SKELETON.get(), world);
-        slime = new ClientSlime(PetsInitializer.Entities.SLIME.get(), world);
-        vex = new ClientVex(PetsInitializer.Entities.VEX.get(), world);
-        vindicator = new ClientVindicator(PetsInitializer.Entities.VINDICATOR.get(), world);
-        warden = new ClientWarden(PetsInitializer.Entities.WARDEN.get(), world);
-        witch = new ClientWitch(PetsInitializer.Entities.WITCH.get(), world);
-        zombie = new ClientZombie(PetsInitializer.Entities.ZOMBIE.get(), world);
-        zombieVillager = new ClientZombieVillager(PetsInitializer.Entities.ZOMBIE_VILLAGER.get(), world);
-        husk = new ClientHusk(PetsInitializer.Entities.HUSK.get(), world);
-        drowned = new ClientDrowned(PetsInitializer.Entities.DROWNED.get(), world);
-        bogged = new ClientBogged(PetsInitializer.Entities.BOGGED.get(), world);
-        parched = new ClientParched(PetsInitializer.Entities.PARCHED.get(), world);
-        stray = new ClientStray(PetsInitializer.Entities.STRAY.get(), world);
-        witherSkeleton = new ClientWitherSkeleton(PetsInitializer.Entities.WITHER_SKELETON.get(), world);
-        enderDragon = new ClientEnderDragon(PetsInitializer.Entities.ENDER_DRAGON.get(), world);
-        wither = new ClientWither(PetsInitializer.Entities.WITHER.get(), world);
-        angryGhast = new AngryGhast(PetsInitializer.Entities.ANGRY_GHAST.get(), world);
-        batato = new Batato(PetsInitializer.Entities.BATATO.get(), world);
-        diamondChicken = new DiamondChicken(PetsInitializer.Entities.DIAMOND_CHICKEN.get(), world);
-        loveGolem = new LoveGolem(PetsInitializer.Entities.LOVE_GOLEM.get(), world);
-        megaSpud = new MegaSpud(PetsInitializer.Entities.MEGA_SPUD.get(), world);
-        moonCow = new MoonCow(PetsInitializer.Entities.MOON_COW.get(), world);
-        nerdCreeper = new NerdCreeper(PetsInitializer.Entities.NERD_CREEPER.get(), world);
-        pinkWither = new PinkWither(PetsInitializer.Entities.PINK_WITHER.get(), world);
-        plaguewhaleSlab = new PlaguewhaleSlab(PetsInitializer.Entities.PLAGUEWHALE_SLAB.get(), world);
-        poisonousPotatoZombie = new PoisonousPotatoZombie(PetsInitializer.Entities.POISONOUS_POTATO_ZOMBIE.get(), world);
-        rayTracing = new RayTracing(PetsInitializer.Entities.RAY_TRACING.get(), world);
-        redstoneBug = new RedstoneBug(PetsInitializer.Entities.REDSTONE_BUG.get(), world);
-        smilingCreeper = new SmilingCreeper(PetsInitializer.Entities.SMILING_CREEPER.get(), world);
-        toxifinSlab = new ToxifinSlab(PetsInitializer.Entities.TOXIFIN_SLAB.get(), world);
-        potatoHusk = new PotatoHusk(PetsInitializer.Entities.POTATO_HUSK.get(), world);
-        head = new Head(PetsInitializer.Entities.HEAD.get(), world);
-        traitor = new Traitor(PetsInitializer.Entities.TRAITOR.get(), world);
-        dumboOctopus = new DumboOctopus(PetsInitializer.Entities.DUMBO_OCTOPUS.get(), world);
-        koi = new Koi(PetsInitializer.Entities.KOI.get(), world);
-        stingray = new Stingray(PetsInitializer.Entities.STINGRAY.get(), world);
+        duck = new Duck(PetsInitializer.DUCK.get(), world);
+        racoon = new Racoon(PetsInitializer.RACOON.get(), world);
+        penguin = new Penguin(PetsInitializer.PENGUIN.get(), world);
+        sheep = new ClientSheep(PetsInitializer.SHEEP.get(), world);
+        cat = new ClientCat(PetsInitializer.CAT.get(), world);
+        allay = new ClientAllay(PetsInitializer.ALLAY.get(), world);
+        armadillo = new ClientArmadillo(PetsInitializer.ARMADILLO.get(), world);
+        axolotl = new ClientAxolotl(PetsInitializer.AXOLOTL.get(), world);
+        bat = new ClientBat(PetsInitializer.BAT.get(), world);
+        camel = new ClientCamel(PetsInitializer.CAMEL.get(), world);
+        chicken = new ClientChicken(PetsInitializer.CHICKEN.get(), world);
+        cod = new ClientCod(PetsInitializer.COD.get(), world);
+        copperGolem = new ClientCopperGolem(PetsInitializer.COPPER_GOLEM.get(), world);
+        cow = new ClientCow(PetsInitializer.COW.get(), world);
+        donkey = new ClientDonkey(PetsInitializer.DONKEY.get(), world);
+        frog = new ClientFrog(PetsInitializer.FROG.get(), world);
+        horse = new ClientHorse(PetsInitializer.HORSE.get(), world);
+        mooshroom = new ClientMooshroom(PetsInitializer.MOOSHROOM.get(), world);
+        parrot = new ClientParrot(PetsInitializer.PARROT.get(), world);
+        pig = new ClientPig(PetsInitializer.PIG.get(), world);
+        rabbit = new ClientRabbit(PetsInitializer.RABBIT.get(), world);
+        salmon = new ClientSalmon(PetsInitializer.SALMON.get(), world);
+        sniffer = new ClientSniffer(PetsInitializer.SNIFFER.get(), world);
+        snowGolem = new ClientSnowGolem(PetsInitializer.SNOW_GOLEM.get(), world);
+        squid = new ClientSquid(PetsInitializer.SQUID.get(), world);
+        strider = new ClientStrider(PetsInitializer.STRIDER.get(), world);
+        tadpole = new ClientTadpole(PetsInitializer.TADPOLE.get(), world);
+        turtle = new ClientTurtle(PetsInitializer.TURTLE.get(), world);
+        villager = new ClientVillager(PetsInitializer.VILLAGER.get(), world);
+        wanderingTrader = new ClientWanderingTrader(PetsInitializer.WANDERING_TRADER.get(), world);
+        bee = new ClientBee(PetsInitializer.BEE.get(), world);
+        caveSpider = new ClientCaveSpider(PetsInitializer.CAVE_SPIDER.get(), world);
+        dolphin = new ClientDolphin(PetsInitializer.DOLPHIN.get(), world);
+        enderman = new ClientEnderman(PetsInitializer.ENDERMAN.get(), world);
+        fox = new ClientFox(PetsInitializer.FOX.get(), world);
+        goat = new ClientGoat(PetsInitializer.GOAT.get(), world);
+        ironGolem = new ClientIronGolem(PetsInitializer.IRON_GOLEM.get(), world);
+        llama = new ClientLlama(PetsInitializer.LLAMA.get(), world);
+        nautilus = new ClientNautilus(PetsInitializer.NAUTILUS.get(), world);
+        panda = new ClientPanda(PetsInitializer.PANDA.get(), world);
+        piglin = new ClientPiglin(PetsInitializer.PIGLIN.get(), world);
+        polarBear = new ClientPolarBear(PetsInitializer.POLAR_BEAR.get(), world);
+        pufferFish = new ClientPufferFish(PetsInitializer.PUFFERFISH.get(), world);
+        spider = new ClientSpider(PetsInitializer.SPIDER.get(), world);
+        wolf = new ClientWolf(PetsInitializer.WOLF.get(), world);
+        blaze = new ClientBlaze(PetsInitializer.BLAZE.get(), world);
+        breeze = new ClientBreeze(PetsInitializer.BREEZE.get(), world);
+        creaking = new ClientCreaking(PetsInitializer.CREAKING.get(), world);
+        creeper = new ClientCreeper(PetsInitializer.CREEPER.get(), world);
+        elderGuardian = new ClientElderGuardian(PetsInitializer.ELDER_GUARDIAN_COOKIE.get(), world);
+        endermite = new ClientEndermite(PetsInitializer.ENDERMITE.get(), world);
+        evoker = new ClientEvoker(PetsInitializer.EVOKER.get(), world);
+        ghast = new ClientGhast(PetsInitializer.GHAST.get(), world);
+        happyGhast = new ClientHappyGhast(PetsInitializer.HAPPY_GHAST.get(), world);
+        guardian = new ClientGuardian(PetsInitializer.GUARDIAN.get(), world);
+        hoglin = new ClientHoglin(PetsInitializer.HOGLIN.get(), world);
+        magmaCube = new ClientMagmaCube(PetsInitializer.MAGMA_CUBE.get(), world);
+        phantom = new ClientPhantom(PetsInitializer.PHANTOM.get(), world);
+        pillager = new ClientPillager(PetsInitializer.PILLAGER.get(), world);
+        ravager = new ClientRavager(PetsInitializer.RAVAGER.get(), world);
+        shulker = new ClientShulker(PetsInitializer.SHULKER.get(), world);
+        silverfish = new ClientSilverfish(PetsInitializer.SILVERFISH.get(), world);
+        skeleton = new ClientSkeleton(PetsInitializer.SKELETON.get(), world);
+        slime = new ClientSlime(PetsInitializer.SLIME.get(), world);
+        vex = new ClientVex(PetsInitializer.VEX.get(), world);
+        vindicator = new ClientVindicator(PetsInitializer.VINDICATOR.get(), world);
+        warden = new ClientWarden(PetsInitializer.WARDEN.get(), world);
+        witch = new ClientWitch(PetsInitializer.WITCH.get(), world);
+        zombie = new ClientZombie(PetsInitializer.ZOMBIE.get(), world);
+        zombieVillager = new ClientZombieVillager(PetsInitializer.ZOMBIE_VILLAGER.get(), world);
+        husk = new ClientHusk(PetsInitializer.HUSK.get(), world);
+        drowned = new ClientDrowned(PetsInitializer.DROWNED.get(), world);
+        bogged = new ClientBogged(PetsInitializer.BOGGED.get(), world);
+        parched = new ClientParched(PetsInitializer.PARCHED.get(), world);
+        stray = new ClientStray(PetsInitializer.STRAY.get(), world);
+        witherSkeleton = new ClientWitherSkeleton(PetsInitializer.WITHER_SKELETON.get(), world);
+        enderDragon = new ClientEnderDragon(PetsInitializer.ENDER_DRAGON.get(), world);
+        wither = new ClientWither(PetsInitializer.WITHER.get(), world);
+        angryGhast = new AngryGhast(PetsInitializer.ANGRY_GHAST.get(), world);
+        batato = new Batato(PetsInitializer.BATATO.get(), world);
+        diamondChicken = new DiamondChicken(PetsInitializer.DIAMOND_CHICKEN.get(), world);
+        loveGolem = new LoveGolem(PetsInitializer.LOVE_GOLEM.get(), world);
+        megaSpud = new MegaSpud(PetsInitializer.MEGA_SPUD.get(), world);
+        moonCow = new MoonCow(PetsInitializer.MOON_COW.get(), world);
+        nerdCreeper = new NerdCreeper(PetsInitializer.NERD_CREEPER.get(), world);
+        pinkWither = new PinkWither(PetsInitializer.PINK_WITHER.get(), world);
+        plaguewhaleSlab = new PlaguewhaleSlab(PetsInitializer.PLAGUEWHALE_SLAB.get(), world);
+        poisonousPotatoZombie = new PoisonousPotatoZombie(PetsInitializer.POISONOUS_POTATO_ZOMBIE.get(), world);
+        rayTracing = new RayTracing(PetsInitializer.RAY_TRACING.get(), world);
+        redstoneBug = new RedstoneBug(PetsInitializer.REDSTONE_BUG.get(), world);
+        smilingCreeper = new SmilingCreeper(PetsInitializer.SMILING_CREEPER.get(), world);
+        toxifinSlab = new ToxifinSlab(PetsInitializer.TOXIFIN_SLAB.get(), world);
+        potatoHusk = new PotatoHusk(PetsInitializer.POTATO_HUSK.get(), world);
+        head = new Head(PetsInitializer.HEAD.get(), world);
+        traitor = new Traitor(PetsInitializer.TRAITOR.get(), world);
+        dumboOctopus = new DumboOctopus(PetsInitializer.DUMBO_OCTOPUS.get(), world);
+        koi = new Koi(PetsInitializer.KOI.get(), world);
+        stingray = new Stingray(PetsInitializer.STINGRAY.get(), world);
 
         if (world != null) {
             if (Objects.equals(CONFIG.activePet, "duck")) {
@@ -646,6 +649,7 @@ public class Central {
                 Utils.summonPet(stingray, CONFIG.stingrayName);
             }
         }
+        NetworkManager.get().broadcastGeneral(minecraft.player.getStringUUID(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby);
     }
 
     /**
@@ -1553,6 +1557,7 @@ public class Central {
 
                     if (isValid) {
                         Minecraft.getInstance().player.sendSystemMessage(Component.literal("§b[PetsMod] §aYour pet's skin has been updated."));
+                        NetworkManager.get().broadcastChangePetSkin(Minecraft.getInstance().player.getUUID().toString(), skin);
                     } else {
                         Minecraft.getInstance().player.sendSystemMessage(Component.literal("§b[PetsMod] §cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else."));
                     }
@@ -1770,6 +1775,8 @@ public class Central {
     static void createPetTeleportCommand(RegisterClientCommandsEvent event) {
         event.getDispatcher().register(LiteralArgumentBuilder.<CommandSourceStack>literal("teleportpet").executes((context) -> {
             despawnPet();
+            Player player = Minecraft.getInstance().player;
+            NetworkManager.get().broadcastTeleportPet(player.getStringUUID(), player.getX(), player.getY(), player.getZ());
             summonPet();
             return 1;
         }));
@@ -2060,109 +2067,9 @@ public class Central {
         event.getDispatcher().register(LiteralArgumentBuilder.<CommandSourceStack>literal("petname").then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("name", StringArgumentType.greedyString()).executes((context) -> {
             String name = StringArgumentType.getString(context, "name");
             if (!summonedEntity.isEmpty()) {
-                switch (CONFIG.activePet) {
-                    case "penguin" -> CONFIG.penguinName = name;
-                    case "duck" -> CONFIG.duckName = name;
-                    case "racoon" -> CONFIG.racoonName = name;
-                    case "cat" -> CONFIG.catName = name;
-                    case "sheep" -> CONFIG.sheepName = name;
-                    case "allay" -> CONFIG.allayName = name;
-                    case "armadillo" -> CONFIG.armadilloName = name;
-                    case "bat" -> CONFIG.batName = name;
-                    case "camel" -> CONFIG.camelName = name;
-                    case "chicken" -> CONFIG.chickenSkin = name;
-                    case "cod" -> CONFIG.codName = name;
-                    case "copper_golem" -> CONFIG.copperGolemName = name;
-                    case "cow" -> CONFIG.cowName = name;
-                    case "donkey" -> CONFIG.donkeyName = name;
-                    case "frog" -> CONFIG.frogName = name;
-                    case "horse" -> CONFIG.horseName = name;
-                    case "mooshroom" -> CONFIG.mooshroomName = name;
-                    case "mule" -> CONFIG.muleName = name;
-                    case "parrot" -> CONFIG.parrotName = name;
-                    case "pig" -> CONFIG.pigName = name;
-                    case "rabbit" -> CONFIG.rabbitName = name;
-                    case "salmon" -> CONFIG.salmonName = name;
-                    case "sniffer" -> CONFIG.snifferName = name;
-                    case "snow_golem" -> CONFIG.snowGolemName = name;
-                    case "squid" -> CONFIG.squidName = name;
-                    case "strider" -> CONFIG.striderName = name;
-                    case "tadpole" -> CONFIG.tadpoleName = name;
-                    case "tropical_fish" -> CONFIG.tropicalFishName = name;
-                    case "turtle" -> CONFIG.turtleName = name;
-                    case "villager" -> CONFIG.villagerName = name;
-                    case "wandering_trader" -> CONFIG.wanderingTraderName = name;
-                    case "bee" -> CONFIG.beeName = name;
-                    case "cave_spider" -> CONFIG.caveSpiderName = name;
-                    case "dolphin" -> CONFIG.dolphinName = name;
-                    case "enderman" -> CONFIG.endermanName = name;
-                    case "fox" -> CONFIG.foxName = name;
-                    case "goat" -> CONFIG.goatName = name;
-                    case "iron_golem" -> CONFIG.ironGolemName = name;
-                    case "llama" -> CONFIG.llamaName = name;
-                    case "nautilus" -> CONFIG.nautilusName = name;
-                    case "panda" -> CONFIG.pandaName = name;
-                    case "piglin" -> CONFIG.piglinName = name;
-                    case "polar_bear" -> CONFIG.polarBearName = name;
-                    case "pufferfish" -> CONFIG.pufferFishName = name;
-                    case "spider" -> CONFIG.spiderName = name;
-                    case "wolf" -> CONFIG.wolfName = name;
-                    case "blaze" -> CONFIG.blazeName = name;
-                    case "breeze" -> CONFIG.breezeName = name;
-                    case "creaking" -> CONFIG.creakingName = name;
-                    case "creeper" -> CONFIG.creeperName = name;
-                    case "elder_guardian" -> CONFIG.elderGuardianName = name;
-                    case "endermite" -> CONFIG.endermiteName = name;
-                    case "evoker" -> CONFIG.evokerName = name;
-                    case "happy_ghast" -> CONFIG.happyGhastName = name;
-                    case "ghast" -> CONFIG.ghastName = name;
-                    case "guardian" -> CONFIG.guardianName = name;
-                    case "hoglin" -> CONFIG.hoglinName = name;
-                    case "magma_cube" -> CONFIG.magmaCubeName = name;
-                    case "phantom" -> CONFIG.phantomName = name;
-                    case "pillager" -> CONFIG.pillagerName = name;
-                    case "ravager" -> CONFIG.ravagerName = name;
-                    case "shulker" -> CONFIG.shulkerName = name;
-                    case "silverfish" -> CONFIG.silverfishName = name;
-                    case "skeleton" -> CONFIG.skeletonName = name;
-                    case "slime" -> CONFIG.slimeName = name;
-                    case "vex" -> CONFIG.vexName = name;
-                    case "vindicator" -> CONFIG.vindicatorName = name;
-                    case "warden" -> CONFIG.wardenName = name;
-                    case "witch" -> CONFIG.witchName = name;
-                    case "zombie" -> CONFIG.zombieName = name;
-                    case "zombie_villager" -> CONFIG.zombieVillagerName = name;
-                    case "husk" -> CONFIG.huskName = name;
-                    case "drowned" -> CONFIG.drownedName = name;
-                    case "bogged" -> CONFIG.boggedName = name;
-                    case "parched" -> CONFIG.parchedName = name;
-                    case "stray" -> CONFIG.strayName = name;
-                    case "wither_skeleton" -> CONFIG.witherSkeletonName = name;
-                    case "ender_dragon" -> CONFIG.enderDragonName = name;
-                    case "wither" -> CONFIG.witherName = name;
-                    case "angry_ghast" -> CONFIG.angryGhastName = name;
-                    case "batato" -> CONFIG.batatoName = name;
-                    case "diamond_chicken" -> CONFIG.diamondChickenName = name;
-                    case "love_golem" -> CONFIG.loveGolemName = name;
-                    case "mega_spud" -> CONFIG.megaSpudName = name;
-                    case "moon_cow" -> CONFIG.moonCowName = name;
-                    case "nerd_creeper" -> CONFIG.nerdCreeperName = name;
-                    case "pink_wither" -> CONFIG.pinkWitherName = name;
-                    case "plaguewhale_slab" -> CONFIG.plaguewhaleSlabName = name;
-                    case "poisonous_potato_zombie" -> CONFIG.poisonousPotatoZombieName = name;
-                    case "ray_tracing" -> CONFIG.rayTracingName = name;
-                    case "redstone_bug" -> CONFIG.redstoneBugName = name;
-                    case "smiling_creeper" -> CONFIG.smilingCreeperName = name;
-                    case "toxifin_slab" -> CONFIG.toxfinSlabName = name;
-                    case "potato_husk" -> CONFIG.potatoHuskName = name;
-                    case "head" -> CONFIG.headName = name;
-                    case "traitor" -> CONFIG.traitorName = name;
-                    case "dumbo_octopus" -> CONFIG.dumboOctopusName = name;
-                    case "koi" -> CONFIG.koiName = name;
-                    case "stingray" -> CONFIG.stingrayName = name;
-                }
-                AutoConfig.getConfigHolder(PetsConfig.class).save();
+                Utils.setActivePetName(name);
             }
+                AutoConfig.getConfigHolder(PetsConfig.class).save();
 
             return 1;
         })));
@@ -2175,13 +2082,16 @@ public class Central {
     static void createToggleCommand(RegisterClientCommandsEvent event) {
         event.getDispatcher().register(LiteralArgumentBuilder.literal("pet").then(RequiredArgumentBuilder.argument("preference", StringArgumentType.string()).suggests((SuggestionProvider) SuggestionProviders.cast(ON_OFF)).executes((context) -> {
             String preference = StringArgumentType.getString(context, "preference");
+            String uuid = Minecraft.getInstance().player.getStringUUID();
             if (Objects.equals(preference, "off")) {
                 CONFIG.petOn = false;
                 Minecraft.getInstance().player.sendSystemMessage(Component.literal("§b[PetsMod] §7Pet §coff."));
                 AutoConfig.getConfigHolder(PetsConfig.class).save();
+                NetworkManager.get().broadcastTogglePet(uuid, Utils.getActivePetName(), CONFIG.petOn);
             } else if (Objects.equals(preference, "on")) {
                 CONFIG.petOn = true;
                 AutoConfig.getConfigHolder(PetsConfig.class).save();
+                NetworkManager.get().broadcastTogglePet(uuid, Utils.getActivePetName(), CONFIG.petOn);
                 Minecraft.getInstance().player.sendSystemMessage(Component.literal("§b[PetsMod] §7Pet §aon."));
             } else {
                 Minecraft.getInstance().player.sendSystemMessage(Component.literal("§b[PetsMod] §c§lUnknown value " + preference + "! Possible values: §r§aon, §6off"));
@@ -2195,11 +2105,13 @@ public class Central {
      * Clears the summon entities when the player joins a world so they are re-summoned
      */
     @SubscribeEvent
-    static void createJoinHandler(ClientPlayerNetworkEvent.LoggingIn event) {
-        Minecraft client = Minecraft.getInstance();
-        List var10001 = summonedEntity;
-        Objects.requireNonNull(var10001);
-        client.execute(var10001::clear);
+    static void createJoinHandler(LevelEvent.Load event) {
+        if (event.getLevel().isClientSide()) {
+            Minecraft client = Minecraft.getInstance();
+            List var10001 = summonedEntity;
+            Objects.requireNonNull(var10001);
+            client.execute(var10001::clear);
+        }
     }
 
     void createPetsList() {
@@ -2243,6 +2155,7 @@ public class Central {
         } else if (isValid && CONFIG.petOn) {
             despawnPet();
             Minecraft.getInstance().player.sendSystemMessage(Component.literal("§b[PetsMod] §aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + "."));
+            NetworkManager.get().broadcastGeneral(Minecraft.getInstance().player.getStringUUID(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby);
             summonPet();
         } else if (isValid && !CONFIG.petOn) {
             Minecraft.getInstance().player.sendSystemMessage(Component.literal("§b[PetsMod] §cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet enabled. Run §l/pet on§r§c to change this."));

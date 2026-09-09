@@ -1,9 +1,10 @@
 package com.jeff.pets.client.enums;
 
-import dev.isxander.yacl3.api.NameableEnum;
 import net.minecraft.network.chat.Component;
 
-public enum PandaSkins implements NameableEnum {
+import java.util.List;
+
+public enum PandaSkins implements NameableEnum, EnumImpl {
     agressive,
     brown,
     lazy,
@@ -15,5 +16,10 @@ public enum PandaSkins implements NameableEnum {
     @Override
     public Component getDisplayName() {
         return Component.literal(String.valueOf(this).replace("_", " "));
+    }
+
+    @Override
+    public List<Enum> getAllValues() {
+        return List.of(agressive, brown, lazy, normal, playful, weak, worried);
     }
 }

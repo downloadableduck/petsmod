@@ -1,9 +1,10 @@
 package com.jeff.pets.client.enums;
 
-import dev.isxander.yacl3.api.NameableEnum;
 import net.minecraft.network.chat.Component;
 
-public enum PigSkins implements NameableEnum {
+import java.util.List;
+
+public enum PigSkins implements NameableEnum, EnumImpl {
     cold,
     temperate,
     warm;
@@ -11,5 +12,10 @@ public enum PigSkins implements NameableEnum {
     @Override
     public Component getDisplayName() {
         return Component.literal(String.valueOf(this).replace("_", " "));
+    }
+
+    @Override
+    public List<Enum> getAllValues() {
+        return List.of(cold, temperate, warm);
     }
 }
