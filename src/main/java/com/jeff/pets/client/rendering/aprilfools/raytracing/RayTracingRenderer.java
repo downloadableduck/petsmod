@@ -1,7 +1,7 @@
-package com.jeff.pets.rendering.aprilfools.raytracing;
+package com.jeff.pets.client.rendering.aprilfools.raytracing;
 
 import com.jeff.pets.mob.aprilfools.RayTracing;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.CubeDeformation;

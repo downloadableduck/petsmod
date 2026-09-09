@@ -1,13 +1,14 @@
-package com.jeff.pets.rendering.custom.aquatic.dumbo_octopus;
+package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 
+import com.jeff.pets.client.rendering.IPetRenderState;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 
 public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopusRenderState, DumboOctopusModel> {
@@ -31,7 +32,8 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
         String orange = "textures/entity/dumbo_octopus/orange.png";
         String pink = "textures/entity/dumbo_octopus/pink.png";
         if (!state.isServerEntity) {
-            switch (CONFIG.dumboOctopusSkin) {
+            String skin = ((IPetRenderState) state).pets$getPetSkin();
+            switch (skin) {
                 case "yellow" -> path = yellow;
                 case "red" -> path = red;
                 case "blue" -> path = blue;

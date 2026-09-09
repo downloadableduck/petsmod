@@ -1,11 +1,11 @@
-package com.jeff.pets.rendering.vanilla.zombie;
+package com.jeff.pets.client.rendering.vanilla.zombie;
 
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.monster.zombie.ZombieModel;
 import net.minecraft.client.renderer.entity.state.ZombieRenderState;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientZombieModel extends ZombieModel<@NotNull ZombieRenderState> {
 

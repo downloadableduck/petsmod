@@ -1,4 +1,4 @@
-package com.jeff.pets.rendering.vanilla.salmon;
+package com.jeff.pets.client.rendering.vanilla.salmon;
 
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;

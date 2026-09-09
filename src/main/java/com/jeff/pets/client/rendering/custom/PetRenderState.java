@@ -1,4 +1,4 @@
-package com.jeff.pets.rendering.custom;
+package com.jeff.pets.client.rendering.custom;
 
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 

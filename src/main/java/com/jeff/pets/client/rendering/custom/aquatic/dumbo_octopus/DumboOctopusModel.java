@@ -1,4 +1,4 @@
-package com.jeff.pets.rendering.custom.aquatic.dumbo_octopus;
+package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;

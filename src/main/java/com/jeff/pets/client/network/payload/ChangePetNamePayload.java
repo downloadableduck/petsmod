@@ -1,7 +1,7 @@
-package com.jeff.pets.network;
+package com.jeff.pets.client.network.payload;
 
 public class ChangePetNamePayload extends Payload {
-    String petName;
+    public String petName;
 
     public ChangePetNamePayload(String uuid, String petName) {
         super(uuid);

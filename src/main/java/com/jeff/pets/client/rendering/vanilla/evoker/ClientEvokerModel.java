@@ -1,4 +1,4 @@
-package com.jeff.pets.rendering.vanilla.evoker;
+package com.jeff.pets.client.rendering.vanilla.evoker;
 
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;

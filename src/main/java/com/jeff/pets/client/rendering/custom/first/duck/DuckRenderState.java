@@ -1,4 +1,4 @@
-package com.jeff.pets.rendering.custom.first.duck;
+package com.jeff.pets.client.rendering.custom.first.duck;
 
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 

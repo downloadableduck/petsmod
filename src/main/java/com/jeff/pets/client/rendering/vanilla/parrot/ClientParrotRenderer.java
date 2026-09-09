@@ -1,7 +1,8 @@
-package com.jeff.pets.rendering.vanilla.parrot;
+package com.jeff.pets.client.rendering.vanilla.parrot;
 
+import com.jeff.pets.client.rendering.IPetRenderState;
 import com.jeff.pets.mob.vanilla.passive.ClientParrot;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.model.animal.parrot.ParrotModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -13,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientParrotRenderer extends PetRenderer<@NotNull ClientParrot, @NotNull ParrotRenderState, @NotNull ParrotModel> {
     public static final ModelLayerLocation PARROT_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientparrot"), "main");
@@ -25,15 +26,16 @@ public class ClientParrotRenderer extends PetRenderer<@NotNull ClientParrot, @No
     }
 
     public @NotNull Identifier getTextureLocation(ParrotRenderState parrotRenderState) {
-        if (Objects.equals(CONFIG.parrotSkin, "red")) {
+        String skin = ((IPetRenderState) parrotRenderState).pets$getPetSkin();
+        if (Objects.equals(skin, "red")) {
             parrotTexturePath = "textures/entity/parrot/parrot_red_blue.png";
-        } else if (Objects.equals(CONFIG.parrotSkin, "blue")) {
+        } else if (Objects.equals(skin, "blue")) {
             parrotTexturePath = "textures/entity/parrot/parrot_blue.png";
-        } else if (Objects.equals(CONFIG.parrotSkin, "green")) {
+        } else if (Objects.equals(skin, "green")) {
             parrotTexturePath = "textures/entity/parrot/parrot_green.png";
-        } else if (Objects.equals(CONFIG.parrotSkin, "yellow")) {
+        } else if (Objects.equals(skin, "yellow")) {
             parrotTexturePath = "textures/entity/parrot/parrot_yellow_blue.png";
-        } else if (Objects.equals(CONFIG.parrotSkin, "gray")) {
+        } else if (Objects.equals(skin, "gray")) {
             parrotTexturePath = "textures/entity/parrot/parrot_gray.png";
         }
         return Identifier.withDefaultNamespace(parrotTexturePath);

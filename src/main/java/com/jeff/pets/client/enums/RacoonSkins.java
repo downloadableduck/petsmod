@@ -1,7 +1,7 @@
-package com.jeff.pets.enums;
+package com.jeff.pets.client.enums;
 
 import com.jeff.pets.client.enums.EnumImpl;
-import dev.isxander.yacl3.api.NameableEnum;
+
 import net.minecraft.network.chat.Component;
 
 import java.util.List;

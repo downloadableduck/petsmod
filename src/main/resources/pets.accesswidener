@@ -9,3 +9,4 @@ accessible field net/minecraft/client/resources/SplashManager SPLASHES_LOCATION 
 mutable field net/minecraft/client/resources/SplashManager SPLASHES_LOCATION Lnet/minecraft/resources/Identifier;
 accessible method net/minecraft/client/gui/components/EditBox onValueChange (Ljava/lang/String;)V
 extendable method net/minecraft/client/gui/components/EditBox onValueChange (Ljava/lang/String;)V
+accessible method net/minecraft/client/gui/screens/inventory/InventoryScreen extractRenderState (Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/client/renderer/entity/state/EntityRenderState;

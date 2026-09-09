@@ -1,7 +1,8 @@
-package com.jeff.pets.rendering.vanilla.piglin;
+package com.jeff.pets.client.rendering.vanilla.piglin;
 
+import com.jeff.pets.client.rendering.IPetRenderState;
 import com.jeff.pets.mob.vanilla.neutral.ClientPiglin;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -15,7 +16,7 @@ import net.minecraft.client.renderer.entity.state.PiglinRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientPiglinRenderer extends PetRenderer<@NotNull ClientPiglin, @NotNull PiglinRenderState, @NotNull ClientPiglinModel> {
 
@@ -34,14 +35,15 @@ public class ClientPiglinRenderer extends PetRenderer<@NotNull ClientPiglin, @No
 
     @Override
     protected void scale(PiglinRenderState state, @NotNull PoseStack poseStack) {
-        if (CONFIG.isBaby) {
+        if (state.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
     public @NotNull Identifier getTextureLocation(PiglinRenderState livingEntityRenderState) {
-        switch (CONFIG.piglinSkin) {
+        String skin = ((IPetRenderState) livingEntityRenderState).pets$getPetSkin();
+        switch (skin) {
             case "piglin" -> piglinTexturePath = "textures/entity/piglin/piglin.png";
             case "zombified_piglin" -> {
                 piglinTexturePath = "textures/entity/piglin/zombified_piglin.png";

@@ -1,8 +1,9 @@
-package com.jeff.pets.rendering.vanilla.cat;
+package com.jeff.pets.client.rendering.vanilla.cat;
 
 import com.jeff.pets.PetsInitializer;
+import com.jeff.pets.client.rendering.IPetRenderState;
 import com.jeff.pets.mob.vanilla.passive.ClientCat;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -14,7 +15,7 @@ import net.minecraft.client.renderer.entity.state.CatRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientCatRenderer extends PetRenderer<@NotNull ClientCat, @NotNull CatRenderState, @NotNull ClientCatModel> {
     public static final ModelLayerLocation CAT_LOCATION = new ModelLayerLocation(
@@ -32,14 +33,15 @@ public class ClientCatRenderer extends PetRenderer<@NotNull ClientCat, @NotNull 
 
     @Override
     protected void scale(CatRenderState state, @NotNull PoseStack poseStack) {
-        if (CONFIG.isBaby) {
+        if (state.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
     public @NotNull Identifier getTextureLocation(CatRenderState livingEntityRenderState) {
-        return switch (CONFIG.catSkin) {
+        String skin = ((IPetRenderState) livingEntityRenderState).pets$getPetSkin();
+        return switch (skin) {
             case "black" -> Identifier.withDefaultNamespace("textures/entity/cat/cat_all_black.png");
             case "tuxedo" -> Identifier.withDefaultNamespace("textures/entity/cat/cat_black.png");
             case "british_shorthair" ->

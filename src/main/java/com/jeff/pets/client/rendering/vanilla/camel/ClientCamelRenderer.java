@@ -1,7 +1,8 @@
-package com.jeff.pets.rendering.vanilla.camel;
+package com.jeff.pets.client.rendering.vanilla.camel;
 
+import com.jeff.pets.client.rendering.IPetRenderState;
 import com.jeff.pets.mob.vanilla.passive.ClientCamel;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.animal.camel.AdultCamelModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -13,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientCamelRenderer extends PetRenderer<@NotNull ClientCamel, @NotNull CamelRenderState, @NotNull AdultCamelModel> {
     public static final ModelLayerLocation CAMEL_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientcamel"), "main");
@@ -25,16 +26,17 @@ public class ClientCamelRenderer extends PetRenderer<@NotNull ClientCamel, @NotN
 
     @Override
     protected void scale(CamelRenderState state, @NotNull PoseStack poseStack) {
-        if (CONFIG.isBaby) {
+        if (state.isBaby) {
             poseStack.scale(0.45f, 0.45f, 0.45f);
         }
     }
 
     @Override
     public @NotNull Identifier getTextureLocation(CamelRenderState camelRenderState) {
-        if (Objects.equals(CONFIG.camelSkin, "camel")) {
+        String skin = ((IPetRenderState) camelRenderState).pets$getPetSkin();
+        if (Objects.equals(skin, "camel")) {
             camelTexturePath = "textures/entity/camel/camel.png";
-        } else if (Objects.equals(CONFIG.camelSkin, "husk")) {
+        } else if (Objects.equals(skin, "husk")) {
             camelTexturePath = "textures/entity/camel/camel_husk.png";
         } else {
             camelTexturePath = "textures/entity/camel/camel.png";

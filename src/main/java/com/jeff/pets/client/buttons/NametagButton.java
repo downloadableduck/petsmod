@@ -1,13 +1,12 @@
 package com.jeff.pets.client.buttons;
 
-import com.jeff.pets.Utils;
+import com.jeff.pets.client.Utils;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.Mth;
 
 public class NametagButton extends EditBox {
 

@@ -1,7 +1,8 @@
-package com.jeff.pets.rendering.vanilla.rabbit;
+package com.jeff.pets.client.rendering.vanilla.rabbit;
 
+import com.jeff.pets.client.rendering.IPetRenderState;
 import com.jeff.pets.mob.vanilla.passive.ClientRabbit;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -12,7 +13,7 @@ import net.minecraft.client.renderer.entity.state.RabbitRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientRabbitRenderer extends PetRenderer<@NotNull ClientRabbit, @NotNull RabbitRenderState, @NotNull ClientRabbitModel> {
     public static final ModelLayerLocation RABBIT_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientrabbit"), "main");
@@ -29,14 +30,15 @@ public class ClientRabbitRenderer extends PetRenderer<@NotNull ClientRabbit, @No
 
     @Override
     protected void scale(@NotNull RabbitRenderState livingEntityRenderState, @NotNull PoseStack poseStack) {
-        if (CONFIG.isBaby) {
+        if (livingEntityRenderState.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
     public @NotNull Identifier getTextureLocation(RabbitRenderState rabbitRenderState) {
-        switch (CONFIG.activePet) {
+        String skin = ((IPetRenderState) rabbitRenderState).pets$getPetSkin();
+        switch (skin) {
             case "brown" -> rabbitTextureLocation = "textures/entity/rabbit/brown.png";
             case "white" -> rabbitTextureLocation = "textures/entity/rabbit/rabbit_white.png";
             case "black" -> rabbitTextureLocation = "textures/entity/rabbit/rabbit_black.png";

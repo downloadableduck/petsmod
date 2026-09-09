@@ -1,8 +1,8 @@
-package com.jeff.pets.rendering.aprilfools.potatohusk;
+package com.jeff.pets.client.rendering.aprilfools.potatohusk;
 
 import com.jeff.pets.mob.aprilfools.PotatoHusk;
-import com.jeff.pets.rendering.PetRenderer;
-import com.jeff.pets.rendering.vanilla.zombie.ClientZombieModel;
+import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.vanilla.zombie.ClientZombieModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.entity.state.ZombieRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class PotatoHuskRenderer extends PetRenderer<@NotNull PotatoHusk, @NotNull ZombieRenderState, @NotNull ClientZombieModel> {
 

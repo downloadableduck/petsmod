@@ -1,24 +1,21 @@
 package com.jeff.pets.mob;
 
-import com.jeff.pets.mob.custom.first.Duck;
+import com.jeff.pets.client.network.NetworkManager;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -30,7 +27,6 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
 
-import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -136,6 +132,7 @@ public abstract class AbstractPet extends TamableAnimal {
             if (!this.isPassenger()) {
                 this.startRiding(player);
                 this.lookAt(player, 1f, 1f);
+                NetworkManager.get().broadcastHeadPayload(Minecraft.getInstance().player.getStringUUID(), true);
                 return InteractionResult.SUCCESS;
             } else {
                 this.stopRiding();
@@ -151,7 +148,7 @@ public abstract class AbstractPet extends TamableAnimal {
      */
     @Override
     public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
-        if (!this.level().isClientSide()) {
+        if (this.level() != null && !this.level().isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
     }
@@ -266,5 +263,13 @@ public abstract class AbstractPet extends TamableAnimal {
             return false;
         }
         return super.isTame();
+    }
+
+    @Override
+    public boolean updateFluidInteraction() {
+        try {
+            return super.updateFluidInteraction();
+        } catch (Exception e) {}
+        return false;
     }
 }

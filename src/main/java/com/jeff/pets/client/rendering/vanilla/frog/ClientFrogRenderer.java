@@ -1,7 +1,8 @@
-package com.jeff.pets.rendering.vanilla.frog;
+package com.jeff.pets.client.rendering.vanilla.frog;
 
+import com.jeff.pets.client.rendering.IPetRenderState;
 import com.jeff.pets.mob.vanilla.passive.ClientFrog;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.model.animal.frog.FrogModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -10,7 +11,7 @@ import net.minecraft.client.renderer.entity.state.FrogRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientFrogRenderer extends PetRenderer<@NotNull ClientFrog, @NotNull FrogRenderState, @NotNull FrogModel> {
 
@@ -22,7 +23,8 @@ public class ClientFrogRenderer extends PetRenderer<@NotNull ClientFrog, @NotNul
     }
 
     public @NotNull Identifier getTextureLocation(FrogRenderState frogRenderState) {
-        switch (CONFIG.frogSkin) {
+        String skin = ((IPetRenderState) frogRenderState).pets$getPetSkin();
+        switch (skin) {
             case "temperate" -> frogTexturePath = "textures/entity/frog/frog_temperate.png";
             case "warm" -> frogTexturePath = "textures/entity/frog/frog_warm.png";
             case "cold" -> frogTexturePath = "textures/entity/frog/frog_cold.png";

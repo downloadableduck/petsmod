@@ -1,4 +1,4 @@
-package com.jeff.pets;
+package com.jeff.pets.client;
 
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
@@ -9,8 +9,8 @@ import me.shedaniel.autoconfig.annotation.Config;
  * whether the custom title is enabled, and the names
  * and skins for each pet. For the actual rendering of the config screen, see {@link PetsConfigScreen}.
  *
- * @see com.jeff.pets.Central
- * @see com.jeff.pets.Central#CONFIG
+ * @see com.jeff.pets.client.Central
+ * @see com.jeff.pets.client.Central#CONFIG
  * @see me.shedaniel.autoconfig.ConfigData
  */
 @Config(name = "petsconfig")

@@ -1,7 +1,7 @@
-package com.jeff.pets.rendering.vanilla.irongolem;
+package com.jeff.pets.client.rendering.vanilla.irongolem;
 
 import com.jeff.pets.mob.vanilla.neutral.ClientIronGolem;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.model.animal.golem.IronGolemModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

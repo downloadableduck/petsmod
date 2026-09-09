@@ -12,7 +12,7 @@ version = project.mod_version
 group = project.maven_group
 
 base {
-    archivesName = project.archives_base_name + "-" + project.mod_version + "-" + project.minecraft_version + "+" + project.build
+    archivesName = project.archives_base_name + "-" + project.mod_version + "-" + project.minecraft_version
 }
 
 repositories {
@@ -49,7 +49,7 @@ dependencies {
     // Fabric API. This is technically optional, but you probably want it anyway.
     implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
     implementation("com.terraformersmc:modmenu:${project.modmenu_version}")
-    implementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
+    //implementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
     include 'io.ably:ably-java:1.2.40'
     implementation 'io.ably:ably-java:1.2.40'
     include 'com.davidehrmann.vcdiff:vcdiff-core:0.1.1'
@@ -61,7 +61,7 @@ processResources {
     inputs.property "version", project.version
 
     filesMatching("fabric.mod.json") {
-        expand "version": inputs.properties.version + "+" + project.build
+        expand "version": inputs.properties.version
     }
 }
 
@@ -141,7 +141,7 @@ mavenPublishing {
 tasks.named('jar') {
     archiveBaseName = project.archives_base_name
     archiveVersion = project.mod_version
-    archiveClassifier = project.minecraft_version + "+" + project.build
+    archiveClassifier = project.minecraft_version + "-fabric"
 
     eachFile { contents -> {
 

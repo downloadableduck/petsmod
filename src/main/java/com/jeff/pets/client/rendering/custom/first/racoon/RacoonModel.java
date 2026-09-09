@@ -1,4 +1,4 @@
-package com.jeff.pets.rendering.custom.first.racoon;
+package com.jeff.pets.client.rendering.custom.first.racoon;
 
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -7,7 +7,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class RacoonModel extends EntityModel<@NotNull RacoonRenderState> {
     private final ModelPart head;
@@ -92,7 +92,7 @@ public class RacoonModel extends EntityModel<@NotNull RacoonRenderState> {
             this.rightFrontLeg.xRot = -0.2617994F;
             this.leftFrontLeg.xRot = -0.2617994F;
         }
-        if ((CONFIG.isBaby && !state.isServerEntity) || (state.isBaby && state.isServerEntity)) {
+        if ((state.isBaby && !state.isServerEntity) || (state.isBaby && state.isServerEntity)) {
             this.head.xScale = 1.5f;
             this.head.yScale = 1.5f;
             this.head.zScale = 1.5f;

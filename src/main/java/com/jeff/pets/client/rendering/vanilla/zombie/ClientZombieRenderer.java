@@ -1,7 +1,7 @@
-package com.jeff.pets.rendering.vanilla.zombie;
+package com.jeff.pets.client.rendering.vanilla.zombie;
 
 import com.jeff.pets.mob.vanilla.hostile.ClientZombie;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.entity.state.ZombieRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientZombieRenderer extends PetRenderer<@NotNull ClientZombie, @NotNull ZombieRenderState, @NotNull ClientZombieModel> {
 

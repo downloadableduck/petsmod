@@ -1,7 +1,7 @@
-package com.jeff.pets.rendering.vanilla.allay;
+package com.jeff.pets.client.rendering.vanilla.allay;
 
 import com.jeff.pets.mob.vanilla.passive.ClientAllay;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.model.animal.allay.AllayModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

@@ -1,6 +1,6 @@
-package com.jeff.pets.mixin.client;
+package com.jeff.pets.client.mixin.client;
 
-import com.jeff.pets.Central;
+import com.jeff.pets.client.Central;
 import net.minecraft.client.gui.components.CommandSuggestions;
 import net.minecraft.client.gui.screens.ChatScreen;
 import org.spongepowered.asm.mixin.Mixin;

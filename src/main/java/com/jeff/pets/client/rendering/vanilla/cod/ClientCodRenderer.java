@@ -1,7 +1,7 @@
-package com.jeff.pets.rendering.vanilla.cod;
+package com.jeff.pets.client.rendering.vanilla.cod;
 
 import com.jeff.pets.mob.vanilla.passive.ClientCod;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.model.animal.fish.CodModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

@@ -1,7 +1,8 @@
-package com.jeff.pets.rendering.vanilla.fox;
+package com.jeff.pets.client.rendering.vanilla.fox;
 
+import com.jeff.pets.client.rendering.IPetRenderState;
 import com.jeff.pets.mob.vanilla.neutral.ClientFox;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -12,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientFoxRenderer extends PetRenderer<@NotNull ClientFox, @NotNull FoxRenderState, @NotNull ClientFoxModel> {
     public static final ModelLayerLocation FOX_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientfox"), "main");
@@ -24,16 +25,17 @@ public class ClientFoxRenderer extends PetRenderer<@NotNull ClientFox, @NotNull 
 
     @Override
     protected void scale(FoxRenderState state, @NotNull PoseStack poseStack) {
-        if (CONFIG.isBaby) {
+        if (state.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
     public @NotNull Identifier getTextureLocation(FoxRenderState livingEntityRenderState) {
-        if (Objects.equals(CONFIG.foxSkin, "red")) {
+        String skin = ((IPetRenderState) livingEntityRenderState).pets$getPetSkin();
+        if (Objects.equals(skin, "red")) {
             foxTexturePath = "textures/entity/fox/fox.png";
-        } else if (Objects.equals(CONFIG.foxSkin, "snow")) {
+        } else if (Objects.equals(skin, "snow")) {
             foxTexturePath = "textures/entity/fox/fox_snow.png";
         } else {
             foxTexturePath = "textures/entity/fox/fox.png";

@@ -1,7 +1,9 @@
 package com.jeff.pets.mob.custom.first;
 
 import com.jeff.pets.PetsSounds;
+import com.jeff.pets.client.network.NetworkManager;
 import com.jeff.pets.mob.AbstractPet;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -159,6 +161,7 @@ public class Penguin extends AbstractPet {
                 if (owner.isCrouching() && owner.isJumping()) {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
+                    NetworkManager.get().broadcastHeadPayload(Minecraft.getInstance().player.getStringUUID(), false);
                     this.isOnHead = false;
                 } else {
                     this.setOrderedToSit(true);
@@ -253,7 +256,7 @@ public class Penguin extends AbstractPet {
 
     @Override
     public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
-        if (!this.level().isClientSide()) {
+        if (this.level() != null && !this.level().isClientSide()) {
             super.onSyncedDataUpdated(key);
         }
     }

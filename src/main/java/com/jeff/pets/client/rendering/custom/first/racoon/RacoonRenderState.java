@@ -1,4 +1,4 @@
-package com.jeff.pets.rendering.custom.first.racoon;
+package com.jeff.pets.client.rendering.custom.first.racoon;
 
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 

@@ -1,7 +1,7 @@
-package com.jeff.pets.rendering.vanilla.sniffer;
+package com.jeff.pets.client.rendering.vanilla.sniffer;
 
 import com.jeff.pets.mob.vanilla.passive.ClientSniffer;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.animal.sniffer.SnifferModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.entity.state.SnifferRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientSnifferRenderer extends PetRenderer<@NotNull ClientSniffer, @NotNull SnifferRenderState, @NotNull SnifferModel> {
     public static final ModelLayerLocation SNIFFER_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientsniffer"), "main");

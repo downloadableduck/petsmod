@@ -1,8 +1,9 @@
-package com.jeff.pets.rendering.custom.first.duck;
+package com.jeff.pets.client.rendering.custom.first.duck;
 
 import com.jeff.pets.PetsInitializer;
+import com.jeff.pets.client.rendering.IPetRenderState;
 import com.jeff.pets.mob.custom.first.Duck;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.Identifier;
@@ -11,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class DuckRenderer extends PetRenderer<@NotNull Duck, @NotNull DuckRenderState, @NotNull DuckModel> {
     public String duckTexturePath;
@@ -23,7 +24,7 @@ public class DuckRenderer extends PetRenderer<@NotNull Duck, @NotNull DuckRender
     @Override
     protected void scale(@NotNull DuckRenderState livingEntityRenderState, @NotNull PoseStack poseStack) {
         if (!livingEntityRenderState.isServerEntity) {
-            if (CONFIG.isBaby) {
+            if (livingEntityRenderState.isBaby) {
                 poseStack.scale(0.6f, 0.6f, 0.6f);
             }
         } else {
@@ -51,13 +52,14 @@ public class DuckRenderer extends PetRenderer<@NotNull Duck, @NotNull DuckRender
     @Override
     public @NotNull Identifier getTextureLocation(final DuckRenderState state) {
         if (!state.isServerEntity) {
-            if (Objects.equals(CONFIG.duckSkin, "pekin")) {
+            String skin = ((IPetRenderState) state).pets$getPetSkin();
+            if (Objects.equals(skin, "pekin")) {
                 duckTexturePath = "textures/entity/duck/pekin.png";
-            } else if (Objects.equals(CONFIG.duckSkin, "mallard")) {
+            } else if (Objects.equals(skin, "mallard")) {
                 duckTexturePath = "textures/entity/duck/mallard_male.png";
-            } else if (Objects.equals(CONFIG.duckSkin, "rubber")) {
+            } else if (Objects.equals(skin, "rubber")) {
                 duckTexturePath = "textures/entity/duck/rubber.png";
-            } else if (CONFIG.duckSkin.equals("bronze")) {
+            } else if (skin.equals("bronze")) {
                 duckTexturePath = "textures/entity/duck/bronze.png";
             }
             return Identifier.fromNamespaceAndPath(PetsInitializer.MOD_ID, duckTexturePath);

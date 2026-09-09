@@ -1,7 +1,7 @@
-package com.jeff.pets.rendering.aprilfools.nerdcreeper;
+package com.jeff.pets.client.rendering.aprilfools.nerdcreeper;
 
 import com.jeff.pets.mob.aprilfools.NerdCreeper;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class NerdCreeperRenderer extends PetRenderer<@NotNull NerdCreeper, @NotNull CreeperRenderState, @NotNull CreeperModel> {
 

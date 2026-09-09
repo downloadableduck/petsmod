@@ -1,4 +1,4 @@
-package com.jeff.pets.rendering.custom.first.penguin;
+package com.jeff.pets.client.rendering.custom.first.penguin;
 
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 

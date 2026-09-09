@@ -1,4 +1,4 @@
-package com.jeff.pets.rendering.vanilla.drowned;
+package com.jeff.pets.client.rendering.vanilla.drowned;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayers;

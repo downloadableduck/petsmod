@@ -1,11 +1,11 @@
-package com.jeff.pets.rendering.vanilla.goat;
+package com.jeff.pets.client.rendering.vanilla.goat;
 
 import net.minecraft.client.model.animal.goat.GoatModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.GoatRenderState;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientGoatModel extends GoatModel {
 
@@ -23,7 +23,7 @@ public class ClientGoatModel extends GoatModel {
     @Override
     public void setupAnim(@NotNull GoatRenderState state) {
         super.setupAnim(state);
-        if (CONFIG.isBaby) {
+        if (state.isBaby) {
             this.leftHorn.visible = false;
             this.rightHorn.visible = false;
         }

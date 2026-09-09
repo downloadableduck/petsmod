@@ -1,4 +1,4 @@
-package com.jeff.pets.rendering.vanilla.villager;
+package com.jeff.pets.client.rendering.vanilla.villager;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;

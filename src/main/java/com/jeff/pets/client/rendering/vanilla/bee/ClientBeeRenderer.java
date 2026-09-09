@@ -1,7 +1,8 @@
-package com.jeff.pets.rendering.vanilla.bee;
+package com.jeff.pets.client.rendering.vanilla.bee;
 
+import com.jeff.pets.client.rendering.IPetRenderState;
 import com.jeff.pets.mob.vanilla.neutral.ClientBee;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.animal.bee.AdultBeeModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -13,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientBeeRenderer extends PetRenderer<@NotNull ClientBee, @NotNull BeeRenderState, @NotNull AdultBeeModel> {
     public static final ModelLayerLocation BEE_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientbee"), "main");
@@ -25,16 +26,17 @@ public class ClientBeeRenderer extends PetRenderer<@NotNull ClientBee, @NotNull 
 
     @Override
     protected void scale(BeeRenderState state, @NotNull PoseStack poseStack) {
-        if (CONFIG.isBaby) {
+        if (state.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
     public @NotNull Identifier getTextureLocation(BeeRenderState beeRenderState) {
-        if (Objects.equals(CONFIG.beeSkin, "happy")) {
+        String skin = ((IPetRenderState) beeRenderState).pets$getPetSkin();
+        if (Objects.equals(skin, "happy")) {
             beeTexturePath = "textures/entity/bee/bee.png";
-        } else if (Objects.equals(CONFIG.beeSkin, "angry")) {
+        } else {
             beeTexturePath = "textures/entity/bee/bee_angry.png";
         }
         return Identifier.withDefaultNamespace(beeTexturePath);

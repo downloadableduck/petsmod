@@ -1,4 +1,4 @@
-package com.jeff.pets.rendering.aprilfools.toxifin;
+package com.jeff.pets.client.rendering.aprilfools.toxifin;
 
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;

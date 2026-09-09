@@ -1,17 +1,16 @@
-package com.jeff.pets.rendering.aprilfools.traitor;
+package com.jeff.pets.client.rendering.aprilfools.traitor;
 
-import com.jeff.pets.rendering.vanilla.evoker.ClientEvokerModel;
+import com.jeff.pets.client.rendering.vanilla.evoker.ClientEvokerModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.EvokerRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class TraitorBiomeLayer extends RenderLayer<@NotNull EvokerRenderState, @NotNull ClientEvokerModel> {
 
@@ -23,15 +22,18 @@ public class TraitorBiomeLayer extends RenderLayer<@NotNull EvokerRenderState, @
     public static final ModelLayerLocation SWAMP_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/villager/type/swamp.png"), "main");
     public static final ModelLayerLocation TAIGA_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/villager/type/taiga.png"), "main");
 
-    public TraitorBiomeLayer(RenderLayerParent<@NotNull EvokerRenderState, @NotNull ClientEvokerModel> renderLayerParent) {
-        super(renderLayerParent);
+    private final TraitorRenderer renderer;
+
+    public TraitorBiomeLayer(TraitorRenderer renderer) {
+        super(renderer);
+        this.renderer = renderer;
     }
 
     @Override
     public void submit(@NotNull PoseStack poseStack, @NotNull SubmitNodeCollector submitNodeCollector, int i, EvokerRenderState entityRenderState, float f, float g) {
         poseStack.pushPose();
         poseStack.scale(1.001f, 1.001f, 1.001f);
-        switch (CONFIG.traitorSkin) {
+        switch (this.renderer.getPetSkin(CONFIG.traitorSkin)) {
             case "desert" ->
                     renderColoredCutoutModel(this.getParentModel(), DESERT_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
             case "jungle" ->

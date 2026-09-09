@@ -1,4 +1,4 @@
-package com.jeff.pets.rendering.custom.first.penguin;
+package com.jeff.pets.client.rendering.custom.first.penguin;
 
 import com.jeff.pets.PetsInitializer;
 import net.minecraft.client.model.EntityModel;
@@ -10,7 +10,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class PenguinModel extends EntityModel<@NotNull PenguinRenderState> {
 
@@ -86,7 +86,7 @@ public class PenguinModel extends EntityModel<@NotNull PenguinRenderState> {
             this.left_foot.y -= 4;
             this.left_foot.xRot = -1.6f;
         }
-        if ((CONFIG.isBaby && !state.isServerEntity) || (state.isBaby && state.isServerEntity)) {
+        if ((state.isBaby && !state.isServerEntity) || (state.isBaby && state.isServerEntity)) {
             this.head.xScale = 1.5f;
             this.head.yScale = 1.5f;
             this.head.zScale = 1.5f;

@@ -1,33 +1,27 @@
-package com.jeff.pets.rendering;
+package com.jeff.pets.client.rendering;
 
-import com.jeff.pets.client.NewPetsConfigScreen;
-import com.jeff.pets.compat.ViaFabricPlusCompat;
+import com.jeff.pets.client.PetsConfigScreen;
+import com.jeff.pets.client.compat.ViaFabricPlusCompat;
 import com.jeff.pets.mob.AbstractPet;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.sun.jna.platform.win32.Netapi32Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
 import net.minecraft.util.ARGB;
-import net.minecraft.world.entity.Display;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+
+import static com.jeff.pets.client.Central.CONFIG;
 
 /**
  * Used as a shared piece of code across all of the renderers. The main point of this class
@@ -46,7 +40,11 @@ public abstract class PetRenderer<D extends AbstractPet, U extends LivingEntityR
         if (this.entity == null) {
             this.entity = entity;
         }
-        super.extractRenderState(entity, state, f);
+        try {
+            super.extractRenderState(entity, state, f);
+        } catch (Exception e) {
+        }
+
         state.isUpsideDown = entity.getPlainTextName().equals("Grumm") || entity.getPlainTextName().equals("Dinnerbone");
         if (state.passengerOffset == null) {
             state.passengerOffset = new Vec3(0, 0, 0);
@@ -54,26 +52,22 @@ public abstract class PetRenderer<D extends AbstractPet, U extends LivingEntityR
         if (ViaFabricPlusCompat.shouldUpdateThingy() && entity.isPassenger()) {
             state.passengerOffset = new Vec3(state.passengerOffset.x, state.passengerOffset.y + 0.35, state.passengerOffset.z);
         }
-    }
+        IPetRenderState petRenderState = (IPetRenderState) state;
+            boolean isOwner = entity.getOwner() != null &&
+                    entity.getOwner().equals(Minecraft.getInstance().player);
 
-    public String getPetSkin(String petSkin) {
-        System.out.println(this.isMyPet());
-        if (this.entity == null || this.isMyPet()) {
-            return petSkin;
-        }
-        return this.entity.petSkin;
-    }
-
-    protected boolean isMyPet() {
-        if (this.entity == null || this.entity.getOwner() == null) {
-            return true;
-        }
-        return this.entity.getOwner().equals(Minecraft.getInstance().player);
+            petRenderState.pets$setMyPet(isOwner);
+            petRenderState.pets$setPetSkin(entity.petSkin != null ? entity.petSkin : "");
+            if (petRenderState.pets$isMyPet()) {
+                state.isBaby = CONFIG.isBaby;
+            } else {
+                state.isBaby = entity.isBaby();
+            }
     }
 
     @Override
     public RenderType getRenderType(U state, boolean transparent, boolean force, boolean glowing) {
-        if (Minecraft.getInstance().screen instanceof NewPetsConfigScreen) {
+        if (Minecraft.getInstance().screen instanceof PetsConfigScreen) {
             return RenderTypes.entityTranslucent(this.getTextureLocation(state));
         }
         return super.getRenderType(state, transparent, force, glowing);
@@ -86,7 +80,7 @@ public abstract class PetRenderer<D extends AbstractPet, U extends LivingEntityR
             Direction bedOrientation = state.bedOrientation;
             if (bedOrientation != null) {
                 float headOffset = state.eyeHeight - 0.1F;
-                poseStack.translate((float)(-bedOrientation.getStepX()) * headOffset, 0.0F, (float)(-bedOrientation.getStepZ()) * headOffset);
+                poseStack.translate((float) (-bedOrientation.getStepX()) * headOffset, 0.0F, (float) (-bedOrientation.getStepZ()) * headOffset);
             }
         }
 
@@ -109,14 +103,14 @@ public abstract class PetRenderer<D extends AbstractPet, U extends LivingEntityR
         if (this.shouldRenderLayers(state) && !this.layers.isEmpty()) {
             this.model.setupAnim(state);
 
-            for(RenderLayer<U, K> layer : this.layers) {
+            for (RenderLayer<U, K> layer : this.layers) {
                 layer.submit(poseStack, node, state.lightCoords, state, state.yRot, state.xRot);
             }
         }
 
         poseStack.popPose();
         if (state.leashStates != null) {
-            for(EntityRenderState.LeashState leashState : state.leashStates) {
+            for (EntityRenderState.LeashState leashState : state.leashStates) {
                 node.submitLeash(poseStack, leashState);
             }
         }
@@ -125,9 +119,13 @@ public abstract class PetRenderer<D extends AbstractPet, U extends LivingEntityR
     }
 
     private int getColor() {
-        if (Minecraft.getInstance().screen instanceof NewPetsConfigScreen screen) {
+        if (Minecraft.getInstance().screen instanceof PetsConfigScreen screen) {
             return screen.button.color;
         }
         return 0xFFFFFFFF;
+    }
+
+    public String getPetSkin(String traitorSkin) {
+        return traitorSkin;
     }
 }

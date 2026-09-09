@@ -4,10 +4,10 @@
  * a little wierd.
  */
 
-package com.jeff.pets;
+package com.jeff.pets.client;
 
-import com.jeff.pets.client.NewPetsConfigScreen;
-import com.jeff.pets.mixin.client.ChatAccessor;
+import com.jeff.pets.PetsInitializer;
+import com.jeff.pets.client.mixin.client.ChatAccessor;
 import com.jeff.pets.mob.aprilfools.*;
 import com.jeff.pets.mob.custom.aprilfools.Head;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
@@ -21,8 +21,8 @@ import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import com.jeff.pets.mob.vanilla.hostile.*;
 import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
-import com.jeff.pets.network.NetworkManager;
-import com.jeff.pets.rendering.custom.aprilfools.head.HeadSkin;
+import com.jeff.pets.client.network.NetworkManager;
+import com.jeff.pets.client.rendering.custom.aprilfools.head.HeadSkin;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
@@ -33,6 +33,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommands;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLevelEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.minecraft.client.Minecraft;
@@ -65,13 +66,12 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
  * to run a large amount of logic in the {@link #onInitializeClient()} method.
  * <p>
  *
- * @see com.jeff.pets.Utils
+ * @see com.jeff.pets.client.Utils
  */
 public class Central implements ClientModInitializer {
 
     public static final List<Entity> summonedEntity = new ArrayList();
-    public static final CopyOnWriteArrayList<String> currentSuggestions = new CopyOnWriteArrayList()
-            ;
+    public static final CopyOnWriteArrayList<String> currentSuggestions = new CopyOnWriteArrayList();
     public static final List<String> BEE_SKINS = List.of("happy", "angry");
     public static final List<String> FOX_SKINS = List.of("red", "snow");
     public static final List<String> LLAMA_SKINS = List.of("brown", "creamy", "gray", "white");
@@ -631,7 +631,7 @@ public class Central implements ClientModInitializer {
                 Utils.summonPet(stingray, CONFIG.stingrayName);
             }
         }
-        NetworkManager.get().broadcastGeneral(minecraft.player.getStringUUID(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin());
+        NetworkManager.get().broadcastGeneral(minecraft.player.getStringUUID(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby);
     }
 
     /**
@@ -741,7 +741,7 @@ public class Central implements ClientModInitializer {
      *
      * @see ChatAccessor
      */
-    private static void updateSuggestions(Minecraft client) {
+    public static void updateSuggestions(Minecraft client) {
         List<String> skinSuggestions = switch (CONFIG.activePet) {
             case "duck" -> DUCK_SKINS;
             case "racoon" -> RACOON_SKINS;
@@ -879,8 +879,10 @@ public class Central implements ClientModInitializer {
 
                     if (Objects.equals(skin, "baby")) {
                         CONFIG.isBaby = true;
+                        NetworkManager.get().broadcastToggleBaby(Minecraft.getInstance().player.getStringUUID(), CONFIG.isBaby);
                     } else if (Objects.equals(skin, "adult")) {
                         CONFIG.isBaby = false;
+                        NetworkManager.get().broadcastToggleBaby(Minecraft.getInstance().player.getStringUUID(), CONFIG.isBaby);
                     } else {
                         if (Objects.equals(CONFIG.activePet, "duck")) {
                             switch (skin) {
@@ -893,8 +895,9 @@ public class Central implements ClientModInitializer {
                                 case "rubber":
                                     CONFIG.duckSkin = "rubber";
                                     break;
-                                case "bronze": CONFIG.duckSkin = "bronze";
-                                break;
+                                case "bronze":
+                                    CONFIG.duckSkin = "bronze";
+                                    break;
                                 case null:
                                 default:
                                     isValid = false;
@@ -2044,7 +2047,7 @@ public class Central implements ClientModInitializer {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(ClientCommands.literal("petname").then(ClientCommands.argument("name", StringArgumentType.greedyString()).executes((context) -> {
             String name = StringArgumentType.getString(context, "name");
             if (!summonedEntity.isEmpty()) {
-                    Utils.setActivePetName(name);
+                Utils.setActivePetName(name);
             }
 
             return 1;
@@ -2080,7 +2083,7 @@ public class Central implements ClientModInitializer {
      * Clears the summon entities when the player joins a world so they are re-summoned
      */
     void createJoinHandler() {
-        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
+        ClientLevelEvents.AFTER_CLIENT_LEVEL_CHANGE.register((client, level) -> {
             List var10001 = summonedEntity;
             Objects.requireNonNull(var10001);
             client.execute(var10001::clear);
@@ -2091,20 +2094,20 @@ public class Central implements ClientModInitializer {
         String[] stuffs = new String[]{"allay", "angry ghast", "armadillo",
                 "axolotl", "bat", "batato", "bee", "blaze", "bogged",
                 "breeze", "camel", "cat", "cave spider", "chicken",
-                 "cod",  "copper golem", "cow",
+                "cod", "copper golem", "cow",
                 "creaking", "creeper", "diamond chicken",
                 "dolphin", "donkey", "drowned", "duck", "dumbo octopus",
                 "elder guardian", "ender dragon", "enderman", "endermite", "evoker",
-                "fox",  "frog",
-                 "ghast", "goat", "guardian",
-                "happy ghast", "head", "hoglin",  "horse",
-                "husk",  "iron golem",
+                "fox", "frog",
+                "ghast", "goat", "guardian",
+                "happy ghast", "head", "hoglin", "horse",
+                "husk", "iron golem",
                 "koi", "llama",
-                 "love golem", "magma cube", "mega spud",
+                "love golem", "magma cube", "mega spud",
                 "moon cow", "mooshroom",
-                 "nautilus", "nerd creeper",
-                "panda", "parched", "parrot",  "penguin", "phantom",
-               "pig", "piglin", "pillager",
+                "nautilus", "nerd creeper",
+                "panda", "parched", "parrot", "penguin", "phantom",
+                "pig", "piglin", "pillager",
                 "pink wither", "plaguewhale slab", "poisonous potato zombie", "polar bear",
                 "potato husk", "pufferfish", "rabbit",
                 "racoon",
@@ -2115,9 +2118,9 @@ public class Central implements ClientModInitializer {
                 "sheep",
                 "shulker",
                 "silverfish", "skeleton", "slime", "smiling creeper", "sniffer", "snow golem",
-                 "spider", "squid", "stingray",  "stray", "strider",  "tadpole", "toxifin slab",
+                "spider", "squid", "stingray", "stray", "strider", "tadpole", "toxifin slab",
                 "traitor", "turtle",
-                 "vex", "villager", "vindicator", "wandering trader", "warden", "witch", "wither",
+                "vex", "villager", "vindicator", "wandering trader", "warden", "witch", "wither",
                 "wither skeleton", "wolf", "zombie", "zombie villager"};
         PETS_LIST.addAll(List.of(stuffs));
     }
@@ -2128,7 +2131,7 @@ public class Central implements ClientModInitializer {
         } else if (isValid && CONFIG.petOn) {
             despawnPet();
             context.getSource().sendFeedback(Component.literal("§b[PetsMod] §aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + "."));
-            NetworkManager.get().broadcastGeneral(Minecraft.getInstance().player.getStringUUID(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin());
+            NetworkManager.get().broadcastGeneral(Minecraft.getInstance().player.getStringUUID(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby);
             summonPet();
         } else if (isValid && !CONFIG.petOn) {
             context.getSource().sendFeedback(Component.literal("§b[PetsMod] §cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet enabled. Run §l/pet on§r§c to change this."));

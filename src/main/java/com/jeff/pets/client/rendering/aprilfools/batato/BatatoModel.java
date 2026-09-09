@@ -1,4 +1,4 @@
-package com.jeff.pets.rendering.aprilfools.batato;
+package com.jeff.pets.client.rendering.aprilfools.batato;
 
 import net.minecraft.client.animation.KeyframeAnimation;
 import net.minecraft.client.animation.definitions.BatAnimation;

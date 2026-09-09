@@ -1,4 +1,4 @@
-package com.jeff.pets.rendering.vanilla.cavespider;
+package com.jeff.pets.client.rendering.vanilla.cavespider;
 
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;

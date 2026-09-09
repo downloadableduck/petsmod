@@ -1,7 +1,7 @@
-package com.jeff.pets.rendering.aprilfools.smilingcreeper;
+package com.jeff.pets.client.rendering.aprilfools.smilingcreeper;
 
 import com.jeff.pets.mob.aprilfools.SmilingCreeper;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.monster.creeper.CreeperModel;
@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class SmilingCreeperRenderer extends PetRenderer<@NotNull SmilingCreeper, @NotNull CreeperRenderState, @NotNull CreeperModel> {
 

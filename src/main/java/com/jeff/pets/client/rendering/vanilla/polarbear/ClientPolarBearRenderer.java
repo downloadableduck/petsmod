@@ -1,7 +1,7 @@
-package com.jeff.pets.rendering.vanilla.polarbear;
+package com.jeff.pets.client.rendering.vanilla.polarbear;
 
 import com.jeff.pets.mob.vanilla.neutral.ClientPolarBear;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.animal.polarbear.PolarBearModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.entity.state.PolarBearRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientPolarBearRenderer extends PetRenderer<@NotNull ClientPolarBear, @NotNull PolarBearRenderState, @NotNull PolarBearModel> {
 
@@ -30,7 +30,7 @@ public class ClientPolarBearRenderer extends PetRenderer<@NotNull ClientPolarBea
 
     @Override
     protected void scale(@NotNull PolarBearRenderState livingEntityRenderState, @NotNull PoseStack poseStack) {
-        if (CONFIG.isBaby) {
+        if (livingEntityRenderState.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }

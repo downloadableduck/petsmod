@@ -1,7 +1,7 @@
-package com.jeff.pets.rendering.vanilla.vex;
+package com.jeff.pets.client.rendering.vanilla.vex;
 
 import com.jeff.pets.mob.vanilla.hostile.ClientVex;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.monster.vex.VexModel;

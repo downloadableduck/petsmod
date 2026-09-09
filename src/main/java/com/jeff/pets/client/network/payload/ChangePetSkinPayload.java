@@ -1,4 +1,4 @@
-package com.jeff.pets.network;
+package com.jeff.pets.client.network.payload;
 
 public class ChangePetSkinPayload extends Payload {
     public String petSkin;

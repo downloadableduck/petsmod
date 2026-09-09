@@ -1,7 +1,7 @@
-package com.jeff.pets.rendering.vanilla.armadillo;
+package com.jeff.pets.client.rendering.vanilla.armadillo;
 
 import com.jeff.pets.mob.vanilla.passive.ClientArmadillo;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.animal.armadillo.AdultArmadilloModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.entity.state.ArmadilloRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientArmadilloRenderer extends PetRenderer<@NotNull ClientArmadillo, @NotNull ArmadilloRenderState, @NotNull AdultArmadilloModel> {
 
@@ -22,7 +22,7 @@ public class ClientArmadilloRenderer extends PetRenderer<@NotNull ClientArmadill
     }
 
     protected void scale(ArmadilloRenderState state, @NotNull PoseStack poseStack) {
-        if (CONFIG.isBaby) {
+        if (state.isBaby) {
             poseStack.scale(0.6f, 0.6f, 0.6f);
         }
     }

@@ -1,7 +1,7 @@
-package com.jeff.pets.rendering.vanilla.silverfish;
+package com.jeff.pets.client.rendering.vanilla.silverfish;
 
 import com.jeff.pets.mob.vanilla.hostile.ClientSilverfish;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.monster.silverfish.SilverfishModel;

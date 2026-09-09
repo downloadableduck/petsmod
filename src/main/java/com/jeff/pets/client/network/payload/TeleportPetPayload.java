@@ -1,6 +1,4 @@
-package com.jeff.pets.client.network;
-
-import com.jeff.pets.network.Payload;
+package com.jeff.pets.client.network.payload;
 
 public class TeleportPetPayload extends Payload {
 

@@ -1,7 +1,8 @@
-package com.jeff.pets.rendering.vanilla.chicken;
+package com.jeff.pets.client.rendering.vanilla.chicken;
 
+import com.jeff.pets.client.rendering.IPetRenderState;
 import com.jeff.pets.mob.vanilla.passive.ClientChicken;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -12,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientChickenRenderer extends PetRenderer<@NotNull ClientChicken, @NotNull ChickenRenderState, @NotNull ClientChickenModel> {
     public static final ModelLayerLocation CHICKEN_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientchicken"), "main");
@@ -30,11 +31,12 @@ public class ClientChickenRenderer extends PetRenderer<@NotNull ClientChicken, @
 
     @Override
     public @NotNull Identifier getTextureLocation(ChickenRenderState livingEntityRenderState) {
-        if (Objects.equals(CONFIG.chickenSkin, "temperate")) {
+        String skin = ((IPetRenderState) livingEntityRenderState).pets$getPetSkin();
+        if (Objects.equals(skin, "temperate")) {
             chickenTexturePath = "textures/entity/chicken/chicken_temperate.png";
-        } else if (Objects.equals(CONFIG.chickenSkin, "cold")) {
+        } else if (Objects.equals(skin, "cold")) {
             chickenTexturePath = "textures/entity/chicken/chicken_cold.png";
-        } else if (Objects.equals(CONFIG.chickenSkin, "warm")) {
+        } else if (Objects.equals(skin, "warm")) {
             chickenTexturePath = "textures/entity/chicken/chicken_warm.png";
         }
         return Identifier.withDefaultNamespace(chickenTexturePath);
@@ -42,7 +44,7 @@ public class ClientChickenRenderer extends PetRenderer<@NotNull ClientChicken, @
 
     @Override
     protected void scale(ChickenRenderState state, @NotNull PoseStack poseStack) {
-        if (CONFIG.isBaby) {
+        if (state.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }

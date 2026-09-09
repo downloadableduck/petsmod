@@ -1,4 +1,4 @@
-package com.jeff.pets.rendering.vanilla.enderdragon;
+package com.jeff.pets.client.rendering.vanilla.enderdragon;
 
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.world.entity.boss.enderdragon.DragonFlightHistory;

@@ -1,19 +1,20 @@
-package com.jeff.pets.rendering.custom.first.racoon;
+package com.jeff.pets.client.rendering.custom.first.racoon;
 
+import com.jeff.pets.client.rendering.IPetRenderState;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Racoon;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 
-public class RacoonRenderer extends com.jeff.pets.rendering.PetRenderer<@NotNull Racoon, @NotNull RacoonRenderState, @NotNull RacoonModel> {
+public class RacoonRenderer extends PetRenderer<@NotNull Racoon, @NotNull RacoonRenderState, @NotNull RacoonModel> {
     public static final ModelLayerLocation RACOON_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(MOD_ID, "racoon"), "main");
 
     public RacoonRenderer(EntityRendererProvider.Context context) {
@@ -22,7 +23,7 @@ public class RacoonRenderer extends com.jeff.pets.rendering.PetRenderer<@NotNull
 
     @Override
     protected void scale(@NotNull RacoonRenderState livingEntityRenderState, @NotNull PoseStack poseStack) {
-        if ((CONFIG.isBaby && !livingEntityRenderState.isServerEntity) || (livingEntityRenderState.isBaby && livingEntityRenderState.isServerEntity)) {
+        if ((livingEntityRenderState.isBaby && !livingEntityRenderState.isServerEntity) || (livingEntityRenderState.isBaby && livingEntityRenderState.isServerEntity)) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
@@ -31,9 +32,10 @@ public class RacoonRenderer extends com.jeff.pets.rendering.PetRenderer<@NotNull
     public @NotNull Identifier getTextureLocation(RacoonRenderState state) {
         String racoonTexturePath;
         if (!state.isServerEntity) {
-            if (Objects.equals(CONFIG.racoonSkin, "normal")) {
+            String skin = ((IPetRenderState) state).pets$getPetSkin();
+            if (Objects.equals(skin, "normal")) {
                 racoonTexturePath = "textures/entity/racoon/racoon.png";
-            } else if (Objects.equals(CONFIG.racoonSkin, "albino")) {
+            } else if (Objects.equals(skin, "albino")) {
                 racoonTexturePath = "textures/entity/racoon/albino.png";
             } else {
                 racoonTexturePath = "textures/entity/racoon/racoon.png";

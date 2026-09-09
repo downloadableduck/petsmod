@@ -1,7 +1,8 @@
-package com.jeff.pets.rendering.vanilla.wither;
+package com.jeff.pets.client.rendering.vanilla.wither;
 
+import com.jeff.pets.client.rendering.IPetRenderState;
 import com.jeff.pets.mob.vanilla.boss.ClientWither;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -15,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientWitherRenderer extends PetRenderer<@NotNull ClientWither, @NotNull WitherRenderState, @NotNull WitherBossModel> {
 
@@ -34,9 +35,10 @@ public class ClientWitherRenderer extends PetRenderer<@NotNull ClientWither, @No
     @Override
     public @NotNull Identifier getTextureLocation(WitherRenderState livingEntityRenderState) {
         String witherTexturePath;
-        if (Objects.equals(CONFIG.witherSkin, "normal")) {
+        String skin = ((IPetRenderState) livingEntityRenderState).pets$getPetSkin();
+        if (Objects.equals(skin, "normal")) {
             witherTexturePath = "textures/entity/wither/wither.png";
-        } else if (Objects.equals(CONFIG.witherSkin, "invulnerable")) {
+        } else if (Objects.equals(skin, "invulnerable")) {
             witherTexturePath = "textures/entity/wither/wither_invulnerable.png";
         } else {
             witherTexturePath = "textures/entity/wither/wither.png";

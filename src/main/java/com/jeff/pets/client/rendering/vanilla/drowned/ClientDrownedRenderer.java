@@ -1,7 +1,7 @@
-package com.jeff.pets.rendering.vanilla.drowned;
+package com.jeff.pets.client.rendering.vanilla.drowned;
 
 import com.jeff.pets.mob.vanilla.hostile.ClientDrowned;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.entity.state.ZombieRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientDrownedRenderer extends PetRenderer<@NotNull ClientDrowned, @NotNull ZombieRenderState, @NotNull ClientDrownedModel> {
 
@@ -30,7 +30,7 @@ public class ClientDrownedRenderer extends PetRenderer<@NotNull ClientDrowned, @
     }
 
     protected void scale(ZombieRenderState state, @NotNull PoseStack poseStack) {
-        if (CONFIG.isBaby) {
+        if (state.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }

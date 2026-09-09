@@ -1,4 +1,4 @@
-package com.jeff.pets.rendering.vanilla.pillager;
+package com.jeff.pets.client.rendering.vanilla.pillager;
 
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;

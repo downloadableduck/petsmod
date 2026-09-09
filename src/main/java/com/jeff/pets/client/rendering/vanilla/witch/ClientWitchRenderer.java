@@ -1,7 +1,7 @@
-package com.jeff.pets.rendering.vanilla.witch;
+package com.jeff.pets.client.rendering.vanilla.witch;
 
 import com.jeff.pets.mob.vanilla.hostile.ClientWitch;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.monster.witch.WitchModel;
@@ -20,7 +20,7 @@ public class ClientWitchRenderer extends PetRenderer<@NotNull ClientWitch, @NotN
 
     @Override
     public @NotNull Identifier getTextureLocation(WitchRenderState livingEntityRenderState) {
-        return Identifier.withDefaultNamespace("textures/entity/witch.png");
+        return Identifier.withDefaultNamespace("textures/entity/witch/witch.png");
     }
 
     @Override

@@ -1,7 +1,8 @@
-package com.jeff.pets.rendering.vanilla.creeper;
+package com.jeff.pets.client.rendering.vanilla.creeper;
 
+import com.jeff.pets.client.rendering.IPetRenderState;
 import com.jeff.pets.mob.vanilla.hostile.ClientCreeper;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -16,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientCreeperRenderer extends PetRenderer<@NotNull ClientCreeper, @NotNull CreeperRenderState, @NotNull CreeperModel> {
     public static final ModelLayerLocation CREEPER_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientcreeper"), "main");
@@ -44,7 +45,8 @@ public class ClientCreeperRenderer extends PetRenderer<@NotNull ClientCreeper, @
     @Override
     public void extractRenderState(ClientCreeper creeper, CreeperRenderState state, float f) {
         super.extractRenderState(creeper, state, f);
-        if (Objects.equals(CONFIG.creeperSkin, "charged")) {
+        String skin = ((IPetRenderState) state).pets$getPetSkin();
+        if (Objects.equals(skin, "charged")) {
             state.isPowered = true;
         }
     }

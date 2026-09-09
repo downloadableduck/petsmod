@@ -1,7 +1,8 @@
-package com.jeff.pets.rendering.vanilla.hoglin;
+package com.jeff.pets.client.rendering.vanilla.hoglin;
 
+import com.jeff.pets.client.rendering.IPetRenderState;
 import com.jeff.pets.mob.vanilla.hostile.ClientHoglin;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -12,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientHoglinRenderer extends PetRenderer<@NotNull ClientHoglin, @NotNull HoglinRenderState, @NotNull ClientHoglinModel> {
 
@@ -24,17 +25,18 @@ public class ClientHoglinRenderer extends PetRenderer<@NotNull ClientHoglin, @No
 
     @Override
     protected void scale(HoglinRenderState state, @NotNull PoseStack poseStack) {
-        if (CONFIG.isBaby) {
+        if (state.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
     public @NotNull Identifier getTextureLocation(HoglinRenderState livingEntityRenderState) {
+        String skin = ((IPetRenderState) livingEntityRenderState).pets$getPetSkin();
         String hoglinTexturePath;
-        if (Objects.equals(CONFIG.hoglinSkin, "hoglin")) {
+        if (Objects.equals(skin, "hoglin")) {
             hoglinTexturePath = "textures/entity/hoglin/hoglin.png";
-        } else if (Objects.equals(CONFIG.hoglinSkin, "zoglin")) {
+        } else if (Objects.equals(skin, "zoglin")) {
             hoglinTexturePath = "textures/entity/hoglin/zoglin.png";
         } else {
             hoglinTexturePath = "textures/entity/hoglin/hoglin.png";

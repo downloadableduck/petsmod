@@ -1,6 +1,4 @@
-package com.jeff.pets.network;
-
-import java.util.UUID;
+package com.jeff.pets.client.network.payload;
 
 public abstract class Payload {
 

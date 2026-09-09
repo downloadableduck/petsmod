@@ -1,11 +1,11 @@
-package com.jeff.pets.rendering.vanilla.drowned;
+package com.jeff.pets.client.rendering.vanilla.drowned;
 
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.monster.zombie.DrownedModel;
 import net.minecraft.client.renderer.entity.state.ZombieRenderState;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientDrownedModel extends DrownedModel {
 
@@ -21,7 +21,7 @@ public class ClientDrownedModel extends DrownedModel {
     @Override
     public void setupAnim(@NotNull ZombieRenderState state) {
         super.setupAnim(state);
-        if (CONFIG.isBaby) {
+        if (state.isBaby) {
             headScale = 1.5f;
             this.head.yScale = headScale;
             this.head.zScale = headScale;

@@ -1,7 +1,8 @@
-package com.jeff.pets.rendering.vanilla.magmacube;
+package com.jeff.pets.client.rendering.vanilla.magmacube;
 
+import com.jeff.pets.client.rendering.IPetRenderState;
 import com.jeff.pets.mob.vanilla.hostile.ClientMagmaCube;
-import com.jeff.pets.rendering.PetRenderer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -11,7 +12,7 @@ import net.minecraft.client.renderer.entity.state.SlimeRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.Central.CONFIG;
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientMagmaCubeRenderer extends PetRenderer<@NotNull ClientMagmaCube, @NotNull SlimeRenderState, @NotNull MagmaCubeModel> {
 
@@ -23,7 +24,8 @@ public class ClientMagmaCubeRenderer extends PetRenderer<@NotNull ClientMagmaCub
 
     @Override
     protected void scale(SlimeRenderState slimeRenderState, @NotNull PoseStack poseStack) {
-        int magmaCubeScale = switch (CONFIG.magmaCubeSkin) {
+        String skin = ((IPetRenderState) slimeRenderState).pets$getPetSkin();
+        int magmaCubeScale = switch (skin) {
             case "small" -> 1;
             case "medium" -> 2;
             case "large" -> 4;

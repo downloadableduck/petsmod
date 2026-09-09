@@ -1,8 +1,7 @@
-package com.jeff.pets.compat;
+package com.jeff.pets.client.compat;
 
 import com.jeff.pets.PetsInitializer;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.Minecraft;
 
 import java.lang.reflect.Method;
 
@@ -10,6 +9,7 @@ public class ViaFabricPlusCompat {
     public static boolean isViaFabricPlusPresent() {
         return FabricLoader.getInstance().isModLoaded("viafabricplus");
     }
+
     public static boolean shouldUpdateThingy() {
         if (!isViaFabricPlusPresent()) {
             return false;

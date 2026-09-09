@@ -5,6 +5,6 @@ import com.terraformersmc.modmenu.api.ModMenuApi;
 
 public class ModMenuEntry implements ModMenuApi {
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return (_ -> new NewPetsConfigScreen());
+        return (_ -> new PetsConfigScreen());
     }
 }

@@ -1,4 +1,4 @@
-package com.jeff.pets.rendering.vanilla.enderdragon;
+package com.jeff.pets.client.rendering.vanilla.enderdragon;
 
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;

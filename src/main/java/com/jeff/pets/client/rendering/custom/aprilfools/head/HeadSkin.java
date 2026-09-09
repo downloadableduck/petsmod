@@ -1,4 +1,4 @@
-package com.jeff.pets.rendering.custom.aprilfools.head;
+package com.jeff.pets.client.rendering.custom.aprilfools.head;
 
 import net.minecraft.resources.Identifier;
 
