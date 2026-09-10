@@ -109,6 +109,7 @@ import com.jeff.pets.client.rendering.vanilla.spider.ClientSpiderRenderer;
 import com.jeff.pets.client.rendering.vanilla.squid.ClientSquidRenderer;
 import com.jeff.pets.client.rendering.vanilla.stray.ClientStrayRenderer;
 import com.jeff.pets.client.rendering.vanilla.strider.ClientStriderRenderer;
+import com.jeff.pets.client.rendering.vanilla.sulfur_cube.ClientSulfurCubeRenderer;
 import com.jeff.pets.client.rendering.vanilla.tadpole.ClientTadpoleRenderer;
 import com.jeff.pets.client.rendering.vanilla.turtle.ClientTurtleRenderer;
 import com.jeff.pets.client.rendering.vanilla.vex.ClientVexRenderer;
@@ -160,12 +161,14 @@ import net.minecraft.client.model.monster.skeleton.BoggedModel;
 import net.minecraft.client.model.monster.skeleton.SkeletonModel;
 import net.minecraft.client.model.monster.slime.MagmaCubeModel;
 import net.minecraft.client.model.monster.slime.SlimeModel;
+import net.minecraft.client.model.monster.slime.SulfurCubeModel;
 import net.minecraft.client.model.monster.spider.SpiderModel;
 import net.minecraft.client.model.monster.strider.AdultStriderModel;
 import net.minecraft.client.model.monster.vex.VexModel;
 import net.minecraft.client.model.monster.warden.WardenModel;
 import net.minecraft.client.model.monster.witch.WitchModel;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.SulfurCubeRenderer;
 import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -311,6 +314,7 @@ public class PetsClientInitializer {
         event.registerLayerDefinition(DumboOctopusRenderer.DUMBO_OCTOPUS_LOCATION, DumboOctopusModel::createBodyLayer);
         event.registerLayerDefinition(KoiRenderer.KOI_LOCATION, KoiModel::createBodyLayer);
         event.registerLayerDefinition(StingrayRenderer.STINGRAY_LOCATION, StingrayModel::createBodyLayer);
+        event.registerLayerDefinition(ClientSulfurCubeRenderer.SULFUR_CUBE_LOCATION, SulfurCubeModel::createOuterBodyLayer);
     }
 
     void register(EntityRenderersEvent.RegisterRenderers event) {
@@ -412,6 +416,7 @@ public class PetsClientInitializer {
         event.registerEntityRenderer(PetsInitializer.DUMBO_OCTOPUS.get(), DumboOctopusRenderer::new);
         event.registerEntityRenderer(PetsInitializer.KOI.get(), KoiRenderer::new);
         event.registerEntityRenderer(PetsInitializer.STINGRAY.get(), StingrayRenderer::new);
+        event.registerEntityRenderer(PetsInitializer.SULFUR_CUBE.get(), ClientSulfurCubeRenderer::new);
     }
 
     /**

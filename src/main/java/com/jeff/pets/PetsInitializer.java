@@ -165,7 +165,8 @@ public class PetsInitializer {
         event.put(TRAITOR.get(), Traitor.createAttributes().build());
         event.put(DUMBO_OCTOPUS.get(), DumboOctopus.createAttributes().build());
         event.put(KOI.get(), Koi.createAttributes().build());
-        event.put(STINGRAY.get(), Stingray.createAttributes().build());;
+        event.put(STINGRAY.get(), Stingray.createAttributes().build());
+        event.put(SULFUR_CUBE.get(), ClientSulfurCube.createAttributes().build());
 
         PetsSounds.initialize();
 
@@ -1133,4 +1134,14 @@ public class PetsInitializer {
                             .eyeHeight(0.4f)
                             .build(STINGRAY_KEY)
             );
+
+    private static final ResourceKey<@NotNull EntityType<?>> SULFUR_CUBE_KEY =
+            ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(MOD_ID, "sulphur_cube"));
+    public static final DeferredHolder<@NotNull EntityType<?>, EntityType<ClientSulfurCube>> SULFUR_CUBE =
+            ENTITY_TYPES.register("sulfur_cube", () ->
+            EntityType.Builder.of(ClientSulfurCube::new, MobCategory.WATER_AMBIENT)
+                    .sized(0.98f, 0.98f)
+                    .eyeHeight(0.6f)
+                    .build(SULFUR_CUBE_KEY)
+    );
 }

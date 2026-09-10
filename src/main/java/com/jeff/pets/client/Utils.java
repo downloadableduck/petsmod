@@ -24,8 +24,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -269,6 +274,7 @@ public class Utils {
             case "dumbo_octopus" -> new DumboOctopus(PetsInitializer.DUMBO_OCTOPUS.get(), world);
             case "koi" -> new Koi(PetsInitializer.KOI.get(), world);
             case "stingray" -> new Stingray(PetsInitializer.STINGRAY.get(), world);
+            case "sulfur_cube" -> new ClientSulfurCube(PetsInitializer.SULFUR_CUBE.get(), world);
             default -> null;
         };
     }
@@ -366,6 +372,7 @@ public class Utils {
             case "koi" -> CONFIG.koiName;
             case "stingray" -> CONFIG.stingrayName;
             case "traitor" -> CONFIG.traitorName;
+            case "sulfur_cube" -> CONFIG.sulfurCubeName;
             default -> "";
         };
     }
@@ -472,6 +479,7 @@ public class Utils {
             case "dumbo_octopus" -> CONFIG.dumboOctopusName = name;
             case "koi" -> CONFIG.koiName = name;
             case "stingray" -> CONFIG.stingrayName = name;
+            case "sulfur_cube" -> CONFIG.sulfurCubeName = name;
         }
         if (Minecraft.getInstance().player != null) {
             NetworkManager.get().broadcastChangePetName(Minecraft.getInstance().player.getStringUUID(), Utils.getActivePetName());
@@ -517,6 +525,7 @@ public class Utils {
             case "wither" -> CONFIG.witherSkin;
             case "dumbo_octopus" -> CONFIG.dumboOctopusSkin;
             case "traitor" -> CONFIG.traitorSkin;
+            case "sulfur_cube" -> CONFIG.sulfurCubeSkin;
             default -> "not_a_skin";
         };
     }
@@ -1023,6 +1032,9 @@ public class Utils {
                     CONFIG.traitorSkin = "swamp";
                 }
             }
+            case "sulfur_cube" -> {
+                CONFIG.sulfurCubeSkin = val.replace(" ", "_");
+            }
         }
         if (Minecraft.getInstance().player != null) {
             NetworkManager.get().broadcastChangePetSkin(Minecraft.getInstance().player.getStringUUID(), getActivePetSkin());
@@ -1054,5 +1066,36 @@ public class Utils {
                 }
             }
         }
+    }
+
+    public static Block getBlockFromString(String string) {
+        try {
+            Field[] fields = Blocks.class.getDeclaredFields();
+
+            for (Field field : fields) {
+                if (!Block.class.isAssignableFrom(field.getType())) continue;
+                if (Objects.equals(string.toLowerCase(), field.getName().toLowerCase())) {
+                    return (Block) field.get(null);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Blocks.AIR;
+    }
+
+    public static List<String> getAllBlocks() {
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            Field[] fields = Blocks.class.getDeclaredFields();
+
+            for (Field field : fields) {
+                if (!Block.class.isAssignableFrom(field.getType())) continue;
+                list.add(field.getName().replace("_", " ").toLowerCase());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

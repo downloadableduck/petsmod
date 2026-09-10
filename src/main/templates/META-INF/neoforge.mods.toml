@@ -30,7 +30,7 @@ displayName="${mod_name}" #mandatory
 displayURL="https://petsmod.com/" #optional
 
 # A file name (in the root of the mod JAR) containing a logo for display
-logoFile="assets/pets_mod/icon.png" #optional
+iconFile="assets/pets_mod/icon.png" #optional
 
 # A text field displayed in the mod UI
 #credits="" #optional
@@ -78,7 +78,7 @@ file="META-INF/accesstransformer.cfg"
     modId="minecraft"
     type="required"
     # This version range declares a minimum of the current minecraft version up to but not including the next major version
-    versionRange="[26.1,)"
+    versionRange="[26.2,)"
     ordering="NONE"
     side="BOTH"
 
