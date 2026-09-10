@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "id": "pets-mod",
+  "version": "${version}",
+  "name": "Pets Mod",
+  "accessWidener": "pets.accessWidener",
+  "description": "Adds completely client-sided pets to your game. Supports every vanilla mob and will work on any server, including in singleplayer!",
+  "authors": [
+    "The Pets Team",
+    "downloadableduck"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/pets-mod",
+    "sources": "https://github.com/downloadableduck/petsmod",
+    "issues": "https://github.com/downloadableduck/petsmod/issues"
+  },
+  "license": "MIT",
+  "icon": "assets/pets-mod/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "preLaunch": [
+      "com.jeff.pets.PreLaunchCheck"
+    ],
+    "main": [
+      "com.jeff.pets.PetsInitializer"
+    ],
+    "client": [
+      "com.jeff.pets.client.PetsClientInitializer",
+      "com.jeff.pets.client.Central"
+    ],
+    "modmenu": [
+      "com.jeff.pets.client.PetsConfigScreen"
+    ]
+  },
+  "mixins": [
+    {
+      "config": "pets.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.18",
+    "minecraft": [
+      "~1.13"
+    ],
+    "java": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.modrinth": "https://modrinth.com/mod/pets-mod"
+      }
+    }
+  }
+}

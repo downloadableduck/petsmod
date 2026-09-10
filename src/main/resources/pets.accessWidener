@@ -1,0 +1,7 @@
+accessWidener v2 named
+accessible field net/minecraft/entity/LivingEntity jumping Z
+accessible field net/minecraft/entity/Entity fireTicks I
+accessible field net/minecraft/entity/Entity nextSoundDistance F
+accessible field net/minecraft/entity/Entity field_15444 J
+accessible field net/minecraft/entity/Entity pistonMovementDelta [D
+accessible field net/minecraft/entity/Entity field_16695 F

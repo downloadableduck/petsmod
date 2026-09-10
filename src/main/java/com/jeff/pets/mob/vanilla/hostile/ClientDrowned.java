@@ -1,0 +1,34 @@
+package com.jeff.pets.mob.vanilla.hostile;
+
+import com.jeff.pets.mob.GroundPet;
+import net.minecraft.sound.Sound;
+import net.minecraft.sound.Sounds;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
+
+public class ClientDrowned extends GroundPet {
+
+    public boolean isOnHead;
+
+    public ClientDrowned(EntityType<? extends @NotNull TameableEntity> entityType, World level) {
+        super(entityType, level);
+        this.setBounds(0.6F, 1.95F);
+    }
+
+    @Override
+    protected int stopDistance() {
+        return 2;
+    }
+
+    @Override
+    protected float heartHeight() {
+        return 2;
+    }
+
+    @Override
+    protected Sound getAmbientSound() {
+        return Sounds.ENTITY_DROWNED_AMBIENT;
+    }
+}
