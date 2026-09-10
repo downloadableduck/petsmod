@@ -19,7 +19,6 @@
 
 package me.shedaniel.clothconfig2.api;
 
-import com.jeff.pets.client.mixin.client.KeyMappingAccessor;
 import com.mojang.blaze3d.platform.InputConstants;
 import me.shedaniel.clothconfig2.gui.entries.DropdownBoxEntry.DefaultSelectionCellCreator;
 import me.shedaniel.clothconfig2.gui.entries.DropdownBoxEntry.SelectionCellCreator;
@@ -106,14 +105,6 @@ public interface ConfigEntryBuilder {
     
     default KeyCodeBuilder startKeyCodeField(Component fieldNameKey, InputConstants.Key value) {
         return startModifierKeyCodeField(fieldNameKey, ModifierKeyCode.of(value, Modifier.none())).setAllowModifiers(false);
-    }
-    
-    default KeyCodeBuilder fillKeybindingField(Component fieldNameKey, KeyMapping value) {
-        return startKeyCodeField(fieldNameKey, (InputConstants.Key) KeyMappingAccessor.getKey(value)).setDefaultValue(value.getDefaultKey()).setKeySaveConsumer(code -> {
-            value.setKey(code);
-            KeyMapping.resetMapping();
-            Minecraft.getInstance().options.save();
-        });
     }
     
     <T> DropdownMenuBuilder<T> startDropdownMenu(Component fieldNameKey, SelectionTopCellElement<T> topCellElement, SelectionCellCreator<T> cellCreator);

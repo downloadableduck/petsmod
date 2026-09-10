@@ -10,6 +10,7 @@ import com.jeff.pets.client.rendering.vanilla.armadillo.ClientArmadilloRenderer;
 import com.jeff.pets.client.rendering.vanilla.axolotl.ClientAxolotlRenderer;
 import com.jeff.pets.client.rendering.vanilla.cat.ClientCatRenderer;
 import com.jeff.pets.client.rendering.vanilla.sheep.ClientSheepRenderer;
+import com.jeff.pets.client.rendering.vanilla.sulfur_cube.ClientSulfurCubeRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.world.entity.EntityType;
@@ -216,6 +217,7 @@ public class EntityRenderersDelegate {
                 mutableMap.put(PetsInitializer.DUMBO_OCTOPUS, new DumboOctopusRenderer(context));
                 mutableMap.put(PetsInitializer.KOI, new KoiRenderer(context));
                 mutableMap.put(PetsInitializer.STINGRAY, new StingrayRenderer(context));
+                mutableMap.put(PetsInitializer.SULFUR_CUBE, new ClientSulfurCubeRenderer(context));
             } catch (Throwable t) {
                 //throw new RuntimeException(t);
             }

@@ -111,6 +111,7 @@ import com.jeff.pets.client.rendering.vanilla.spider.ClientSpiderRenderer;
 import com.jeff.pets.client.rendering.vanilla.squid.ClientSquidRenderer;
 import com.jeff.pets.client.rendering.vanilla.stray.ClientStrayRenderer;
 import com.jeff.pets.client.rendering.vanilla.strider.ClientStriderRenderer;
+import com.jeff.pets.client.rendering.vanilla.sulfur_cube.ClientSulfurCubeRenderer;
 import com.jeff.pets.client.rendering.vanilla.tadpole.ClientTadpoleRenderer;
 import com.jeff.pets.client.rendering.vanilla.turtle.ClientTurtleRenderer;
 import com.jeff.pets.client.rendering.vanilla.vex.ClientVexRenderer;
@@ -165,6 +166,7 @@ import net.minecraft.client.model.monster.skeleton.BoggedModel;
 import net.minecraft.client.model.monster.skeleton.SkeletonModel;
 import net.minecraft.client.model.monster.slime.MagmaCubeModel;
 import net.minecraft.client.model.monster.slime.SlimeModel;
+import net.minecraft.client.model.monster.slime.SulfurCubeModel;
 import net.minecraft.client.model.monster.spider.SpiderModel;
 import net.minecraft.client.model.monster.strider.AdultStriderModel;
 import net.minecraft.client.model.monster.vex.VexModel;
@@ -307,6 +309,7 @@ public class PetsClientInitializer {
         ModelLayersAccessor.registerModelLayer(DumboOctopusRenderer.DUMBO_OCTOPUS_LOCATION, DumboOctopusModel::createBodyLayer);
         ModelLayersAccessor.registerModelLayer(KoiRenderer.KOI_LOCATION, KoiModel::createBodyLayer);
         ModelLayersAccessor.registerModelLayer(StingrayRenderer.STINGRAY_LOCATION, StingrayModel::createBodyLayer);
+        ModelLayersAccessor.registerModelLayer(ClientSulfurCubeRenderer.SULFUR_CUBE_LOCATION, SulfurCubeModel::createOuterBodyLayer);
 
         //ClientLifecycleEvents.CLIENT_STARTED.register((mc) -> {
             //LOGGER.info("PetsMod addons loaded:{}", ADDONS);

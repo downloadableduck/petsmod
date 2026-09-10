@@ -140,6 +140,7 @@ public class AttributeSupplierMixin {
             map.put(DUMBO_OCTOPUS, DumboOctopus.createAttributes().build());
             map.put(KOI, Koi.createAttributes().build());
             map.put(STINGRAY, Stingray.createAttributes().build());
+            map.put(SULFUR_CUBE, ClientSulfurCube.createAttributes().build());
 
             field.set(null, map);
         } catch (Exception e) {

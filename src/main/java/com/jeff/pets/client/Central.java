@@ -119,7 +119,7 @@ public class Central {
                     "spider", "squid", "stingray",  "stray", "strider",  "tadpole", "toxifin slab",
                     "traitor", "turtle",
                     "vex", "villager", "vindicator", "wandering trader", "warden", "witch", "wither",
-                    "wither skeleton", "wolf", "zombie", "zombie villager"), builder);
+                    "wither skeleton", "wolf", "zombie", "zombie villager", "sulfur cube"), builder);
     private static final SuggestionProvider ON_OFF = (context, builder) -> SharedSuggestionProvider.suggest(new String[]{"off", "on"}, builder);
     private static final List<String> DUCK_SKINS = List.of("mallard", "pekin", "rubber", "bronze");
     private static final List<String> CAT_SKINS = List.of("black", "tuxedo", "british shorthair", "calico", "jellie", "ocelot", "persian", "ragdoll", "red", "siamese", "tabby", "white");
@@ -245,6 +245,7 @@ public class Central {
     public static DumboOctopus dumboOctopus;
     public static Koi koi;
     public static Stingray stingray;
+    public static ClientSulfurCube sulfurCube;
 
     private final SuggestionProvider SKINS = (context, builder) -> {
         String remaining = builder.getRemainingLowerCase();
@@ -362,6 +363,7 @@ public class Central {
         Utils.despawnEntity(dumboOctopus);
         Utils.despawnEntity(koi);
         Utils.despawnEntity(stingray);
+        Utils.despawnEntity(sulfurCube);
     }
 
     /**
@@ -469,6 +471,7 @@ public class Central {
         dumboOctopus = new DumboOctopus(PetsInitializer.DUMBO_OCTOPUS, world);
         koi = new Koi(PetsInitializer.KOI, world);
         stingray = new Stingray(PetsInitializer.STINGRAY, world);
+        sulfurCube = new ClientSulfurCube(PetsInitializer.SULFUR_CUBE, world);
 
         if (world != null) {
             if (Objects.equals(CONFIG.activePet, "duck")) {
@@ -667,6 +670,8 @@ public class Central {
                 Utils.summonPet(koi, CONFIG.koiName);
             } else if (Objects.equals(CONFIG.activePet, "stingray")) {
                 Utils.summonPet(stingray, CONFIG.stingrayName);
+            } else if (Objects.equals(CONFIG.activePet, "sulfur_cube")) {
+                Utils.summonPet(sulfurCube, CONFIG.sulfurCubeName);
             }
         }
         NetworkManager.get().broadcastGeneral(minecraft.player.getStringUUID(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby);
@@ -772,6 +777,7 @@ public class Central {
         Utils.checkName("dumbo_octopus", dumboOctopus, CONFIG.dumboOctopusName);
         Utils.checkName("koi", koi, CONFIG.koiName);
         Utils.checkName("stingray", stingray, CONFIG.stingrayName);
+        Utils.checkName("sulfur_cube", sulfurCube, CONFIG.sulfurCubeName);
     }
 
     /**
@@ -812,6 +818,7 @@ public class Central {
             case "head" -> HEAD_SKINS;
             case "traitor" -> TRAITOR_SKINS;
             case "dumbo_octopus" -> DUMBO_OCTOPUS_SKINS;
+            case "sulfur_cube" -> Utils.getAllBlocks();
             case null, default -> EMPTY_LIST;
         };
 
@@ -829,7 +836,7 @@ public class Central {
      * @see ChatAccessor
      */
     public static void refreshChatSuggestor(Minecraft client) {
-        Screen screen = client.screen;
+        Screen screen = client.gui.screen();
         if ((screen instanceof ChatScreen chatScreen)) {
             CommandSuggestions suggestions = (CommandSuggestions) ChatAccessor.getChatInputSuggestor(chatScreen);
             suggestions.updateCommandInfo();
@@ -1575,6 +1582,8 @@ public class Central {
                                 case "pink" -> CONFIG.dumboOctopusSkin = "pink";
                                 case null, default -> isValid = false;
                             }
+                        } else if (Objects.equals(CONFIG.activePet, "sulfur_cube")) {
+                            CONFIG.sulfurCubeSkin = skin.replace("_", " ");
                         }
                     }
 
@@ -1790,6 +1799,9 @@ public class Central {
         CONFIG.stingrayName = Utils.checkNullString(CONFIG.stingrayName);
 
         CONFIG.headSkin = Utils.checkNullString(CONFIG.headSkin, "downloadableduck");
+
+        CONFIG.sulfurCubeName = Utils.checkNullString(CONFIG.sulfurCubeName);
+        CONFIG.sulfurCubeSkin = Utils.checkNullString(CONFIG.sulfurCubeSkin, "air");
     }
 
     /**
@@ -2014,6 +2026,8 @@ public class Central {
                     Utils.setActivePet(koi, "koi");
                 } else if (Objects.equals(species, "stingray")) {
                     Utils.setActivePet(stingray, "stingray");
+                } else if (Objects.equals(species, "sulfur cube") || Objects.equals(species, "sulfur_cube")) {
+                    Utils.setActivePet(sulfurCube, "sulfur_cube");
                 } else {
                     isValid = false;
                 }
@@ -2051,7 +2065,7 @@ public class Central {
         }
         refreshPetNames();
         if (PetsClientInitializer.keyMapping.consumeClick()) {
-            minecraft.setScreen(new PetsConfigScreen());
+            minecraft.gui.setScreen(new PetsConfigScreen());
         }
     }
     public void createPetHelpCommand(Object obj) {
@@ -2166,7 +2180,7 @@ public class Central {
                  "spider", "squid", "stingray",  "stray", "strider",  "tadpole", "toxifin slab",
                 "traitor", "turtle",
                  "vex", "villager", "vindicator", "wandering trader", "warden", "witch", "wither",
-                "wither skeleton", "wolf", "zombie", "zombie villager"};
+                "wither skeleton", "wolf", "zombie", "zombie villager", "sulfur cube"};
         PETS_LIST.addAll(List.of(stuffs));
     }
 
