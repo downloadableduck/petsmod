@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.donkey;
 
-import com.jeff.pets.mob.vanilla.passive.ClientDonkey;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientDonkey;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.animal.equine.DonkeyModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -13,8 +13,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.DonkeyRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
-
-import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientDonkeyRenderer extends PetRenderer<@NotNull ClientDonkey, @NotNull DonkeyRenderState, @NotNull DonkeyModel> {
     public static ModelLayerLocation DONKEY_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientdonkey"), "main");
@@ -33,7 +31,7 @@ public class ClientDonkeyRenderer extends PetRenderer<@NotNull ClientDonkey, @No
     }
 
     protected void scale(DonkeyRenderState state, @NotNull PoseStack poseStack) {
-        if (CONFIG.isBaby) {
+        if (state.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }

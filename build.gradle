@@ -35,6 +35,11 @@ dependencies {
     implementation 'me.shedaniel.cloth:basic-math:0.6.1'
     implementation("blue.endless:jankson:${rootProject.jankson_version}")
     implementation("com.moandjiezana.toml:toml4j:${rootProject.toml4j_version}")
+    implementation 'io.ably:ably-java:1.2.40'
+    implementation 'io.ably:ably-java:1.2.40'
+    implementation 'com.davidehrmann.vcdiff:vcdiff-core:0.1.1'
+    implementation 'org.java-websocket:Java-WebSocket:1.6.0'
+    implementation 'org.msgpack:msgpack-core:0.9.8'
 }
 
 minecraft {

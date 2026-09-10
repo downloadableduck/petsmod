@@ -1,9 +1,10 @@
 package com.jeff.pets.client.enums;
 
-
 import net.minecraft.network.chat.Component;
 
-public enum SlimeLikeSkins implements NameableEnum {
+import java.util.List;
+
+public enum SlimeLikeSkins implements NameableEnum, EnumImpl {
     small,
     medium,
     large;
@@ -11,5 +12,10 @@ public enum SlimeLikeSkins implements NameableEnum {
     @Override
     public Component getDisplayName() {
         return Component.literal(String.valueOf(this).replace("_", " "));
+    }
+
+    @Override
+    public List<Enum> getAllValues() {
+        return List.of(small, medium, large);
     }
 }

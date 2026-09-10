@@ -1,7 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.panda;
 
-import com.jeff.pets.mob.vanilla.neutral.ClientPanda;
+import com.jeff.pets.client.rendering.IPetRenderState;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.neutral.ClientPanda;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.animal.panda.PandaModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -10,8 +11,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.PandaRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
-
-import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientPandaRenderer extends PetRenderer<@NotNull ClientPanda, @NotNull PandaRenderState, @NotNull PandaModel> {
     public static final ModelLayerLocation PANDA_LOCAITON = new ModelLayerLocation(Identifier.withDefaultNamespace("clientpanda"), "main");
@@ -22,7 +21,7 @@ public class ClientPandaRenderer extends PetRenderer<@NotNull ClientPanda, @NotN
 
     @Override
     protected void scale(PandaRenderState state, @NotNull PoseStack poseStack) {
-        if (CONFIG.isBaby) {
+        if (state.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
@@ -30,7 +29,8 @@ public class ClientPandaRenderer extends PetRenderer<@NotNull ClientPanda, @NotN
     @Override
     public @NotNull Identifier getTextureLocation(PandaRenderState livingEntityRenderState) {
         String pandaTexturePath;
-        switch (CONFIG.pandaSkin) {
+        String skin = ((IPetRenderState) livingEntityRenderState).pets$getPetSkin();
+        switch (skin) {
             case "normal" -> pandaTexturePath = "textures/entity/panda/panda.png";
             case "lazy" -> pandaTexturePath = "textures/entity/panda/panda_lazy.png";
             case "agressive" -> pandaTexturePath = "textures/entity/panda/panda_aggressive.png";

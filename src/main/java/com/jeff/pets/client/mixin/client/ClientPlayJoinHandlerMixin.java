@@ -1,5 +1,6 @@
 package com.jeff.pets.client.mixin.client;
 
+import net.minecraft.client.multiplayer.ClientPacketListener;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
@@ -21,14 +22,26 @@ public class ClientPlayJoinHandlerMixin {
 
                 instructionsToInject.add(new MethodInsnNode(
                         Opcodes.INVOKESTATIC,
-                        "com/jeff/pets/client/Central",
-                        "createJoinHandler",
+                        "com/jeff/pets/client/network/PetsNetworked",
+                        "createConnectHandler",
                         "()V",
                         false
                 ));
 
                 method.instructions.insert(instructionsToInject);
-                break;
+            }
+            if ("handleDisconnect".equals(method.name)) {
+                InsnList instructionsToInject = new InsnList();
+
+                instructionsToInject.add(new MethodInsnNode(
+                        Opcodes.INVOKESTATIC,
+                        "com/jeff/pets/client/network/PetsNetworked",
+                        "createDisconnectHandler",
+                        "()V",
+                        false
+                ));
+
+                method.instructions.insert(instructionsToInject);
             }
         }
 

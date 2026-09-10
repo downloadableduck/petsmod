@@ -1,6 +1,7 @@
 package com.jeff.pets;
 
 import com.jeff.pets.client.Central;
+import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.client.PetsConfig;
 import com.jeff.pets.mob.aprilfools.*;
 import com.jeff.pets.mob.custom.aprilfools.Head;
@@ -17,6 +18,7 @@ import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -29,6 +31,7 @@ import net.minecraft.server.packs.repository.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1173,6 +1176,7 @@ public class PetsInitializer {
                     selected.add("pets-mod-resources");
                 }
                 repo.setSelected(selected);
+                Minecraft.getInstance().reloadResourcePacks();
             }
         } catch (Exception e) {
             e.printStackTrace();

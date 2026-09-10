@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.aprilfools.plaguewhale;
 
-import com.jeff.pets.mob.aprilfools.PlaguewhaleSlab;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.aprilfools.toxifin.ToxifinSlabModel;
+import com.jeff.pets.mob.aprilfools.PlaguewhaleSlab;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

@@ -1,9 +1,10 @@
 package com.jeff.pets.client.enums;
 
-
 import net.minecraft.network.chat.Component;
 
-public enum LlamaSkins implements NameableEnum {
+import java.util.List;
+
+public enum LlamaSkins implements NameableEnum, EnumImpl {
     brown,
     creamy,
     gray,
@@ -12,5 +13,10 @@ public enum LlamaSkins implements NameableEnum {
     @Override
     public Component getDisplayName() {
         return Component.literal(String.valueOf(this).replace("_", " "));
+    }
+
+    @Override
+    public List<Enum> getAllValues() {
+        return List.of(brown, creamy, gray, white);
     }
 }

@@ -5,8 +5,6 @@ import net.minecraft.client.model.monster.piglin.AdultPiglinModel;
 import net.minecraft.client.renderer.entity.state.PiglinRenderState;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.client.Central.CONFIG;
-
 public class ClientPiglinModel extends AdultPiglinModel {
 
     private final ModelPart head;
@@ -18,7 +16,7 @@ public class ClientPiglinModel extends AdultPiglinModel {
 
     public void setupAnim(@NotNull PiglinRenderState state) {
         super.setupAnim(state);
-        if (CONFIG.isBaby) {
+        if (state.isBaby) {
             head.xScale = 1.5f;
             head.yScale = 1.5f;
             head.zScale = 1.5f;

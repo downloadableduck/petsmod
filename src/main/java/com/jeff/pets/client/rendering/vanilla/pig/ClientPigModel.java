@@ -4,8 +4,6 @@ import net.minecraft.client.model.animal.pig.PigModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 
-import static com.jeff.pets.client.Central.CONFIG;
-
 public class ClientPigModel extends PigModel {
 
     private final ModelPart head;
@@ -17,7 +15,7 @@ public class ClientPigModel extends PigModel {
 
     public void setupAnim(LivingEntityRenderState state) {
         super.setupAnim(state);
-        if (CONFIG.isBaby) {
+        if (state.isBaby) {
             head.xScale = 1.5f;
             head.yScale = 1.5f;
             head.zScale = 1.5f;

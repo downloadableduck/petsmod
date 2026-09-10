@@ -10,8 +10,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.client.Central.CONFIG;
-
 public class DuckModel extends EntityModel<@NotNull DuckRenderState> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
             Identifier.fromNamespaceAndPath(PetsInitializer.MOD_ID, "duck"), "main"
@@ -81,7 +79,7 @@ public class DuckModel extends EntityModel<@NotNull DuckRenderState> {
             this.rightLeg.visible = true;
             this.leftLeg.visible = true;
         }
-        if ((CONFIG.isBaby && !state.isServerEntity) || (state.isBaby && !state.isServerEntity)) {
+        if ((state.isBaby && !state.isServerEntity) || (state.isBaby && state.isServerEntity)) {
             this.head.xScale = 1.5f;
             this.head.yScale = 1.5f;
             this.head.zScale = 1.5f;

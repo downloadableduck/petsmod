@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.skeleton;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientSkeleton;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientSkeleton;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

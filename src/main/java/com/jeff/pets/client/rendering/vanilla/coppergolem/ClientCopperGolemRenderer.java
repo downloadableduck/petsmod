@@ -1,7 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.coppergolem;
 
-import com.jeff.pets.mob.vanilla.passive.ClientCopperGolem;
+import com.jeff.pets.client.rendering.IPetRenderState;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientCopperGolem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.animal.golem.CopperGolemModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -17,8 +18,6 @@ import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
-
-import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientCopperGolemRenderer extends PetRenderer<@NotNull ClientCopperGolem, @NotNull CopperGolemRenderState, @NotNull CopperGolemModel> {
     public static ModelLayerLocation COPPER_GOLEM_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientcoppergolem"), "main");
@@ -41,13 +40,14 @@ public class ClientCopperGolemRenderer extends PetRenderer<@NotNull ClientCopper
 
     @Override
     public @NotNull Identifier getTextureLocation(CopperGolemRenderState copperGolemRenderState) {
-        if (Objects.equals(CONFIG.copperGolemSkin, "unoxidized")) {
+        String skin = ((IPetRenderState) copperGolemRenderState).pets$getPetSkin();
+        if (Objects.equals(skin, "unoxidized")) {
             copperGolemTexturePath = "textures/entity/copper_golem/copper_golem.png";
-        } else if (Objects.equals(CONFIG.copperGolemSkin, "exposed")) {
+        } else if (Objects.equals(skin, "exposed")) {
             copperGolemTexturePath = "textures/entity/copper_golem/copper_golem_exposed.png";
-        } else if (Objects.equals(CONFIG.copperGolemSkin, "oxidized")) {
+        } else if (Objects.equals(skin, "oxidized")) {
             copperGolemTexturePath = "textures/entity/copper_golem/copper_golem_oxidized.png";
-        } else if (Objects.equals(CONFIG.copperGolemSkin, "weathered")) {
+        } else if (Objects.equals(skin, "weathered")) {
             copperGolemTexturePath = "textures/entity/copper_golem/copper_golem_weathered.png";
         }
         return Identifier.withDefaultNamespace(copperGolemTexturePath);

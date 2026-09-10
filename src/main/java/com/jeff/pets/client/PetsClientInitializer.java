@@ -126,6 +126,8 @@ import com.jeff.pets.client.rendering.vanilla.zombie.ClientZombieRenderer;
 import com.jeff.pets.client.rendering.vanilla.zombievillager.ClientZombieVillagerModel;
 import com.jeff.pets.client.rendering.vanilla.zombievillager.ClientZombieVillagerRenderer;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.Options;
 import net.minecraft.client.model.ambient.BatModel;
 import net.minecraft.client.model.animal.allay.AllayModel;
 import net.minecraft.client.model.animal.armadillo.AdultArmadilloModel;
@@ -173,8 +175,12 @@ import net.minecraft.resources.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 import java.lang.instrument.Instrumentation;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import sun.misc.Unsafe;
 
 import static com.jeff.pets.PetsInitializer.LOGGER;
 
@@ -200,8 +206,6 @@ public class PetsClientInitializer {
      * Misc rendering stuff
      */
     public static void registerRenderers() {
-
-        createKeyBinding();
 
         ModelLayersAccessor.registerModelLayer(HeadModel.LAYER_LOCATION, HeadModel::getTexturedModelData);
         ModelLayersAccessor.registerModelLayer(RacoonRenderer.RACOON_LOCATION, RacoonModel::getTexturedModelData);
@@ -313,8 +317,24 @@ public class PetsClientInitializer {
      * Registers the key binding and an {@code END_CLIENT_TICK} event to check if the key
      * is pressed
      */
-    static void createKeyBinding() {
+    public static void createKeyBinding() {
         keyMapping = new KeyMapping("Open Pets Menu", GLFW.GLFW_KEY_P, new KeyMapping.Category(Identifier.fromNamespaceAndPath(PetsInitializer.MOD_ID, "petsmod.keymapping")));
+        try {
+            Field f = Unsafe.class.getDeclaredField("theUnsafe");
+            f.setAccessible(true);
+            Unsafe unsafe = (Unsafe) f.get(null);
+            Options instance = Minecraft.getInstance().options;
+            Field keyMappingsField = Options.class.getDeclaredField("keyMappings");
+            long offset = unsafe.objectFieldOffset(keyMappingsField);
+            KeyMapping[] currentMappings = (KeyMapping[]) unsafe.getObject(instance, offset);
+            KeyMapping[] newMappings = new KeyMapping[currentMappings.length + 1];
+
+            System.arraycopy(currentMappings, 0, newMappings, 0, currentMappings.length);
+            newMappings[currentMappings.length] = keyMapping;
+            unsafe.putObject(instance, offset, newMappings);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FunctionalInterface

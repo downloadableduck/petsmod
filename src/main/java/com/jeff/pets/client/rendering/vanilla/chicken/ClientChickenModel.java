@@ -5,8 +5,6 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.ChickenRenderState;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.client.Central.CONFIG;
-
 public class ClientChickenModel extends AdultChickenModel {
 
     private final ModelPart head;
@@ -19,7 +17,7 @@ public class ClientChickenModel extends AdultChickenModel {
     @Override
     public void setupAnim(@NotNull ChickenRenderState state) {
         super.setupAnim(state);
-        if (CONFIG.isBaby) {
+        if (state.isBaby) {
             head.zScale = 2;
             head.xScale = 2;
             head.yScale = 2;

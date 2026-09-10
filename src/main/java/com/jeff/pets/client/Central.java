@@ -9,6 +9,7 @@ package com.jeff.pets.client;
 import com.jeff.pets.Agent;
 import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.client.mixin.client.ChatAccessor;
+import com.jeff.pets.client.network.NetworkManager;
 import com.jeff.pets.mob.aprilfools.*;
 import com.jeff.pets.mob.custom.aprilfools.Head;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
@@ -61,6 +62,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import static com.jeff.pets.PetsInitializer.LOGGER;
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 
 /**
@@ -72,6 +74,7 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
  *
  * @see com.jeff.pets.Utils
  */
+@SuppressWarnings("unchecked")
 public class Central {
 
     public static final List<Entity> summonedEntity = new ArrayList();
@@ -666,6 +669,7 @@ public class Central {
                 Utils.summonPet(stingray, CONFIG.stingrayName);
             }
         }
+        NetworkManager.get().broadcastGeneral(minecraft.player.getStringUUID(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby);
     }
 
     /**
@@ -908,8 +912,10 @@ public class Central {
 
                     if (Objects.equals(skin, "baby")) {
                         CONFIG.isBaby = true;
+                        NetworkManager.get().broadcastToggleBaby(Minecraft.getInstance().player.getStringUUID(), CONFIG.isBaby);
                     } else if (Objects.equals(skin, "adult")) {
                         CONFIG.isBaby = false;
+                        NetworkManager.get().broadcastToggleBaby(Minecraft.getInstance().player.getStringUUID(), CONFIG.isBaby);
                     } else {
                         if (Objects.equals(CONFIG.activePet, "duck")) {
                             switch (skin) {
@@ -1575,6 +1581,7 @@ public class Central {
                     LocalPlayer player = Minecraft.getInstance().player;
                     if (isValid) {
                         player.sendSystemMessage(Component.literal("§b[PetsMod] §aYour pet's skin has been updated."));
+                        NetworkManager.get().broadcastChangePetSkin(Minecraft.getInstance().player.getUUID().toString(), skin);
                     } else {
                         player.sendSystemMessage(Component.literal("§b[PetsMod] §cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else."));
                     }
@@ -1793,6 +1800,8 @@ public class Central {
         dispatcher.register(LiteralArgumentBuilder.literal("teleportpet").executes((context) -> {
             Minecraft.getInstance().execute(() -> {
                 despawnPet();
+                Player player = Minecraft.getInstance().player;
+                NetworkManager.get().broadcastTeleportPet(player.getStringUUID(), player.getX(), player.getY(), player.getZ());
                 summonPet();
             });
             return 1;
@@ -2041,6 +2050,9 @@ public class Central {
             summonedEntity.clear();
         }
         refreshPetNames();
+        if (PetsClientInitializer.keyMapping.consumeClick()) {
+            minecraft.setScreen(new PetsConfigScreen());
+        }
     }
     public void createPetHelpCommand(Object obj) {
         CommandDispatcher dispatcher = (CommandDispatcher) obj;
@@ -2076,109 +2088,9 @@ public class Central {
             Minecraft.getInstance().execute(() -> {
                 String name = StringArgumentType.getString(context, "name");
             if (!summonedEntity.isEmpty()) {
-                switch (CONFIG.activePet) {
-                    case "penguin" -> CONFIG.penguinName = name;
-                    case "duck" -> CONFIG.duckName = name;
-                    case "racoon" -> CONFIG.racoonName = name;
-                    case "cat" -> CONFIG.catName = name;
-                    case "sheep" -> CONFIG.sheepName = name;
-                    case "allay" -> CONFIG.allayName = name;
-                    case "armadillo" -> CONFIG.armadilloName = name;
-                    case "bat" -> CONFIG.batName = name;
-                    case "camel" -> CONFIG.camelName = name;
-                    case "chicken" -> CONFIG.chickenSkin = name;
-                    case "cod" -> CONFIG.codName = name;
-                    case "copper_golem" -> CONFIG.copperGolemName = name;
-                    case "cow" -> CONFIG.cowName = name;
-                    case "donkey" -> CONFIG.donkeyName = name;
-                    case "frog" -> CONFIG.frogName = name;
-                    case "horse" -> CONFIG.horseName = name;
-                    case "mooshroom" -> CONFIG.mooshroomName = name;
-                    case "mule" -> CONFIG.muleName = name;
-                    case "parrot" -> CONFIG.parrotName = name;
-                    case "pig" -> CONFIG.pigName = name;
-                    case "rabbit" -> CONFIG.rabbitName = name;
-                    case "salmon" -> CONFIG.salmonName = name;
-                    case "sniffer" -> CONFIG.snifferName = name;
-                    case "snow_golem" -> CONFIG.snowGolemName = name;
-                    case "squid" -> CONFIG.squidName = name;
-                    case "strider" -> CONFIG.striderName = name;
-                    case "tadpole" -> CONFIG.tadpoleName = name;
-                    case "tropical_fish" -> CONFIG.tropicalFishName = name;
-                    case "turtle" -> CONFIG.turtleName = name;
-                    case "villager" -> CONFIG.villagerName = name;
-                    case "wandering_trader" -> CONFIG.wanderingTraderName = name;
-                    case "bee" -> CONFIG.beeName = name;
-                    case "cave_spider" -> CONFIG.caveSpiderName = name;
-                    case "dolphin" -> CONFIG.dolphinName = name;
-                    case "enderman" -> CONFIG.endermanName = name;
-                    case "fox" -> CONFIG.foxName = name;
-                    case "goat" -> CONFIG.goatName = name;
-                    case "iron_golem" -> CONFIG.ironGolemName = name;
-                    case "llama" -> CONFIG.llamaName = name;
-                    case "nautilus" -> CONFIG.nautilusName = name;
-                    case "panda" -> CONFIG.pandaName = name;
-                    case "piglin" -> CONFIG.piglinName = name;
-                    case "polar_bear" -> CONFIG.polarBearName = name;
-                    case "pufferfish" -> CONFIG.pufferFishName = name;
-                    case "spider" -> CONFIG.spiderName = name;
-                    case "wolf" -> CONFIG.wolfName = name;
-                    case "blaze" -> CONFIG.blazeName = name;
-                    case "breeze" -> CONFIG.breezeName = name;
-                    case "creaking" -> CONFIG.creakingName = name;
-                    case "creeper" -> CONFIG.creeperName = name;
-                    case "elder_guardian" -> CONFIG.elderGuardianName = name;
-                    case "endermite" -> CONFIG.endermiteName = name;
-                    case "evoker" -> CONFIG.evokerName = name;
-                    case "happy_ghast" -> CONFIG.happyGhastName = name;
-                    case "ghast" -> CONFIG.ghastName = name;
-                    case "guardian" -> CONFIG.guardianName = name;
-                    case "hoglin" -> CONFIG.hoglinName = name;
-                    case "magma_cube" -> CONFIG.magmaCubeName = name;
-                    case "phantom" -> CONFIG.phantomName = name;
-                    case "pillager" -> CONFIG.pillagerName = name;
-                    case "ravager" -> CONFIG.ravagerName = name;
-                    case "shulker" -> CONFIG.shulkerName = name;
-                    case "silverfish" -> CONFIG.silverfishName = name;
-                    case "skeleton" -> CONFIG.skeletonName = name;
-                    case "slime" -> CONFIG.slimeName = name;
-                    case "vex" -> CONFIG.vexName = name;
-                    case "vindicator" -> CONFIG.vindicatorName = name;
-                    case "warden" -> CONFIG.wardenName = name;
-                    case "witch" -> CONFIG.witchName = name;
-                    case "zombie" -> CONFIG.zombieName = name;
-                    case "zombie_villager" -> CONFIG.zombieVillagerName = name;
-                    case "husk" -> CONFIG.huskName = name;
-                    case "drowned" -> CONFIG.drownedName = name;
-                    case "bogged" -> CONFIG.boggedName = name;
-                    case "parched" -> CONFIG.parchedName = name;
-                    case "stray" -> CONFIG.strayName = name;
-                    case "wither_skeleton" -> CONFIG.witherSkeletonName = name;
-                    case "ender_dragon" -> CONFIG.enderDragonName = name;
-                    case "wither" -> CONFIG.witherName = name;
-                    case "angry_ghast" -> CONFIG.angryGhastName = name;
-                    case "batato" -> CONFIG.batatoName = name;
-                    case "diamond_chicken" -> CONFIG.diamondChickenName = name;
-                    case "love_golem" -> CONFIG.loveGolemName = name;
-                    case "mega_spud" -> CONFIG.megaSpudName = name;
-                    case "moon_cow" -> CONFIG.moonCowName = name;
-                    case "nerd_creeper" -> CONFIG.nerdCreeperName = name;
-                    case "pink_wither" -> CONFIG.pinkWitherName = name;
-                    case "plaguewhale_slab" -> CONFIG.plaguewhaleSlabName = name;
-                    case "poisonous_potato_zombie" -> CONFIG.poisonousPotatoZombieName = name;
-                    case "ray_tracing" -> CONFIG.rayTracingName = name;
-                    case "redstone_bug" -> CONFIG.redstoneBugName = name;
-                    case "smiling_creeper" -> CONFIG.smilingCreeperName = name;
-                    case "toxifin_slab" -> CONFIG.toxfinSlabName = name;
-                    case "potato_husk" -> CONFIG.potatoHuskName = name;
-                    case "head" -> CONFIG.headName = name;
-                    case "traitor" -> CONFIG.traitorName = name;
-                    case "dumbo_octopus" -> CONFIG.dumboOctopusName = name;
-                    case "koi" -> CONFIG.koiName = name;
-                    case "stingray" -> CONFIG.stingrayName = name;
-                }
-                AutoConfig.getConfigHolder(PetsConfig.class).save();
+                Utils.setActivePetName(name);
             }
+                AutoConfig.getConfigHolder(PetsConfig.class).save();
             });
             return 1;
         })));
@@ -2192,14 +2104,17 @@ public class Central {
         dispatcher.register(LiteralArgumentBuilder.literal("pet").then(RequiredArgumentBuilder.argument("preference", StringArgumentType.string()).suggests(SuggestionProviders.cast(ON_OFF)).executes((context) -> {
             String preference = StringArgumentType.getString(context, "preference");
             LocalPlayer player = Minecraft.getInstance().player;
+            String uuid = player.getStringUUID();
             if (Objects.equals(preference, "off")) {
                 CONFIG.petOn = false;
                 player.sendSystemMessage(Component.literal("§b[PetsMod] §7Pet §coff."));
                 AutoConfig.getConfigHolder(PetsConfig.class).save();
+                NetworkManager.get().broadcastTogglePet(uuid, Utils.getActivePetName(), CONFIG.petOn);
             } else if (Objects.equals(preference, "on")) {
                 CONFIG.petOn = true;
                 AutoConfig.getConfigHolder(PetsConfig.class).save();
                 player.sendSystemMessage(Component.literal("§b[PetsMod] §7Pet §aon."));
+                NetworkManager.get().broadcastTogglePet(uuid, Utils.getActivePetName(), CONFIG.petOn);
             } else {
                 player.sendSystemMessage(Component.literal("§b[PetsMod] §c§lUnknown value " + preference + "! Possible values: §r§aon, §6off"));
             }
@@ -2212,6 +2127,7 @@ public class Central {
      * Clears the summon entities when the player joins a world so they are re-summoned
      */
     public static void createJoinHandler() {
+
         //ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
             List var10001 = summonedEntity;
             Objects.requireNonNull(var10001);
@@ -2261,6 +2177,7 @@ public class Central {
         } else if (isValid && CONFIG.petOn) {
             despawnPet();
             player.sendSystemMessage(Component.literal("§b[PetsMod] §aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + "."));
+            NetworkManager.get().broadcastGeneral(Minecraft.getInstance().player.getStringUUID(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby);
             summonPet();
         } else if (isValid && !CONFIG.petOn) {
             player.sendSystemMessage(Component.literal("§b[PetsMod] §cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet enabled. Run §l/pet on§r§c to change this."));

@@ -11,6 +11,9 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.KnownPack;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.Opcodes;
 
 import java.io.File;
 import java.lang.instrument.ClassFileTransformer;
@@ -24,8 +27,6 @@ import java.util.Optional;
 public class Agent {
 
     public static void premain(String agentArgs, Instrumentation inst) {
-        // Safe worker polling via reflection so premain doesn't crash on startup
-        Agent.checkforNullObjects();
 
         inst.addTransformer(new ClassFileTransformer() {
             @Override
@@ -40,7 +41,9 @@ public class Agent {
                     return WitherRenderStateAccessor.transform(classfileBuffer);
                 }
                 if ("net/minecraft/client/Minecraft".equals(className)) {
-                    return ClientTickMixin.transform(classfileBuffer);
+                    byte[] byt =  ClientTickMixin.transform(classfileBuffer);
+                    checkforNullObjects();
+                    return byt;
                 }
                 if ("net/minecraft/commands/Commands".equals(className)) {
                     return CommandManagerMixin.transform(classfileBuffer);
@@ -59,6 +62,18 @@ public class Agent {
                 }
                 if ("net/minecraft/client/renderer/entity/EntityRenderDispatcher".equals(className)) {
                     return EntityRenderDispatcherTransformer.transform(classfileBuffer);
+                } if ("net/minecraft/client/gui/components/EditBox".equals(className)) {
+                    ClassReader reader = new ClassReader(classfileBuffer);
+                    ClassWriter writer = new ClassWriter(reader, ClassWriter.COMPUTE_FRAMES);
+                    ButtonClassVisitor transformer = new ButtonClassVisitor(Opcodes.ASM9, writer);
+                    reader.accept(transformer, 0);
+                    return writer.toByteArray();
+                } if ("net/minecraft/client/renderer/entity/state/EntityRenderState".equals(className)) {
+                    ClassReader reader = new ClassReader(classfileBuffer);
+                    ClassWriter writer = new ClassWriter(reader, ClassWriter.COMPUTE_FRAMES);
+                    EntityRenderStateClassVisitor visitor = new EntityRenderStateClassVisitor(Opcodes.ASM9, writer);
+                    reader.accept(visitor, 0);
+                    return writer.toByteArray();
                 }
                 return ClassFileTransformer.super.transform(loader, className, classBeingRedefined, protectionDomain, classfileBuffer);
             }
@@ -72,7 +87,6 @@ public class Agent {
                 }
             }
         } catch (Throwable t) {
-            // Silently ignore if classes aren't loaded yet
         }
     }
 

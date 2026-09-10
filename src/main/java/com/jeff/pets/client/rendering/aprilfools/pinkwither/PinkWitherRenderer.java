@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.aprilfools.pinkwither;
 
 import com.jeff.pets.client.mixin.client.WitherRenderStateAccessor;
-import com.jeff.pets.mob.aprilfools.PinkWither;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.aprilfools.PinkWither;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.monster.wither.WitherBossModel;
