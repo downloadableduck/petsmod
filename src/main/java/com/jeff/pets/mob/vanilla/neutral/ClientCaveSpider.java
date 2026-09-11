@@ -3,14 +3,14 @@ package com.jeff.pets.mob.vanilla.neutral;
 import com.jeff.pets.mob.GroundPet;
 import net.minecraft.sound.Sound;
 import net.minecraft.sound.Sounds;
-import net.minecraft.entity.EntityType;
+
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientCaveSpider extends GroundPet {
-    public ClientCaveSpider(EntityType<? extends @NotNull TameableEntity> entityType, World level) {
-        super(entityType, level);
+    public ClientCaveSpider(World level) {
+        super(level);
         this.setBounds(0.7F, 0.5F);
     }
 

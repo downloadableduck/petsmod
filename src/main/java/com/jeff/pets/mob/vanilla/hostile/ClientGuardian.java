@@ -4,15 +4,15 @@ import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.GroundPet;
 import net.minecraft.sound.Sound;
 import net.minecraft.sound.Sounds;
-import net.minecraft.entity.EntityType;
+
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 @CanFly
 public class ClientGuardian extends GroundPet {
-    public ClientGuardian(EntityType<? extends @NotNull TameableEntity> entityType, World level) {
-        super(entityType, level);
+    public ClientGuardian(World level) {
+        super(level);
         this.setBounds(0.85F, 0.85F);
     }
 

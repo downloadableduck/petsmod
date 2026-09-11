@@ -1,78 +1,70 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.class_4122;
 import net.minecraft.client.resource.language.I18n;
-import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-@Environment(EnvType.CLIENT)
 public class FloatListListEntry extends AbstractTextFieldListListEntry<Float, FloatListListEntry.FloatListCell, FloatListListEntry> {
-    
+
     private float minimum, maximum;
-    
-    @ApiStatus.Internal
+
+
     @Deprecated
     public FloatListListEntry(String fieldName, List<Float> value, boolean defaultExpanded, Supplier<Optional<String[]>> tooltipSupplier, Consumer<List<Float>> saveConsumer, Supplier<List<Float>> defaultValue, String resetButtonKey) {
         this(fieldName, value, defaultExpanded, tooltipSupplier, saveConsumer, defaultValue, resetButtonKey, false);
     }
-    
-    @ApiStatus.Internal
+
+
     @Deprecated
     public FloatListListEntry(String fieldName, List<Float> value, boolean defaultExpanded, Supplier<Optional<String[]>> tooltipSupplier, Consumer<List<Float>> saveConsumer, Supplier<List<Float>> defaultValue, String resetButtonKey, boolean requiresRestart) {
         this(fieldName, value, defaultExpanded, tooltipSupplier, saveConsumer, defaultValue, resetButtonKey, requiresRestart, true, true);
     }
-    
-    @ApiStatus.Internal
+
+
     @Deprecated
     public FloatListListEntry(String fieldName, List<Float> value, boolean defaultExpanded, Supplier<Optional<String[]>> tooltipSupplier, Consumer<List<Float>> saveConsumer, Supplier<List<Float>> defaultValue, String resetButtonKey, boolean requiresRestart, boolean deleteButtonEnabled, boolean insertInFront) {
         super(fieldName, value, defaultExpanded, tooltipSupplier, saveConsumer, defaultValue, resetButtonKey, requiresRestart, deleteButtonEnabled, insertInFront, FloatListCell::new);
         this.minimum = Float.NEGATIVE_INFINITY;
         this.maximum = Float.POSITIVE_INFINITY;
     }
-    
+
     public FloatListListEntry setMaximum(float maximum) {
         this.maximum = maximum;
         return this;
     }
-    
+
     public FloatListListEntry setMinimum(float minimum) {
         this.minimum = minimum;
         return this;
     }
-    
+
     @Override
     public FloatListListEntry self() {
         return this;
     }
 
-    public static class FloatListCell extends AbstractTextFieldListCell<Float, FloatListCell, FloatListListEntry> {
-        
+    public static class FloatListCell extends AbstractTextFieldListListEntry.AbstractTextFieldListCell<Float, FloatListCell, FloatListListEntry> {
+
         public FloatListCell(Float value, FloatListListEntry listListEntry) {
             super(value, listListEntry);
         }
-        
-        @Nullable
+
         @Override
-        protected Float substituteDefault(@Nullable Float value) {
+        protected Float substituteDefault(Float value) {
             if (value == null)
                 return 0f;
             else
                 return value;
         }
-        
+
         @Override
-        protected boolean isValidText(@NotNull String text) {
+        protected boolean isValidText(String text) {
             return text.chars().allMatch(c -> Character.isDigit(c) || c == '-' || c == '.');
         }
-        
+
         public Float getValue() {
             try {
                 return Float.valueOf(widget.getText());
@@ -80,7 +72,7 @@ public class FloatListListEntry extends AbstractTextFieldListListEntry<Float, Fl
                 return 0f;
             }
         }
-        
+
         @Override
         public Optional<String> getError() {
             try {

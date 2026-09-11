@@ -3,9 +3,9 @@ package me.shedaniel.clothconfig2.impl;
 import java.util.function.Function;
 
 public interface EasingMethod {
-    
+
     double apply(double v);
-    
+
     enum EasingMethodImpl implements EasingMethod {
         NONE(v -> 1.0),
         LINEAR(v -> v),
@@ -16,18 +16,18 @@ public interface EasingMethod {
         CUBIC(v -> ((v = v - 1) * v * v + 1)),
         QUINTIC(v -> ((v = v - 1) * v * v * v * v + 1)),
         CIRC(v -> Math.sqrt(1 - (v = v - 1) * v));
-        
+
         private final Function<Double, Double> function;
-        
+
         EasingMethodImpl(Function<Double, Double> function) {
             this.function = function;
         }
-        
+
         @Override
         public double apply(double v) {
             return function.apply(v);
         }
-        
+
         @Override
         public String toString() {
             return name();

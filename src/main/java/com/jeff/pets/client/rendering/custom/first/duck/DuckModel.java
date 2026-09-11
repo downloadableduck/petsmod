@@ -30,44 +30,44 @@ public class DuckModel extends PetModel {
         head = new ModelPart(this);
         head.setPivot(0.0F, 0.0F, 0.0F);
         root.add(head);
-        head.setTextureOffset(0, 0).method_18947(-1.5F, -5.0F, -1.5F, (int) 3.0F, (int) 6.0F, (int) 3.0F, 0.0F, false);
+        head.setTextureOffset(0, 0).addCuboid(-1.5F, -5.0F, -1.5F, (int) 3.0F, (int) 6.0F, (int) 3.0F, 0.0F);
 
         bill_r1 = new ModelPart(this);
         bill_r1.setPivot(1.0F, -15.9F, -9.1F);
         head.add(bill_r1);
         setRotationAngle(bill_r1, 3.1176F, 0.0244F, -0.0049F);
-        bill_r1.setTextureOffset(14, 0).method_18947(-2.2F, -13.0F, -8.0F, (int) 2.0F, (int) 1.0F, (int) 2.0F, 0.0F, false);
+        bill_r1.setTextureOffset(14, 0).addCuboid(-2.2F, -13.0F, -8.0F, (int) 2.0F, (int) 1.0F, (int) 2.0F, 0.0F);
 
         body = new ModelPart(this);
         body.setPivot(0.0F, 1.0F, 4.0F);
         root.add(body);
         setRotationAngle(body, 1.5708F, 0.0F, 0.0F);
-        body.setTextureOffset(1, 10).method_18947(-2.5F, -4.0F, -4.0F, (int) 5.0F, (int) 8.0F, (int) 5.0F, 0.0F, false);
+        body.setTextureOffset(1, 10).addCuboid(-2.5F, -4.0F, -4.0F, (int) 5.0F, (int) 8.0F, (int) 5.0F, 0.0F);
 
         left_wing = new ModelPart(this);
         left_wing.setPivot(3.0F, 0.0F, 4.0F);
         root.add(left_wing);
-        left_wing.setTextureOffset(24, 13).method_18947(-0.5F, 0.0F, -3.0F, (int) 1.0F, (int) 3.0F, (int) 6.0F, 0.0F, false);
+        left_wing.setTextureOffset(24, 13).addCuboid(-0.5F, 0.0F, -3.0F, (int) 1.0F, (int) 3.0F, (int) 6.0F, 0.0F);
 
         right_wing = new ModelPart(this);
         right_wing.setPivot(-3.0F, 0.0F, 4.0F);
         root.add(right_wing);
-        right_wing.setTextureOffset(24, 13).method_18947(-0.5F, 0.0F, -3.0F, (int) 1.0F, (int) 3.0F, (int) 6.0F, 0.0F, false);
+        right_wing.setTextureOffset(24, 13).addCuboid(-0.5F, 0.0F, -3.0F, (int) 1.0F, (int) 3.0F, (int) 6.0F, 0.0F);
 
         left_leg = new ModelPart(this);
         left_leg.setPivot(1.0F, 4.0F, 5.0F);
         root.add(left_leg);
-        left_leg.setTextureOffset(26, 0).method_18947(-1.0F, 0.0F, -3.0F, (int) 3.0F, (int) 5.0F, (int) 3.0F, 0.0F, false);
+        left_leg.setTextureOffset(26, 0).addCuboid(-1.0F, 0.0F, -3.0F, (int) 3.0F, (int) 5.0F, (int) 3.0F, 0.0F);
 
         right_leg = new ModelPart(this);
         right_leg.setPivot(-2.0F, 4.0F, 5.0F);
         root.add(right_leg);
-        right_leg.setTextureOffset(26, 0).method_18947(-1.0F, 0.0F, -3.0F, (int) 3.0F, (int) 5.0F, (int) 3.0F, 0.0F, false);
+        right_leg.setTextureOffset(26, 0).addCuboid(-1.0F, 0.0F, -3.0F, (int) 3.0F, (int) 5.0F, (int) 3.0F, 0.0F);
 
         tail = new ModelPart(this);
         tail.setPivot(0.0F, 4.0F, 9.0F);
         root.add(tail);
-        tail.setTextureOffset(0, 23).method_18947(-1.0F, -2.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F, false);
+        tail.setTextureOffset(0, 23).addCuboid(-1.0F, -2.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
     }
 
     @Override

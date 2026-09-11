@@ -687,7 +687,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
         }
         return builder.startEnumSelector(("Pet Skin"), enumClass, initialValue)
                 .setSaveConsumer((value) -> {
-                    String val = value.getDisplayName().getString().replace(" ", "_");
+                    String val = value.getDisplayName().toString().replace(" ", "_");
                     switch (CONFIG.activePet) {
                         case "duck":
                             enumClass = (Class<T>) DuckSkins.class;

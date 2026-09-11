@@ -1,63 +1,70 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.platform.GlStateManager;
-import me.shedaniel.clothconfig2.api.AbstractConfigEntry;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
-import me.shedaniel.clothconfig2.gui.ClothConfigScreen;
-import net.minecraft.class_4122;
+import me.shedaniel.math.Rectangle;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.sound.PositionedSoundInstance;
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.render.DiffuseLighting;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.sound.PositionedSoundInstance;
-import net.minecraft.util.Identifier;
 import net.minecraft.sound.Sounds;
+import net.minecraft.util.Identifier;
 
-import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-public class SubCategoryListEntry extends TooltipListEntry {
-    
+public class SubCategoryListEntry extends TooltipListEntry<List<AbstractConfigListEntry>> {
+
     private static final Identifier CONFIG_TEX = new Identifier("cloth-config2", "textures/gui/cloth_config.png");
-    private String categoryName;
-    private List<AbstractConfigListEntry> entries;
-    private CategoryLabelWidget widget;
-    private List<class_4122> children;
-    private boolean expended;
-    
-    public SubCategoryListEntry(String categoryName, List<AbstractConfigListEntry> entries, boolean defaultExpended, boolean requiresRestart) {
-        super(categoryName, null, requiresRestart);
+    private final String categoryName;
+    private final List<AbstractConfigListEntry> entries;
+    private final CategoryLabelWidget widget;
+    private final List<Object> children;
+    private boolean expanded;
+
+    @Deprecated
+    public SubCategoryListEntry(String categoryName, List<AbstractConfigListEntry> entries, boolean defaultExpanded) {
+        super(categoryName, null);
         this.categoryName = categoryName;
         this.entries = entries;
-        this.expended = defaultExpended;
+        this.expanded = defaultExpanded;
         this.widget = new CategoryLabelWidget();
         this.children = Lists.newArrayList(widget);
         this.children.addAll(entries);
     }
-    
+
+    @Override
+    public boolean isRequiresRestart() {
+        for (AbstractConfigListEntry entry : entries)
+            if (entry.isRequiresRestart())
+                return true;
+        return false;
+    }
+
+    @Override
+    public void setRequiresRestart(boolean requiresRestart) {
+
+    }
+
     public String getCategoryName() {
         return categoryName;
     }
-    
-    public List<AbstractConfigListEntry> getEntries() {
+
+    @Override
+    public List<AbstractConfigListEntry> getValue() {
         return entries;
     }
-    
+
     @Override
-    public Object getValue() {
-        return entries;
-    }
-    
-    @Override
-    public Optional<Object> getDefaultValue() {
+    public Optional<List<AbstractConfigListEntry>> getDefaultValue() {
         return Optional.empty();
     }
-    
+
     @Override
-    public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
-        super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
+    public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isHovered, float delta) {
+        super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isHovered, delta);
         widget.rectangle.x = x - 19;
         widget.rectangle.y = y;
         widget.rectangle.width = entryWidth + 19;
@@ -65,21 +72,53 @@ public class SubCategoryListEntry extends TooltipListEntry {
         MinecraftClient.getInstance().getTextureManager().bindTexture(CONFIG_TEX);
         DiffuseLighting.disable();
         GlStateManager.color(1, 1, 1, 1);
-        this.drawTexture(x - 15, y + 4, 24, expended ? 9 : 0, 9, 9); //blit?
-        MinecraftClient.getInstance().textRenderer.drawWithShadow(I18n.translate(categoryName), x, y + 5, -1);
-        for(AbstractConfigListEntry entry : entries) {
+        drawTexture(x - 15, y + 4, 24, (widget.rectangle.contains(mouseX, mouseY) ? 18 : 0) + (expanded ? 9 : 0), 9, 9);
+        MinecraftClient.getInstance().textRenderer.drawWithShadow(I18n.translate(categoryName), x, y + 5, widget.rectangle.contains(mouseX, mouseY) ? 0xffe6fe16 : -1);
+        for (AbstractConfigListEntry<?> entry : entries) {
             entry.setParent(getParent());
             entry.setScreen(getScreen());
         }
-        if (expended) {
+        if (expanded) {
             int yy = y + 24;
-            for(AbstractConfigListEntry entry : entries) {
-                entry.render(-1, yy, x + 14, entryWidth - 14, entry.getItemHeight(), mouseX, mouseY, isSelected, delta);
+            for (AbstractConfigListEntry<?> entry : entries) {
+                entry.render(-1, yy, x + 14, entryWidth - 14, entry.getItemHeight(), mouseX, mouseY, isHovered, delta);
                 yy += entry.getItemHeight();
             }
         }
     }
-    
+
+    @Override
+    public void updateSelected(boolean isSelected) {
+        for (AbstractConfigListEntry<?> entry : entries) {
+            entry.updateSelected(expanded && isSelected);
+        }
+    }
+
+    @Override
+    public void lateRender(int mouseX, int mouseY, float delta) {
+        if (expanded) {
+            for (AbstractConfigListEntry<?> entry : entries) {
+                entry.lateRender(mouseX, mouseY, delta);
+            }
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public int getMorePossibleHeight() {
+        if (!expanded) return -1;
+        List<Integer> list = new ArrayList<>();
+        int i = 24;
+        for (AbstractConfigListEntry<?> entry : entries) {
+            i += entry.getItemHeight();
+            if (entry.getMorePossibleHeight() >= 0) {
+                list.add(i + entry.getMorePossibleHeight());
+            }
+        }
+        list.add(i);
+        return list.stream().max(Integer::compare).orElse(0) - getItemHeight();
+    }
+
     @Override
     public boolean isMouseInside(int mouseX, int mouseY, int x, int y, int entryWidth, int entryHeight) {
         widget.rectangle.x = x - 15;
@@ -88,32 +127,27 @@ public class SubCategoryListEntry extends TooltipListEntry {
         widget.rectangle.height = 24;
         return widget.rectangle.contains(mouseX, mouseY) && getParent().isMouseOver(mouseX, mouseY);
     }
-    
+
     @Override
     public int getItemHeight() {
-        if (expended) {
+        if (expanded) {
             int i = 24;
-            for(AbstractConfigListEntry entry : entries)
+            for (AbstractConfigListEntry<?> entry : entries)
                 i += entry.getItemHeight();
             return i;
         }
         return 24;
     }
-    
-    @Override
-    public List<? extends class_4122> children() {
-        return children;
-    }
-    
+
     @Override
     public void save() {
         entries.forEach(AbstractConfigListEntry::save);
     }
-    
+
     @Override
     public Optional<String> getError() {
         String error = null;
-        for(AbstractConfigListEntry entry : entries)
+        for (AbstractConfigListEntry<?> entry : entries)
             if (entry.getError().isPresent()) {
                 if (error != null)
                     return Optional.ofNullable(I18n.translate("text.cloth-config.multi_error"));
@@ -121,59 +155,18 @@ public class SubCategoryListEntry extends TooltipListEntry {
             }
         return Optional.ofNullable(error);
     }
-    
-    public class CategoryLabelWidget implements class_4122 {
-        private Rectangle rectangle = new Rectangle();
-        
-        @Override
-        public boolean mouseReleased(double double_1, double double_2, int int_1) {
-            return false;
-        }
-        
-        @Override
-        public boolean mouseDragged(double double_1, double double_2, int int_1, double double_3, double double_4) {
-            return false;
-        }
-        
-        @Override
-        public boolean mouseScrolled(double double_1) {
-            return false;
-        }
-        
-        @Override
-        public boolean keyPressed(int int_1, int int_2, int int_3) {
-            return false;
-        }
-        
-        @Override
-        public boolean keyReleased(int int_1, int int_2, int int_3) {
-            return false;
-        }
-        
-        @Override
-        public boolean charTyped(char char_1, int int_1) {
-            return false;
-        }
-        
-        /*@Override
-        public boolean method_18428(boolean boolean_1) {
-            return false;
-        }*/
-        
-        @Override
-        public boolean method_18427() {
-            return false;
-        }
-        
-        @Override
+
+    public class CategoryLabelWidget {
+        private final Rectangle rectangle = new Rectangle();
+
         public boolean mouseClicked(double double_1, double double_2, int int_1) {
             if (rectangle.contains(double_1, double_2)) {
-                expended = !expended;
+                expanded = !expanded;
                 MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.method_12521(Sounds.UI_BUTTON_CLICK, 1.0F));
                 return true;
             }
             return false;
         }
     }
-    
+
 }

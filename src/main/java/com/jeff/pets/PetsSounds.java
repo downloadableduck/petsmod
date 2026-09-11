@@ -1,6 +1,5 @@
 package com.jeff.pets;
 
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.sound.Sound;
 
@@ -15,14 +14,14 @@ public class PetsSounds {
     private static Sound registerSound() {
         Identifier identifier = new Identifier(PetsInitializer.MOD_ID, "duck_ambient");
         Sound sound = new Sound(identifier);
-        Registry.SOUND_EVENT.add(identifier, sound);
+        Sound.REGISTRY.put(identifier, sound);
         return sound;
     }
 
     private static Sound registerPenguinSound() {
         Identifier identifier = new Identifier(PetsInitializer.MOD_ID, "penguin_ambient");
         Sound sound = new Sound(identifier);
-        Registry.SOUND_EVENT.add(identifier, sound);
+        Sound.REGISTRY.put(identifier, sound);
         return sound;
     }
 

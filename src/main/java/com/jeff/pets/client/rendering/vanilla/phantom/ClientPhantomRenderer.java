@@ -10,7 +10,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientPhantomRenderer extends PetRenderer<@NotNull ClientPhantom> {
 
     public ClientPhantomRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new net.minecraft.class_4190(), 0.75f);
+        super(context, new net.minecraft.client.render.entity.model.GhastEntityModel(), 0.75f);
     }
 
     @Override

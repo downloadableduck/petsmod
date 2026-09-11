@@ -1,50 +1,44 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.platform.GlStateManager;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.math.Rectangle;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.class_4122;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.sound.PositionedSoundInstance;
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.render.DiffuseLighting;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.sound.Sounds;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Environment(EnvType.CLIENT)
 public class MultiElementListEntry<T> extends TooltipListEntry<T> {
-    
+
     private static final Identifier CONFIG_TEX = new Identifier("cloth-config2", "textures/gui/cloth_config.png");
     private final T object;
-    private String categoryName;
-    private List<AbstractConfigListEntry<?>> entries;
-    private CategoryLabelWidget widget;
-    private List<class_4122> children;
+    private final String categoryName;
+    private final List<AbstractConfigListEntry<?>> entries;
+    private final MultiElementListEntry<T>.CategoryLabelWidget widget;
+    private final List<Object> children;
     private boolean expanded;
-    
-    @ApiStatus.Internal
+
+
     @Deprecated
-    public MultiElementListEntry(String categoryName, T object, List<AbstractConfigListEntry<?>> entries, boolean defaultExpanded, boolean requiresRestart) {
-        super(categoryName, null, requiresRestart);
+    public MultiElementListEntry(String categoryName, T object, List<AbstractConfigListEntry<?>> entries, boolean defaultExpanded) {
+        super(categoryName, null);
         this.categoryName = categoryName;
         this.object = object;
         this.entries = entries;
         this.expanded = defaultExpanded;
-        this.widget = new CategoryLabelWidget();
+        this.widget = new MultiElementListEntry<T>.CategoryLabelWidget();
         this.children = Lists.newArrayList(widget);
         this.children.addAll(entries);
     }
-    
+
     @Override
     public boolean isRequiresRestart() {
         for (AbstractConfigListEntry<?> entry : entries)
@@ -52,26 +46,26 @@ public class MultiElementListEntry<T> extends TooltipListEntry<T> {
                 return true;
         return false;
     }
-    
+
     @Override
     public void setRequiresRestart(boolean requiresRestart) {
-    
+
     }
-    
+
     public String getCategoryName() {
         return categoryName;
     }
-    
+
     @Override
     public T getValue() {
         return object;
     }
-    
+
     @Override
     public Optional<T> getDefaultValue() {
         return Optional.empty();
     }
-    
+
     @Override
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
@@ -82,7 +76,7 @@ public class MultiElementListEntry<T> extends TooltipListEntry<T> {
         MinecraftClient.getInstance().getTextureManager().bindTexture(CONFIG_TEX);
         DiffuseLighting.disable();
         GlStateManager.color(1, 1, 1, 1);
-        this.drawTexture(x - 15, y + 4, 24, (widget.rectangle.contains(mouseX, mouseY) ? 18 : 0) + (expanded ? 9 : 0), 9, 9);
+        drawTexture(x - 15, y + 4, 24, (widget.rectangle.contains(mouseX, mouseY) ? 18 : 0) + (expanded ? 9 : 0), 9, 9);
         MinecraftClient.getInstance().textRenderer.drawWithShadow(I18n.translate(categoryName), x, y + 5, widget.rectangle.contains(mouseX, mouseY) ? 0xffe6fe16 : -1);
         for (AbstractConfigListEntry<?> entry : entries) {
             entry.setParent(getParent());
@@ -97,7 +91,7 @@ public class MultiElementListEntry<T> extends TooltipListEntry<T> {
             }
         }
     }
-    
+
     @Override
     public boolean isMouseInside(int mouseX, int mouseY, int x, int y, int entryWidth, int entryHeight) {
         widget.rectangle.x = x - 15;
@@ -106,7 +100,7 @@ public class MultiElementListEntry<T> extends TooltipListEntry<T> {
         widget.rectangle.height = 24;
         return widget.rectangle.contains(mouseX, mouseY) && getParent().isMouseOver(mouseX, mouseY);
     }
-    
+
     @Override
     public int getItemHeight() {
         if (expanded) {
@@ -117,14 +111,14 @@ public class MultiElementListEntry<T> extends TooltipListEntry<T> {
         }
         return 24;
     }
-    
+
     @Override
     public void updateSelected(boolean isSelected) {
         for (AbstractConfigListEntry<?> entry : entries) {
-            entry.updateSelected(expanded && isSelected && getFocused() == entry);
+            entry.updateSelected(expanded && isSelected);
         }
     }
-    
+
     @Override
     public void lateRender(int mouseX, int mouseY, float delta) {
         if (expanded) {
@@ -133,7 +127,7 @@ public class MultiElementListEntry<T> extends TooltipListEntry<T> {
             }
         }
     }
-    
+
     @SuppressWarnings("deprecation")
     @Override
     public int getMorePossibleHeight() {
@@ -149,71 +143,25 @@ public class MultiElementListEntry<T> extends TooltipListEntry<T> {
         list.add(i);
         return list.stream().max(Integer::compare).orElse(0) - getItemHeight();
     }
-    
-    @Override
-    public List<? extends class_4122> children() {
-        return expanded ? children : (List<? extends class_4122>) Collections.singletonList(widget);
-    }
-    
+
     @Override
     public void save() {
         entries.forEach(AbstractConfigListEntry::save);
     }
-    
+
     @Override
     public Optional<String> getError() {
         List<String> errors = entries.stream().map(AbstractConfigListEntry::getConfigError).filter(Optional::isPresent).map(Optional::get).collect(Collectors.toList());
-        
+
         if (errors.size() > 1)
             return Optional.of(I18n.translate("text.cloth-config.multi_error"));
         else
             return errors.stream().findFirst();
     }
-    
-    public class CategoryLabelWidget implements class_4122 {
-        private Rectangle rectangle = new Rectangle();
-        
-        @Override
-        public boolean mouseReleased(double double_1, double double_2, int int_1) {
-            return false;
-        }
-        
-        @Override
-        public boolean mouseDragged(double double_1, double double_2, int int_1, double double_3, double double_4) {
-            return false;
-        }
-        
-        @Override
-        public boolean mouseScrolled(double double_1) {
-            return false;
-        }
-        
-        @Override
-        public boolean keyPressed(int int_1, int int_2, int int_3) {
-            return false;
-        }
-        
-        @Override
-        public boolean keyReleased(int int_1, int int_2, int int_3) {
-            return false;
-        }
-        
-        @Override
-        public boolean charTyped(char char_1, int int_1) {
-            return false;
-        }
-        
-        /*@Override
-        public boolean method_18428(boolean boolean_1) {
-            return false;
-        }*/
-        
-        @Override
-        public boolean method_18427() {
-            return false;
-        }
-        
-        @Override
+
+    public class CategoryLabelWidget {
+        private final Rectangle rectangle = new Rectangle();
+
         public boolean mouseClicked(double double_1, double double_2, int int_1) {
             if (rectangle.contains(double_1, double_2)) {
                 expanded = !expanded;
@@ -223,5 +171,5 @@ public class MultiElementListEntry<T> extends TooltipListEntry<T> {
             return false;
         }
     }
-    
+
 }

@@ -2,6 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.drowned;
 
 import com.jeff.pets.client.rendering.AnimationUtils;
 import net.minecraft.client.render.entity.model.BiPedModel;
+import net.minecraft.client.render.entity.model.BiPedModel.class_2850;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -9,6 +10,8 @@ import net.minecraft.entity.LivingEntity;
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientDrownedModel extends BiPedModel {
+
+    private float field_20533;
 
     public ClientDrownedModel(float f, float g, int i, int j) {
         super(f, g, i, j);
@@ -26,6 +29,10 @@ public class ClientDrownedModel extends BiPedModel {
         AnimationUtils.animateZombieArms(this.leftArm, this.rightArm, true, this.field_20533, h);
     }
 
+    private float method_18915(float f, float g, float h) {
+        return g + net.minecraft.util.math.MathHelper.wrapDegrees(h - g) * f;
+    }
+
     @Override
     public void animateModel(LivingEntity zombie, float f, float g, float h) {
         this.field_13385 = class_2850.EMPTY;
@@ -33,7 +40,7 @@ public class ClientDrownedModel extends BiPedModel {
 
         super.animateModel(zombie, f, g, h);
 
-        if (this.field_13385 == class_2850.THROW_SPEAR) {
+        if (this.field_13385 == class_2850.BOW_AND_ARROW) {
             this.rightArm.posX = this.rightArm.posX * 0.5F - (float) Math.PI;
             this.rightArm.posY = 0.0F;
         }

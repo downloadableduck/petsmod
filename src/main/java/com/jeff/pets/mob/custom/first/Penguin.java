@@ -5,7 +5,7 @@ import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.sound.SoundCategory;
 import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
+
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.ai.goal.BreedGoal;
@@ -22,7 +22,6 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.class_4385;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -38,8 +37,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static com.jeff.pets.PetsInitializer.PENGUIN;
-
 public class Penguin extends AbstractPet {
     public static final TrackedData<@NotNull Boolean> IS_SERVER_ENTITY =
             DataTracker.registerData(Penguin.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -53,8 +50,8 @@ public class Penguin extends AbstractPet {
     public boolean isOnHead;
     private boolean isFlapping = !this.onGround;
 
-    public Penguin(EntityType<? extends @NotNull TameableEntity> entityType, World level) {
-        super(entityType, level);
+    public Penguin(World level) {
+        super(level);
         this.setBounds(1.0F, 1.5F);
     }
 
@@ -132,18 +129,16 @@ public class Penguin extends AbstractPet {
     }
 
     public @Nullable Penguin createChild(final @NotNull PassiveEntity partner) {
-        Penguin penguin = PENGUIN.spawn(world);
-        penguin.setServerEntity(true);
-        return penguin;
+        return null;
     }
 
-    public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @Nullable EntityData groupData, NbtCompound compoundTag) {
+public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @Nullable EntityData groupData) {
         this.setServerEntity(true);
-        return super.initialize(difficulty, groupData, compoundTag);
+        return super.initialize(difficulty, groupData);
     }
 
     public boolean isBreedingItem(final @NotNull ItemStack itemStack) {
-        return ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.TROPICAL_FISH)) || ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.COD)) || ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.SALMON));
+        return ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.RAW_FISH, 1, 2)) || ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.RAW_FISH, 1, 0)) || ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.RAW_FISH, 1, 1));
     }
 
     @Override
@@ -152,7 +147,7 @@ public class Penguin extends AbstractPet {
         this.goals.add(1, new BreedGoal(this, 1));
         this.goals.add(2, new SwimGoal(this));
         this.goals.add(3, new EscapeDangerGoal(this, 1.4d));
-        this.goals.add(4, new TemptGoal(this, 1.0f, Ingredient.ofItems(Items.SKELETON_SKULL, Items.WITHER_SKELETON_SKULL), false));
+        this.goals.add(4, new TemptGoal(this, 1.0f, Items.SKULL, false));
 
         this.goals.add(5, new LookAroundGoal(this));
         this.goals.add(6, new WanderAroundGoal(this, 1.0D));

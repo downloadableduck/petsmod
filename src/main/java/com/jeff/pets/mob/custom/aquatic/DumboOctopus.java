@@ -6,7 +6,7 @@ import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.sound.SoundCategory;
 import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
+
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.ai.goal.BreedGoal;
@@ -20,7 +20,6 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.class_4385;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -35,8 +34,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static com.jeff.pets.PetsInitializer.DUMBO_OCTOPUS;
-
 public class DumboOctopus extends FlyingPet {
 
     public static final TrackedData<@NotNull Boolean> IS_SERVER_ENTITY =
@@ -47,8 +44,8 @@ public class DumboOctopus extends FlyingPet {
     public float tentacleAngle = 0;
     public ServerPlayerEntity owner = (ServerPlayerEntity) this.getOwner();
 
-    public DumboOctopus(final EntityType<? extends @NotNull DumboOctopus> type, final World level) {
-        super(type, level);
+    public DumboOctopus(final World level) {
+        super(level);
         this.setBounds(0.5F, 0.5F);
     }
 
@@ -104,25 +101,22 @@ public class DumboOctopus extends FlyingPet {
     }
 
     public @Nullable DumboOctopus createChild(final @NotNull PassiveEntity partner) {
-        DumboOctopus octopus = DUMBO_OCTOPUS.spawn(world);
-        octopus.setServerEntity(true);
-        return octopus;
+        return null;
     }
 
-    public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @Nullable EntityData groupData, NbtCompound compoundTag) {
+public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @Nullable EntityData groupData) {
         this.setServerEntity(true);
         this.dataTracker.set(OCTOPUS_SKIN, this.random.nextInt(6));
-        return super.initialize(difficulty, groupData, compoundTag);
+        return super.initialize(difficulty, groupData);
     }
 
     public boolean isBreedingItem(final @NotNull ItemStack itemStack) {
-        return ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.TROPICAL_FISH)) || ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.COD)) || ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.SALMON));
+        return ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.RAW_FISH, 1, 2)) || ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.RAW_FISH, 1, 0)) || ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.RAW_FISH, 1, 1));
     }
 
-    @Override
+@Override
     public void initGoals() {
 
-        this.getNavigation().method_15709(true);
         this.goals.add(2, new SwimGoal(this));
 
         this.goals.add(0, new FollowOwnerGoal(this, 1, 2, 10));

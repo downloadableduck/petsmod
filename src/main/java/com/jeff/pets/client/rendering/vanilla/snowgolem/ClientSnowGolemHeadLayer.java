@@ -24,11 +24,11 @@ public class ClientSnowGolemHeadLayer implements FeatureRenderer<ClientSnowGolem
             boolean bl = snowGolem.isGlowing() && snowGolem.isInvisible();
             if (!snowGolem.isInvisible() || bl) {
                 com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
-                ((SnowmanEntityModel) this.renderer.getModel()).method_18942().preRender(0.0625F);
+                ((SnowmanEntityModel) this.renderer.getModel()).field_1532.preRender(0.0625F);
                 GlStateManager.translate(0.0F, -0F, 0.0F);
                 com.mojang.blaze3d.platform.GlStateManager.scale(0.625F, -0.625F, -0.625F);
                 GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
-                MinecraftClient.getInstance().method_18201().method_19139(snowGolem, new ItemStack(Blocks.CARVED_PUMPKIN), ModelTransformation.Mode.HEAD);
+                MinecraftClient.getInstance().getItemRenderer().method_12458(new ItemStack(Blocks.PUMPKIN), ModelTransformation.Mode.HEAD);
                 com.mojang.blaze3d.platform.GlStateManager.popMatrix();
             }
         }

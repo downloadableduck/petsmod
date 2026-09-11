@@ -3,7 +3,7 @@ package com.jeff.pets.mob.custom.aprilfools;
 import com.jeff.pets.mob.AbstractPet;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
+
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.ai.goal.EscapeDangerGoal;
@@ -31,19 +31,17 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static com.jeff.pets.PetsInitializer.HEAD;
-
 public class Head extends AbstractPet {
     public static final TrackedData<@NotNull Boolean> IS_SERVER_ENTITY =
             DataTracker.registerData(Head.class, TrackedDataHandlerRegistry.BOOLEAN);
 
-    public Head(final EntityType<? extends @NotNull Head> type, final World level) {
-        super(type, level);
+    public Head(World level) {
+        super(level);
         this.setBounds(0.5F, 0.5F);
     }
 
     public @Nullable PassiveEntity createChild(@NotNull PassiveEntity AgableMob) {
-        return HEAD.spawn(world);
+        return null;
     }
 
     @Override
@@ -74,10 +72,9 @@ public class Head extends AbstractPet {
         return ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.APPLE));
     }
 
-    @Override
-    public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @Nullable EntityData groupData, NbtCompound compoundTag) {
+public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @Nullable EntityData groupData) {
         this.setServerEntity(true);
-        return super.initialize(difficulty, groupData, compoundTag);
+        return super.initialize(difficulty, groupData);
     }
 
     @Override
@@ -85,7 +82,7 @@ public class Head extends AbstractPet {
 
         this.goals.add(2, new SwimGoal(this));
         this.goals.add(3, new EscapeDangerGoal(this, 1.4d));
-        this.goals.add(4, new TemptGoal(this, 1.0f, Ingredient.ofItems(Items.APPLE), false));
+        this.goals.add(4, new TemptGoal(this, 1.0f, Items.APPLE, false));
 
         this.goals.add(5, new LookAroundGoal(this));
         this.goals.add(6, new WanderAroundGoal(this, 1.0D));

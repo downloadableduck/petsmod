@@ -5,12 +5,11 @@ import com.jeff.pets.mob.FlyingPet;
 import net.minecraft.dragon.class_2987;
 import net.minecraft.dragon.class_2993;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
-import net.minecraft.class_3804;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.sound.Sound;
 import net.minecraft.sound.Sounds;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.entity.EntityType;
+
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.EndExitPortalFeature;
@@ -24,8 +23,8 @@ public class ClientEnderDragon extends FlyingPet {
     public float flapTime;
     public int posPointer = -1;
 
-    public ClientEnderDragon(EntityType<? extends @NotNull TameableEntity> entityType, World level) {
-        super(entityType, level);
+    public ClientEnderDragon(World level) {
+        super(level);
         this.setBounds(16.0F, 8.0F);
     }
 
@@ -41,7 +40,7 @@ public class ClientEnderDragon extends FlyingPet {
 
     @Override
     protected Sound getAmbientSound() {
-        return Sounds.ENTITY_ENDER_DRAGON_AMBIENT;
+        return Sounds.ENTITY_ENDERDRAGON_AMBIENT;
     }
 
     @Override
@@ -87,7 +86,7 @@ public class ClientEnderDragon extends FlyingPet {
                 e = es[1] - ds[1];
             }
         } else {
-            BlockPos blockPos = this.world.method_16373(class_3804.class_3805.MOTION_BLOCKING_NO_LEAVES, EndExitPortalFeature.ORIGIN);
+            BlockPos blockPos = new BlockPos(EndExitPortalFeature.ORIGIN);
             double d = Math.max(Math.sqrt(blockPos.squaredDistanceTo(this.getPos().x, this.getPos().y, this.getPos().z)) / (double) 4.0F, 1.0F);
             e = (double) i / d;
         }

@@ -27,44 +27,44 @@ public class RacoonModel extends PetModel {
         head = new ModelPart(this);
         head.setPivot(0.0F, 0.0F, 0.0F);
         root.add(head);
-        head.setTextureOffset(0, 15).method_18947(-2.5F, -7.0F, -2.0F, (int) 7.0F, (int) 5.0F, (int) 5.0F, 0.0F, false);
-        head.setTextureOffset(28, 28).method_18947(1.5F, -9.0F, 1.0F, (int) 2.0F, (int) 2.0F, (int) 1.0F, 0.0F, false);
-        head.setTextureOffset(0, 30).method_18947(-1.5F, -9.0F, 1.0F, (int) 2.0F, (int) 2.0F, (int) 1.0F, 0.0F, false);
-        head.setTextureOffset(1, 26).method_18947(-0.5F, -4.0F, -4.0F, (int) 3.0F, (int) 2.0F, (int) 2.0F, 0.0F, false);
-        head.setTextureOffset(24, 12).method_18947(-3.5F, -5.0F, -2.0F, (int) 1.0F, (int) 3.0F, (int) 5.0F, 0.0F, false);
-        head.setTextureOffset(24, 20).method_18947(4.5F, -5.0F, -2.0F, (int) 1.0F, (int) 3.0F, (int) 5.0F, 0.0F, false);
+        head.setTextureOffset(0, 15).addCuboid(-2.5F, -7.0F, -2.0F, (int) 7.0F, (int) 5.0F, (int) 5.0F, 0.0F);
+        head.setTextureOffset(28, 28).addCuboid(1.5F, -9.0F, 1.0F, (int) 2.0F, (int) 2.0F, (int) 1.0F, 0.0F);
+        head.setTextureOffset(0, 30).addCuboid(-1.5F, -9.0F, 1.0F, (int) 2.0F, (int) 2.0F, (int) 1.0F, 0.0F);
+        head.setTextureOffset(1, 26).addCuboid(-0.5F, -4.0F, -4.0F, (int) 3.0F, (int) 2.0F, (int) 2.0F, 0.0F);
+        head.setTextureOffset(24, 12).addCuboid(-3.5F, -5.0F, -2.0F, (int) 1.0F, (int) 3.0F, (int) 5.0F, 0.0F);
+        head.setTextureOffset(24, 20).addCuboid(4.5F, -5.0F, -2.0F, (int) 1.0F, (int) 3.0F, (int) 5.0F, 0.0F);
 
         body = new ModelPart(this);
         body.setPivot(1.0F, -0.5F, -3.0F);
         head.add(body);
         setRotationAngle(body, 1.5708F, 0.0F, 0.0F);
-        body.setTextureOffset(0, 0).method_18947(-3.0F, 4.0F, -3.5F, (int) 6.0F, (int) 9.0F, (int) 6.0F, 0.0F, false);
+        body.setTextureOffset(0, 0).addCuboid(-3.0F, 4.0F, -3.5F, (int) 6.0F, (int) 9.0F, (int) 6.0F, 0.0F);
 
         left_hind_leg = new ModelPart(this);
         left_hind_leg.setPivot(-4.0F, 1.0F, 10.0F);
         root.add(left_hind_leg);
-        left_hind_leg.setTextureOffset(12, 25).method_18947(2.5F, 2.0F, -2.0F, (int) 2.0F, (int) 4.0F, (int) 2.0F, 0.0F, false);
+        left_hind_leg.setTextureOffset(12, 25).addCuboid(2.5F, 2.0F, -2.0F, (int) 2.0F, (int) 4.0F, (int) 2.0F, 0.0F);
 
         right_hind_leg = new ModelPart(this);
         right_hind_leg.setPivot(0.0F, 1.0F, 10.0F);
         root.add(right_hind_leg);
-        right_hind_leg.setTextureOffset(20, 28).method_18947(1.5F, 2.0F, -2.0F, (int) 2.0F, (int) 4.0F, (int) 2.0F, 0.0F, false);
+        right_hind_leg.setTextureOffset(20, 28).addCuboid(1.5F, 2.0F, -2.0F, (int) 2.0F, (int) 4.0F, (int) 2.0F, 0.0F);
 
         left_front_leg = new ModelPart(this);
         left_front_leg.setPivot(-4.0F, 1.0F, 3.0F);
         root.add(left_front_leg);
-        left_front_leg.setTextureOffset(12, 25).method_18947(2.5F, 2.0F, -1.0F, (int) 2.0F, (int) 4.0F, (int) 2.0F, 0.0F, false);
+        left_front_leg.setTextureOffset(12, 25).addCuboid(2.5F, 2.0F, -1.0F, (int) 2.0F, (int) 4.0F, (int) 2.0F, 0.0F);
 
         right_front_leg = new ModelPart(this);
         right_front_leg.setPivot(0.0F, 1.0F, 3.0F);
         root.add(right_front_leg);
-        right_front_leg.setTextureOffset(20, 28).method_18947(1.5F, 2.0F, -1.0F, (int) 2.0F, (int) 4.0F, (int) 2.0F, 0.0F, false);
+        right_front_leg.setTextureOffset(20, 28).addCuboid(1.5F, 2.0F, -1.0F, (int) 2.0F, (int) 4.0F, (int) 2.0F, 0.0F);
 
         tail = new ModelPart(this);
         tail.setPivot(-3.0F, 0.5F, 12.0F);
         root.add(tail);
         setRotationAngle(tail, 1.5708F, 0.0F, 0.0F);
-        tail.setTextureOffset(24, 0).method_18947(2.0F, -2.0F, -1.0F, (int) 4.0F, (int) 8.0F, (int) 4.0F, 0.0F, false);
+        tail.setTextureOffset(24, 0).addCuboid(2.0F, -2.0F, -1.0F, (int) 4.0F, (int) 8.0F, (int) 4.0F, 0.0F);
     }
 
     @Override

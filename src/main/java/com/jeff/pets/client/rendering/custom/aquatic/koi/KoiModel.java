@@ -24,12 +24,12 @@ public class KoiModel extends PetModel {
 
         body = new ModelPart(this);
         body.setPivot(0.0F, 20.0F, -7.0F);
-        body.setTextureOffset(0, 0).method_18947(-2.0F, -4.0F, -2.0F, (int) 4.0F, (int) 4.0F, (int) 14.0F, 0.0F, false);
+        body.setTextureOffset(0, 0).addCuboid(-2.0F, -4.0F, -2.0F, (int) 4.0F, (int) 4.0F, (int) 14.0F, 0.0F);
 
         top_fin = new ModelPart(this);
         top_fin.setPivot(-4.0F, 0.0F, 8.0F);
         body.add(top_fin);
-        top_fin.setTextureOffset(16, 26).method_18947(4.0F, -6.0F, -6.0F, (int) 0.0F, (int) 2.0F, (int) 4.0F, 0.0F, false);
+        top_fin.setTextureOffset(16, 26).addCuboid(4.0F, -6.0F, -6.0F, (int) 0.0F, (int) 2.0F, (int) 4.0F, 0.0F);
 
         left_hind_fin = new ModelPart(this);
         left_hind_fin.setPivot(4.0F, 0.0F, 2.0F);
@@ -40,7 +40,7 @@ public class KoiModel extends PetModel {
         left_hind_fin_r1.setPivot(-8.0F, 0.0F, 6.0F);
         left_hind_fin.add(left_hind_fin_r1);
         setRotationAngle(left_hind_fin_r1, 0.0F, 0.0F, -0.6981F);
-        left_hind_fin_r1.setTextureOffset(24, 26).method_18947(0.6F, 0.0F, 0.0F, (int) 2.0F, (int) 0.0F, (int) 2.0F, 0.0F, false);
+        left_hind_fin_r1.setTextureOffset(24, 26).addCuboid(0.6F, 0.0F, 0.0F, (int) 2.0F, (int) 0.0F, (int) 2.0F, 0.0F);
 
         right_hind_fin = new ModelPart(this);
         right_hind_fin.setPivot(4.0F, 0.0F, 2.0F);
@@ -51,7 +51,7 @@ public class KoiModel extends PetModel {
         right_hind_fin_r1.setPivot(-2.0F, -2.0F, 6.0F);
         right_hind_fin.add(right_hind_fin_r1);
         setRotationAngle(right_hind_fin_r1, 0.0F, 0.0F, 0.829F);
-        right_hind_fin_r1.setTextureOffset(24, 28).method_18947(0.0F, 0.0F, 0.0F, (int) 2.0F, (int) 0.0F, (int) 2.0F, 0.0F, false);
+        right_hind_fin_r1.setTextureOffset(24, 28).addCuboid(0.0F, 0.0F, 0.0F, (int) 2.0F, (int) 0.0F, (int) 2.0F, 0.0F);
 
         left_fin = new ModelPart(this);
         left_fin.setPivot(0.0F, 0.0F, 0.0F);
@@ -62,7 +62,7 @@ public class KoiModel extends PetModel {
         left_fin_r1.setPivot(-4.0F, 0.0F, 2.0F);
         left_fin.add(left_fin_r1);
         setRotationAngle(left_fin_r1, 0.0F, 0.0F, -0.6981F);
-        left_fin_r1.setTextureOffset(16, 22).method_18947(-1.4F, 0.0F, -2.0F, (int) 4.0F, (int) 0.0F, (int) 4.0F, 0.0F, false);
+        left_fin_r1.setTextureOffset(16, 22).addCuboid(-1.4F, 0.0F, -2.0F, (int) 4.0F, (int) 0.0F, (int) 4.0F, 0.0F);
 
         right_fin = new ModelPart(this);
         right_fin.setPivot(-4.0F, 0.0F, 2.0F);
@@ -73,12 +73,12 @@ public class KoiModel extends PetModel {
         right_fin_r1.setPivot(8.0F, 0.0F, 0.0F);
         right_fin.add(right_fin_r1);
         setRotationAngle(right_fin_r1, 0.0F, 0.0F, 0.6109F);
-        right_fin_r1.setTextureOffset(16, 18).method_18947(-2.6F, 0.0F, -2.0F, (int) 4.0F, (int) 0.0F, (int) 4.0F, 0.0F, false);
+        right_fin_r1.setTextureOffset(16, 18).addCuboid(-2.6F, 0.0F, -2.0F, (int) 4.0F, (int) 0.0F, (int) 4.0F, 0.0F);
 
         tail_fin = new ModelPart(this);
         tail_fin.setPivot(0.0F, 0.0F, 14.0F);
         body.add(tail_fin);
-        tail_fin.setTextureOffset(0, 18).method_18947(0.0F, -8.0F, -2.0F, (int) 0.0F, (int) 12.0F, (int) 8.0F, 0.0F, false);
+        tail_fin.setTextureOffset(0, 18).addCuboid(0.0F, -8.0F, -2.0F, (int) 0.0F, (int) 12.0F, (int) 8.0F, 0.0F);
     }
 
     @Override

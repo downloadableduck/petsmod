@@ -23,8 +23,8 @@ public class AnimationUtils {
         float f = (float) livingEntity.method_13064().getMaxUseTime();
         float g = MathHelper.clamp((float) livingEntity.method_13065(), 0.0F, f);
         float h = g / f;
-        part4.pivotY = MathHelper.method_21515(h, 0.4F, 0.85F) * (bl ? 1 : -1);
-        part4.pivotX = MathHelper.method_21515(h, part4.pivotX, (float) (-Math.PI / 2));
+        part4.pivotY = (float) MathHelper.clampedLerp(h, 0.4F, 0.85F) * (bl ? 1 : -1);
+        part4.pivotX = (float) MathHelper.clampedLerp(h, part4.pivotX, (float) (-Math.PI / 2));
     }
 
     public static void bobArms(ModelPart part, ModelPart part2, float f) {

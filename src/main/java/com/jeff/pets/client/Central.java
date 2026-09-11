@@ -22,16 +22,15 @@ import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import com.jeff.pets.mob.vanilla.hostile.*;
 import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
-import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.StringArgumentType;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.mojang.brigadier.builder.RequiredArgumentBuilder;
-import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.suggestion.SuggestionProvider;
-import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
+import net.minecraft.command.Command;
+import net.minecraft.command.CommandException;
+import net.minecraft.command.CommandSource;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.command.CommandRegistry;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.Screen;
@@ -67,9 +66,7 @@ public class Central implements ClientModInitializer {
     public static final List<String> PIGLIN_SKINS = ImmutableList.of("piglin", "zombified", "brute");
     //public static final List<String> WOLF_SKINS = ImmutableList.of("pale", "ashen", "black", "chestnut", "rusty", "snowy", "spotted", "striped", "woods");
     public static final List<String> PETS_LIST = new ArrayList<>();
-    public static final SuggestionProvider<net.minecraft.class_3915> PETS = (context, builder) ->
-            net.minecraft.class_3965.method_17571(PETS_LIST, builder);
-    private static final SuggestionProvider<net.minecraft.class_3915> ON_OFF = (context, builder) -> net.minecraft.class_3965.method_17570(new String[]{"off", "on"}, builder);
+    private static final List<String> ON_OFF_LIST = ImmutableList.of("off", "on");
     private static final List<String> DUCK_SKINS = ImmutableList.of("mallard", "pekin", "rubber", "bronze");
     private static final List<String> CAT_SKINS = ImmutableList.of("black", "tuxedo", "british shorthair", "calico", "jellie", "ocelot", "persian", "ragdoll", "red", "siamese", "tabby", "white");
     private static final List<String> AXOLOTL_SKINS = ImmutableList.of("pink", "brown", "gold", "cyan", "blue");
@@ -154,18 +151,13 @@ public class Central implements ClientModInitializer {
     public static Stingray stingray;
     public static ClientZombiePigman zombiePigman;
 
-    private final SuggestionProvider<net.minecraft.class_3915> SKINS = (context, builder) -> {
-        String remaining = builder.getRemaining().toLowerCase();
+    private static List<String> getSkinSuggestions() {
+        return new ArrayList<>(currentSuggestions);
+    }
 
-        for (String s : currentSuggestions) {
-            if (s.toLowerCase().startsWith(remaining)) {
-                builder.suggest(s);
-            }
-        }
-
-        return builder.buildFuture();
-    };
-    int i = 1;
+    private static List<String> getSpeciesSuggestions() {
+        return new ArrayList<>(PETS_LIST);
+    }
 
     /**
      * Despawns the entity to ensure that only one is present at a time. For the helper method used,
@@ -238,63 +230,63 @@ public class Central implements ClientModInitializer {
     public static void summonPet() {
         MinecraftClient minecraft = MinecraftClient.getInstance();
         ClientWorld world = minecraft.world;
-        duck = new Duck(PetsInitializer.DUCK, world);
-        racoon = new Racoon(PetsInitializer.RACOON, world);
-        penguin = new Penguin(PetsInitializer.PENGUIN, world);
-        sheep = new ClientSheep(PetsInitializer.SHEEP, world);
-        cat = new ClientCat(PetsInitializer.CAT, world);
-        bat = new ClientBat(PetsInitializer.BAT, world);
-        chicken = new ClientChicken(PetsInitializer.CHICKEN, world);
-        cod = new ClientCod(PetsInitializer.COD, world);
-        cow = new ClientCow(PetsInitializer.COW, world);
-        donkey = new ClientDonkey(PetsInitializer.DONKEY, world);
-        horse = new ClientHorse(PetsInitializer.HORSE, world);
-        mooshroom = new ClientMooshroom(PetsInitializer.MOOSHROOM, world);
-        parrot = new ClientParrot(PetsInitializer.PARROT, world);
-        pig = new ClientPig(PetsInitializer.PIG, world);
-        rabbit = new ClientRabbit(PetsInitializer.RABBIT, world);
-        salmon = new ClientSalmon(PetsInitializer.SALMON, world);
-        snowGolem = new ClientSnowGolem(PetsInitializer.SNOW_GOLEM, world);
-        squid = new ClientSquid(PetsInitializer.SQUID, world);
-        villager = new ClientVillager(PetsInitializer.VILLAGER, world);
-        caveSpider = new ClientCaveSpider(PetsInitializer.CAVE_SPIDER, world);
-        dolphin = new ClientDolphin(PetsInitializer.DOLPHIN, world);
-        enderman = new ClientEnderman(PetsInitializer.ENDERMAN, world);
-        ironGolem = new ClientIronGolem(PetsInitializer.IRON_GOLEM, world);
-        llama = new ClientLlama(PetsInitializer.LLAMA, world);
-        polarBear = new ClientPolarBear(PetsInitializer.POLAR_BEAR, world);
-        pufferFish = new ClientPufferFish(PetsInitializer.PUFFERFISH, world);
-        spider = new ClientSpider(PetsInitializer.SPIDER, world);
-        wolf = new ClientWolf(PetsInitializer.WOLF, world);
-        blaze = new ClientBlaze(PetsInitializer.BLAZE, world);
-        creeper = new ClientCreeper(PetsInitializer.CREEPER, world);
-        elderGuardian = new ClientElderGuardian(PetsInitializer.ELDER_GUARDIAN_COOKIE, world);
-        endermite = new ClientEndermite(PetsInitializer.ENDERMITE, world);
-        evoker = new ClientEvoker(PetsInitializer.EVOKER, world);
-        ghast = new ClientGhast(PetsInitializer.GHAST, world);
-        guardian = new ClientGuardian(PetsInitializer.GUARDIAN, world);
-        magmaCube = new ClientMagmaCube(PetsInitializer.MAGMA_CUBE, world);
-        phantom = new ClientPhantom(PetsInitializer.PHANTOM, world);
-        shulker = new ClientShulker(PetsInitializer.SHULKER, world);
-        silverfish = new ClientSilverfish(PetsInitializer.SILVERFISH, world);
-        skeleton = new ClientSkeleton(PetsInitializer.SKELETON, world);
-        slime = new ClientSlime(PetsInitializer.SLIME, world);
-        vex = new ClientVex(PetsInitializer.VEX, world);
-        vindicator = new ClientVindicator(PetsInitializer.VINDICATOR, world);
-        witch = new ClientWitch(PetsInitializer.WITCH, world);
-        zombie = new ClientZombie(PetsInitializer.ZOMBIE, world);
-        zombieVillager = new ClientZombieVillager(PetsInitializer.ZOMBIE_VILLAGER, world);
-        husk = new ClientHusk(PetsInitializer.HUSK, world);
-        drowned = new ClientDrowned(PetsInitializer.DROWNED, world);
-        stray = new ClientStray(PetsInitializer.STRAY, world);
-        witherSkeleton = new ClientWitherSkeleton(PetsInitializer.WITHER_SKELETON, world);
-        enderDragon = new ClientEnderDragon(PetsInitializer.ENDER_DRAGON, world);
-        wither = new ClientWither(PetsInitializer.WITHER, world);
-        head = new Head(PetsInitializer.HEAD, world);
-        dumboOctopus = new DumboOctopus(PetsInitializer.DUMBO_OCTOPUS, world);
-        koi = new Koi(PetsInitializer.KOI, world);
-        stingray = new Stingray(PetsInitializer.STINGRAY, world);
-        zombiePigman = new ClientZombiePigman(PetsInitializer.ZOMBIE_PIGMAN, world);
+        duck = new Duck(world);
+        racoon = new Racoon(world);
+        penguin = new Penguin(world);
+        sheep = new ClientSheep(world);
+        cat = new ClientCat(world);
+        bat = new ClientBat(world);
+        chicken = new ClientChicken(world);
+        cod = new ClientCod(world);
+        cow = new ClientCow(world);
+        donkey = new ClientDonkey(world);
+        horse = new ClientHorse(world);
+        mooshroom = new ClientMooshroom(world);
+        parrot = new ClientParrot(world);
+        pig = new ClientPig(world);
+        rabbit = new ClientRabbit(world);
+        salmon = new ClientSalmon(world);
+        snowGolem = new ClientSnowGolem(world);
+        squid = new ClientSquid(world);
+        villager = new ClientVillager(world);
+        caveSpider = new ClientCaveSpider(world);
+        dolphin = new ClientDolphin(world);
+        enderman = new ClientEnderman(world);
+        ironGolem = new ClientIronGolem(world);
+        llama = new ClientLlama(world);
+        polarBear = new ClientPolarBear(world);
+        pufferFish = new ClientPufferFish(world);
+        spider = new ClientSpider(world);
+        wolf = new ClientWolf(world);
+        blaze = new ClientBlaze(world);
+        creeper = new ClientCreeper(world);
+        elderGuardian = new ClientElderGuardian(world);
+        endermite = new ClientEndermite(world);
+        evoker = new ClientEvoker(world);
+        ghast = new ClientGhast(world);
+        guardian = new ClientGuardian(world);
+        magmaCube = new ClientMagmaCube(world);
+        phantom = new ClientPhantom(world);
+        shulker = new ClientShulker(world);
+        silverfish = new ClientSilverfish(world);
+        skeleton = new ClientSkeleton(world);
+        slime = new ClientSlime(world);
+        vex = new ClientVex(world);
+        vindicator = new ClientVindicator(world);
+        witch = new ClientWitch(world);
+        zombie = new ClientZombie(world);
+        zombieVillager = new ClientZombieVillager(world);
+        husk = new ClientHusk(world);
+        drowned = new ClientDrowned(world);
+        stray = new ClientStray(world);
+        witherSkeleton = new ClientWitherSkeleton(world);
+        enderDragon = new ClientEnderDragon(world);
+        wither = new ClientWither(world);
+        head = new Head(world);
+        dumboOctopus = new DumboOctopus(world);
+        koi = new Koi(world);
+        stingray = new Stingray(world);
+        zombiePigman = new ClientZombiePigman(world);
 
         if (world != null) {
             if (Objects.equals(CONFIG.activePet, "duck")) {
@@ -689,7 +681,7 @@ public class Central implements ClientModInitializer {
      */
     public void onInitializeClient() {
         AutoConfig.register(PetsConfig.class, GsonConfigSerializer::new);
-        CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
+        CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).get();
 
         this.checkForNullObjects();
         createJoinHandler();
@@ -703,12 +695,42 @@ public class Central implements ClientModInitializer {
      * slightly malformed (specifically the {@code switch} statements) as this file was
      * re-created from an bytecode after a change messed it up around version {@code 0.6.0}
      */
-    public void createPetSkinCommand(CommandDispatcher<net.minecraft.class_3915> dispatcher) {
-        dispatcher.register(LiteralArgumentBuilder.<net.minecraft.class_3915>literal("petskin").then(RequiredArgumentBuilder.<net.minecraft.class_3915, String>argument("skin", StringArgumentType.greedyString())
-                .suggests(this.SKINS)
-                .executes((context) -> {
+    public void createPetSkinCommand(CommandRegistry dispatcher) {
+        dispatcher.registerCommand(new Command() {
+            @Override
+            public String getCommandName() {
+                return "petskin";
+            }
+
+            @Override
+            public int compareTo(Command command) {
+                return getCommandName().compareTo(command.getCommandName());
+            }
+
+            @Override
+            public String getUsageTranslationKey(CommandSource source) {
+                return "commands.petskin.usage";
+            }
+
+            @Override
+            public List<String> getAliases() {
+                return Collections.emptyList();
+            }
+
+            @Override
+            public boolean method_3278(MinecraftServer server, CommandSource source) {
+                return true;
+            }
+
+            @Override
+            public boolean isUsernameAtIndex(String[] args, int index) {
+                return false;
+            }
+
+            @Override
+            public void method_3279(MinecraftServer server, CommandSource source, String[] args) throws CommandException {
                     boolean isValid = true;
-                    String skin = StringArgumentType.getString(context, "skin");
+                    String skin = args.length > 0 ? String.join(" ", args) : "";
 
                     if (Objects.equals(skin, "baby")) {
                         CONFIG.isBaby = true;
@@ -1254,8 +1276,13 @@ public class Central implements ClientModInitializer {
                     }
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
 
-                    return 1;
-                })));
+            }
+
+            @Override
+            public List<String> method_10738(MinecraftServer server, CommandSource source, String[] args, BlockPos pos) {
+                return getSkinSuggestions();
+            }
+        });
     }
 
     /**
@@ -1444,7 +1471,7 @@ public class Central implements ClientModInitializer {
         CONFIG.potatoHuskName = Utils.checkNullString(CONFIG.potatoHuskName);
 
         if (CONFIG.headSkin == null && MinecraftClient.getInstance().player != null) {
-            CONFIG.headSkin = MinecraftClient.getInstance().player.getName().getString();
+            CONFIG.headSkin = MinecraftClient.getInstance().player.getName().asUnformattedString();
         }
         CONFIG.headName = Utils.checkNullString(CONFIG.headName);
 
@@ -1464,21 +1491,90 @@ public class Central implements ClientModInitializer {
     /**
      * Creates the command that allows the user to use {@code /teleportpet}.
      */
-    void createPetTeleportCommand(CommandDispatcher<net.minecraft.class_3915> dispatcher) {
-        dispatcher.register(LiteralArgumentBuilder.<net.minecraft.class_3915>literal("teleportpet").executes((context) -> {
-            despawnPet();
-            summonPet();
-            return 1;
-        }));
+    void createPetTeleportCommand(CommandRegistry dispatcher) {
+        dispatcher.registerCommand(new Command() {
+            @Override
+            public String getCommandName() {
+                return "teleportpet";
+            }
+
+            @Override
+            public int compareTo(Command command) {
+                return getCommandName().compareTo(command.getCommandName());
+            }
+
+            @Override
+            public String getUsageTranslationKey(CommandSource source) {
+                return "commands.teleportpet.usage";
+            }
+
+            @Override
+            public List<String> getAliases() {
+                return Collections.emptyList();
+            }
+
+            @Override
+            public boolean method_3278(MinecraftServer server, CommandSource source) {
+                return true;
+            }
+
+            @Override
+            public boolean isUsernameAtIndex(String[] args, int index) {
+                return false;
+            }
+
+            @Override
+            public void method_3279(MinecraftServer server, CommandSource source, String[] args) throws CommandException {
+                despawnPet();
+                summonPet();
+            }
+
+            @Override
+            public List<String> method_10738(MinecraftServer server, CommandSource source, String[] args, BlockPos pos) {
+                return Collections.emptyList();
+            }
+        });
     }
 
     /**
      * Creates the command that allows the user to use {@code /petspecies}.
      */
-    void createPetSpeciesCommand(CommandDispatcher<net.minecraft.class_3915> dispatcher) {
-        dispatcher.register(LiteralArgumentBuilder.<net.minecraft.class_3915>literal("petspecies").then(RequiredArgumentBuilder.<net.minecraft.class_3915, String>argument("species", StringArgumentType.greedyString()).suggests(PETS).executes((context) -> {
+    void createPetSpeciesCommand(CommandRegistry dispatcher) {
+        dispatcher.registerCommand(new Command() {
+            @Override
+            public String getCommandName() {
+                return "petspecies";
+            }
+
+            @Override
+            public int compareTo(Command command) {
+                return getCommandName().compareTo(command.getCommandName());
+            }
+
+            @Override
+            public String getUsageTranslationKey(CommandSource source) {
+                return "commands.petspecies.usage";
+            }
+
+            @Override
+            public List<String> getAliases() {
+                return Collections.emptyList();
+            }
+
+            @Override
+            public boolean method_3278(MinecraftServer server, CommandSource source) {
+                return true;
+            }
+
+            @Override
+            public boolean isUsernameAtIndex(String[] args, int index) {
+                return false;
+            }
+
+            @Override
+            public void method_3279(MinecraftServer server, CommandSource source, String[] args) throws CommandException {
             boolean isValid = true;
-            String species = StringArgumentType.getString(context, "species");
+            String species = args.length > 0 ? String.join(" ", args) : "";
 
             if (Objects.equals(species, "duck")) {
                 Utils.setActivePet(duck, "duck");
@@ -1598,32 +1694,106 @@ public class Central implements ClientModInitializer {
                 isValid = false;
             }
 
-            this.checkValidPet(isValid, context, species);
+            Central.this.checkValidPet(isValid, species);
 
             AutoConfig.getConfigHolder(PetsConfig.class).save();
             updateSuggestions(MinecraftClient.getInstance());
-            return 1;
-        })));
+            }
+
+            @Override
+            public List<String> method_10738(MinecraftServer server, CommandSource source, String[] args, BlockPos pos) {
+                return getSpeciesSuggestions();
+            }
+        });
     }
 
     /**
      * Creates a help command to let the user easily view the commands at their disposal.
      */
-    void createPetHelpCommand(CommandDispatcher<net.minecraft.class_3915> dispatcher) {
-        dispatcher.register(LiteralArgumentBuilder.<net.minecraft.class_3915>literal("pethelp").executes(context -> {
+    void createPetHelpCommand(CommandRegistry dispatcher) {
+        dispatcher.registerCommand(new Command() {
+            @Override
+            public String getCommandName() {
+                return "pethelp";
+            }
+
+            @Override
+            public int compareTo(Command command) {
+                return getCommandName().compareTo(command.getCommandName());
+            }
+
+            @Override
+            public String getUsageTranslationKey(CommandSource source) {
+                return "commands.pethelp.usage";
+            }
+
+            @Override
+            public List<String> getAliases() {
+                return Collections.emptyList();
+            }
+
+            @Override
+            public boolean method_3278(MinecraftServer server, CommandSource source) {
+                return true;
+            }
+
+            @Override
+            public boolean isUsernameAtIndex(String[] args, int index) {
+                return false;
+            }
+
+            @Override
+            public void method_3279(MinecraftServer server, CommandSource source, String[] args) throws CommandException {
             MinecraftClient.getInstance().player.sendMessage(new LiteralText(
                     "§b[PetsMod] §aPossible commands: §a/pethelp: §rdisplays a list of commands §a/pet <on/off> §rtoggles whether your pet will appear or not§a/petspecies <species>: §rchanges the species of your pet§a/petskin <skin>: §rchanges the skin of your selected pet§a/teleportpet: §rteleports your pet to you. will not work if you are not on the ground.§a/petname: §rchanges the name of your currently selected pet"
             ), false);
-            return 1;
-        }));
+            }
+
+            @Override
+            public List<String> method_10738(MinecraftServer server, CommandSource source, String[] args, BlockPos pos) {
+                return Collections.emptyList();
+            }
+        });
     }
 
     /**
      * Creates the command that allows the user to change their pet's name.
      */
-    void createPetNameCommand(CommandDispatcher<net.minecraft.class_3915> dispatcher) {
-        dispatcher.register(LiteralArgumentBuilder.<net.minecraft.class_3915>literal("petname").then(RequiredArgumentBuilder.<net.minecraft.class_3915, String>argument("name", StringArgumentType.greedyString()).executes((context) -> {
-            String name = StringArgumentType.getString(context, "name");
+    void createPetNameCommand(CommandRegistry dispatcher) {
+        dispatcher.registerCommand(new Command() {
+            @Override
+            public String getCommandName() {
+                return "petname";
+            }
+
+            @Override
+            public int compareTo(Command command) {
+                return getCommandName().compareTo(command.getCommandName());
+            }
+
+            @Override
+            public String getUsageTranslationKey(CommandSource source) {
+                return "commands.petname.usage";
+            }
+
+            @Override
+            public List<String> getAliases() {
+                return Collections.emptyList();
+            }
+
+            @Override
+            public boolean method_3278(MinecraftServer server, CommandSource source) {
+                return true;
+            }
+
+            @Override
+            public boolean isUsernameAtIndex(String[] args, int index) {
+                return false;
+            }
+
+            @Override
+            public void method_3279(MinecraftServer server, CommandSource source, String[] args) throws CommandException {
+            String name = args.length > 0 ? String.join(" ", args) : "";
             if (!summonedEntity.isEmpty()) {
                 if (CONFIG.activePet.equals("penguin")) {
                     CONFIG.penguinName = name;
@@ -1828,17 +1998,53 @@ public class Central implements ClientModInitializer {
                 }
                 AutoConfig.getConfigHolder(PetsConfig.class).save();
             }
+            }
 
-            return 1;
-        })));
+            @Override
+            public List<String> method_10738(MinecraftServer server, CommandSource source, String[] args, BlockPos pos) {
+                return Collections.emptyList();
+            }
+        });
     }
 
     /**
      * Creates the command that allows the user to toggle their pet on and off.
      */
-    void createToggleCommand(CommandDispatcher<net.minecraft.class_3915> dispatcher) {
-        dispatcher.register(LiteralArgumentBuilder.<net.minecraft.class_3915>literal("pet").then(RequiredArgumentBuilder.<net.minecraft.class_3915, String>argument("preference", StringArgumentType.string()).suggests((CommandContext<net.minecraft.class_3915> context, SuggestionsBuilder builder) -> ON_OFF.getSuggestions(context, builder)).executes((context) -> {
-            String preference = StringArgumentType.getString(context, "preference");
+    void createToggleCommand(CommandRegistry dispatcher) {
+        dispatcher.registerCommand(new Command() {
+            @Override
+            public String getCommandName() {
+                return "pet";
+            }
+
+            @Override
+            public int compareTo(Command command) {
+                return getCommandName().compareTo(command.getCommandName());
+            }
+
+            @Override
+            public String getUsageTranslationKey(CommandSource source) {
+                return "commands.pet.usage";
+            }
+
+            @Override
+            public List<String> getAliases() {
+                return Collections.emptyList();
+            }
+
+            @Override
+            public boolean method_3278(MinecraftServer server, CommandSource source) {
+                return true;
+            }
+
+            @Override
+            public boolean isUsernameAtIndex(String[] args, int index) {
+                return false;
+            }
+
+            @Override
+            public void method_3279(MinecraftServer server, CommandSource source, String[] args) throws CommandException {
+            String preference = args.length > 0 ? args[0] : "";
             if (Objects.equals(preference, "off")) {
                 CONFIG.petOn = false;
                 MinecraftClient.getInstance().player.sendMessage(new LiteralText("§b[PetsMod] §7Pet §coff."), false);
@@ -1850,9 +2056,13 @@ public class Central implements ClientModInitializer {
             } else {
                 MinecraftClient.getInstance().player.sendMessage(new LiteralText("§b[PetsMod] §c§lUnknown value " + preference + "! Possible values: §r§aon, §6off"), false);
             }
+            }
 
-            return 1;
-        })));
+            @Override
+            public List<String> method_10738(MinecraftServer server, CommandSource source, String[] args, BlockPos pos) {
+                return new ArrayList<>(ON_OFF_LIST);
+            }
+        });
     }
 
     void createPetsList() {
@@ -1885,7 +2095,7 @@ public class Central implements ClientModInitializer {
         Collections.addAll(PETS_LIST, stuffs);
     }
 
-    public void checkValidPet(boolean isValid, CommandContext<net.minecraft.class_3915> context, String species) {
+    public void checkValidPet(boolean isValid, String species) {
         if (!isValid) {
             MinecraftClient.getInstance().player.sendMessage(new LiteralText("§b[PetsMod] §cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")"), false);
         } else if (isValid && CONFIG.petOn) {
@@ -1901,11 +2111,11 @@ public class Central implements ClientModInitializer {
      * Registers all of the pets commands against the {@code CommandManager} of the
      * integrated server, via {@link com.jeff.pets.client.mixin.client.CommandManagerMixin}.
      */
-    public static void registerCommands(CommandDispatcher<net.minecraft.class_3915> dispatcher) {
+    public static void registerCommands(CommandRegistry dispatcher) {
         new Central().registerAll(dispatcher);
     }
 
-    private void registerAll(CommandDispatcher<net.minecraft.class_3915> dispatcher) {
+    private void registerAll(CommandRegistry dispatcher) {
         createPetSkinCommand(dispatcher);
         createPetTeleportCommand(dispatcher);
         createPetSpeciesCommand(dispatcher);

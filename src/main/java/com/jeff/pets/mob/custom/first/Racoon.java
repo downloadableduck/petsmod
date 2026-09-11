@@ -2,7 +2,7 @@ package com.jeff.pets.mob.custom.first;
 
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
+
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.ai.goal.BreedGoal;
@@ -30,16 +30,14 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static com.jeff.pets.PetsInitializer.RACOON;
-
 public class Racoon extends AbstractPet {
 
     public static final TrackedData<@NotNull Boolean> IS_SERVER_ENTITY =
             DataTracker.registerData(Racoon.class, TrackedDataHandlerRegistry.BOOLEAN);
     public boolean isOnHead;
 
-    public Racoon(EntityType<? extends @NotNull TameableEntity> entityType, World level) {
-        super(entityType, level);
+    public Racoon(World level) {
+        super(level);
         this.setBounds(1.0F, 1.0F);
     }
 
@@ -58,10 +56,9 @@ public class Racoon extends AbstractPet {
         return Sounds.ENTITY_CHICKEN_STEP;
     }
 
-    @Override
-    public @Nullable EntityData initialize(@NotNull LocalDifficulty difficulty, @Nullable EntityData groupData, NbtCompound compoundTag) {
+public @Nullable EntityData initialize(@NotNull LocalDifficulty difficulty, @Nullable EntityData groupData) {
         this.setServerEntity(true);
-        return super.initialize(difficulty, groupData, compoundTag);
+        return super.initialize(difficulty, groupData);
     }
 
     @Override
@@ -70,7 +67,7 @@ public class Racoon extends AbstractPet {
         this.goals.add(1, new BreedGoal(this, 1));
         this.goals.add(2, new SwimGoal(this));
         this.goals.add(3, new EscapeDangerGoal(this, 1.4d));
-        this.goals.add(4, new TemptGoal(this, 1.0f, Ingredient.ofItems(Items.SKELETON_SKULL, Items.WITHER_SKELETON_SKULL), false));
+        this.goals.add(4, new TemptGoal(this, 1.0f, Items.SKULL, false));
 
         this.goals.add(5, new LookAroundGoal(this));
         this.goals.add(6, new WanderAroundGoal(this, 1.0D));
@@ -193,9 +190,7 @@ public class Racoon extends AbstractPet {
     }
 
     public @Nullable PassiveEntity createChild(@NotNull PassiveEntity AgableMob) {
-        Racoon racoon = RACOON.spawn(world);
-        racoon.setServerEntity(false);
-        return racoon;
+        return null;
     }
 
     @Override

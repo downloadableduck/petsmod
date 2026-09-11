@@ -150,14 +150,14 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
 
         Text categoryKey = new TranslatableText(categoryFunction.apply(baseI13n, categoryName));
 
-        if (!screenBuilder.hasCategory(categoryKey.getString())) {
-            ConfigCategory category = screenBuilder.getOrCreateCategory(categoryKey.getString());
+        if (!screenBuilder.hasCategory(categoryKey.asUnformattedString())) {
+            ConfigCategory category = screenBuilder.getOrCreateCategory(categoryKey.asUnformattedString());
             if (backgroundMap.containsKey(categoryName)) {
                 category.setCategoryBackground(backgroundMap.get(categoryName));
             }
             return category;
         }
 
-        return screenBuilder.getOrCreateCategory(categoryKey.getString());
+        return screenBuilder.getOrCreateCategory(categoryKey.asUnformattedString());
     }
 }

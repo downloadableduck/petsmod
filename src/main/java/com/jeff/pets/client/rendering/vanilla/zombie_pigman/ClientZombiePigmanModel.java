@@ -29,31 +29,31 @@ public class ClientZombiePigmanModel extends EntityModel {
 
         head = new ModelPart(this);
         head.setPivot(0.0F, 0.0F, 0.0F);
-        head.setTextureOffset(0, 0).method_18947(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.0F, false);
+        head.setTextureOffset(0, 0).addCuboid(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.0F);
 
         headwear = new ModelPart(this);
         headwear.setPivot(0.0F, 0.0F, 0.0F);
-        headwear.setTextureOffset(32, 0).method_18947(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.5F, false);
+        headwear.setTextureOffset(32, 0).addCuboid(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.5F);
 
         body = new ModelPart(this);
         body.setPivot(0.0F, 0.0F, 0.0F);
-        body.setTextureOffset(16, 16).method_18947(-4.0F, 0.0F, -2.0F, 8, 12, 4, 0.0F, false);
+        body.setTextureOffset(16, 16).addCuboid(-4.0F, 0.0F, -2.0F, 8, 12, 4, 0.0F);
 
         left_arm = new ModelPart(this);
         left_arm.setPivot(5.0F, 2.0F, 0.0F);
-        left_arm.setTextureOffset(40, 16).method_18947(-1.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F, false);
+        left_arm.setTextureOffset(40, 16).addCuboid(-1.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F);
 
         right_arm = new ModelPart(this);
         right_arm.setPivot(-5.0F, 2.0F, 0.0F);
-        right_arm.setTextureOffset(40, 16).method_18947(-3.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F, false);
+        right_arm.setTextureOffset(40, 16).addCuboid(-3.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F);
 
         left_leg = new ModelPart(this);
         left_leg.setPivot(1.9F, 12.0F, 0.0F);
-        left_leg.setTextureOffset(0, 16).method_18947(-1.9F, 0.0F, -2.0F, 4, 12, 4, 0.0F, false);
+        left_leg.setTextureOffset(0, 16).addCuboid(-1.9F, 0.0F, -2.0F, 4, 12, 4, 0.0F);
 
         right_leg = new ModelPart(this);
         right_leg.setPivot(-1.9F, 12.0F, 0.0F);
-        right_leg.setTextureOffset(0, 16).method_18947(-2.1F, 0.0F, -2.0F, 4, 12, 4, 0.0F, false);
+        right_leg.setTextureOffset(0, 16).addCuboid(-2.1F, 0.0F, -2.0F, 4, 12, 4, 0.0F);
     }
 
     @Override
@@ -137,14 +137,11 @@ public class ClientZombiePigmanModel extends EntityModel {
                 this.right_arm.posX = this.right_arm.posX * 0.5F - (float) (Math.PI / 10);
                 this.right_arm.posY = 0.0F;
                 break;
-            case THROW_SPEAR:
-                this.right_arm.posX = this.right_arm.posX * 0.5F - (float) Math.PI;
-                this.right_arm.posY = 0.0F;
         }
 
-        if (this.field_13384 == BiPedModel.class_2850.THROW_SPEAR
+        if (this.field_13384 == BiPedModel.class_2850.BOW_AND_ARROW
                 && this.field_13385 != BiPedModel.class_2850.BLOCK
-                && this.field_13385 != BiPedModel.class_2850.THROW_SPEAR
+                && this.field_13385 != BiPedModel.class_2850.BOW_AND_ARROW
                 && this.field_13385 != BiPedModel.class_2850.BOW_AND_ARROW) {
             this.left_arm.posX = this.left_arm.posX * 0.5F - (float) Math.PI;
             this.left_arm.posY = 0.0F;
@@ -207,7 +204,7 @@ public class ClientZombiePigmanModel extends EntityModel {
             this.right_arm.posX = (float) (-Math.PI / 2) + this.head.posX;
             this.left_arm.posX = (float) (-Math.PI / 2) + this.head.posX;
         } else if (this.field_13384 == BiPedModel.class_2850.BOW_AND_ARROW
-                && this.field_13385 != BiPedModel.class_2850.THROW_SPEAR
+                && this.field_13385 != BiPedModel.class_2850.BOW_AND_ARROW
                 && this.field_13385 != BiPedModel.class_2850.BLOCK) {
             this.right_arm.posY = -0.1F + this.head.posY - 0.4F;
             this.left_arm.posY = 0.1F + this.head.posY;

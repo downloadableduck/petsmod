@@ -1,8 +1,6 @@
 package me.shedaniel.clothconfig2.api;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.screen.Screen;
+import org.lwjgl.input.Keyboard;
 
 import java.util.Objects;
 
@@ -12,10 +10,9 @@ import java.util.Objects;
  *
  * @author Siphalor
  */
-@Environment(EnvType.CLIENT)
 public class Modifier {
-    private short value;
-    
+    private final short value;
+
     /**
      * Constructs a new modifier object by a raw value
      *
@@ -24,11 +21,11 @@ public class Modifier {
     private Modifier(short value) {
         this.value = value;
     }
-    
+
     public static Modifier none() {
         return of((short) 0);
     }
-    
+
     /**
      * Constructs a new modifier object by all modifier bits
      *
@@ -42,31 +39,35 @@ public class Modifier {
         value = setFlag(value, (short) 4, shift);
         return of(value);
     }
-    
+
     public static Modifier of(short value) {
         return new Modifier(value);
     }
-    
+
     public static Modifier current() {
-        return Modifier.of(Screen.hasAltDown(), Screen.hasControlDown(), Screen.hasShiftDown());
+        return Modifier.of(
+                Keyboard.isKeyDown(Keyboard.KEY_LMENU) || Keyboard.isKeyDown(Keyboard.KEY_RMENU),
+                Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL),
+                Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)
+        );
     }
-    
+
     private static short setFlag(short base, short flag, boolean val) {
         return val ? setFlag(base, flag) : removeFlag(base, flag);
     }
-    
+
     private static short setFlag(short base, short flag) {
         return (short) (base | flag);
     }
-    
+
     private static short removeFlag(short base, short flag) {
         return (short) (base & (~flag));
     }
-    
+
     private static boolean getFlag(short base, short flag) {
         return (base & flag) != 0;
     }
-    
+
     /**
      * Compares this object with the current pressed keys
      *
@@ -75,7 +76,7 @@ public class Modifier {
     public boolean matchesCurrent() {
         return equals(current());
     }
-    
+
     /**
      * Gets the raw value
      *
@@ -84,7 +85,7 @@ public class Modifier {
     public short getValue() {
         return value;
     }
-    
+
     /**
      * Gets the state of the alt flag
      *
@@ -93,7 +94,7 @@ public class Modifier {
     public boolean hasAlt() {
         return getFlag(value, (short) 1);
     }
-    
+
     /**
      * Gets the state of the control flag
      *
@@ -102,7 +103,7 @@ public class Modifier {
     public boolean hasControl() {
         return getFlag(value, (short) 2);
     }
-    
+
     /**
      * Gets the state of the shift flag
      *
@@ -111,7 +112,7 @@ public class Modifier {
     public boolean hasShift() {
         return getFlag(value, (short) 4);
     }
-    
+
     /**
      * Returns whether no flag is set
      *
@@ -120,7 +121,7 @@ public class Modifier {
     public boolean isEmpty() {
         return value == 0;
     }
-    
+
     /**
      * Returns whether this object equals another one
      *
@@ -135,10 +136,10 @@ public class Modifier {
             return false;
         return value == ((Modifier) other).value;
     }
-    
+
     @Override
     public int hashCode() {
         return Objects.hash(value);
     }
-    
+
 }

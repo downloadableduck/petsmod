@@ -23,22 +23,22 @@ public class StingrayModel extends PetModel {
         body = new ModelPart(this);
         body.setPivot(0.0F, -2.0F, 0.0F);
         root.add(body);
-        body.setTextureOffset(0, 0).method_18947(-6.0F, -2.0F, -6.0F, (int) 12.0F, (int) 2.0F, (int) 12.0F, 0.0F, false);
+        body.setTextureOffset(0, 0).addCuboid(-6.0F, -2.0F, -6.0F, (int) 12.0F, (int) 2.0F, (int) 12.0F, 0.0F);
 
         tail = new ModelPart(this);
         tail.setPivot(0.0F, -2.0F, 0.0F);
         root.add(tail);
-        tail.setTextureOffset(0, 14).method_18947(-1.0F, -2.0F, 6.0F, (int) 2.0F, (int) 2.0F, (int) 10.0F, 0.0F, false);
+        tail.setTextureOffset(0, 14).addCuboid(-1.0F, -2.0F, 6.0F, (int) 2.0F, (int) 2.0F, (int) 10.0F, 0.0F);
 
         right_fin = new ModelPart(this);
         right_fin.setPivot(6.0F, -4.0F, -1.0F);
         root.add(right_fin);
-        right_fin.setTextureOffset(24, 14).method_18947(0.0F, 0.0F, -3.0F, (int) 4.0F, (int) 2.0F, (int) 6.0F, 0.0F, false);
+        right_fin.setTextureOffset(24, 14).addCuboid(0.0F, 0.0F, -3.0F, (int) 4.0F, (int) 2.0F, (int) 6.0F, 0.0F);
 
         left_fin = new ModelPart(this);
         left_fin.setPivot(-6.0F, -4.0F, -1.0F);
         root.add(left_fin);
-        left_fin.setTextureOffset(24, 22).method_18947(-4.0F, 0.0F, -3.0F, (int) 4.0F, (int) 2.0F, (int) 6.0F, 0.0F, false);
+        left_fin.setTextureOffset(24, 22).addCuboid(-4.0F, 0.0F, -3.0F, (int) 4.0F, (int) 2.0F, (int) 6.0F, 0.0F);
     }
 
     @Override

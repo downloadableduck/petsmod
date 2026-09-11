@@ -3,7 +3,7 @@ package com.jeff.pets.client.mixin.client;
 import com.jeff.pets.client.PetsClientInitializer;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.EntityRenderer;
-import net.minecraft.client.render.item.HeldItemRenderer;
+import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.entity.Entity;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,7 +22,7 @@ public abstract class EntityRendererDispatcherMixin {
     private Map<Class<? extends Entity>, EntityRenderer<? extends Entity>> renderers;
 
     @Inject(at = @At("TAIL"), method = "<init>")
-    public void onFunc(net.minecraft.client.texture.TextureManager textureManager, HeldItemRenderer heldItemRenderer, CallbackInfo ci) {
+    public void onFunc(net.minecraft.client.texture.TextureManager textureManager, ItemRenderer itemRenderer, CallbackInfo ci) {
         PetsClientInitializer.register();
         synchronized (PetsClientInitializer.renderManagerMap.keySet()) {
             for (Map.Entry<Class, PetsClientInitializer.Factory> entry : PetsClientInitializer.renderSupplierMap.entrySet()) {

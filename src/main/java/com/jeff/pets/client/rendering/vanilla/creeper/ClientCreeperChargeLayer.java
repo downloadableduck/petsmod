@@ -35,9 +35,7 @@ public class ClientCreeperChargeLayer implements FeatureRenderer<ClientCreeper> 
             GlStateManager.disableLighting();
             GlStateManager.method_12287(GlStateManager.class_2870.ONE, GlStateManager.class_2866.ONE);
             this.model.copy(this.renderer.getModel());
-            MinecraftClient.getInstance().field_3818.method_19079(true);
             this.model.render(creeperEntity, f, g, i, j, k, l);
-            MinecraftClient.getInstance().field_3818.method_19079(false);
             GlStateManager.matrixMode(5890);
             GlStateManager.loadIdentity();
             GlStateManager.matrixMode(5888);

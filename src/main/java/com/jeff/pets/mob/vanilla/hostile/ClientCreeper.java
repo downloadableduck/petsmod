@@ -3,7 +3,7 @@ package com.jeff.pets.mob.vanilla.hostile;
 import com.jeff.pets.mob.GroundPet;
 import net.minecraft.sound.Sound;
 import net.minecraft.sound.Sounds;
-import net.minecraft.entity.EntityType;
+
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
@@ -12,8 +12,8 @@ public class ClientCreeper extends GroundPet {
 
     public boolean isPowered = false;
 
-    public ClientCreeper(EntityType<? extends @NotNull TameableEntity> entityType, World level) {
-        super(entityType, level);
+    public ClientCreeper(World level) {
+        super(level);
         this.setBounds(0.6F, 1.7F);
     }
 

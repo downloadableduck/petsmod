@@ -78,7 +78,7 @@ import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.resource.ResourcePackLoader;
 import net.minecraft.entity.Entity;
-import org.lwjgl.glfw.GLFW;
+import org.lwjgl.input.Keyboard;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -136,7 +136,7 @@ public class PetsClientInitializer implements ClientModInitializer {
             client.options.save();
         }
         try {
-            Futures.addCallback(loader.method_19544(file), new FutureCallback<Object>() {
+            Futures.addCallback(loader.loadServerPack(file), new FutureCallback<Object>() {
                 @Override
                 public void onSuccess(Object result) {
                     client.execute(() -> {
@@ -218,7 +218,7 @@ public class PetsClientInitializer implements ClientModInitializer {
      * is pressed
      */
     void createKeyBinding() {
-        keyMapping = new KeyBinding("Open Pets Menu", GLFW.GLFW_KEY_P, "petsmod.keymapping");
+        keyMapping = new KeyBinding("Open Pets Menu", Keyboard.KEY_P, "petsmod.keymapping");
     }
 
     public static void register(Class entityClass, Factory factory) {

@@ -1,11 +1,11 @@
 package com.jeff.pets.client.rendering.vanilla.cow;
 
-import net.minecraft.class_4184;
+import net.minecraft.client.render.entity.model.CowEntityModel;
 import net.minecraft.client.render.model.ModelPart;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientCowModel extends class_4184 {
+public class ClientCowModel extends CowEntityModel {
 
     public ClientCowModel() {
         super();

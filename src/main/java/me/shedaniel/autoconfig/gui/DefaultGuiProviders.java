@@ -26,7 +26,6 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.autoconfig.gui.registry.GuiRegistry;
 import me.shedaniel.autoconfig.gui.registry.api.GuiRegistryAccess;
 import me.shedaniel.autoconfig.util.Utils;
-import me.shedaniel.clothconfig2.ParentElement;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.clothconfig2.gui.entries.SelectionListEntry;
@@ -138,7 +137,7 @@ public class DefaultGuiProviders {
                                         (i18n),
                                         getChildren(i18n, field, config, defaults, guiProvider)
                                 )
-                                .setExpended(field.getAnnotation(ConfigEntry.Gui.CollapsibleObject.class).startExpanded())
+                                //.setExpended(field.getAnnotation(ConfigEntry.Gui.CollapsibleObject.class).startExpanded())
                                 .build()
                 ),
                 field -> !field.getType().isPrimitive(),
@@ -264,10 +263,10 @@ public class DefaultGuiProviders {
 
                         }
 
-                        @Override
+                        /*@Override
                         public List<? extends ParentElement> children() {
                             return ImmutableList.of();
-                        }
+                        }*/
                     }
                     /*new NestedListListEntry<Object, MultiElementListEntry<Object>>(
                             (i18n),
@@ -527,10 +526,10 @@ public class DefaultGuiProviders {
 
                         }
 
-                        @Override
+                        /*@Override
                         public List<? extends ParentElement> children() {
                             return ImmutableList.of();
-                        }
+                        }*/
                     }
                     /*new NestedListListEntry<Object, MultiElementListEntry<Object>>(
                             (i18n),

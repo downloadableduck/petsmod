@@ -4,15 +4,15 @@ import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
 import net.minecraft.sound.Sound;
 import net.minecraft.sound.Sounds;
-import net.minecraft.entity.EntityType;
+
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 @CanFly
 public class ClientBlaze extends FlyingPet {
-    public ClientBlaze(EntityType<? extends @NotNull TameableEntity> entityType, World level) {
-        super(entityType, level);
+    public ClientBlaze(World level) {
+        super(level);
         this.setBounds(0.6F, 1.8F);
     }
 

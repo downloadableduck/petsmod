@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 public class ClientPufferFishRenderer extends PetRenderer<@NotNull ClientPufferFish> {
 
     public ClientPufferFishRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new net.minecraft.class_4191(), 0.75f);
+        super(context, new net.minecraft.client.render.entity.model.SquidEntityModel(), 0.75f);
     }
 
     @Override

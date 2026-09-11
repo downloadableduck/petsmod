@@ -5,7 +5,7 @@ import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.sound.SoundCategory;
 import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
+
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.ai.goal.BreedGoal;
@@ -22,7 +22,6 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.class_4385;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -37,8 +36,6 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import static com.jeff.pets.PetsInitializer.DUCK;
 
 public class Duck extends AbstractPet {
 
@@ -56,8 +53,8 @@ public class Duck extends AbstractPet {
     public ServerPlayerEntity owner = (ServerPlayerEntity) this.getOwner();
     private float nextFlap = 1.0F;
 
-    public Duck(final EntityType<? extends @NotNull Duck> type, final World level) {
-        super(type, level);
+    public Duck(final World level) {
+        super(level);
         this.setBounds(0.4F, 0.7F);
     }
 
@@ -144,19 +141,17 @@ public class Duck extends AbstractPet {
     }
 
     public @Nullable Duck createChild(final @NotNull PassiveEntity partner) {
-        Duck duck = DUCK.spawn(world);
-        duck.setServerEntity(true);
-        return duck;
+        return null;
     }
 
-    public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @Nullable EntityData groupData, NbtCompound compoundTag) {
+public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @Nullable EntityData groupData) {
         this.setServerEntity(true);
         this.dataTracker.set(DUCK_SKIN, this.random.nextInt(2));
-        return super.initialize(difficulty, groupData, compoundTag);
+        return super.initialize(difficulty, groupData);
     }
 
     public boolean isBreedingItem(final @NotNull ItemStack itemStack) {
-        return ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.TROPICAL_FISH)) || ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.COD)) || ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.SALMON));
+        return ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.RAW_FISH, 1, 2)) || ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.RAW_FISH, 1, 0)) || ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.RAW_FISH, 1, 1));
     }
 
     @Override
@@ -168,7 +163,7 @@ public class Duck extends AbstractPet {
         this.goals.add(9, new BreedGoal(this, 1));
         this.goals.add(2, new SwimGoal(this));
         this.goals.add(3, new EscapeDangerGoal(this, 1.4d));
-        this.goals.add(4, new TemptGoal(this, 1.0f, Ingredient.ofItems(Items.SKELETON_SKULL, Items.WITHER_SKELETON_SKULL), false));
+        this.goals.add(4, new TemptGoal(this, 1.0f, Items.SKULL, false));
 
         this.goals.add(5, new LookAroundGoal(this));
         this.goals.add(6, new WanderAroundGoal(this, 1.0D));

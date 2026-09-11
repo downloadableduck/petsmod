@@ -2,7 +2,7 @@ package com.jeff.pets.mob;
 
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.client.sound.SoundCategory;
-import net.minecraft.entity.EntityType;
+
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.passive.TameableEntity;
@@ -17,8 +17,8 @@ import java.util.Objects;
  * including rabbits.
  */
 public abstract class SlimeLikePet extends AbstractPet {
-    public SlimeLikePet(EntityType<? extends TameableEntity> entityType, World level) {
-        super(entityType, level);
+    public SlimeLikePet(World level) {
+        super(level);
     }
 
     @Override

@@ -27,7 +27,7 @@ public class DumboOctopusModel extends PetModel {
         body = new ModelPart(this);
         body.setPivot(0.0F, 22.0F, 0.0F);
         setRotationAngle(body, 0.0F, -1.5708F, 0.0F);
-        body.setTextureOffset(0, 0).method_18947(-4.0F, -5.0F, -3.0F, (int) 6.0F, (int) 6.0F, (int) 6.0F, 0.0F, false);
+        body.setTextureOffset(0, 0).addCuboid(-4.0F, -5.0F, -3.0F, (int) 6.0F, (int) 6.0F, (int) 6.0F, 0.0F);
 
         left_ear = new ModelPart(this);
         left_ear.setPivot(-1.0F, 2.0F, 2.0F);
@@ -38,7 +38,7 @@ public class DumboOctopusModel extends PetModel {
         left_ear_r1.setPivot(-1.0F, -7.0F, 1.0F);
         left_ear.add(left_ear_r1);
         setRotationAngle(left_ear_r1, -0.5236F, 0.0F, 0.0F);
-        left_ear_r1.setTextureOffset(8, 12).method_18947(-1.0F, -2.0F, -0.5F, (int) 2.0F, (int) 2.0F, (int) 1.0F, 0.0F, false);
+        left_ear_r1.setTextureOffset(8, 12).addCuboid(-1.0F, -2.0F, -0.5F, (int) 2.0F, (int) 2.0F, (int) 1.0F, 0.0F);
 
         right_ear = new ModelPart(this);
         right_ear.setPivot(-2.0F, -5.0F, 3.0F);
@@ -49,47 +49,47 @@ public class DumboOctopusModel extends PetModel {
         right_ear_r1.setPivot(0.0F, 0.0F, -6.0F);
         right_ear.add(right_ear_r1);
         setRotationAngle(right_ear_r1, 0.5236F, 0.0F, 0.0F);
-        right_ear_r1.setTextureOffset(8, 12).method_18947(-1.0F, -2.0F, -0.5F, (int) 2.0F, (int) 2.0F, (int) 1.0F, 0.0F, false);
+        right_ear_r1.setTextureOffset(8, 12).addCuboid(-1.0F, -2.0F, -0.5F, (int) 2.0F, (int) 2.0F, (int) 1.0F, 0.0F);
 
         leg1 = new ModelPart(this);
         leg1.setPivot(-4.0F, 1.0F, 2.0F);
         body.add(leg1);
-        leg1.setTextureOffset(0, 12).method_18947(-2.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F, false);
+        leg1.setTextureOffset(0, 12).addCuboid(-2.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
 
         leg2 = new ModelPart(this);
         leg2.setPivot(-4.0F, 1.0F, -1.0F);
         body.add(leg2);
-        leg2.setTextureOffset(0, 12).method_18947(-2.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F, false);
+        leg2.setTextureOffset(0, 12).addCuboid(-2.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
 
         leg3 = new ModelPart(this);
         leg3.setPivot(-3.0F, 1.0F, -3.0F);
         body.add(leg3);
-        leg3.setTextureOffset(0, 12).method_18947(-1.0F, -1.0F, -2.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F, false);
+        leg3.setTextureOffset(0, 12).addCuboid(-1.0F, -1.0F, -2.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
 
         leg4 = new ModelPart(this);
         leg4.setPivot(0.0F, 1.0F, -3.0F);
         body.add(leg4);
-        leg4.setTextureOffset(0, 12).method_18947(-1.0F, -1.0F, -2.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F, false);
+        leg4.setTextureOffset(0, 12).addCuboid(-1.0F, -1.0F, -2.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
 
         leg5 = new ModelPart(this);
         leg5.setPivot(2.0F, 1.0F, -2.0F);
         body.add(leg5);
-        leg5.setTextureOffset(0, 12).method_18947(0.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F, false);
+        leg5.setTextureOffset(0, 12).addCuboid(0.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
 
         leg6 = new ModelPart(this);
         leg6.setPivot(2.0F, 1.0F, 1.0F);
         body.add(leg6);
-        leg6.setTextureOffset(0, 12).method_18947(0.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F, false);
+        leg6.setTextureOffset(0, 12).addCuboid(0.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
 
         leg7 = new ModelPart(this);
         leg7.setPivot(1.0F, 1.0F, 3.0F);
         body.add(leg7);
-        leg7.setTextureOffset(0, 12).method_18947(-1.0F, -1.0F, 0.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F, false);
+        leg7.setTextureOffset(0, 12).addCuboid(-1.0F, -1.0F, 0.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
 
         leg8 = new ModelPart(this);
         leg8.setPivot(-2.0F, 1.0F, 3.0F);
         body.add(leg8);
-        leg8.setTextureOffset(0, 12).method_18947(-1.0F, -1.0F, 0.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F, false);
+        leg8.setTextureOffset(0, 12).addCuboid(-1.0F, -1.0F, 0.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
     }
 
     @Override

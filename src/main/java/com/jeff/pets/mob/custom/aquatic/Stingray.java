@@ -5,7 +5,7 @@ import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.sound.SoundCategory;
 import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
+
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.ai.goal.BreedGoal;
@@ -33,8 +33,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static com.jeff.pets.PetsInitializer.STINGRAY;
-
 public class Stingray extends FlyingPet {
     public static final TrackedData<@NotNull Boolean> IS_SERVER_ENTITY =
             DataTracker.registerData(Stingray.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -43,8 +41,8 @@ public class Stingray extends FlyingPet {
     public float flap;
     public float flapping = 1.0F;
 
-    public Stingray(EntityType<? extends @NotNull TameableEntity> type, World level) {
-        super(type, level);
+    public Stingray(World level) {
+        super(level);
         this.setBounds(1.0F, 0.4F);
     }
 
@@ -96,28 +94,25 @@ public class Stingray extends FlyingPet {
     }
 
     protected void playStepSound(final @NotNull BlockPos pos, final @NotNull BlockState blockState) {
-        this.playSound(Sounds.ENTITY_FISH_SWIM, 0.15F, 1.0F);
+        this.playSound(Sounds.ENTITY_GENERIC_SWIM, 0.15F, 1.0F);
     }
 
     public @Nullable Stingray createChild(final @NotNull PassiveEntity partner) {
-        Stingray stringray = STINGRAY.spawn(world);
-        stringray.setServerEntity(true);
-        return stringray;
+        return null;
     }
 
-    public @NotNull EntityData initialize(final @NotNull LocalDifficulty difficulty, final @Nullable EntityData groupData, NbtCompound compoundTag) {
+public @NotNull EntityData initialize(final @NotNull LocalDifficulty difficulty, final @Nullable EntityData groupData) {
         this.setServerEntity(true);
-        return super.initialize(difficulty, groupData, compoundTag);
+        return super.initialize(difficulty, groupData);
     }
 
     public boolean isBreedingItem(final @NotNull ItemStack itemStack) {
-        return ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.TROPICAL_FISH)) || ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.COD)) || ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.SALMON));
+        return ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.RAW_FISH, 1, 2)) || ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.RAW_FISH, 1, 0)) || ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.RAW_FISH, 1, 1));
     }
 
-    @Override
+@Override
     public void initGoals() {
 
-        this.getNavigation().method_15709(true);
         this.goals.add(2, new SwimGoal(this));
 
         this.goals.add(0, new FollowOwnerGoal(this, 1, 2, 10));

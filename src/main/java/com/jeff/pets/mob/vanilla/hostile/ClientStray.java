@@ -3,7 +3,7 @@ package com.jeff.pets.mob.vanilla.hostile;
 import com.jeff.pets.mob.GroundPet;
 import net.minecraft.sound.Sound;
 import net.minecraft.sound.Sounds;
-import net.minecraft.entity.EntityType;
+
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.ai.RangedAttackMob;
@@ -12,8 +12,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientStray extends GroundPet implements RangedAttackMob {
 
-    public ClientStray(EntityType<? extends @NotNull TameableEntity> entityType, World level) {
-        super(entityType, level);
+    public ClientStray(World level) {
+        super(level);
         this.setBounds(0.6F, 1.95F);
     }
 
@@ -37,8 +37,11 @@ public class ClientStray extends GroundPet implements RangedAttackMob {
 
     }
 
-    @Override
-    public void method_13246(boolean bl) {
+public void method_13246(boolean bl) {
 
+    }
+
+    @Override
+    public void method_14057(boolean bl) {
     }
 }

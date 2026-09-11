@@ -9,48 +9,60 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class LongListEntry extends TextFieldListEntry<Long> {
-    
-    private static Function<String, String> stripCharacters = s -> {
+
+    private static final Function<String, String> stripCharacters = s -> {
         StringBuilder stringBuilder_1 = new StringBuilder();
         char[] var2 = s.toCharArray();
         int var3 = var2.length;
-        
-        for(int var4 = 0; var4 < var3; ++var4)
-            if (Character.isDigit(var2[var4]) || var2[var4] == '-')
-                stringBuilder_1.append(var2[var4]);
-        
+
+        for (char c : var2)
+            if (Character.isDigit(c) || c == '-')
+                stringBuilder_1.append(c);
+
         return stringBuilder_1.toString();
     };
     private long minimum, maximum;
-    private Consumer<Long> saveConsumer;
-    
+    private final Consumer<Long> saveConsumer;
+
+
+    @Deprecated
     public LongListEntry(String fieldName, Long value, Consumer<Long> saveConsumer) {
-        this(fieldName, value, "text.cloth-config2.reset_value", null, saveConsumer);
+        this(fieldName, value, "text.cloth-config.reset_value", null, saveConsumer);
     }
-    
+
+
+    @Deprecated
     public LongListEntry(String fieldName, Long value, String resetButtonKey, Supplier<Long> defaultValue, Consumer<Long> saveConsumer) {
         super(fieldName, value, resetButtonKey, defaultValue);
         this.minimum = -Long.MAX_VALUE;
         this.maximum = Long.MAX_VALUE;
         this.saveConsumer = saveConsumer;
     }
-    
+
+
+    @Deprecated
     public LongListEntry(String fieldName, Long value, String resetButtonKey, Supplier<Long> defaultValue, Consumer<Long> saveConsumer, Supplier<Optional<String[]>> tooltipSupplier) {
-        super(fieldName, value, resetButtonKey, defaultValue, tooltipSupplier);
+        this(fieldName, value, resetButtonKey, defaultValue, saveConsumer, tooltipSupplier, false);
+    }
+
+
+    @Deprecated
+    public LongListEntry(String fieldName, Long value, String resetButtonKey, Supplier<Long> defaultValue, Consumer<Long> saveConsumer, Supplier<Optional<String[]>> tooltipSupplier, boolean requiresRestart) {
+        super(fieldName, value, resetButtonKey, defaultValue, tooltipSupplier, requiresRestart);
         this.minimum = -Long.MAX_VALUE;
         this.maximum = Long.MAX_VALUE;
         this.saveConsumer = saveConsumer;
     }
-    
+
     @Override
     protected String stripAddText(String s) {
         return stripCharacters.apply(s);
     }
-    
+
     @Override
     protected void textFieldPreRender(TextFieldWidget widget) {
         try {
-            double i = Long.valueOf(textFieldWidget.getText());
+            double i = Long.parseLong(textFieldWidget.getText());
             if (i < minimum || i > maximum)
                 widget.setEditableColor(16733525);
             else
@@ -59,41 +71,41 @@ public class LongListEntry extends TextFieldListEntry<Long> {
             widget.setEditableColor(16733525);
         }
     }
-    
+
     @Override
     public void save() {
         if (saveConsumer != null)
             saveConsumer.accept(getValue());
     }
-    
+
     @Override
     protected boolean isMatchDefault(String text) {
-        return getDefaultValue().isPresent() ? text.equals(defaultValue.get().toString()) : false;
+        return getDefaultValue().isPresent() && text.equals(defaultValue.get().toString());
     }
-    
+
     public LongListEntry setMinimum(long minimum) {
         this.minimum = minimum;
         return this;
     }
-    
+
     public LongListEntry setMaximum(long maximum) {
         this.maximum = maximum;
         return this;
     }
-    
+
     @Override
     public Long getValue() {
         try {
             return Long.valueOf(textFieldWidget.getText());
         } catch (Exception e) {
-            return 0l;
+            return 0L;
         }
     }
-    
+
     @Override
     public Optional<String> getError() {
         try {
-            long i = Long.valueOf(textFieldWidget.getText());
+            long i = Long.parseLong(textFieldWidget.getText());
             if (i > maximum)
                 return Optional.of(I18n.translate("text.cloth-config.error.too_large", maximum));
             else if (i < minimum)

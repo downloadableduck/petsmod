@@ -16,8 +16,8 @@ public class HeadModel extends PetModel {
         Head = new ModelPart(this);
         Head.setPivot(0.0F, 0.0F, 0.0F);
         setRotationAngle(Head, -0.1047F, 0.0873F, 0.0F);
-        Head.setTextureOffset(0, 0).method_18947(-8.0F, 16.0F, 0.0F, (int) 8.0F, (int) 8.0F, (int) 8.0F, 0.0F, false);
-        Head.setTextureOffset(32, 0).method_18947(-4.0F, -8.0F, -4.0F, (int) 8.0F, (int) 8.0F, (int) 8.0F, 0.5F, false);
+        Head.setTextureOffset(0, 0).addCuboid(-8.0F, 16.0F, 0.0F, (int) 8.0F, (int) 8.0F, (int) 8.0F, 0.0F);
+        Head.setTextureOffset(32, 0).addCuboid(-4.0F, -8.0F, -4.0F, (int) 8.0F, (int) 8.0F, (int) 8.0F, 0.5F);
     }
 
     public void setAngles(net.minecraft.entity.Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float f) {

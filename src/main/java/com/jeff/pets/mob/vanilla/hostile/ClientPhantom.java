@@ -4,15 +4,15 @@ import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
 import net.minecraft.sound.Sound;
 import net.minecraft.sound.Sounds;
-import net.minecraft.entity.EntityType;
+
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 @CanFly
 public class ClientPhantom extends FlyingPet {
-    public ClientPhantom(EntityType<? extends @NotNull TameableEntity> entityType, World level) {
-        super(entityType, level);
+    public ClientPhantom(World level) {
+        super(level);
         this.setBounds(0.9F, 0.5F);
     }
 
@@ -28,6 +28,6 @@ public class ClientPhantom extends FlyingPet {
 
     @Override
     protected Sound getAmbientSound() {
-        return Sounds.ENTITY_PHANTOM_AMBIENT;
+        return Sounds.ENTITY_GHAST_AMBIENT;
     }
 }

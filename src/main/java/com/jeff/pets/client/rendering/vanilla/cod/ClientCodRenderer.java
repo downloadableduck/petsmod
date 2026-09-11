@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 public class ClientCodRenderer extends PetRenderer<@NotNull ClientCod> {
 
     public ClientCodRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new net.minecraft.class_4183(), 0.3F);
+        super(context, new net.minecraft.client.render.entity.model.SquidEntityModel(), 0.3F);
     }
 
     @Override

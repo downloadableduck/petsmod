@@ -1,22 +1,22 @@
 package me.shedaniel.clothconfig2.gui;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.ConfirmScreen;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.ConfirmScreen;
 import net.minecraft.client.resource.language.I18n;
+import net.minecraft.text.TranslatableText;
 
-@Environment(EnvType.CLIENT)
+import java.util.Random;
+
 public class ClothRequiresRestartScreen extends ConfirmScreen {
-    
+
     public ClothRequiresRestartScreen(Screen parent) {
         super((t, u) -> {
             if (t)
-                MinecraftClient.getInstance().stop();
+                MinecraftClient.getInstance().scheduleStop();
             else
                 MinecraftClient.getInstance().setScreen(parent);
-        }, I18n.translate("text.cloth-config2.restart_required"), I18n.translate("text.cloth-config2.restart_required_sub"), I18n.translate("text.cloth-config2.exit_minecraft"), I18n.translate("text.cloth-config2.ignore_restart"), 0);
+        }, new TranslatableText("text.cloth-config.restart_required").toString(), new TranslatableText("text.cloth-config.restart_required_sub").toString(), I18n.translate("text.cloth-config.exit_minecraft"), I18n.translate("text.cloth-config.ignore_restart"), new Random().nextInt());
     }
-    
+
 }

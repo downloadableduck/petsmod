@@ -107,7 +107,7 @@ public class DefaultGuiTransformers {
                     ArrayList<AbstractConfigListEntry> ret = new ArrayList<>(guis);
                     String text = String.format("%s.%s", i18n, "@PrefixText");
                     TextListEntry element = ENTRY_BUILDER.startTextDescription(text).build();
-                    String s = new TranslatableText(i18n).getString().toLowerCase(Locale.ROOT);
+                    String s = new TranslatableText(i18n).asUnformattedString().toLowerCase(Locale.ROOT);
                     if (!s.isEmpty()) {
                         //element.appendSearchTags(Lists.newArrayList(s.split(" ")));
                     }

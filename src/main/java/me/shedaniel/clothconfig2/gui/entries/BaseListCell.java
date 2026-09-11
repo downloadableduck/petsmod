@@ -1,17 +1,10 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.class_4121;
-import net.minecraft.class_4122;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-@Environment(EnvType.CLIENT)
-public abstract class BaseListCell extends class_4121 {
+public abstract class BaseListCell {
 
     private Supplier<Optional<String>> errorSupplier;
 
@@ -35,11 +28,7 @@ public abstract class BaseListCell extends class_4121 {
 
     public abstract void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta);
 
-    public void updateSelected(boolean isSelected) {}
-
-    @Override
-    protected List<? extends class_4122> method_18423() {
-        return Collections.emptyList();
+    public void updateSelected(boolean isSelected) {
     }
 
 }

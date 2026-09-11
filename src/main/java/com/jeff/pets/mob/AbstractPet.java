@@ -1,23 +1,22 @@
 package com.jeff.pets.mob;
 
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.particle.ParticleType;
 import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.text.LiteralText;
 import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.player.ClientPlayerEntity;
 import net.minecraft.sound.Sound;
 import net.minecraft.util.Hand;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
+
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.*;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.Sys;
 
 /**
  * Abstract class that extends {@link TameableEntity}, providing multiple utilities
@@ -38,8 +37,8 @@ public abstract class AbstractPet extends TameableEntity {
     private float randomX = (float) (Math.random() - 1f);
     private float randomZ = (float) (Math.random() - 1);
 
-    protected AbstractPet(EntityType<? extends @NotNull TameableEntity> type, World level) {
-        super(type, level);
+protected AbstractPet(World level) {
+        super(level);
         this.setMovementSpeed(0.5f);
     }
 
@@ -105,16 +104,11 @@ public abstract class AbstractPet extends TameableEntity {
      */
     @Override
     public boolean interactMob(@NotNull PlayerEntity player, @NotNull Hand hand) {
+        System.out.println("hi");
         ItemStack itemStack = player.getStackInHand(hand);
 
-        if (this.isTamed() && itemStack.isEmpty() && !player.isSneaking()) {
-            this.world.method_16343(
-                    (ParticleEffect) Registry.PARTICLE_TYPE.get(new Identifier("heart")),
-                    this.x,
-                    this.y + this.heartHeight(),
-                    this.z,
-                    5, 5, 5
-            );
+if (this.isTamed() && itemStack.isEmpty() && !player.isSneaking()) {
+            this.world.addParticle(ParticleType.HEART, this.x, this.y + this.heartHeight(), this.z, 0.0, 0.0, 0.0);
             return true;
         }
 
@@ -169,8 +163,9 @@ public abstract class AbstractPet extends TameableEntity {
     /**
      * Easier way to call the super's custom name method that takes a String rather than a {@link net.minecraft.text.Text}.
      */
-    public void setName(String string) {
-        this.method_15578(new LiteralText(string));
+public void setName(String string) {
+        this.setCustomName(string);
+        this.setCustomNameVisible(true);
     }
 
     public void wander() {

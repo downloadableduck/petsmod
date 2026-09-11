@@ -9,48 +9,60 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class IntegerListEntry extends TextFieldListEntry<Integer> {
-    
-    private static Function<String, String> stripCharacters = s -> {
+
+    private static final Function<String, String> stripCharacters = s -> {
         StringBuilder stringBuilder_1 = new StringBuilder();
         char[] var2 = s.toCharArray();
         int var3 = var2.length;
-        
-        for(int var4 = 0; var4 < var3; ++var4)
-            if (Character.isDigit(var2[var4]) || var2[var4] == '-')
-                stringBuilder_1.append(var2[var4]);
-        
+
+        for (char c : var2)
+            if (Character.isDigit(c) || c == '-')
+                stringBuilder_1.append(c);
+
         return stringBuilder_1.toString();
     };
     private int minimum, maximum;
-    private Consumer<Integer> saveConsumer;
-    
+    private final Consumer<Integer> saveConsumer;
+
+
+    @Deprecated
     public IntegerListEntry(String fieldName, Integer value, Consumer<Integer> saveConsumer) {
-        this(fieldName, value, "text.cloth-config2.reset_value", null, saveConsumer);
+        this(fieldName, value, "text.cloth-config.reset_value", null, saveConsumer);
     }
-    
+
+
+    @Deprecated
     public IntegerListEntry(String fieldName, Integer value, String resetButtonKey, Supplier<Integer> defaultValue, Consumer<Integer> saveConsumer) {
         super(fieldName, value, resetButtonKey, defaultValue);
         this.minimum = -Integer.MAX_VALUE;
         this.maximum = Integer.MAX_VALUE;
         this.saveConsumer = saveConsumer;
     }
-    
+
+
+    @Deprecated
     public IntegerListEntry(String fieldName, Integer value, String resetButtonKey, Supplier<Integer> defaultValue, Consumer<Integer> saveConsumer, Supplier<Optional<String[]>> tooltipSupplier) {
-        super(fieldName, value, resetButtonKey, defaultValue, tooltipSupplier);
+        this(fieldName, value, resetButtonKey, defaultValue, saveConsumer, tooltipSupplier, false);
+    }
+
+
+    @Deprecated
+    public IntegerListEntry(String fieldName, Integer value, String resetButtonKey, Supplier<Integer> defaultValue, Consumer<Integer> saveConsumer, Supplier<Optional<String[]>> tooltipSupplier, boolean requiresRestart) {
+        super(fieldName, value, resetButtonKey, defaultValue, tooltipSupplier, requiresRestart);
         this.minimum = -Integer.MAX_VALUE;
         this.maximum = Integer.MAX_VALUE;
         this.saveConsumer = saveConsumer;
     }
-    
+
     @Override
     protected String stripAddText(String s) {
         return stripCharacters.apply(s);
     }
-    
+
     @Override
     protected void textFieldPreRender(TextFieldWidget widget) {
         try {
-            double i = Integer.valueOf(textFieldWidget.getText());
+            double i = Integer.parseInt(textFieldWidget.getText());
             if (i < minimum || i > maximum)
                 widget.setEditableColor(16733525);
             else
@@ -59,28 +71,28 @@ public class IntegerListEntry extends TextFieldListEntry<Integer> {
             widget.setEditableColor(16733525);
         }
     }
-    
+
     @Override
     protected boolean isMatchDefault(String text) {
-        return getDefaultValue().isPresent() ? text.equals(defaultValue.get().toString()) : false;
+        return getDefaultValue().isPresent() && text.equals(defaultValue.get().toString());
     }
-    
+
     @Override
     public void save() {
         if (saveConsumer != null)
             saveConsumer.accept(getValue());
     }
-    
+
     public IntegerListEntry setMaximum(int maximum) {
         this.maximum = maximum;
         return this;
     }
-    
+
     public IntegerListEntry setMinimum(int minimum) {
         this.minimum = minimum;
         return this;
     }
-    
+
     @Override
     public Integer getValue() {
         try {
@@ -89,11 +101,11 @@ public class IntegerListEntry extends TextFieldListEntry<Integer> {
             return 0;
         }
     }
-    
+
     @Override
     public Optional<String> getError() {
         try {
-            int i = Integer.valueOf(textFieldWidget.getText());
+            int i = Integer.parseInt(textFieldWidget.getText());
             if (i > maximum)
                 return Optional.of(I18n.translate("text.cloth-config.error.too_large", maximum));
             else if (i < minimum)

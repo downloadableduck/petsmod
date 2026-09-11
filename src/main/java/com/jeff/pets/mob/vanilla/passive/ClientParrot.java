@@ -5,7 +5,7 @@ import com.jeff.pets.mob.FlyingPet;
 import net.minecraft.sound.Sound;
 import net.minecraft.sound.Sounds;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.entity.EntityType;
+
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
@@ -21,8 +21,8 @@ public class ClientParrot extends FlyingPet {
 
     public boolean isOnHead;
 
-    public ClientParrot(EntityType<? extends @NotNull TameableEntity> entityType, World level) {
-        super(entityType, level);
+    public ClientParrot(World level) {
+        super(level);
         this.setBounds(0.5F, 0.9F);
     }
 
