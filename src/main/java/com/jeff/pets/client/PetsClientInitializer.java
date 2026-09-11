@@ -29,7 +29,6 @@ import com.jeff.pets.client.rendering.vanilla.irongolem.ClientIronGolemRenderer;
 import com.jeff.pets.client.rendering.vanilla.llama.ClientLlamaRenderer;
 import com.jeff.pets.client.rendering.vanilla.magmacube.ClientMagmaCubeRenderer;
 import com.jeff.pets.client.rendering.vanilla.mooshroom.ClientMooshroomRenderer;
-import com.jeff.pets.client.rendering.vanilla.parrot.ClientParrotRenderer;
 import com.jeff.pets.client.rendering.vanilla.pig.ClientPigRenderer;
 import com.jeff.pets.client.rendering.vanilla.polarbear.ClientPolarBearRenderer;
 import com.jeff.pets.client.rendering.vanilla.rabbit.ClientRabbitRenderer;
@@ -70,7 +69,6 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.input.Keyboard;
 
@@ -213,7 +211,6 @@ public class PetsClientInitializer {
         register(ClientDonkey.class, ClientDonkeyRenderer::new);
         register(ClientHorse.class, ClientHorseRenderer::new);
         register(ClientMooshroom.class, ClientMooshroomRenderer::new);
-        register(ClientParrot.class, ClientParrotRenderer::new);
         register(ClientPig.class, ClientPigRenderer::new);
         register(ClientRabbit.class, ClientRabbitRenderer::new);
         register(ClientSnowGolem.class, ClientSnowGolemRenderer::new);

@@ -32,9 +32,4 @@ public class ClientStray extends GroundPet implements IRangedAttackMob {
     public void attackEntityWithRangedAttack(EntityLivingBase livingEntity, float f) {
 
     }
-
-    @Override
-    public void setSwingingArms(boolean swingingArms) {
-
-    }
 }

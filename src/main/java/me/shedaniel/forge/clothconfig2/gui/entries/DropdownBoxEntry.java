@@ -13,7 +13,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -82,7 +82,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             this.selectionElement.bounds.x = x + entryWidth - 150 + 1;
         }
         this.selectionElement.bounds.width = 150 - resetButton.getWidth() - 4;
-        resetButton.func_191745_a(Minecraft.getInstance(), mouseX, mouseY, delta);
+        resetButton.func_146112_a(Minecraft.getInstance(), mouseX, mouseY);
         selectionElement.render(mouseX, mouseY, delta);
     }
 
@@ -386,7 +386,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
                 int topc = new Rectangle(scrollbarPositionMinX, minY, scrollbarPositionMaxX - scrollbarPositionMinX, height).contains(PointHelper.ofMouse()) ? 222 : 172;
 
                 Tessellator tessellator = Tessellator.getInstance();
-                BufferBuilder buffer = tessellator.getBuffer();
+                VertexBuffer buffer = tessellator.getBuffer();
 
                 // Bottom
                 buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);

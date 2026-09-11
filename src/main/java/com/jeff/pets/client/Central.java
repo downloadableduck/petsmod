@@ -127,7 +127,6 @@ public class Central {
     public static ClientDonkey donkey;
     public static ClientHorse horse;
     public static ClientMooshroom mooshroom;
-    public static ClientParrot parrot;
     public static ClientPig pig;
     public static ClientRabbit rabbit;
     public static ClientSnowGolem snowGolem;
@@ -218,7 +217,6 @@ public class Central {
         Utils.despawnEntity(donkey);
         Utils.despawnEntity(horse);
         Utils.despawnEntity(mooshroom);
-        Utils.despawnEntity(parrot);
         Utils.despawnEntity(pig);
         Utils.despawnEntity(rabbit);
         Utils.despawnEntity(snowGolem);
@@ -278,7 +276,6 @@ public class Central {
         donkey = new ClientDonkey(world);
         horse = new ClientHorse(world);
         mooshroom = new ClientMooshroom(world);
-        parrot = new ClientParrot(world);
         pig = new ClientPig(world);
         rabbit = new ClientRabbit(world);
         snowGolem = new ClientSnowGolem(world);
@@ -342,8 +339,6 @@ public class Central {
                 Utils.summonPet(horse, CONFIG.horseName);
             } else if (Objects.equals(CONFIG.activePet, "mooshroom")) {
                 Utils.summonPet(mooshroom, CONFIG.mooshroomName);
-            } else if (Objects.equals(CONFIG.activePet, "parrot")) {
-                Utils.summonPet(parrot, CONFIG.parrotName);
             } else if (Objects.equals(CONFIG.activePet, "pig")) {
                 Utils.summonPet(pig, CONFIG.pigName);
             } else if (Objects.equals(CONFIG.activePet, "rabbit")) {
@@ -444,7 +439,6 @@ public class Central {
         Utils.checkName("donkey", donkey, CONFIG.donkeyName);
         Utils.checkName("horse", horse, CONFIG.horseName);
         Utils.checkName("mooshroom", mooshroom, CONFIG.mooshroomName);
-        Utils.checkName("parrot", parrot, CONFIG.parrotName);
         Utils.checkName("pig", pig, CONFIG.pigName);
         Utils.checkName("rabbit", rabbit, CONFIG.rabbitName);
         Utils.checkName("snow_golem", snowGolem, CONFIG.snowGolemName);
@@ -1296,8 +1290,6 @@ public class Central {
                     Utils.setActivePet(horse, "horse");
                 } else if (Objects.equals(species, "mooshroom")) {
                     Utils.setActivePet(mooshroom, "mooshroom");
-                } else if (Objects.equals(species, "parrot")) {
-                    Utils.setActivePet(parrot, "parrot");
                 } else if (Objects.equals(species, "pig")) {
                     Utils.setActivePet(pig, "pig");
                 } else if (Objects.equals(species, "rabbit")) {

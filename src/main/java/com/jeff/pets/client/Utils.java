@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 
@@ -49,7 +50,7 @@ public class Utils {
         entity.setPosition(x, y, z);
         entity.setName(entityName);
         world.addEntityToWorld(entity.getEntityId(), entity);
-        entity.setTamedBy(player);
+        entity.setOwnerId(EntityPlayer.getUUID(player.getGameProfile()));
         Central.summonedEntity.add(entity);
     }
 

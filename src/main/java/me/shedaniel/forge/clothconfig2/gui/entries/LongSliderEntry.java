@@ -136,8 +136,8 @@ public class LongSliderEntry extends TooltipListEntry<Long> {
             this.sliderWidget.x = x + entryWidth - 150;
         }
         this.sliderWidget.setWidth(150 - resetButton.getWidth() - 2);
-        resetButton.func_191745_a(Minecraft.getInstance(), mouseX, mouseY, delta);
-        sliderWidget.func_191745_a(Minecraft.getInstance(), mouseX, mouseY, delta);
+        resetButton.func_146112_a(Minecraft.getInstance(), mouseX, mouseY);
+        sliderWidget.func_146112_a(Minecraft.getInstance(), mouseX, mouseY);
     }
 
     private class Slider extends GuiOptionSlider {

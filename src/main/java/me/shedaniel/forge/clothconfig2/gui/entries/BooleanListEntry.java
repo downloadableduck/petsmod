@@ -110,8 +110,8 @@ public class BooleanListEntry extends TooltipListEntry<Boolean> {
             this.buttonWidget.x = x + entryWidth - 150;
         }
         this.buttonWidget.setWidth(150 - resetButton.getWidth() - 2);
-        resetButton.func_191745_a(Minecraft.getInstance(), mouseX, mouseY, delta);
-        buttonWidget.func_191745_a(Minecraft.getInstance(), mouseX, mouseY, delta);
+        resetButton.func_146112_a(Minecraft.getInstance(), mouseX, mouseY);
+        buttonWidget.func_146112_a(Minecraft.getInstance(), mouseX, mouseY);
     }
 
     public String getYesNoText(boolean bool) {

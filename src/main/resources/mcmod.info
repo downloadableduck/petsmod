@@ -4,7 +4,7 @@
     "name": "Pets Mod",
     "description": "Adds completely client-sided pets to your game. Supports every vanilla mob, some custom ones, and will work on any server, including in singleplayer!",
     "version": "0.7.9",
-    "mcversion": "[1.12,1.12.2]",
+    "mcversion": "[1.11,1.11.2]",
     "url": "https://petsmod.com/",
     "authorList": [
       "Pets Team",
