@@ -27,44 +27,44 @@ public class RacoonModel extends PetModel {
         head = new ModelPart(this);
         head.setPos(0.0F, 0.0F, 0.0F);
         root.addChild(head);
-        head.setTextureCoords(0, 15).addBox(-2.5F, -7.0F, -2.0F, 7, 5, 5, 0.0F, false);
-        head.setTextureCoords(28, 28).addBox(1.5F, -9.0F, 1.0F, 2, 2, 1, 0.0F, false);
-        head.setTextureCoords(0, 30).addBox(-1.5F, -9.0F, 1.0F, 2, 2, 1, 0.0F, false);
-        head.setTextureCoords(1, 26).addBox(-0.5F, -4.0F, -4.0F, 3, 2, 2, 0.0F, false);
-        head.setTextureCoords(24, 12).addBox(-3.5F, -5.0F, -2.0F, 1, 3, 5, 0.0F, false);
-        head.setTextureCoords(24, 20).addBox(4.5F, -5.0F, -2.0F, 1, 3, 5, 0.0F, false);
+        head.setTextureCoords(0, 15).addBox(-2.5F, -7.0F, -2.0F, 7, 5, 5, 0.0F);
+        head.setTextureCoords(28, 28).addBox(1.5F, -9.0F, 1.0F, 2, 2, 1, 0.0F);
+        head.setTextureCoords(0, 30).addBox(-1.5F, -9.0F, 1.0F, 2, 2, 1, 0.0F);
+        head.setTextureCoords(1, 26).addBox(-0.5F, -4.0F, -4.0F, 3, 2, 2, 0.0F);
+        head.setTextureCoords(24, 12).addBox(-3.5F, -5.0F, -2.0F, 1, 3, 5, 0.0F);
+        head.setTextureCoords(24, 20).addBox(4.5F, -5.0F, -2.0F, 1, 3, 5, 0.0F);
 
         body = new ModelPart(this);
         body.setPos(1.0F, -0.5F, -3.0F);
         head.addChild(body);
         setRotationAngle(body, 1.5708F, 0.0F, 0.0F);
-        body.setTextureCoords(0, 0).addBox(-3.0F, 4.0F, -3.5F, 6, 9, 6, 0.0F, false);
+        body.setTextureCoords(0, 0).addBox(-3.0F, 4.0F, -3.5F, 6, 9, 6, 0.0F);
 
         left_hind_leg = new ModelPart(this);
         left_hind_leg.setPos(-4.0F, 1.0F, 10.0F);
         root.addChild(left_hind_leg);
-        left_hind_leg.setTextureCoords(12, 25).addBox(2.5F, 2.0F, -2.0F, 2, 4, 2, 0.0F, false);
+        left_hind_leg.setTextureCoords(12, 25).addBox(2.5F, 2.0F, -2.0F, 2, 4, 2, 0.0F);
 
         right_hind_leg = new ModelPart(this);
         right_hind_leg.setPos(0.0F, 1.0F, 10.0F);
         root.addChild(right_hind_leg);
-        right_hind_leg.setTextureCoords(20, 28).addBox(1.5F, 2.0F, -2.0F, 2, 4, 2, 0.0F, false);
+        right_hind_leg.setTextureCoords(20, 28).addBox(1.5F, 2.0F, -2.0F, 2, 4, 2, 0.0F);
 
         left_front_leg = new ModelPart(this);
         left_front_leg.setPos(-4.0F, 1.0F, 3.0F);
         root.addChild(left_front_leg);
-        left_front_leg.setTextureCoords(12, 25).addBox(2.5F, 2.0F, -1.0F, 2, 4, 2, 0.0F, false);
+        left_front_leg.setTextureCoords(12, 25).addBox(2.5F, 2.0F, -1.0F, 2, 4, 2, 0.0F);
 
         right_front_leg = new ModelPart(this);
         right_front_leg.setPos(0.0F, 1.0F, 3.0F);
         root.addChild(right_front_leg);
-        right_front_leg.setTextureCoords(20, 28).addBox(1.5F, 2.0F, -1.0F, 2, 4, 2, 0.0F, false);
+        right_front_leg.setTextureCoords(20, 28).addBox(1.5F, 2.0F, -1.0F, 2, 4, 2, 0.0F);
 
         tail = new ModelPart(this);
         tail.setPos(-3.0F, 0.5F, 12.0F);
         root.addChild(tail);
         setRotationAngle(tail, 1.5708F, 0.0F, 0.0F);
-        tail.setTextureCoords(24, 0).addBox(2.0F, -2.0F, -1.0F, 4, 8, 4, 0.0F, false);
+        tail.setTextureCoords(24, 0).addBox(2.0F, -2.0F, -1.0F, 4, 8, 4, 0.0F);
     }
 
     @Override

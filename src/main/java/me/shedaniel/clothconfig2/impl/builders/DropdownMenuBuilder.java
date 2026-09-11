@@ -168,7 +168,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                     // textFieldWidget.setWidth(width - 4 - 20); // Not in 1.13
                     textFieldWidget.setEditable(getParent().isEditable());
                     textFieldWidget.setEditableColor(getPreferredTextColor());
-                    textFieldWidget.render(mouseX, mouseY, delta);
+                    textFieldWidget.render();
                     ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
                     ItemStack stack = hasConfigError() ? BARRIER : new ItemStack(Item.REGISTRY.get(getValue()));
                     itemRenderer.renderGuiItem(stack, x + width - 18, y + 2);
@@ -185,7 +185,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                     // textFieldWidget.setWidth(width - 4 - 20); // Not in 1.13
                     textFieldWidget.setEditable(getParent().isEditable());
                     textFieldWidget.setEditableColor(getPreferredTextColor());
-                    textFieldWidget.render(mouseX, mouseY, delta);
+                    textFieldWidget.render();
                     ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
                     ItemStack stack = hasConfigError() ? BARRIER : new ItemStack(Block.REGISTRY.get(getValue()));
                     itemRenderer.renderGuiItem(stack, x + width - 18, y + 2);
@@ -202,7 +202,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                     // textFieldWidget.setWidth(width - 4 - 20); // Not in 1.13
                     textFieldWidget.setEditable(getParent().isEditable());
                     textFieldWidget.setEditableColor(getPreferredTextColor());
-                    textFieldWidget.render(mouseX, mouseY, delta);
+                    textFieldWidget.render();
                     ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
                     ItemStack stack = hasConfigError() ? BARRIER : new ItemStack(getValue());
                     itemRenderer.renderGuiItem(stack, x + width - 18, y + 2);
@@ -219,7 +219,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                     // textFieldWidget.setWidth(width - 4 - 20); // Not in 1.13
                     textFieldWidget.setEditable(getParent().isEditable());
                     textFieldWidget.setEditableColor(getPreferredTextColor());
-                    textFieldWidget.render(mouseX, mouseY, delta);
+                    textFieldWidget.render();
                     ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
                     ItemStack stack = hasConfigError() ? BARRIER : new ItemStack(getValue());
                     itemRenderer.renderGuiItem(stack, x + width - 18, y + 2);

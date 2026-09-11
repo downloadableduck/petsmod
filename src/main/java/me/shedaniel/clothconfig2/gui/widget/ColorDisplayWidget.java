@@ -1,6 +1,6 @@
 package me.shedaniel.clothconfig2.gui.widget;
 
-import net.minecraft.client.gui.widget.ButtonWidget;
+import me.shedaniel.clothconfig2.ButtonWidget;
 
 public class ColorDisplayWidget extends ButtonWidget {
     
@@ -8,7 +8,7 @@ public class ColorDisplayWidget extends ButtonWidget {
     protected int size;
     
     public ColorDisplayWidget(int x, int y, int size, int color) {
-        super(x, y, size, size, 20, "");
+        super(x, y, size, size, "", w -> {});
         this.color = color;
         this.size = size;
     }

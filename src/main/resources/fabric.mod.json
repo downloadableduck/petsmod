@@ -29,7 +29,7 @@
       "com.jeff.pets.client.Central"
     ],
     "modmenu": [
-      "com.jeff.pets.client.PetsConfigScreen"
+      "com.jeff.pets.client.ModMenuEntrypoint"
     ]
   },
   "mixins": [
@@ -41,7 +41,7 @@
   "depends": {
     "fabricloader": ">=0.18",
     "minecraft": [
-      "1.13"
+      "~1.11"
     ],
     "java": "*",
     "osl-core": "*"

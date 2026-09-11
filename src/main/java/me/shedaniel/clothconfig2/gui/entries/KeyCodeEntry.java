@@ -1,36 +1,23 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
+import me.shedaniel.clothconfig2.impl.WindowUtil;
+
 import com.google.common.collect.Lists;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.render.platform.Window;
 import me.shedaniel.clothconfig2.ButtonWidget;
-import net.minecraft.client.render.platform.Window;
 import me.shedaniel.clothconfig2.api.ModifierKeyCode;
-import net.minecraft.client.render.platform.Window;
 import net.fabricmc.api.EnvType;
-import net.minecraft.client.render.platform.Window;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.render.platform.Window;
-import net.minecraft.client.gui.GuiEventListener;
-import net.minecraft.client.render.platform.Window;
+import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.text.Formatting;
-import net.minecraft.client.render.platform.Window;
 import org.jetbrains.annotations.ApiStatus;
-import net.minecraft.client.render.platform.Window;
 
 import java.util.List;
-import net.minecraft.client.render.platform.Window;
 import java.util.Optional;
-import net.minecraft.client.render.platform.Window;
 import java.util.function.Consumer;
-import net.minecraft.client.render.platform.Window;
 import java.util.function.Supplier;
-import net.minecraft.client.render.platform.Window;
 
 @SuppressWarnings("DuplicatedCode")
 @Environment(EnvType.CLIENT)
@@ -113,7 +100,6 @@ public class KeyCodeEntry extends TooltipListEntry<ModifierKeyCode> {
     @Override
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-        Window window = Minecraft.getInstance().window;
         this.resetButton.active = isEditable() && getDefaultValue().isPresent() && !getDefaultValue().get().equals(value);
         this.resetButton.y = y;
         this.buttonWidget.active = isEditable();
@@ -122,7 +108,7 @@ public class KeyCodeEntry extends TooltipListEntry<ModifierKeyCode> {
         if (getScreen().getFocusedBinding() == this)
             this.buttonWidget.message = Formatting.WHITE + "> " + Formatting.YELLOW + this.buttonWidget.message + Formatting.WHITE + " <";
         if (Minecraft.getInstance().textRenderer.isBidirectional()) {
-            Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), window.getGuiScaledWidth() - x - Minecraft.getInstance().textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, 16777215);
+            Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.getInstance().textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, 16777215);
             this.resetButton.x = x;
             this.buttonWidget.x = x + resetButton.getWidth() + 2;
         } else {

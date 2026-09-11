@@ -32,7 +32,7 @@ import me.shedaniel.clothconfig2.gui.entries.SelectionListEntry;
 import me.shedaniel.clothconfig2.impl.builders.DropdownMenuBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.GuiEventListener;
+import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.resource.language.I18n;
 import org.apache.commons.lang3.ArrayUtils;
 

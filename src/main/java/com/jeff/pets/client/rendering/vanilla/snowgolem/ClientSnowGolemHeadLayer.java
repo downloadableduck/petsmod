@@ -7,9 +7,7 @@ import net.minecraft.block.state.BlockState;
 import net.minecraft.client.render.block.BlockRenderDispatcher;
 import net.minecraft.client.render.entity.ItemRenderer;
 import net.minecraft.client.render.entity.layer.EntityRenderLayer;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.model.block.ModelTransformations;
-import net.minecraft.client.render.model.entity.SnowGolemModel;
 import net.minecraft.client.resource.model.BakedModel;
 import net.minecraft.item.ItemStack;
 
@@ -38,9 +36,9 @@ public class ClientSnowGolemHeadLayer implements EntityRenderLayer<ClientSnowGol
                 //poseStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180.0F));
                 net.minecraft.client.render.platform.GlStateManager.scalef(0.625F, -0.625F, -0.625F);
                 GlStateManager.rotatef(180.0F, 0.0F, 1.0F, 0.0F);
-                ItemStack itemStack = new ItemStack(Blocks.CARVED_PUMPKIN);
+                    ItemStack itemStack = new ItemStack(Blocks.PUMPKIN);
                 if (bl) {
-                    BlockState blockState = Blocks.CARVED_PUMPKIN.defaultState();
+                    BlockState blockState = Blocks.PUMPKIN.defaultState();
                     BakedModel bakedModel = this.blockRenderer.getModel(blockState);
                     int n = 0;
                     net.minecraft.client.render.platform.GlStateManager.translatef(-0.5F, -0.5F, -0.5F);

@@ -17,8 +17,8 @@ public class HeadModel extends Model {
         Head = new ModelPart(this);
         Head.setPos(0.0F, 0.0F, 0.0F);
         setRotationAngle(Head, -0.1047F, 0.0873F, 0.0F);
-        Head.setTextureCoords(0, 0).addBox(-8.0F, 16.0F, 0.0F, 8, 8, 8, 0.0F, false);
-        Head.setTextureCoords(32, 0).addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.5F, false);
+        Head.setTextureCoords(0, 0).addBox(-8.0F, 16.0F, 0.0F, 8, 8, 8, 0.0F);
+        Head.setTextureCoords(32, 0).addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.5F);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
-import net.minecraft.client.gui.widget.TextFieldWidget;
+import me.shedaniel.clothconfig2.compat.CompatTextFieldWidget;
 import net.minecraft.client.resource.language.I18n;
 
 import java.util.Optional;
@@ -48,7 +48,7 @@ public class FloatListEntry extends TextFieldListEntry<Float> {
     }
     
     @Override
-    protected void textFieldPreRender(TextFieldWidget widget) {
+    protected void textFieldPreRender(CompatTextFieldWidget widget) {
         try {
             double i = Float.valueOf(textFieldWidget.getText());
             if (i < minimum || i > maximum)

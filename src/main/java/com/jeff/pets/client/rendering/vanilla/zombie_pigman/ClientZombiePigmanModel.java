@@ -31,38 +31,38 @@ public class ClientZombiePigmanModel extends Model {
 
         head = new ModelPart(this);
         head.setPos(0.0F, 0.0F, 0.0F);
-        head.setTextureCoords(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.0F, false);
+        head.setTextureCoords(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.0F);
 
         headwear = new ModelPart(this);
         headwear.setPos(0.0F, 0.0F, 0.0F);
-        headwear.setTextureCoords(32, 0).addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.5F, false);
+        headwear.setTextureCoords(32, 0).addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.5F);
 
         body = new ModelPart(this);
         body.setPos(0.0F, 0.0F, 0.0F);
-        body.setTextureCoords(16, 16).addBox(-4.0F, 0.0F, -2.0F, 8, 12, 4, 0.0F, false);
+        body.setTextureCoords(16, 16).addBox(-4.0F, 0.0F, -2.0F, 8, 12, 4, 0.0F);
 
         left_arm = new ModelPart(this);
         left_arm.setPos(5.0F, 2.0F, 0.0F);
-        left_arm.setTextureCoords(40, 16).addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F, false);
+        left_arm.setTextureCoords(40, 16).addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F);
 
         right_arm = new ModelPart(this);
         right_arm.setPos(-5.0F, 2.0F, 0.0F);
-        right_arm.setTextureCoords(40, 16).addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F, false);
+        right_arm.setTextureCoords(40, 16).addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F);
 
         left_leg = new ModelPart(this);
         left_leg.setPos(1.9F, 12.0F, 0.0F);
-        left_leg.setTextureCoords(0, 16).addBox(-1.9F, 0.0F, -2.0F, 4, 12, 4, 0.0F, false);
+        left_leg.setTextureCoords(0, 16).addBox(-1.9F, 0.0F, -2.0F, 4, 12, 4, 0.0F);
 
         right_leg = new ModelPart(this);
         right_leg.setPos(-1.9F, 12.0F, 0.0F);
-        right_leg.setTextureCoords(0, 16).addBox(-2.1F, 0.0F, -2.0F, 4, 12, 4, 0.0F, false);
+        right_leg.setTextureCoords(0, 16).addBox(-2.1F, 0.0F, -2.0F, 4, 12, 4, 0.0F);
     }
 
     @Override
     public void setupAnimation(float f, float g, float h, float i, float j, float s, net.minecraft.entity.Entity entity) {
         ClientZombiePigman state = (ClientZombiePigman) entity;
         boolean bl = false;
-        boolean bl2 = state.isSwimming();
+        boolean bl2 = state.isInWater();
         this.head.rotationY = i * (float) (Math.PI / 180.0);
         if (bl) {
             this.head.rotationX = (float) (-Math.PI / 4);
@@ -140,15 +140,10 @@ public class ClientZombiePigmanModel extends Model {
                 this.right_arm.rotationX = this.right_arm.rotationX * 0.5F - (float) (Math.PI / 10);
                 this.right_arm.rotationY = 0.0F;
                 break;
-            case THROW_SPEAR:
-                this.right_arm.rotationX = this.right_arm.rotationX * 0.5F - (float) Math.PI;
-                this.right_arm.rotationY = 0.0F;
         }
 
-        if (this.leftArmPose == HumanoidModel.ArmPose.THROW_SPEAR
-                && this.rightArmPose != HumanoidModel.ArmPose.BLOCK
-                && this.rightArmPose != HumanoidModel.ArmPose.THROW_SPEAR
-                && this.rightArmPose != HumanoidModel.ArmPose.BOW_AND_ARROW) {
+        if (this.leftArmPose == HumanoidModel.ArmPose.BOW_AND_ARROW
+                && this.rightArmPose != HumanoidModel.ArmPose.BLOCK) {
             this.left_arm.rotationX = this.left_arm.rotationX * 0.5F - (float) Math.PI;
             this.left_arm.rotationY = 0.0F;
         }
@@ -214,7 +209,6 @@ public class ClientZombiePigmanModel extends Model {
             this.right_arm.rotationX = (float) (-Math.PI / 2) + this.head.rotationX;
             this.left_arm.rotationX = (float) (-Math.PI / 2) + this.head.rotationX;
         } else if (this.leftArmPose == HumanoidModel.ArmPose.BOW_AND_ARROW
-                && this.rightArmPose != HumanoidModel.ArmPose.THROW_SPEAR
                 && this.rightArmPose != HumanoidModel.ArmPose.BLOCK) {
             this.right_arm.rotationY = -0.1F + this.head.rotationY - 0.4F;
             this.left_arm.rotationY = 0.1F + this.head.rotationY;

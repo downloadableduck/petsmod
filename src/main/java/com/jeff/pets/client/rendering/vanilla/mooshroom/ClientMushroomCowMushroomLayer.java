@@ -45,7 +45,6 @@ public class ClientMushroomCowMushroomLayer implements EntityRenderLayer<ClientM
             GlStateManager.popMatrix();
             GlStateManager.popMatrix();
             GlStateManager.pushMatrix();
-            ((ClientCowModel) this.renderer.getModel()).getHead().transform(0.0625F);
             GlStateManager.scalef(1.0F, -1.0F, 1.0F);
             GlStateManager.translatef(0.0F, 0.7F, -0.2F);
             GlStateManager.rotatef(12.0F, 0.0F, 1.0F, 0.0F);

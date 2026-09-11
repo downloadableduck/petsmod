@@ -225,7 +225,7 @@ public class ConfigBuilderImpl implements ConfigBuilder {
             }
             
             @Override
-            protected void init() {
+            public void init() {
                 super.init();
                 afterInitConsumer.accept(this);
             }

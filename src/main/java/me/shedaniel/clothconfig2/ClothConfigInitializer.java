@@ -1,78 +1,41 @@
 package me.shedaniel.clothconfig2;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.client.render.platform.Window;
-import net.minecraft.client.render.platform.InputConstants;
-import net.minecraft.client.render.platform.Window;
+import me.shedaniel.clothconfig2.compat.InputConstants;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.render.platform.Window;
 import me.shedaniel.clothconfig2.api.*;
-import net.minecraft.client.render.platform.Window;
 import me.shedaniel.clothconfig2.gui.entries.DoubleListEntry;
-import net.minecraft.client.render.platform.Window;
 import me.shedaniel.clothconfig2.gui.entries.DropdownBoxEntry;
-import net.minecraft.client.render.platform.Window;
 import me.shedaniel.clothconfig2.gui.entries.LongSliderEntry;
-import net.minecraft.client.render.platform.Window;
 import me.shedaniel.clothconfig2.gui.entries.TooltipListEntry;
-import net.minecraft.client.render.platform.Window;
 import me.shedaniel.clothconfig2.gui.widget.DynamicEntryListWidget;
-import net.minecraft.client.render.platform.Window;
 import me.shedaniel.clothconfig2.impl.EasingMethod;
-import net.minecraft.client.render.platform.Window;
 import me.shedaniel.clothconfig2.impl.EasingMethod.EasingMethodImpl;
-import net.minecraft.client.render.platform.Window;
 import me.shedaniel.clothconfig2.impl.EasingMethods;
-import net.minecraft.client.render.platform.Window;
 import me.shedaniel.clothconfig2.impl.builders.DropdownMenuBuilder;
-import net.minecraft.client.render.platform.Window;
 import me.shedaniel.clothconfig2.impl.builders.SubCategoryBuilder;
-import net.minecraft.client.render.platform.Window;
 import net.fabricmc.api.ClientModInitializer;
-import net.minecraft.client.render.platform.Window;
 import net.fabricmc.api.EnvType;
-import net.minecraft.client.render.platform.Window;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.platform.Window;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.render.platform.Window;
-import net.minecraft.client.gui.GuiEventListener;
-import net.minecraft.client.render.platform.Window;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.render.platform.Window;
+import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.item.Item;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.item.Items;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.resource.Identifier;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.client.render.platform.Window;
 import org.apache.logging.log4j.LogManager;
-import net.minecraft.client.render.platform.Window;
 import org.apache.logging.log4j.Logger;
-import net.minecraft.client.render.platform.Window;
 
 import java.io.File;
-import net.minecraft.client.render.platform.Window;
 import java.io.FileInputStream;
-import net.minecraft.client.render.platform.Window;
 import java.io.FileWriter;
-import net.minecraft.client.render.platform.Window;
 import java.lang.reflect.Method;
-import net.minecraft.client.render.platform.Window;
 import java.nio.file.Files;
-import net.minecraft.client.render.platform.Window;
 import java.util.*;
-import net.minecraft.client.render.platform.Window;
 import java.util.stream.Collectors;
-import net.minecraft.client.render.platform.Window;
 
 @Environment(EnvType.CLIENT)
 public class ClothConfigInitializer implements ClientModInitializer {
@@ -256,7 +219,6 @@ public class ClothConfigInitializer implements ClientModInitializer {
             @Override
             public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
                 super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-                Window window = Minecraft.getInstance().window;
                 this.buttonWidget.active = this.isEditable();
                 this.buttonWidget.y = y;
                 this.buttonWidget.x = x + entryWidth / 2 - width / 2;
@@ -301,7 +263,6 @@ public class ClothConfigInitializer implements ClientModInitializer {
             @Override
             public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
                 super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-                Window window = Minecraft.getInstance().window;
                 this.buttonWidget.active = this.isEditable();
                 this.buttonWidget.y = y;
                 this.buttonWidget.x = x + entryWidth / 2 - width / 2;

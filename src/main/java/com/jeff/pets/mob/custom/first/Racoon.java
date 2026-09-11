@@ -2,7 +2,6 @@ package com.jeff.pets.mob.custom.first;
 
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.data.DataAttribute;
@@ -10,24 +9,18 @@ import net.minecraft.entity.data.DataSerializers;
 import net.minecraft.entity.data.SyncedData;
 import net.minecraft.entity.living.LivingEntity;
 import net.minecraft.entity.living.mob.passive.PassiveEntity;
-import net.minecraft.entity.living.mob.passive.animal.tameable.TameableEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.s2c.play.AddEntityS2CPacket;
-import net.minecraft.crafting.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.WorldAccess;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static com.jeff.pets.PetsInitializer.RACOON;
+import com.google.common.collect.ImmutableSet;
 
 public class Racoon extends AbstractPet {
 
@@ -35,8 +28,8 @@ public class Racoon extends AbstractPet {
             SyncedData.registerSerializer(Racoon.class, DataSerializers.BOOLEAN);
     public boolean isOnHead;
 
-    public Racoon(EntityType<? extends @NotNull TameableEntity> entityType, World level) {
-        super(entityType, level);
+    public Racoon(World level) {
+        super(level);
     }
 
     @Override
@@ -55,9 +48,9 @@ public class Racoon extends AbstractPet {
     }
 
     @Override
-    public @Nullable EntityData initialize(LocalDifficulty difficulty, @Nullable EntityData groupData, NbtCompound NbtCompound) {
+    public @Nullable EntityData initialize(LocalDifficulty difficulty, @Nullable EntityData groupData) {
         this.setServerEntity(true);
-        return super.initialize(difficulty, groupData, NbtCompound);
+        return super.initialize(difficulty, groupData);
     }
 
     @Override
@@ -66,7 +59,7 @@ public class Racoon extends AbstractPet {
         this.goalSelector.addGoal(1, new AnimalBreedGoal(this, 1));
         this.goalSelector.addGoal(2, new SwimGoal(this));
         this.goalSelector.addGoal(3, new EscapeDangerGoal(this, 1.4d));
-        this.goalSelector.addGoal(4, new TemptGoal(this, 1.0f, Ingredient.of(Items.SKELETON_SKULL, Items.WITHER_SKELETON_SKULL), false));
+        this.goalSelector.addGoal(4, new TemptGoal(this, 1.0d, false, ImmutableSet.of(Items.SKULL)));
 
         this.goalSelector.addGoal(5, new LookAroundGoal(this));
         this.goalSelector.addGoal(6, new WanderAroundGoal(this, 1.0D));
@@ -189,14 +182,14 @@ public class Racoon extends AbstractPet {
 
     @Override
     public @Nullable PassiveEntity makeChild(@NotNull PassiveEntity AgableMob) {
-        Racoon racoon = RACOON.create(world);
+        Racoon racoon = new Racoon(world);
         racoon.setServerEntity(false);
         return racoon;
     }
 
     @Override
     public void onDataValueChanged(@NotNull DataAttribute<?> key) {
-        if (!this.world.isClient()) {
+        if (!this.world.isClient) {
             super.onDataValueChanged(key);
         }
     }

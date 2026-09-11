@@ -2,19 +2,14 @@ package com.jeff.pets.mob.vanilla.boss;
 
 import com.jeff.pets.client.Math2;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.living.mob.monster.boss.dragon.EnderDragonPhase;
 import net.minecraft.entity.living.mob.monster.boss.dragon.EnderDragonPhaseInstance;
-import net.minecraft.entity.living.mob.passive.animal.tameable.TameableEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.HeightMap;
-import org.jetbrains.annotations.NotNull;
 
 
 public class ClientEnderDragon extends FlyingPet {
@@ -23,8 +18,8 @@ public class ClientEnderDragon extends FlyingPet {
     public float flapTime;
     public int posPointer = -1;
 
-    public ClientEnderDragon(EntityType<? extends @NotNull TameableEntity> entityType, World level) {
-        super(entityType, level);
+    public ClientEnderDragon(World world) {
+        super(world);
     }
 
     @Override
@@ -85,8 +80,7 @@ public class ClientEnderDragon extends FlyingPet {
                 e = es[1] - ds[1];
             }
         } else {
-            BlockPos blockPos = this.world.getHeight(HeightMap.Type.MOTION_BLOCKING_NO_LEAVES, BlockPos.ORIGIN);
-            double d = Math.max(Math.sqrt(blockPos.squaredDistanceTo(new Vec3i(this.getPosVec().x, this.getPosVec().y, this.getPosVec().z))) / (double) 4.0F, 1.0F);
+            double d = Math.max(Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z) / (double) 4.0F, 1.0F);
             e = (double) i / d;
         }
 

@@ -14,7 +14,6 @@
     "ButtonWidgetHooks",
     "MixinControlsOptionsScreen",
     "MixinGameOptions",
-    "MixinKeyBinding",
-    "MouseHooks"
+    "MixinKeyBinding"
   ]
 }

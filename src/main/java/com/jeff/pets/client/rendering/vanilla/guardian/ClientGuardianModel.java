@@ -27,7 +27,7 @@ public class ClientGuardianModel extends Model {
         this.field_3379 = new ModelPart(this);
         this.field_3379.setTextureCoords(0, 0).addBox(-6.0F, 10.0F, -8.0F, 12, 12, 16);
         this.field_3379.setTextureCoords(0, 28).addBox(-8.0F, 10.0F, -6.0F, 2, 12, 12);
-        this.field_3379.setTextureCoords(0, 28).addBox(6.0F, 10.0F, -6.0F, 2, 12, 12, true);
+        this.field_3379.setTextureCoords(0, 28).addBox(6.0F, 10.0F, -6.0F, 2, 12, 12);
         this.field_3379.setTextureCoords(16, 40).addBox(-6.0F, 8.0F, -6.0F, 12, 2, 12);
         this.field_3379.setTextureCoords(16, 40).addBox(-6.0F, 22.0F, -6.0F, 12, 2, 12);
 

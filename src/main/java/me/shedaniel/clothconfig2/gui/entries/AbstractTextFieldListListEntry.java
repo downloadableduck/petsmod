@@ -3,8 +3,8 @@ package me.shedaniel.clothconfig2.gui.entries;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiEventListener;
-import net.minecraft.client.gui.widget.TextFieldWidget;
+import me.shedaniel.clothconfig2.compat.CompatTextFieldWidget;
+import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -42,7 +42,7 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
     @ApiStatus.Internal
     public static abstract class AbstractTextFieldListCell<T, SELF extends AbstractTextFieldListCell<T, SELF, OUTER_SELF>, OUTER_SELF extends AbstractTextFieldListListEntry<T, SELF, OUTER_SELF>> extends AbstractListCell<T, SELF, OUTER_SELF> {
         
-        protected TextFieldWidget widget;
+        protected CompatTextFieldWidget widget;
         private boolean isSelected;
         
         public AbstractTextFieldListCell(@Nullable T value, OUTER_SELF listListEntry) {
@@ -50,10 +50,10 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
             
             final T finalValue = substituteDefault(value);
             
-            widget = new TextFieldWidget(0, Minecraft.getInstance().textRenderer, 0, 0, 100, 18) {
+            widget = new CompatTextFieldWidget(0, Minecraft.getInstance().textRenderer, 0, 0, 100, 18) {
                 @Override
-                public void render(int mouseX, int mouseY, float delta) {
-                    super.render(mouseX, mouseY, delta);
+                public void render() {
+                    super.render();
                 }
             };
             // widget.setFilter(this::isValidText); // Not available in 1.13
@@ -101,7 +101,7 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
             widget.x = x;
             widget.y = y + 1;
             widget.setEditable(listListEntry.isEditable());
-            widget.render(mouseX, mouseY, delta);
+            widget.render();
             if (isSelected && listListEntry.isEditable())
                 fill(x, y + 12, x + entryWidth - 12, y + 13, getConfigError().isPresent() ? 0xffff5555 : 0xffe0e0e0);
         }

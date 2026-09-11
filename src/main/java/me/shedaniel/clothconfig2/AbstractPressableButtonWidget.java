@@ -8,7 +8,11 @@ public abstract class AbstractPressableButtonWidget extends me.shedaniel.clothco
     public abstract void onPress();
 
     @Override
-    public void click(double mouseX, double mouseY) {
-        this.onPress();
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (this.x <= mouseX && mouseX <= this.x + this.width && this.y <= mouseY && mouseY <= this.y + this.height) {
+            this.onPress();
+            return true;
+        }
+        return false;
     }
 }

@@ -8,7 +8,7 @@ import me.shedaniel.math.Rectangle;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiEventListener;
+import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.sound.instance.SimpleSoundInstance;
 import net.minecraft.sound.SoundEvents;

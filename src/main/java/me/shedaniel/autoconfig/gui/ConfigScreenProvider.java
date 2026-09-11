@@ -19,8 +19,6 @@
 
 package me.shedaniel.autoconfig.gui;
 
-import com.mojang.brigadier.StringReader;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.ConfigManager;
 import me.shedaniel.autoconfig.annotation.Config;
@@ -103,8 +101,8 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
             String bg = configClass.getAnnotation(Config.Gui.Background.class).value();
             Identifier bgId = null;
             try {
-                bgId = Identifier.parse(new StringReader(bg));
-            } catch (CommandSyntaxException e) {
+                bgId = new Identifier(bg);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             if (TRANSPARENT_BACKGROUND.equals(bgId))

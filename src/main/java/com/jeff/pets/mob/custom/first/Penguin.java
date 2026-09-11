@@ -4,7 +4,6 @@ import com.jeff.pets.PetsSounds;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.damage.DamageSource;
@@ -18,7 +17,6 @@ import net.minecraft.entity.living.mob.passive.animal.tameable.TameableEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.crafting.recipe.Ingredient;
 import net.minecraft.server.entity.living.player.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -26,13 +24,12 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.WorldAccess;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static com.jeff.pets.PetsInitializer.PENGUIN;
+import com.google.common.collect.ImmutableSet;
 
 public class Penguin extends AbstractPet {
     public static final DataAttribute<@NotNull Boolean> IS_SERVER_ENTITY =
@@ -47,8 +44,8 @@ public class Penguin extends AbstractPet {
     public boolean isOnHead;
     private boolean isFlapping = !this.onGround;
 
-    public Penguin(EntityType<? extends @NotNull TameableEntity> entityType, World level) {
-        super(entityType, level);
+    public Penguin(World level) {
+        super(level);
     }
 
     @Override
@@ -126,18 +123,18 @@ public class Penguin extends AbstractPet {
     }
 
     public @Nullable Penguin makeChild(final @NotNull PassiveEntity partner) {
-        Penguin penguin = PENGUIN.create(world);
+        Penguin penguin = new Penguin(world);
         penguin.setServerEntity(true);
         return penguin;
     }
 
-    public EntityData initialize(LocalDifficulty difficulty, @Nullable EntityData groupData, NbtCompound NbtCompound) {
+    public EntityData initialize(LocalDifficulty difficulty, @Nullable EntityData groupData) {
         this.setServerEntity(true);
-        return super.initialize(difficulty, groupData, NbtCompound);
+        return super.initialize(difficulty, groupData);
     }
 
     public boolean isBreedingItem(final @NotNull ItemStack itemStack) {
-        return itemStack.matchesItemIgnoreDamage(new ItemStack(Items.TROPICAL_FISH)) || itemStack.matchesItemIgnoreDamage(new ItemStack(Items.COD)) || itemStack.matchesItemIgnoreDamage(new ItemStack(Items.SALMON));
+        return itemStack.matchesItemIgnoreDamage(new ItemStack(Items.FISH, 1, 0)) || itemStack.matchesItemIgnoreDamage(new ItemStack(Items.FISH, 1, 1)) || itemStack.matchesItemIgnoreDamage(new ItemStack(Items.FISH, 1, 2));
     }
 
     @Override
@@ -146,7 +143,7 @@ public class Penguin extends AbstractPet {
         this.goalSelector.addGoal(1, new AnimalBreedGoal(this, 1));
         this.goalSelector.addGoal(2, new SwimGoal(this));
         this.goalSelector.addGoal(3, new EscapeDangerGoal(this, 1.4d));
-        this.goalSelector.addGoal(4, new TemptGoal(this, 1.0f, Ingredient.of(Items.SKELETON_SKULL, Items.WITHER_SKELETON_SKULL), false));
+        this.goalSelector.addGoal(4, new TemptGoal(this, 1.0d, false, ImmutableSet.of(Items.SKULL)));
 
         this.goalSelector.addGoal(5, new LookAroundGoal(this));
         this.goalSelector.addGoal(6, new WanderAroundGoal(this, 1.0D));
@@ -252,7 +249,7 @@ public class Penguin extends AbstractPet {
 
     @Override
     public void onDataValueChanged(@NotNull DataAttribute<?> key) {
-        if (!this.world.isClient()) {
+        if (!this.world.isClient) {
             super.onDataValueChanged(key);
         }
     }

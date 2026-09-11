@@ -5,7 +5,6 @@ import com.jeff.pets.mob.FlyingPet;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.PathBlockingType;
@@ -28,13 +27,10 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.WorldAccess;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import static com.jeff.pets.PetsInitializer.DUMBO_OCTOPUS;
 
 public class DumboOctopus extends FlyingPet {
 
@@ -46,8 +42,8 @@ public class DumboOctopus extends FlyingPet {
     public float tentacleAngle = 0;
     public ServerPlayerEntity owner = (ServerPlayerEntity) this.getOwner();
 
-    public DumboOctopus(final EntityType<? extends @NotNull DumboOctopus> type, final World level) {
-        super(type, level);
+    public DumboOctopus(final World level) {
+        super(level);
         this.setPathfindingPenalty(PathBlockingType.WATER, 0.0f);
     }
 
@@ -99,19 +95,19 @@ public class DumboOctopus extends FlyingPet {
     }
 
     public @Nullable DumboOctopus makeChild(final @NotNull PassiveEntity partner) {
-        DumboOctopus octopus = DUMBO_OCTOPUS.create(world);
+        DumboOctopus octopus = new DumboOctopus(world);
         octopus.setServerEntity(true);
         return octopus;
     }
 
-    public EntityData initialize(LocalDifficulty difficulty, @Nullable EntityData groupData, NbtCompound NbtCompound) {
+    public EntityData initialize(LocalDifficulty difficulty, @Nullable EntityData groupData) {
         this.setServerEntity(true);
         this.syncedData.set(OCTOPUS_SKIN, this.random.nextInt(6));
-        return super.initialize(difficulty, groupData, NbtCompound);
+        return super.initialize(difficulty, groupData);
     }
 
     public boolean isBreedingItem(final @NotNull ItemStack itemStack) {
-        return itemStack.matchesItemIgnoreDamage(new ItemStack(Items.TROPICAL_FISH)) || itemStack.matchesItemIgnoreDamage(new ItemStack(Items.COD)) || itemStack.matchesItemIgnoreDamage(new ItemStack(Items.SALMON));
+        return itemStack.matchesItemIgnoreDamage(new ItemStack(Items.FISH, 1, 0)) || itemStack.matchesItemIgnoreDamage(new ItemStack(Items.FISH, 1, 1)) || itemStack.matchesItemIgnoreDamage(new ItemStack(Items.FISH, 1, 2));
     }
 
     @Override
@@ -119,9 +115,7 @@ public class DumboOctopus extends FlyingPet {
 
         /**Using false in this statement causes the mob to sink to the bottom and reptitively spin.*/
         //this.moveControl = new SmoothSwimmingMoveControl(this, 10, 10, 1, 1, true);
-        this.getNavigation().setCanFloat(true);
-        this.goalSelector.addGoal(1, new SwimAroundGoal(this, 1, 1));
-        this.goalSelector.addGoal(2, new TryFindWaterGoal(this));
+        this.goalSelector.addGoal(1, new SwimGoal(this));
 
         this.goalSelector.addGoal(0, new FollowOwnerGoal(this, 1, 2, 10));
         this.goalSelector.addGoal(9, new AnimalBreedGoal(this, 1));
@@ -237,7 +231,7 @@ public class DumboOctopus extends FlyingPet {
 
     @Override
     public void onDataValueChanged(@NotNull DataAttribute<?> key) {
-        if (!this.world.isClient()) {
+        if (!this.world.isClient) {
             super.onDataValueChanged(key);
         }
     }

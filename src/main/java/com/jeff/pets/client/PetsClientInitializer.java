@@ -13,12 +13,9 @@ import com.jeff.pets.client.rendering.vanilla.blaze.ClientBlazeRenderer;
 import com.jeff.pets.client.rendering.vanilla.cat.ClientCatRenderer;
 import com.jeff.pets.client.rendering.vanilla.cavespider.ClientCaveSpiderRenderer;
 import com.jeff.pets.client.rendering.vanilla.chicken.ClientChickenRenderer;
-import com.jeff.pets.client.rendering.vanilla.cod.ClientCodRenderer;
 import com.jeff.pets.client.rendering.vanilla.cow.ClientCowRenderer;
 import com.jeff.pets.client.rendering.vanilla.creeper.ClientCreeperRenderer;
-import com.jeff.pets.client.rendering.vanilla.dolphin.ClientDolphinRenderer;
 import com.jeff.pets.client.rendering.vanilla.donkey.ClientDonkeyRenderer;
-import com.jeff.pets.client.rendering.vanilla.drowned.ClientDrownedRenderer;
 import com.jeff.pets.client.rendering.vanilla.elderguardian.ClientElderGuardianRenderer;
 import com.jeff.pets.client.rendering.vanilla.enderdragon.ClientEnderDragonRenderer;
 import com.jeff.pets.client.rendering.vanilla.enderman.ClientEndermanRenderer;
@@ -32,13 +29,9 @@ import com.jeff.pets.client.rendering.vanilla.irongolem.ClientIronGolemRenderer;
 import com.jeff.pets.client.rendering.vanilla.llama.ClientLlamaRenderer;
 import com.jeff.pets.client.rendering.vanilla.magmacube.ClientMagmaCubeRenderer;
 import com.jeff.pets.client.rendering.vanilla.mooshroom.ClientMooshroomRenderer;
-import com.jeff.pets.client.rendering.vanilla.parrot.ClientParrotRenderer;
-import com.jeff.pets.client.rendering.vanilla.phantom.ClientPhantomRenderer;
 import com.jeff.pets.client.rendering.vanilla.pig.ClientPigRenderer;
 import com.jeff.pets.client.rendering.vanilla.polarbear.ClientPolarBearRenderer;
-import com.jeff.pets.client.rendering.vanilla.pufferfish.ClientPufferFishRenderer;
 import com.jeff.pets.client.rendering.vanilla.rabbit.ClientRabbitRenderer;
-import com.jeff.pets.client.rendering.vanilla.salmon.ClientSalmonRenderer;
 import com.jeff.pets.client.rendering.vanilla.sheep.ClientSheepRenderer;
 import com.jeff.pets.client.rendering.vanilla.shulker.ClientShulkerRenderer;
 import com.jeff.pets.client.rendering.vanilla.silverfish.ClientSilverfishRenderer;
@@ -48,7 +41,6 @@ import com.jeff.pets.client.rendering.vanilla.snowgolem.ClientSnowGolemRenderer;
 import com.jeff.pets.client.rendering.vanilla.spider.ClientSpiderRenderer;
 import com.jeff.pets.client.rendering.vanilla.squid.ClientSquidRenderer;
 import com.jeff.pets.client.rendering.vanilla.stray.ClientStrayRenderer;
-import com.jeff.pets.client.rendering.vanilla.turtle.ClientTurtleRenderer;
 import com.jeff.pets.client.rendering.vanilla.vex.ClientVexRenderer;
 import com.jeff.pets.client.rendering.vanilla.villager.ClientVillagerRenderer;
 import com.jeff.pets.client.rendering.vanilla.vindicator.ClientVindicatorRenderer;
@@ -77,8 +69,7 @@ import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.ItemRenderer;
 import net.minecraft.client.render.texture.TextureManager;
 import net.minecraft.entity.Entity;
-import net.minecraft.resource.manager.ReloadableResourceManager;
-import org.lwjgl.glfw.GLFW;
+import org.lwjgl.input.Keyboard;
 
 import java.util.*;
 
@@ -122,39 +113,31 @@ public class PetsClientInitializer implements ClientModInitializer {
         register(ClientCat.class, ClientCatRenderer::new);
         register(ClientBat.class, ClientBatRenderer::new);
         register(ClientChicken.class, ClientChickenRenderer::new);
-        register(ClientCod.class, ClientCodRenderer::new);
         register(ClientCow.class, ClientCowRenderer::new);
         register(ClientDonkey.class, ClientDonkeyRenderer::new);
         register(ClientHorse.class, ClientHorseRenderer::new);
         register(ClientMooshroom.class, ClientMooshroomRenderer::new);
-        register(ClientParrot.class, ClientParrotRenderer::new);
         register(ClientPig.class, ClientPigRenderer::new);
         register(ClientRabbit.class, ClientRabbitRenderer::new);
-        register(ClientSalmon.class, ClientSalmonRenderer::new);
         register(ClientSnowGolem.class, ClientSnowGolemRenderer::new);
         register(ClientSquid.class, ClientSquidRenderer::new);
-        register(ClientTurtle.class, ClientTurtleRenderer::new);
         register(ClientVillager.class, ClientVillagerRenderer::new);
         register(ClientCaveSpider.class, ClientCaveSpiderRenderer::new);
-        register(ClientDolphin.class, ClientDolphinRenderer::new);
         register(ClientEnderman.class, ClientEndermanRenderer::new);
         register(ClientIronGolem.class, ClientIronGolemRenderer::new);
         register(ClientLlama.class, ClientLlamaRenderer::new);
         register(ClientPolarBear.class, ClientPolarBearRenderer::new);
-        register(ClientPufferFish.class, ClientPufferFishRenderer::new);
         register(ClientSpider.class, ClientSpiderRenderer::new);
         register(ClientWolf.class, ClientWolfRenderer::new);
         register(ClientElderGuardian.class, ClientElderGuardianRenderer::new);
         register(ClientBlaze.class, ClientBlazeRenderer::new);
         register(ClientCreeper.class, ClientCreeperRenderer::new);
-        register(ClientDrowned.class, ClientDrownedRenderer::new);
         register(ClientEndermite.class, ClientEndermiteRenderer::new);
         register(ClientEvoker.class, ClientEvokerRenderer::new);
         register(ClientGhast.class, ClientGhastRenderer::new);
         register(ClientGuardian.class, ClientGuardianRenderer::new);
         register(ClientHusk.class, ClientHuskRenderer::new);
         register(ClientMagmaCube.class, ClientMagmaCubeRenderer::new);
-        register(ClientPhantom.class, ClientPhantomRenderer::new);
         register(ClientShulker.class, ClientShulkerRenderer::new);
         register(ClientSilverfish.class, ClientSilverfishRenderer::new);
         register(ClientSkeleton.class, ClientSkeletonRenderer::new);
@@ -179,7 +162,7 @@ public class PetsClientInitializer implements ClientModInitializer {
      * is pressed
      */
     void createKeyBinding() {
-        keyMapping = new KeyBinding("Open Pets Menu", GLFW.GLFW_KEY_P, "petsmod.keymapping");
+        keyMapping = new KeyBinding("Open Pets Menu", Keyboard.KEY_P, "petsmod.keymapping");
     }
 
     public static void register(Class<? extends Entity> entityClass, Factory factory) {

@@ -1,65 +1,39 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
+import me.shedaniel.clothconfig2.compat.MouseInput;
+import me.shedaniel.clothconfig2.impl.WindowUtil;
+
 import com.google.common.collect.ImmutableList;
-import net.minecraft.client.render.platform.Window;
 import com.google.common.collect.Lists;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.render.platform.GlStateManager;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.render.vertex.BufferBuilder;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.render.vertex.DefaultVertexFormat;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.render.vertex.Tesselator;
-import net.minecraft.client.render.platform.Window;
 import me.shedaniel.clothconfig2.ButtonWidget;
-import net.minecraft.client.render.platform.Window;
 import me.shedaniel.clothconfig2.ClothConfigInitializer;
-import net.minecraft.client.render.platform.Window;
 import me.shedaniel.clothconfig2.api.ScissorsHandler;
-import net.minecraft.client.render.platform.Window;
 import me.shedaniel.math.Point;
-import net.minecraft.client.render.platform.Window;
 import me.shedaniel.math.Rectangle;
-import net.minecraft.client.render.platform.Window;
 import net.fabricmc.api.EnvType;
-import net.minecraft.client.render.platform.Window;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.render.platform.Window;
-import net.minecraft.client.gui.AbstractContainerEventHandler;
-import net.minecraft.client.render.platform.Window;
-import net.minecraft.client.gui.GuiEventListener;
-import net.minecraft.client.render.platform.Window;
+import me.shedaniel.clothconfig2.compat.AbstractContainerEventHandler;
+import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.render.TextRenderer;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.client.render.platform.Window;
 import org.jetbrains.annotations.ApiStatus;
-import net.minecraft.client.render.platform.Window;
 import org.jetbrains.annotations.NotNull;
-import net.minecraft.client.render.platform.Window;
 import org.jetbrains.annotations.Nullable;
-import net.minecraft.client.render.platform.Window;
 
 import java.util.*;
-import net.minecraft.client.render.platform.Window;
 import java.util.function.Consumer;
-import net.minecraft.client.render.platform.Window;
 import java.util.function.Function;
-import net.minecraft.client.render.platform.Window;
 import java.util.function.Supplier;
-import net.minecraft.client.render.platform.Window;
 
 import static me.shedaniel.clothconfig2.ClothConfigInitializer.handleScrollingPosition;
-import net.minecraft.client.render.platform.Window;
 
 @SuppressWarnings("deprecation")
 @Environment(EnvType.CLIENT)
@@ -87,13 +61,12 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
     @Override
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-        Window window = Minecraft.getInstance().window;
         this.resetButton.active = isEditable() && getDefaultValue().isPresent() && (!defaultValue.get().equals(getValue()) || getConfigError().isPresent());
         this.resetButton.y = y;
         this.selectionElement.active = isEditable();
         this.selectionElement.bounds.y = y;
         if (Minecraft.getInstance().textRenderer.isBidirectional()) {
-            Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), window.getGuiScaledWidth() - x - Minecraft.getInstance().textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, getPreferredTextColor());
+            Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.getInstance().textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, getPreferredTextColor());
             this.resetButton.x = x;
             this.selectionElement.bounds.x = x + resetButton.getWidth() + 1;
         } else {
@@ -437,8 +410,8 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
                 height = Math.max(10, height);
                 int minY = (int) Math.min(Math.max((int) scroll * (last10Height - height) / getMaxScrollPosition() + (lastRectangle.y + lastRectangle.height + 1), (lastRectangle.y + lastRectangle.height + 1)), (lastRectangle.y + lastRectangle.height + 1 + last10Height) - height);
                 
-                int bottomc = new Rectangle(scrollbarPositionMinX, minY, scrollbarPositionMaxX - scrollbarPositionMinX, height).contains(new Point(Minecraft.getInstance().mouseHandler.xpos(), Minecraft.getInstance().mouseHandler.ypos())) ? 168 : 128;
-                int topc = new Rectangle(scrollbarPositionMinX, minY, scrollbarPositionMaxX - scrollbarPositionMinX, height).contains(new Point(Minecraft.getInstance().mouseHandler.xpos(), Minecraft.getInstance().mouseHandler.ypos())) ? 222 : 172;
+                int bottomc = new Rectangle(scrollbarPositionMinX, minY, scrollbarPositionMaxX - scrollbarPositionMinX, height).contains(new Point(MouseInput.getX(), MouseInput.getY())) ? 168 : 128;
+                int topc = new Rectangle(scrollbarPositionMinX, minY, scrollbarPositionMaxX - scrollbarPositionMinX, height).contains(new Point(MouseInput.getX(), MouseInput.getY())) ? 222 : 172;
                 
                 Tesselator tesselator = Tesselator.getInstance();
                 BufferBuilder buffer = tesselator.getBuffer();
@@ -724,23 +697,18 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             this.toStringFunction = Objects.requireNonNull(toStringFunction);
             textFieldWidget = new TextFieldWidget(0, Minecraft.getInstance().textRenderer, 0, 0, 148, 18) {
                 @Override
-                public void render(int int_1, int int_2, float float_1) {
+                public void render() {
                     // setFocused(isSuggestionMode() && isSelected && DefaultSelectionTopCellElement.this.getParent().getFocused() == DefaultSelectionTopCellElement.this.getParent().selectionElement && DefaultSelectionTopCellElement.this.getParent().selectionElement.setCharging() == DefaultSelectionTopCellElement.this && DefaultSelectionTopCellElement.this.setCharging() == this); // Not available in 1.13
-                    super.render(int_1, int_2, float_1);
+                    super.render();
                 }
                 
                 @Override
-                public boolean keyPressed(int int_1, int int_2, int int_3) {
-                    if (int_1 == 257 || int_1 == 335) {
+                public boolean keyPressed(char chr, int key) {
+                    if (key == 257 || key == 335) {
                         DefaultSelectionTopCellElement.this.selectFirstRecommendation();
                         return true;
                     }
-                    return isSuggestionMode() && super.keyPressed(int_1, int_2, int_3);
-                }
-                
-                @Override
-                public boolean charTyped(char chr, int keyCode) {
-                    return isSuggestionMode() && super.charTyped(chr, keyCode);
+                    return isSuggestionMode() && super.keyPressed(chr, key);
                 }
             };
             textFieldWidget.setHasBorder(false);
@@ -759,7 +727,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             // textFieldWidget.setWidth(width - 8); // Not available in 1.13
             textFieldWidget.setEditable(getParent().isEditable());
             textFieldWidget.setEditableColor(getPreferredTextColor());
-            textFieldWidget.render(mouseX, mouseY, delta);
+            textFieldWidget.render();
         }
         
         @Override
@@ -789,7 +757,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         
         @Override
         public List<? extends GuiEventListener> children() {
-            return Collections.singletonList(textFieldWidget);
+            return Collections.emptyList();
         }
     }
 }

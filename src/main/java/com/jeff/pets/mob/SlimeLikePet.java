@@ -1,7 +1,6 @@
 package com.jeff.pets.mob;
 
 import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.living.LivingEntity;
 import net.minecraft.entity.living.mob.passive.animal.tameable.TameableEntity;
@@ -18,8 +17,8 @@ import java.util.Objects;
  * including rabbits.
  */
 public abstract class SlimeLikePet extends AbstractPet {
-    public SlimeLikePet(EntityType<? extends @NotNull TameableEntity> entityType, World level) {
-        super(entityType, level);
+    public SlimeLikePet(World level) {
+        super(level);
     }
 
     /**

@@ -4,7 +4,6 @@ import com.jeff.pets.mob.FlyingPet;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.PathBlockingType;
@@ -25,20 +24,17 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.WorldAccess;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static com.jeff.pets.PetsInitializer.KOI;
-
 public class Koi extends FlyingPet {
     public static final DataAttribute<@NotNull Boolean> IS_SERVER_ENTITY =
             SyncedData.registerSerializer(Koi.class, DataSerializers.BOOLEAN);
 
-    public Koi(EntityType<? extends @NotNull TameableEntity> type, World level) {
-        super(type, level);
+    public Koi(World level) {
+        super(level);
         this.setPathfindingPenalty(PathBlockingType.WATER, 0);
     }
 
@@ -67,34 +63,34 @@ public class Koi extends FlyingPet {
     }
 
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_TROPICAL_FISH_AMBIENT;
+        return SoundEvents.ENTITY_SQUID_AMBIENT;
     }
 
     protected SoundEvent getHurtSound(final @NotNull DamageSource source) {
-        return SoundEvents.ENTITY_TROPICAL_FISH_HURT;
+        return SoundEvents.ENTITY_SQUID_HURT;
     }
 
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_TROPICAL_FISH_DEATH;
+        return SoundEvents.ENTITY_SQUID_DEATH;
     }
 
     protected void playStepSound(final @NotNull BlockPos pos, final @NotNull BlockState blockState) {
-        this.playSound(SoundEvents.ENTITY_FISH_SWIM, 0.15F, 1.0F);
+        this.playSound(SoundEvents.ENTITY_SQUID_AMBIENT, 0.15F, 1.0F);
     }
 
     public @Nullable Koi makeChild(final @NotNull PassiveEntity partner) {
-        Koi koi = KOI.create(world);
+        Koi koi = new Koi(world);
         koi.setServerEntity(true);
         return koi;
     }
 
-    public EntityData initialize(LocalDifficulty difficulty, @Nullable EntityData groupData, NbtCompound NbtCompound) {
+    public EntityData initialize(LocalDifficulty difficulty, @Nullable EntityData groupData) {
         this.setServerEntity(true);
-        return super.initialize(difficulty, groupData, NbtCompound);
+        return super.initialize(difficulty, groupData);
     }
 
     public boolean isBreedingItem(final @NotNull ItemStack itemStack) {
-        return itemStack.matchesItemIgnoreDamage(new ItemStack(Items.TROPICAL_FISH)) || itemStack.matchesItemIgnoreDamage(new ItemStack(Items.COD)) || itemStack.matchesItemIgnoreDamage(new ItemStack(Items.SALMON));
+        return itemStack.matchesItemIgnoreDamage(new ItemStack(Items.FISH, 1, 0)) || itemStack.matchesItemIgnoreDamage(new ItemStack(Items.FISH, 1, 1)) || itemStack.matchesItemIgnoreDamage(new ItemStack(Items.FISH, 1, 2));
     }
 
     @Override
@@ -102,9 +98,7 @@ public class Koi extends FlyingPet {
 
         /**Using false in this statement causes the mob to sink to the bottom and reptitively spin.*/
         //this.moveControl = new SmoothSwimmingMoveControl(this, 10, 10, 1, 1, true);
-        this.getNavigation().setCanFloat(true);
-        this.goalSelector.addGoal(1, new SwimAroundGoal(this, 1, 1));
-        this.goalSelector.addGoal(2, new TryFindWaterGoal(this));
+        this.goalSelector.addGoal(1, new SwimGoal(this));
 
         this.goalSelector.addGoal(0, new FollowOwnerGoal(this, 1, 2, 10));
         this.goalSelector.addGoal(9, new AnimalBreedGoal(this, 1));

@@ -1,8 +1,8 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
 import me.shedaniel.clothconfig2.gui.widget.ColorDisplayWidget;
+import me.shedaniel.clothconfig2.compat.CompatTextFieldWidget;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.resource.language.I18n;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
@@ -50,7 +50,7 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
     }
     
     @Override
-    protected void textFieldPreRender(TextFieldWidget widget) {
+    protected void textFieldPreRender(CompatTextFieldWidget widget) {
         if (!getConfigError().isPresent()) {
             widget.setEditableColor(14737632);
         } else {

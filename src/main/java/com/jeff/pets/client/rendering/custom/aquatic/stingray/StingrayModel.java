@@ -25,22 +25,22 @@ public class StingrayModel extends PetModel {
         body = new ModelPart(this);
         body.setPos(0.0F, -2.0F, 0.0F);
         root.addChild(body);
-        body.setTextureCoords(0, 0).addBox(-6.0F, -2.0F, -6.0F, 12, 2, 12, 0.0F, false);
+        body.setTextureCoords(0, 0).addBox(-6.0F, -2.0F, -6.0F, 12, 2, 12, 0.0F);
 
         tail = new ModelPart(this);
         tail.setPos(0.0F, -2.0F, 0.0F);
         root.addChild(tail);
-        tail.setTextureCoords(0, 14).addBox(-1.0F, -2.0F, 6.0F, 2, 2, 10, 0.0F, false);
+        tail.setTextureCoords(0, 14).addBox(-1.0F, -2.0F, 6.0F, 2, 2, 10, 0.0F);
 
         right_fin = new ModelPart(this);
         right_fin.setPos(6.0F, -4.0F, -1.0F);
         root.addChild(right_fin);
-        right_fin.setTextureCoords(24, 14).addBox(0.0F, 0.0F, -3.0F, 4, 2, 6, 0.0F, false);
+        right_fin.setTextureCoords(24, 14).addBox(0.0F, 0.0F, -3.0F, 4, 2, 6, 0.0F);
 
         left_fin = new ModelPart(this);
         left_fin.setPos(-6.0F, -4.0F, -1.0F);
         root.addChild(left_fin);
-        left_fin.setTextureCoords(24, 22).addBox(-4.0F, 0.0F, -3.0F, 4, 2, 6, 0.0F, false);
+        left_fin.setTextureCoords(24, 22).addBox(-4.0F, 0.0F, -3.0F, 4, 2, 6, 0.0F);
     }
 
     @Override

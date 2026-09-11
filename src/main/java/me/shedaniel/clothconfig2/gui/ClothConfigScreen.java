@@ -13,11 +13,11 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiElement;
-import net.minecraft.client.gui.GuiEventListener;
+import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.gui.screen.ConfirmScreen;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.render.platform.InputConstants;
+import me.shedaniel.clothconfig2.ButtonWidget;
+import me.shedaniel.clothconfig2.compat.InputConstants;
 import net.minecraft.client.render.TextRenderer;
 import net.minecraft.client.render.platform.GlStateManager;
 import net.minecraft.client.render.texture.TextureAtlasSprite;
@@ -48,6 +48,7 @@ public abstract class ClothConfigScreen extends Screen {
     public double tabsScrollProgress;
     public ListWidget<AbstractConfigEntry<AbstractConfigEntry>> listWidget;
     private KeyCodeEntry focusedBinding;
+    public final List<GuiEventListener> children = Lists.newArrayList();
     private final Screen parent;
     private final LinkedHashMap<String, List<AbstractConfigEntry>> tabbedEntries;
     private final List<Pair<String, Integer>> tabs;
@@ -69,6 +70,8 @@ public abstract class ClothConfigScreen extends Screen {
     @Nullable private String defaultFallbackCategory = null;
     private boolean alwaysShowTabs = false;
     private ModifierKeyCode startedKeyCode = null;
+    private double lastMouseX, lastMouseY;
+    private boolean hasLastMouse = false;
     
     @Deprecated
     public ClothConfigScreen(Screen parent, String title, Map<String, List<Pair<String, Object>>> o, boolean confirmSave, boolean displayErrors, boolean smoothScrollingList, Identifier defaultBackgroundLocation, Map<String, Identifier> categoryBackgroundLocation) {
@@ -217,7 +220,7 @@ public abstract class ClothConfigScreen extends Screen {
     }
     
     @Override
-    protected void init() {
+    public void init() {
         super.init();
         this.children.clear();
         this.tabButtons.clear();
@@ -240,7 +243,8 @@ public abstract class ClothConfigScreen extends Screen {
             else
                 minecraft.openScreen(parent);
         }));
-        addButton(saveButton = new AbstractPressableButtonWidget(width / 2 + buttonWidths / 2 + 6, height - 26, buttonWidths, 20, "") {
+        children.add(quitButton);
+        addButton(saveButton = new AbstractPressableButtonWidget(width / 2 + buttonWidths / 2 + 6, height - 26, buttonWidths, 20, I18n.translate("text.cloth-config.save_and_done")) {
             @Override
             public void onPress() {
                 saveAll(true);
@@ -264,6 +268,7 @@ public abstract class ClothConfigScreen extends Screen {
                 super.render(int_1, int_2, float_1);
             }
         });
+        children.add(saveButton);
         addButton(applyButton = new AbstractPressableButtonWidget(width / 2 - buttonWidths / 2, height - 26, buttonWidths, 20, I18n.translate("text.cloth-config.apply")) {
             @Override
             public void onPress() {
@@ -278,6 +283,7 @@ public abstract class ClothConfigScreen extends Screen {
                 super.render(int_1, int_2, float_1);
             }
         });
+        children.add(applyButton);
         saveButton.active = edited;
         if (isShowingTabs()) {
             tabsBounds = new Rectangle(0, 41, width, 24);
@@ -330,10 +336,12 @@ public abstract class ClothConfigScreen extends Screen {
         }
     }
     
-    @Override
+    
     public boolean mouseScrolled(double double_1) {
         // 1.13 Screen.mouseScrolled takes only 1 param (scroll amount)
-        // For tab hover detection, we'd need mouse position separately
+        // 1.12.2 Screen has no mouseScrolled; kept as a helper (void handler absent).
+        for (GuiEventListener child : Lists.newArrayList(this.children))
+            child.mouseScrolled(double_1);
         if (double_1 != 0d) {
             if (double_1 < 0)
                 tabsScrollVelocity += 16;
@@ -341,7 +349,7 @@ public abstract class ClothConfigScreen extends Screen {
                 tabsScrollVelocity -= 16;
             return true;
         }
-        return super.mouseScrolled(double_1);
+        return false;
     }
     
     public double getTabsMaximumScrolled() {
@@ -432,7 +440,7 @@ public abstract class ClothConfigScreen extends Screen {
             if (errors.size() > 0) {
                 minecraft.getTextureManager().bind(CONFIG_TEX);
                 GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-                String text = "§c" + (errors.size() == 1 ? errors.get(0) : I18n.translate("text.cloth-config.multi_error"));
+                String text = "\u00A7c" + (errors.size() == 1 ? errors.get(0) : I18n.translate("text.cloth-config.multi_error"));
                 if (isTransparentBackground()) {
                     int stringWidth = minecraft.textRenderer.getWidth(text);
                     fillGradient(8, 9, 20 + stringWidth, 14 + minecraft.textRenderer.fontHeight, 0x68000000, 0x68000000);
@@ -448,7 +456,7 @@ public abstract class ClothConfigScreen extends Screen {
         } else if (!isEditable()) {
             minecraft.getTextureManager().bind(CONFIG_TEX);
             GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-            String text = "§c" + I18n.translate("text.cloth-config.not_editable");
+            String text = "\u00A7c" + I18n.translate("text.cloth-config.not_editable");
             if (isTransparentBackground()) {
                 int stringWidth = minecraft.textRenderer.getWidth(text);
                 fillGradient(8, 9, 20 + stringWidth, 14 + minecraft.textRenderer.fontHeight, 0x68000000, 0x68000000);
@@ -522,27 +530,41 @@ public abstract class ClothConfigScreen extends Screen {
     }
     
     @Override
-    public boolean mouseReleased(double double_1, double double_2, int int_1) {
+    public void mouseReleased(int mouseX, int mouseY, int state) {
         if (this.focusedBinding != null && this.startedKeyCode != null && !this.startedKeyCode.isUnknown() && focusedBinding.isAllowMouse()) {
             focusedBinding.setValue(startedKeyCode);
             setFocusedBinding(null);
-            return true;
+            return;
         }
-        return super.mouseReleased(double_1, double_2, int_1);
+        super.mouseReleased(mouseX, mouseY, state);
+        for (GuiEventListener child : Lists.newArrayList(this.children))
+            child.mouseReleased((double) mouseX, (double) mouseY, state);
+        this.hasLastMouse = false;
     }
     
     @Override
-    public boolean keyReleased(int int_1, int int_2, int int_3) {
+    public void mouseDragged(int mouseX, int mouseY, int button, long time) {
+        super.mouseDragged(mouseX, mouseY, button, time);
+        double deltaX = this.hasLastMouse ? (double) mouseX - this.lastMouseX : 0d;
+        double deltaY = this.hasLastMouse ? (double) mouseY - this.lastMouseY : 0d;
+        for (GuiEventListener child : Lists.newArrayList(this.children))
+            child.mouseDragged((double) mouseX, (double) mouseY, button, deltaX, deltaY);
+        this.lastMouseX = mouseX;
+        this.lastMouseY = mouseY;
+        this.hasLastMouse = true;
+    }
+    
+    // 1.12.2 Screen has no keyReleased callback; retained as a helper.
+    public void keyReleased(int int_1, int int_2, int int_3) {
         if (this.focusedBinding != null && this.startedKeyCode != null && focusedBinding.isAllowKey()) {
             focusedBinding.setValue(startedKeyCode);
             setFocusedBinding(null);
-            return true;
         }
-        return super.keyReleased(int_1, int_2, int_3);
     }
     
     @Override
-    public boolean mouseClicked(double double_1, double double_2, int int_1) {
+    public void mouseClicked(int mouseX, int mouseY, int button) {
+        int int_1 = button;
         if (this.focusedBinding != null && this.startedKeyCode != null && focusedBinding.isAllowMouse()) {
             if (startedKeyCode.isUnknown())
                 startedKeyCode.setKeyCode(InputConstants.Type.MOUSE.getOrCreate(int_1));
@@ -553,32 +575,39 @@ public abstract class ClothConfigScreen extends Screen {
                         Modifier modifier = startedKeyCode.getModifier();
                         startedKeyCode.setModifier(Modifier.of(modifier.hasAlt(), true, modifier.hasShift()));
                         startedKeyCode.setKeyCode(InputConstants.Type.MOUSE.getOrCreate(int_1));
-                        return true;
+                        return;
                     } else if (code == 344 || code == 340) {
                         Modifier modifier = startedKeyCode.getModifier();
                         startedKeyCode.setModifier(Modifier.of(modifier.hasAlt(), modifier.hasControl(), true));
                         startedKeyCode.setKeyCode(InputConstants.Type.MOUSE.getOrCreate(int_1));
-                        return true;
+                        return;
                     } else if (code == 342 || code == 346) {
                         Modifier modifier = startedKeyCode.getModifier();
                         startedKeyCode.setModifier(Modifier.of(true, modifier.hasControl(), modifier.hasShift()));
                         startedKeyCode.setKeyCode(InputConstants.Type.MOUSE.getOrCreate(int_1));
-                        return true;
+                        return;
                     }
                 }
             }
-            return true;
+            return;
         } else {
             if (this.focusedBinding != null)
-                return true;
-            return super.mouseClicked(double_1, double_2, int_1);
+                return;
+            super.mouseClicked(mouseX, mouseY, button);
+            for (GuiEventListener child : Lists.newArrayList(this.children)) {
+                if (child.mouseClicked((double) mouseX, (double) mouseY, button))
+                    break;
+            }
         }
+        this.hasLastMouse = false;
     }
     
     @Override
-    public boolean keyPressed(int int_1, int int_2, int int_3) {
-        if (this.focusedBinding != null && (focusedBinding.isAllowKey() || int_1 == 256)) {
-            if (int_1 != 256) {
+    public void keyPressed(char typedChar, int keyCode) {
+        int int_1 = keyCode;
+        int int_2 = 0;
+        if (this.focusedBinding != null && (focusedBinding.isAllowKey() || int_1 == 1)) {
+            if (int_1 != 1) {
                 if (startedKeyCode.isUnknown())
                     startedKeyCode.setKeyCode(InputConstants.getKey(int_1, int_2));
                 else if (focusedBinding.isAllowModifiers()) {
@@ -588,42 +617,42 @@ public abstract class ClothConfigScreen extends Screen {
                             Modifier modifier = startedKeyCode.getModifier();
                             startedKeyCode.setModifier(Modifier.of(modifier.hasAlt(), true, modifier.hasShift()));
                             startedKeyCode.setKeyCode(InputConstants.getKey(int_1, int_2));
-                            return true;
+                            return;
                         } else if (code == 344 || code == 340) {
                             Modifier modifier = startedKeyCode.getModifier();
                             startedKeyCode.setModifier(Modifier.of(modifier.hasAlt(), modifier.hasControl(), true));
                             startedKeyCode.setKeyCode(InputConstants.getKey(int_1, int_2));
-                            return true;
+                            return;
                         } else if (code == 342 || code == 346) {
                             Modifier modifier = startedKeyCode.getModifier();
                             startedKeyCode.setModifier(Modifier.of(true, modifier.hasControl(), modifier.hasShift()));
                             startedKeyCode.setKeyCode(InputConstants.getKey(int_1, int_2));
-                            return true;
+                            return;
                         }
                     }
                     if (Minecraft.IS_MAC ? (int_1 == 343 || int_1 == 347) : (int_1 == 341 || int_1 == 345)) {
                         Modifier modifier = startedKeyCode.getModifier();
                         startedKeyCode.setModifier(Modifier.of(modifier.hasAlt(), true, modifier.hasShift()));
-                        return true;
+                        return;
                     } else if (int_1 == 344 || int_1 == 340) {
                         Modifier modifier = startedKeyCode.getModifier();
                         startedKeyCode.setModifier(Modifier.of(modifier.hasAlt(), modifier.hasControl(), true));
-                        return true;
+                        return;
                     } else if (int_1 == 342 || int_1 == 346) {
                         Modifier modifier = startedKeyCode.getModifier();
                         startedKeyCode.setModifier(Modifier.of(true, modifier.hasControl(), modifier.hasShift()));
-                        return true;
+                        return;
                     }
                 }
             } else {
                 focusedBinding.setValue(ModifierKeyCode.unknown());
                 setFocusedBinding(null);
             }
-            return true;
+            return;
         }
-        if (this.focusedBinding != null && int_1 != 256)
-            return true;
-        if (int_1 == 256 && this.shouldCloseOnEsc()) {
+        if (this.focusedBinding != null && int_1 != 1)
+            return;
+        if (int_1 == 1) {
             if (confirmSave && edited)
                 minecraft.openScreen(new ConfirmScreen((t, i) -> {
                     if (t)
@@ -633,9 +662,13 @@ public abstract class ClothConfigScreen extends Screen {
                 }, I18n.translate("text.cloth-config.quit_config"), I18n.translate("text.cloth-config.quit_config_sure"), 0));
             else
                 minecraft.openScreen(parent);
-            return true;
+            return;
         }
-        return super.keyPressed(int_1, int_2, int_3);
+        super.keyPressed(typedChar, keyCode);
+        for (GuiEventListener child : Lists.newArrayList(this.children)) {
+            child.keyPressed(keyCode, 0, 0);
+            child.charTyped(typedChar, 0);
+        }
     }
     
     public void save() {

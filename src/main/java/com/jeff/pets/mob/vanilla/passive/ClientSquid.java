@@ -1,15 +1,12 @@
 package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.living.effect.StatusEffects;
-import net.minecraft.entity.living.mob.passive.animal.tameable.TameableEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.NotNull;
 
 
 public class ClientSquid extends FlyingPet {
@@ -30,8 +27,8 @@ public class ClientSquid extends FlyingPet {
     private float tz;
 
 
-    public ClientSquid(EntityType<? extends @NotNull TameableEntity> entityType, World level) {
-        super(entityType, level);
+    public ClientSquid(World world) {
+        super(world);
     }
 
     @Override
@@ -70,7 +67,7 @@ public class ClientSquid extends FlyingPet {
             }
         }
 
-        if (this.isInWaterOrInBubbleColumn()) {
+        if (this.isInWater()) {
             if (this.tentacleMovement < (float) Math.PI) {
                 float f = this.tentacleMovement / (float) Math.PI;
                 this.tentacleAngle = MathHelper.sin(f * f * (float) Math.PI) * (float) Math.PI * 0.25F;
@@ -91,9 +88,9 @@ public class ClientSquid extends FlyingPet {
             }
 
             Vec3d vec3 = this.getVelocity();
-            double d = this.horizontalDistance(vec3);
-            this.bodyYaw /*bodyYaw*/ += (-((float) MathHelper.fastAtan2(vec3.x, vec3.z)) * (180F / (float) Math.PI) - this.bodyYaw /*bodyYaw*/) * 0.1F;
-            this.setYRot(this.bodyYaw /*bodyYaw*/);
+            double d = Math.sqrt(vec3.x * vec3.x + vec3.z * vec3.z);
+            this.bodyYaw += (-((float) MathHelper.fastAtan2(vec3.x, vec3.z)) * (180F / (float) Math.PI) - this.bodyYaw) * 0.1F;
+            this.setYRot(this.bodyYaw);
             this.zBodyRot += (float) Math.PI * this.rotateSpeed * 1.5F;
             this.xBodyRot += (-((float) MathHelper.fastAtan2(d, vec3.y)) * (180F / (float) Math.PI) - this.xBodyRot) * 0.1F;
         } else {
@@ -115,7 +112,7 @@ public class ClientSquid extends FlyingPet {
 
     @Override
     public void addVelocity(double x, double y, double z) {
-        this.lerpVelocity(new Vec3d(x, y, z));
+        super.addVelocity(x, y, z);
         this.tx = (float) x;
         this.ty = (float) y;
         this.tz = (float) z;

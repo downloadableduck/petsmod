@@ -22,45 +22,45 @@ public class ClientEvokerModel extends PetModel {
 
         body = new ModelPart(this);
         body.setPos(0.0F, 0.0F, 0.0F);
-        body.setTextureCoords(16, 20).addBox(-4.0F, 0.0F, -3.0F, 8, 12, 6, 0.0F, false);
-        body.setTextureCoords(0, 38).addBox(-4.0F, 0.0F, -3.0F, 8, 18, 6, 0.5F, false);
+        body.setTextureCoords(16, 20).addBox(-4.0F, 0.0F, -3.0F, 8, 12, 6, 0.0F);
+        body.setTextureCoords(0, 38).addBox(-4.0F, 0.0F, -3.0F, 8, 18, 6, 0.5F);
 
         Head = new ModelPart(this);
         Head.setPos(0.0F, 0.0F, 0.0F);
         body.addChild(Head);
-        Head.setTextureCoords(0, 0).addBox(-4.0F, -10.0F, -4.0F, 8, 10, 8, 0.0F, false);
+        Head.setTextureCoords(0, 0).addBox(-4.0F, -10.0F, -4.0F, 8, 10, 8, 0.0F);
 
         nose = new ModelPart(this);
         nose.setPos(0.0F, -2.0F, 0.0F);
         Head.addChild(nose);
-        nose.setTextureCoords(24, 0).addBox(-1.0F, -1.0F, -6.0F, 2, 4, 2, 0.0F, false);
+        nose.setTextureCoords(24, 0).addBox(-1.0F, -1.0F, -6.0F, 2, 4, 2, 0.0F);
 
         arms = new ModelPart(this);
         arms.setPos(0.0F, 2.0F, 0.0F);
         body.addChild(arms);
-        arms.setTextureCoords(44, 22).addBox(-8.0F, -2.0F, -2.0F, 4, 8, 4, 0.0F, false);
-        arms.setTextureCoords(44, 22).addBox(4.0F, -2.0F, -2.0F, 4, 8, 4, 0.0F, false);
-        arms.setTextureCoords(40, 38).addBox(-4.0F, 2.0F, -2.0F, 8, 4, 4, 0.0F, false);
+        arms.setTextureCoords(44, 22).addBox(-8.0F, -2.0F, -2.0F, 4, 8, 4, 0.0F);
+        arms.setTextureCoords(44, 22).addBox(4.0F, -2.0F, -2.0F, 4, 8, 4, 0.0F);
+        arms.setTextureCoords(40, 38).addBox(-4.0F, 2.0F, -2.0F, 8, 4, 4, 0.0F);
 
         leftLeg = new ModelPart(this);
         leftLeg.setPos(-2.0F, 12.0F, 0.0F);
         body.addChild(leftLeg);
-        leftLeg.setTextureCoords(0, 22).addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, 0.0F, false);
+        leftLeg.setTextureCoords(0, 22).addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, 0.0F);
 
         rightLeg = new ModelPart(this);
         rightLeg.setPos(2.0F, 12.0F, 0.0F);
         body.addChild(rightLeg);
-        rightLeg.setTextureCoords(0, 22).addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, 0.0F, true);
+        rightLeg.setTextureCoords(0, 22).addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, 0.0F);
 
         RightArm = new ModelPart(this);
         RightArm.setPos(-5.0F, 2.0F, 0.0F);
         body.addChild(RightArm);
-        RightArm.setTextureCoords(40, 46).addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F, false);
+        RightArm.setTextureCoords(40, 46).addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F);
 
         LeftArm = new ModelPart(this);
         LeftArm.setPos(5.0F, 2.0F, 0.0F);
         body.addChild(LeftArm);
-        LeftArm.setTextureCoords(40, 46).addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F, true);
+        LeftArm.setTextureCoords(40, 46).addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F);
     }
 
     @Override

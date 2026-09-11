@@ -1,17 +1,10 @@
 package me.shedaniel.clothconfig2.api;
 
-import net.minecraft.client.render.platform.InputConstants;
-import net.minecraft.client.render.platform.Window;
+import me.shedaniel.clothconfig2.compat.InputConstants;
+import me.shedaniel.clothconfig2.compat.MouseInput;
 import me.shedaniel.clothconfig2.impl.ModifierKeyCodeImpl;
-import net.minecraft.client.render.platform.Window;
-import me.shedaniel.clothconfig2.mixin.MouseHooks;
-import net.minecraft.client.render.platform.Window;
 import net.fabricmc.api.EnvType;
-import net.minecraft.client.render.platform.Window;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.platform.Window;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.render.platform.Window;
 
 @Environment(EnvType.CLIENT)
 public interface ModifierKeyCode {
@@ -57,11 +50,11 @@ public interface ModifierKeyCode {
         if (!isUnknown() && getType() == InputConstants.Type.MOUSE && getModifier().matchesCurrent()) {
             switch (getKeyCode().getValue()) {
                 case 0:
-                    return Minecraft.getInstance().mouseHandler.isLeftPressed();
+                    return MouseInput.isLeftPressed();
                 case 1:
-                    return Minecraft.getInstance().mouseHandler.isRightPressed();
+                    return MouseInput.isRightPressed();
                 case 2:
-                    return ((MouseHooks) Minecraft.getInstance().mouseHandler).middleButtonClicked();
+                    return MouseInput.isMiddlePressed();
             }
         }
         return false;

@@ -1,15 +1,13 @@
 package com.jeff.pets.mob;
 
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.data.DataAttribute;
 import net.minecraft.entity.living.attribute.EntityAttributes;
 import net.minecraft.entity.living.mob.passive.PassiveEntity;
 import net.minecraft.entity.living.mob.passive.animal.tameable.TameableEntity;
 import net.minecraft.entity.living.player.PlayerEntity;
-import net.minecraft.entity.particle.ParticleTypes;
+import net.minecraft.entity.particle.ParticleType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.InteractionHand;
@@ -36,8 +34,8 @@ public abstract class AbstractPet extends TameableEntity {
     private float randomX = (float) (Math.random() - 1f);
     private float randomZ = (float) (Math.random() - 1);
 
-    protected AbstractPet(EntityType<? extends @NotNull TameableEntity> type, World level) {
-        super(type, level);
+    protected AbstractPet(World level) {
+        super(level);
         this.setSpeed(0.5f);
     }
 
@@ -107,11 +105,11 @@ public abstract class AbstractPet extends TameableEntity {
 
         if (this.isTamed() && itemStack.isEmpty() && !player.isSneaking()) {
             this.world.addParticle(
-                    ParticleTypes.HEART,
+                    ParticleType.HEART,
                     this.x,
                     this.y + this.heartHeight(),
                     this.z,
-                    5, 5, 5
+                    0, 0, 0
             );
             return true;
         }
@@ -135,7 +133,7 @@ public abstract class AbstractPet extends TameableEntity {
      */
     @Override
     public void onDataValueChanged(@NotNull DataAttribute<?> key) {
-        if (!this.world.isClient()) {
+        if (!this.world.isClient) {
             super.onDataValueChanged(key);
         }
     }
@@ -166,7 +164,7 @@ public abstract class AbstractPet extends TameableEntity {
      * Easier way to call {@link TameableEntity#setCustomName} that takes a String rather than a {@link Text}
      */
     public void setName(String string) {
-        this.setCustomName(new LiteralText(string));
+        this.setCustomName(string);
     }
 
     public void wander() {

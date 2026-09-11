@@ -5,7 +5,7 @@ import me.shedaniel.clothconfig2.gui.entries.NestedListListEntry.NestedListCell;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.GuiElement;
-import net.minecraft.client.gui.GuiEventListener;
+import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 

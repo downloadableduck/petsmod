@@ -1,7 +1,7 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiEventListener;
+import me.shedaniel.clothconfig2.compat.GuiEventListener;
 
 import java.util.Collections;
 import java.util.List;

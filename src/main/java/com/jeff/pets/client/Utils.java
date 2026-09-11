@@ -8,7 +8,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.living.player.PlayerEntity;
-import net.minecraft.text.LiteralText;
 import net.minecraft.resource.Identifier;
 import net.minecraft.util.math.Vec3d;
 
@@ -52,9 +51,9 @@ public class Utils {
         double z = player.z - lookAngle.z * (double) 0.5F;
 
         entity.setPosition(x, y, z);
-        entity.setCustomName(new LiteralText(entityName));
+        entity.setCustomName(entityName);
         world.forceEntity(entity.getNetworkId(), entity);
-        entity.setOwner(player);
+        entity.setOwnerUuid(player.getUuid());
         Central.summonedEntity.add(entity);
     }
 
@@ -70,7 +69,7 @@ public class Utils {
      *                  current name is checked off of.
      */
     public static void checkName(String activePet, AbstractPet entity, String petName) {
-        if (Objects.equals(CONFIG.activePet, activePet) && entity != null && !entity.getName().getString().equals(petName)) {
+        if (Objects.equals(CONFIG.activePet, activePet) && entity != null && !entity.getName().equals(petName)) {
             entity.setName(petName);
         }
     }

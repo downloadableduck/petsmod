@@ -2,7 +2,7 @@ package me.shedaniel.clothconfig2.api;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.screen.Screen;
+import org.lwjgl.input.Keyboard;
 
 import java.util.Objects;
 
@@ -48,7 +48,7 @@ public class Modifier {
     }
     
     public static Modifier current() {
-        return Modifier.of(Screen.isAltDown(), Screen.isControlDown(), Screen.isShiftDown());
+        return Modifier.of(Keyboard.isKeyDown(56) || Keyboard.isKeyDown(184), Keyboard.isKeyDown(29) || Keyboard.isKeyDown(157), Keyboard.isKeyDown(42) || Keyboard.isKeyDown(54));
     }
     
     private static short setFlag(short base, short flag, boolean val) {

@@ -29,44 +29,44 @@ public class DuckModel extends PetModel {
         head = new ModelPart(this);
         head.setPos(0.0F, 0.0F, 0.0F);
         root.addChild(head);
-        head.setTextureCoords(0, 0).addBox(-1.5F, -5.0F, -1.5F, 3, 6, 3, 0.0F, false);
+        head.setTextureCoords(0, 0).addBox(-1.5F, -5.0F, -1.5F, 3, 6, 3, 0.0F);
 
         bill_r1 = new ModelPart(this);
         bill_r1.setPos(1.0F, -15.9F, -9.1F);
         head.addChild(bill_r1);
         setRotationAngle(bill_r1, 3.1176F, 0.0244F, -0.0049F);
-        bill_r1.setTextureCoords(14, 0).addBox(-2.2F, -13.0F, -8.0F, 2, 1, 2, 0.0F, false);
+        bill_r1.setTextureCoords(14, 0).addBox(-2.2F, -13.0F, -8.0F, 2, 1, 2, 0.0F);
 
         body = new ModelPart(this);
         body.setPos(0.0F, 1.0F, 4.0F);
         root.addChild(body);
         setRotationAngle(body, 1.5708F, 0.0F, 0.0F);
-        body.setTextureCoords(1, 10).addBox(-2.5F, -4.0F, -4.0F, 5, 8, 5, 0.0F, false);
+        body.setTextureCoords(1, 10).addBox(-2.5F, -4.0F, -4.0F, 5, 8, 5, 0.0F);
 
         left_wing = new ModelPart(this);
         left_wing.setPos(3.0F, 0.0F, 4.0F);
         root.addChild(left_wing);
-        left_wing.setTextureCoords(24, 13).addBox(-0.5F, 0.0F, -3.0F, 1, 3, 6, 0.0F, false);
+        left_wing.setTextureCoords(24, 13).addBox(-0.5F, 0.0F, -3.0F, 1, 3, 6, 0.0F);
 
         right_wing = new ModelPart(this);
         right_wing.setPos(-3.0F, 0.0F, 4.0F);
         root.addChild(right_wing);
-        right_wing.setTextureCoords(24, 13).addBox(-0.5F, 0.0F, -3.0F, 1, 3, 6, 0.0F, false);
+        right_wing.setTextureCoords(24, 13).addBox(-0.5F, 0.0F, -3.0F, 1, 3, 6, 0.0F);
 
         left_leg = new ModelPart(this);
         left_leg.setPos(1.0F, 4.0F, 5.0F);
         root.addChild(left_leg);
-        left_leg.setTextureCoords(26, 0).addBox(-1.0F, 0.0F, -3.0F, 3, 5, 3, 0.0F, false);
+        left_leg.setTextureCoords(26, 0).addBox(-1.0F, 0.0F, -3.0F, 3, 5, 3, 0.0F);
 
         right_leg = new ModelPart(this);
         right_leg.setPos(-2.0F, 4.0F, 5.0F);
         root.addChild(right_leg);
-        right_leg.setTextureCoords(26, 0).addBox(-1.0F, 0.0F, -3.0F, 3, 5, 3, 0.0F, false);
+        right_leg.setTextureCoords(26, 0).addBox(-1.0F, 0.0F, -3.0F, 3, 5, 3, 0.0F);
 
         tail = new ModelPart(this);
         tail.setPos(0.0F, 4.0F, 9.0F);
         root.addChild(tail);
-        tail.setTextureCoords(0, 23).addBox(-1.0F, -2.0F, -1.0F, 2, 2, 2, 0.0F, false);
+        tail.setTextureCoords(0, 23).addBox(-1.0F, -2.0F, -1.0F, 2, 2, 2, 0.0F);
     }
 
     @Override

@@ -1,35 +1,23 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
+import me.shedaniel.clothconfig2.impl.WindowUtil;
+
 import com.google.common.collect.Lists;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.render.platform.Window;
 import me.shedaniel.clothconfig2.ButtonWidget;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.render.platform.Window;
-import net.minecraft.client.gui.GuiEventListener;
-import net.minecraft.client.render.platform.Window;
+import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.gui.widget.OptionSliderWidget;
 import net.minecraft.client.options.GameOptions;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.client.render.platform.Window;
 
 import java.util.List;
-import net.minecraft.client.render.platform.Window;
 import java.util.Optional;
-import net.minecraft.client.render.platform.Window;
 import java.util.concurrent.atomic.AtomicInteger;
-import net.minecraft.client.render.platform.Window;
 import java.util.function.Consumer;
-import net.minecraft.client.render.platform.Window;
 import java.util.function.Function;
-import net.minecraft.client.render.platform.Window;
 import java.util.function.Supplier;
-import net.minecraft.client.render.platform.Window;
 
 public class IntegerSliderEntry extends TooltipListEntry {
     
@@ -111,13 +99,12 @@ public class IntegerSliderEntry extends TooltipListEntry {
     @Override
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-        Window window = Minecraft.getInstance().window;
         this.resetButton.active = isEditable() && getDefaultValue().isPresent() && defaultValue.get().intValue() != value.get();
         this.resetButton.y = y;
         this.sliderWidget.active = isEditable();
         this.sliderWidget.y = y;
         if (Minecraft.getInstance().textRenderer.isBidirectional()) {
-            Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), window.getGuiScaledWidth() - x - Minecraft.getInstance().textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, 16777215);
+            Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.getInstance().textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, 16777215);
             this.resetButton.x = x;
             this.sliderWidget.x = x + resetButton.getWidth() + 1;
             // this.sliderWidget.setWidth(150 - resetButton.getWidth() - 2); // Not available in 1.13
@@ -131,7 +118,7 @@ public class IntegerSliderEntry extends TooltipListEntry {
         sliderWidget.render(mouseX, mouseY, delta);
     }
     
-    private class Slider extends OptionSliderWidget {
+    private class Slider extends OptionSliderWidget implements me.shedaniel.clothconfig2.compat.GuiEventListener {
         private double progress;
         
         protected Slider(int int_1, int int_2, int int_3, int int_4, double double_1) {
@@ -145,18 +132,8 @@ public class IntegerSliderEntry extends TooltipListEntry {
             getScreen().setEdited(true);
         }
     
-        @Override
-        public boolean keyPressed(int int_1, int int_2, int int_3) {
-            if (!isEditable())
-                return false;
-            return super.keyPressed(int_1, int_2, int_3);
-        }
-    
-        @Override
-        public boolean mouseDragged(double double_1, double double_2, int int_1, double double_3, double double_4) {
-            if (!isEditable())
-                return false;
-            return super.mouseDragged(double_1, double_2, int_1, double_3, double_4);
+        public void render(int mouseX, int mouseY, float delta) {
+            super.render(Minecraft.getInstance(), mouseX, mouseY);
         }
     
         public double getProgress() {

@@ -1,19 +1,16 @@
 package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.living.LivingEntity;
 import net.minecraft.entity.living.mob.monster.RangedAttackMob;
-import net.minecraft.entity.living.mob.passive.animal.tameable.TameableEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.NotNull;
 
 public class ClientSkeleton extends GroundPet implements RangedAttackMob {
 
-    public ClientSkeleton(EntityType<? extends @NotNull TameableEntity> entityType, World level) {
-        super(entityType, level);
+    public ClientSkeleton(World world) {
+        super(world);
     }
 
     @Override
@@ -33,11 +30,6 @@ public class ClientSkeleton extends GroundPet implements RangedAttackMob {
 
     @Override
     public void doRangedAttack(LivingEntity livingEntity, float f) {
-
-    }
-
-    @Override
-    public void setAggressive(boolean aggressive) {
 
     }
 }

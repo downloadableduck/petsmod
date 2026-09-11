@@ -1,7 +1,6 @@
 package com.jeff.pets.mob;
 
 import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.living.LivingEntity;
 import net.minecraft.entity.living.mob.passive.animal.tameable.TameableEntity;
@@ -22,8 +21,8 @@ import java.util.Objects;
 public abstract class GroundPet extends AbstractPet {
     private int waitingTime;
 
-    public GroundPet(EntityType<? extends @NotNull TameableEntity> type, World level) {
-        super(type, level);
+    public GroundPet(World level) {
+        super(level);
     }
 
     /**

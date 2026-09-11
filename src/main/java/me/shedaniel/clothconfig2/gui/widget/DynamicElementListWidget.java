@@ -4,7 +4,7 @@ import me.shedaniel.clothconfig2.ParentElement;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiEventListener;
+import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.resource.Identifier;
 
 @Environment(EnvType.CLIENT)

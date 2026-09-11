@@ -43,7 +43,7 @@ public class EndermanEyesLayer implements EntityRenderLayer<ClientEnderman> {
         Minecraft.getInstance().gameRenderer.resetFogColor(true);
         this.parent.getModel().render(endermanEntity, f, g, i, j, k, l);
         Minecraft.getInstance().gameRenderer.resetFogColor(false);
-        this.parent.setLightColor(endermanEntity);
+        this.parent.setLightColor(endermanEntity, i);
         GlStateManager.depthMask(true);
         GlStateManager.disableBlend();
         GlStateManager.enableAlphaTest();

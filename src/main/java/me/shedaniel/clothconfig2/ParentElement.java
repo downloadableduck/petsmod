@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
-import net.minecraft.client.gui.GuiEventListener;
+import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import org.jetbrains.annotations.Nullable;
 
 public interface ParentElement extends GuiEventListener {

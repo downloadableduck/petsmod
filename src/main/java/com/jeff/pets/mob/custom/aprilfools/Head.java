@@ -1,10 +1,8 @@
 package com.jeff.pets.mob.custom.aprilfools;
 
 import com.jeff.pets.mob.AbstractPet;
-import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.crafting.recipe.Ingredient;
+import com.google.common.collect.ImmutableSet;
 import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.data.DataAttribute;
@@ -13,7 +11,7 @@ import net.minecraft.entity.data.SyncedData;
 import net.minecraft.entity.living.LivingEntity;
 import net.minecraft.entity.living.mob.passive.PassiveEntity;
 import net.minecraft.entity.living.player.PlayerEntity;
-import net.minecraft.entity.particle.ParticleTypes;
+import net.minecraft.entity.particle.ParticleType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
@@ -24,23 +22,20 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import static com.jeff.pets.PetsInitializer.HEAD;
 
 public class Head extends AbstractPet {
     public static final DataAttribute<@NotNull Boolean> IS_SERVER_ENTITY =
             SyncedData.registerSerializer(Head.class, DataSerializers.BOOLEAN);
 
-    public Head(final EntityType<? extends @NotNull Head> type, final World level) {
-        super(type, level);
+    public Head(final World level) {
+        super(level);
     }
 
     @Override
     public @Nullable PassiveEntity makeChild(@NotNull PassiveEntity AgableMob) {
-        return HEAD.create(world);
+        return new Head(world);
     }
 
     @Override
@@ -72,9 +67,9 @@ public class Head extends AbstractPet {
     }
 
     @Override
-    public EntityData initialize(LocalDifficulty difficulty, @Nullable EntityData groupData, NbtCompound NbtCompound) {
+    public EntityData initialize(LocalDifficulty difficulty, @Nullable EntityData groupData) {
         this.setServerEntity(true);
-        return super.initialize(difficulty, groupData, NbtCompound);
+        return super.initialize(difficulty, groupData);
     }
 
     @Override
@@ -82,7 +77,7 @@ public class Head extends AbstractPet {
 
         this.goalSelector.addGoal(2, new SwimGoal(this));
         this.goalSelector.addGoal(3, new EscapeDangerGoal(this, 1.4d));
-        this.goalSelector.addGoal(4, new TemptGoal(this, 1.0f, Ingredient.of(Items.CARROT), false));
+        this.goalSelector.addGoal(4, new TemptGoal(this, 1.0d, false, ImmutableSet.of(Items.CARROT)));
 
         this.goalSelector.addGoal(5, new LookAroundGoal(this));
         this.goalSelector.addGoal(6, new WanderAroundGoal(this, 1.0D));
@@ -114,10 +109,9 @@ public class Head extends AbstractPet {
 
         if (!this.isTamed() && this.isBreedingItem(itemStack)) {
             if (this.random.nextInt(3) == 0) {
-                this.setOwner(player);
                 this.getNavigation().stop();
                 this.world.addParticle(
-                        ParticleTypes.HEART,
+                        ParticleType.HEART,
 
                         x + (player.getRandom().nextFloat() * 0.4 - 0.25),
                         y + (player.getRandom().nextFloat() * 0.4 - 0.25),
@@ -129,7 +123,7 @@ public class Head extends AbstractPet {
 
         if (this.isTamed() && itemStack.isEmpty()) {
             this.world.addParticle(
-                    ParticleTypes.HEART,
+                    ParticleType.HEART,
                     this.x,
                     this.y + 1,
                     this.z,
@@ -243,7 +237,7 @@ public class Head extends AbstractPet {
 
     @Override
     public void onDataValueChanged(@NotNull DataAttribute<?> key) {
-        if (!this.world.isClient()) {
+        if (!this.world.isClient) {
             super.onDataValueChanged(key);
         }
     }

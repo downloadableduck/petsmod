@@ -1,28 +1,19 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
+import me.shedaniel.clothconfig2.impl.WindowUtil;
+
 import com.google.common.collect.Lists;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.render.platform.Window;
 import me.shedaniel.clothconfig2.ButtonWidget;
-import net.minecraft.client.render.platform.Window;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.render.platform.Window;
-import net.minecraft.client.gui.GuiEventListener;
-import net.minecraft.client.render.platform.Window;
+import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.render.platform.Window;
 
 import java.util.List;
-import net.minecraft.client.render.platform.Window;
 import java.util.Optional;
-import net.minecraft.client.render.platform.Window;
 import java.util.concurrent.atomic.AtomicBoolean;
-import net.minecraft.client.render.platform.Window;
 import java.util.function.Consumer;
-import net.minecraft.client.render.platform.Window;
 import java.util.function.Supplier;
-import net.minecraft.client.render.platform.Window;
 
 public class BooleanListEntry extends TooltipListEntry {
     
@@ -75,14 +66,13 @@ public class BooleanListEntry extends TooltipListEntry {
     @Override
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-        Window window = Minecraft.getInstance().window;
         this.resetButton.active = isEditable() && getDefaultValue().isPresent() && defaultValue.get().booleanValue() != bool.get();
         this.resetButton.y = y;
         this.buttonWidget.active = isEditable();
         this.buttonWidget.y = y;
         this.buttonWidget.message = getYesNoText(bool.get());
         if (Minecraft.getInstance().textRenderer.isBidirectional()) {
-            Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), window.getGuiScaledWidth() - x - Minecraft.getInstance().textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, 16777215);
+            Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.getInstance().textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, 16777215);
             this.resetButton.x = x;
             this.buttonWidget.x = x + resetButton.getWidth() + 2;
             // this.buttonWidget.setWidth(150 - resetButton.getWidth() - 2); // Not available in 1.13
@@ -97,7 +87,7 @@ public class BooleanListEntry extends TooltipListEntry {
     }
     
     public String getYesNoText(boolean bool) {
-        return bool ? "§aYes" : "§cNo";
+        return bool ? "\u00A7aYes" : "\u00A7cNo";
     }
     
     @Override

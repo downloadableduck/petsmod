@@ -1,8 +1,6 @@
 package com.jeff.pets.client.mixin.client;
 
-import net.fabricmc.loader.impl.FormattedException;
 import net.minecraft.client.Minecraft;
-import net.ornithemc.osl.networking.impl.mixin.common.MinecraftServerMixin;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

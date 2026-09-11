@@ -32,19 +32,19 @@ public class PenguinModel extends PetModel {
         body = new ModelPart(this);
         body.setPos(0.0F, 4.0F, 0.0F);
         root.addChild(body);
-        body.setTextureCoords(0, 0).addBox(-8.0F, -20.0F, 0.0F, 8, 12, 8, 0.0F, false);
+        body.setTextureCoords(0, 0).addBox(-8.0F, -20.0F, 0.0F, 8, 12, 8, 0.0F);
 
         left_wing = new ModelPart(this);
         left_wing.setPos(-4.0F, -15.0F, 8.5F);
         root.addChild(left_wing);
         setRotationAngle(left_wing, 0.0F, 0.0F, -1.5708F);
-        left_wing.setTextureCoords(24, 25).addBox(-10.0F, -3.0F, -0.5F, 10, 6, 1, 0.0F, false);
+        left_wing.setTextureCoords(24, 25).addBox(-10.0F, -3.0F, -0.5F, 10, 6, 1, 0.0F);
 
         right_wing = new ModelPart(this);
         right_wing.setPos(-4.0F, -15.0F, 0.0F);
         root.addChild(right_wing);
         setRotationAngle(right_wing, 0.0F, 0.0F, -1.5708F);
-        right_wing.setTextureCoords(24, 25).addBox(-10.0F, -3.0F, -1.0F, 10, 6, 1, 0.0F, false);
+        right_wing.setTextureCoords(24, 25).addBox(-10.0F, -3.0F, -1.0F, 10, 6, 1, 0.0F);
 
         left_foot = new ModelPart(this);
         left_foot.setPos(-4.0F, -4.0F, 2.0F);
@@ -55,7 +55,7 @@ public class PenguinModel extends PetModel {
         left_foot_r1.setPos(5.0F, 1.0F, 0.0F);
         left_foot.addChild(left_foot_r1);
         setRotationAngle(left_foot_r1, 0.0F, 0.0F, -1.5708F);
-        left_foot_r1.setTextureCoords(0, 32).addBox(-1.0F, -6.0F, 2.0F, 2, 6, 4, 0.0F, false);
+        left_foot_r1.setTextureCoords(0, 32).addBox(-1.0F, -6.0F, 2.0F, 2, 6, 4, 0.0F);
 
         right_foot = new ModelPart(this);
         right_foot.setPos(-4.0F, -4.0F, 7.0F);
@@ -66,22 +66,22 @@ public class PenguinModel extends PetModel {
         right_foot_r1.setPos(5.0F, 1.0F, -9.0F);
         right_foot.addChild(right_foot_r1);
         setRotationAngle(right_foot_r1, 0.0F, 0.0F, -1.5708F);
-        right_foot_r1.setTextureCoords(32, 0).addBox(-1.0F, -6.0F, 2.0F, 2, 6, 4, 0.0F, false);
+        right_foot_r1.setTextureCoords(32, 0).addBox(-1.0F, -6.0F, 2.0F, 2, 6, 4, 0.0F);
 
         tail = new ModelPart(this);
         tail.setPos(-3.0F, -3.0F, 2.0F);
         root.addChild(tail);
-        tail.setTextureCoords(-8, -8).addBox(3.0F, -4.0F, 0.0F, 2, 2, 4, 0.0F, false);
+        tail.setTextureCoords(-8, -8).addBox(3.0F, -4.0F, 0.0F, 2, 2, 4, 0.0F);
 
         head = new ModelPart(this);
         head.setPos(1.0F, -5.0F, 3.0F);
         root.addChild(head);
-        head.setTextureCoords(0, 20).addBox(-8.0F, -17.0F, -2.0F, 6, 6, 6, 0.0F, false);
+        head.setTextureCoords(0, 20).addBox(-8.0F, -17.0F, -2.0F, 6, 6, 6, 0.0F);
 
         beak = new ModelPart(this);
         beak.setPos(0.0F, 0.0F, 0.0F);
         head.addChild(beak);
-        beak.setTextureCoords(12, 32).addBox(-2.0F, -14.0F, 0.0F, 4, 2, 2, 0.0F, false);
+        beak.setTextureCoords(12, 32).addBox(-2.0F, -14.0F, 0.0F, 4, 2, 2, 0.0F);
     }
 
     @Override
