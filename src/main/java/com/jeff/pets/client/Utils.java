@@ -55,7 +55,7 @@ public class Utils {
         entity.setPosition(x, y, z);
         entity.setName(entityName);
         world.addEntityToWorld(entity.getEntityId(), entity);
-        entity.setTamedBy(player);
+        entity.setOwnerId(player.getUniqueID());
         Central.summonedEntity.add(entity);
     }
 

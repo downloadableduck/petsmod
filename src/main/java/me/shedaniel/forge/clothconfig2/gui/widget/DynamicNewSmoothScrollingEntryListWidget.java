@@ -4,7 +4,7 @@ import me.shedaniel.forge.clothconfig2.ClothConfigInitializer;
 import me.shedaniel.forge.math.Rectangle;
 import me.shedaniel.forge.math.impl.PointHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
@@ -112,7 +112,7 @@ public abstract class DynamicNewSmoothScrollingEntryListWidget<E extends Dynamic
 
     @SuppressWarnings("deprecation")
     @Override
-    protected void renderScrollBar(Tessellator tessellator, BufferBuilder buffer, int maxScroll, int scrollbarPositionMinX, int scrollbarPositionMaxX) {
+    protected void renderScrollBar(Tessellator tessellator, VertexBuffer buffer, int maxScroll, int scrollbarPositionMinX, int scrollbarPositionMaxX) {
         if (!smoothScrolling)
             super.renderScrollBar(tessellator, buffer, maxScroll, scrollbarPositionMinX, scrollbarPositionMaxX);
         else if (maxScroll > 0) {

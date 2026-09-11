@@ -5,7 +5,7 @@ import me.shedaniel.forge.clothconfig2.api.ScissorsHandler;
 import me.shedaniel.forge.math.Rectangle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -176,7 +176,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
     }
 
     @Deprecated
-    protected void renderBackBackground(BufferBuilder buffer, Tessellator tessellator) {
+    protected void renderBackBackground(VertexBuffer buffer, Tessellator tessellator) {
         this.client.getTextureManager().bindTexture(backgroundLocation);
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         float float_2 = 32.0F;
@@ -196,7 +196,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
         GlStateManager.disableLighting();
         GlStateManager.disableFog();
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder buffer = tessellator.getBuffer();
+        VertexBuffer buffer = tessellator.getBuffer();
         renderBackBackground(buffer, tessellator);
         int rowLeft = this.getRowLeft();
         int startY = this.top + 4 - (int) this.getScroll();
@@ -236,7 +236,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
     }
 
     @SuppressWarnings("deprecation")
-    protected void renderScrollBar(Tessellator tessellator, BufferBuilder buffer, int maxScroll, int scrollbarPositionMinX, int scrollbarPositionMaxX) {
+    protected void renderScrollBar(Tessellator tessellator, VertexBuffer buffer, int maxScroll, int scrollbarPositionMinX, int scrollbarPositionMaxX) {
         if (maxScroll > 0) {
             int int_9 = ((this.bottom - this.top) * (this.bottom - this.top)) / this.getMaxScrollPosition();
             int_9 = MathHelper.clamp(int_9, 32, this.bottom - this.top - 8);
@@ -387,7 +387,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
     protected void renderList(int startX, int startY, int int_3, int int_4, float float_1) {
         int itemCount = this.getItemCount();
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder buffer = tessellator.getBuffer();
+        VertexBuffer buffer = tessellator.getBuffer();
 
         for (int renderIndex = 0; renderIndex < itemCount; ++renderIndex) {
             E item = this.getItem(renderIndex);
@@ -449,7 +449,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
     @SuppressWarnings("deprecation")
     protected void renderHoleBackground(int int_1, int int_2, int int_3, int int_4) {
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder buffer = tessellator.getBuffer();
+        VertexBuffer buffer = tessellator.getBuffer();
         this.client.getTextureManager().bindTexture(backgroundLocation);
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         float float_1 = 32.0F;

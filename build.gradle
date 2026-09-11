@@ -90,3 +90,8 @@ jar {
     archiveName = "pets-mod-" + project.version + "-" + project.mcVersion + "-lite.litemod"
     archivesBaseName = "pets-mod"
 }
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8;
+    targetCompatibility = JavaVersion.VERSION_1_8
+}

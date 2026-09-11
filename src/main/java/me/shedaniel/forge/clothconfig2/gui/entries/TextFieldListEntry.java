@@ -114,7 +114,7 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
             this.textFieldWidget.x = x + entryWidth - 148;
         }
         setTextFieldWidth(textFieldWidget, 148 - resetButton.getWidth() - 4);
-        resetButton.func_191745_a(Minecraft.getInstance(), mouseX, mouseY, delta);
+        resetButton.func_146112_a(Minecraft.getInstance(), mouseX, mouseY);
         textFieldWidget.func_146194_f();
     }
 

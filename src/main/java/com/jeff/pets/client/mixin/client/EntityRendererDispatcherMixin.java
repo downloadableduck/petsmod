@@ -15,14 +15,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Map;
 
-@Mixin(value = RenderManager.class, remap = false)
+@Mixin(value = RenderManager.class)
 public abstract class EntityRendererDispatcherMixin {
 
     @Shadow
     @Final
     private Map<Class<? extends Entity>, Render<? extends Entity>> k;
 
-    @Inject(at = @At("RETURN"), method = "<init>")
+    @Inject(at = @At(value="RETURN"), method = "<init>(Lbza;Lbvh;)V")
     public void onFunc(TextureManager p_i46180_1_, RenderItem p_i46180_2_, CallbackInfo ci) {
         PetsClientInitializer.register();
         synchronized (PetsClientInitializer.renderManagerMap.keySet()) {

@@ -9,7 +9,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumHand;
@@ -111,7 +110,6 @@ public class Head extends AbstractPet {
 
         if (!this.isTamed() && this.isBreedingItem(itemStack)) {
             if (this.rand.nextInt(3) == 0) {
-                this.setTamedBy(player);
                 this.navigator.clearPath();
                 this.world.func_175682_a(
                         EnumParticleTypes.HEART,

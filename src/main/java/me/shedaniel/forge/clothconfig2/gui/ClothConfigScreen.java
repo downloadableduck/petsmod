@@ -11,9 +11,9 @@ import me.shedaniel.forge.clothconfig2.impl.KeyInput;
 import me.shedaniel.forge.math.Rectangle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
@@ -355,8 +355,8 @@ public abstract class ClothConfigScreen extends GuiScreen {
                 widget.render(int_1, int_2, float_1);
             drawTabsShades(0, isTransparentBackground() ? 120 : 255);
             ScissorsHandler.INSTANCE.removeLastScissor();
-            buttonLeftTab.func_191745_a(minecraft, int_1, int_2, float_1);
-            buttonRightTab.func_191745_a(minecraft, int_1, int_2, float_1);
+            buttonLeftTab.func_146112_a(minecraft, int_1, int_2);
+            buttonRightTab.func_146112_a(minecraft, int_1, int_2);
         } else
             drawCenteredString(minecraft.fontRenderer, title, width / 2, 12, -1);
 
@@ -404,7 +404,7 @@ public abstract class ClothConfigScreen extends GuiScreen {
         GlStateManager.shadeModel(7425);
         GlStateManager.disableTexture2D();
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder buffer = tessellator.getBuffer();
+        VertexBuffer buffer = tessellator.getBuffer();
         buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
         buffer.pos(tabsBounds.getMinX() + 20, tabsBounds.getMinY() + 4, 0.0D).tex(0, 1f).color(0, 0, 0, lightColor).endVertex();
         buffer.pos(tabsBounds.getMaxX() - 20, tabsBounds.getMinY() + 4, 0.0D).tex(1f, 1f).color(0, 0, 0, lightColor).endVertex();
@@ -428,7 +428,7 @@ public abstract class ClothConfigScreen extends GuiScreen {
         if (isTransparentBackground())
             return;
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder buffer = tessellator.getBuffer();
+        VertexBuffer buffer = tessellator.getBuffer();
         minecraft.getTextureManager().bindTexture(getBackgroundLocation());
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         float f = 32.0F;
@@ -688,7 +688,7 @@ public abstract class ClothConfigScreen extends GuiScreen {
         }
 
         @Override
-        protected void renderBackBackground(BufferBuilder buffer, Tessellator tessellator) {
+        protected void renderBackBackground(VertexBuffer buffer, Tessellator tessellator) {
             if (!isTransparentBackground())
                 super.renderBackBackground(buffer, tessellator);
             else {

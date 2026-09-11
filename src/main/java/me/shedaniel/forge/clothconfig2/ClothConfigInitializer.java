@@ -199,7 +199,7 @@ public class ClothConfigInitializer {
                 this.buttonWidget.y = y;
                 this.buttonWidget.x = x + entryWidth / 2 - width / 2;
                 this.buttonWidget.setWidth(width);
-                this.buttonWidget.func_191745_a(Minecraft.getInstance(), mouseX, mouseY, delta);
+                this.buttonWidget.func_146112_a(Minecraft.getInstance(), mouseX, mouseY);
             }
         });
 
@@ -242,7 +242,7 @@ public class ClothConfigInitializer {
                 this.buttonWidget.y = y;
                 this.buttonWidget.x = x + entryWidth / 2 - width / 2;
                 this.buttonWidget.setWidth(width);
-                this.buttonWidget.func_191745_a(Minecraft.getInstance(), mouseX, mouseY, delta);
+                this.buttonWidget.func_146112_a(Minecraft.getInstance(), mouseX, mouseY);
             }
         });
         scrolling.addEntry(easingMethodEntry);

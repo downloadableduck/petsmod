@@ -20,7 +20,7 @@ public class ClothConfigTabButton extends GuiButton {
 
     public void render(int mouseX, int mouseY, float delta) {
         enabled = index != screen.selectedTabIndex;
-        this.func_191745_a(Minecraft.getInstance(), mouseX, mouseY, delta);
+        this.func_146112_a(Minecraft.getInstance(), mouseX, mouseY);
     }
 
     public void onClick() {

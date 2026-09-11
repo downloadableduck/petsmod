@@ -28,7 +28,6 @@ public enum PetList implements NameableEnum {
     llama,
     magma_cube,
     mooshroom,
-    parrot,
     penguin,
     pig,
     polar_bear,

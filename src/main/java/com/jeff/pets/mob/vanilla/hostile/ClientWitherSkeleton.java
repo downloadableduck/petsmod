@@ -34,8 +34,4 @@ public class ClientWitherSkeleton extends GroundPet implements IRangedAttackMob 
 
     }
 
-    @Override
-    public void setSwingingArms(boolean swingingArms) {
-
-    }
 }

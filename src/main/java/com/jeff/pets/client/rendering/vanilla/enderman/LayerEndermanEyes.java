@@ -30,7 +30,7 @@ public class LayerEndermanEyes implements LayerRenderer<ClientEnderman> {
         GlStateManager.enableLighting();
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.endermanRenderer.getMainModel().render(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-        this.endermanRenderer.setLightmap(entitylivingbaseIn);
+        this.endermanRenderer.setLightmap(entitylivingbaseIn, ageInTicks);
         GlStateManager.depthMask(true);
         GlStateManager.disableBlend();
         GlStateManager.enableAlphaTest();
