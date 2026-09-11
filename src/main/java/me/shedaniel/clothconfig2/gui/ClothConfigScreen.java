@@ -356,8 +356,8 @@ public abstract class ClothConfigScreen extends Screen {
                 widget.render(int_1, int_2, float_1);
             drawTabsShades(0, isTransparentBackground() ? 120 : 255);
             ScissorsHandler.INSTANCE.removeLastScissor();
-            buttonLeftTab.method_891(minecraft, int_1, int_2, float_1);
-            buttonRightTab.method_891(minecraft, int_1, int_2, float_1);
+            buttonLeftTab.render(minecraft, int_1, int_2);
+            buttonRightTab.render(minecraft, int_1, int_2);
         } else
             drawCenteredString(minecraft.textRenderer, title, width / 2, 12, -1);
 

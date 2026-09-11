@@ -37,12 +37,4 @@ public class ClientWitherSkeleton extends GroundPet implements RangedAttackMob {
     public void rangedAttack(LivingEntity target, float pullProgress) {
 
     }
-
-public void method_13246(boolean bl) {
-
-    }
-
-    @Override
-    public void method_14057(boolean bl) {
-    }
 }

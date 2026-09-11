@@ -100,15 +100,12 @@ public class Central implements ClientModInitializer {
     public static ClientCat cat;
     public static ClientBat bat;
     public static ClientChicken chicken;
-    public static ClientCod cod;
     public static ClientCow cow;
     public static ClientDonkey donkey;
     public static ClientHorse horse;
     public static ClientMooshroom mooshroom;
-    public static ClientParrot parrot;
     public static ClientPig pig;
     public static ClientRabbit rabbit;
-    public static ClientSalmon salmon;
     public static ClientSnowGolem snowGolem;
     public static ClientSquid squid;
     public static ClientVillager villager;
@@ -129,7 +126,6 @@ public class Central implements ClientModInitializer {
     public static ClientGhast ghast;
     public static ClientGuardian guardian;
     public static ClientMagmaCube magmaCube;
-    public static ClientPhantom phantom;
     public static ClientShulker shulker;
     public static ClientSilverfish silverfish;
     public static ClientSkeleton skeleton;
@@ -171,15 +167,12 @@ public class Central implements ClientModInitializer {
         Utils.despawnEntity(cat);
         Utils.despawnEntity(bat);
         Utils.despawnEntity(chicken);
-        Utils.despawnEntity(cod);
         Utils.despawnEntity(cow);
         Utils.despawnEntity(donkey);
         Utils.despawnEntity(horse);
         Utils.despawnEntity(mooshroom);
-        Utils.despawnEntity(parrot);
         Utils.despawnEntity(pig);
         Utils.despawnEntity(rabbit);
-        Utils.despawnEntity(salmon);
         Utils.despawnEntity(snowGolem);
         Utils.despawnEntity(squid);
         Utils.despawnEntity(villager);
@@ -200,7 +193,6 @@ public class Central implements ClientModInitializer {
         Utils.despawnEntity(ghast);
         Utils.despawnEntity(guardian);
         Utils.despawnEntity(magmaCube);
-        Utils.despawnEntity(phantom);
         Utils.despawnEntity(shulker);
         Utils.despawnEntity(silverfish);
         Utils.despawnEntity(skeleton);
@@ -237,15 +229,12 @@ public class Central implements ClientModInitializer {
         cat = new ClientCat(world);
         bat = new ClientBat(world);
         chicken = new ClientChicken(world);
-        cod = new ClientCod(world);
         cow = new ClientCow(world);
         donkey = new ClientDonkey(world);
         horse = new ClientHorse(world);
         mooshroom = new ClientMooshroom(world);
-        parrot = new ClientParrot(world);
         pig = new ClientPig(world);
         rabbit = new ClientRabbit(world);
-        salmon = new ClientSalmon(world);
         snowGolem = new ClientSnowGolem(world);
         squid = new ClientSquid(world);
         villager = new ClientVillager(world);
@@ -266,7 +255,6 @@ public class Central implements ClientModInitializer {
         ghast = new ClientGhast(world);
         guardian = new ClientGuardian(world);
         magmaCube = new ClientMagmaCube(world);
-        phantom = new ClientPhantom(world);
         shulker = new ClientShulker(world);
         silverfish = new ClientSilverfish(world);
         skeleton = new ClientSkeleton(world);
@@ -303,8 +291,6 @@ public class Central implements ClientModInitializer {
                 Utils.summonPet(bat, CONFIG.batName);
             } else if (Objects.equals(CONFIG.activePet, "chicken")) {
                 Utils.summonPet(chicken, CONFIG.chickenName);
-            } else if (Objects.equals(CONFIG.activePet, "cod")) {
-                Utils.summonPet(cod, CONFIG.codName);
             } else if (Objects.equals(CONFIG.activePet, "cow")) {
                 Utils.summonPet(cow, CONFIG.cowName);
             } else if (Objects.equals(CONFIG.activePet, "donkey")) {
@@ -313,14 +299,10 @@ public class Central implements ClientModInitializer {
                 Utils.summonPet(horse, CONFIG.horseName);
             } else if (Objects.equals(CONFIG.activePet, "mooshroom")) {
                 Utils.summonPet(mooshroom, CONFIG.mooshroomName);
-            } else if (Objects.equals(CONFIG.activePet, "parrot")) {
-                Utils.summonPet(parrot, CONFIG.parrotName);
             } else if (Objects.equals(CONFIG.activePet, "pig")) {
                 Utils.summonPet(pig, CONFIG.pigName);
             } else if (Objects.equals(CONFIG.activePet, "rabbit")) {
                 Utils.summonPet(rabbit, CONFIG.rabbitName);
-            } else if (Objects.equals(CONFIG.activePet, "salmon")) {
-                Utils.summonPet(salmon, CONFIG.salmonName);
             } else if (Objects.equals(CONFIG.activePet, "snow_golem")) {
                 Utils.summonPet(snowGolem, CONFIG.snowGolemName);
             } else if (Objects.equals(CONFIG.activePet, "squid")) {
@@ -361,8 +343,6 @@ public class Central implements ClientModInitializer {
                 Utils.summonPet(guardian, CONFIG.guardianName);
             } else if (Objects.equals(CONFIG.activePet, "magma_cube")) {
                 Utils.summonPet(magmaCube, CONFIG.magmaCubeName);
-            } else if (Objects.equals(CONFIG.activePet, "phantom")) {
-                Utils.summonPet(phantom, CONFIG.phantomName);
             } else if (Objects.equals(CONFIG.activePet, "shulker")) {
                 Utils.summonPet(shulker, CONFIG.shulkerName);
             } else if (Objects.equals(CONFIG.activePet, "silverfish")) {
@@ -420,15 +400,12 @@ public class Central implements ClientModInitializer {
         Utils.checkName("sheep", sheep, CONFIG.sheepName);
         Utils.checkName("bat", bat, CONFIG.batName);
         Utils.checkName("chicken", chicken, CONFIG.chickenName);
-        Utils.checkName("cod", cod, CONFIG.codName);
         Utils.checkName("cow", cow, CONFIG.cowName);
         Utils.checkName("donkey", donkey, CONFIG.donkeyName);
         Utils.checkName("horse", horse, CONFIG.horseName);
         Utils.checkName("mooshroom", mooshroom, CONFIG.mooshroomName);
-        Utils.checkName("parrot", parrot, CONFIG.parrotName);
         Utils.checkName("pig", pig, CONFIG.pigName);
         Utils.checkName("rabbit", rabbit, CONFIG.rabbitName);
-        Utils.checkName("salmon", salmon, CONFIG.salmonName);
         Utils.checkName("snow_golem", snowGolem, CONFIG.snowGolemName);
         Utils.checkName("squid", squid, CONFIG.squidName);
         Utils.checkName("villager", villager, CONFIG.villagerName);
@@ -449,7 +426,6 @@ public class Central implements ClientModInitializer {
         Utils.checkName("ghast", ghast, CONFIG.ghastName);
         Utils.checkName("guardian", guardian, CONFIG.guardianName);
         Utils.checkName("magma_cube", magmaCube, CONFIG.magmaCubeName);
-        Utils.checkName("phantom", phantom, CONFIG.phantomName);
         Utils.checkName("shulker", shulker, CONFIG.shulkerName);
         Utils.checkName("silverfish", silverfish, CONFIG.silverfishName);
         Utils.checkName("skeleton", skeleton, CONFIG.skeletonName);
@@ -1590,8 +1566,6 @@ public class Central implements ClientModInitializer {
                 Utils.setActivePet(bat, "bat");
             } else if (Objects.equals(species, "chicken")) {
                 Utils.setActivePet(chicken, "chicken");
-            } else if (Objects.equals(species, "cod")) {
-                Utils.setActivePet(cod, "cod");
             } else if (Objects.equals(species, "cow")) {
                 Utils.setActivePet(cow, "cow");
             } else if (Objects.equals(species, "donkey")) {
@@ -1600,14 +1574,10 @@ public class Central implements ClientModInitializer {
                 Utils.setActivePet(horse, "horse");
             } else if (Objects.equals(species, "mooshroom")) {
                 Utils.setActivePet(mooshroom, "mooshroom");
-            } else if (Objects.equals(species, "parrot")) {
-                Utils.setActivePet(parrot, "parrot");
             } else if (Objects.equals(species, "pig")) {
                 Utils.setActivePet(pig, "pig");
             } else if (Objects.equals(species, "rabbit")) {
                 Utils.setActivePet(rabbit, "rabbit");
-            } else if (Objects.equals(species, "salmon")) {
-                Utils.setActivePet(salmon, "salmon");
             } else if (Objects.equals(species, "snow_golem") || Objects.equals(species, "snow golem")) {
                 Utils.setActivePet(snowGolem, "snow_golem");
             } else if (Objects.equals(species, "squid")) {
@@ -1648,8 +1618,6 @@ public class Central implements ClientModInitializer {
                 Utils.setActivePet(guardian, "guardian");
             } else if (Objects.equals(species, "magma_cube") || Objects.equals(species, "magma cube")) {
                 Utils.setActivePet(magmaCube, "magma_cube");
-            } else if (Objects.equals(species, "phantom")) {
-                Utils.setActivePet(phantom, "phantom");
             } else if (Objects.equals(species, "shulker")) {
                 Utils.setActivePet(shulker, "shulker");
             } else if (Objects.equals(species, "silverfish")) {
@@ -2069,7 +2037,7 @@ public class Central implements ClientModInitializer {
         String[] stuffs = new String[]{
                 "bat", "blaze",
                 "cat", "cave spider", "chicken",
-                "cod", "cow",
+                "cow",
                 "creeper",
                 "dolphin", "donkey", "drowned", "duck", "dumbo octopus",
                 "elder guardian", "ender dragon", "enderman", "endermite", "evoker",
@@ -2079,17 +2047,15 @@ public class Central implements ClientModInitializer {
                 "koi", "llama",
                 "magma cube",
                 "mooshroom",
-                "parrot", "penguin", "phantom",
+                "penguin",
                 "pig",
                 "polar bear",
                 "pufferfish", "rabbit",
                 "racoon",
-                "salmon",
                 "sheep",
                 "shulker",
                 "silverfish", "skeleton", "slime", "snow golem",
                 "spider", "squid", "stingray", "stray",
-                "turtle",
                 "vex", "villager", "vindicator", "witch", "wither",
                 "wither skeleton", "wolf", "zombie", "zombie villager", "zombie pigman"};
         Collections.addAll(PETS_LIST, stuffs);

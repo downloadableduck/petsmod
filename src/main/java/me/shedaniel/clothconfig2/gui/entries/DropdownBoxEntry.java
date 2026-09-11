@@ -77,7 +77,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             this.selectionElement.bounds.x = x + entryWidth - 150 + 1;
         }
         this.selectionElement.bounds.width = 150 - resetButton.getWidth() - 4;
-        resetButton.method_891(MinecraftClient.getInstance(), mouseX, mouseY, delta);
+        resetButton.render(MinecraftClient.getInstance(), mouseX, mouseY);
         selectionElement.render(mouseX, mouseY, delta);
     }
 

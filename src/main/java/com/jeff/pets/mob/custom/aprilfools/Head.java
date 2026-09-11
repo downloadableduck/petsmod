@@ -20,7 +20,6 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.Sound;
 import net.minecraft.sound.Sounds;
 import net.minecraft.util.Hand;

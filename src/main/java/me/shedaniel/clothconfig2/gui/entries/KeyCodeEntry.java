@@ -127,8 +127,8 @@ public class KeyCodeEntry extends TooltipListEntry<ModifierKeyCode> {
             this.buttonWidget.x = x + entryWidth - 150;
         }
         this.buttonWidget.setWidth(150 - resetButton.getWidth() - 2);
-        resetButton.method_891(MinecraftClient.getInstance(), mouseX, mouseY, delta);
-        buttonWidget.method_891(MinecraftClient.getInstance(), mouseX, mouseY, delta);
+        resetButton.render(MinecraftClient.getInstance(), mouseX, mouseY);
+        buttonWidget.render(MinecraftClient.getInstance(), mouseX, mouseY);
     }
     @Override
     public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {

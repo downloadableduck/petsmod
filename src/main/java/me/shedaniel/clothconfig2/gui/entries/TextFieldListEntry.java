@@ -111,7 +111,7 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
             this.textFieldWidget.x = x + entryWidth - 148;
         }
         setTextFieldWidth(textFieldWidget, 148 - resetButton.getWidth() - 4);
-        resetButton.method_891(MinecraftClient.getInstance(), mouseX, mouseY, delta);
+        resetButton.render(MinecraftClient.getInstance(), mouseX, mouseY);
         textFieldWidget.render();
     }
 
@@ -160,7 +160,7 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
 
         this.textFieldWidget.setFocused(isInsideField);
         if (isInsideField) {
-            this.textFieldWidget.method_920(mouseX, mouseY, mouseButton);
+            this.textFieldWidget.mouseClicked(mouseX, mouseY, mouseButton);
             return true;
         }
 

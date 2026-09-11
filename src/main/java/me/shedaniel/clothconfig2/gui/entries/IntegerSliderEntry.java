@@ -128,8 +128,8 @@ public class IntegerSliderEntry extends TooltipListEntry<Integer> {
             this.sliderWidget.x = x + entryWidth - 150;
         }
         this.sliderWidget.setWidth(150 - resetButton.getWidth() - 2);
-        resetButton.method_891(MinecraftClient.getInstance(), mouseX, mouseY, delta);
-        sliderWidget.method_891(MinecraftClient.getInstance(), mouseX, mouseY, delta);
+        resetButton.render(MinecraftClient.getInstance(), mouseX, mouseY);
+        sliderWidget.render(MinecraftClient.getInstance(), mouseX, mouseY);
     }
 
     private class Slider extends OptionSliderWidget {

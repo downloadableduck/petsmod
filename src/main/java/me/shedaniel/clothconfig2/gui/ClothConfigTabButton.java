@@ -18,7 +18,7 @@ public class ClothConfigTabButton extends ButtonWidget {
 
     public void render(int mouseX, int mouseY, float delta) {
         active = index != screen.selectedTabIndex;
-        this.method_891(MinecraftClient.getInstance(), mouseX, mouseY, delta);
+        this.render(MinecraftClient.getInstance(), mouseX, mouseY);
     }
 
     public void onClick() {

@@ -204,7 +204,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         resetWidget.x = x + entryWidth - resetWidget.getWidth();
         resetWidget.y = y;
         resetWidget.active = isEditable() && getDefaultValue().isPresent();
-        resetWidget.method_891(MinecraftClient.getInstance(), mouseX, mouseY, delta);
+        resetWidget.render(MinecraftClient.getInstance(), mouseX, mouseY);
         MinecraftClient.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), isDeleteButtonEnabled() ? x + 24 : x + 24 - 9, y + 5, labelWidget.rectangle.contains(mouseX, mouseY) && !resetWidget.isMouseOver(MinecraftClient.getInstance(), mouseX, mouseY) && !insideDelete && !insideCreateNew ? 0xffe6fe16 : getPreferredTextColor());
         if (expanded) {
             int yy = y + 24;
