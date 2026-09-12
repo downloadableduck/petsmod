@@ -2,6 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.stray;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientStray;
+import net.minecraft.client.render.entity.feature.StrayFeatureRenderer;
 import net.minecraft.client.render.entity.model.SkeletonEntityModel;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;

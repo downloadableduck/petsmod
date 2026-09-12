@@ -7,7 +7,6 @@ import net.minecraft.client.sound.SoundCategory;
 import net.minecraft.entity.EntityData;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MovementType;
 import net.minecraft.entity.ai.goal.BreedGoal;
 import net.minecraft.entity.ai.goal.EscapeDangerGoal;
 import net.minecraft.entity.ai.goal.FollowOwnerGoal;
@@ -234,7 +233,7 @@ public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @N
                                 this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.headYaw - this.bodyYaw /*bodyYaw*/, -10, 10);
             }
 
-            this.move(MovementType.SELF, this.velocityX, this.velocityY, this.velocityZ);
+            this.move(this.velocityX, this.velocityY, this.velocityZ);
 
             if (!this.onGround) {
                 this.setVelocity(this.getVelocity().add(0, -0.04, 0));

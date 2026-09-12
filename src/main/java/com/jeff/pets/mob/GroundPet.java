@@ -4,7 +4,6 @@ import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.client.sound.SoundCategory;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MovementType;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -81,7 +80,7 @@ public abstract class GroundPet extends AbstractPet {
                 this.addVelocity(0, -0.04, 0);
             }
 
-            this.move(MovementType.SELF, this.velocityX, this.velocityY, this.velocityZ);
+            this.move(this.velocityX, this.velocityY, this.velocityZ);
 
             this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
             this.setHeadYaw(this.getYRot());

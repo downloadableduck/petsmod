@@ -103,16 +103,14 @@ protected AbstractPet(World level) {
      * @return It's super method
      */
     @Override
-    public boolean interactMob(@NotNull PlayerEntity player, @NotNull Hand hand) {
-        System.out.println("hi");
-        ItemStack itemStack = player.getStackInHand(hand);
+    public boolean method_6100(@NotNull PlayerEntity player, ItemStack itemStack, @NotNull Hand hand) {
 
-if (this.isTamed() && itemStack.isEmpty() && !player.isSneaking()) {
+if (this.isTamed() && itemStack.getItem() == null && !player.isSneaking()) {
             this.world.addParticle(ParticleType.HEART, this.x, this.y + this.heartHeight(), this.z, 0.0, 0.0, 0.0);
             return true;
         }
 
-        if (this.isTamed() && itemStack.isEmpty() && player.isSneaking()) {
+        if (this.isTamed() && itemStack.getItem() == null && player.isSneaking()) {
             if (!this.hasMount()) {
                 this.startRiding(player);
                 this.lookAtEntity(player, 1f, 1f);
@@ -122,7 +120,7 @@ if (this.isTamed() && itemStack.isEmpty() && !player.isSneaking()) {
             }
             return true;
         }
-        return super.interactMob(player, hand);
+        return super.method_6100(player, itemStack, hand);
     }
 
     @Override
