@@ -2,7 +2,7 @@ package com.jeff.pets.mob;
 
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.MoverType;
+
 
 /**
  * Abstract class representing slimes or any animal that bounces up and down repeatedly,
@@ -90,7 +90,7 @@ public abstract class SlimeLikePet extends AbstractPet {
                 this.renderYawOffset = this.renderYawOffset + net.minecraft.util.math.MathHelper.clamp(this.rotationYawHead - this.renderYawOffset, -10, 10);
             }
 
-            this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
+            this.move(this.motionX, this.motionY, this.motionZ);
 
             if (!this.onGround) {
                 this.setVelocity(this.motionX, this.motionY - 0.02, this.motionZ);

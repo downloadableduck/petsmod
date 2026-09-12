@@ -4,7 +4,7 @@ import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
-import net.minecraft.entity.MoverType;
+
 import net.minecraft.entity.ai.*;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -157,7 +157,7 @@ public class Racoon extends AbstractPet {
             }
             //
 
-            this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
+            this.move(this.motionX, this.motionY, this.motionZ);
 
             if (!this.onGround) {
                 this.setVelocity(this.motionX, this.motionY - 0.04, this.motionZ);

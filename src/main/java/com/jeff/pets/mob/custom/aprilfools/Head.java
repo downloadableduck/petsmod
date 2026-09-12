@@ -100,52 +100,6 @@ public class Head extends AbstractPet {
     }
 
     @Override
-    public boolean processInteract(EntityPlayer player, EnumHand hand) {
-        ItemStack itemStack = player.getHeldItem(hand);
-
-        double x = this.posX;
-        double y = this.posY;
-        double z = this.posZ;
-
-        if (!this.isTamed() && this.isBreedingItem(itemStack)) {
-            if (this.rand.nextInt(3) == 0) {
-                //this.setTamedBy(player);
-                this.navigator.clearPath();
-                this.world.func_175682_a(
-                        EnumParticleTypes.HEART,
-                        false,
-                        x + (player.getRNG().nextFloat() * 0.4 - 0.25),
-                        y + (player.getRNG().nextFloat() * 0.4 - 0.25),
-                        z + (player.getRNG().nextFloat() * 0.4 - 0.25),
-                        0, 5, 0
-                );
-            }
-        }
-
-        if (this.isTamed() && itemStack.isEmpty()) {
-            this.world.func_175682_a(
-                    EnumParticleTypes.HEART,
-                    false,
-                    this.posX,
-                    this.posY + 1,
-                    this.posZ,
-                    5, 5, 5
-            );
-        }
-
-        if (this.isTamed() && itemStack.isEmpty() && player.isSneaking()) {
-            if (!this.isPassenger()) {
-                this.startRiding(player);
-                this.lookAt(player, 1f, 1f);
-                this.setSitting(true);
-            } else {
-                this.stopRiding();
-            }
-        }
-        return true;
-    }
-
-    @Override
     public void tick() {
         super.tick();
         EntityLivingBase owner = this.getOwner();
@@ -216,7 +170,7 @@ public class Head extends AbstractPet {
                 this.renderYawOffset = this.renderYawOffset + MathHelper.clamp(this.rotationYawHead - this.renderYawOffset, -10, 10);
             }
 
-            this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
+            this.move(this.motionX, this.motionY, this.motionZ);
 
             if (!this.onGround) {
                 this.setVelocity(this.motionX, this.motionY - 0.04, this.motionZ);
