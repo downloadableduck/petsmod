@@ -1,5 +1,6 @@
 package com.jeff.pets.mob;
 
+import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.custom.first.Duck;
 
 import net.minecraft.entity.living.LivingEntity;
@@ -99,7 +100,7 @@ public abstract class GroundPet extends AbstractPet {
                 //this.processFlappingMovement();
             }
 
-            if (new Vec3d(owner.velocityX, owner.velocityY, owner.velocityZ).squaredDistanceToOrigin() < 0.01) {
+            if (Utils.squaredDistanceToOrigin(new Vec3d(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
                 this.waitingTime++;
                 if (this.waitingTime > 30) this.wander();
             } else {

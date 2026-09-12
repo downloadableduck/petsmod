@@ -1,6 +1,7 @@
 package com.jeff.pets.mob.custom.first;
 
 import com.jeff.pets.PetsSounds;
+import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.EntityData;
@@ -245,7 +246,7 @@ public class Duck extends AbstractPet {
                 // this.processFlappingMovement();
             }
 
-            if (new Vec3d(owner.velocityX, owner.velocityY, owner.velocityZ).squaredDistanceToOrigin() < 0.01) {
+            if (Utils.squaredDistanceToOrigin(new Vec3d(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
                 this.waitingTime++;
                 if (this.waitingTime > 30) this.wander();
             } else {

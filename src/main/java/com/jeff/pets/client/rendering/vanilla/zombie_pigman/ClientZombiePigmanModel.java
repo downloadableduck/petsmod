@@ -1,6 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.zombie_pigman;
 
 import com.jeff.pets.client.Math2;
+import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.vanilla.neutral.ClientZombiePigman;
 import net.minecraft.client.render.model.Model;
 import net.minecraft.client.render.model.ModelPart;
@@ -83,7 +84,7 @@ public class ClientZombiePigmanModel extends Model {
         this.left_arm.x = 5.0F;
         float k = 1.0F;
         if (bl) {
-            k = (float) state.getVelocity().squaredDistanceToOrigin();
+            k = (float) Utils.squaredDistanceToOrigin(state.getVelocity());
             k /= 0.2F;
             k *= k * k;
         }

@@ -26,7 +26,7 @@ public class ClientWitherSkeleton extends GroundPet implements RangedAttackMob {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_WITHER_SKELETON_AMBIENT;
+        return SoundEvents.ENTITY_SKELETON_AMBIENT;
     }
 
     @Override

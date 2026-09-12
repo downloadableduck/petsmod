@@ -111,7 +111,6 @@ public class Central implements ClientModInitializer {
     public static ClientCaveSpider caveSpider;
     public static ClientEnderman enderman;
     public static ClientIronGolem ironGolem;
-    public static ClientPolarBear polarBear;
     public static ClientSpider spider;
     public static ClientWolf wolf;
     public static ClientBlaze blaze;
@@ -128,8 +127,6 @@ public class Central implements ClientModInitializer {
     public static ClientWitch witch;
     public static ClientZombie zombie;
     public static ClientZombieVillager zombieVillager;
-    public static ClientHusk husk;
-    public static ClientStray stray;
     public static ClientWitherSkeleton witherSkeleton;
     public static ClientEnderDragon enderDragon;
     public static ClientWither wither;
@@ -165,7 +162,6 @@ public class Central implements ClientModInitializer {
         Utils.despawnEntity(caveSpider);
         Utils.despawnEntity(enderman);
         Utils.despawnEntity(ironGolem);
-        Utils.despawnEntity(polarBear);
         Utils.despawnEntity(spider);
         Utils.despawnEntity(wolf);
         Utils.despawnEntity(blaze);
@@ -182,8 +178,6 @@ public class Central implements ClientModInitializer {
         Utils.despawnEntity(witch);
         Utils.despawnEntity(zombie);
         Utils.despawnEntity(zombieVillager);
-        Utils.despawnEntity(husk);
-        Utils.despawnEntity(stray);
         Utils.despawnEntity(witherSkeleton);
         Utils.despawnEntity(enderDragon);
         Utils.despawnEntity(wither);
@@ -220,7 +214,6 @@ public class Central implements ClientModInitializer {
         caveSpider = new ClientCaveSpider(world);
         enderman = new ClientEnderman(world);
         ironGolem = new ClientIronGolem(world);
-        polarBear = new ClientPolarBear(world);
         spider = new ClientSpider(world);
         wolf = new ClientWolf(world);
         blaze = new ClientBlaze(world);
@@ -237,8 +230,6 @@ public class Central implements ClientModInitializer {
         witch = new ClientWitch(world);
         zombie = new ClientZombie(world);
         zombieVillager = new ClientZombieVillager(world);
-        husk = new ClientHusk(world);
-        stray = new ClientStray(world);
         witherSkeleton = new ClientWitherSkeleton(world);
         enderDragon = new ClientEnderDragon(world);
         wither = new ClientWither(world);
@@ -287,8 +278,6 @@ public class Central implements ClientModInitializer {
                 Utils.summonPet(enderman, CONFIG.endermanName);
             } else if (Objects.equals(CONFIG.activePet, "iron_golem")) {
                 Utils.summonPet(ironGolem, CONFIG.ironGolemName);
-            } else if (Objects.equals(CONFIG.activePet, "polar_bear")) {
-                Utils.summonPet(polarBear, CONFIG.polarBearName);
             } else if (Objects.equals(CONFIG.activePet, "spider")) {
                 Utils.summonPet(spider, CONFIG.spiderName);
             } else if (Objects.equals(CONFIG.activePet, "wolf")) {
@@ -321,10 +310,6 @@ public class Central implements ClientModInitializer {
                 Utils.summonPet(zombie, CONFIG.zombieName);
             } else if (Objects.equals(CONFIG.activePet, "zombie_villager")) {
                 Utils.summonPet(zombieVillager, CONFIG.zombieVillagerName);
-            } else if (Objects.equals(CONFIG.activePet, "husk")) {
-                Utils.summonPet(husk, CONFIG.huskName);
-            } else if (Objects.equals(CONFIG.activePet, "stray")) {
-                Utils.summonPet(stray, CONFIG.strayName);
             } else if (Objects.equals(CONFIG.activePet, "wither_skeleton")) {
                 Utils.summonPet(witherSkeleton, CONFIG.witherSkeletonName);
             } else if (Objects.equals(CONFIG.activePet, "ender_dragon")) {
@@ -370,7 +355,6 @@ public class Central implements ClientModInitializer {
         Utils.checkName("cave_spider", caveSpider, CONFIG.caveSpiderName);
         Utils.checkName("enderman", enderman, CONFIG.endermanName);
         Utils.checkName("iron_golem", ironGolem, CONFIG.ironGolemName);
-        Utils.checkName("polar_bear", polarBear, CONFIG.polarBearName);
         Utils.checkName("spider", spider, CONFIG.spiderName);
         Utils.checkName("wolf", wolf, CONFIG.wolfName);
         Utils.checkName("blaze", blaze, CONFIG.blazeName);
@@ -384,8 +368,6 @@ public class Central implements ClientModInitializer {
         Utils.checkName("silverfish", silverfish, CONFIG.silverfishName);
         Utils.checkName("skeleton", skeleton, CONFIG.skeletonName);
         Utils.checkName("slime", slime, CONFIG.slimeName);
-        Utils.checkName("husk", husk, CONFIG.huskName);
-        Utils.checkName("stray", stray, CONFIG.strayName);
         Utils.checkName("wither_skeleton", witherSkeleton, CONFIG.witherSkeletonName);
         Utils.checkName("ender_dragon", enderDragon, CONFIG.enderDragonName);
         Utils.checkName("wither", wither, CONFIG.witherName);
@@ -1477,8 +1459,6 @@ public class Central implements ClientModInitializer {
                 Utils.setActivePet(enderman, "enderman");
             } else if (Objects.equals(species, "iron_golem") || Objects.equals(species, "iron golem")) {
                 Utils.setActivePet(ironGolem, "iron_golem");
-            } else if (Objects.equals(species, "polar_bear") || Objects.equals(species, "polar bear")) {
-                Utils.setActivePet(polarBear, "polar_bear");
             } else if (Objects.equals(species, "spider")) {
                 Utils.setActivePet(spider, "spider");
             } else if (Objects.equals(species, "wolf")) {
@@ -1511,10 +1491,6 @@ public class Central implements ClientModInitializer {
                 Utils.setActivePet(zombie, "zombie");
             } else if (Objects.equals(species, "zombie_villager") || Objects.equals(species, "zombie villager")) {
                 Utils.setActivePet(zombieVillager, "zombie_villager");
-            } else if (Objects.equals(species, "husk")) {
-                Utils.setActivePet(husk, "husk");
-            } else if (Objects.equals(species, "stray")) {
-                Utils.setActivePet(stray, "stray");
             } else if (Objects.equals(species, "wither_skeleton") || Objects.equals(species, "wither skeleton")) {
                 Utils.setActivePet(witherSkeleton, "wither_skeleton");
             } else if (Objects.equals(species, "wither")) {
@@ -1849,19 +1825,18 @@ public class Central implements ClientModInitializer {
                 "elder guardian", "ender dragon", "enderman", "endermite",
                 "ghast", "guardian",
                 "head", "horse",
-                "husk", "iron golem",
+                "iron golem",
                 "koi",
                 "magma cube",
                 "mooshroom",
                 "penguin",
                 "pig",
-                "polar bear",
                 "rabbit",
                 "racoon",
                 "sheep",
                 "shulker",
                 "silverfish", "skeleton", "slime", "snow golem",
-                "spider", "squid", "stingray", "stray",
+                "spider", "squid", "stingray",
                 "villager", "witch", "wither",
                 "wither skeleton", "wolf", "zombie", "zombie villager", "zombie pigman"};
         Collections.addAll(PETS_LIST, stuffs);

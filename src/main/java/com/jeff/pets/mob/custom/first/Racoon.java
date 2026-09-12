@@ -1,5 +1,6 @@
 package com.jeff.pets.mob.custom.first;
 
+import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.entity.EntityData;
 
@@ -143,7 +144,7 @@ public class Racoon extends AbstractPet {
                 this.lerpVelocity(this.getVelocity().add(0, -0.01, 0));
             }
 
-            if (new Vec3d(owner.velocityX, owner.velocityY, owner.velocityZ).squaredDistanceToOrigin() < 0.01) {
+            if (Utils.squaredDistanceToOrigin(new Vec3d(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
                 this.waitingTime++;
                 if (this.waitingTime > 30) this.wander();
             } else {

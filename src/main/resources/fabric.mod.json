@@ -41,7 +41,7 @@
   "depends": {
     "fabricloader": ">=0.18",
     "minecraft": [
-      "~1.10"
+      "~1.9"
     ],
     "java": "*",
     "osl-core": "*"

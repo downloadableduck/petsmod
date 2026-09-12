@@ -1,6 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.zombie;
 
 import com.jeff.pets.client.Math2;
+import com.jeff.pets.client.Utils;
 import com.jeff.pets.client.rendering.AnimationUtils;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.client.render.model.Model;
@@ -95,7 +96,7 @@ public class ClientZombieModel extends Model {
         this.left_arm.x = 5.0F;
         float k = 1.0F;
         if (bl) {
-            k = (float) state.getVelocity().squaredDistanceToOrigin();
+            k = (float) Utils.squaredDistanceToOrigin(state.getVelocity());
             k /= 0.2F;
             k *= k * k;
         }
