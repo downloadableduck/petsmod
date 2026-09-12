@@ -71,7 +71,6 @@ import static com.jeff.pets.client.Central.MOD_ID;
  * @see Utils
  */
 //@SuppressWarnings("unchecked")
-@Mod.EventBusSubscriber(value = Side.CLIENT)
 public class Central {
 
     public static final String MOD_ID = "pets_mod";
@@ -1386,7 +1385,7 @@ public class Central {
      * - Generates a random number for {@link #petSkin}, which used to be used for <a href="https://modrinth.com/mod/pets-natural">Pets Natural</a> and <a href="https://modrinth.com/mod/duck--mod">DuckMod</a>.
      */
     @SubscribeEvent
-    public static void createTickWatcher(TickEvent.ClientTickEvent event) {
+    public void createTickWatcher(TickEvent.ClientTickEvent event) {
         Minecraft client = Minecraft.getInstance();
         client.addScheduledTask(() -> {
             checkForNullObjects();
@@ -1684,7 +1683,7 @@ public class Central {
      * Clears the summon entities when the player joins a world so they are re-summoned
      */
     @SubscribeEvent
-    static void createJoinHandler(PlayerEvent.PlayerLoggedInEvent event) {
+    void createJoinHandler(PlayerEvent.PlayerLoggedInEvent event) {
         Minecraft client = Minecraft.getInstance();
         List var10001 = summonedEntity;
         Objects.requireNonNull(var10001);

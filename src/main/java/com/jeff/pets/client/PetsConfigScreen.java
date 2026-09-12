@@ -27,7 +27,6 @@ import static com.jeff.pets.client.Central.MOD_ID;
  * @see Central
  */
 //@Mod(modid = MOD_ID)
-@Mod.EventBusSubscriber
 public class PetsConfigScreen<T extends Enum & NameableEnum> {
 
 

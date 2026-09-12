@@ -84,7 +84,6 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
  * @see PetsInitializer
  * @see Central
  */
-@Mod.EventBusSubscriber(value = Side.CLIENT)
 public class PetsClientInitializer {
 
     public static final Map<Class, Factory> renderSupplierMap = new HashMap();
