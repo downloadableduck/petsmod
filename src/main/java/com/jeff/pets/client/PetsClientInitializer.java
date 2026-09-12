@@ -23,12 +23,10 @@ import com.jeff.pets.client.rendering.vanilla.endermite.ClientEndermiteRenderer;
 import com.jeff.pets.client.rendering.vanilla.ghast.ClientGhastRenderer;
 import com.jeff.pets.client.rendering.vanilla.guardian.ClientGuardianRenderer;
 import com.jeff.pets.client.rendering.vanilla.horse.ClientHorseRenderer;
-import com.jeff.pets.client.rendering.vanilla.husk.ClientHuskRenderer;
 import com.jeff.pets.client.rendering.vanilla.irongolem.ClientIronGolemRenderer;
 import com.jeff.pets.client.rendering.vanilla.magmacube.ClientMagmaCubeRenderer;
 import com.jeff.pets.client.rendering.vanilla.mooshroom.ClientMooshroomRenderer;
 import com.jeff.pets.client.rendering.vanilla.pig.ClientPigRenderer;
-import com.jeff.pets.client.rendering.vanilla.polarbear.ClientPolarBearRenderer;
 import com.jeff.pets.client.rendering.vanilla.rabbit.ClientRabbitRenderer;
 import com.jeff.pets.client.rendering.vanilla.sheep.ClientSheepRenderer;
 import com.jeff.pets.client.rendering.vanilla.shulker.ClientShulkerRenderer;
@@ -38,7 +36,6 @@ import com.jeff.pets.client.rendering.vanilla.slime.ClientSlimeRenderer;
 import com.jeff.pets.client.rendering.vanilla.snowgolem.ClientSnowGolemRenderer;
 import com.jeff.pets.client.rendering.vanilla.spider.ClientSpiderRenderer;
 import com.jeff.pets.client.rendering.vanilla.squid.ClientSquidRenderer;
-import com.jeff.pets.client.rendering.vanilla.stray.ClientStrayRenderer;
 import com.jeff.pets.client.rendering.vanilla.villager.ClientVillagerRenderer;
 import com.jeff.pets.client.rendering.vanilla.witch.ClientWitchRenderer;
 import com.jeff.pets.client.rendering.vanilla.wither.ClientWitherRenderer;
@@ -64,13 +61,9 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.input.Keyboard;
 
 import java.util.*;
-
-import static com.jeff.pets.PetsInitializer.MOD_ID;
 
 /**
  * Another {@code initializer} class. This class does a couple of things:
@@ -214,7 +207,6 @@ public class PetsClientInitializer {
         register(ClientCaveSpider.class, ClientCaveSpiderRenderer::new);
         register(ClientEnderman.class, ClientEndermanRenderer::new);
         register(ClientIronGolem.class, ClientIronGolemRenderer::new);
-        register(ClientPolarBear.class, ClientPolarBearRenderer::new);
         register(ClientSpider.class, ClientSpiderRenderer::new);
         register(ClientWolf.class, ClientWolfRenderer::new);
         register(ClientElderGuardian.class, ClientElderGuardianRenderer::new);
@@ -223,13 +215,11 @@ public class PetsClientInitializer {
         register(ClientEndermite.class, ClientEndermiteRenderer::new);
         register(ClientGhast.class, ClientGhastRenderer::new);
         register(ClientGuardian.class, ClientGuardianRenderer::new);
-        register(ClientHusk.class, ClientHuskRenderer::new);
         register(ClientMagmaCube.class, ClientMagmaCubeRenderer::new);
         register(ClientShulker.class, ClientShulkerRenderer::new);
         register(ClientSilverfish.class, ClientSilverfishRenderer::new);
         register(ClientSkeleton.class, ClientSkeletonRenderer::new);
         register(ClientSlime.class, ClientSlimeRenderer::new);
-        register(ClientStray.class, ClientStrayRenderer::new);
         register(ClientWitch.class, ClientWitchRenderer::new);
         register(ClientWitherSkeleton.class, ClientWitherSkeletonRenderer::new);
         register(ClientZombie.class, ClientZombieRenderer::new);
