@@ -239,9 +239,9 @@ public abstract class ClothConfigScreen extends GuiScreen {
         if (tabbedEntries.size() > selectedTabIndex)
             Lists.newArrayList(tabbedEntries.values()).get(selectedTabIndex).forEach(entry -> listWidget.children().add(entry));
         int buttonWidths = (width - 50 - 12) / 3;
-        addButton(quitButton = new GuiButton(ID_QUIT, 25, height - 26, buttonWidths, 20, edited ? I18n.format("text.cloth-config.cancel_discard") : I18n.format("gui.cancel")));
-        addButton(saveButton = new GuiButton(ID_SAVE, 25 + 6 + buttonWidths, height - 26, buttonWidths, 20, I18n.format("text.cloth-config.save_and_done")));
-        addButton(applyButton = new GuiButton(ID_APPLY, 25 + (6 + buttonWidths) * 2, height - 26, buttonWidths, 20, I18n.format("text.cloth-config.apply")));
+        this.buttons.add(quitButton = new GuiButton(ID_QUIT, 25, height - 26, buttonWidths, 20, edited ? I18n.format("text.cloth-config.cancel_discard") : I18n.format("gui.cancel")));
+        this.buttons.add(saveButton = new GuiButton(ID_SAVE, 25 + 6 + buttonWidths, height - 26, buttonWidths, 20, I18n.format("text.cloth-config.save_and_done")));
+        this.buttons.add(applyButton = new GuiButton(ID_APPLY, 25 + (6 + buttonWidths) * 2, height - 26, buttonWidths, 20, I18n.format("text.cloth-config.apply")));
         saveButton.enabled = edited;
         if (isShowingTabs()) {
             tabsBounds = new Rectangle(0, 41, width, 24);
