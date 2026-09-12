@@ -1,5 +1,6 @@
 package com.jeff.pets.mob;
 
+import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.client.sound.SoundCategory;
 
@@ -57,8 +58,8 @@ public abstract class FlyingPet extends AbstractPet {
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.distanceTo(owner);
-            float rotation = this.getRotationClient().x;
-            float rotationToOwner = rotation + this.getOwner().getRotationClient().x;
+            float rotation = -this.pitch;
+            float rotationToOwner = rotation + -this.getOwner().pitch;
             float bodyYawDiff = net.minecraft.util.math.MathHelper.wrapDegrees(this.headYaw - this.bodyYaw);
 
             if (rotationToOwner >= 50) {
@@ -88,7 +89,7 @@ public abstract class FlyingPet extends AbstractPet {
                 this.jump();
             }
 
-            if (new Vec3d(owner.velocityX, owner.velocityY, owner.velocityZ).squaredLength() < 0.01) {
+            if (Utils.squaredDistanceToOrigin(new Vec3d(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
                 this.waitingTime++;
                 if (this.waitingTime > 30) this.wander();
             } else {

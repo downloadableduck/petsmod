@@ -165,4 +165,8 @@ public class Utils {
     public static float triangleWave(float p_78172_1_, float p_78172_2_) {
         return (Math.abs(p_78172_1_ % p_78172_2_ - p_78172_2_ * 0.5F) - p_78172_2_ * 0.25F) / (p_78172_2_ * 0.25F);
     }
+
+    public static double squaredDistanceToOrigin(Vec3d vec3d) {
+        return vec3d.x * vec3d.x + vec3d.y * vec3d.y + vec3d.z * vec3d.z;
+    }
 }

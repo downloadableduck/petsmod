@@ -124,8 +124,8 @@ public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @N
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.distanceTo(owner);
-            float rotation = this.getRotationClient().x;
-            float rotationToOwner = rotation + this.getOwner().getRotationClient().x;
+            float rotation = -this.pitch;
+            float rotationToOwner = rotation + -this.getOwner().pitch;
             float bodyYawDiff = MathHelper.wrapDegrees(this.headYaw - this.bodyYaw);
 
             if (rotationToOwner >= 50) {

@@ -1,6 +1,7 @@
 package com.jeff.pets.mob.custom.aquatic;
 
 import com.jeff.pets.PetsSounds;
+import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.FlyingPet;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.block.BlockState;
@@ -150,8 +151,8 @@ public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @N
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.distanceTo(owner);
-            float rotation = this.getRotationClient().x;
-            float rotationToOwner = rotation + this.getOwner().getRotationClient().x;
+            float rotation = -this.pitch;
+            float rotationToOwner = rotation + -this.getOwner().pitch;
             float bodyYawDiff = MathHelper.wrapDegrees(this.headYaw - this.bodyYaw);
 
             if (rotationToOwner >= 50) {
@@ -185,7 +186,7 @@ public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @N
                 this.setVelocity(this.getVelocity().add(0, -0.01, 0));
             }
 
-            if (new Vec3d(owner.velocityX, owner.velocityY, owner.velocityZ).squaredLength() < 0.01) {
+            if (Utils.squaredDistanceToOrigin(new Vec3d(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
                 this.waitingTime++;
                 if (this.waitingTime > 30) this.wander();
             } else {
