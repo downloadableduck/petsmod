@@ -20,13 +20,11 @@ import com.jeff.pets.client.rendering.vanilla.elderguardian.ClientElderGuardianR
 import com.jeff.pets.client.rendering.vanilla.enderdragon.ClientEnderDragonRenderer;
 import com.jeff.pets.client.rendering.vanilla.enderman.ClientEndermanRenderer;
 import com.jeff.pets.client.rendering.vanilla.endermite.ClientEndermiteRenderer;
-import com.jeff.pets.client.rendering.vanilla.evoker.ClientEvokerRenderer;
 import com.jeff.pets.client.rendering.vanilla.ghast.ClientGhastRenderer;
 import com.jeff.pets.client.rendering.vanilla.guardian.ClientGuardianRenderer;
 import com.jeff.pets.client.rendering.vanilla.horse.ClientHorseRenderer;
 import com.jeff.pets.client.rendering.vanilla.husk.ClientHuskRenderer;
 import com.jeff.pets.client.rendering.vanilla.irongolem.ClientIronGolemRenderer;
-import com.jeff.pets.client.rendering.vanilla.llama.ClientLlamaRenderer;
 import com.jeff.pets.client.rendering.vanilla.magmacube.ClientMagmaCubeRenderer;
 import com.jeff.pets.client.rendering.vanilla.mooshroom.ClientMooshroomRenderer;
 import com.jeff.pets.client.rendering.vanilla.pig.ClientPigRenderer;
@@ -41,9 +39,7 @@ import com.jeff.pets.client.rendering.vanilla.snowgolem.ClientSnowGolemRenderer;
 import com.jeff.pets.client.rendering.vanilla.spider.ClientSpiderRenderer;
 import com.jeff.pets.client.rendering.vanilla.squid.ClientSquidRenderer;
 import com.jeff.pets.client.rendering.vanilla.stray.ClientStrayRenderer;
-import com.jeff.pets.client.rendering.vanilla.vex.ClientVexRenderer;
 import com.jeff.pets.client.rendering.vanilla.villager.ClientVillagerRenderer;
-import com.jeff.pets.client.rendering.vanilla.vindicator.ClientVindicatorRenderer;
 import com.jeff.pets.client.rendering.vanilla.witch.ClientWitchRenderer;
 import com.jeff.pets.client.rendering.vanilla.wither.ClientWitherRenderer;
 import com.jeff.pets.client.rendering.vanilla.witherskeleton.ClientWitherSkeletonRenderer;
@@ -212,7 +208,6 @@ public class PetsClientInitializer {
         register(ClientCaveSpider.class, ClientCaveSpiderRenderer::new);
         register(ClientEnderman.class, ClientEndermanRenderer::new);
         register(ClientIronGolem.class, ClientIronGolemRenderer::new);
-        register(ClientLlama.class, ClientLlamaRenderer::new);
         register(ClientPolarBear.class, ClientPolarBearRenderer::new);
         register(ClientSpider.class, ClientSpiderRenderer::new);
         register(ClientWolf.class, ClientWolfRenderer::new);
@@ -220,7 +215,6 @@ public class PetsClientInitializer {
         register(ClientBlaze.class, ClientBlazeRenderer::new);
         register(ClientCreeper.class, ClientCreeperRenderer::new);
         register(ClientEndermite.class, ClientEndermiteRenderer::new);
-        register(ClientEvoker.class, ClientEvokerRenderer::new);
         register(ClientGhast.class, ClientGhastRenderer::new);
         register(ClientGuardian.class, ClientGuardianRenderer::new);
         register(ClientHusk.class, ClientHuskRenderer::new);
@@ -230,8 +224,6 @@ public class PetsClientInitializer {
         register(ClientSkeleton.class, ClientSkeletonRenderer::new);
         register(ClientSlime.class, ClientSlimeRenderer::new);
         register(ClientStray.class, ClientStrayRenderer::new);
-        register(ClientVex.class, ClientVexRenderer::new);
-        register(ClientVindicator.class, ClientVindicatorRenderer::new);
         register(ClientWitch.class, ClientWitchRenderer::new);
         register(ClientWitherSkeleton.class, ClientWitherSkeletonRenderer::new);
         register(ClientZombie.class, ClientZombieRenderer::new);

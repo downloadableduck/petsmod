@@ -3,7 +3,7 @@ package com.jeff.pets.mob;
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.MoverType;
+
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -99,7 +99,7 @@ public abstract class FlyingPet extends AbstractPet {
                 this.renderYawOffset = this.renderYawOffset + MathHelper.clamp(this.rotationYawHead - this.renderYawOffset, -10, 10);
             }
 
-            this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
+            this.move(this.motionX, this.motionY, this.motionZ);
         }
         if (owner != null) {
             if (getDistance(owner) >= 10) {

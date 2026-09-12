@@ -3,7 +3,7 @@
     "name": "petsmod",
     "version": "0.7.9",
   "author": "downloadableduck",
-    "mcversion": "1.11",
+    "mcversion": "1.10",
   "class": "com.jeff.pets.PetsInitializer",
     "mixinConfigs": [
         "pets.client.mixins.json"

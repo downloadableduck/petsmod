@@ -204,7 +204,7 @@ public class Koi extends FlyingPet {
                 this.renderYawOffset = this.renderYawOffset + MathHelper.clamp(this.rotationYawHead - this.renderYawOffset, -10, 10);
             }
 
-            this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
+            this.move(this.motionX, this.motionY, this.motionZ);
         }
         if (owner != null) {
             if (getDistance(owner) >= 10) {

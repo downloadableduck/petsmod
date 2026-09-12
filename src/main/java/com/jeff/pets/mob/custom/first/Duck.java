@@ -4,7 +4,7 @@ import com.jeff.pets.PetsSounds;
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.MoverType;
+
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -161,7 +161,7 @@ public class Duck extends AbstractPet {
                 this.renderYawOffset = this.renderYawOffset + MathHelper.clamp(this.rotationYawHead - this.renderYawOffset, -10, 10);
             }
 
-            this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
+            this.move(this.motionX, this.motionY, this.motionZ);
 
             if (!this.onGround) {
                 this.setVelocity(this.motionX, this.motionY - 0.04, this.motionZ);

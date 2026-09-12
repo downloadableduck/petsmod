@@ -120,7 +120,6 @@ public class Central {
     public static ClientCaveSpider caveSpider;
     public static ClientEnderman enderman;
     public static ClientIronGolem ironGolem;
-    public static ClientLlama llama;
     public static ClientPolarBear polarBear;
     public static ClientSpider spider;
     public static ClientWolf wolf;
@@ -128,7 +127,6 @@ public class Central {
     public static ClientCreeper creeper;
     public static ClientElderGuardian elderGuardian;
     public static ClientEndermite endermite;
-    public static ClientEvoker evoker;
     public static ClientGhast ghast;
     public static ClientGuardian guardian;
     public static ClientMagmaCube magmaCube;
@@ -136,8 +134,6 @@ public class Central {
     public static ClientSilverfish silverfish;
     public static ClientSkeleton skeleton;
     public static ClientSlime slime;
-    public static ClientVex vex;
-    public static ClientVindicator vindicator;
     public static ClientWitch witch;
     public static ClientZombie zombie;
     public static ClientZombieVillager zombieVillager;
@@ -209,7 +205,6 @@ public class Central {
         Utils.despawnEntity(caveSpider);
         Utils.despawnEntity(enderman);
         Utils.despawnEntity(ironGolem);
-        Utils.despawnEntity(llama);
         Utils.despawnEntity(polarBear);
         Utils.despawnEntity(spider);
         Utils.despawnEntity(wolf);
@@ -217,7 +212,6 @@ public class Central {
         Utils.despawnEntity(creeper);
         Utils.despawnEntity(elderGuardian);
         Utils.despawnEntity(endermite);
-        Utils.despawnEntity(evoker);
         Utils.despawnEntity(ghast);
         Utils.despawnEntity(guardian);
         Utils.despawnEntity(magmaCube);
@@ -225,8 +219,6 @@ public class Central {
         Utils.despawnEntity(silverfish);
         Utils.despawnEntity(skeleton);
         Utils.despawnEntity(slime);
-        Utils.despawnEntity(vex);
-        Utils.despawnEntity(vindicator);
         Utils.despawnEntity(witch);
         Utils.despawnEntity(zombie);
         Utils.despawnEntity(zombieVillager);
@@ -268,7 +260,6 @@ public class Central {
         caveSpider = new ClientCaveSpider(world);
         enderman = new ClientEnderman(world);
         ironGolem = new ClientIronGolem(world);
-        llama = new ClientLlama(world);
         polarBear = new ClientPolarBear(world);
         spider = new ClientSpider(world);
         wolf = new ClientWolf(world);
@@ -276,7 +267,6 @@ public class Central {
         creeper = new ClientCreeper(world);
         elderGuardian = new ClientElderGuardian(world);
         endermite = new ClientEndermite(world);
-        evoker = new ClientEvoker(world);
         ghast = new ClientGhast(world);
         guardian = new ClientGuardian(world);
         magmaCube = new ClientMagmaCube(world);
@@ -284,8 +274,6 @@ public class Central {
         silverfish = new ClientSilverfish(world);
         skeleton = new ClientSkeleton(world);
         slime = new ClientSlime(world);
-        vex = new ClientVex(world);
-        vindicator = new ClientVindicator(world);
         witch = new ClientWitch(world);
         zombie = new ClientZombie(world);
         zombieVillager = new ClientZombieVillager(world);
@@ -339,8 +327,6 @@ public class Central {
                 Utils.summonPet(enderman, CONFIG.endermanName);
             } else if (Objects.equals(CONFIG.activePet, "iron_golem")) {
                 Utils.summonPet(ironGolem, CONFIG.ironGolemName);
-            } else if (Objects.equals(CONFIG.activePet, "llama")) {
-                Utils.summonPet(llama, CONFIG.llamaName);
             } else if (Objects.equals(CONFIG.activePet, "polar_bear")) {
                 Utils.summonPet(polarBear, CONFIG.polarBearName);
             } else if (Objects.equals(CONFIG.activePet, "spider")) {
@@ -355,8 +341,6 @@ public class Central {
                 Utils.summonPet(elderGuardian, CONFIG.elderGuardianName);
             } else if (Objects.equals(CONFIG.activePet, "endermite")) {
                 Utils.summonPet(endermite, CONFIG.endermiteName);
-            } else if (Objects.equals(CONFIG.activePet, "evoker")) {
-                Utils.summonPet(evoker, CONFIG.evokerName);
             } else if (Objects.equals(CONFIG.activePet, "ghast")) {
                 Utils.summonPet(ghast, CONFIG.ghastName);
             } else if (Objects.equals(CONFIG.activePet, "guardian")) {
@@ -371,10 +355,6 @@ public class Central {
                 Utils.summonPet(skeleton, CONFIG.skeletonName);
             } else if (Objects.equals(CONFIG.activePet, "slime")) {
                 Utils.summonPet(slime, CONFIG.slimeName);
-            } else if (Objects.equals(CONFIG.activePet, "vex")) {
-                Utils.summonPet(vex, CONFIG.vexName);
-            } else if (Objects.equals(CONFIG.activePet, "vindicator")) {
-                Utils.summonPet(vindicator, CONFIG.vindicatorName);
             } else if (Objects.equals(CONFIG.activePet, "witch")) {
                 Utils.summonPet(witch, CONFIG.witchName);
             } else if (Objects.equals(CONFIG.activePet, "zombie")) {
@@ -431,7 +411,6 @@ public class Central {
         Utils.checkName("cave_spider", caveSpider, CONFIG.caveSpiderName);
         Utils.checkName("enderman", enderman, CONFIG.endermanName);
         Utils.checkName("iron_golem", ironGolem, CONFIG.ironGolemName);
-        Utils.checkName("llama", llama, CONFIG.llamaName);
         Utils.checkName("polar_bear", polarBear, CONFIG.polarBearName);
         Utils.checkName("spider", spider, CONFIG.spiderName);
         Utils.checkName("wolf", wolf, CONFIG.wolfName);
@@ -439,7 +418,6 @@ public class Central {
         Utils.checkName("creeper", creeper, CONFIG.creeperName);
         Utils.checkName("elder_guardian", elderGuardian, CONFIG.elderGuardianName);
         Utils.checkName("endermite", endermite, CONFIG.endermiteName);
-        Utils.checkName("evoker", evoker, CONFIG.evokerName);
         Utils.checkName("ghast", ghast, CONFIG.ghastName);
         Utils.checkName("guardian", guardian, CONFIG.guardianName);
         Utils.checkName("magma_cube", magmaCube, CONFIG.magmaCubeName);
@@ -447,8 +425,6 @@ public class Central {
         Utils.checkName("silverfish", silverfish, CONFIG.silverfishName);
         Utils.checkName("skeleton", skeleton, CONFIG.skeletonName);
         Utils.checkName("slime", slime, CONFIG.slimeName);
-        Utils.checkName("vex", vex, CONFIG.vexName);
-        Utils.checkName("vindicator", vindicator, CONFIG.vindicatorName);
         Utils.checkName("husk", husk, CONFIG.huskName);
         Utils.checkName("stray", stray, CONFIG.strayName);
         Utils.checkName("wither_skeleton", witherSkeleton, CONFIG.witherSkeletonName);
@@ -1290,8 +1266,6 @@ public class Central {
                     Utils.setActivePet(enderman, "enderman");
                 } else if (Objects.equals(species, "iron_golem") || Objects.equals(species, "iron golem")) {
                     Utils.setActivePet(ironGolem, "iron_golem");
-                } else if (Objects.equals(species, "llama")) {
-                    Utils.setActivePet(llama, "llama");
                 } else if (Objects.equals(species, "polar_bear") || Objects.equals(species, "polar bear")) {
                     Utils.setActivePet(polarBear, "polar_bear");
                 } else if (Objects.equals(species, "spider")) {
@@ -1306,8 +1280,6 @@ public class Central {
                     Utils.setActivePet(elderGuardian, "elder_guardian");
                 } else if (Objects.equals(species, "endermite")) {
                     Utils.setActivePet(endermite, "endermite");
-                } else if (Objects.equals(species, "evoker")) {
-                    Utils.setActivePet(evoker, "evoker");
                 } else if (Objects.equals(species, "ghast")) {
                     Utils.setActivePet(ghast, "ghast");
                 } else if (Objects.equals(species, "guardian")) {
@@ -1322,10 +1294,6 @@ public class Central {
                     Utils.setActivePet(skeleton, "skeleton");
                 } else if (Objects.equals(species, "slime")) {
                     Utils.setActivePet(slime, "slime");
-                } else if (Objects.equals(species, "vex")) {
-                    Utils.setActivePet(vex, "vex");
-                } else if (Objects.equals(species, "vindicator")) {
-                    Utils.setActivePet(vindicator, "vindicator");
                 } else if (Objects.equals(species, "witch")) {
                     Utils.setActivePet(witch, "witch");
                 } else if (Objects.equals(species, "zombie")) {
@@ -1947,11 +1915,11 @@ public class Central {
                 "cow",
                 "creeper",
                 "dolphin", "donkey", "duck", "dumbo octopus",
-                "elder guardian", "ender dragon", "enderman", "endermite", "evoker",
+                "elder guardian", "ender dragon", "enderman", "endermite",
                 "ghast", "guardian",
                 "head", "horse",
                 "husk", "iron golem",
-                "koi", "llama",
+                "koi",
                 "magma cube",
                 "mooshroom",
                 "penguin",
@@ -1963,7 +1931,7 @@ public class Central {
                 "shulker",
                 "silverfish", "skeleton", "slime", "snow golem",
                 "spider", "squid", "stingray", "stray",
-                "vex", "villager", "vindicator", "witch", "wither",
+                "villager", "witch", "wither",
                 "wither skeleton", "wolf", "zombie", "zombie villager", "zombie pigman"};
         Collections.addAll(PETS_LIST, stuffs);
     }
