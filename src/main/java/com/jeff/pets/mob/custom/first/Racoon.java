@@ -2,7 +2,7 @@ package com.jeff.pets.mob.custom.first;
 
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.entity.EntityData;
-import net.minecraft.entity.MoverType;
+
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.data.DataAttribute;
 import net.minecraft.entity.data.DataSerializers;
@@ -162,7 +162,7 @@ public class Racoon extends AbstractPet {
                 this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/, -10, 10);
             }
 
-            this.move(MoverType.SELF, this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
+            this.move(this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
 
             if (!this.onGround) {
                 this.lerpVelocity(this.getVelocity().add(0, -0.04, 0));

@@ -1,6 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.creeper;
 
 import com.jeff.pets.mob.vanilla.hostile.ClientCreeper;
+import net.minecraft.client.render.entity.layer.CreeperChargeLayer;
 import net.minecraft.client.render.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.GameRenderer;
@@ -14,6 +15,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientCreeperChargeLayer implements EntityRenderLayer<ClientCreeper> {
     private static final Identifier SKIN = new Identifier("textures/entity/creeper/creeper_armor.png");
     private final net.minecraft.client.render.entity.MobRenderer renderer;
+    private final CreeperModel model = new CreeperModel(2);
 
     public ClientCreeperChargeLayer(net.minecraft.client.render.entity.MobRenderer renderer) {
         this.renderer = renderer;
@@ -34,18 +36,15 @@ public class ClientCreeperChargeLayer implements EntityRenderLayer<ClientCreeper
             float n = 0.5F;
             GlStateManager.color4f(0.5F, 0.5F, 0.5F, 1.0F);
             GlStateManager.disableLighting();
-            GlStateManager.blendFunc(1, 1);
-            (this.renderer.getModel()).copyPropertiesFrom(this.renderer.getModel());
-            GameRenderer gameRenderer = Minecraft.getInstance().gameRenderer;
-            gameRenderer.resetFogColor(true);
-            this.renderer.getModel().render(creeperEntity, f, g, i, j, k, l);
-            gameRenderer.resetFogColor(false);
+            GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+            this.model.copyPropertiesFrom(this.renderer.getModel());
+            this.model.render(creeperEntity, f, g, i, j, k, l);
             GlStateManager.matrixMode(5890);
             GlStateManager.loadIdentity();
             GlStateManager.matrixMode(5888);
             GlStateManager.enableLighting();
             GlStateManager.disableBlend();
-            GlStateManager.depthMask(true);
+            GlStateManager.depthMask(bl);
         }
     }
 

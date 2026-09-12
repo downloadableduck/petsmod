@@ -5,7 +5,7 @@ import com.jeff.pets.mob.FlyingPet;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.EntityData;
-import net.minecraft.entity.MoverType;
+
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.PathBlockingType;
 import net.minecraft.entity.damage.DamageSource;
@@ -201,7 +201,7 @@ public class DumboOctopus extends FlyingPet {
                 this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/, -10, 10);
             }
 
-            this.move(MoverType.SELF, this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
+            this.move(this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
         }
         if (owner != null) {
             if (distanceTo(owner) >= 10) {

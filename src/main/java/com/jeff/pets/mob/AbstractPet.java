@@ -72,7 +72,7 @@ public abstract class AbstractPet extends TameableEntity {
      * Custom interactions.
      * - Right clicking on a pet with an empty hand will let make hearts appear above it:
      * <pre>
-     *     {@code if (this.isTame() && itemStack.isEmpty() && !player.isShiftKeyDown()) {
+     *     {@code if (this.isTame() && itemStack.getItem() == null && !player.isShiftKeyDown()) {
      *         this.level.addParticle(
      *                 ParticleTypes.HEART,
      *                 this.x,
@@ -84,7 +84,7 @@ public abstract class AbstractPet extends TameableEntity {
      *     }}</pre>
      * - Shifting and right clicking on a pet with an empty hand will pick it up:
      * <pre>
-     *     {@code if (this.isTame() && itemStack.isEmpty() && player.isShiftKeyDown()) {
+     *     {@code if (this.isTame() && itemStack.getItem() == null && player.isShiftKeyDown()) {
      *         if (!this.isPassenger()) {
      *             this.startRiding(player);
      *             this.lookAt(player, 1f, 1f);
@@ -100,10 +100,9 @@ public abstract class AbstractPet extends TameableEntity {
      * @return It's super method
      */
     @Override
-    public boolean interactMob(@NotNull PlayerEntity player, @NotNull InteractionHand hand) {
-        ItemStack itemStack = player.getItemInHand(hand);
+    public boolean interactMob(@NotNull PlayerEntity player, @NotNull InteractionHand hand, ItemStack itemStack) {
 
-        if (this.isTamed() && itemStack.isEmpty() && !player.isSneaking()) {
+        if (this.isTamed() && itemStack.getItem() == null && !player.isSneaking()) {
             this.world.addParticle(
                     ParticleType.HEART,
                     this.x,
@@ -114,7 +113,7 @@ public abstract class AbstractPet extends TameableEntity {
             return true;
         }
 
-        if (this.isTamed() && itemStack.isEmpty() && player.isSneaking()) {
+        if (this.isTamed() && itemStack.getItem() == null && player.isSneaking()) {
             if (!this.isRiding()) {
                 this.startRiding(player);
                 this.lookAt(player, 1f, 1f);
@@ -124,7 +123,7 @@ public abstract class AbstractPet extends TameableEntity {
             }
             return true;
         }
-        return super.interactMob(player, hand);
+        return super.interactMob(player, hand, itemStack);
     }
 
     /**

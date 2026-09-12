@@ -12,7 +12,6 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.layer.EntityRenderLayer;
 import net.minecraft.client.render.platform.GlStateManager;
-import net.minecraft.entity.living.mob.monster.StrayEntity;
 import net.minecraft.resource.Identifier;
 
 @Environment(EnvType.CLIENT)

@@ -4,7 +4,7 @@ import com.jeff.pets.PetsSounds;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.EntityData;
-import net.minecraft.entity.MoverType;
+
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataAttribute;
@@ -229,7 +229,7 @@ public class Penguin extends AbstractPet {
                 this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/, -10, 10);
             }
 
-            this.move(MoverType.SELF, this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
+            this.move(this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
 
             if (!this.onGround) {
                 this.lerpVelocity(this.getVelocity().add(0, -0.04, 0));

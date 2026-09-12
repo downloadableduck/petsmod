@@ -3,7 +3,7 @@ package com.jeff.pets.mob.custom.aprilfools;
 import com.jeff.pets.mob.AbstractPet;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.entity.EntityData;
-import net.minecraft.entity.MoverType;
+
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.data.DataAttribute;
 import net.minecraft.entity.data.DataSerializers;
@@ -100,50 +100,6 @@ public class Head extends AbstractPet {
     }
 
     @Override
-    public boolean interactMob(@NotNull PlayerEntity player, @NotNull InteractionHand hand) {
-        ItemStack itemStack = player.getItemInHand(hand);
-
-        double x = this.x;
-        double y = this.y;
-        double z = this.z;
-
-        if (!this.isTamed() && this.isBreedingItem(itemStack)) {
-            if (this.random.nextInt(3) == 0) {
-                this.getNavigation().stop();
-                this.world.addParticle(
-                        ParticleType.HEART,
-
-                        x + (player.getRandom().nextFloat() * 0.4 - 0.25),
-                        y + (player.getRandom().nextFloat() * 0.4 - 0.25),
-                        z + (player.getRandom().nextFloat() * 0.4 - 0.25),
-                        0, 5, 0
-                );
-            }
-        }
-
-        if (this.isTamed() && itemStack.isEmpty()) {
-            this.world.addParticle(
-                    ParticleType.HEART,
-                    this.x,
-                    this.y + 1,
-                    this.z,
-                    5, 5, 5
-            );
-        }
-
-        if (this.isTamed() && itemStack.isEmpty() && player.isSneaking()) {
-            if (!this.isRiding()) {
-                this.startRiding(player);
-                this.lookAt(player, 1f, 1f);
-                this.setSitting(true);
-            } else {
-                this.stopRiding();
-            }
-        }
-        return true;
-    }
-
-    @Override
     public void tick() {
         super.tick();
         LivingEntity owner = this.getOwner();
@@ -213,7 +169,7 @@ public class Head extends AbstractPet {
                 this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/, -10, 10);
             }
 
-            this.move(MoverType.SELF, this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
+            this.move(this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
 
             if (!this.onGround) {
                 this.lerpVelocity(this.getVelocity().add(0, -0.04, 0));

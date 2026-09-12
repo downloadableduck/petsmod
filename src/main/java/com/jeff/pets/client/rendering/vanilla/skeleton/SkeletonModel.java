@@ -13,7 +13,6 @@ import net.minecraft.client.render.model.entity.HumanoidModel.ArmPose;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.living.Arm;
 import net.minecraft.entity.living.LivingEntity;
-import net.minecraft.entity.living.mob.monster.AbstractSkeletonEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.MathHelper;
@@ -64,7 +63,7 @@ public class SkeletonModel extends HumanoidModel {
     public void setupAnimation(float walkAnimationProgress, float walkAnimationSpeed, float bob, float yaw, float pitch, float scale, Entity entity) {
         super.setupAnimation(walkAnimationProgress, walkAnimationSpeed, bob, yaw, pitch, scale, entity);
         ItemStack itemStack = ((LivingEntity)entity).getItemInMainHand();
-        if ((itemStack.isEmpty() || itemStack.getItem() != Items.BOW)) {
+        if ((itemStack.getItem() == null || itemStack.getItem() != Items.BOW)) {
             float f = MathHelper.sin(this.attackAnimationProgress * (float)Math.PI);
             float g = MathHelper.sin((1.0F - (1.0F - this.attackAnimationProgress) * (1.0F - this.attackAnimationProgress)) * (float)Math.PI);
             /*this.rightArm.rotationZ = 0.0F;
