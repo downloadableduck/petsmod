@@ -21,7 +21,7 @@ import java.util.jar.JarFile;
 
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 
-@Mod(modid=MOD_ID, acceptedMinecraftVersions = "[1.9,1.9.4]")
+@Mod(modid=MOD_ID, acceptedMinecraftVersions = "[1.8,1.8.9]")
 public class PetsInitializer {
 
     public static final String MOD_ID = "pets_mod";

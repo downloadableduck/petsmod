@@ -1,8 +1,6 @@
 package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.SlimeLikePet;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundEvent;
 
 public class ClientMagmaCube extends SlimeLikePet {
 
@@ -22,7 +20,7 @@ public class ClientMagmaCube extends SlimeLikePet {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_MAGMA_CUBE_SQUISH;
+    protected String func_70639_aQ() {
+        return "mob.magmacube.small";
     }
 }

@@ -54,6 +54,6 @@ public class ClientCatRenderer extends PetRenderer<ClientCat, ClientCatModel> {
     @Override
     public void renderModel(ClientCat cat, float f, float g, float h, float i, float j, float k) {
         super.renderModel(cat, f, g, h, i, j, k);
-        cat.setSitting(cat.isPassenger());
+        cat.setSitting(cat.field_70154_o != null);
     }
 }

@@ -1,7 +1,7 @@
 package com.jeff.pets.client.mixin.client;
 
 import com.jeff.pets.client.PetsClientInitializer;
-import net.minecraft.client.renderer.RenderItem;
+import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -22,7 +22,7 @@ public abstract class EntityRendererDispatcherMixin {
     @Final
     public Map<Class<? extends Entity>, Render<? extends Entity>> field_78729_o;
 
-    @Inject(at = @At("TAIL"), method = "<init>(Lnet/minecraft/client/renderer/texture/TextureManager;Lnet/minecraft/client/renderer/RenderItem;)V")
+    @Inject(at = @At("TAIL"), method = "<init>")
     public void onFunc(TextureManager p_i46180_1_, RenderItem p_i46180_2_, CallbackInfo ci) {
         PetsClientInitializer.register();
         synchronized (PetsClientInitializer.renderManagerMap.keySet()) {

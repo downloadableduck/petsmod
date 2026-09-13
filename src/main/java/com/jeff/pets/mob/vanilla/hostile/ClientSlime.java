@@ -1,8 +1,6 @@
 package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.SlimeLikePet;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundEvent;
 
 public class ClientSlime extends SlimeLikePet {
     public ClientSlime(net.minecraft.world.World level) {
@@ -21,7 +19,7 @@ public class ClientSlime extends SlimeLikePet {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_SLIME_JUMP;
+    protected String func_70639_aQ() {
+        return "mob.slime.small";
     }
 }

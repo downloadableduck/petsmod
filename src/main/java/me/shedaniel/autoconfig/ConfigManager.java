@@ -22,7 +22,7 @@ package me.shedaniel.autoconfig;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.event.ConfigSerializeEvent;
 import me.shedaniel.autoconfig.serializer.ConfigSerializer;
-import net.minecraft.util.EnumActionResult;
+import me.shedaniel.autoconfig.EnumActionResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

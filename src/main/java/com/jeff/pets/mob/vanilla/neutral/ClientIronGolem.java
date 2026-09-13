@@ -1,8 +1,6 @@
 package com.jeff.pets.mob.vanilla.neutral;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundEvent;
 
 public class ClientIronGolem extends GroundPet {
     public ClientIronGolem(net.minecraft.world.World level) {
@@ -21,7 +19,7 @@ public class ClientIronGolem extends GroundPet {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_IRON_GOLEM_STEP;
+    protected String func_70639_aQ() {
+        return "mob.irongolem.walk";
     }
 }

@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.villager;
 
 import com.jeff.pets.mob.vanilla.passive.ClientVillager;
-import net.minecraft.client.renderer.entity.RenderLivingBase;
+import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 
@@ -22,9 +22,9 @@ public class ClientVillagerProfessionLayer implements LayerRenderer<ClientVillag
     public static final ResourceLocation TOOLSMITH_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/toolsmith.png");
     public static final ResourceLocation WEAPONSMITH_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/weaponsmith.png");
 
-    private final RenderLivingBase<ClientVillager> renderer;
+    private final RendererLivingEntity<ClientVillager> renderer;
 
-    public ClientVillagerProfessionLayer(RenderLivingBase<ClientVillager> renderLayerParent) {
+    public ClientVillagerProfessionLayer(RendererLivingEntity<ClientVillager> renderLayerParent) {
         this.renderer = renderLayerParent;
     }
 

@@ -152,12 +152,12 @@ public class ClientEnderDragonModel extends ModelBase {
             this.rearLeg.render(p_78088_7_);
             GlStateManager.scalef(-1.0F, 1.0F, 1.0F);
             if (j == 0) {
-                GlStateManager.cullFace(GlStateManager.CullFace.FRONT);
+                GlStateManager.cullFace(1028);
             }
         }
 
         GlStateManager.popMatrix();
-        GlStateManager.cullFace(GlStateManager.CullFace.BACK);
+        GlStateManager.cullFace(1029);
         GlStateManager.disableCull();
         float f10 = -((float) Math.sin(f * ((float) Math.PI * 2F))) * 0.0F;
         f8 = f * ((float) Math.PI * 2F);

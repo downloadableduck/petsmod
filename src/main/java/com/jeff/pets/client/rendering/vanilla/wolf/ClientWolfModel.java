@@ -64,9 +64,9 @@ public class ClientWolfModel extends ModelBase {
     }
 
     public void setLivingAnimations(ClientWolf wolf, float f, float g, float h) {
-        //this.tail.rotateAngleY = net.minecraft.util.math.MathHelper.cos(f * 0.6662F) * 1.4F * g;
+        //this.tail.rotateAngleY = net.minecraft.util.MathHelper.cos(f * 0.6662F) * 1.4F * g;
 
-        if (wolf.isPassenger()) {
+        if (wolf.field_70154_o != null) {
             this.upperBody.setRotationPoint(-1.0F, 16.0F, -3.0F);
             this.upperBody.rotateAngleX = 1.2566371F;
             this.upperBody.rotateAngleY = 0.0F;
@@ -91,10 +91,10 @@ public class ClientWolfModel extends ModelBase {
             this.leg1.setRotationPoint(0.5F, 16.0F, 7.0F);
             this.leg2.setRotationPoint(-2.5F, 16.0F, -4.0F);
             this.leg3.setRotationPoint(0.5F, 16.0F, -4.0F);
-            this.leg0.rotateAngleX = net.minecraft.util.math.MathHelper.cos(f * 0.6662F) * 1.4F * g;
-            this.leg1.rotateAngleX = net.minecraft.util.math.MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g;
-            this.leg2.rotateAngleX = net.minecraft.util.math.MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g;
-            this.leg3.rotateAngleX = net.minecraft.util.math.MathHelper.cos(f * 0.6662F) * 1.4F * g;
+            this.leg0.rotateAngleX = net.minecraft.util.MathHelper.cos(f * 0.6662F) * 1.4F * g;
+            this.leg1.rotateAngleX = net.minecraft.util.MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g;
+            this.leg2.rotateAngleX = net.minecraft.util.MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g;
+            this.leg3.rotateAngleX = net.minecraft.util.MathHelper.cos(f * 0.6662F) * 1.4F * g;
         }
 
         this.realHead.rotateAngleZ = 0;

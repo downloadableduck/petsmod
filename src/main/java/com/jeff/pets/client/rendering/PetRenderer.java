@@ -18,7 +18,7 @@ public abstract class PetRenderer<D extends AbstractPet, K extends ModelBase> ex
     @Override
     protected void renderModel(D entity, float f, float g, float h, float i, float j, float k) {
         net.minecraft.client.renderer.GlStateManager.pushMatrix();
-        if (entity.isPassenger()) {
+        if (entity.field_70154_o != null) {
             net.minecraft.client.renderer.GlStateManager.translatef(0, -0.35f, 0);
         }
         super.renderModel(entity, f, g, h, i, j, k);

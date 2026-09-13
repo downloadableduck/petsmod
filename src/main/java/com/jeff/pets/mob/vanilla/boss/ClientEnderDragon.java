@@ -4,17 +4,8 @@ import com.jeff.pets.CanFly;
 import com.jeff.pets.client.Math2;
 import com.jeff.pets.mob.FlyingPet;
 import net.minecraft.entity.boss.EntityDragon;
-import net.minecraft.entity.boss.dragon.phase.IPhase;
-import net.minecraft.entity.boss.dragon.phase.PhaseList;
-import net.minecraft.entity.boss.dragon.phase.PhaseManager;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
-import net.minecraft.world.end.DragonFightManager;
-import net.minecraft.world.gen.feature.WorldGenEndPodium;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 
 @CanFly
 public class ClientEnderDragon extends FlyingPet {
@@ -22,12 +13,10 @@ public class ClientEnderDragon extends FlyingPet {
     public float oFlapTime;
     public float flapTime;
     public int posPointer = -1;
-    private PhaseManager phaseManager;
 
     public ClientEnderDragon(net.minecraft.world.World level) {
         super(level);
         this.setSize(16f, 8f);
-        this.phaseManager = new PhaseManager(new EntityDragon(level));
     }
 
     @Override
@@ -41,8 +30,8 @@ public class ClientEnderDragon extends FlyingPet {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_ENDER_DRAGON_FLAP;
+    protected String func_70639_aQ() {
+        return "mob.enderdragon.wings";
     }
 
     @Override
@@ -64,7 +53,7 @@ public class ClientEnderDragon extends FlyingPet {
         int k = this.posPointer - i - 1 & 63;
         double[] ds = new double[3];
         double d = this.positions[j][0];
-        double e = net.minecraft.util.math.MathHelper.wrapDegrees(this.positions[k][0] - d);
+        double e = net.minecraft.util.MathHelper.wrapDegrees(this.positions[k][0] - d);
         ds[0] = d + e * (double) f;
         d = this.positions[j][1];
         e = this.positions[k][1] - d;
@@ -74,51 +63,14 @@ public class ClientEnderDragon extends FlyingPet {
     }
 
     public float getHeadPartYOffset(int i, double[] ds, double[] es) {
-        IPhase iphase = this.phaseManager.getCurrentPhase();
-        PhaseList<? extends IPhase> phaselist = iphase.getType();
-        double d0;
-        if (phaselist != PhaseList.LANDING && phaselist != PhaseList.TAKEOFF) {
-            if (iphase.getIsStationary()) {
-                d0 = (double)i;
-            } else if (i == 6) {
-                d0 = (double)0.0F;
-            } else {
-                d0 = ds[1] - es[1];
-            }
+        if (i == 6) {
+            return 0.0F;
         } else {
-            BlockPos blockpos = this.world.func_175672_r(WorldGenEndPodium.END_PODIUM_LOCATION);
-            float f = Math.max(MathHelper.sqrt(this.getDistanceSqToCenter(blockpos)) / 4.0F, 1.0F);
-            d0 = (double)((float)i / f);
+            return (float) (ds[1] - es[1]);
         }
-
-        return (float)d0;
     }
 
-    public Vec3d getHeadLookVec(float p_184665_1_) {
-        IPhase iphase = this.phaseManager.getCurrentPhase();
-        PhaseList<? extends IPhase> phaselist = iphase.getType();
-        Vec3d vec3d;
-        if (phaselist != PhaseList.LANDING && phaselist != PhaseList.TAKEOFF) {
-            if (iphase.getIsStationary()) {
-                float f4 = this.rotationPitch;
-                float f5 = 1.5F;
-                this.rotationPitch = -45.0F;
-                vec3d = this.getLook(p_184665_1_);
-                this.rotationPitch = f4;
-            } else {
-                vec3d = this.getLook(p_184665_1_);
-            }
-        } else {
-            BlockPos blockpos = this.world.func_175672_r(WorldGenEndPodium.END_PODIUM_LOCATION);
-            float f = Math.max(MathHelper.sqrt(this.getDistanceSqToCenter(blockpos)) / 4.0F, 1.0F);
-            float f1 = 6.0F / f;
-            float f2 = this.rotationPitch;
-            float f3 = 1.5F;
-            this.rotationPitch = -f1 * 1.5F * 5.0F;
-            vec3d = this.getLook(p_184665_1_);
-            this.rotationPitch = f2;
-        }
-
-        return vec3d;
+    public Vec3 getHeadLookVec(float p_184665_1_) {
+        return this.getLook(p_184665_1_);
     }
 }

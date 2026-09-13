@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.vanilla.creeper;
 import com.jeff.pets.mob.vanilla.hostile.ClientCreeper;
 import net.minecraft.client.model.ModelCreeper;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderLivingBase;
+import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 
@@ -11,10 +11,10 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientCreeperChargeLayer implements LayerRenderer<ClientCreeper> {
     private static final ResourceLocation SKIN = new ResourceLocation("textures/entity/creeper/creeper_armor.png");
-    private final RenderLivingBase<ClientCreeper> renderer;
+    private final RendererLivingEntity<ClientCreeper> renderer;
     private final ModelCreeper creeperModel;
 
-    public ClientCreeperChargeLayer(RenderLivingBase<ClientCreeper> renderLayerParent) {
+    public ClientCreeperChargeLayer(RendererLivingEntity<ClientCreeper> renderLayerParent) {
         this.renderer = renderLayerParent;
         this.creeperModel = new ModelCreeper(0.25F);
     }
@@ -34,7 +34,7 @@ public class ClientCreeperChargeLayer implements LayerRenderer<ClientCreeper> {
             float n = 0.5F;
             GlStateManager.color4f(0.5F, 0.5F, 0.5F, 1.0F);
             GlStateManager.disableLighting();
-            GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+            GlStateManager.blendFunc(1, 1);
             this.creeperModel.setModelAttributes(this.renderer.getMainModel());
             this.creeperModel.render(creeperEntity, f, g, i, j, k, l);
             GlStateManager.matrixMode(5890);

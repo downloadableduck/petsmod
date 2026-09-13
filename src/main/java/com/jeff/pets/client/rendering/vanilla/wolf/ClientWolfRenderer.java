@@ -30,6 +30,6 @@ public class ClientWolfRenderer extends PetRenderer<ClientWolf, ClientWolfModel>
     @Override
     public void renderModel(ClientWolf wolf, float f, float g, float h, float i, float j, float k) {
         super.renderModel(wolf, f, g, h, i, j, k);
-        wolf.setSitting(wolf.isPassenger());
+        wolf.setSitting(wolf.field_70154_o != null);
     }
 }

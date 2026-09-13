@@ -2,8 +2,6 @@ package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundEvent;
 
 @CanFly
 public class ClientElderGuardian extends FlyingPet {
@@ -23,7 +21,7 @@ public class ClientElderGuardian extends FlyingPet {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_ELDER_GUARDIAN_AMBIENT;
+    protected String func_70639_aQ() {
+        return "mob.guardian.elder.idle";
     }
 }

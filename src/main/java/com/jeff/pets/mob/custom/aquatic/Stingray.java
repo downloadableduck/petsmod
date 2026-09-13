@@ -3,28 +3,22 @@ package com.jeff.pets.mob.custom.aquatic;
 import com.jeff.pets.mob.AbstractPet;
 import com.jeff.pets.mob.FlyingPet;
 import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.EntityAIFollowOwner;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMate;
 import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class Stingray extends AbstractPet {
-    public static final net.minecraft.network.datasync.DataParameter<Boolean> IS_SERVER_ENTITY =
-            net.minecraft.network.datasync.EntityDataManager.createKey(Stingray.class, net.minecraft.network.datasync.DataSerializers.BOOLEAN);
+    private static final int IS_SERVER_ENTITY = 10;
     private final float nextFlap = 1.0F;
     public float oFlap;
     public float flap;
@@ -33,7 +27,6 @@ public class Stingray extends AbstractPet {
     public Stingray(World level) {
         super(level);
         this.setSize(1.0f, 0.4f);
-        this.setPathPriority(PathNodeType.WATER, 0);
     }
 
     @Override
@@ -45,15 +38,15 @@ public class Stingray extends AbstractPet {
     @Override
     protected void registerData() {
         super.registerData();
-        this.dataManager.register(IS_SERVER_ENTITY, false);
+        this.dataManager.func_75682_a(IS_SERVER_ENTITY, Byte.valueOf((byte) 0));
     }
 
     public boolean isServerEntity() {
-        return this.dataManager.get(IS_SERVER_ENTITY);
+        return this.dataManager.func_75683_a(IS_SERVER_ENTITY) != 0;
     }
 
     public void setServerEntity(Boolean value) {
-        this.dataManager.set(IS_SERVER_ENTITY, value);
+        this.dataManager.func_75692_b(IS_SERVER_ENTITY, Byte.valueOf((byte) (value.booleanValue() ? 1 : 0)));
     }
 
     @Override
@@ -71,20 +64,20 @@ public class Stingray extends AbstractPet {
         this.flap += this.flapping * 2.0F;
     }
 
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_SQUID_AMBIENT;
+    protected String func_70639_aQ() {
+        return "mob.squid.ambient";
     }
 
-    protected SoundEvent getHurtSound(final DamageSource source) {
-        return SoundEvents.ENTITY_SQUID_HURT;
+    protected String func_70621_aR() {
+        return "mob.squid.hurt";
     }
 
-    protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_SQUID_DEATH;
+    protected String func_70673_aS() {
+        return "mob.squid.death";
     }
 
-    protected void playStepSound(final BlockPos pos, final IBlockState blockState) {
-        this.playSound(SoundEvents.ENTITY_GENERIC_SPLASH, 0.15F, 1.0F);
+    protected void playStepSound(final BlockPos pos, final net.minecraft.block.Block blockState) {
+        this.func_85030_a("random.splash", 0.15F, 1.0F);
     }
 
     public Stingray createChild(final EntityAgeable partner) {
@@ -161,9 +154,9 @@ public class Stingray extends AbstractPet {
         EntityLivingBase owner = this.getOwner();
         if (owner != null) {
 
-            if (owner.isRidingOrBeingRiddenBy(this)) {
+            if (this.field_70154_o == owner) {
                 if (owner.isSneaking() && owner.isJumping) {
-                    this.stopRiding();
+                    this.func_70078_a(null);
                     this.setVelocity(this.motionX, this.motionY + 0.1, this.motionZ);
                 } else {
                     this.setSitting(true);
@@ -172,16 +165,16 @@ public class Stingray extends AbstractPet {
 
             double dx = owner.posX - this.posX;
             double dz = owner.posZ - this.posZ;
-            net.minecraft.util.math.Vec3d ownerPos = owner.getPositionVector().add(0, owner.getEyeHeight() * 0.8, 0);
-            net.minecraft.util.math.Vec3d vecToOwner = ownerPos.subtract(this.getPositionVector());
-            Vec3d dir = vecToOwner.normalize();
+            net.minecraft.util.Vec3 ownerPos = owner.getPositionVector().add(0, owner.getEyeHeight() * 0.8, 0);
+            net.minecraft.util.Vec3 vecToOwner = ownerPos.subtract(this.getPositionVector());
+            Vec3 dir = vecToOwner.normalize();
 
             float targetYaw = (float) (Math.atan2(dz, dx) * (180.0 / Math.PI)) - 90.0F;
 
             double distance = this.getDistance(owner);
             float rotation = -this.rotationPitch;
             float rotationToOwner = rotation + (-this.getOwner().rotationPitch);
-            float bodyYawDiff = net.minecraft.util.math.MathHelper.wrapDegrees(this.rotationYawHead - this.renderYawOffset);
+            float bodyYawDiff = net.minecraft.util.MathHelper.wrapDegrees(this.rotationYawHead - this.renderYawOffset);
 
             if (rotationToOwner >= 50) {
                 this.renderYawOffset = this.rotationYawHead - (Math.signum(bodyYawDiff) * 50.0F);
@@ -243,7 +236,7 @@ public class Stingray extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            this.playSound(SoundEvents.ENTITY_SQUID_AMBIENT, 1.0f, 1.0f);
+            this.func_85030_a("mob.squid.ambient", 1.0f, 1.0f);
         }
     }
 }

@@ -8,7 +8,6 @@ import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -165,7 +164,7 @@ public class SubCategoryListEntry extends TooltipListEntry<List<AbstractConfigLi
         public boolean mouseClicked(double double_1, double double_2, int int_1) {
             if (rectangle.contains(double_1, double_2)) {
                 expanded = !expanded;
-                Minecraft.getInstance().getSoundHandler().play(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+                Minecraft.getInstance().getSoundHandler().play(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
                 return true;
             }
             return false;

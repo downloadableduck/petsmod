@@ -2,8 +2,6 @@ package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundEvent;
 
 @CanFly
 public class ClientBat extends FlyingPet {
@@ -26,7 +24,7 @@ public class ClientBat extends FlyingPet {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_BAT_AMBIENT;
+    protected String func_70639_aQ() {
+        return "mob.bat.idle";
     }
 }

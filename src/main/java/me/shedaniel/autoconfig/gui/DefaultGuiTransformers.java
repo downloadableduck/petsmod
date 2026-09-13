@@ -25,8 +25,8 @@ import me.shedaniel.forge.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.forge.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.forge.clothconfig2.gui.entries.TextListEntry;
 import me.shedaniel.forge.clothconfig2.gui.entries.TooltipListEntry;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.IChatComponent;
+import net.minecraft.util.ChatComponentTranslation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,16 +54,16 @@ public class DefaultGuiTransformers {
                                 } else if (tooltip.count() == 1) {
                                     tryApplyTooltip(
                                             gui,
-                                            new ITextComponent[]{
-                                                    new TextComponentTranslation(String.format("%s.%s", i18n, "@Tooltip"))
+                                            new IChatComponent[]{
+                                                    new ChatComponentTranslation(String.format("%s.%s", i18n, "@Tooltip"))
                                             }
                                     );
                                 } else {
                                     tryApplyTooltip(
                                             gui, IntStream.range(0, tooltip.count()).boxed()
                                                     .map(i -> String.format("%s.%s[%d]", i18n, "@Tooltip", i))
-                                                    .map(TextComponentTranslation::new)
-                                                    .toArray(ITextComponent[]::new)
+                                                    .map(ChatComponentTranslation::new)
+                                                    .toArray(IChatComponent[]::new)
                                     );
                                 }
                             }
@@ -87,8 +87,8 @@ public class DefaultGuiTransformers {
                 (guis, i18n, field, config, defaults, guiProvider) -> {
                     ArrayList<AbstractConfigListEntry> ret = new ArrayList<>(guis);
                     String text = String.format("%s.%s", i18n, "@PrefixText");
-                    TextListEntry element = ENTRY_BUILDER.startTextDescription(new TextComponentTranslation(text).getUnformattedComponentText()).build();
-                    String s = new TextComponentTranslation(i18n).getUnformattedComponentText().toLowerCase(Locale.ROOT);
+                    TextListEntry element = ENTRY_BUILDER.startTextDescription(new ChatComponentTranslation(text).getUnformattedComponentText()).build();
+                    String s = new ChatComponentTranslation(i18n).getUnformattedComponentText().toLowerCase(Locale.ROOT);
                     if (!s.isEmpty()) {
                         //element.appendSearchTags(Lists.newArrayList(s.split(" ")));
                     }
@@ -111,7 +111,7 @@ public class DefaultGuiTransformers {
         return registry;
     }
 
-    private static void tryApplyTooltip(AbstractConfigListEntry gui, ITextComponent[] text) {
+    private static void tryApplyTooltip(AbstractConfigListEntry gui, IChatComponent[] text) {
         if (gui instanceof TooltipListEntry) {
             TooltipListEntry tooltipGui = (TooltipListEntry) gui;
             tooltipGui.setTooltipSupplier(() -> Optional.of(text));

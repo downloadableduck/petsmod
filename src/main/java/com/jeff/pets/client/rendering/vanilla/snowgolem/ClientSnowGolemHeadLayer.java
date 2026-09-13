@@ -4,9 +4,9 @@ import com.jeff.pets.mob.vanilla.passive.ClientSnowGolem;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderItem;
+import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.entity.RenderLivingBase;
+import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -16,9 +16,9 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientSnowGolemHeadLayer implements LayerRenderer<ClientSnowGolem> {
     private final BlockRendererDispatcher blockRenderer;
     private final RenderItem itemRenderer;
-    private final RenderLivingBase<ClientSnowGolem> renderer;
+    private final RendererLivingEntity<ClientSnowGolem> renderer;
 
-    public ClientSnowGolemHeadLayer(RenderLivingBase<ClientSnowGolem> renderLayerParent, BlockRendererDispatcher blockRenderDispatcher, RenderItem itemRenderer) {
+    public ClientSnowGolemHeadLayer(RendererLivingEntity<ClientSnowGolem> renderLayerParent, BlockRendererDispatcher blockRenderDispatcher, RenderItem itemRenderer) {
         this.renderer = renderLayerParent;
         this.blockRenderer = blockRenderDispatcher;
         this.itemRenderer = itemRenderer;
@@ -26,7 +26,7 @@ public class ClientSnowGolemHeadLayer implements LayerRenderer<ClientSnowGolem> 
 
     public void render(ClientSnowGolem snowGolem, float f, float g, float h, float i, float j, float k, float l) {
         if (CONFIG.snowGolemSkin.equals("pumpkin_on")) {
-            boolean bl = snowGolem.isGlowing() && snowGolem.isInvisible();
+            boolean bl = false;
             if (!snowGolem.isInvisible() || bl) {
                 net.minecraft.client.renderer.GlStateManager.pushMatrix();
                 this.renderer.getMainModel().setRotationAngles(f, g, i, j, k, l, snowGolem);
@@ -40,7 +40,7 @@ public class ClientSnowGolemHeadLayer implements LayerRenderer<ClientSnowGolem> 
                     net.minecraft.client.renderer.GlStateManager.translatef(-0.5F, -0.5F, -0.5F);
                     this.blockRenderer.renderBlockBrightness(blockState, 1.0F);
                 } else {
-                    this.itemRenderer.renderItem(itemStack, snowGolem, ItemCameraTransforms.TransformType.HEAD, false);
+                    this.itemRenderer.renderItem(itemStack, ItemCameraTransforms.TransformType.HEAD);
                 }
 
                 net.minecraft.client.renderer.GlStateManager.popMatrix();

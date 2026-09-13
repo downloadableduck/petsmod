@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.zombievillager;
 
 import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
-import net.minecraft.client.renderer.entity.RenderLivingBase;
+import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 
@@ -24,9 +24,9 @@ public class ClientZombieVillagerProfessionLayer implements LayerRenderer<Client
     public static final ResourceLocation TOOLSMITH_LOCATION = new ResourceLocation("minecraft", "textures/entity/zombie_villager/profession/toolsmith.png");
     public static final ResourceLocation WEAPONSMITH_LOCATION = new ResourceLocation("minecraft", "textures/entity/zombie_villager/profession/weaponsmith.png");
 
-    private final RenderLivingBase<ClientZombieVillager> renderer;
+    private final RendererLivingEntity<ClientZombieVillager> renderer;
 
-    public ClientZombieVillagerProfessionLayer(RenderLivingBase<ClientZombieVillager> renderLayerParent) {
+    public ClientZombieVillagerProfessionLayer(RendererLivingEntity<ClientZombieVillager> renderLayerParent) {
         this.renderer = renderLayerParent;
     }
 

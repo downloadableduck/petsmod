@@ -23,7 +23,7 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.serializer.DummyConfigSerializer;
 import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
-import net.minecraft.util.EnumActionResult;
+import me.shedaniel.autoconfig.EnumActionResult;
 
 public class ExampleInits {
     public static void exampleCommonInit() {

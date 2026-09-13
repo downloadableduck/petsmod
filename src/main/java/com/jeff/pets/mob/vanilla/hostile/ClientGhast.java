@@ -2,8 +2,6 @@ package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundEvent;
 
 @CanFly
 public class ClientGhast extends FlyingPet {
@@ -23,7 +21,7 @@ public class ClientGhast extends FlyingPet {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_GHAST_AMBIENT;
+    protected String func_70639_aQ() {
+        return "mob.ghast.moan";
     }
 }

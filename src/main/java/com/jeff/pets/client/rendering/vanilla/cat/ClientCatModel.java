@@ -6,7 +6,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.MathHelper;
 
 public class ClientCatModel extends ModelBase {
     /**
@@ -183,7 +183,7 @@ public class ClientCatModel extends ModelBase {
             this.ocelotTail.rotateAngleX = ((float) Math.PI / 2F);
             this.ocelotTail2.rotateAngleX = ((float) Math.PI / 2F);
             this.state = 2;
-        } else if (entitylivingbaseIn.getOwner() != null && entitylivingbaseIn.isRidingOrBeingRiddenBy(entitylivingbaseIn.getOwner())) {
+        } else if (entitylivingbaseIn.getOwner() != null && (entitylivingbaseIn.field_70154_o == entitylivingbaseIn.getOwner() || entitylivingbaseIn.field_70153_n == entitylivingbaseIn.getOwner())) {
             this.ocelotBody.rotateAngleX = ((float) Math.PI / 4F);
             this.ocelotBody.rotationPointY += -4.0F;
             this.ocelotBody.rotationPointZ += 5.0F;

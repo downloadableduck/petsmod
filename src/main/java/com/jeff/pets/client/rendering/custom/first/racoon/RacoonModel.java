@@ -83,10 +83,10 @@ public class RacoonModel extends PetModel {
         Racoon fox = (Racoon) entity;
         //this.body.rotateAngleX = ((float) Math2.PI / 2F);
         this.tail.rotateAngleX = -0.05235988F;
-        this.right_hind_leg.rotateAngleX = net.minecraft.util.math.MathHelper.cos(f * 0.6662F) * 1.4F * g;
-        this.left_hind_leg.rotateAngleX = net.minecraft.util.math.MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g;
-        this.right_front_leg.rotateAngleX = net.minecraft.util.math.MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g;
-        this.left_front_leg.rotateAngleX = net.minecraft.util.math.MathHelper.cos(f * 0.6662F) * 1.4F * g;
+        this.right_hind_leg.rotateAngleX = net.minecraft.util.MathHelper.cos(f * 0.6662F) * 1.4F * g;
+        this.left_hind_leg.rotateAngleX = net.minecraft.util.MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g;
+        this.right_front_leg.rotateAngleX = net.minecraft.util.MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g;
+        this.left_front_leg.rotateAngleX = net.minecraft.util.MathHelper.cos(f * 0.6662F) * 1.4F * g;
         //this.head.setRotationPoint(-1.0F, 16.5F, -3.0F);
         //this.head.rotateAngleY = 0.0F;
         //this.head.rotateAngleZ = 0;
@@ -100,7 +100,7 @@ public class RacoonModel extends PetModel {
         this.left_hind_leg.setRotationPoint(-1.0F, 17.5F, 7.0F);
         this.tail.rotateAngleX = 2f;
 
-        if (fox.isPassenger()) {
+        if (fox.field_70154_o != null) {
             //this.body.rotateAngleX = 1.35f;
             //this.tail.z = 7;
         }

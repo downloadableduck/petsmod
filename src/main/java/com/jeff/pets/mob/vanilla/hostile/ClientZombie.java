@@ -1,8 +1,6 @@
 package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundEvent;
 
 public class ClientZombie extends GroundPet {
 
@@ -22,7 +20,7 @@ public class ClientZombie extends GroundPet {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_ZOMBIE_AMBIENT;
+    protected String func_70639_aQ() {
+        return "mob.zombie.say";
     }
 }

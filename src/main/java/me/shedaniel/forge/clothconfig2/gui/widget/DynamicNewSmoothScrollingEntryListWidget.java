@@ -4,11 +4,11 @@ import me.shedaniel.forge.clothconfig2.ClothConfigInitializer;
 import me.shedaniel.forge.math.Rectangle;
 import me.shedaniel.forge.math.impl.PointHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Mouse;
@@ -113,7 +113,7 @@ public abstract class DynamicNewSmoothScrollingEntryListWidget<E extends Dynamic
 
     @SuppressWarnings("deprecation")
     @Override
-    protected void renderScrollBar(Tessellator tessellator, VertexBuffer buffer, int maxScroll, int scrollbarPositionMinX, int scrollbarPositionMaxX) {
+    protected void renderScrollBar(Tessellator tessellator, WorldRenderer buffer, int maxScroll, int scrollbarPositionMinX, int scrollbarPositionMaxX) {
         if (!smoothScrolling)
             super.renderScrollBar(tessellator, buffer, maxScroll, scrollbarPositionMinX, scrollbarPositionMaxX);
         else if (maxScroll > 0) {
@@ -128,26 +128,26 @@ public abstract class DynamicNewSmoothScrollingEntryListWidget<E extends Dynamic
 
             // Black Bar
             buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-            buffer.pos(scrollbarPositionMinX, this.bottom, 0.0D).tex(0, 1).color(0, 0, 0, 255).endVertex();
-            buffer.pos(scrollbarPositionMaxX, this.bottom, 0.0D).tex(1, 1).color(0, 0, 0, 255).endVertex();
-            buffer.pos(scrollbarPositionMaxX, this.top, 0.0D).tex(1, 0).color(0, 0, 0, 255).endVertex();
-            buffer.pos(scrollbarPositionMinX, this.top, 0.0D).tex(0, 0).color(0, 0, 0, 255).endVertex();
+            buffer.pos(scrollbarPositionMinX, this.bottom, 0.0D).func_181673_a(0, 1).color(0, 0, 0, 255).endVertex();
+            buffer.pos(scrollbarPositionMaxX, this.bottom, 0.0D).func_181673_a(1, 1).color(0, 0, 0, 255).endVertex();
+            buffer.pos(scrollbarPositionMaxX, this.top, 0.0D).func_181673_a(1, 0).color(0, 0, 0, 255).endVertex();
+            buffer.pos(scrollbarPositionMinX, this.top, 0.0D).func_181673_a(0, 0).color(0, 0, 0, 255).endVertex();
             tessellator.draw();
 
             // Bottom
             buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-            buffer.pos(scrollbarPositionMinX, minY + height, 0.0D).tex(0, 1).color(bottomc, bottomc, bottomc, 255).endVertex();
-            buffer.pos(scrollbarPositionMaxX, minY + height, 0.0D).tex(1, 1).color(bottomc, bottomc, bottomc, 255).endVertex();
-            buffer.pos(scrollbarPositionMaxX, minY, 0.0D).tex(1, 0).color(bottomc, bottomc, bottomc, 255).endVertex();
-            buffer.pos(scrollbarPositionMinX, minY, 0.0D).tex(0, 0).color(bottomc, bottomc, bottomc, 255).endVertex();
+            buffer.pos(scrollbarPositionMinX, minY + height, 0.0D).func_181673_a(0, 1).color(bottomc, bottomc, bottomc, 255).endVertex();
+            buffer.pos(scrollbarPositionMaxX, minY + height, 0.0D).func_181673_a(1, 1).color(bottomc, bottomc, bottomc, 255).endVertex();
+            buffer.pos(scrollbarPositionMaxX, minY, 0.0D).func_181673_a(1, 0).color(bottomc, bottomc, bottomc, 255).endVertex();
+            buffer.pos(scrollbarPositionMinX, minY, 0.0D).func_181673_a(0, 0).color(bottomc, bottomc, bottomc, 255).endVertex();
             tessellator.draw();
 
             // Top
             buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-            buffer.pos(scrollbarPositionMinX, (minY + height - 1), 0.0D).tex(0, 1).color(topc, topc, topc, 255).endVertex();
-            buffer.pos((scrollbarPositionMaxX - 1), (minY + height - 1), 0.0D).tex(1, 1).color(topc, topc, topc, 255).endVertex();
-            buffer.pos((scrollbarPositionMaxX - 1), minY, 0.0D).tex(1, 0).color(topc, topc, topc, 255).endVertex();
-            buffer.pos(scrollbarPositionMinX, minY, 0.0D).tex(0, 0).color(topc, topc, topc, 255).endVertex();
+            buffer.pos(scrollbarPositionMinX, (minY + height - 1), 0.0D).func_181673_a(0, 1).color(topc, topc, topc, 255).endVertex();
+            buffer.pos((scrollbarPositionMaxX - 1), (minY + height - 1), 0.0D).func_181673_a(1, 1).color(topc, topc, topc, 255).endVertex();
+            buffer.pos((scrollbarPositionMaxX - 1), minY, 0.0D).func_181673_a(1, 0).color(topc, topc, topc, 255).endVertex();
+            buffer.pos(scrollbarPositionMinX, minY, 0.0D).func_181673_a(0, 0).color(topc, topc, topc, 255).endVertex();
             tessellator.draw();
         }
     }

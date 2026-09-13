@@ -5,7 +5,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.MathHelper;
 
 public class ClientHorseModel extends ModelBase {
     protected final ModelRenderer field_3305;
@@ -98,7 +98,7 @@ public class ClientHorseModel extends ModelBase {
         boolean bl = horseEntity.isChild();
         float l = 1.0F;
         boolean bl2 = false;
-        boolean bl3 = horseEntity.isBeingRidden();
+        boolean bl3 = horseEntity.field_70153_n != null;
 
         for (ModelRenderer ModelRenderer : this.field_3304) {
             ModelRenderer.showModel = bl2;

@@ -3,7 +3,7 @@ package me.shedaniel.forge.clothconfig2.impl.builders;
 import me.shedaniel.forge.clothconfig2.gui.entries.DropdownBoxEntry;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderItem;
+import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;

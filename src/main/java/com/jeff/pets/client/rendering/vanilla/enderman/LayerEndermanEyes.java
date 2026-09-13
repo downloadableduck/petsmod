@@ -21,7 +21,7 @@ public class LayerEndermanEyes implements LayerRenderer<ClientEnderman> {
         this.endermanRenderer.bindTexture(RES_ENDERMAN_EYES);
         GlStateManager.enableBlend();
         GlStateManager.disableAlphaTest();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+        GlStateManager.blendFunc(1, 1);
         GlStateManager.disableLighting();
         GlStateManager.depthMask(!entitylivingbaseIn.isInvisible());
         int i = 61680;

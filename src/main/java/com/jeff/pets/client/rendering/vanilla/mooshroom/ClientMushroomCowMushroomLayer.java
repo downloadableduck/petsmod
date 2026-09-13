@@ -6,7 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelCow;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderLivingBase;
+import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.init.Blocks;
@@ -14,9 +14,9 @@ import net.minecraft.init.Blocks;
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientMushroomCowMushroomLayer implements LayerRenderer<ClientMooshroom> {
-    private final RenderLivingBase<ClientMooshroom> renderer;
+    private final RendererLivingEntity<ClientMooshroom> renderer;
 
-    public ClientMushroomCowMushroomLayer(RenderLivingBase<ClientMooshroom> renderLayerParent, BlockRendererDispatcher blockRenderDispatcher) {
+    public ClientMushroomCowMushroomLayer(RendererLivingEntity<ClientMooshroom> renderLayerParent, BlockRendererDispatcher blockRenderDispatcher) {
         this.renderer = renderLayerParent;
     }
 
@@ -26,7 +26,7 @@ public class ClientMushroomCowMushroomLayer implements LayerRenderer<ClientMoosh
             IBlockState blockstate = CONFIG.mooshroomSkin.equals("brown") ? Blocks.BROWN_MUSHROOM.getDefaultState() : Blocks.RED_MUSHROOM.getDefaultState();
             this.renderer.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
             GlStateManager.enableCull();
-            GlStateManager.cullFace(GlStateManager.CullFace.FRONT);
+            GlStateManager.cullFace(1028);
             GlStateManager.pushMatrix();
             GlStateManager.scalef(1.0F, -1.0F, 1.0F);
             GlStateManager.translatef(0.2F, 0.35F, 0.5F);
@@ -51,7 +51,7 @@ public class ClientMushroomCowMushroomLayer implements LayerRenderer<ClientMoosh
             GlStateManager.translatef(-0.5F, -0.5F, 0.5F);
             blockrendererdispatcher.renderBlockBrightness(blockstate, 1.0F);
             GlStateManager.popMatrix();
-            GlStateManager.cullFace(GlStateManager.CullFace.BACK);
+            GlStateManager.cullFace(1029);
             GlStateManager.disableCull();
         }
     }

@@ -43,6 +43,6 @@ public class RacoonRenderer extends PetRenderer<Racoon, RacoonModel> {
     @Override
     public void renderModel(Racoon racoon, float g, float f, float k, float h, float i, float j) {
         super.renderModel(racoon, g, f, k, h, i, j);
-        racoon.setServerEntity(racoon.getDataManager().get(Racoon.IS_SERVER_ENTITY));
+        racoon.setServerEntity(racoon.isServerEntity());
     }
 }

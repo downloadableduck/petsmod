@@ -8,19 +8,13 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class Duck extends AbstractPet {
 
-    public static final DataParameter<Boolean> IS_SERVER_ENTITY =
-            EntityDataManager.createKey(Duck.class, net.minecraft.network.datasync.DataSerializers.BOOLEAN);
-    public static final DataParameter<Integer> DUCK_SKIN =
-            EntityDataManager.createKey(Duck.class, net.minecraft.network.datasync.DataSerializers.VARINT);
+    private static final int IS_SERVER_ENTITY = 10;
+    private static final int DUCK_SKIN = 11;
     private final float flyDist = 0;
     public float flap;
     public float flapSpeed;
@@ -37,7 +31,7 @@ public class Duck extends AbstractPet {
     }
 
     public static float rotlerp(float start, float end) {
-        float f = net.minecraft.util.math.MathHelper.wrapDegrees(end - start);
+        float f = net.minecraft.util.MathHelper.wrapDegrees(end - start);
         if (f > 10.0f) f = 10.0f;
         if (f < -10.0f) f = -10.0f;
         return start + f;
@@ -52,16 +46,16 @@ public class Duck extends AbstractPet {
     @Override
     protected void registerData() {
         super.registerData();
-        this.dataManager.register(DUCK_SKIN, 1);
-        this.dataManager.register(IS_SERVER_ENTITY, false);
+        this.dataManager.func_75682_a(DUCK_SKIN, 1);
+        this.dataManager.func_75682_a(IS_SERVER_ENTITY, Byte.valueOf((byte) 0));
     }
 
     public boolean isServerEntity() {
-        return this.dataManager.get(IS_SERVER_ENTITY);
+        return this.dataManager.func_75683_a(IS_SERVER_ENTITY) != 0;
     }
 
     public void setServerEntity(Boolean value) {
-        this.dataManager.set(IS_SERVER_ENTITY, value);
+        this.dataManager.func_75692_b(IS_SERVER_ENTITY, Byte.valueOf((byte) (value.booleanValue() ? 1 : 0)));
     }
 
     @Override
@@ -70,13 +64,13 @@ public class Duck extends AbstractPet {
         this.oFlap = this.flap;
         this.oFlapSpeed = this.flapSpeed;
         this.flapSpeed += (this.onGround ? -1.0F : 4.0F) * 0.3F;
-        this.flapSpeed = net.minecraft.util.math.MathHelper.clamp(this.flapSpeed, 0.0F, 1.0F);
+        this.flapSpeed = net.minecraft.util.MathHelper.clamp(this.flapSpeed, 0.0F, 1.0F);
         if (!this.onGround && this.flapping < 1.0F) {
             this.flapping = 1.0F;
         }
 
         this.flapping *= 0.9F;
-        net.minecraft.util.math.Vec3d movement = new Vec3d(this.motionX, this.motionY, this.motionZ);
+        net.minecraft.util.Vec3 movement = new net.minecraft.util.Vec3(this.motionX, this.motionY, this.motionZ);
         if (!this.onGround && movement.y < (double) 0.0F) {
             this.setVelocity(movement.x * 1.0F, movement.y * 0.6, movement.z * 1.0F);
         }
@@ -86,9 +80,9 @@ public class Duck extends AbstractPet {
         EntityLivingBase owner = this.getOwner();
         if (owner != null) {
 
-            if (owner.isRidingOrBeingRiddenBy(this)) {
+            if (this.field_70154_o == owner) {
                 if (owner.isSneaking() && owner.isJumping) {
-                    this.stopRiding();
+                    this.func_70078_a(null);
                     this.setVelocity(this.motionX, this.motionY - 0.04, this.motionZ);
                     this.isOnHead = false;
                 } else {
@@ -104,7 +98,7 @@ public class Duck extends AbstractPet {
             double distance = this.getDistance(owner);
             float rotation = -this.rotationPitch;
             float rotationToOwner = rotation + (-this.getOwner().rotationPitch);
-            float bodyYawDiff = net.minecraft.util.math.MathHelper.wrapDegrees(this.rotationYawHead - this.renderYawOffset);
+            float bodyYawDiff = net.minecraft.util.MathHelper.wrapDegrees(this.rotationYawHead - this.renderYawOffset);
 
             if (rotationToOwner >= 50) {
                 this.renderYawOffset = this.rotationYawHead - (Math.signum(bodyYawDiff) * 50.0F);
@@ -114,8 +108,8 @@ public class Duck extends AbstractPet {
 
                 this.limbSwingAmount = (0.5F);
 
-                net.minecraft.util.math.Vec3d targetPos = owner.getPositionVector();
-                net.minecraft.util.math.Vec3d dir = targetPos.subtract(this.getPositionVector()).normalize();
+                net.minecraft.util.Vec3 targetPos = owner.getPositionVector();
+                net.minecraft.util.Vec3 dir = targetPos.subtract(this.getPositionVector()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setRotationYawHead(this.getYRot());
@@ -182,21 +176,14 @@ public class Duck extends AbstractPet {
     public void writeAdditional(NBTTagCompound output) {
         super.writeAdditional(output);
         output.setBoolean("isServerEntity", true);
-        output.setInt("floatiant", this.dataManager.get(DUCK_SKIN));
+        output.setInt("floatiant", this.dataManager.func_75679_c(DUCK_SKIN));
     }
 
     @Override
     public void readAdditional(NBTTagCompound input) {
         super.readAdditional(input);
         this.setServerEntity(input.getBoolean("isServerEntity"));
-        this.dataManager.set(DUCK_SKIN, input.getInt("floatiant"));
-    }
-
-    @Override
-    public void notifyDataManagerChange(net.minecraft.network.datasync.DataParameter<?> key) {
-        if (!this.world.isRemote) {
-            super.notifyDataManagerChange(key);
-        }
+        this.dataManager.func_75692_b(DUCK_SKIN, input.getInt("floatiant"));
     }
 
     // @Override - does not exist as override in 1.13
@@ -219,7 +206,7 @@ public class Duck extends AbstractPet {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
+    protected String func_70639_aQ() {
         return PetsSounds.DUCK_AMBIENT;
     }
 }

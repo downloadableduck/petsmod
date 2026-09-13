@@ -29,7 +29,6 @@ import com.jeff.pets.client.rendering.vanilla.mooshroom.ClientMooshroomRenderer;
 import com.jeff.pets.client.rendering.vanilla.pig.ClientPigRenderer;
 import com.jeff.pets.client.rendering.vanilla.rabbit.ClientRabbitRenderer;
 import com.jeff.pets.client.rendering.vanilla.sheep.ClientSheepRenderer;
-import com.jeff.pets.client.rendering.vanilla.shulker.ClientShulkerRenderer;
 import com.jeff.pets.client.rendering.vanilla.silverfish.ClientSilverfishRenderer;
 import com.jeff.pets.client.rendering.vanilla.skeleton.ClientSkeletonRenderer;
 import com.jeff.pets.client.rendering.vanilla.slime.ClientSlimeRenderer;
@@ -216,7 +215,6 @@ public class PetsClientInitializer {
         register(ClientGhast.class, ClientGhastRenderer::new);
         register(ClientGuardian.class, ClientGuardianRenderer::new);
         register(ClientMagmaCube.class, ClientMagmaCubeRenderer::new);
-        register(ClientShulker.class, ClientShulkerRenderer::new);
         register(ClientSilverfish.class, ClientSilverfishRenderer::new);
         register(ClientSkeleton.class, ClientSkeletonRenderer::new);
         register(ClientSlime.class, ClientSlimeRenderer::new);

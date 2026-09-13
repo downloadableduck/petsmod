@@ -97,15 +97,15 @@ public class PenguinModel extends PetModel {
     @Override
     public void setRotationAngles(float f, float g, float h, float i, float j, float p, Entity entity) {
         Penguin state = (Penguin) entity;
-        float flapAngle = (net.minecraft.util.math.MathHelper.sin(state.flap) + 1.0F) * state.flapSpeed;
+        float flapAngle = (net.minecraft.util.MathHelper.sin(state.flap) + 1.0F) * state.flapSpeed;
         this.head.rotateAngleX = state.rotationPitch * ((float) Math.PI / 180F);
         float limbSwingAmount = state.limbSwingAmount;
-        float animationPos = state.limbSwing;
-        this.right_foot.rotateAngleZ = net.minecraft.util.math.MathHelper.cos(animationPos * 0.6662F) * 1.4F * limbSwingAmount;
-        this.left_foot.rotateAngleZ = net.minecraft.util.math.MathHelper.cos(animationPos * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
+        float animationPos = f;
+        this.right_foot.rotateAngleZ = net.minecraft.util.MathHelper.cos(animationPos * 0.6662F) * 1.4F * limbSwingAmount;
+        this.left_foot.rotateAngleZ = net.minecraft.util.MathHelper.cos(animationPos * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
         this.right_wing.rotateAngleY = -flapAngle * 0.75F;
         this.left_wing.rotateAngleY = flapAngle * 0.75F;
-        this.body.rotateAngleZ = net.minecraft.util.math.MathHelper.cos(animationPos * 0.6662F) * 0.1F * limbSwingAmount;
-        this.head.rotateAngleZ = net.minecraft.util.math.MathHelper.cos(animationPos * 0.6662F) * 0.1F * limbSwingAmount;
+        this.body.rotateAngleZ = net.minecraft.util.MathHelper.cos(animationPos * 0.6662F) * 0.1F * limbSwingAmount;
+        this.head.rotateAngleZ = net.minecraft.util.MathHelper.cos(animationPos * 0.6662F) * 0.1F * limbSwingAmount;
     }
 }

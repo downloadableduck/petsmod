@@ -37,8 +37,8 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -143,7 +143,6 @@ public class Central {
     public static ClientGhast ghast;
     public static ClientGuardian guardian;
     public static ClientMagmaCube magmaCube;
-    public static ClientShulker shulker;
     public static ClientSilverfish silverfish;
     public static ClientSkeleton skeleton;
     public static ClientSlime slime;
@@ -226,7 +225,6 @@ public class Central {
         Utils.despawnEntity(ghast);
         Utils.despawnEntity(guardian);
         Utils.despawnEntity(magmaCube);
-        Utils.despawnEntity(shulker);
         Utils.despawnEntity(silverfish);
         Utils.despawnEntity(skeleton);
         Utils.despawnEntity(slime);
@@ -278,7 +276,6 @@ public class Central {
         ghast = new ClientGhast(world);
         guardian = new ClientGuardian(world);
         magmaCube = new ClientMagmaCube(world);
-        shulker = new ClientShulker(world);
         silverfish = new ClientSilverfish(world);
         skeleton = new ClientSkeleton(world);
         slime = new ClientSlime(world);
@@ -351,8 +348,6 @@ public class Central {
                 Utils.summonPet(guardian, CONFIG.guardianName);
             } else if (Objects.equals(CONFIG.activePet, "magma_cube")) {
                 Utils.summonPet(magmaCube, CONFIG.magmaCubeName);
-            } else if (Objects.equals(CONFIG.activePet, "shulker")) {
-                Utils.summonPet(shulker, CONFIG.shulkerName);
             } else if (Objects.equals(CONFIG.activePet, "silverfish")) {
                 Utils.summonPet(silverfish, CONFIG.silverfishName);
             } else if (Objects.equals(CONFIG.activePet, "skeleton")) {
@@ -420,7 +415,6 @@ public class Central {
         Utils.checkName("ghast", ghast, CONFIG.ghastName);
         Utils.checkName("guardian", guardian, CONFIG.guardianName);
         Utils.checkName("magma_cube", magmaCube, CONFIG.magmaCubeName);
-        Utils.checkName("shulker", shulker, CONFIG.shulkerName);
         Utils.checkName("silverfish", silverfish, CONFIG.silverfishName);
         Utils.checkName("skeleton", skeleton, CONFIG.skeletonName);
         Utils.checkName("slime", slime, CONFIG.slimeName);
@@ -581,7 +575,7 @@ public class Central {
             client.getResourcePackRepository().addPack("file/headpack");
             options.save();
             client.reloadResourcePacks();
-            //client.player.sendSystemMessage(new net.minecraft.util.text.TextComponentString("§b[PetsMod] §aSorry for the interruption, the head pet requires a custom resource pack to work correctly and we loaded a pack for you. This will not affect anything except the head texture."));
+            //client.player.sendSystemMessage(new net.minecraft.util.ChatComponentText("Â§b[PetsMod] Â§aSorry for the interruption, the head pet requires a custom resource pack to work correctly and we loaded a pack for you. This will not affect anything except the head texture."));
         }*/
     }
 
@@ -622,7 +616,7 @@ public class Central {
             }
 
             @Override
-            public void func_184881_a(MinecraftServer server, ICommandSender source, String[] args) {
+            public void func_71515_b(ICommandSender sender, String[] args) {
                 Minecraft.getInstance().addScheduledTask(() -> {
                     boolean isValid = true;
                     String skin = String.join(" ", args);
@@ -1165,17 +1159,21 @@ public class Central {
                     }
 
                     if (isValid) {
-                        Minecraft.getInstance().player.sendMessage(new TextComponentString("\u00A7b[PetsMod] \u00A7aYour pet's skin has been updated."));
+                        Minecraft.getInstance().player.sendMessage(new ChatComponentText("\u00A7b[PetsMod] \u00A7aYour pet's skin has been updated."));
                     } else {
-                        Minecraft.getInstance().player.sendMessage(new TextComponentString("\u00A7b[PetsMod] \u00A7cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else."));
+                        Minecraft.getInstance().player.sendMessage(new ChatComponentText("\u00A7b[PetsMod] \u00A7cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else."));
                     }
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
                 });
             }
 
             @Override
-            public List<String> func_184883_a(MinecraftServer server, ICommandSender commandSource, String[] args, BlockPos blockPos) {
+            public List<String> func_180525_a(ICommandSender sender, String[] args, BlockPos pos) {
                 return currentSuggestions;
+            }
+            @Override
+            public int func_82362_a() {
+                return 0;
             }
         });
     }
@@ -1196,11 +1194,15 @@ public class Central {
             }
 
             @Override
-            public void func_184881_a(MinecraftServer server, ICommandSender source, String[] args)  {
+            public void func_71515_b(ICommandSender sender, String[] args)  {
                 Minecraft.getInstance().addScheduledTask(() -> {
                     despawnPet();
                     summonPet();
                 });
+            }
+            @Override
+            public int func_82362_a() {
+                return 0;
             }
         });
     }
@@ -1221,7 +1223,7 @@ public class Central {
             }
 
             @Override
-            public void func_184881_a(MinecraftServer server, ICommandSender source, String[] args) {
+            public void func_71515_b(ICommandSender sender, String[] args) {
                 boolean isValid = true;
                 String species = String.join(" ", args);
 
@@ -1281,8 +1283,6 @@ public class Central {
                     Utils.setActivePet(guardian, "guardian");
                 } else if (Objects.equals(species, "magma_cube") || Objects.equals(species, "magma cube")) {
                     Utils.setActivePet(magmaCube, "magma_cube");
-                } else if (Objects.equals(species, "shulker")) {
-                    Utils.setActivePet(shulker, "shulker");
                 } else if (Objects.equals(species, "silverfish")) {
                     Utils.setActivePet(silverfish, "silverfish");
                 } else if (Objects.equals(species, "skeleton")) {
@@ -1322,8 +1322,13 @@ public class Central {
             }
 
             @Override
-            public List<String> func_184883_a(MinecraftServer server, ICommandSender commandSource, String[] args, BlockPos blockPos) {
+            public List<String> func_180525_a(ICommandSender sender, String[] args, BlockPos pos) {
                 return PETS_LIST;
+            }
+
+            @Override
+            public int func_82362_a() {
+                return 0;
             }
         });
     }
@@ -1344,12 +1349,16 @@ public class Central {
             }
 
             @Override
-            public void func_184881_a(MinecraftServer server, ICommandSender source, String[] args)  {
+            public void func_71515_b(ICommandSender sender, String[] args)  {
                 Minecraft.getInstance().addScheduledTask(() -> {
-                    Minecraft.getInstance().player.sendMessage(new TextComponentString(
+                    Minecraft.getInstance().player.sendMessage(new ChatComponentText(
                             "\u00A7b[PetsMod] \u00A7aPossible commands: \u00A7a/pethelp: \u00A7rdisplays a list of commands \u00A7a/pet <on/off> \u00A7rtoggles whether your pet will appear or not\u00A7a/petspecies <species>: \u00A7rchanges the species of your pet\u00A7a/petskin <skin>: \u00A7rchanges the skin of your selected pet\u00A7a/teleportpet: \u00A7rteleports your pet to you. will not work if you are not on the ground.\u00A7a/petname: \u00A7rchanges the name of your currently selected pet"
                     ));
                 });
+            }
+            @Override
+            public int func_82362_a() {
+                return 0;
             }
         });
     }
@@ -1406,7 +1415,7 @@ public class Central {
             }
 
             @Override
-            public void func_184881_a(MinecraftServer server, ICommandSender source, String[] args)  {
+            public void func_71515_b(ICommandSender sender, String[] args)  {
                 Minecraft.getInstance().addScheduledTask(() -> {
                     String name = String.join(" ", args);
                     if (!summonedEntity.isEmpty()) {
@@ -1615,6 +1624,10 @@ public class Central {
                     }
                 });
             }
+            @Override
+            public int func_82362_a() {
+                return 0;
+            }
         });
     }
 
@@ -1634,23 +1647,28 @@ public class Central {
             }
 
             @Override
-            public void func_184881_a(MinecraftServer server, ICommandSender source, String[] args)  {
+            public void func_71515_b(ICommandSender sender, String[] args)  {
                 String preference = args.length > 0 ? args[0] : "";
                 if (Objects.equals(preference, "off")) {
                     CONFIG.petOn = false;
-                    Minecraft.getInstance().player.sendMessage(new TextComponentString("\u00A7b[PetsMod] \u00A77Pet \u00A7coff."));
+                    Minecraft.getInstance().player.sendMessage(new ChatComponentText("\u00A7b[PetsMod] \u00A77Pet \u00A7coff."));
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
                 } else if (Objects.equals(preference, "on")) {
                     CONFIG.petOn = true;
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
-                    Minecraft.getInstance().player.sendMessage(new TextComponentString("\u00A7b[PetsMod] \u00A77Pet \u00A7aon."));
+                    Minecraft.getInstance().player.sendMessage(new ChatComponentText("\u00A7b[PetsMod] \u00A77Pet \u00A7aon."));
                 } else {
-                    Minecraft.getInstance().player.sendMessage(new TextComponentString("\u00A7b[PetsMod] \u00A7c\u00A7lUnknown value " + preference + "! Possible values: \u00A7r\u00A7aon, \u00A76off"));
+                    Minecraft.getInstance().player.sendMessage(new ChatComponentText("\u00A7b[PetsMod] \u00A7c\u00A7lUnknown value " + preference + "! Possible values: \u00A7r\u00A7aon, \u00A76off"));
                 }
             }
             @Override
-            public List<String> func_184883_a(MinecraftServer server, ICommandSender commandSource, String[] args, BlockPos blockPos) {
+            public List<String> func_180525_a(ICommandSender sender, String[] args, BlockPos pos) {
                 return ON_OFF;
+            }
+
+            @Override
+            public int func_82362_a() {
+                return 0;
             }
         });
     }
@@ -1668,13 +1686,13 @@ public class Central {
 
     public static void checkValidPet(boolean isValid, String species) {
         if (!isValid) {
-            Minecraft.getInstance().player.sendMessage(new TextComponentString("§b[PetsMod] §cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")"));
+            Minecraft.getInstance().player.sendMessage(new ChatComponentText("Â§b[PetsMod] Â§cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")"));
         } else if (isValid && CONFIG.petOn) {
             despawnPet();
-            Minecraft.getInstance().player.sendMessage(new net.minecraft.util.text.TextComponentString("§b[PetsMod] §aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + "."));
+            Minecraft.getInstance().player.sendMessage(new net.minecraft.util.ChatComponentText("Â§b[PetsMod] Â§aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + "."));
             summonPet();
         } else if (isValid && !CONFIG.petOn) {
-            Minecraft.getInstance().player.sendMessage(new net.minecraft.util.text.TextComponentString("§b[PetsMod] §cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet enabled. Run §l/pet on§r§c to change this."));
+            Minecraft.getInstance().player.sendMessage(new net.minecraft.util.ChatComponentText("Â§b[PetsMod] Â§cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet enabled. Run Â§l/pet onÂ§rÂ§c to change this."));
         }
     }
 
@@ -1920,7 +1938,6 @@ public class Central {
                 "rabbit",
                 "racoon",
                 "sheep",
-                "shulker",
                 "silverfish", "skeleton", "slime", "snow golem",
                 "spider", "squid", "stingray",
                 "villager", "witch", "wither",

@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.vanilla.sheep;
 import com.jeff.pets.mob.vanilla.passive.ClientSheep;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderLivingBase;
+import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 
@@ -14,10 +14,10 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientSheepWoolLayer implements LayerRenderer<ClientSheep> {
     private final ModelBase model;
-    private final RenderLivingBase<ClientSheep> renderer;
+    private final RendererLivingEntity<ClientSheep> renderer;
     int woolColor;
 
-    public ClientSheepWoolLayer(RenderLivingBase<ClientSheep> renderLayerParent) {
+    public ClientSheepWoolLayer(RendererLivingEntity<ClientSheep> renderLayerParent) {
         this.renderer = renderLayerParent;
         this.model = new ClientSheepFurModel();
     }

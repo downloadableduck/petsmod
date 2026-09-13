@@ -18,7 +18,7 @@ public class ClientSkeletonRenderer extends PetRenderer<ClientSkeleton, ModelSke
     @Override
     public void applyRotations(ClientSkeleton state, float f, float g, float h) {
         super.applyRotations(state, f, g, h);
-        if (state.isPassenger()) {
+        if (state.field_70154_o != null) {
             net.minecraft.client.renderer.GlStateManager.translatef(0, -0.5f, 0);
         }
     }

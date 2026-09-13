@@ -3,8 +3,6 @@ package com.jeff.pets.mob.vanilla.hostile;
 import com.jeff.pets.mob.GroundPet;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundEvent;
 
 public class ClientSkeleton extends GroundPet implements IRangedAttackMob {
 
@@ -24,8 +22,8 @@ public class ClientSkeleton extends GroundPet implements IRangedAttackMob {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_SKELETON_AMBIENT;
+    protected String func_70639_aQ() {
+        return "mob.skeleton.say";
     }
 
     @Override

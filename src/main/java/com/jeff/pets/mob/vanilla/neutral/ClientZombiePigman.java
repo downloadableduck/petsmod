@@ -1,8 +1,6 @@
 package com.jeff.pets.mob.vanilla.neutral;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundEvent;
 
 public class ClientZombiePigman extends GroundPet {
     public ClientZombiePigman(net.minecraft.world.World level) {
@@ -21,7 +19,7 @@ public class ClientZombiePigman extends GroundPet {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_ZOMBIE_PIGMAN_AMBIENT;
+    protected String func_70639_aQ() {
+        return "mob.zombiepig.zpig";
     }
 }

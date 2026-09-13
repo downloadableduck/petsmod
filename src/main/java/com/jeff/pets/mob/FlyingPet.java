@@ -2,9 +2,8 @@ package com.jeff.pets.mob;
 
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 
 /**
  * Abstract class representing any pet tht can fly (ghasts, vexes, etc). Contains custom movement
@@ -25,9 +24,9 @@ public abstract class FlyingPet extends AbstractPet {
         EntityLivingBase owner = this.getOwner();
         if (owner != null) {
 
-            if (owner.isRidingOrBeingRiddenBy(this)) {
+            if (this.field_70154_o == owner) {
                 if (owner.isSneaking() && owner.isJumping) {
-                    this.stopRiding();
+                    this.func_70078_a(null);
                     this.setVelocity(this.motionX, this.motionY + 0.1, this.motionZ);
                 } else {
                     this.setSitting(true);
@@ -36,16 +35,16 @@ public abstract class FlyingPet extends AbstractPet {
 
             double dx = owner.posX - this.posX;
             double dz = owner.posZ - this.posZ;
-            net.minecraft.util.math.Vec3d ownerPos = owner.getPositionVector().add(0, owner.getEyeHeight() * 0.8, 0);
-            net.minecraft.util.math.Vec3d vecToOwner = ownerPos.subtract(this.getPositionVector());
-            Vec3d dir = vecToOwner.normalize();
+            net.minecraft.util.Vec3 ownerPos = owner.getPositionVector().add(0, owner.getEyeHeight() * 0.8, 0);
+            net.minecraft.util.Vec3 vecToOwner = ownerPos.subtract(this.getPositionVector());
+            Vec3 dir = vecToOwner.normalize();
 
             float targetYaw = (float) (Math.atan2(dz, dx) * (180.0 / Math.PI)) - 90.0F;
 
             double distance = this.getDistance(owner);
             float rotation = -this.rotationPitch;
             float rotationToOwner = rotation + (-this.getOwner().rotationPitch);
-            float bodyYawDiff = net.minecraft.util.math.MathHelper.wrapDegrees(this.rotationYawHead - this.renderYawOffset);
+            float bodyYawDiff = net.minecraft.util.MathHelper.wrapDegrees(this.rotationYawHead - this.renderYawOffset);
 
             if (rotationToOwner >= 50) {
                 this.renderYawOffset = this.rotationYawHead - (Math.signum(bodyYawDiff) * 50.0F);
@@ -107,7 +106,7 @@ public abstract class FlyingPet extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            this.playSound(SoundEvents.ENTITY_SQUID_AMBIENT, 1.0f, 1.0f);
+            this.func_85030_a("mob.squid.ambient", 1.0f, 1.0f);
         }
     }
 }

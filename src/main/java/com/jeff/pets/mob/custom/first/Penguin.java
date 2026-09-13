@@ -2,25 +2,20 @@ package com.jeff.pets.mob.custom.first;
 
 import com.jeff.pets.PetsSounds;
 import com.jeff.pets.mob.AbstractPet;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class Penguin extends AbstractPet {
-    public static final net.minecraft.network.datasync.DataParameter<Boolean> IS_SERVER_ENTITY =
-            net.minecraft.network.datasync.EntityDataManager.createKey(Penguin.class, net.minecraft.network.datasync.DataSerializers.BOOLEAN);
+    private static final int IS_SERVER_ENTITY = 10;
     public float flap;
     public float flapSpeed;
     public float oFlapSpeed;
@@ -55,15 +50,15 @@ public class Penguin extends AbstractPet {
     @Override
     protected void registerData() {
         super.registerData();
-        this.dataManager.register(IS_SERVER_ENTITY, false);
+        this.dataManager.func_75682_a(IS_SERVER_ENTITY, Byte.valueOf((byte) 0));
     }
 
     public boolean isServerEntity() {
-        return this.dataManager.get(IS_SERVER_ENTITY);
+        return this.dataManager.func_75683_a(IS_SERVER_ENTITY) != 0;
     }
 
     public void setServerEntity(Boolean value) {
-        this.dataManager.set(IS_SERVER_ENTITY, value);
+        this.dataManager.func_75692_b(IS_SERVER_ENTITY, Byte.valueOf((byte) (value.booleanValue() ? 1 : 0)));
     }
 
     @Override
@@ -72,13 +67,13 @@ public class Penguin extends AbstractPet {
         this.oFlap = this.flap;
         this.oFlapSpeed = this.flapSpeed;
         this.flapSpeed += (this.onGround ? -1.0F : 4.0F) * 0.3F;
-        this.flapSpeed = net.minecraft.util.math.MathHelper.clamp(this.flapSpeed, 0.0F, 1.0F);
+        this.flapSpeed = net.minecraft.util.MathHelper.clamp(this.flapSpeed, 0.0F, 1.0F);
         if (!this.onGround && this.flapping < 1.0F) {
             this.flapping = 1.0F;
         }
 
         this.flapping *= 0.9F;
-        net.minecraft.util.math.Vec3d movement = new Vec3d(this.motionX, this.motionY, this.motionZ);
+        net.minecraft.util.Vec3 movement = new Vec3(this.motionX, this.motionY, this.motionZ);
         if (!this.onGround && movement.y < (double) 0.0F) {
             this.setVelocity(movement.x * 1.0F, movement.y * 0.6, movement.z * 1.0F);
         }
@@ -87,10 +82,10 @@ public class Penguin extends AbstractPet {
         EntityLivingBase owner = this.getOwner();
         if (owner != null) {
 
-            if (owner.isRidingOrBeingRiddenBy(this)) {
+            if (this.field_70154_o == owner) {
                 this.isFlapping = false;
                 if (owner.isSneaking() && owner.isJumping) {
-                    this.stopRiding();
+                    this.func_70078_a(null);
                     this.setVelocity(this.motionX, this.motionY - 0.04, this.motionZ);
                     this.isOnHead = false;
                 } else {
@@ -106,7 +101,7 @@ public class Penguin extends AbstractPet {
             double distance = this.getDistance(owner);
             float rotation = -this.rotationPitch;
             float rotationToOwner = rotation + (-this.getOwner().rotationPitch);
-            float bodyYawDiff = net.minecraft.util.math.MathHelper.wrapDegrees(this.rotationYawHead - this.renderYawOffset);
+            float bodyYawDiff = net.minecraft.util.MathHelper.wrapDegrees(this.rotationYawHead - this.renderYawOffset);
 
             if (rotationToOwner >= 50) {
                 this.renderYawOffset = this.rotationYawHead - (Math.signum(bodyYawDiff) * 50.0F);
@@ -116,8 +111,8 @@ public class Penguin extends AbstractPet {
 
                 this.limbSwingAmount = (0.5F);
 
-                net.minecraft.util.math.Vec3d targetPos = owner.getPositionVector();
-                net.minecraft.util.math.Vec3d dir = targetPos.subtract(this.getPositionVector()).normalize();
+                net.minecraft.util.Vec3 targetPos = owner.getPositionVector();
+                net.minecraft.util.Vec3 dir = targetPos.subtract(this.getPositionVector()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setRotationYawHead(this.getYRot());
@@ -188,20 +183,20 @@ public class Penguin extends AbstractPet {
         //this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
     }
 
-    protected SoundEvent getAmbientSound() {
+    protected String func_70639_aQ() {
         return PetsSounds.PENGUIN_AMBIENT;
     }
 
-    protected SoundEvent getHurtSound(final DamageSource source) {
+    protected String func_70621_aR() {
         return PetsSounds.PENGUIN_AMBIENT;
     }
 
-    protected SoundEvent getDeathSound() {
+    protected String func_70673_aS() {
         return PetsSounds.PENGUIN_AMBIENT;
     }
 
-    protected void playStepSound(final BlockPos pos, final IBlockState blockState) {
-        this.playSound(SoundEvents.ENTITY_CHICKEN_STEP, 0.15F, 1.0F);
+    protected void playStepSound(final BlockPos pos, final net.minecraft.block.Block blockState) {
+        this.func_85030_a("mob.chicken.step", 0.15F, 1.0F);
     }
 
     public Penguin createChild(final EntityAgeable partner) {
@@ -230,13 +225,6 @@ public class Penguin extends AbstractPet {
         this.tasks.addTask(5, new EntityAILookIdle(this));
         this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
         this.tasks.addTask(8, new EntityAIFollowOwner(this, 1, 2, 10));
-    }
-
-    @Override
-    public void notifyDataManagerChange(net.minecraft.network.datasync.DataParameter<?> key) {
-        if (!this.world.isRemote) {
-            super.notifyDataManagerChange(key);
-        }
     }
 
     @Override

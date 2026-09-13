@@ -2,9 +2,6 @@ package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.init.MobEffects;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundEvent;
 
 @CanFly
 public class ClientSquid extends FlyingPet {
@@ -41,8 +38,8 @@ public class ClientSquid extends FlyingPet {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_SQUID_AMBIENT;
+    protected String func_70639_aQ() {
+        return "mob.squid.ambient";
     }
 
     @Override
@@ -69,7 +66,7 @@ public class ClientSquid extends FlyingPet {
         if (this.isInWater()) {
             if (this.tentacleMovement < (float) Math.PI) {
                 float f = this.tentacleMovement / (float) Math.PI;
-                this.tentacleAngle = net.minecraft.util.math.MathHelper.sin(f * f * (float) Math.PI) * (float) Math.PI * 0.25F;
+                this.tentacleAngle = net.minecraft.util.MathHelper.sin(f * f * (float) Math.PI) * (float) Math.PI * 0.25F;
                 if ((double) f > (double) 0.75F) {
                     this.speed = 1.0F;
                     this.rotateSpeed = 1.0F;
@@ -87,19 +84,15 @@ public class ClientSquid extends FlyingPet {
             }
 
             double d = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
-            this.renderYawOffset += (-((float) net.minecraft.util.math.MathHelper.atan2(this.motionX, this.motionZ)) * (180F / (float) Math.PI) - this.renderYawOffset) * 0.1F;
+            this.renderYawOffset += (-((float) net.minecraft.util.MathHelper.atan2(this.motionX, this.motionZ)) * (180F / (float) Math.PI) - this.renderYawOffset) * 0.1F;
             this.setYRot(this.renderYawOffset);
             this.zBodyRot += (float) Math.PI * this.rotateSpeed * 1.5F;
-            this.xBodyRot += (-((float) net.minecraft.util.math.MathHelper.atan2(d, this.motionY)) * (180F / (float) Math.PI) - this.xBodyRot) * 0.1F;
+            this.xBodyRot += (-((float) net.minecraft.util.MathHelper.atan2(d, this.motionY)) * (180F / (float) Math.PI) - this.xBodyRot) * 0.1F;
         } else {
-            this.tentacleAngle = net.minecraft.util.math.MathHelper.abs(net.minecraft.util.math.MathHelper.sin(this.tentacleMovement)) * (float) Math.PI * 0.25F;
+            this.tentacleAngle = net.minecraft.util.MathHelper.abs(net.minecraft.util.MathHelper.sin(this.tentacleMovement)) * (float) Math.PI * 0.25F;
             if (!this.world.isRemote) {
                 double e = this.motionY;
-                if (this.isPotionActive(MobEffects.LEVITATION)) {
-                    e = 0.05 * (double) (this.getActivePotionEffect(MobEffects.LEVITATION).getAmplifier() + 1);
-                } else {
-                    e -= 1;
-                }
+                e -= 1;
 
                 this.setVelocity(0.0F, e * (double) 0.98F, 0.0F);
             }

@@ -3,8 +3,7 @@ package com.jeff.pets.client.rendering;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.EnumHandSide;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.MathHelper;
 
 public class ModelUtils {
     public static void animateCrossbowHold(ModelRenderer ModelRenderer, ModelRenderer ModelRenderer2, ModelRenderer ModelRenderer3, boolean bl) {
@@ -22,8 +21,8 @@ public class ModelUtils {
         ModelRenderer3.rotateAngleY = bl ? -0.8F : 0.8F;
         ModelRenderer3.rotateAngleX = -0.97079635F;
         ModelRenderer4.rotateAngleX = ModelRenderer3.rotateAngleX;
-        float f = livingEntity.getActiveItemStack().getMaxStackSize();
-        float g = MathHelper.clamp((float) livingEntity.getItemInUseCount(), 0.0F, f);
+        float f = 1.0F;
+        float g = 1.0F;
         float h = g / f;
         ModelRenderer4.rotateAngleY = (float) MathHelper.clampedLerp(h, 0.4D, 0.85D) * (bl ? 1 : -1);
         ModelRenderer4.rotateAngleX = (float) MathHelper.clampedLerp(h, ModelRenderer4.rotateAngleX, -((float) Math.PI / 2));
@@ -36,7 +35,7 @@ public class ModelUtils {
         ModelRenderer2.rotateAngleZ = 0.0F;
         ModelRenderer.rotateAngleY = (float) (Math.PI / 20);
         ModelRenderer2.rotateAngleY = (float) (-Math.PI / 20);
-        if (mob.getPrimaryHand() == EnumHandSide.RIGHT) {
+        if (true) {
             ModelRenderer.rotateAngleX = -1.8849558F + MathHelper.cos(g * 0.09F) * 0.15F;
             ModelRenderer2.rotateAngleX = -0.0F + MathHelper.cos(g * 0.19F) * 0.5F;
             ModelRenderer.rotateAngleX += h * 2.2F - i * 0.4F;

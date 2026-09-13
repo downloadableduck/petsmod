@@ -1,8 +1,6 @@
 package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundEvent;
 
 public class ClientCow extends GroundPet {
 
@@ -22,7 +20,7 @@ public class ClientCow extends GroundPet {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_COW_AMBIENT;
+    protected String func_70639_aQ() {
+        return "mob.cow.say";
     }
 }

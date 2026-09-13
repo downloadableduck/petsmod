@@ -5,7 +5,7 @@ import net.minecraft.client.model.ModelBat;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityBat;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.MathHelper;
 
 public class ClientBatModel extends ModelBase {
     private final ModelRenderer batHead;

@@ -4,8 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 
 public class ClientGuardianModel extends ModelBase {
     private static final float[] field_17131 = new float[]{1.75F, 0.25F, 0.0F, 0.0F, 0.5F, 0.5F, 0.5F, 0.5F, 1.25F, 0.75F, 0.0F, 0.0F};
@@ -78,8 +78,8 @@ public class ClientGuardianModel extends ModelBase {
         Entity entity = Minecraft.getInstance().getRenderViewEntity();
 
         if (entity != null) {
-            Vec3d vec3d = entity.getEyePosition(0.0F);
-            Vec3d vec3d2 = entity2.getEyePosition(0.0F);
+            Vec3 vec3d = entity.getEyePosition(0.0F);
+            Vec3 vec3d2 = entity2.getEyePosition(0.0F);
             double d = vec3d.y - vec3d2.y;
             if (d > (double) 0.0F) {
                 this.field_3381.rotationPointY = 0.0F;
@@ -87,9 +87,9 @@ public class ClientGuardianModel extends ModelBase {
                 this.field_3381.rotationPointY = 1.0F;
             }
 
-            Vec3d vec3d3 = entity2.getLookVec();
-            vec3d3 = new Vec3d(vec3d3.x, 0.0F, vec3d3.z);
-            Vec3d vec3d4 = (new Vec3d(vec3d2.x - vec3d.x, 0.0F, vec3d2.z - vec3d.z)).normalize().rotateYaw(((float) Math.PI / 2F));
+            Vec3 vec3d3 = entity2.getLookVec();
+            vec3d3 = new Vec3(vec3d3.x, 0.0F, vec3d3.z);
+            Vec3 vec3d4 = (new Vec3(vec3d2.x - vec3d.x, 0.0F, vec3d2.z - vec3d.z)).normalize().rotateYaw(((float) Math.PI / 2F));
             double e = vec3d3.dotProduct(vec3d4);
             this.field_3381.rotationPointX = MathHelper.sqrt((float) Math.abs(e)) * 2.0F * (float) Math.signum(e);
         }

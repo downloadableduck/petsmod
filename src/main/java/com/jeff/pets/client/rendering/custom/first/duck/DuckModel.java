@@ -82,17 +82,17 @@ public class DuckModel extends PetModel {
     @Override
     public void setRotationAngles(float f, float g, float h, float i, float j, float p, Entity entity) {
         final Duck state = (Duck) entity;
-        float flapAngle = state.onGround ? 0 : (net.minecraft.util.math.MathHelper.sin(h) + 1.0F) * state.flapSpeed;
+        float flapAngle = state.onGround ? 0 : (net.minecraft.util.MathHelper.sin(h) + 1.0F) * state.flapSpeed;
         this.head.rotateAngleX = j * ((float) Math.PI / 180F);
         this.head.rotateAngleY = i * ((float) Math.PI / 180F);
         float limbSwingAmount = state.limbSwingAmount;
-        float animationPos = state.limbSwing;
-        this.right_leg.rotateAngleX = net.minecraft.util.math.MathHelper.cos(animationPos * 0.6662F) * 1.4F * limbSwingAmount;
-        this.left_leg.rotateAngleX = net.minecraft.util.math.MathHelper.cos(animationPos * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
+        float animationPos = f;
+        this.right_leg.rotateAngleX = net.minecraft.util.MathHelper.cos(animationPos * 0.6662F) * 1.4F * limbSwingAmount;
+        this.left_leg.rotateAngleX = net.minecraft.util.MathHelper.cos(animationPos * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
         this.right_wing.rotateAngleZ = flapAngle;
         this.left_wing.rotateAngleZ = -flapAngle;
         //thing is weird af in 1.16.5 and below, base y is 15, base x is 0, base z is -4
-        if (state.isPassenger()) {
+        if (state.field_70154_o != null) {
             this.root.setRotationPoint(0.4F, 17.5F, -4.0F);
             this.right_leg.showModel = false;
             this.left_leg.showModel = false;

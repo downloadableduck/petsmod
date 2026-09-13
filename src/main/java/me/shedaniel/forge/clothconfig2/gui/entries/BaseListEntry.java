@@ -11,7 +11,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -251,7 +250,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
                     widgets.add(cell);
                 }
                 getScreen().setEdited(true, isRequiresRestart());
-                Minecraft.getInstance().getSoundHandler().play(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+                Minecraft.getInstance().getSoundHandler().play(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
                 return true;
             } else if (isDeleteButtonEnabled() && isInsideDelete(double_1, double_2)) {
                 if (expanded && !cells.isEmpty()) {
@@ -259,12 +258,12 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
                     cells.remove(cell);
                     widgets.remove(cell);
                     getScreen().setEdited(true, isRequiresRestart());
-                    Minecraft.getInstance().getSoundHandler().play(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+                    Minecraft.getInstance().getSoundHandler().play(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
                 }
                 return true;
             } else if (rectangle.contains(double_1, double_2)) {
                 expanded = !expanded;
-                Minecraft.getInstance().getSoundHandler().play(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+                Minecraft.getInstance().getSoundHandler().play(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
                 return true;
             }
             return false;

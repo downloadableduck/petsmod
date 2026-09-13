@@ -1,8 +1,6 @@
 package com.jeff.pets.mob.vanilla.neutral;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundEvent;
 
 public class ClientSpider extends GroundPet {
     public ClientSpider(net.minecraft.world.World level) {
@@ -21,7 +19,7 @@ public class ClientSpider extends GroundPet {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_SPIDER_AMBIENT;
+    protected String func_70639_aQ() {
+        return "mob.spider.say";
     }
 }

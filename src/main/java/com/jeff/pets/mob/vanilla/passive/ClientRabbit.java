@@ -1,8 +1,6 @@
 package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.mob.SlimeLikePet;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundEvent;
 
 public class ClientRabbit extends SlimeLikePet {
 
@@ -22,7 +20,7 @@ public class ClientRabbit extends SlimeLikePet {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_RABBIT_AMBIENT;
+    protected String func_70639_aQ() {
+        return "mob.rabbit.idle";
     }
 }

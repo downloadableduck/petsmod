@@ -21,7 +21,7 @@ package me.shedaniel.autoconfig.event;
 
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.ConfigHolder;
-import net.minecraft.util.EnumActionResult;
+import me.shedaniel.autoconfig.EnumActionResult;
 
 public final class ConfigSerializeEvent {
     private ConfigSerializeEvent() {

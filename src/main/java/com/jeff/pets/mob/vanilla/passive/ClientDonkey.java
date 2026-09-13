@@ -1,8 +1,6 @@
 package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundEvent;
 
 public class ClientDonkey extends GroundPet {
 
@@ -22,7 +20,7 @@ public class ClientDonkey extends GroundPet {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_DONKEY_AMBIENT;
+    protected String func_70639_aQ() {
+        return "mob.horse.donkey.idle";
     }
 }

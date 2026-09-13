@@ -7,7 +7,7 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.Vec3;
 
 import java.util.Objects;
 
@@ -41,7 +41,7 @@ public class Utils {
 
         if (entity == null || world == null || player == null) return;
 
-        Vec3d lookAngle = player.getLook(1.0f);
+        Vec3 lookAngle = player.getLook(1.0f);
 
         double x = player.posX - lookAngle.x * (double) 0.5F;
         double y = player.posY + (double) 0.5F;
@@ -50,7 +50,7 @@ public class Utils {
         entity.setPosition(x, y, z);
         entity.setName(entityName);
         world.addEntityToWorld(entity.getEntityId(), entity);
-        entity.setOwnerId(EntityPlayer.getUUID(player.getGameProfile()));
+        entity.func_152115_b(EntityPlayer.getUUID(player.getGameProfile()).toString());
         Central.summonedEntity.add(entity);
     }
 

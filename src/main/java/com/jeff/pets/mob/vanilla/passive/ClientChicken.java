@@ -1,8 +1,6 @@
 package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundEvent;
 
 public class ClientChicken extends GroundPet {
 
@@ -28,8 +26,8 @@ public class ClientChicken extends GroundPet {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_CHICKEN_AMBIENT;
+    protected String func_70639_aQ() {
+        return "mob.chicken.say";
     }
 
     @Override
@@ -38,7 +36,7 @@ public class ClientChicken extends GroundPet {
         this.oFlap = this.flap;
         this.oFlapSpeed = this.flapSpeed;
         this.flapSpeed += (this.onGround ? -1.0F : 4.0F) * 0.3F;
-        this.flapSpeed = net.minecraft.util.math.MathHelper.clamp(this.flapSpeed, 0.0F, 1.0F);
+        this.flapSpeed = net.minecraft.util.MathHelper.clamp(this.flapSpeed, 0.0F, 1.0F);
         if (!this.onGround && this.flapping < 1.0F) {
             this.flapping = 1.0F;
         }

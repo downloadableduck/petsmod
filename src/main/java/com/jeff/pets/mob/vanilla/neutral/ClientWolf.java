@@ -1,8 +1,6 @@
 package com.jeff.pets.mob.vanilla.neutral;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundEvent;
 
 public class ClientWolf extends GroundPet {
 
@@ -22,7 +20,7 @@ public class ClientWolf extends GroundPet {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_WOLF_AMBIENT;
+    protected String func_70639_aQ() {
+        return "mob.wolf.growl";
     }
 }

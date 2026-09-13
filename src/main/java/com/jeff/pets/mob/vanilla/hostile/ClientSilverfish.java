@@ -1,8 +1,6 @@
 package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundEvent;
 
 public class ClientSilverfish extends GroundPet {
     public ClientSilverfish(net.minecraft.world.World level) {
@@ -21,7 +19,7 @@ public class ClientSilverfish extends GroundPet {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_SILVERFISH_AMBIENT;
+    protected String func_70639_aQ() {
+        return "mob.silverfish.say";
     }
 }
