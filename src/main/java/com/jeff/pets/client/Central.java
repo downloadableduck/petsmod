@@ -759,7 +759,7 @@ public class Central {
      *
      * @see ChatAccessor
      */
-    private static void updateSuggestions(Minecraft client) {
+    public static void updateSuggestions(Minecraft client) {
         List<String> skinSuggestions = switch (CONFIG.activePet) {
             case "duck" -> DUCK_SKINS;
             case "racoon" -> RACOON_SKINS;
