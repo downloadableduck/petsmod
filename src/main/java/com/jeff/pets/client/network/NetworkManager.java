@@ -3,6 +3,11 @@ package com.jeff.pets.client.network;
 import com.google.gson.Gson;
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.client.network.payload.*;
+import com.jeff.pets.client.network.payload.ChangePetNamePayload;
+import com.jeff.pets.client.network.payload.ChangePetSkinPayload;
+import com.jeff.pets.client.network.payload.GeneralPetsPayload;
+import com.jeff.pets.client.network.payload.TeleportPetPayload;
+import com.jeff.pets.client.network.payload.TogglePetPayload;
 import com.jeff.pets.mob.AbstractPet;
 import io.ably.lib.realtime.AblyRealtime;
 import io.ably.lib.realtime.Channel;
@@ -11,6 +16,7 @@ import io.ably.lib.types.ClientOptions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 
+import java.beans.Beans;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
@@ -23,11 +29,12 @@ public class NetworkManager {
 
     private static final NetworkManager INSTANCE = new NetworkManager();
     public static Map<UUID, AbstractPet> map = new ConcurrentHashMap<>();
-    public static List<UUID> allPlayers = new ArrayList<>();
     private final Gson GSON = new Gson();
     private AblyRealtime ably;
     private Channel channel;
     private ClientOptions options;
+    private static long delay = 200;
+    private static long lastMessage = 0;
 
     public static NetworkManager get() {
         return INSTANCE;
@@ -40,7 +47,11 @@ public class NetworkManager {
             String channelName = "petsmod:server:" + this.getIp(ip);
             this.log(channelName);
             channel = ably.channels.get(channelName);
-
+            try {
+                this.options.clientId = Minecraft.getInstance().player.getName().getString();
+            } catch (NullPointerException e) {
+                this.options.clientId = "Unknown";
+            }
             channel.subscribe("requestPetState", (message) -> {
                 try {
                     this.log("Received a request for current pet state");
@@ -55,7 +66,7 @@ public class NetworkManager {
             channel.subscribe("pets_general", (message) -> {
                 try {
                     String json = (String) message.data;
-                    GeneralPetsPayload payload = GSON.fromJson(json, GeneralPetsPayload.class);
+                    GeneralPetsPayload payload = GSON.fromJson(json, com.jeff.pets.client.network.payload.GeneralPetsPayload.class);
                     if (this.isMe(payload.uuid)) return;
                     this.log("Received packet: {}", message.data);
                     Minecraft.getInstance().execute(() -> {
@@ -202,6 +213,7 @@ public class NetworkManager {
     public void broadcastGeneral(String playerUuid,
                                  boolean petOn, String petSpecies, String petName,
                                  String petSkin, boolean isBaby) {
+        if (shouldReturn()) return;
         if (channel != null) {
             GeneralPetsPayload payload = new GeneralPetsPayload(playerUuid, petOn, petSpecies, petName, petSkin, isBaby);
             String jsonPayload = GSON.toJson(payload);
@@ -216,6 +228,7 @@ public class NetworkManager {
     }
 
     public void broadcastChangePetSkin(String uuid, String petSkin) {
+        if (shouldReturn()) return;
         if (channel != null) {
             ChangePetSkinPayload payload = new ChangePetSkinPayload(uuid, petSkin);
             String jsonPayload = GSON.toJson(payload);
@@ -230,6 +243,7 @@ public class NetworkManager {
     }
 
     public void broadcastChangePetName(String uuid, String petName) {
+        if (shouldReturn()) return;
         if (channel != null) {
             ChangePetNamePayload payload = new ChangePetNamePayload(uuid, petName);
             String jsonPayload = GSON.toJson(payload);
@@ -244,6 +258,7 @@ public class NetworkManager {
     }
 
     public void broadcastTeleportPet(String uuid, double x, double y, double z) {
+        if (shouldReturn()) return;
         if (channel != null) {
             TeleportPetPayload payload = new TeleportPetPayload(uuid, x, y, z);
             String jsonPayload = GSON.toJson(payload);
@@ -258,6 +273,7 @@ public class NetworkManager {
     }
 
     public void broadcastTogglePet(String uuid, String petName, boolean petOn) {
+        if (shouldReturn()) return;
         if (channel != null) {
             TogglePetPayload payload = new TogglePetPayload(uuid, petOn, petName);
             String jsonPayload = GSON.toJson(payload);
@@ -270,10 +286,9 @@ public class NetworkManager {
             }
         }
     }
-    
+
     public void put(UUID uuid, AbstractPet pet) {
         map.put(uuid, pet);
-        allPlayers.add(uuid);
     }
 
     public NetworkManager() {
@@ -300,6 +315,7 @@ public class NetworkManager {
     }
 
     public void requestPetState() {
+        if (shouldReturn()) return;
         if (channel != null) {
             try {
                 channel.publish("requestPetState", "string");
@@ -311,6 +327,7 @@ public class NetworkManager {
     }
 
     public void broadcastToggleBaby(String uuid, boolean isBaby) {
+        if (shouldReturn()) return;
         if (channel != null) {
             try {
                 channel.publish("toggle_baby", new ToggleBabyPayload(uuid, isBaby));
@@ -321,6 +338,7 @@ public class NetworkManager {
     }
 
     public void broadcastHeadPayload(String uuid, boolean onHead) {
+        if (shouldReturn()) return;
         if (channel != null) {
             try {
                 channel.publish("put_on_head", new PutPetOnHeadPayload(uuid, onHead));
@@ -331,6 +349,7 @@ public class NetworkManager {
     }
 
     public void sayByeBye() {
+        if (shouldReturn()) return;
         if (channel != null) {
             try {
                 channel.publish("bye", Minecraft.getInstance().player.getStringUUID());
@@ -351,7 +370,7 @@ public class NetworkManager {
     public boolean isMe(String uuid) {
         return this.isMe(UUID.fromString(uuid));
     }
-    
+
     public void log(String string, Object ... optionals) {
         if (false) {
             String message2 = string;
@@ -364,5 +383,20 @@ public class NetworkManager {
 
     public void log(Throwable e) {
         this.log("", e);
+    }
+
+    protected boolean shouldReturn() {
+        long time = System.currentTimeMillis();
+        boolean shouldReturn = false;
+        if (time - lastMessage < delay) {
+            shouldReturn = true;
+        }
+        if (channel == null) {
+            lastMessage = time;
+            shouldReturn = true;
+            return shouldReturn;
+        }
+        lastMessage = time;
+        return shouldReturn;
     }
 }
