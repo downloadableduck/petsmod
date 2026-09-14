@@ -162,4 +162,7 @@ public class PetsConfig implements ConfigData {
     public String headName;
 
     public boolean isBaby;
+
+    public boolean renderPetHitbox = true;
+    public boolean alwaysRenderNametag = false;
 }

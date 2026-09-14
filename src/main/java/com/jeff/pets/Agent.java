@@ -3,6 +3,7 @@ package com.jeff.pets;
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.mixin.client.*;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.debug.EntityHitboxDebugRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.FilePackResources;
 import net.minecraft.server.packs.PackLocationInfo;
@@ -74,6 +75,8 @@ public class Agent {
                     EntityRenderStateClassVisitor visitor = new EntityRenderStateClassVisitor(Opcodes.ASM9, writer);
                     reader.accept(visitor, 0);
                     return writer.toByteArray();
+                } if ("net/minecraft/client/renderer/debug/EntityHitboxDebugRenderer".equals(className)) {
+                    return NoHitboxMixin.transform(classfileBuffer);
                 }
                 return ClassFileTransformer.super.transform(loader, className, classBeingRedefined, protectionDomain, classfileBuffer);
             }
