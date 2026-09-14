@@ -41,6 +41,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.asm.transformers.AccessTransformer;
 import net.minecraftforge.fml.common.event.FMLConstructionEvent;
@@ -181,6 +182,7 @@ public class Central {
         createPetSpeciesCommand();
         createPetTeleportCommand();
         createToggleCommand();
+        createPetHelpCommand();
     }
 
     /**
@@ -1159,9 +1161,9 @@ public class Central {
                     }
 
                     if (isValid) {
-                        Minecraft.getInstance().player.sendMessage(new ChatComponentText("\u00A7b[PetsMod] \u00A7aYour pet's skin has been updated."));
+                        Minecraft.getInstance().player.sendMessage(new ChatComponentText("§b[PetsMod] §aYour pet's skin has been updated."));
                     } else {
-                        Minecraft.getInstance().player.sendMessage(new ChatComponentText("\u00A7b[PetsMod] \u00A7cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else."));
+                        Minecraft.getInstance().player.sendMessage(new ChatComponentText("§b[PetsMod] §cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else."));
                     }
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
                 });
@@ -1225,11 +1227,11 @@ public class Central {
             @Override
             public void func_71515_b(ICommandSender sender, String[] args) {
                 boolean isValid = true;
-                String species = String.join(" ", args);
+                String species = String.join(" ", args).toLowerCase();
 
                 if (Objects.equals(species, "duck")) {
                     Utils.setActivePet(duck, "duck");
-                } else if (Objects.equals(species, "racoon")) {
+                } else if (Objects.equals(species, "racoon") || Objects.equals(species, "raccoon")) {
                     Utils.setActivePet(racoon, "racoon");
                 } else if (Objects.equals(species, "penguin")) {
                     Utils.setActivePet(penguin, "penguin");
@@ -1336,7 +1338,7 @@ public class Central {
     /**
      * Creates a help command to let the user easily view the commands at their disposal.
      */
-    public void createPetHelpCommand() {
+    public static void createPetHelpCommand() {
         ClientCommandHandler.instance.func_71560_a(new CommandBase() {
             @Override
             public String func_71517_b() {
@@ -1352,7 +1354,13 @@ public class Central {
             public void func_71515_b(ICommandSender sender, String[] args)  {
                 Minecraft.getInstance().addScheduledTask(() -> {
                     Minecraft.getInstance().player.sendMessage(new ChatComponentText(
-                            "\u00A7b[PetsMod] \u00A7aPossible commands: \u00A7a/pethelp: \u00A7rdisplays a list of commands \u00A7a/pet <on/off> \u00A7rtoggles whether your pet will appear or not\u00A7a/petspecies <species>: \u00A7rchanges the species of your pet\u00A7a/petskin <skin>: \u00A7rchanges the skin of your selected pet\u00A7a/teleportpet: \u00A7rteleports your pet to you. will not work if you are not on the ground.\u00A7a/petname: \u00A7rchanges the name of your currently selected pet"
+                            "§b[PetsMod] §aPossible commands: " +
+                                    "\n§a/pethelp: §rdisplays a list of commands " +
+                                    "\n§a/pet <on/off> §rtoggles whether your pet will appear or not" +
+                                    "\n§a/petspecies <species>: §rchanges the species of your pet" +
+                                    "\n§a/petskin <skin>: §rchanges the skin of your selected pet" +
+                                    "\n§a/teleportpet: §rteleports your pet to you. will not work if you are not on the ground." +
+                                    "\n§a/petname: §rchanges the name of your currently selected pet"
                     ));
                 });
             }
@@ -1651,14 +1659,14 @@ public class Central {
                 String preference = args.length > 0 ? args[0] : "";
                 if (Objects.equals(preference, "off")) {
                     CONFIG.petOn = false;
-                    Minecraft.getInstance().player.sendMessage(new ChatComponentText("\u00A7b[PetsMod] \u00A77Pet \u00A7coff."));
+                    Minecraft.getInstance().player.sendMessage(new ChatComponentText("§b[PetsMod] §7Pet §coff."));
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
                 } else if (Objects.equals(preference, "on")) {
                     CONFIG.petOn = true;
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
-                    Minecraft.getInstance().player.sendMessage(new ChatComponentText("\u00A7b[PetsMod] \u00A77Pet \u00A7aon."));
+                    Minecraft.getInstance().player.sendMessage(new ChatComponentText("§b[PetsMod] §7Pet §aon."));
                 } else {
-                    Minecraft.getInstance().player.sendMessage(new ChatComponentText("\u00A7b[PetsMod] \u00A7c\u00A7lUnknown value " + preference + "! Possible values: \u00A7r\u00A7aon, \u00A76off"));
+                    Minecraft.getInstance().player.sendMessage(new ChatComponentText("§b[PetsMod] §c§lUnknown value " + preference + "! Possible values: §r§aon, §6off"));
                 }
             }
             @Override
@@ -1677,11 +1685,13 @@ public class Central {
      * Clears the summon entities when the player joins a world so they are re-summoned
      */
     @SubscribeEvent
-    void createJoinHandler(PlayerEvent.PlayerLoggedInEvent event) {
-        Minecraft client = Minecraft.getInstance();
-        List var10001 = summonedEntity;
-        Objects.requireNonNull(var10001);
-        client.addScheduledTask(var10001::clear);
+    void createJoinHandler(WorldEvent.Load event) {
+        if (event.world.isRemote) {
+            Minecraft client = Minecraft.getInstance();
+            List var10001 = summonedEntity;
+            Objects.requireNonNull(var10001);
+            client.addScheduledTask(var10001::clear);
+        }
     }
 
     public static void checkValidPet(boolean isValid, String species) {

@@ -96,8 +96,8 @@ public class RacoonModel extends PetModel {
         this.left_front_leg.showModel = true;
         //this.body.setRotationPoint(0.0F, 16.0F, -6.0F);
         //this.body.rotateAngleZ = 0.0F;
-        this.right_hind_leg.setRotationPoint(-5.0F, 17.5F, 7.0F);
-        this.left_hind_leg.setRotationPoint(-1.0F, 17.5F, 7.0F);
+        //this.right_hind_leg.setRotationPoint(-5.0F, 17.5F, 7.0F);
+        //this.left_hind_leg.setRotationPoint(-1.0F, 17.5F, 7.0F);
         this.tail.rotateAngleX = 2f;
 
         if (fox.field_70154_o != null) {
