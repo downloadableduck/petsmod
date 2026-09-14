@@ -6,6 +6,7 @@ import com.jeff.pets.client.enums.*;
 import com.jeff.pets.client.network.NetworkManager;
 import com.jeff.pets.mob.AbstractPet;
 import com.mojang.blaze3d.platform.Window;
+import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -13,6 +14,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
+
+import java.util.function.Supplier;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
@@ -100,14 +103,20 @@ public class PetsConfigScreen extends Screen {
         this.addRenderableWidget(new ExitButton(this, 10, 10, 80, 20));
         this.addRenderableWidget(new SwitchSkinsButton(this, width - (fontWidth / 2) - 10 - 80, height - 3, 80, 20));
         this.addRenderableWidget(new ChangePetButton(this, width + (fontWidth / 2) + 10, height - 3, 80, 20));
+        this.addRenderableWidget(new ToggleButton(this.width - 42, this.height / 2 - 80, Component.literal("Show hitboxes?"), (_) -> {
+            CONFIG.renderPetHitbox = !CONFIG.renderPetHitbox;
+        }, () -> CONFIG.renderPetHitbox, this, 34));
         this.addRenderableWidget(new ToggleButton(this.width - 42, this.height / 2 - 40, Component.literal("Pet On?"), (_) -> {
             CONFIG.petOn = !CONFIG.petOn;
             NetworkManager.get().broadcastTogglePet(Minecraft.getInstance().player.getStringUUID(), Utils.getActivePetName(), CONFIG.petOn);
-        }, CONFIG.petOn, this));
-        this.addRenderableWidget(new ToggleButton(this.width - 42, this.height / 2 + 40, Component.literal("Baby?"), (_) -> {
+        }, () -> CONFIG.petOn, this));
+        this.addRenderableWidget(new ToggleButton(this.width - 42, this.height / 2 + 40, Component.literal("Always show nametag?"), (_) -> {
+            CONFIG.alwaysRenderNametag = !CONFIG.alwaysRenderNametag;
+        }, () -> CONFIG.alwaysRenderNametag, this, 69));
+        this.addRenderableWidget(new ToggleButton(this.width - 42, this.height / 2 + 80, Component.literal("Baby?"), (_) -> {
             CONFIG.isBaby = !CONFIG.isBaby;
             NetworkManager.get().broadcastToggleBaby(Minecraft.getInstance().player.getStringUUID(), CONFIG.isBaby);
-        }, CONFIG.isBaby, this));
+        }, () -> CONFIG.isBaby, this));
     }
 
     @Override
@@ -116,6 +125,7 @@ public class PetsConfigScreen extends Screen {
             this.closing = true;
             return;
         }
+        AutoConfig.getConfigHolder(PetsConfig.class).save();
         super.onClose();
     }
 
