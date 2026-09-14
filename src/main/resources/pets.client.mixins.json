@@ -3,7 +3,8 @@
   "package": "com.jeff.pets.client.mixin.client",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "ChatAccessor"
+    "ChatAccessor",
+    "NoHitboxMixin"
   ],
   "injectors": {
     "defaultRequire": 1

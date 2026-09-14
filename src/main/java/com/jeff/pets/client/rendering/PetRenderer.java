@@ -124,4 +124,12 @@ public abstract class PetRenderer<D extends AbstractPet, U extends LivingEntityR
     public String getPetSkin(String traitorSkin) {
         return traitorSkin;
     }
+
+    @Override
+    public boolean shouldShowName(D entity, double distanceToCamera) {
+        if (CONFIG.alwaysRenderNametag && !(Minecraft.getInstance().screen instanceof PetsConfigScreen)) {
+            return true;
+        }
+        return super.shouldShowName(entity, distanceToCamera);
+    }
 }

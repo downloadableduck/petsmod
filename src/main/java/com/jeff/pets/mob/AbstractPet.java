@@ -203,12 +203,16 @@ public abstract class AbstractPet extends TamableAnimal {
         float distance = this.distanceTo(this.getOwner());
         float yVelo = (float) this.getDeltaMovement().y;
 
-        if (distance > 5) {
-            this.reCalcPos();
+        float absDistance = Math.abs(distance);
+
+        if (absDistance > 5) {
             this.isReturningToOwner = true;
-        } else if (distance < 2) {
             this.reCalcPos();
+            this.waitingTime = 15;
+        } else if (distance < 2) {
             this.isReturningToOwner = false;
+            this.reCalcPos();
+            //this.waitingTime = 15;
         }
 
         if (!this.isReturningToOwner) {
