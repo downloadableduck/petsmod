@@ -165,4 +165,7 @@ public class PetsConfig implements ConfigData {
 
     public String sulfurCubeName;
     public String sulfurCubeSkin;
+
+    public boolean renderPetHitbox = true;
+    public boolean alwaysRenderNametag = false;
 }
