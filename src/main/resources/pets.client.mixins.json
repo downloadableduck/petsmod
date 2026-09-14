@@ -4,7 +4,8 @@
   "compatibilityLevel": "JAVA_21",
   "client": [
     "ChatAccessor",
-    "EntityRenderStateMixin"
+    "EntityRenderStateMixin",
+    "NoHitboxMixin"
   ],
   "injectors": {
     "defaultRequire": 1
