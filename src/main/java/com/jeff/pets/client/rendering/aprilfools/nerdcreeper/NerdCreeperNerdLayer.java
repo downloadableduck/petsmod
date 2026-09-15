@@ -27,7 +27,7 @@ public class NerdCreeperNerdLayer extends RenderLayer<@NotNull CreeperRenderStat
         int overlayCoords = LivingEntityRenderer.getOverlayCoords(entityRenderState, 0.0f);
         poseStack.pushPose();
         poseStack.scale(1.1f, 1.0f, 1.1f);
-        submitNodeCollector.order(1).submitModel(this.nerdCreeperLayer, entityRenderState, poseStack, RenderTypes.entityTranslucent(Identifier.withDefaultNamespace("textures/entity/creeper/nerd_creeper_overlay.png")), i, overlayCoords, -1, null, entityRenderState.outlineColor, null);
+        submitNodeCollector.order(1).submitModel(this.nerdCreeperLayer, entityRenderState, poseStack, RenderTypes.entityTranslucent(Identifier.withDefaultNamespace("textures/entity/creeper/nerd_creeper_overlay.png")), i, overlayCoords, -1, null, entityRenderState.outlineColor);
         poseStack.popPose();
     }
 }

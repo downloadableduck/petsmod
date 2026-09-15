@@ -97,7 +97,7 @@ public abstract class PetRenderer<D extends AbstractPet, U extends LivingEntityR
             int overlayCoords = getOverlayCoords(state, this.getWhiteOverlayProgress(state));
             int baseColor = forceTransparent ? 654311423 : -1;
             int tintedColor = ARGB.multiply(baseColor, this.getModelTint(state));
-            node.submitModel(this.model, state, poseStack, renderType, state.lightCoords, overlayCoords, this.getColor(), null, state.outlineColor, null);
+            node.submitModel(this.model, state, poseStack, renderType, state.lightCoords, overlayCoords, this.getColor(), null, state.outlineColor);
         }
 
         if (this.shouldRenderLayers(state) && !this.layers.isEmpty()) {

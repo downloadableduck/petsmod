@@ -16,8 +16,6 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 
-import java.util.function.Supplier;
-
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class PetsConfigScreen extends Screen {
@@ -184,5 +182,13 @@ public class PetsConfigScreen extends Screen {
         this.entity.tick();
         this.entity.walkAnimation.setSpeed(0.3f);
         super.tick();
+    }
+
+    @Override
+    public boolean mouseScrolled(double x, double y, double scrollX, double scrollY) {
+        boolean bl = super.mouseScrolled(x, y, scrollX, scrollY);
+        this.getPetsMenu().onScroll(scrollY < 0);
+        this.getDropDownMenu().onScroll(scrollY < 0);
+        return bl;
     }
 }
