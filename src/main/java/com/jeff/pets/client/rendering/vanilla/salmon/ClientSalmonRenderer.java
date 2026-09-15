@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.entity.state.SalmonRenderState;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Matrix4f;
 
 public class ClientSalmonRenderer extends PetRenderer<@NotNull ClientSalmon, @NotNull LivingEntityRenderState, @NotNull ClientSalmonModel> {
 
@@ -36,6 +37,6 @@ public class ClientSalmonRenderer extends PetRenderer<@NotNull ClientSalmon, @No
         float i = 1.0F;
 
         float j = h * 4.3F * Mth.sin(i * 0.6F * salmonRenderState.ageInTicks);
-        poseStack.mulPose(Axis.YP.rotationDegrees(j));
+        poseStack.mulPose(Axis.YP.rotationDegrees(j).get(new Matrix4f()));
     }
 }

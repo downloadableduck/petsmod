@@ -2,24 +2,34 @@ package com.jeff.pets.client.buttons;
 
 
 import com.jeff.pets.client.Central;
-import com.jeff.pets.client.PetsConfigScreen;
 import com.jeff.pets.client.Utils;
-import com.jeff.pets.client.enums.BlankEnum;
+import com.jeff.pets.client.PetsConfigScreen;
 import com.jeff.pets.client.enums.EnumImpl;
-
+import com.jeff.pets.client.enums.BlankEnum;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.player.ClientInput;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
-import org.lwjgl.glfw.GLFW;
+import org.lwjgl.sdl.SDL_Event;
+import org.lwjgl.sdl.SDL_MouseWheelEvent;
 
+import javax.swing.*;
+import javax.swing.event.MouseInputAdapter;
+import javax.swing.event.MouseInputListener;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.jeff.pets.client.Central.CONFIG;
+import static org.lwjgl.sdl.SDLMouse.*;
 
 
 public class DropdownMenu {
@@ -50,10 +60,6 @@ public class DropdownMenu {
                 max = min + 8;
             }
         }
-
-        GLFW.glfwSetScrollCallback(Minecraft.getInstance().getWindow().handle(), (handle, xo, yo) -> {
-            this.onScroll(yo < 0);
-        });
     }
 
     public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, int x, int y) {
@@ -95,7 +101,8 @@ public class DropdownMenu {
             graphics.pose().popMatrix();
 
             long window = Minecraft.getInstance().getWindow().handle();
-            boolean pressed = GLFW.glfwGetMouseButton(window, GLFW.GLFW_MOUSE_BUTTON_1) == GLFW.GLFW_PRESS;
+            int mouseState = SDL_GetMouseState(null, null);
+            boolean pressed = (mouseState & SDL_BUTTON_LMASK) != 0;
 
             if (hovered && pressed && !value.equals(BlankEnum.no_skins_are_available) && !(value instanceof com.jeff.pets.client.enums.PetList)) {
                 Utils.setActivePetSkin(String.valueOf(value));

@@ -127,7 +127,7 @@ public class DumboOctopus extends FlyingPet {
         this.moveControl = new SmoothSwimmingMoveControl(this, 10, 10, 1, 1, true);
         this.getNavigation().setCanFloat(true);
         this.goalSelector.addGoal(1, new RandomSwimmingGoal(this, 1, 1));
-        this.goalSelector.addGoal(2, new TryFindWaterGoal(this));
+        //this.goalSelector.addGoal(2, new TryFindWaterGoal(this));
 
         this.goalSelector.addGoal(0, new FollowOwnerGoal(this, 1, 2, 10));
         this.goalSelector.addGoal(9, new BreedGoal(this, 1));

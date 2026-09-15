@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.141'
+    id 'net.neoforged.moddev' version '2.0.147'
     id 'idea'
 }
 
@@ -118,7 +118,7 @@ configurations {
 }
 
 dependencies {
-    implementation "me.shedaniel.cloth:cloth-config-neoforge:26.2.155"
+    implementation "me.shedaniel.cloth:cloth-config-neoforge:26.3.158"
     // Fabric API. This is technically optional, but you probably want it anyway.
     //implementation "maven.modrinth:mod-menu-for-neoforge:17.0.1"
     //implementation "maven.modrinth:tpan:3.0.0+26.1"

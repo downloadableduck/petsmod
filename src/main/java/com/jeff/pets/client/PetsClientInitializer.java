@@ -124,6 +124,7 @@ import com.jeff.pets.client.rendering.vanilla.wolf.ClientWolfRenderer;
 import com.jeff.pets.client.rendering.vanilla.zombie.ClientZombieRenderer;
 import com.jeff.pets.client.rendering.vanilla.zombievillager.ClientZombieVillagerModel;
 import com.jeff.pets.client.rendering.vanilla.zombievillager.ClientZombieVillagerRenderer;
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.model.ambient.BatModel;
 import net.minecraft.client.model.animal.allay.AllayModel;
@@ -178,7 +179,6 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -425,7 +425,7 @@ public class PetsClientInitializer {
      */
 
      void createKeyBinding(RegisterKeyMappingsEvent event) {
-        openConfigScreen = new KeyMapping("Open Pets Menu", GLFW.GLFW_KEY_P, new KeyMapping.Category(Identifier.fromNamespaceAndPath(MOD_ID, "petsmod.keymapping")));
+        openConfigScreen = new KeyMapping("Open Pets Menu", InputConstants.KEY_P, new KeyMapping.Category(Identifier.fromNamespaceAndPath(MOD_ID, "petsmod.keymapping")));
 
         event.register(openConfigScreen);
     }

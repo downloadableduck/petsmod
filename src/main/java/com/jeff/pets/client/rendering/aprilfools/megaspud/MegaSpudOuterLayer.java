@@ -33,6 +33,6 @@ public class MegaSpudOuterLayer extends RenderLayer<@NotNull SlimeRenderState, @
     @Override
     public void submit(@NotNull PoseStack poseStack, @NotNull SubmitNodeCollector submitNodeCollector, int i, SlimeRenderState entityRenderState, float f, float g) {
         int overlayCoords = LivingEntityRenderer.getOverlayCoords(entityRenderState, 0.0f);
-        submitNodeCollector.order(1).submitModel(this.model, entityRenderState, poseStack, RenderTypes.entityTranslucent(Identifier.withDefaultNamespace("textures/entity/slime/mega_spud.png")), i, overlayCoords, -1, null, entityRenderState.outlineColor, null);
+        submitNodeCollector.order(1).submitModel(this.model, entityRenderState, poseStack, RenderTypes.entityTranslucent(Identifier.withDefaultNamespace("textures/entity/slime/mega_spud.png")), i, overlayCoords, -1, null, entityRenderState.outlineColor);
     }
 }
