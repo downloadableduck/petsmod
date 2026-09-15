@@ -123,14 +123,14 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
         };
         public static final Function<String, Item> ITEM_FUNCTION = str -> {
             try {
-                return Item.REGISTRY.get(new ResourceLocation(str));
+                return (Item) Item.REGISTRY.get(new ResourceLocation(str));
             } catch (Exception ignored) {
             }
             return null;
         };
         public static final Function<String, Block> BLOCK_FUNCTION = str -> {
             try {
-                return Block.REGISTRY.get(new ResourceLocation(str));
+                return (Block) Block.REGISTRY.get(new ResourceLocation(str));
             } catch (Exception ignored) {
             }
             return null;
@@ -146,7 +146,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
         }
 
         public static DropdownBoxEntry.SelectionTopCellElement<ResourceLocation> ofItemIdentifier(Item item) {
-            return new DropdownBoxEntry.DefaultSelectionTopCellElement<ResourceLocation>(Item.REGISTRY.getKey(item), ITEM_IDENTIFIER_FUNCTION, ResourceLocation::toString) {
+            return new DropdownBoxEntry.DefaultSelectionTopCellElement<ResourceLocation>((ResourceLocation) Item.REGISTRY.getKey(item), ITEM_IDENTIFIER_FUNCTION, ResourceLocation::toString) {
                 @Override
                 public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
                     textFieldWidget.x = x + 4;
@@ -156,14 +156,14 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                     textFieldWidget.setTextColor(getPreferredTextColor());
                     textFieldWidget.func_146194_f();
                     RenderItem itemRenderer = Minecraft.getInstance().getItemRenderer();
-                    ItemStack stack = hasConfigError() ? BARRIER : new ItemStack(Item.REGISTRY.get(getValue()));
+                    ItemStack stack = hasConfigError() ? BARRIER : new ItemStack((Item) Item.REGISTRY.get(getValue()));
                     itemRenderer.renderItemIntoGUI(stack, x + width - 18, y + 2);
                 }
             };
         }
 
         public static DropdownBoxEntry.SelectionTopCellElement<ResourceLocation> ofBlockIdentifier(Block block) {
-            return new DropdownBoxEntry.DefaultSelectionTopCellElement<ResourceLocation>(Block.REGISTRY.getKey(block), BLOCK_IDENTIFIER_FUNCTION, ResourceLocation::toString) {
+            return new DropdownBoxEntry.DefaultSelectionTopCellElement<ResourceLocation>((ResourceLocation) Block.REGISTRY.getKey(block), BLOCK_IDENTIFIER_FUNCTION, ResourceLocation::toString) {
                 @Override
                 public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
                     textFieldWidget.x = x + 4;
@@ -173,7 +173,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                     textFieldWidget.setTextColor(getPreferredTextColor());
                     textFieldWidget.func_146194_f();
                     RenderItem itemRenderer = Minecraft.getInstance().getItemRenderer();
-                    ItemStack stack = hasConfigError() ? BARRIER : new ItemStack(Block.REGISTRY.get(getValue()));
+                    ItemStack stack = hasConfigError() ? BARRIER : new ItemStack((Block) Block.REGISTRY.get(getValue()));
                     itemRenderer.renderItemIntoGUI(stack, x + width - 18, y + 2);
                 }
             };
@@ -337,7 +337,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
             return new DropdownBoxEntry.DefaultSelectionCellCreator<ResourceLocation>() {
                 @Override
                 public DropdownBoxEntry.SelectionCellElement<ResourceLocation> create(ResourceLocation selection) {
-                    ItemStack s = new ItemStack(Item.REGISTRY.get(selection));
+                    ItemStack s = new ItemStack((Item) Item.REGISTRY.get(selection));
                     return new DropdownBoxEntry.DefaultSelectionCellElement<ResourceLocation>(selection, toStringFunction) {
                         @Override
                         public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
@@ -386,7 +386,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
             return new DropdownBoxEntry.DefaultSelectionCellCreator<ResourceLocation>() {
                 @Override
                 public DropdownBoxEntry.SelectionCellElement<ResourceLocation> create(ResourceLocation selection) {
-                    ItemStack s = new ItemStack(Block.REGISTRY.get(selection));
+                    ItemStack s = new ItemStack((Block) Block.REGISTRY.get(selection));
                     return new DropdownBoxEntry.DefaultSelectionCellElement<ResourceLocation>(selection, toStringFunction) {
                         @Override
                         public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {

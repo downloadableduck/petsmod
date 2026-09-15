@@ -1,5 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.mooshroom;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
+
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.cow.ClientCowModel;
 import com.jeff.pets.mob.vanilla.passive.ClientMooshroom;
@@ -8,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientMooshroomRenderer extends PetRenderer<ClientMooshroom, ClientCowModel> {
+public class ClientMooshroomRenderer extends PetRenderer {
 
     String mooshroomTexturePath;
 
@@ -18,7 +21,7 @@ public class ClientMooshroomRenderer extends PetRenderer<ClientMooshroom, Client
     }
 
     @Override
-    public void preRenderCallback(ClientMooshroom state, float f) {
+    public void preRenderCallback( final EntityLivingBase state, float f) {
         if (CONFIG.isBaby) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
@@ -26,8 +29,9 @@ public class ClientMooshroomRenderer extends PetRenderer<ClientMooshroom, Client
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientMooshroom cowRenderState) {
+    public ResourceLocation getEntityTexture( final Entity cowRenderState) {
         mooshroomTexturePath = "textures/entity/cow/mooshroom.png";
         return new ResourceLocation("minecraft", mooshroomTexturePath);
     }
 }
+

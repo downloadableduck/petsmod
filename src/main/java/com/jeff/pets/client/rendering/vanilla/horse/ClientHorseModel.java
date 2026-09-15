@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.horse;
 
+import net.minecraft.entity.Entity;
+
 import com.jeff.pets.client.Math2;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;

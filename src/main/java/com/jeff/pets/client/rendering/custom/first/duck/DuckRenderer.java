@@ -1,5 +1,8 @@
 package com.jeff.pets.client.rendering.custom.first.duck;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
+
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.Math2;
 import com.jeff.pets.client.rendering.PetRenderer;
@@ -11,7 +14,7 @@ import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class DuckRenderer extends PetRenderer<Duck, DuckModel> {
+public class DuckRenderer extends PetRenderer {
     public String duckTexturePath;
 
     public DuckRenderer(final net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
@@ -19,7 +22,7 @@ public class DuckRenderer extends PetRenderer<Duck, DuckModel> {
     }
 
     @Override
-    public void preRenderCallback(Duck livingEntityRenderState, float f) {
+    public void preRenderCallback( final EntityLivingBase livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.6f, 0.6f, 0.6f);
         }
@@ -27,15 +30,15 @@ public class DuckRenderer extends PetRenderer<Duck, DuckModel> {
     }
 
     @Override
-    public void renderModel(final Duck duck, float f, final float k, float u, float g, float h, float i) {
+    public void renderModel( final EntityLivingBase duck, float f, final float k, float u, float g, float h, float i) {
         float partialTick = 1.0F;
-        duck.flap = Math2.lerp(partialTick, duck.oFlap, duck.flap);
-        duck.flapSpeed = Math2.lerp(partialTick, duck.oFlapSpeed, duck.flapSpeed);
+        ((Duck) duck).flap = Math2.lerp(partialTick, ((Duck) duck).oFlap, ((Duck) duck).flap);
+        ((Duck) duck).flapSpeed = Math2.lerp(partialTick, ((Duck) duck).oFlapSpeed, ((Duck) duck).flapSpeed);
         super.renderModel(duck, f, k, u, g, h, i);
     }
 
     @Override
-    public ResourceLocation getEntityTexture(final Duck state) {
+    public ResourceLocation getEntityTexture( final Entity state) {
         if (Objects.equals(CONFIG.duckSkin, "pekin")) {
             duckTexturePath = "textures/entity/duck/pekin.png";
         } else if (Objects.equals(CONFIG.duckSkin, "mallard")) {

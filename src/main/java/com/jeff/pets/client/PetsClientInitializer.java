@@ -252,13 +252,13 @@ public class PetsClientInitializer {
 
     @FunctionalInterface
     public interface Factory {
-        RenderLiving<? extends Entity> create(RenderManager var1, Context var2);
+        RenderLiving create(RenderManager var1, Context var2);
     }
 
     public static final class Context {
-        private final Map<Class, RenderLiving<? extends Entity>> rendererMap;
+        private final Map<Class, RenderLiving> rendererMap;
 
-        public Context(Map<Class, RenderLiving<? extends Entity>> rendererMap) {
+        public Context(Map<Class, RenderLiving> rendererMap) {
             super();
             this.rendererMap = rendererMap;
         }

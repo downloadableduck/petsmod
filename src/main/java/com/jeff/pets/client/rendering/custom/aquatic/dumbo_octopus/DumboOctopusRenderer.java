@@ -1,5 +1,8 @@
 package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
+
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
 import net.minecraft.util.ResourceLocation;
@@ -7,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import static com.jeff.pets.client.Central.CONFIG;
 import static com.jeff.pets.client.Central.MOD_ID;
 
-public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopusModel> {
+public class DumboOctopusRenderer extends PetRenderer {
 
     double i = 45;
     float direction = 1;
@@ -18,7 +21,7 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
     }
 
     @Override
-    public ResourceLocation getEntityTexture(DumboOctopus state) {
+    public ResourceLocation getEntityTexture( final Entity state) {
         String path;
         String yellow = "textures/entity/dumbo_octopus/yellow.png";
         String red = "textures/entity/dumbo_octopus/red.png";
@@ -45,7 +48,7 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
     }
 
     @Override
-    public void renderModel(DumboOctopus octopus, float f, float g, float h, float i, float j, float k) {
+    public void renderModel( final EntityLivingBase octopus, float f, float g, float h, float i, float j, float k) {
         super.renderModel(octopus, f, g, h, i, j, k);
         float currentSpeed;
         if (i > 67.5f) {
@@ -57,6 +60,7 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
         if (i >= 90 || i <= 45) {
             direction *= -1;
         }
-        octopus.tentacleAngle = i % 360;
+        ((DumboOctopus) octopus).tentacleAngle = i % 360;
     }
 }
+

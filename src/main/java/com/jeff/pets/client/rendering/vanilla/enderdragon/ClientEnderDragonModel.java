@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.enderdragon;
 
+import net.minecraft.entity.EntityLivingBase;
+
 import com.jeff.pets.client.Math2;
 import com.jeff.pets.mob.vanilla.boss.ClientEnderDragon;
 import net.minecraft.client.model.ModelBase;
@@ -86,7 +88,7 @@ public class ClientEnderDragonModel extends ModelBase {
     }
 
     @Override
-    public void render(Entity p_78088_1_, float p_78088_2_, float p_78088_3_, float p_78088_4_, float p_78088_5_, float p_78088_6_, float p_78088_7_) {
+    public void render( final Entity p_78088_1_, float p_78088_2_, float p_78088_3_, float p_78088_4_, float p_78088_5_, float p_78088_6_, float p_78088_7_) {
         ClientEnderDragon dragon = (ClientEnderDragon) p_78088_1_;
         GlStateManager.pushMatrix();
         float f = Math2.lerp(this.a, dragon.oFlapTime, dragon.flapTime);
@@ -196,3 +198,4 @@ public class ClientEnderDragonModel extends ModelBase {
         return (float) p_78214_1_;
     }
 }
+

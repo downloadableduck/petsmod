@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.cow;
 
+import net.minecraft.entity.Entity;
+
 import net.minecraft.client.model.ModelCow;
 
 import static com.jeff.pets.client.Central.CONFIG;

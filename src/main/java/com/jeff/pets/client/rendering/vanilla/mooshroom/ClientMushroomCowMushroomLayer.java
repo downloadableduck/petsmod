@@ -1,5 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.mooshroom;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
+
 import com.jeff.pets.mob.vanilla.passive.ClientMooshroom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -13,15 +16,15 @@ import net.minecraft.init.Blocks;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientMushroomCowMushroomLayer implements LayerRenderer<ClientMooshroom> {
-    private final RendererLivingEntity<ClientMooshroom> renderer;
+public class ClientMushroomCowMushroomLayer implements LayerRenderer {
+    private final RendererLivingEntity renderer;
 
-    public ClientMushroomCowMushroomLayer(RendererLivingEntity<ClientMooshroom> renderLayerParent, BlockRendererDispatcher blockRenderDispatcher) {
+    public ClientMushroomCowMushroomLayer(RendererLivingEntity renderLayerParent, BlockRendererDispatcher blockRenderDispatcher) {
         this.renderer = renderLayerParent;
     }
 
     @Override
-    public void render(ClientMooshroom p_212842_1_, float p_212842_2_, float p_212842_3_, float p_212842_4_, float p_212842_5_, float p_212842_6_, float p_212842_7_, float p_212842_8_) {
+    public void render( final EntityLivingBase p_212842_1_, float p_212842_2_, float p_212842_3_, float p_212842_4_, float p_212842_5_, float p_212842_6_, float p_212842_7_, float p_212842_8_) {
         if (!p_212842_1_.isChild() && !p_212842_1_.isInvisible()) {
             IBlockState blockstate = CONFIG.mooshroomSkin.equals("brown") ? Blocks.BROWN_MUSHROOM.getDefaultState() : Blocks.RED_MUSHROOM.getDefaultState();
             this.renderer.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
@@ -61,3 +64,5 @@ public class ClientMushroomCowMushroomLayer implements LayerRenderer<ClientMoosh
         return false;
     }
 }
+
+

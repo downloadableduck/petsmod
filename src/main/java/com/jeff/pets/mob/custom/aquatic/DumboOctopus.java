@@ -148,7 +148,7 @@ public class DumboOctopus extends FlyingPet {
                 net.minecraft.util.Vec3 dir = vecToOwner.normalize();
                 double speed = 0.2;
 
-                this.setRenderYawOffset(Duck.rotlerp(this.renderYawOffset, (float) targetYaw));
+                this.renderYawOffset = Duck.rotlerp(this.renderYawOffset, (float) targetYaw);
                 this.setRotationYawHead(this.getYRot());
                 this.renderYawOffset = this.renderYawOffset + MathHelper.clamp(this.rotationYawHead - this.renderYawOffset, -50.0f, 50.0f);
 

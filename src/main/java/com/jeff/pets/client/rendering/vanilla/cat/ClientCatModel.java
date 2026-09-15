@@ -81,7 +81,7 @@ public class ClientCatModel extends ModelBase {
     /**
      * Sets the models various rotation angles then renders the model.
      */
-    public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+    public void render( final Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         this.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn);
         if (this.isChild) {
             float f = 2.0F;
@@ -213,3 +213,4 @@ public class ClientCatModel extends ModelBase {
         }
     }
 }
+

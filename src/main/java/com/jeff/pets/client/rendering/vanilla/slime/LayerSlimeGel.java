@@ -5,6 +5,9 @@
 
 package com.jeff.pets.client.rendering.vanilla.slime;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
+
 import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelSlime;
@@ -14,7 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class LayerSlimeGel implements LayerRenderer<ClientSlime> {
+public class LayerSlimeGel implements LayerRenderer {
     private final ClientSlimeRenderer slimeRenderer;
     private final ModelBase slimeModel = new ModelSlime(0);
 
@@ -23,7 +26,7 @@ public class LayerSlimeGel implements LayerRenderer<ClientSlime> {
     }
 
     @Override
-    public void render(ClientSlime p_177141_1_, float p_177141_2_, float p_177141_3_, float p_177141_4_, float p_177141_5_, float p_177141_6_, float p_177141_7_, float p_177141_8_) {
+    public void render( final EntityLivingBase p_177141_1_, float p_177141_2_, float p_177141_3_, float p_177141_4_, float p_177141_5_, float p_177141_6_, float p_177141_7_, float p_177141_8_) {
         if (!p_177141_1_.isInvisible()) {
             GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             GlStateManager.enableNormalize();
@@ -40,3 +43,5 @@ public class LayerSlimeGel implements LayerRenderer<ClientSlime> {
         return true;
     }
 }
+
+

@@ -1,5 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.magmacube;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
+
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientMagmaCube;
 import net.minecraft.client.model.ModelSlime;
@@ -7,14 +10,14 @@ import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientMagmaCubeRenderer extends PetRenderer<ClientMagmaCube, ModelSlime> {
+public class ClientMagmaCubeRenderer extends PetRenderer {
 
     public ClientMagmaCubeRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ModelSlime(0), 0.75f);
     }
 
     @Override
-    public void preRenderCallback(ClientMagmaCube slimeRenderState, float a) {
+    public void preRenderCallback( final EntityLivingBase slimeRenderState, float a) {
         int magmaCubeScale;
         switch (CONFIG.magmaCubeSkin) {
             case "small":
@@ -34,7 +37,8 @@ public class ClientMagmaCubeRenderer extends PetRenderer<ClientMagmaCube, ModelS
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientMagmaCube livingEntityRenderState) {
+    public ResourceLocation getEntityTexture( final Entity livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/slime/magmacube.png");
     }
 }
+

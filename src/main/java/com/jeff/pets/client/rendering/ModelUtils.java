@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering;
 
+import net.minecraft.entity.Entity;
+
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;

@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.wolf;
 
+import net.minecraft.entity.Entity;
+
 import com.google.common.collect.ImmutableList;
 import com.jeff.pets.mob.vanilla.neutral.ClientWolf;
 import net.minecraft.client.model.ModelBase;

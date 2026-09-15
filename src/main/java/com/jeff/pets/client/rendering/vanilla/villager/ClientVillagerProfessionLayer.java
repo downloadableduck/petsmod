@@ -1,11 +1,14 @@
 package com.jeff.pets.client.rendering.vanilla.villager;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
+
 import com.jeff.pets.mob.vanilla.passive.ClientVillager;
 import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 
-public class ClientVillagerProfessionLayer implements LayerRenderer<ClientVillager> {
+public class ClientVillagerProfessionLayer implements LayerRenderer {
 
     public static final ResourceLocation ARMORER_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/armorer.png");
     public static final ResourceLocation BUTCHER_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/butcher.png");
@@ -22,14 +25,14 @@ public class ClientVillagerProfessionLayer implements LayerRenderer<ClientVillag
     public static final ResourceLocation TOOLSMITH_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/toolsmith.png");
     public static final ResourceLocation WEAPONSMITH_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/weaponsmith.png");
 
-    private final RendererLivingEntity<ClientVillager> renderer;
+    private final RendererLivingEntity renderer;
 
-    public ClientVillagerProfessionLayer(RendererLivingEntity<ClientVillager> renderLayerParent) {
+    public ClientVillagerProfessionLayer(RendererLivingEntity renderLayerParent) {
         this.renderer = renderLayerParent;
     }
 
     @Override
-    public void render(ClientVillager villager, float f, float g, float h, float i, float j, float k, float l) {
+    public void render( final EntityLivingBase villager, float f, float g, float h, float i, float j, float k, float l) {
         net.minecraft.client.renderer.GlStateManager.pushMatrix();
         net.minecraft.client.renderer.GlStateManager.scalef(1.001f, 1.001f, 1.001f);
         this.renderer.getMainModel().render(villager, f, g, i, j, k, l);
@@ -41,3 +44,5 @@ public class ClientVillagerProfessionLayer implements LayerRenderer<ClientVillag
         return false;
     }
 }
+
+

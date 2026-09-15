@@ -607,6 +607,10 @@ public class Central {
      */
     public static void createPetSkinCommand() {
         ClientCommandHandler.instance.func_71560_a(new CommandBase() {
+
+            public int compareTo(Object other) {
+                return 0;
+            }
             @Override
             public String func_71517_b() {
                 return "petskin";
@@ -1185,6 +1189,10 @@ public class Central {
      */
     public static void createPetTeleportCommand() {
         ClientCommandHandler.instance.func_71560_a(new CommandBase() {
+
+            public int compareTo(Object other) {
+                return 0;
+            }
             @Override
             public String func_71517_b() {
                 return "teleportpet";
@@ -1214,6 +1222,10 @@ public class Central {
      */
     public static void createPetSpeciesCommand() {
         ClientCommandHandler.instance.func_71560_a(new CommandBase() {
+
+            public int compareTo(Object other) {
+                return 0;
+            }
             @Override
             public String func_71517_b() {
                 return "petspecies";
@@ -1340,6 +1352,10 @@ public class Central {
      */
     public static void createPetHelpCommand() {
         ClientCommandHandler.instance.func_71560_a(new CommandBase() {
+
+            public int compareTo(Object other) {
+                return 0;
+            }
             @Override
             public String func_71517_b() {
                 return "pethelp";
@@ -1412,6 +1428,10 @@ public class Central {
      */
     public static void createPetNameCommand() {
         ClientCommandHandler.instance.func_71560_a(new CommandBase() {
+
+            public int compareTo(Object other) {
+                return 0;
+            }
             @Override
             public String func_71517_b() {
                 return "petname";
@@ -1644,6 +1664,10 @@ public class Central {
      */
     public static void createToggleCommand() {
         ClientCommandHandler.instance.func_71560_a(new CommandBase() {
+
+            public int compareTo(Object other) {
+                return 0;
+            }
             @Override
             public String func_71517_b() {
                 return "pet";

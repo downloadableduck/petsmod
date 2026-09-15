@@ -1,5 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.villager;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
+
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientVillager;
 import net.minecraft.client.model.ModelVillager;
@@ -9,7 +12,7 @@ import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientVillagerRenderer extends PetRenderer<ClientVillager, ModelVillager> {
+public class ClientVillagerRenderer extends PetRenderer {
 
     public static final ResourceLocation BUTCHER_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/butcher.png");
     public static final ResourceLocation FARMER_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/farmer.png");
@@ -22,7 +25,7 @@ public class ClientVillagerRenderer extends PetRenderer<ClientVillager, ModelVil
     }
 
     @Override
-    public void preRenderCallback(ClientVillager state, float f) {
+    public void preRenderCallback( final EntityLivingBase state, float f) {
         if (CONFIG.isBaby) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
@@ -30,7 +33,7 @@ public class ClientVillagerRenderer extends PetRenderer<ClientVillager, ModelVil
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientVillager villagerRenderState) {
+    public ResourceLocation getEntityTexture( final Entity villagerRenderState) {
         if (Objects.equals(CONFIG.villagerSkin, "butcher")) {
             return (BUTCHER_LOCATION);
         } else if (Objects.equals(CONFIG.villagerSkin, "farmer")) {
@@ -45,3 +48,4 @@ public class ClientVillagerRenderer extends PetRenderer<ClientVillager, ModelVil
         return NITWIT_LOCATION;
     }
 }
+

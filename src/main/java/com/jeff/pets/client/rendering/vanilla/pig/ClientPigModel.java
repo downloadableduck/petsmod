@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.pig;
 
+import net.minecraft.entity.Entity;
+
 import com.jeff.pets.mob.vanilla.passive.ClientPig;
 import net.minecraft.client.model.ModelPig;
 

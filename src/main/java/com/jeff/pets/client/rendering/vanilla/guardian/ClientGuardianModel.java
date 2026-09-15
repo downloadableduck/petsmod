@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.guardian;
 
+import net.minecraft.entity.EntityLivingBase;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
@@ -53,7 +55,7 @@ public class ClientGuardianModel extends ModelBase {
     }
 
     @Override
-    public void render(Entity guardianEntity, float f, float g, float h, float i, float j, float k) {
+    public void render( final Entity guardianEntity, float f, float g, float h, float i, float j, float k) {
         this.setRotationAngles(f, g, h, i, j, k, guardianEntity);
         this.field_3379.render(k);
     }
@@ -107,3 +109,4 @@ public class ClientGuardianModel extends ModelBase {
         this.field_3378[2].rotationPointZ = 6.0F;
     }
 }
+

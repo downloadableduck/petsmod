@@ -1,5 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.zombievillager;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
+
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
 import net.minecraft.util.ResourceLocation;
@@ -8,7 +11,7 @@ import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientZombieVillagerRenderer extends PetRenderer<ClientZombieVillager, ClientZombieVillagerModel> {
+public class ClientZombieVillagerRenderer extends PetRenderer {
 
     public static final ResourceLocation BUTCHER_LOCATION = new ResourceLocation("minecraft", "textures/entity/zombie_villager/zombie_butcher.png");
     public static final ResourceLocation FARMER_LOCATION = new ResourceLocation("minecraft", "textures/entity/zombie_villager/zombie_farmer.png");
@@ -23,7 +26,7 @@ public class ClientZombieVillagerRenderer extends PetRenderer<ClientZombieVillag
     }
 
     @Override
-    public void preRenderCallback(ClientZombieVillager livingEntityRenderState, float f) {
+    public void preRenderCallback( final EntityLivingBase livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
@@ -31,7 +34,7 @@ public class ClientZombieVillagerRenderer extends PetRenderer<ClientZombieVillag
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientZombieVillager villagerRenderState) {
+    public ResourceLocation getEntityTexture( final Entity villagerRenderState) {
         if (Objects.equals(CONFIG.zombieVillagerSkin, "butcher")) {
             return (BUTCHER_LOCATION);
         } else if (Objects.equals(CONFIG.zombieVillagerSkin, "farmer")) {
@@ -47,10 +50,11 @@ public class ClientZombieVillagerRenderer extends PetRenderer<ClientZombieVillag
     }
 
     @Override
-    public void applyRotations(ClientZombieVillager state, float f, float g, float h) {
+    public void applyRotations(EntityLivingBase state, float f, float g, float h) {
         super.applyRotations(state, f, g, h);
         if (state.field_70154_o != null) {
             net.minecraft.client.renderer.GlStateManager.translatef(0, -0.5f, 0);
         }
     }
 }
+

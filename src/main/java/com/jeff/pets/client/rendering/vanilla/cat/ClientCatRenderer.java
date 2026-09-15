@@ -1,26 +1,29 @@
 package com.jeff.pets.client.rendering.vanilla.cat;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
+
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientCat;
 import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientCatRenderer extends PetRenderer<ClientCat, ClientCatModel> {
+public class ClientCatRenderer extends PetRenderer {
 
     public ClientCatRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientCatModel(), 0.7F);
     }
 
     @Override
-    public void preRenderCallback(ClientCat state, float f) {
+    public void preRenderCallback( final EntityLivingBase state, float f) {
         if (CONFIG.isBaby) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientCat livingEntityRenderState) {
+    public ResourceLocation getEntityTexture( final Entity livingEntityRenderState) {
         switch (CONFIG.catSkin) {
             case "black":
                 return new ResourceLocation("minecraft", "textures/entity/cat/all_black.png");
@@ -52,8 +55,9 @@ public class ClientCatRenderer extends PetRenderer<ClientCat, ClientCatModel> {
     }
 
     @Override
-    public void renderModel(ClientCat cat, float f, float g, float h, float i, float j, float k) {
+    public void renderModel( final EntityLivingBase cat, float f, float g, float h, float i, float j, float k) {
         super.renderModel(cat, f, g, h, i, j, k);
-        cat.setSitting(cat.field_70154_o != null);
+        ((com.jeff.pets.mob.vanilla.passive.ClientCat) cat).setSitting(cat.field_70154_o != null);
     }
 }
+

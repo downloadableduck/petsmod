@@ -1,5 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.creeper;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
+
 import com.jeff.pets.mob.vanilla.hostile.ClientCreeper;
 import net.minecraft.client.model.ModelCreeper;
 import net.minecraft.client.renderer.GlStateManager;
@@ -9,18 +12,18 @@ import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientCreeperChargeLayer implements LayerRenderer<ClientCreeper> {
+public class ClientCreeperChargeLayer implements LayerRenderer {
     private static final ResourceLocation SKIN = new ResourceLocation("textures/entity/creeper/creeper_armor.png");
-    private final RendererLivingEntity<ClientCreeper> renderer;
+    private final RendererLivingEntity renderer;
     private final ModelCreeper creeperModel;
 
-    public ClientCreeperChargeLayer(RendererLivingEntity<ClientCreeper> renderLayerParent) {
+    public ClientCreeperChargeLayer(RendererLivingEntity renderLayerParent) {
         this.renderer = renderLayerParent;
         this.creeperModel = new ModelCreeper(0.25F);
     }
 
     @Override
-    public void render(ClientCreeper creeperEntity, float f, float g, float h, float i, float j, float k, float l) {
+    public void render( final EntityLivingBase creeperEntity, float f, float g, float h, float i, float j, float k, float l) {
         if (CONFIG.creeperSkin.equals("charged")) {
             boolean bl = creeperEntity.isInvisible();
             GlStateManager.depthMask(!bl);
@@ -51,3 +54,5 @@ public class ClientCreeperChargeLayer implements LayerRenderer<ClientCreeper> {
         return false;
     }
 }
+
+

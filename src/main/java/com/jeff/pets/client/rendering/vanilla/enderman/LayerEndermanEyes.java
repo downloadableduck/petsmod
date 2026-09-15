@@ -1,5 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.enderman;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
+
 import com.jeff.pets.mob.vanilla.neutral.ClientEnderman;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -9,7 +12,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class LayerEndermanEyes implements LayerRenderer<ClientEnderman> {
+public class LayerEndermanEyes implements LayerRenderer {
     private static final ResourceLocation RES_ENDERMAN_EYES = new ResourceLocation("textures/entity/enderman/enderman_eyes.png");
     private final ClientEndermanRenderer endermanRenderer;
 
@@ -17,7 +20,7 @@ public class LayerEndermanEyes implements LayerRenderer<ClientEnderman> {
         this.endermanRenderer = endermanRendererIn;
     }
 
-    public void render(ClientEnderman entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+    public void render( final EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         this.endermanRenderer.bindTexture(RES_ENDERMAN_EYES);
         GlStateManager.enableBlend();
         GlStateManager.disableAlphaTest();
@@ -31,7 +34,7 @@ public class LayerEndermanEyes implements LayerRenderer<ClientEnderman> {
         GlStateManager.enableLighting();
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.endermanRenderer.getMainModel().render(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-        this.endermanRenderer.setLightmap(entitylivingbaseIn, ageInTicks);
+        this.endermanRenderer.setLightmap((net.minecraft.entity.EntityLiving) entitylivingbaseIn, ageInTicks);
         GlStateManager.depthMask(true);
         GlStateManager.disableBlend();
         GlStateManager.enableAlphaTest();
@@ -41,3 +44,4 @@ public class LayerEndermanEyes implements LayerRenderer<ClientEnderman> {
         return false;
     }
 }
+

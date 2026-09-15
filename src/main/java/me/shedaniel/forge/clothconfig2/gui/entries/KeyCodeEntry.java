@@ -112,7 +112,7 @@ public class KeyCodeEntry extends TooltipListEntry<ModifierKeyCode> {
     @Override
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-        int windowWidth = new ScaledResolution(Minecraft.getInstance()).func_78326_a();
+        int windowWidth = new ScaledResolution(Minecraft.getInstance(), Minecraft.getInstance().field_71443_c, Minecraft.getInstance().field_71440_d).func_78326_a();
         this.resetButton.enabled = isEditable() && getDefaultValue().isPresent() && !getDefaultValue().get().equals(value);
         this.resetButton.y = y;
         this.buttonWidget.enabled = isEditable();

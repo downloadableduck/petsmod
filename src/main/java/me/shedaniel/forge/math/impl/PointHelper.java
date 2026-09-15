@@ -11,7 +11,7 @@ import org.lwjgl.input.Mouse;
 public class PointHelper {
     public static Point ofMouse() {
         Minecraft client = Minecraft.getInstance();
-        ScaledResolution sr = new ScaledResolution(client);
+        ScaledResolution sr = new ScaledResolution(client, client.field_71443_c, client.field_71440_d);
         double scaledWidth = sr.func_78326_a();
         double scaledHeight = sr.func_78328_b();
         double mx = Mouse.getX() * scaledWidth / (double) client.field_71443_c;

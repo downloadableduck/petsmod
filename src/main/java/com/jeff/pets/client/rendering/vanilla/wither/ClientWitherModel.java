@@ -66,9 +66,10 @@ public class ClientWitherModel extends ModelBase {
     }
 
     @Override
-    public void render(Entity wither, float f, float g, float h, float i, float j, float k) {
+    public void render( final Entity wither, float f, float g, float h, float i, float j, float k) {
         for (ModelRenderer head : this.parts()) {
             head.render(k);
         }
     }
 }
+

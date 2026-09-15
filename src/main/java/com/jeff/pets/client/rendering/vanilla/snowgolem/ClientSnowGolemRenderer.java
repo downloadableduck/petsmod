@@ -1,12 +1,14 @@
 package com.jeff.pets.client.rendering.vanilla.snowgolem;
 
+import net.minecraft.entity.Entity;
+
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientSnowGolem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelSnowMan;
 import net.minecraft.util.ResourceLocation;
 
-public class ClientSnowGolemRenderer extends PetRenderer<ClientSnowGolem, ModelSnowMan> {
+public class ClientSnowGolemRenderer extends PetRenderer {
 
     public ClientSnowGolemRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ModelSnowMan(), 0.5F);
@@ -14,7 +16,7 @@ public class ClientSnowGolemRenderer extends PetRenderer<ClientSnowGolem, ModelS
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientSnowGolem snowGolemRenderState) {
+    public ResourceLocation getEntityTexture( final Entity snowGolemRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/snow_golem.png");
     }
 
@@ -25,3 +27,4 @@ public class ClientSnowGolemRenderer extends PetRenderer<ClientSnowGolem, ModelS
         snowGolem.headItemModel = this.itemRenderer.resolveItemModel(state.headItem, snowGolem, ItemDisplayContext.HEAD);
     }*/
 }
+

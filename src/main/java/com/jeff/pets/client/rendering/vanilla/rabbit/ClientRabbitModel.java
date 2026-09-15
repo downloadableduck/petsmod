@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.rabbit;
 
+import net.minecraft.entity.EntityLivingBase;
+
 import com.google.common.collect.ImmutableList;
 import com.jeff.pets.mob.vanilla.passive.ClientRabbit;
 import net.minecraft.client.model.ModelBase;
@@ -93,7 +95,7 @@ public class ClientRabbitModel extends ModelBase {
     }
 
     @Override
-    public void render(Entity entity, float i, float j, float f, float g, float h, float k) {
+    public void render( final Entity entity, float i, float j, float f, float g, float h, float k) {
         ClientRabbit rabbit = (ClientRabbit) entity;
         if (this.isChild) {
             float l = 1.5F;
@@ -136,3 +138,4 @@ public class ClientRabbitModel extends ModelBase {
         this.frontLegRight.rotateAngleX = (this.jumpRotation * -40.0F - 11.0F) * ((float) Math.PI / 180F);
     }
 }
+

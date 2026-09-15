@@ -1,5 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.snowgolem;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
+
 import com.jeff.pets.mob.vanilla.passive.ClientSnowGolem;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
@@ -13,18 +16,18 @@ import net.minecraft.item.ItemStack;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSnowGolemHeadLayer implements LayerRenderer<ClientSnowGolem> {
+public class ClientSnowGolemHeadLayer implements LayerRenderer {
     private final BlockRendererDispatcher blockRenderer;
     private final RenderItem itemRenderer;
-    private final RendererLivingEntity<ClientSnowGolem> renderer;
+    private final RendererLivingEntity renderer;
 
-    public ClientSnowGolemHeadLayer(RendererLivingEntity<ClientSnowGolem> renderLayerParent, BlockRendererDispatcher blockRenderDispatcher, RenderItem itemRenderer) {
+    public ClientSnowGolemHeadLayer(RendererLivingEntity renderLayerParent, BlockRendererDispatcher blockRenderDispatcher, RenderItem itemRenderer) {
         this.renderer = renderLayerParent;
         this.blockRenderer = blockRenderDispatcher;
         this.itemRenderer = itemRenderer;
     }
 
-    public void render(ClientSnowGolem snowGolem, float f, float g, float h, float i, float j, float k, float l) {
+    public void render( final EntityLivingBase snowGolem, float f, float g, float h, float i, float j, float k, float l) {
         if (CONFIG.snowGolemSkin.equals("pumpkin_on")) {
             boolean bl = false;
             if (!snowGolem.isInvisible() || bl) {
@@ -40,7 +43,7 @@ public class ClientSnowGolemHeadLayer implements LayerRenderer<ClientSnowGolem> 
                     net.minecraft.client.renderer.GlStateManager.translatef(-0.5F, -0.5F, -0.5F);
                     this.blockRenderer.renderBlockBrightness(blockState, 1.0F);
                 } else {
-                    this.itemRenderer.renderItem(itemStack, ItemCameraTransforms.TransformType.HEAD);
+                    this.itemRenderer.func_175049_a(itemStack, snowGolem, ItemCameraTransforms.TransformType.HEAD);
                 }
 
                 net.minecraft.client.renderer.GlStateManager.popMatrix();
@@ -53,3 +56,5 @@ public class ClientSnowGolemHeadLayer implements LayerRenderer<ClientSnowGolem> 
         return false;
     }
 }
+
+

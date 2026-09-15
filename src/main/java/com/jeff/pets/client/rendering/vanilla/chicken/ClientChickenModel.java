@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.chicken;
 
+import net.minecraft.entity.Entity;
+
 import com.jeff.pets.mob.vanilla.passive.ClientChicken;
 import net.minecraft.client.model.ModelChicken;
 

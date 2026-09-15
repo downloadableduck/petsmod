@@ -1,5 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.sheep;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
+
 import com.jeff.pets.mob.vanilla.passive.ClientSheep;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
@@ -12,18 +15,18 @@ import java.util.Objects;
 import static com.jeff.pets.client.Central.CONFIG;
 
 
-public class ClientSheepWoolLayer implements LayerRenderer<ClientSheep> {
+public class ClientSheepWoolLayer implements LayerRenderer {
     private final ModelBase model;
-    private final RendererLivingEntity<ClientSheep> renderer;
+    private final RendererLivingEntity renderer;
     int woolColor;
 
-    public ClientSheepWoolLayer(RendererLivingEntity<ClientSheep> renderLayerParent) {
+    public ClientSheepWoolLayer(RendererLivingEntity renderLayerParent) {
         this.renderer = renderLayerParent;
         this.model = new ClientSheepFurModel();
     }
 
     @Override
-    public void render(ClientSheep sheep, float p_212842_2_, float p_212842_3_, float p_212842_4_, float p_212842_5_, float p_212842_6_, float p_212842_7_, float p_212842_8_) {
+    public void render( final EntityLivingBase sheep, float p_212842_2_, float p_212842_3_, float p_212842_4_, float p_212842_5_, float p_212842_6_, float p_212842_7_, float p_212842_8_) {
         this.renderer.bindTexture(new ResourceLocation("minecraft", "textures/entity/sheep/sheep_fur.png"));
         if (Objects.equals(CONFIG.sheepSkin, "white")) {
             woolColor = 15132390;
@@ -76,3 +79,5 @@ public class ClientSheepWoolLayer implements LayerRenderer<ClientSheep> {
         return false;
     }
 }
+
+

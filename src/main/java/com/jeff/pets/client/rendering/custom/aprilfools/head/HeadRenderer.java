@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.custom.aprilfools.head;
 
+import net.minecraft.entity.Entity;
+
 import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.aprilfools.Head;
@@ -20,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class HeadRenderer extends PetRenderer<Head, HeadModel> {
+public class HeadRenderer extends PetRenderer {
 
     private final Map<String, GameProfile> PROFILLES = new ConcurrentHashMap<>();
 
@@ -38,7 +40,7 @@ public class HeadRenderer extends PetRenderer<Head, HeadModel> {
     }
 
     @Override
-    public ResourceLocation getEntityTexture(final Head state) {
+    public ResourceLocation getEntityTexture( final Entity state) {
         Minecraft minecraft = Minecraft.getInstance();
         try {
             Optional<GameProfile> gameProfile = fetchGameProfile(CONFIG.headSkin).get();
@@ -57,3 +59,4 @@ public class HeadRenderer extends PetRenderer<Head, HeadModel> {
         return DefaultPlayerSkin.getDefaultSkinLegacy();
     }
 }
+

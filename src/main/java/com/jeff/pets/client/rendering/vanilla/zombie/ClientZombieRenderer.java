@@ -1,19 +1,22 @@
 package com.jeff.pets.client.rendering.vanilla.zombie;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
+
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientZombie;
 import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientZombieRenderer extends PetRenderer<ClientZombie, ClientZombieModel> {
+public class ClientZombieRenderer extends PetRenderer {
 
     public ClientZombieRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientZombieModel(), 0.75f);
     }
 
     @Override
-    public void preRenderCallback(ClientZombie livingEntityRenderState, float f) {
+    public void preRenderCallback( final EntityLivingBase livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
@@ -21,7 +24,8 @@ public class ClientZombieRenderer extends PetRenderer<ClientZombie, ClientZombie
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientZombie livingEntityRenderState) {
+    public ResourceLocation getEntityTexture( final Entity livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/zombie/zombie.png");
     }
 }
+

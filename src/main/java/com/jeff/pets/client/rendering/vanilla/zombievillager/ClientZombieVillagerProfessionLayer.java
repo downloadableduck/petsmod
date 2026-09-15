@@ -1,5 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.zombievillager;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
+
 import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
 import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
@@ -7,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientZombieVillagerProfessionLayer implements LayerRenderer<ClientZombieVillager> {
+public class ClientZombieVillagerProfessionLayer implements LayerRenderer {
 
     public static final ResourceLocation ARMORER_LOCATION = new ResourceLocation("minecraft", "textures/entity/zombie_villager/profession/armorer.png");
     public static final ResourceLocation BUTCHER_LOCATION = new ResourceLocation("minecraft", "textures/entity/zombie_villager/profession/butcher.png");
@@ -24,14 +27,14 @@ public class ClientZombieVillagerProfessionLayer implements LayerRenderer<Client
     public static final ResourceLocation TOOLSMITH_LOCATION = new ResourceLocation("minecraft", "textures/entity/zombie_villager/profession/toolsmith.png");
     public static final ResourceLocation WEAPONSMITH_LOCATION = new ResourceLocation("minecraft", "textures/entity/zombie_villager/profession/weaponsmith.png");
 
-    private final RendererLivingEntity<ClientZombieVillager> renderer;
+    private final RendererLivingEntity renderer;
 
-    public ClientZombieVillagerProfessionLayer(RendererLivingEntity<ClientZombieVillager> renderLayerParent) {
+    public ClientZombieVillagerProfessionLayer(RendererLivingEntity renderLayerParent) {
         this.renderer = renderLayerParent;
     }
 
     @Override
-    public void render(ClientZombieVillager zombieVillager, float f, float g, float h, float k, float l, float u, float v) {
+    public void render( final EntityLivingBase zombieVillager, float f, float g, float h, float k, float l, float u, float v) {
         net.minecraft.client.renderer.GlStateManager.pushMatrix();
         net.minecraft.client.renderer.GlStateManager.scalef(1.001f, 1.001f, 1.001f);
         if (CONFIG.zombieVillagerSkin.equals("armorer")) {
@@ -71,3 +74,5 @@ public class ClientZombieVillagerProfessionLayer implements LayerRenderer<Client
         return false;
     }
 }
+
+

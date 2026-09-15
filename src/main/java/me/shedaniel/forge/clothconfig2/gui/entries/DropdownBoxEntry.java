@@ -67,7 +67,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
     @Override
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-        int windowWidth = new ScaledResolution(Minecraft.getInstance()).func_78326_a();
+        int windowWidth = new ScaledResolution(Minecraft.getInstance(), Minecraft.getInstance().field_71443_c, Minecraft.getInstance().field_71440_d).func_78326_a();
         this.resetButton.enabled = isEditable() && getDefaultValue().isPresent() && (!defaultValue.get().equals(getValue()) || getConfigError().isPresent());
         this.resetButton.y = y;
         this.selectionElement.active = isEditable();
@@ -389,19 +389,21 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
                 WorldRenderer buffer = tessellator.getBuffer();
 
                 // Bottom
-                buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-                buffer.pos(scrollbarPositionMinX, minY + height, 0.0D).func_181673_a(0, 1).color(bottomc, bottomc, bottomc, 255).endVertex();
-                buffer.pos(scrollbarPositionMaxX, minY + height, 0.0D).func_181673_a(1, 1).color(bottomc, bottomc, bottomc, 255).endVertex();
-                buffer.pos(scrollbarPositionMaxX, minY, 0.0D).func_181673_a(1, 0).color(bottomc, bottomc, bottomc, 255).endVertex();
-                buffer.pos(scrollbarPositionMinX, minY, 0.0D).func_181673_a(0, 0).color(bottomc, bottomc, bottomc, 255).endVertex();
+                buffer.func_178970_b();
+                buffer.func_178961_b(bottomc, bottomc, bottomc, 255);
+                buffer.func_178985_a(scrollbarPositionMinX, minY + height, 0.0D, 0, 1);
+                buffer.func_178985_a(scrollbarPositionMaxX, minY + height, 0.0D, 1, 1);
+                buffer.func_178985_a(scrollbarPositionMaxX, minY, 0.0D, 1, 0);
+                buffer.func_178985_a(scrollbarPositionMinX, minY, 0.0D, 0, 0);
                 tessellator.draw();
 
                 // Top
-                buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-                buffer.pos(scrollbarPositionMinX, (minY + height - 1), 0.0D).func_181673_a(0, 1).color(topc, topc, topc, 255).endVertex();
-                buffer.pos((scrollbarPositionMaxX - 1), (minY + height - 1), 0.0D).func_181673_a(1, 1).color(topc, topc, topc, 255).endVertex();
-                buffer.pos((scrollbarPositionMaxX - 1), minY, 0.0D).func_181673_a(1, 0).color(topc, topc, topc, 255).endVertex();
-                buffer.pos(scrollbarPositionMinX, minY, 0.0D).func_181673_a(0, 0).color(topc, topc, topc, 255).endVertex();
+                buffer.func_178970_b();
+                buffer.func_178961_b(topc, topc, topc, 255);
+                buffer.func_178985_a(scrollbarPositionMinX, (minY + height - 1), 0.0D, 0, 1);
+                buffer.func_178985_a((scrollbarPositionMaxX - 1), (minY + height - 1), 0.0D, 1, 1);
+                buffer.func_178985_a((scrollbarPositionMaxX - 1), minY, 0.0D, 1, 0);
+                buffer.func_178985_a(scrollbarPositionMinX, minY, 0.0D, 0, 0);
                 tessellator.draw();
                 GlStateManager.enableTexture2D();
             }

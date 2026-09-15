@@ -23,7 +23,7 @@ public class ClientZombieModel extends ModelBiped {
     }
 
     @Override
-    public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+    public void render( final Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         super.render(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
         net.minecraft.client.renderer.GlStateManager.pushMatrix();
         if (CONFIG.isBaby) {
@@ -34,3 +34,4 @@ public class ClientZombieModel extends ModelBiped {
         net.minecraft.client.renderer.GlStateManager.popMatrix();
     }
 }
+

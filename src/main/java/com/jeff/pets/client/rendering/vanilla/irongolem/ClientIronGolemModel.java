@@ -74,7 +74,7 @@ public class ClientIronGolemModel extends ModelBase {
     }
 
     @Override
-    public void render(Entity ironGOlem, float f, float g, float h, float i, float j, float k) {
+    public void render( final Entity ironGOlem, float f, float g, float h, float i, float j, float k) {
         super.render(ironGOlem, f, g, h, i, j, k);
         this.body.render(k);
         this.head.render(k);
@@ -84,3 +84,4 @@ public class ClientIronGolemModel extends ModelBase {
         this.leg1.render(k);
     }
 }
+
