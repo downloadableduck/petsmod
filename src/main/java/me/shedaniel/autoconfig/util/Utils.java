@@ -34,11 +34,9 @@ import static java.util.stream.Collectors.toMap;
 public class Utils {
     private Utils() {
     }
-    
+
     public static Path getConfigFolder() {
-        Path path =  Minecraft.getInstance().gameDirectory.toPath().resolve("config");
-        System.out.println("the path is " + path);
-        return path;
+        return Minecraft.getInstance().gameDirectory.toPath().resolve("config");
     }
     
     public static <V> V constructUnsafely(Class<V> cls) {

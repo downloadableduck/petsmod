@@ -42,7 +42,7 @@ public class PetsPackSource extends BuiltInPackSource {
     }
 
     @Override
-    protected Pack createVanillaPack(PackResources resources) {
+    protected Pack createVanillaPack(Pack.ResourcesSupplier resources) {
         return createPetsPack();
     }
 

@@ -126,6 +126,7 @@ import com.jeff.pets.client.rendering.vanilla.wolf.ClientWolfRenderer;
 import com.jeff.pets.client.rendering.vanilla.zombie.ClientZombieRenderer;
 import com.jeff.pets.client.rendering.vanilla.zombievillager.ClientZombieVillagerModel;
 import com.jeff.pets.client.rendering.vanilla.zombievillager.ClientZombieVillagerRenderer;
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
@@ -174,7 +175,6 @@ import net.minecraft.client.model.monster.warden.WardenModel;
 import net.minecraft.client.model.monster.witch.WitchModel;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.Identifier;
-import org.lwjgl.glfw.GLFW;
 
 import java.lang.instrument.Instrumentation;
 import java.lang.reflect.Field;
@@ -321,7 +321,7 @@ public class PetsClientInitializer {
      * is pressed
      */
     public static void createKeyBinding() {
-        keyMapping = new KeyMapping("Open Pets Menu", GLFW.GLFW_KEY_P, new KeyMapping.Category(Identifier.fromNamespaceAndPath(PetsInitializer.MOD_ID, "petsmod.keymapping")));
+        keyMapping = new KeyMapping("Open Pets Menu", InputConstants.KEY_P, new KeyMapping.Category(Identifier.fromNamespaceAndPath(PetsInitializer.MOD_ID, "petsmod.keymapping")));
         try {
             Field f = Unsafe.class.getDeclaredField("theUnsafe");
             f.setAccessible(true);
