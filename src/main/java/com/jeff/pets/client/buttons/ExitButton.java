@@ -16,7 +16,7 @@ public class ExitButton extends Button {
     private final PetsConfigScreen screen;
 
     public ExitButton(PetsConfigScreen screen, int x, int y, int width, int height) {
-        super(x, y, width, height, Component.literal("<- Exit"), (_ -> screen.onClose()), Supplier::get);
+        super(x, y, width, height, Component.nullToEmpty("<- Exit"), (_ -> screen.onClose()), Supplier::get);
         this.screen = screen;
     }
 

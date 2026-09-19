@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "msgpack",
+  "version": "0.9.12",
+  "name": "msgpack",
+  "description": "MessagePack is an extremely efficient object serialization library. It's like JSON, but very fast and small. Bundled with Pets Mod.",
+  "authors": [
+    "msgpack"
+  ],
+  "contact": {
+    "homepage": "https://msgpack.org",
+    "sources": "https://github.com/msgpack/msgpack-java",
+    "issues": "https://github.com/msgpack/msgpack-java/issues"
+  },
+  "license": "Apache 2.0",
+  "icon": "msgpack.png",
+  "environment": "client",
+
+  "custom": {
+    "modmenu": {
+      "parent": "pets-mod",
+      "badges": [ "library" ]
+    }
+  }
+}

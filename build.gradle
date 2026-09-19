@@ -1,4 +1,7 @@
 import com.vanniktech.maven.publish.SonatypeHost
+import java.nio.file.Path;
+import java.nio.file.FileSystems;
+import java.nio.file.Files
 
 plugins {
     id 'net.fabricmc.fabric-loom' version "${loom_version}"
@@ -50,15 +53,16 @@ dependencies {
     implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
     implementation("com.terraformersmc:modmenu:${project.modmenu_version}")
     //implementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
-    include 'io.ably:ably-java:1.2.40'
-    implementation 'io.ably:ably-java:1.2.40'
-    include 'com.davidehrmann.vcdiff:vcdiff-core:0.1.1'
-    include 'org.java-websocket:Java-WebSocket:1.6.0'
-    include 'org.msgpack:msgpack-core:0.9.8'
+    include "io.ably:ably-java:${project.ably_version}"
+    implementation "io.ably:ably-java:${project.ably_version}"
+    include "com.davidehrmann.vcdiff:vcdiff-core:${project.vcdiff_version}"
+    include "org.java-websocket:Java-WebSocket:${project.java_websocket_version}"
+    include "org.msgpack:msgpack-core:${project.msgpack_version}"
 }
 
 processResources {
     inputs.property "version", project.version
+    inputs.property "ably_version", project.ably_version
 
     filesMatching("fabric.mod.json") {
         expand "version": inputs.properties.version
@@ -142,8 +146,48 @@ tasks.named('jar') {
     archiveBaseName = project.archives_base_name
     archiveVersion = project.mod_version
     archiveClassifier = project.minecraft_version + "-fabric"
+    exclude 'ably.mod.json'
+    exclude 'msgpack.mod.json'
+    exclude 'vcdiff.mod.json'
+    exclude 'websocket.mod.json'
+    exclude 'assets/pets-mod/ably.png'
+    exclude 'assets/pets-mod/msgpack.png'
+    exclude 'assets/pets-mod/vcdiff.png'
+    exclude 'assets/pets-mod/websocket.png'
+}
 
-    eachFile { contents -> {
+tasks.withType(Jar) {
+    doLast { ->
+        Path jar = archiveFile.get().asFile.toPath()
+        File srcDir = sourceSets.main.resources.srcDirs.find { (it.name == "resources") }
+        move("ably.mod.json", "ably-java-${project.ably_version}.jar", jar, srcDir, "ably.png")
+        move("msgpack.mod.json", "msgpack-core-${project.msgpack_version}.jar", jar, srcDir, "msgpack.png")
+        move("vcdiff.mod.json", "vcdiff-core-${project.vcdiff_version}.jar", jar, srcDir, "vcdiff.png")
+        move("websocket.mod.json", "Java-WebSocket-${project.java_websocket_version}.jar", jar, srcDir, "websocket.png")
+    }
+}
 
-    }}
+static def move(String json, String jarName, Path jar, File srcDir, String icon) {
+
+    File ablyJson = srcDir.toPath().resolve(json).toFile()
+    File iconFile = srcDir.toPath().resolve("assets").resolve("pets-mod").resolve(icon).toFile()
+
+    FileSystems.newFileSystem(jar, (ClassLoader) null).withCloseable { outerFs ->
+        Path jarPath = outerFs.getPath("META-INF", "jars", jarName)
+
+        if (Files.exists(jarPath)) {
+            FileSystems.newFileSystem(jarPath, (ClassLoader) null).withCloseable { innerFs ->
+                Path jsonPath = innerFs.getPath("fabric.mod.json")
+                Path iconDest = innerFs.getPath(icon)
+
+                Files.deleteIfExists(jsonPath)
+                Files.copy(ablyJson.toPath(), jsonPath)
+                Files.copy(iconFile.toPath(), iconDest)
+            }
+        }
+    }
+}
+
+tasks.named('compileJava') {
+    dependsOn('clean')
 }

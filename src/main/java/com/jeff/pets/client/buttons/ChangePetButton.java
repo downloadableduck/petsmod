@@ -18,7 +18,7 @@ public class ChangePetButton extends Button {
     public boolean opened = false;
 
     public ChangePetButton(PetsConfigScreen screen, int x, int y, int width, int height) {
-        super(x, y, width, height, Component.literal("Change . . . "), (button) -> {
+        super(x, y, width, height, Component.nullToEmpty("Change . . . "), (button) -> {
         }, Supplier::get);
         this.screen = screen;
     }
