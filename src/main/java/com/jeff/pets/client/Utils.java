@@ -69,7 +69,7 @@ public class Utils {
         double z = player.getZ() - lookAngle.z * (double) 0.5F;
 
         entity.setPos(x, y, z);
-        entity.setCustomName(Component.literal(entityName));
+        entity.setCustomName(Component.nullToEmpty(entityName));
         world.addEntity(entity);
         entity.tame(player);
         Central.summonedEntity.add(entity);
