@@ -21,6 +21,12 @@ repositories {
     maven { url "https://maven.isxander.dev/releases" }
     maven { url "https://api.modrinth.com/maven"}
     maven {url 'https://repo.spongepowered.org/repository/maven-public/'}
+    maven {
+        url 'https://repo.sleeping.town'
+        content {
+            includeGroup 'com.unascribed'
+        }
+    }
     // Add repositories to retrieve artifacts from in here.
     // You should only use this when depending on other mods because
     // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
@@ -29,17 +35,18 @@ repositories {
 }
 
 dependencies {
+    implementation 'com.unascribed:nilloader:1.4.0'
     implementation 'org.ow2.asm:asm:9.10'
     implementation 'org.ow2.asm:asm-commons:9.10'
     implementation 'org.ow2.asm:asm-tree:9.10'
     implementation 'me.shedaniel.cloth:basic-math:0.6.1'
     implementation("blue.endless:jankson:${rootProject.jankson_version}")
     implementation("com.moandjiezana.toml:toml4j:${rootProject.toml4j_version}")
-    implementation 'io.ably:ably-java:1.2.40'
-    implementation 'io.ably:ably-java:1.2.40'
+    implementation "io.ably:ably-java:${project.ably_version}"
+    implementation "io.ably:ably-java:${project.ably_version}"
     implementation 'com.davidehrmann.vcdiff:vcdiff-core:0.1.1'
     implementation 'org.java-websocket:Java-WebSocket:1.6.0'
-    implementation 'org.msgpack:msgpack-core:0.9.8'
+    implementation "org.msgpack:msgpack-core:${project.msgpack_version}"
 }
 
 minecraft {
@@ -48,13 +55,14 @@ minecraft {
 processResources {
     inputs.property "version", project.version
 
-    filesMatching("fabric.mod.json") {
+    filesMatching("pets-mod.nilmod.css") {
         expand "version": inputs.properties.version + "+" + project.build
     }
 }
 
 tasks.withType(JavaCompile).configureEach {
     it.options.release = 25
+    options.encoding = 'UTF-8'
 }
 
 java {

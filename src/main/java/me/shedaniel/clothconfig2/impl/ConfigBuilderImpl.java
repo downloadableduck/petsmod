@@ -234,7 +234,7 @@ public class ConfigBuilderImpl implements ConfigBuilder {
         }
         screen.setSavingRunnable(savingRunnable);
         screen.setEditable(editable);
-        screen.setFallbackCategory(fallbackCategory == null ? null : Component.literal(fallbackCategory));
+        screen.setFallbackCategory(fallbackCategory == null ? null : Component.nullToEmpty(fallbackCategory));
         screen.setTransparentBackground(transparentBackground);
         screen.setAlwaysShowTabs(alwaysShowTabs);
         screen.setConfirmSave(doesConfirmSave);

@@ -175,7 +175,7 @@ public class DefaultGuiProviders {
                                             DropdownMenuBuilder.TopCellElementBuilder.of(
                                                     getUnsafely(field, config, getUnsafely(field, defaults)),
                                                     str -> {
-                                                        String s = Component.literal(str).getString();
+                                                        String s = Component.nullToEmpty(str).getString();
                                                         for (Enum<?> constant : enums) {
                                                             if (DEFAULT_NAME_PROVIDER.apply(constant).getString().equals(s)) {
                                                                 return constant;
@@ -276,7 +276,7 @@ public class DefaultGuiProviders {
                                     String translate = I18n.get(key);
                                     if (translate.equals(key))
                                         return Component.translatable("text.cloth-config.boolean.value." + bool);
-                                    return Component.literal(translate);
+                                    return Component.nullToEmpty(translate);
                                 })
                                 .build()
                 ),

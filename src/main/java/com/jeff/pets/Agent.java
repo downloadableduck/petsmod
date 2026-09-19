@@ -2,7 +2,10 @@ package com.jeff.pets;
 
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.mixin.client.*;
+import com.sun.tools.attach.AttachNotSupportedException;
+import com.sun.tools.attach.VirtualMachine;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.toasts.SystemToast;
 import net.minecraft.client.renderer.debug.EntityHitboxDebugRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.FilePackResources;
@@ -12,20 +15,26 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.KnownPack;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
+import nilloader.NilAgent;
+import nilloader.api.NilLoader;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
+import sun.misc.Unsafe;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.lang.instrument.Instrumentation;
+import java.lang.management.ManagementFactory;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.security.ProtectionDomain;
 import java.util.Optional;
 
-public class Agent {
+public class Agent implements Runnable {
 
     public static void premain(String agentArgs, Instrumentation inst) {
 
@@ -134,5 +143,21 @@ public class Agent {
 
         thread.setDaemon(true);
         thread.start();
+    }
+
+    @Override
+    public void run() {
+        try {
+            Field field = Unsafe.class.getDeclaredField("theUnsafe");
+            field.setAccessible(true);
+            Unsafe unafe = (Unsafe) field.get(null);
+            Field field0 = NilAgent.class.getDeclaredField("instrumentation");
+            Object base = unafe.staticFieldBase(field0);
+            long offset = unafe.staticFieldOffset(field0);
+            Instrumentation inst = (Instrumentation) unafe.getObject(base, offset);
+            premain("", inst);
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
+        }
     }
 }

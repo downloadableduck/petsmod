@@ -1147,7 +1147,7 @@ public class PetsInitializer {
 
             PackLocationInfo locationInfo = new PackLocationInfo(
                     "pets-mod-resources",
-                    Component.literal("PetsMod Resources"),
+                    Component.nullToEmpty("PetsMod Resources"),
                     PackSource.BUILT_IN,
                     Optional.empty()
             );

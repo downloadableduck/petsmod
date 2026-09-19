@@ -120,7 +120,7 @@ public class ConfigEntryBuilderImpl implements ConfigEntryBuilder {
     
     @Override
     public TextDescriptionBuilder startTextDescription(Component value) {
-        return new TextDescriptionBuilder(resetButtonKey, Component.literal(UUID.randomUUID().toString()), value);
+        return new TextDescriptionBuilder(resetButtonKey, Component.nullToEmpty(UUID.randomUUID().toString()), value);
     }
     
     @Override

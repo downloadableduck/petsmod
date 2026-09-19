@@ -78,7 +78,7 @@ public class DefaultGuiTransformers {
                         .peek(gui -> {
                             if (!(gui instanceof TextListEntry)) {
                                 Comment tooltip = field.getAnnotation(Comment.class);
-                                Component[] text = new Component[]{Component.literal(tooltip.value())};
+                                Component[] text = new Component[]{Component.nullToEmpty(tooltip.value())};
                                 tryApplyTooltip(gui, text);
                             }
                         })

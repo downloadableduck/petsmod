@@ -850,7 +850,7 @@ public class Central {
             client.getResourcePackRepository().addPack("file/headpack");
             options.save();
             client.reloadResourcePacks();
-            //client.player.sendSystemMessage(Component.literal("§b[PetsMod] §aSorry for the interruption, the head pet requires a custom resource pack to work correctly and we loaded a pack for you. This will not affect anything except the head texture."));
+            //client.player.sendSystemMessage(Component.nullToEmpty("§b[PetsMod] §aSorry for the interruption, the head pet requires a custom resource pack to work correctly and we loaded a pack for you. This will not affect anything except the head texture."));
         }*/
     }
 
@@ -1580,10 +1580,10 @@ public class Central {
 
                     LocalPlayer player = Minecraft.getInstance().player;
                     if (isValid) {
-                        player.sendSystemMessage(Component.literal("§b[PetsMod] §aYour pet's skin has been updated."));
+                        player.sendSystemMessage(Component.nullToEmpty("§b[PetsMod] §aYour pet's skin has been updated."));
                         NetworkManager.get().broadcastChangePetSkin(Minecraft.getInstance().player.getUUID().toString(), skin);
                     } else {
-                        player.sendSystemMessage(Component.literal("§b[PetsMod] §cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else."));
+                        player.sendSystemMessage(Component.nullToEmpty("§b[PetsMod] §cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else."));
                     }
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
                 });
@@ -1709,6 +1709,7 @@ public class Central {
         CONFIG.pufferFishName = Utils.checkNullString(CONFIG.pufferFishName);
         CONFIG.spiderName = Utils.checkNullString(CONFIG.spiderName);
         CONFIG.wolfName = Utils.checkNullString(CONFIG.wolfName);
+        CONFIG.wolfSkin = Utils.checkNullString(CONFIG.wolfSkin, "pale");
         CONFIG.blazeName = Utils.checkNullString(CONFIG.blazeName);
         CONFIG.boggedName = Utils.checkNullString(CONFIG.boggedName);
         CONFIG.breezeName = Utils.checkNullString(CONFIG.breezeName);
@@ -1738,6 +1739,7 @@ public class Central {
         CONFIG.pillagerName = Utils.checkNullString(CONFIG.pillagerName);
         CONFIG.ravagerName = Utils.checkNullString(CONFIG.ravagerName);
         CONFIG.shulkerName = Utils.checkNullString(CONFIG.shulkerName);
+        CONFIG.shulkerSkin = Utils.checkNullString(CONFIG.shulkerSkin, "normal");
         CONFIG.silverfishName = Utils.checkNullString(CONFIG.silverfishName);
         CONFIG.skeletonName = Utils.checkNullString(CONFIG.skeletonName);
 
@@ -2058,7 +2060,7 @@ public class Central {
         CommandDispatcher dispatcher = (CommandDispatcher) obj;
         dispatcher.register(LiteralArgumentBuilder.literal("pethelp").executes(context -> {
         Minecraft.getInstance().execute(() -> {
-            Minecraft.getInstance().player.sendSystemMessage(Component.literal("""
+            Minecraft.getInstance().player.sendSystemMessage(Component.nullToEmpty("""
                     §b[PetsMod] §aPossible commands:\
                     
                     §a/pethelp: §rdisplays a list of commands\
@@ -2107,16 +2109,16 @@ public class Central {
             String uuid = player.getStringUUID();
             if (Objects.equals(preference, "off")) {
                 CONFIG.petOn = false;
-                player.sendSystemMessage(Component.literal("§b[PetsMod] §7Pet §coff."));
+                player.sendSystemMessage(Component.nullToEmpty("§b[PetsMod] §7Pet §coff."));
                 AutoConfig.getConfigHolder(PetsConfig.class).save();
                 NetworkManager.get().broadcastTogglePet(uuid, Utils.getActivePetName(), CONFIG.petOn);
             } else if (Objects.equals(preference, "on")) {
                 CONFIG.petOn = true;
                 AutoConfig.getConfigHolder(PetsConfig.class).save();
-                player.sendSystemMessage(Component.literal("§b[PetsMod] §7Pet §aon."));
+                player.sendSystemMessage(Component.nullToEmpty("§b[PetsMod] §7Pet §aon."));
                 NetworkManager.get().broadcastTogglePet(uuid, Utils.getActivePetName(), CONFIG.petOn);
             } else {
-                player.sendSystemMessage(Component.literal("§b[PetsMod] §c§lUnknown value " + preference + "! Possible values: §r§aon, §6off"));
+                player.sendSystemMessage(Component.nullToEmpty("§b[PetsMod] §c§lUnknown value " + preference + "! Possible values: §r§aon, §6off"));
             }
 
             return 1;
@@ -2173,14 +2175,14 @@ public class Central {
     public void checkValidPet(boolean isValid, CommandContext context, String species) {
         LocalPlayer player = Minecraft.getInstance().player;
         if (!isValid) {
-            player.sendSystemMessage(Component.literal("§b[PetsMod] §cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")"));
+            player.sendSystemMessage(Component.nullToEmpty("§b[PetsMod] §cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")"));
         } else if (isValid && CONFIG.petOn) {
             despawnPet();
-            player.sendSystemMessage(Component.literal("§b[PetsMod] §aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + "."));
+            player.sendSystemMessage(Component.nullToEmpty("§b[PetsMod] §aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + "."));
             NetworkManager.get().broadcastGeneral(Minecraft.getInstance().player.getStringUUID(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby);
             summonPet();
         } else if (isValid && !CONFIG.petOn) {
-            player.sendSystemMessage(Component.literal("§b[PetsMod] §cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet enabled. Run §l/pet on§r§c to change this."));
+            player.sendSystemMessage(Component.nullToEmpty("§b[PetsMod] §cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet enabled. Run §l/pet on§r§c to change this."));
         }
     }
 }
