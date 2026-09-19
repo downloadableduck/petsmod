@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "ably-realtime",
+  "version": "1.8.2",
+  "name": "Ably Realtime",
+  "description": "Ably is the realtime platform built for scale and reliability. Power live chat, messaging, and collaborative apps that never drop. Bundled with PetsMod.",
+  "authors": [
+    "Ably"
+  ],
+  "contact": {
+    "homepage": "https://ably.com",
+    "sources": "https://github.com/ably/ably-pubsub-java",
+    "issues": "https://github.com/ably/ably-pubsub-java/issues"
+  },
+  "license": "Apache 2.0",
+  "icon": "ably.png",
+  "environment": "client",
+
+  "custom": {
+    "modmenu": {
+      "parent": "pets-mod",
+      "badges": [ "library" ]
+    }
+  }
+}

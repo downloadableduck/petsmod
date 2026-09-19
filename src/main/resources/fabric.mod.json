@@ -46,7 +46,8 @@
   "custom": {
     "modmenu": {
       "links": {
-        "modmenu.modrinth": "https://modrinth.com/mod/pets-mod"
+        "modmenu.modrinth": "https://modrinth.com/mod/pets-mod",
+        "modmenu.curseforge": "https://www.curseforge.com/minecraft/mc-mods/pets-mod"
       }
     }
   }
