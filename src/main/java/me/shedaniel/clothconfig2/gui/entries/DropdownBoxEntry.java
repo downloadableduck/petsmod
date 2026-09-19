@@ -549,7 +549,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         }
         
         public DefaultSelectionCellCreator() {
-            this(r -> Component.literal(r.toString()));
+            this(r -> Component.nullToEmpty(r.toString()));
         }
         
         @Override
@@ -787,14 +787,14 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         
         @Override
         public Component getSearchTerm() {
-            return Component.literal(textFieldWidget.getValue());
+            return Component.nullToEmpty(textFieldWidget.getValue());
         }
         
         @Override
         public Optional<Component> getError() {
             if (toObjectFunction.apply(textFieldWidget.getValue()) != null)
                 return Optional.empty();
-            return Optional.of(Component.literal("Invalid Value!"));
+            return Optional.of(Component.nullToEmpty("Invalid Value!"));
         }
         
         @Override

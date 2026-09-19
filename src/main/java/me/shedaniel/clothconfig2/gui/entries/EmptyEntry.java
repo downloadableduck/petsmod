@@ -34,7 +34,7 @@ public class EmptyEntry extends AbstractConfigListEntry<Object> {
     private final int height;
     
     public EmptyEntry(int height) {
-        super(Component.literal(UUID.randomUUID().toString()), false);
+        super(Component.nullToEmpty(UUID.randomUUID().toString()), false);
         this.height = height;
     }
     

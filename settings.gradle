@@ -6,5 +6,6 @@ pluginManagement {
 		}
 		mavenCentral()
 		gradlePluginPortal()
+        maven {url 'https://repo.sleeping.town'}
 	}
 }
