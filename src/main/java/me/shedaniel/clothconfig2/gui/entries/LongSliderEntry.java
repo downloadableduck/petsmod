@@ -49,7 +49,7 @@ public class LongSliderEntry extends TooltipListEntry<Long> {
     protected final long orginial;
     private long minimum, maximum;
     private final Supplier<Long> defaultValue;
-    private Function<Long, Component> textGetter = value -> Component.literal(String.format("Value: %d", value));
+    private Function<Long, Component> textGetter = value -> Component.nullToEmpty(String.format("Value: %d", value));
     private final List<AbstractWidget> widgets;
     
     @ApiStatus.Internal

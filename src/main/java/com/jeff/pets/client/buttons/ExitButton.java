@@ -1,9 +1,11 @@
 package com.jeff.pets.client.buttons;
 
 import com.jeff.pets.client.PetsConfigScreen;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 
@@ -16,7 +18,7 @@ public class ExitButton extends Button {
     private final PetsConfigScreen screen;
 
     public ExitButton(PetsConfigScreen screen, int x, int y, int width, int height) {
-        super(x, y, width, height, Component.literal("<- Exit"), (_ -> screen.onClose()), Supplier::get);
+        super(x, y, width, height, Component.nullToEmpty("<- Exit"), (_ -> screen.onClose()), Supplier::get);
         this.screen = screen;
     }
 

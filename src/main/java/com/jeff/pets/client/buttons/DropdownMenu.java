@@ -16,6 +16,8 @@ import net.minecraft.util.FormattedCharSequence;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -33,7 +35,7 @@ public class DropdownMenu {
     PetsConfigScreen screen;
 
     public DropdownMenu(PetsConfigScreen screen, EnumImpl enumimpl, boolean isPet) {
-        this.values = new ArrayList<>(enumimpl.getAllValues());
+        this.values = new ArrayList<Enum>((Collection) Arrays.asList(enumimpl.getClass().getEnumConstants()));
         this.values.sort((e1, e2) -> e2.name().compareToIgnoreCase(e1.name()));
         this.color = screen.button.color;
         this.screen = screen;
@@ -74,7 +76,7 @@ public class DropdownMenu {
                 }
             }
             String formattedText = Utils.capitalize(value.toString().replaceAll("_", " "));
-            Component textComponent = Component.literal(formattedText);
+            Component textComponent = Component.nullToEmpty(formattedText);
             List<FormattedCharSequence> lines = font.split(textComponent, availableTextWidth);
 
             int lineCount = Math.max(1, lines.size());
@@ -108,6 +110,9 @@ public class DropdownMenu {
                 }
                 PetsConfigScreen petsConfigScreen = new PetsConfigScreen();
                 petsConfigScreen.ticks = 20;
+                if (Minecraft.getInstance().gui.screen() instanceof PetsConfigScreen petsConfigScreen1) {
+                    petsConfigScreen.size = petsConfigScreen1.size;
+                }
                 Minecraft.getInstance().gui.setScreen(null);
                 Minecraft.getInstance().gui.setScreen(petsConfigScreen);
             }

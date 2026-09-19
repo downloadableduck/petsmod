@@ -25,7 +25,7 @@ public class PetsPackSource extends BuiltInPackSource {
 
     @Override
     public Component getPackTitle(String id) {
-        return Component.literal("PetsMod Resources");
+        return Component.nullToEmpty("PetsMod Resources");
     }
 
     @Override
@@ -63,7 +63,7 @@ public class PetsPackSource extends BuiltInPackSource {
 
             PackLocationInfo locationInfo = new PackLocationInfo(
                     "pets-mod-resources",
-                    Component.literal("PetsMod Resources"),
+                    Component.nullToEmpty("PetsMod Resources"),
                     PackSource.BUILT_IN,
                     Optional.empty()
             );

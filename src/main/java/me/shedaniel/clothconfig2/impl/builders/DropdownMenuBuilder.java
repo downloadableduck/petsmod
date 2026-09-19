@@ -168,7 +168,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>,
         };
         
         public static <T> SelectionTopCellElement<T> of(T value, Function<String, T> toObjectFunction) {
-            return of(value, toObjectFunction, t -> Component.literal(t.toString()));
+            return of(value, toObjectFunction, t -> Component.nullToEmpty(t.toString()));
         }
         
         public static <T> SelectionTopCellElement<T> of(T value, Function<String, T> toObjectFunction, Function<T, Component> toTextFunction) {
@@ -176,7 +176,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>,
         }
         
         public static SelectionTopCellElement<Identifier> ofItemIdentifier(Item item) {
-            return new DefaultSelectionTopCellElement<Identifier>(BuiltInRegistries.ITEM.getKey(item), ITEM_IDENTIFIER_FUNCTION, identifier -> Component.literal(identifier.toString())) {
+            return new DefaultSelectionTopCellElement<Identifier>(BuiltInRegistries.ITEM.getKey(item), ITEM_IDENTIFIER_FUNCTION, identifier -> Component.nullToEmpty(identifier.toString())) {
                 @Override
                 public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
                     textFieldWidget.setX(x + 4);
@@ -192,7 +192,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>,
         }
         
         public static SelectionTopCellElement<Identifier> ofBlockIdentifier(Block block) {
-            return new DefaultSelectionTopCellElement<Identifier>(BuiltInRegistries.BLOCK.getKey(block), BLOCK_IDENTIFIER_FUNCTION, identifier -> Component.literal(identifier.toString())) {
+            return new DefaultSelectionTopCellElement<Identifier>(BuiltInRegistries.BLOCK.getKey(block), BLOCK_IDENTIFIER_FUNCTION, identifier -> Component.nullToEmpty(identifier.toString())) {
                 @Override
                 public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
                     textFieldWidget.setX(x + 4);
@@ -208,7 +208,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>,
         }
         
         public static SelectionTopCellElement<Item> ofItemObject(Item item) {
-            return new DefaultSelectionTopCellElement<Item>(item, ITEM_FUNCTION, i -> Component.literal(BuiltInRegistries.ITEM.getKey(i).toString())) {
+            return new DefaultSelectionTopCellElement<Item>(item, ITEM_FUNCTION, i -> Component.nullToEmpty(BuiltInRegistries.ITEM.getKey(i).toString())) {
                 @Override
                 public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
                     textFieldWidget.setX(x + 4);
@@ -224,7 +224,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>,
         }
         
         public static SelectionTopCellElement<Block> ofBlockObject(Block block) {
-            return new DefaultSelectionTopCellElement<Block>(block, BLOCK_FUNCTION, i -> Component.literal(BuiltInRegistries.BLOCK.getKey(i).toString())) {
+            return new DefaultSelectionTopCellElement<Block>(block, BLOCK_FUNCTION, i -> Component.nullToEmpty(BuiltInRegistries.BLOCK.getKey(i).toString())) {
                 @Override
                 public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
                     textFieldWidget.setX(x + 4);
@@ -455,7 +455,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>,
         }
         
         public static SelectionCellCreator<Item> ofItemObject(int cellHeight, int cellWidth, int maxItems) {
-            return new DefaultSelectionCellCreator<Item>(i -> Component.literal(BuiltInRegistries.ITEM.getKey(i).toString())) {
+            return new DefaultSelectionCellCreator<Item>(i -> Component.nullToEmpty(BuiltInRegistries.ITEM.getKey(i).toString())) {
                 @Override
                 public DropdownBoxEntry.SelectionCellElement<Item> create(Item selection) {
                     ItemStack s = new ItemStack(selection);
@@ -502,7 +502,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>,
         }
         
         public static SelectionCellCreator<Block> ofBlockObject(int cellHeight, int cellWidth, int maxItems) {
-            return new DefaultSelectionCellCreator<Block>(i -> Component.literal(BuiltInRegistries.BLOCK.getKey(i).toString())) {
+            return new DefaultSelectionCellCreator<Block>(i -> Component.nullToEmpty(BuiltInRegistries.BLOCK.getKey(i).toString())) {
                 @Override
                 public DropdownBoxEntry.SelectionCellElement<Block> create(Block selection) {
                     ItemStack s = new ItemStack(selection);

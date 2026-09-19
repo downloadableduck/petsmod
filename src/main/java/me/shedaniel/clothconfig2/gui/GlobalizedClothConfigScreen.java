@@ -329,7 +329,7 @@ public class GlobalizedClothConfigScreen extends AbstractConfigScreen implements
         private final Component text;
         
         public CategoryTextEntry(Component category, Component text) {
-            super(Component.literal(UUID.randomUUID().toString()), false);
+            super(Component.nullToEmpty(UUID.randomUUID().toString()), false);
             this.category = category;
             this.text = text;
         }
