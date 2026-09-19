@@ -1,0 +1,13 @@
+license="MIT"
+issueTrackerURL="https://github.com/tootallnate/java-websocket/issues"
+
+[[mods]]
+
+modId="java_websocket"
+version="1.6.0"
+displayName="Java Websocket"
+iconFile="websocket.png"
+authors="TooTallNate"
+description='''
+A barebones WebSocket client and server implementation written in 100% Java. Bundled with PetsMod.
+'''

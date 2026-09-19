@@ -106,7 +106,7 @@ public enum PetList implements NameableEnum, EnumImpl {
 
     @Override
     public Component getDisplayName() {
-        return Component.literal(String.valueOf(this).replace("_", " "));
+        return Component.nullToEmpty(String.valueOf(this).replace("_", " "));
     }
 
     @Override
