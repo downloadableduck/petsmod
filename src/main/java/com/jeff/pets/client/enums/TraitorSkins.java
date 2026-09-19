@@ -27,6 +27,6 @@ public enum TraitorSkins implements NameableEnum, EnumImpl {
 
     @Override
     public Component getDisplayName() {
-        return Component.literal(String.valueOf(this));
+        return Component.nullToEmpty(String.valueOf(this));
     }
 }

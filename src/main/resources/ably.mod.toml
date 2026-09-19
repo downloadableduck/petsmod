@@ -1,0 +1,14 @@
+license="Apache 2.0"
+issueTrackerURL="https://github.com/ably/ably-pubsub-java"
+
+[[mods]]
+
+modId="ably_realtime"
+version="1.8.2"
+displayName="Ably Realtime"
+displayURL="https://ably.com/"
+iconFile="ably.png"
+authors="Ably"
+description='''
+Ably is the realtime platform built for scale and reliability. Power live chat, messaging, and collaborative apps that never drop. Bundled with PetsMod.
+'''

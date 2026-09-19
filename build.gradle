@@ -1,3 +1,6 @@
+import java.nio.file.FileSystems
+import java.nio.file.Files
+
 plugins {
     id 'java-library'
     id 'maven-publish'
@@ -123,11 +126,11 @@ dependencies {
     //implementation "maven.modrinth:mod-menu-for-neoforge:17.0.1"
     //implementation "maven.modrinth:tpan:3.0.0+26.1"
     //implementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
-    jarJar 'io.ably:ably-java:1.2.40'
-    implementation 'io.ably:ably-java:1.2.40'
-    jarJar 'com.davidehrmann.vcdiff:vcdiff-core:0.1.1'
-    jarJar 'org.java-websocket:Java-WebSocket:1.6.0'
-    jarJar 'org.msgpack:msgpack-core:0.9.8'
+    jarJar "io.ably:ably-java:${project.ably_version}"
+    implementation "io.ably:ably-java:${project.ably_version}"
+    jarJar "com.davidehrmann.vcdiff:vcdiff-core:${project.vcdiff_version}"
+    jarJar "org.java-websocket:Java-WebSocket:${project.java_websocket_version}"
+    jarJar "org.msgpack:msgpack-core:${project.msgpack_version}"
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
@@ -203,4 +206,51 @@ tasks.named('jar') {
     archiveBaseName = "pets-mod"
     archiveVersion = project.mod_version
     archiveClassifier = project.minecraft_version + "-neo"
+    exclude 'ably.mod.toml'
+    exclude 'msgpack.mod.toml'
+    exclude 'vcdiff.mod.toml'
+    exclude 'websocket.mod.toml'
+    exclude 'assets/pets_mod/ably.png'
+    exclude 'assets/pets_mod/msgpack.png'
+    exclude 'assets/pets_mod/vcdiff.png'
+    exclude 'assets/pets_mod/websocket.png'
+}
+
+tasks.withType(Jar) {
+    File srcDir = project.sourceSets.main.resources.srcDirs.find { (it.name == "resources") }
+    def ably = project.ably_version
+    def msgpack = project.msgpack_version
+    def vcdiff = project.vcdiff_version
+    def websocket = project.java_websocket_version
+    doLast { ->
+        java.nio.file.Path jar = archiveFile.get().asFile.toPath()
+        Static.move("ably.mod.toml", "ably-java-${ably}.jar", jar, srcDir, "ably.png")
+        Static.move("msgpack.mod.toml", "msgpack-core-${msgpack}.jar", jar, srcDir, "msgpack.png")
+        Static.move("vcdiff.mod.toml", "vcdiff-core-${vcdiff}.jar", jar, srcDir, "vcdiff.png")
+        Static.move("websocket.mod.toml", "Java-WebSocket-${websocket}.jar", jar, srcDir, "websocket.png")
+    }
+}
+
+class Static {
+    static def move(String json, String jarName, java.nio.file.Path jar, File srcDir, String icon) {
+
+        File ablyJson = srcDir.toPath().resolve(json).toFile()
+        File iconFile = srcDir.toPath().resolve("assets").resolve("pets_mod").resolve(icon).toFile()
+
+        FileSystems.newFileSystem(jar, (ClassLoader) null).withCloseable { outerFs ->
+            java.nio.file.Path jarPath = outerFs.getPath("META-INF", "jarjar", jarName)
+
+            if (Files.exists(jarPath)) {
+                FileSystems.newFileSystem(jarPath, (ClassLoader) null).withCloseable { innerFs ->
+                    java.nio.file.Path metaInf = innerFs.getPath("META-INF")
+                    java.nio.file.Path jsonPath = metaInf.resolve("neoforge.mods.toml")
+                    java.nio.file.Path iconDest = innerFs.getPath(icon)
+
+                    Files.deleteIfExists(jsonPath)
+                    Files.copy(ablyJson.toPath(), jsonPath)
+                    Files.copy(iconFile.toPath(), iconDest)
+                }
+            }
+        }
+    }
 }

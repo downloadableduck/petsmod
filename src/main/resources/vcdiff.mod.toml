@@ -1,0 +1,13 @@
+license="Apache 2.0"
+issueTrackerURL="https://github.com/ehrmann/vcdiff-java/issues"
+
+[[mods]]
+
+modId="vcdiff"
+version="0.1.1"
+displayName="vcdiff"
+iconFile="vcdiff.png"
+authors="davidehrmann"
+description='''
+An Java encoder/decoder for the VCDIFF (RFC3284) format. A Java port of Google's open-vcdiff vcdiff (RFC3284) implementation. Bundled with PetsMod.
+'''
