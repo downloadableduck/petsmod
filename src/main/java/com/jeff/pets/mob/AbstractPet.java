@@ -192,7 +192,7 @@ public abstract class AbstractPet extends TamableAnimal {
      * Easier way to call {@link TamableAnimal#setCustomName} that takes a String rather than a {@link Component}
      */
     public void setName(String string) {
-        this.setCustomName(Component.literal(string));
+        this.setCustomName(Component.nullToEmpty(string));
     }
 
     public void wander() {

@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "java-websocket",
+  "version": "1.6.0",
+  "name": "Java Websocket",
+  "description": "A barebones WebSocket client and server implementation written in 100% Java. Bundled with PetsMod.",
+  "authors": [
+    "TooTallNate"
+  ],
+  "contact": {
+    "sources": "https://github.com/tootallnate/java-websocket",
+    "issues": "https://github.com/tootallnate/java-websocket/issues"
+  },
+  "license": "MIT",
+  "icon": "websocket.png",
+  "environment": "client",
+
+  "custom": {
+    "modmenu": {
+      "parent": "pets-mod",
+      "badges": [ "library" ]
+    }
+  }
+}

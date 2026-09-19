@@ -17,6 +17,6 @@ public enum TropicalFishSkins implements NameableEnum {
 
     @Override
     public Component getDisplayName() {
-        return Component.literal(String.valueOf(this).replace("_", " "));
+        return Component.nullToEmpty(String.valueOf(this).replace("_", " "));
     }
 }

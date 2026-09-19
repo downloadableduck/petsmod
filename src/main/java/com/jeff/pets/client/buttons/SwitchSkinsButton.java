@@ -18,7 +18,7 @@ public class SwitchSkinsButton extends Button {
     public boolean opened = false;
 
     public SwitchSkinsButton(PetsConfigScreen screen, int x, int y, int width, int height) {
-        super(x, y, width, height, Component.literal("⇆ Switch Skin"), (button) -> {
+        super(x, y, width, height, Component.nullToEmpty("⇆ Switch Skin"), (button) -> {
         }, Supplier::get);
         this.screen = screen;
     }
