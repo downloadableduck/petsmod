@@ -48,11 +48,6 @@ public class NetworkManager {
             String channelName = "petsmod:server:" + this.getIp(ip);
             this.log(channelName);
             channel = ably.channels.get(channelName);
-            try {
-                this.options.clientId = Minecraft.getInstance().player.getName().getString();
-            } catch (NullPointerException e) {
-                this.options.clientId = "Unknown";
-            }
             channel.subscribe("requestPetState", (message) -> {
                 try {
                     this.log("Received a request for current pet state");
@@ -208,7 +203,9 @@ public class NetworkManager {
 
     public void disconnect() {
         this.log("Disconnected.");
-        ably.close();
+        if (ably != null) {
+            ably.close();
+        }
     }
 
     public void broadcastGeneral(String playerUuid,
