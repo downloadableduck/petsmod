@@ -4,7 +4,7 @@ issueTrackerURL="https://github.com/ably/ably-pubsub-java"
 [[mods]]
 
 modId="ably_realtime"
-version="1.8.2"
+version="1.2.40"
 displayName="Ably Realtime"
 displayURL="https://ably.com/"
 iconFile="ably.png"
