@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "ably-realtime",
-  "version": "1.8.2",
+  "version": "1.2.40",
   "name": "Ably Realtime",
   "description": "Ably is the realtime platform built for scale and reliability. Power live chat, messaging, and collaborative apps that never drop. Bundled with PetsMod.",
   "authors": [
