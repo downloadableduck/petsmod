@@ -43,7 +43,7 @@ public class DropdownMenu {
     PetsConfigScreen screen;
 
     public DropdownMenu(PetsConfigScreen screen, EnumImpl enumimpl, boolean isPet) {
-        this.values = new ArrayList<>((Collection) Arrays.asList(enumimpl.getClass().getEnumConstants()));
+        this.values = new ArrayList<Enum>((Collection) Arrays.asList(enumimpl.getClass().getEnumConstants()));
         this.values.sort((e1, e2) -> e2.name().compareToIgnoreCase(e1.name()));
         this.color = screen.button.color;
         this.screen = screen;
