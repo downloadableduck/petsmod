@@ -26,9 +26,15 @@ public class ClientSquidRenderer extends PetRenderer<ClientSquid> {
     }
 
     @Override
+<<<<<<< HEAD
     protected void applyScale(@NotNull ClientSquid livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
             net.minecraft.client.render.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+=======
+    public void preRenderCallback(ClientSquid livingEntityRenderState, float f) {
+        if (livingEntityRenderState.isChild()) {
+            net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+>>>>>>> 908063cb (backport the 0.8.x updates to 1.8.9, as well as allow users to place and break blocks on top of the pet)
         }
     }
 

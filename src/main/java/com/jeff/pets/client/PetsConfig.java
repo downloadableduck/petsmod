@@ -163,4 +163,7 @@ public class PetsConfig implements ConfigData {
 
     public boolean isBaby;
     public String zombiePigmanName;
+
+    public boolean renderPetHitbox = true;
+    public boolean alwaysRenderNametag = false;
 }

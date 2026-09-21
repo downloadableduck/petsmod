@@ -1829,7 +1829,6 @@ public class Central implements ClientModInitializer {
                 "rabbit",
                 "racoon",
                 "sheep",
-                "shulker",
                 "silverfish", "skeleton", "slime", "snow golem",
                 "spider", "squid", "stingray",
                 "villager", "witch", "wither",

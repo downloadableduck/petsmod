@@ -23,23 +23,34 @@ public class ClientZombieVillagerRenderer extends PetRenderer<ClientZombieVillag
     }
 
     @Override
+<<<<<<< HEAD
     protected void applyScale(@NotNull ClientZombieVillager livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
             net.minecraft.client.render.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+=======
+    public void preRenderCallback(ClientZombieVillager livingEntityRenderState, float f) {
+        if (livingEntityRenderState.isChild()) {
+            net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+>>>>>>> 908063cb (backport the 0.8.x updates to 1.8.9, as well as allow users to place and break blocks on top of the pet)
         }
     }
 
     @Override
+<<<<<<< HEAD
     public Identifier getTextureLocation(ClientZombieVillager villagerRenderState) {
         if (Objects.equals(CONFIG.zombieVillagerSkin, "butcher")) {
+=======
+    public ResourceLocation getEntityTexture(ClientZombieVillager villagerRenderState) {
+        if (Objects.equals(villagerRenderState.petSkin, "butcher")) {
+>>>>>>> 908063cb (backport the 0.8.x updates to 1.8.9, as well as allow users to place and break blocks on top of the pet)
             return (BUTCHER_LOCATION);
-        } else if (Objects.equals(CONFIG.zombieVillagerSkin, "farmer")) {
+        } else if (Objects.equals(villagerRenderState.petSkin, "farmer")) {
             return (FARMER_LOCATION);
-        } else if (Objects.equals(CONFIG.zombieVillagerSkin, "librarian")) {
+        } else if (Objects.equals(villagerRenderState.petSkin, "librarian")) {
             return (LIBRARIAN_LOCATION);
-        } else if (Objects.equals(CONFIG.zombieVillagerSkin, "nitwit")) {
+        } else if (Objects.equals(villagerRenderState.petSkin, "nitwit")) {
             return (NITWIT_LOCATION);
-        } else if (Objects.equals(CONFIG.zombieVillagerSkin, "toolsmith") || Objects.equals(CONFIG.zombieVillagerSkin, "weaponsmith")) {
+        } else if (Objects.equals(villagerRenderState.petSkin, "toolsmith") || Objects.equals(villagerRenderState.petSkin, "weaponsmith")) {
             return (TOOLSMITH_LOCATION);
         }
         return NITWIT_LOCATION;

@@ -1,9 +1,13 @@
 package com.jeff.pets.client.rendering;
 
+import com.jeff.pets.client.PetsConfigScreen;
 import com.jeff.pets.mob.AbstractPet;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.entity.MobRenderer;
 import net.minecraft.client.render.platform.GlStateManager;
 import net.minecraft.entity.living.mob.MobEntity;
+
+import static com.jeff.pets.client.Central.CONFIG;
 
 /**
  * Used as a shared piece of code across all of the renderers. The main point of this class
@@ -23,5 +27,13 @@ public abstract class PetRenderer<D extends AbstractPet> extends MobRenderer<D> 
         }
         super.renderModel(entity, f, g, h, i, j, k);
         GlStateManager.popMatrix();
+    }
+
+    @Override
+    public boolean shouldRenderNameTag(D entity) {
+        if (CONFIG.alwaysRenderNametag && !(Minecraft.getInstance().screen instanceof PetsConfigScreen)) {
+            return true;
+        }
+        return super.shouldRenderNameTag(entity);
     }
 }

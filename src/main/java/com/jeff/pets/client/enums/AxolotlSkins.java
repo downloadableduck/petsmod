@@ -1,8 +1,11 @@
 package com.jeff.pets.client.enums;
 
-import net.minecraft.text.LiteralText;
+import com.google.common.collect.ImmutableList;
+import net.minecraft.util.IChatComponent; import net.minecraft.util.ChatComponentText;
 
-public enum AxolotlSkins implements NameableEnum {
+import java.util.List;
+
+public enum AxolotlSkins implements NameableEnum, EnumImpl {
     blue,
     brown,
     cyan,
@@ -10,7 +13,12 @@ public enum AxolotlSkins implements NameableEnum {
     pink;
 
     @Override
-    public LiteralText getDisplayName() {
-        return new LiteralText(String.valueOf(this).replace("_", " "));
+    public IChatComponent getDisplayName() {
+        return new ChatComponentText(String.valueOf(this).replace("_", " "));
+    }
+
+    @Override
+    public List<Enum> getAllValues() {
+        return ImmutableList.of(blue, brown, cyan, gold, pink);
     }
 }

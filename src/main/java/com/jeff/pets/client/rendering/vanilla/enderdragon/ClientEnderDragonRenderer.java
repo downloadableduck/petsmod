@@ -6,6 +6,7 @@ import net.minecraft.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
+import static com.jeff.pets.client.Central.stingray;
 
 
 public class ClientEnderDragonRenderer extends PetRenderer<ClientEnderDragon> {
@@ -15,10 +16,16 @@ public class ClientEnderDragonRenderer extends PetRenderer<ClientEnderDragon> {
     }
 
     @Override
+<<<<<<< HEAD
     protected void applyScale(@NotNull ClientEnderDragon livingEntityRenderState, float f) {
         super.applyScale(livingEntityRenderState, f);
         if (CONFIG.isBaby) {
             net.minecraft.client.render.platform.GlStateManager.scalef(0.25f, 0.25f, 0.25f);
+=======
+    public void preRenderCallback(ClientEnderDragon livingEntityRenderState, float f) {
+        if (livingEntityRenderState.isChild()) {
+            net.minecraft.client.renderer.GlStateManager.scalef(0.25f, 0.25f, 0.25f);
+>>>>>>> 908063cb (backport the 0.8.x updates to 1.8.9, as well as allow users to place and break blocks on top of the pet)
         }
     }
 

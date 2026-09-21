@@ -26,6 +26,6 @@ public class ClientCreeperRenderer extends PetRenderer<ClientCreeper> {
     @Override
     public void renderModel(ClientCreeper creeper, float f, float g, float h, float i, float j, float k) {
         super.renderModel(creeper, f, g, h, i, j, k);
-        creeper.isPowered = Objects.equals(CONFIG.creeperSkin, "charged");
+        creeper.isPowered = Objects.equals(creeper.petSkin, "charged");
     }
 }

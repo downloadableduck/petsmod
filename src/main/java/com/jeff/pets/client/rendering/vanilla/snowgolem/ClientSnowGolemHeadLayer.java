@@ -26,8 +26,13 @@ public class ClientSnowGolemHeadLayer implements EntityRenderLayer<ClientSnowGol
 
     @Override
     public void render(ClientSnowGolem snowGolem, float f, float g, float h, float i, float j, float k, float l) {
+<<<<<<< HEAD
         if (CONFIG.snowGolemSkin.equals("pumpkin_on")) {
 boolean bl = false;
+=======
+        if (snowGolem.petSkin.equals("pumpkin_on")) {
+            boolean bl = false;
+>>>>>>> 908063cb (backport the 0.8.x updates to 1.8.9, as well as allow users to place and break blocks on top of the pet)
             if (!snowGolem.isInvisible() || bl) {
                 net.minecraft.client.render.platform.GlStateManager.pushMatrix();
                 //this.getContextModel().method_2834().rotate(poseStack);

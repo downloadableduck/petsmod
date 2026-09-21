@@ -16,15 +16,26 @@ public class ClientCatRenderer extends PetRenderer {
     }
 
     @Override
+<<<<<<< HEAD
     protected void applyScale(LivingEntity state, float f) {
         if (CONFIG.isBaby) {
             net.minecraft.client.render.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+=======
+    public void preRenderCallback(ClientCat state, float f) {
+        if (state.isChild()) {
+            net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+>>>>>>> 908063cb (backport the 0.8.x updates to 1.8.9, as well as allow users to place and break blocks on top of the pet)
         }
     }
 
     @Override
+<<<<<<< HEAD
     public @NotNull Identifier getTextureLocation(Entity livingEntityRenderState) {
         switch (CONFIG.catSkin) {
+=======
+    public ResourceLocation getEntityTexture(ClientCat livingEntityRenderState) {
+        switch (livingEntityRenderState.petSkin) {
+>>>>>>> 908063cb (backport the 0.8.x updates to 1.8.9, as well as allow users to place and break blocks on top of the pet)
             case "black":
                 return new Identifier("minecraft", "textures/entity/cat/all_black.png");
             case "tuxedo":

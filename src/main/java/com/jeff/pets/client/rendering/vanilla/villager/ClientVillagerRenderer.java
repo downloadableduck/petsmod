@@ -25,23 +25,34 @@ public class ClientVillagerRenderer extends PetRenderer<ClientVillager> {
     }
 
     @Override
+<<<<<<< HEAD
     protected void applyScale(ClientVillager state, float f) {
         if (CONFIG.isBaby) {
             net.minecraft.client.render.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+=======
+    public void preRenderCallback(ClientVillager state, float f) {
+        if (state.isChild()) {
+            net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+>>>>>>> 908063cb (backport the 0.8.x updates to 1.8.9, as well as allow users to place and break blocks on top of the pet)
         }
     }
 
     @Override
+<<<<<<< HEAD
     public Identifier getTextureLocation(ClientVillager villagerRenderState) {
         if (Objects.equals(CONFIG.villagerSkin, "butcher")) {
+=======
+    public ResourceLocation getEntityTexture(ClientVillager villagerRenderState) {
+        if (Objects.equals(villagerRenderState.petSkin, "butcher")) {
+>>>>>>> 908063cb (backport the 0.8.x updates to 1.8.9, as well as allow users to place and break blocks on top of the pet)
             return (BUTCHER_LOCATION);
-        } else if (Objects.equals(CONFIG.villagerSkin, "farmer")) {
+        } else if (Objects.equals(villagerRenderState.petSkin, "farmer")) {
             return (FARMER_LOCATION);
-        } else if (Objects.equals(CONFIG.villagerSkin, "librarian")) {
+        } else if (Objects.equals(villagerRenderState.petSkin, "librarian")) {
             return (LIBRARIAN_LOCATION);
-        } else if (Objects.equals(CONFIG.villagerSkin, "nitwit")) {
+        } else if (Objects.equals(villagerRenderState.petSkin, "nitwit")) {
             return (NITWIT_LOCATION);
-        } else if (Objects.equals(CONFIG.villagerSkin, "toolsmith") || Objects.equals(CONFIG.villagerSkin, "weaponsmith")) {
+        } else if (Objects.equals(villagerRenderState.petSkin, "toolsmith") || Objects.equals(villagerRenderState.petSkin, "weaponsmith")) {
             return (TOOLSMITH_LOCATION);
         }
         return NITWIT_LOCATION;

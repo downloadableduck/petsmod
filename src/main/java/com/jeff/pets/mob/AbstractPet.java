@@ -1,5 +1,6 @@
 package com.jeff.pets.mob;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.living.attribute.EntityAttributes;
 import net.minecraft.entity.living.LivingEntity;
 import net.minecraft.entity.living.mob.passive.PassiveEntity;
@@ -267,5 +268,12 @@ public abstract class AbstractPet extends TameableEntity {
     @Override
     public boolean isTamed() {
         return true;
+    }
+
+    @Override
+    public boolean canBeCollidedWith() {
+        PlayerEntity player = Minecraft.getInstance().player;
+        ItemStack itemStack = player.func_70694_bm();
+        return itemStack == null;
     }
 }

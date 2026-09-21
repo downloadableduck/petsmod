@@ -1,0 +1,397 @@
+package com.jeff.pets.client.network;
+
+import com.google.gson.Gson;
+import com.jeff.pets.client.Utils;
+import com.jeff.pets.client.network.payload.*;
+import com.jeff.pets.mob.AbstractPet;
+import io.ably.lib.realtime.AblyRealtime;
+import io.ably.lib.realtime.Channel;
+import io.ably.lib.types.AblyException;
+import io.ably.lib.types.ClientOptions;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.launchwrapper.Launch;
+import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static com.jeff.pets.client.Central.CONFIG;
+import static com.jeff.pets.client.network.PetsNetworked.LOGGER;
+
+public class NetworkManager {
+
+    private static final NetworkManager INSTANCE = new NetworkManager();
+    public static Map<UUID, AbstractPet> map = new ConcurrentHashMap<>();
+    private final Gson GSON = new Gson();
+    private AblyRealtime ably;
+    private Channel channel;
+    private ClientOptions options;
+    private static long delay = 200;
+    private static long lastMessage = 0;
+
+    public static NetworkManager get() {
+        return INSTANCE;
+    }
+
+    public void connect(String ip) {
+        this.log("Connected");
+        try {
+            ably = new AblyRealtime(this.options);
+            String channelName = "petsmod:server:" + this.getIp(ip);
+            this.log(channelName);
+            channel = ably.channels.get(channelName);
+            channel.subscribe("requestPetState", (message) -> {
+                try {
+                    this.log("Received a request for current pet state");
+                    Minecraft.getInstance().addScheduledTask(() -> {
+                        this.broadcastGeneral(Minecraft.getInstance().player.getGameProfile().getId().toString(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby);
+                    });
+                } catch (Throwable t) {
+                    this.log(t);
+                }
+            });
+
+            channel.subscribe("pets_general", (message) -> {
+                try {
+                    String json = (String) message.data;
+                    GeneralPetsPayload payload = GSON.fromJson(json, GeneralPetsPayload.class);
+                    if (this.isMe(payload.uuid)) return;
+                    this.log("Received packet: {}", message.data);
+                    Minecraft.getInstance().addScheduledTask(() -> {
+                        AbstractPet pet = Utils.getPet(payload.petSpecies);
+                        EntityPlayer player = Minecraft.getInstance().world.getPlayerEntityByUUID(payload.playerUUID);
+                        AbstractPet entity = map.get(player.getGameProfile().getId());
+                        if (entity != null) {
+                            Utils.despawnEntity(entity);
+                        }
+                        if (player.getGameProfile().getId().equals(payload.playerUUID)) {
+                            Utils.summonPet(pet, payload.petName, player);
+                            pet.petSkin = payload.petSkin;
+                            pet.setBaby(payload.isBaby);
+                            this.put(player.getGameProfile().getId(), pet);
+                        }
+                    });
+                } catch (Exception e) {
+                    this.log(e);
+                }
+            });
+            channel.subscribe("pets_skin_change", (message) -> {
+                try {
+                    String json = (String) message.data;
+                    ChangePetSkinPayload payload = GSON.fromJson(json, ChangePetSkinPayload.class);
+                    if (this.isMe(payload.uuid)) return;
+                    Minecraft.getInstance().addScheduledTask(() -> {
+                        AbstractPet pet = map.get(UUID.fromString(payload.uuid));
+                        if (!Objects.equals(payload.petSkin, "baby") && !Objects.equals(payload.petSkin, "adult")) {
+                            pet.petSkin = payload.petSkin;
+                            this.log("Received pet skin packet: {}", message.data + " pet skin is now: " + pet.petSkin);
+                        } else {
+                            pet.setBaby(Objects.equals(payload.petSkin, "baby"));
+                        }
+                    });
+                } catch (Exception e) {
+                    this.log(e);
+                }
+            });
+            channel.subscribe("pets_name_change", message -> {
+                try {
+                    String json = (String) message.data;
+                    ChangePetNamePayload payload = GSON.fromJson(json, ChangePetNamePayload.class);
+                    if (this.isMe(payload.uuid)) return;
+                    Minecraft.getInstance().addScheduledTask(() -> {
+                        AbstractPet pet = map.get(UUID.fromString(payload.uuid));
+                        pet.setName(payload.petName);
+                    });
+                } catch (Exception e) {
+                    this.log(e);
+                }
+            });
+            channel.subscribe("teleport_pet", message -> {
+                try {
+                    String json = (String) message.data;
+                    TeleportPetPayload payload = GSON.fromJson(json, TeleportPetPayload.class);
+                    if (this.isMe(payload.uuid)) return;
+                    Minecraft.getInstance().addScheduledTask(() -> {
+                        AbstractPet pet = map.get(UUID.fromString(payload.uuid));
+                        pet.setPositionAndUpdate(payload.x, payload.y, payload.z);
+                    });
+                } catch (Exception e) {
+                    this.log(e);
+                }
+            });
+            channel.subscribe("toggle_pet", message -> {
+                try {
+                    String json = (String) message.data;
+                    TogglePetPayload payload = GSON.fromJson(json, TogglePetPayload.class);
+                    if (this.isMe(payload.uuid)) return;
+                    this.log("Received toggle pet payload: {}", payload);
+                    Minecraft.getInstance().addScheduledTask(() -> {
+                        AbstractPet pet = map.get(UUID.fromString(payload.uuid));
+                        if (payload.on) {
+                            EntityPlayer player = Minecraft.getInstance().world.getPlayerEntityByUUID(UUID.fromString(payload.uuid));
+                            if (player.getGameProfile().getId().equals(Minecraft.getInstance().player.getGameProfile().getId())) return;
+                            if (player.getGameProfile().getId().equals(UUID.fromString(payload.uuid))) {
+                                Utils.summonPet(pet, payload.petName, player);
+                                this.put(player.getGameProfile().getId(), pet);
+                            }
+                        } else {
+                            Utils.despawnEntity(pet);
+                        }
+                    });
+                } catch (Exception e) {
+                    this.log(e);
+                }
+            });
+            channel.subscribe("toggle_baby", message -> {
+                try {
+                    String json = (String) message.data;
+                    ToggleBabyPayload payload = GSON.fromJson(json, ToggleBabyPayload.class);
+                    EntityPlayer player = Minecraft.getInstance().world.getPlayerEntityByUUID(UUID.fromString(payload.uuid));
+                    if (this.isMe(payload.uuid)) return;
+                    this.log("Received baby toggle payload: {}", payload);
+                    AbstractPet pet = map.get(player);
+                    pet.setBaby(payload.isBaby);
+                } catch (Exception e) {
+                    this.log(e);
+                }
+            });
+
+            channel.subscribe("put_on_head", message -> {
+                try {
+                    String json = (String) message.data;
+                    PutPetOnHeadPayload payload = GSON.fromJson(json, PutPetOnHeadPayload.class);
+                    EntityPlayer player = Minecraft.getInstance().world.getPlayerEntityByUUID(UUID.fromString(payload.uuid));
+                    if (this.isMe(payload.uuid)) return;
+                    this.log("Received put on head packet: {}", payload);
+                    AbstractPet pet = map.get(player);
+                    if (payload.onHead) {
+                        //pet.startRiding(player);
+                    } else {
+                        //pet.stopRiding();
+                    }
+                } catch (Exception e) {
+                    this.log(e);
+                }
+            });
+
+            channel.subscribe("bye", message -> {
+                try {
+                    String uuid = (String) message.data;
+                    this.log("Received goodbye packet from: " + uuid);
+                    Minecraft.getInstance().addScheduledTask(() -> {
+                        AbstractPet pet = map.get(UUID.fromString(uuid));
+                        pet.remove();
+                    });
+                } catch (Exception e) {
+                    this.log(e);
+                }
+            });
+
+            this.requestPetState();
+        } catch (AblyException e) {
+            this.log(e.getMessage());
+        }
+    }
+
+    public void disconnect() {
+        this.log("Disconnected.");
+        if (ably != null) {
+            ably.close();
+        }
+    }
+
+    public void broadcastGeneral(String playerUuid,
+                                 boolean petOn, String petSpecies, String petName,
+                                 String petSkin, boolean isBaby) {
+        if (shouldReturn()) return;
+        if (channel != null) {
+            GeneralPetsPayload payload = new GeneralPetsPayload(playerUuid, petOn, petSpecies, petName, petSkin, isBaby);
+            String jsonPayload = GSON.toJson(payload);
+
+            try {
+                channel.publish("pets_general", jsonPayload);
+                this.log("Sent general packet: {}", jsonPayload);
+            } catch (AblyException e) {
+                this.log(e.getMessage());
+            }
+        }
+    }
+
+    public void broadcastChangePetSkin(String uuid, String petSkin) {
+        if (shouldReturn()) return;
+        if (channel != null) {
+            ChangePetSkinPayload payload = new ChangePetSkinPayload(uuid, petSkin);
+            String jsonPayload = GSON.toJson(payload);
+
+            try {
+                channel.publish("pets_skin_change", jsonPayload);
+                this.log("Sent pet skin packet: {}", jsonPayload);
+            } catch (AblyException e) {
+                this.log(e.getMessage());
+            }
+        }
+    }
+
+    public void broadcastChangePetName(String uuid, String petName) {
+        if (shouldReturn()) return;
+        if (channel != null) {
+            ChangePetNamePayload payload = new ChangePetNamePayload(uuid, petName);
+            String jsonPayload = GSON.toJson(payload);
+
+            try {
+                channel.publish("pets_name_change", jsonPayload);
+                this.log("Sent pet name packet: {}", jsonPayload);
+            } catch (AblyException e) {
+                this.log(e.getMessage());
+            }
+        }
+    }
+
+    public void broadcastTeleportPet(String uuid, double x, double y, double z) {
+        if (shouldReturn()) return;
+        if (channel != null) {
+            TeleportPetPayload payload = new TeleportPetPayload(uuid, x, y, z);
+            String jsonPayload = GSON.toJson(payload);
+
+            try {
+                channel.publish("teleport_pet", jsonPayload);
+                this.log("Sent pet teleport packet: {}", jsonPayload);
+            } catch (AblyException e) {
+                this.log(e.getMessage());
+            }
+        }
+    }
+
+    public void broadcastTogglePet(String uuid, String petName, boolean petOn) {
+        if (shouldReturn()) return;
+        if (channel != null) {
+            TogglePetPayload payload = new TogglePetPayload(uuid, petOn, petName);
+            String jsonPayload = GSON.toJson(payload);
+
+            try {
+                channel.publish("toggle_pet", jsonPayload);
+                this.log("Sent toggle pet packet: {}", jsonPayload);
+            } catch (AblyException e) {
+                this.log(e.getMessage());
+            }
+        }
+    }
+    
+    public void put(UUID uuid, AbstractPet pet) {
+        map.put(uuid, pet);
+    }
+
+    public NetworkManager() {
+        this.options = new ClientOptions();
+        this.options.authUrl = "https://petsmod.downloadableduck.workers.dev";
+        this.options.echoMessages = false;
+        this.options.logLevel = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment") ? 2 : 0;
+    }
+
+    private String getIp(String ip) {
+        if (ip == null || ip.isEmpty()) {
+            return "singleplayer";
+        }
+
+        String address = ip.split(":")[0].toLowerCase().trim();
+
+        Pattern pattern = Pattern.compile("([^.]+?\\.(?:co\\.[a-z]{2}|[a-z]{2,}))(?::\\d+)?$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(address);
+
+        if (matcher.find()) {
+            address = matcher.group(1);
+        }
+        return address.replaceAll("[^a-zA-Z0-9]", "_");
+    }
+
+    public void requestPetState() {
+        if (shouldReturn()) return;
+        if (channel != null) {
+            try {
+                channel.publish("requestPetState", "string");
+                this.log("Sent a request for the pet state.");
+            } catch (AblyException e) {
+                this.log(e.getMessage());
+            }
+        }
+    }
+
+    public void broadcastToggleBaby(String uuid, boolean isBaby) {
+        if (shouldReturn()) return;
+        if (channel != null) {
+            try {
+                channel.publish("toggle_baby", new ToggleBabyPayload(uuid, isBaby));
+            } catch (AblyException e) {
+                this.log(e.getMessage());
+            }
+        }
+    }
+
+    public void broadcastHeadPayload(String uuid, boolean onHead) {
+        if (shouldReturn()) return;
+        if (channel != null) {
+            try {
+                channel.publish("put_on_head", new PutPetOnHeadPayload(uuid, onHead));
+            } catch (AblyException e) {
+                this.log(e.getMessage());
+            }
+        }
+    }
+
+    public void sayByeBye() {
+        if (shouldReturn()) return;
+        if (channel != null) {
+            try {
+                channel.publish("bye", Minecraft.getInstance().player.getGameProfile().getId().toString());
+            } catch (Exception e) {
+                this.log(e.getMessage());
+            }
+        }
+    }
+
+    public boolean isMe(UUID uuid) {
+        try {
+            return Minecraft.getInstance().player.getGameProfile().getId().equals(uuid);
+        } catch (NullPointerException e) {
+            return true;
+        }
+    }
+
+    public boolean isMe(String uuid) {
+        return this.isMe(UUID.fromString(uuid));
+    }
+    
+    public void log(String string, Object ... optionals) {
+        if ((Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment")) {
+            String message2 = string;
+            for (Object arg : optionals) {
+                message2 = message2.replaceFirst("\\{\\}", String.valueOf(arg));
+            }
+            LOGGER.info(message2);
+        }
+    }
+
+    public void log(Throwable e) {
+        this.log("", e);
+    }
+
+    protected boolean shouldReturn() {
+        long time = System.currentTimeMillis();
+        boolean shouldReturn = false;
+        if (time - lastMessage < delay) {
+            shouldReturn = true;
+        }
+        if (channel == null) {
+            lastMessage = time;
+            shouldReturn = true;
+            return shouldReturn;
+        }
+        lastMessage = time;
+        return shouldReturn;
+    }
+}
