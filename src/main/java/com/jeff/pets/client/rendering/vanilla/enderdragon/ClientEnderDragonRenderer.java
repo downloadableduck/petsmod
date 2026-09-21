@@ -5,6 +5,7 @@ import com.jeff.pets.mob.vanilla.boss.ClientEnderDragon;
 import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
+import static com.jeff.pets.client.Central.stingray;
 
 
 public class ClientEnderDragonRenderer extends PetRenderer<ClientEnderDragon, ClientEnderDragonModel> {
@@ -15,7 +16,7 @@ public class ClientEnderDragonRenderer extends PetRenderer<ClientEnderDragon, Cl
 
     @Override
     public void preRenderCallback(ClientEnderDragon livingEntityRenderState, float f) {
-        if (CONFIG.isBaby) {
+        if (livingEntityRenderState.isChild()) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.25f, 0.25f, 0.25f);
         }
 

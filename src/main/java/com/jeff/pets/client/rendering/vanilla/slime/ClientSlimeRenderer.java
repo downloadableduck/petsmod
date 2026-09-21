@@ -17,7 +17,7 @@ public class ClientSlimeRenderer extends PetRenderer<ClientSlime, ModelSlime> {
     @Override
     public void preRenderCallback(ClientSlime slimeRenderState, float f) {
         int slimeScale;
-        switch (CONFIG.slimeSkin) {
+        switch (slimeRenderState.petSkin) {
             case "small":
                 slimeScale = 1;
                 break;

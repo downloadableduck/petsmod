@@ -14,7 +14,7 @@ public class ClientZombieRenderer extends PetRenderer<ClientZombie, ClientZombie
 
     @Override
     public void preRenderCallback(ClientZombie livingEntityRenderState, float f) {
-        if (CONFIG.isBaby) {
+        if (livingEntityRenderState.isChild()) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
 

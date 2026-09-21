@@ -25,7 +25,7 @@ public class ClientSnowGolemHeadLayer implements LayerRenderer<ClientSnowGolem> 
     }
 
     public void render(ClientSnowGolem snowGolem, float f, float g, float h, float i, float j, float k, float l) {
-        if (CONFIG.snowGolemSkin.equals("pumpkin_on")) {
+        if (snowGolem.petSkin.equals("pumpkin_on")) {
             boolean bl = false;
             if (!snowGolem.isInvisible() || bl) {
                 net.minecraft.client.renderer.GlStateManager.pushMatrix();

@@ -1,7 +1,11 @@
 package com.jeff.pets.client.enums;
 
+import com.google.common.collect.ImmutableList;
+import net.minecraft.util.IChatComponent; import net.minecraft.util.ChatComponentText;
 
-public enum HorseSkins implements NameableEnum {
+import java.util.List;
+
+public enum HorseSkins implements NameableEnum, EnumImpl {
     black,
     brown,
     chestnut,
@@ -13,7 +17,12 @@ public enum HorseSkins implements NameableEnum {
     zombie;
 
     @Override
-    public net.minecraft.util.IChatComponent getDisplayName() {
-        return new net.minecraft.util.ChatComponentText(String.valueOf(this).replace("_", " "));
+    public IChatComponent getDisplayName() {
+        return new ChatComponentText(String.valueOf(this).replace("_", " "));
+    }
+
+    @Override
+    public List<Enum> getAllValues() {
+        return ImmutableList.of(black, brown, chestnut, creamy, dark_brown, gray, skeleton, white, zombie);
     }
 }

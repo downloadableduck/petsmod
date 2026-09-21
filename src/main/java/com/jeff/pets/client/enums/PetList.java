@@ -1,7 +1,11 @@
 package com.jeff.pets.client.enums;
 
+import com.google.common.collect.ImmutableList;
+import net.minecraft.util.IChatComponent; import net.minecraft.util.ChatComponentText;
 
-public enum PetList implements NameableEnum {
+import java.util.List;
+
+public enum PetList implements NameableEnum, EnumImpl {
     bat,
     blaze,
     cat,
@@ -47,7 +51,12 @@ public enum PetList implements NameableEnum {
     zombie_pigman;
 
     @Override
-    public net.minecraft.util.IChatComponent getDisplayName() {
-        return new net.minecraft.util.ChatComponentText(String.valueOf(this).replace("_", " "));
+    public IChatComponent getDisplayName() {
+        return new ChatComponentText(String.valueOf(this).replace("_", " "));
+    }
+
+    @Override
+    public List<Enum> getAllValues() {
+        return ImmutableList.of();
     }
 }

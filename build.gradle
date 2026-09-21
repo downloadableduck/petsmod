@@ -8,6 +8,11 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
     }
 }
+
+plugins {
+    id 'com.github.johnrengelman.shadow' version '4.0.4'
+}
+
 apply plugin: 'java'
 configurations {
     compile
@@ -52,6 +57,15 @@ dependencies {
     implementation("maven.modrinth:mixinbooter:11.17") {
         transitive = true
     }
+
+   // include "io.ably:ably-java:${project.ably_version}"
+    implementation "io.ably:ably-java:${project.ably_version}"
+    implementation "com.davidehrmann.vcdiff:vcdiff-core:${project.vcdiff_version}"
+    implementation "org.java-websocket:Java-WebSocket:${project.java_websocket_version}"
+    implementation "org.msgpack:msgpack-core:${project.msgpack_version}"
+   // include "com.davidehrmann.vcdiff:vcdiff-core:${project.vcdiff_version}"
+   // include "org.java-websocket:Java-WebSocket:${project.java_websocket_version}"
+   // include "org.msgpack:msgpack-core:${project.msgpack_version}"
 }
 
 processResources {
@@ -88,4 +102,21 @@ jar {
 
 tasks.withType(JavaCompile).configureEach {
     options.compilerArgs << "-Xmaxerrs" << "5000"
+}
+
+shadowJar {
+    exclude 'module-info.class'
+    exclude 'META-INF/versions/**'
+    dependencies {
+        include(dependency("io.ably:ably-java:${project.ably_version}"))
+        include(dependency("com.davidehrmann.vcdiff:vcdiff-core:${project.vcdiff_version}"))
+        include(dependency("org.java-websocket:Java-WebSocket:${project.java_websocket_version}"))
+        include(dependency("org.msgpack:msgpack-core:${project.msgpack_version}"))
+    }
+}
+
+reobf {
+    shadowJar {
+
+    }
 }

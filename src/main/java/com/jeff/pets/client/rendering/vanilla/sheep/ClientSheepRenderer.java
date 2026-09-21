@@ -15,7 +15,7 @@ public class ClientSheepRenderer extends PetRenderer<ClientSheep, ClientSheepMod
 
     @Override
     public void preRenderCallback(ClientSheep livingEntityRenderState, float f) {
-        if (CONFIG.isBaby) {
+        if (livingEntityRenderState.isChild()) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
 

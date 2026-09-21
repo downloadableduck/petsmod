@@ -23,7 +23,7 @@ public class ClientVillagerRenderer extends PetRenderer<ClientVillager, ModelVil
 
     @Override
     public void preRenderCallback(ClientVillager state, float f) {
-        if (CONFIG.isBaby) {
+        if (state.isChild()) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
 
@@ -31,15 +31,15 @@ public class ClientVillagerRenderer extends PetRenderer<ClientVillager, ModelVil
 
     @Override
     public ResourceLocation getEntityTexture(ClientVillager villagerRenderState) {
-        if (Objects.equals(CONFIG.villagerSkin, "butcher")) {
+        if (Objects.equals(villagerRenderState.petSkin, "butcher")) {
             return (BUTCHER_LOCATION);
-        } else if (Objects.equals(CONFIG.villagerSkin, "farmer")) {
+        } else if (Objects.equals(villagerRenderState.petSkin, "farmer")) {
             return (FARMER_LOCATION);
-        } else if (Objects.equals(CONFIG.villagerSkin, "librarian")) {
+        } else if (Objects.equals(villagerRenderState.petSkin, "librarian")) {
             return (LIBRARIAN_LOCATION);
-        } else if (Objects.equals(CONFIG.villagerSkin, "nitwit")) {
+        } else if (Objects.equals(villagerRenderState.petSkin, "nitwit")) {
             return (NITWIT_LOCATION);
-        } else if (Objects.equals(CONFIG.villagerSkin, "toolsmith") || Objects.equals(CONFIG.villagerSkin, "weaponsmith")) {
+        } else if (Objects.equals(villagerRenderState.petSkin, "toolsmith") || Objects.equals(villagerRenderState.petSkin, "weaponsmith")) {
             return (TOOLSMITH_LOCATION);
         }
         return NITWIT_LOCATION;

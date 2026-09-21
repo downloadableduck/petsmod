@@ -1,12 +1,22 @@
 package com.jeff.pets.client.enums;
 
+import net.minecraft.util.ChatComponentText;
+import com.google.common.collect.ImmutableList;
+import net.minecraft.util.IChatComponent; import net.minecraft.util.ChatComponentText;
 
-public enum CamelSkins implements NameableEnum {
+import java.util.List;
+
+public enum CamelSkins implements NameableEnum, EnumImpl {
     camel,
     husk;
 
     @Override
-    public net.minecraft.util.IChatComponent getDisplayName() {
-        return new net.minecraft.util.ChatComponentText(String.valueOf(this).replace("_", " "));
+    public IChatComponent getDisplayName() {
+        return new ChatComponentText(String.valueOf(this).replace("_", " "));
+    }
+
+    @Override
+    public List<Enum> getAllValues() {
+        return ImmutableList.of(camel, husk);
     }
 }

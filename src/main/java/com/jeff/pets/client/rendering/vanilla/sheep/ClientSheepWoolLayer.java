@@ -25,37 +25,37 @@ public class ClientSheepWoolLayer implements LayerRenderer<ClientSheep> {
     @Override
     public void render(ClientSheep sheep, float p_212842_2_, float p_212842_3_, float p_212842_4_, float p_212842_5_, float p_212842_6_, float p_212842_7_, float p_212842_8_) {
         this.renderer.bindTexture(new ResourceLocation("minecraft", "textures/entity/sheep/sheep_fur.png"));
-        if (Objects.equals(CONFIG.sheepSkin, "white")) {
+        if (Objects.equals(sheep.petSkin, "white")) {
             woolColor = 15132390;
-        } else if (Objects.equals(CONFIG.sheepSkin, "orange")) {
+        } else if (Objects.equals(sheep.petSkin, "orange")) {
             woolColor = 12214293;
-        } else if (Objects.equals(CONFIG.sheepSkin, "magenta")) {
+        } else if (Objects.equals(sheep.petSkin, "magenta")) {
             woolColor = 9779853;
-        } else if (Objects.equals(CONFIG.sheepSkin, "light_blue")) {
+        } else if (Objects.equals(sheep.petSkin, "light_blue")) {
             woolColor = 2852515;
-        } else if (Objects.equals(CONFIG.sheepSkin, "yellow")) {
+        } else if (Objects.equals(sheep.petSkin, "yellow")) {
             woolColor = 12493357;
-        } else if (Objects.equals(CONFIG.sheepSkin, "lime")) {
+        } else if (Objects.equals(sheep.petSkin, "lime")) {
             woolColor = 6329623;
-        } else if (Objects.equals(CONFIG.sheepSkin, "pink")) {
+        } else if (Objects.equals(sheep.petSkin, "pink")) {
             woolColor = 11954303;
-        } else if (Objects.equals(CONFIG.sheepSkin, "gray")) {
+        } else if (Objects.equals(sheep.petSkin, "gray")) {
             woolColor = 3488573;
-        } else if (Objects.equals(CONFIG.sheepSkin, "light_gray")) {
+        } else if (Objects.equals(sheep.petSkin, "light_gray")) {
             woolColor = 7697777;
-        } else if (Objects.equals(CONFIG.sheepSkin, "cyan")) {
+        } else if (Objects.equals(sheep.petSkin, "cyan")) {
             woolColor = 1078645;
-        } else if (Objects.equals(CONFIG.sheepSkin, "purple")) {
+        } else if (Objects.equals(sheep.petSkin, "purple")) {
             woolColor = 6694282;
-        } else if (Objects.equals(CONFIG.sheepSkin, "blue")) {
+        } else if (Objects.equals(sheep.petSkin, "blue")) {
             woolColor = 2962303;
-        } else if (Objects.equals(CONFIG.sheepSkin, "brown")) {
+        } else if (Objects.equals(sheep.petSkin, "brown")) {
             woolColor = 6438693;
-        } else if (Objects.equals(CONFIG.sheepSkin, "green")) {
+        } else if (Objects.equals(sheep.petSkin, "green")) {
             woolColor = 4611344;
-        } else if (Objects.equals(CONFIG.sheepSkin, "red")) {
+        } else if (Objects.equals(sheep.petSkin, "red")) {
             woolColor = 8659484;
-        } else if (Objects.equals(CONFIG.sheepSkin, "black")) {
+        } else if (Objects.equals(sheep.petSkin, "black")) {
             woolColor = 1381656;
         } else {
             woolColor = 1381656;

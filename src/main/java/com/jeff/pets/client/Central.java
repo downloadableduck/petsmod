@@ -8,6 +8,7 @@ package com.jeff.pets.client;
 import com.google.common.collect.ImmutableList;
 import com.jeff.pets.client.mixin.client.SplashManagerMixin;
 import com.jeff.pets.client.mixin.client.TitleScreenRenderingMixin;
+import com.jeff.pets.client.network.NetworkManager;
 import com.jeff.pets.client.rendering.custom.aprilfools.head.HeadSkin;
 import com.jeff.pets.mob.custom.aprilfools.Head;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
@@ -35,6 +36,7 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
@@ -173,7 +175,7 @@ public class Central {
         if (Minecraft.getInstance() != null) {
             updateSuggestions(Minecraft.getInstance());
         }
-        new PetsConfigScreen<>();
+        new PetsConfigScreen();
     }
 
     public static void setupCommands(FMLInitializationEvent event) {
@@ -381,6 +383,7 @@ public class Central {
                 Utils.summonPet(zombiePigman, CONFIG.zombiePigmanName);
             }
         }
+        NetworkManager.get().broadcastGeneral(minecraft.player.getGameProfile().getId().toString(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby);
     }
 
     /**
@@ -435,7 +438,7 @@ public class Central {
      *
      * @see ChatAccessor
      */
-    private static void updateSuggestions(Minecraft client) {
+    public static void updateSuggestions(Minecraft client) {
         List<String> skinSuggestions;
         switch (CONFIG.activePet) {
             case "duck":
@@ -1162,6 +1165,7 @@ public class Central {
 
                     if (isValid) {
                         Minecraft.getInstance().player.sendMessage(new ChatComponentText("§b[PetsMod] §aYour pet's skin has been updated."));
+                        NetworkManager.get().broadcastChangePetSkin(Minecraft.getInstance().player.getGameProfile().getId().toString(), skin);
                     } else {
                         Minecraft.getInstance().player.sendMessage(new ChatComponentText("§b[PetsMod] §cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else."));
                     }
@@ -1198,7 +1202,9 @@ public class Central {
             @Override
             public void func_71515_b(ICommandSender sender, String[] args)  {
                 Minecraft.getInstance().addScheduledTask(() -> {
+                    EntityPlayer player = Minecraft.getInstance().player;
                     despawnPet();
+                    NetworkManager.get().broadcastTeleportPet(player.getGameProfile().getId().toString(), player.posX, player.posY, player.posZ);
                     summonPet();
                 });
             }
@@ -1403,7 +1409,7 @@ public class Central {
         });
         if (PetsClientInitializer.openConfigScreen == null) return;
         if (PetsClientInitializer.openConfigScreen.isPressed()) {
-            Minecraft.getInstance().displayGuiScreen(new PetsConfigScreen<>().build());
+            Minecraft.getInstance().displayGuiScreen(new PetsConfigScreen());
         }
     }
 
@@ -1426,210 +1432,7 @@ public class Central {
             public void func_71515_b(ICommandSender sender, String[] args)  {
                 Minecraft.getInstance().addScheduledTask(() -> {
                     String name = String.join(" ", args);
-                    if (!summonedEntity.isEmpty()) {
-                        if (CONFIG.activePet.equals("penguin")) {
-                            CONFIG.penguinName = name;
-                        } else if (CONFIG.activePet.equals("duck")) {
-                            CONFIG.duckName = name;
-                        } else if (CONFIG.activePet.equals("racoon")) {
-                            CONFIG.racoonName = name;
-                        } else if (CONFIG.activePet.equals("cat")) {
-                            CONFIG.catName = name;
-                        } else if (CONFIG.activePet.equals("sheep")) {
-                            CONFIG.sheepName = name;
-                        } else if (CONFIG.activePet.equals("allay")) {
-                            CONFIG.allayName = name;
-                        } else if (CONFIG.activePet.equals("armadillo")) {
-                            CONFIG.armadilloName = name;
-                        } else if (CONFIG.activePet.equals("bat")) {
-                            CONFIG.batName = name;
-                        } else if (CONFIG.activePet.equals("camel")) {
-                            CONFIG.camelName = name;
-                        } else if (CONFIG.activePet.equals("chicken")) {
-                            CONFIG.chickenSkin = name;
-                        } else if (CONFIG.activePet.equals("cod")) {
-                            CONFIG.codName = name;
-                        } else if (CONFIG.activePet.equals("copper_golem")) {
-                            CONFIG.copperGolemName = name;
-                        } else if (CONFIG.activePet.equals("cow")) {
-                            CONFIG.cowName = name;
-                        } else if (CONFIG.activePet.equals("donkey")) {
-                            CONFIG.donkeyName = name;
-                        } else if (CONFIG.activePet.equals("frog")) {
-                            CONFIG.frogName = name;
-                        } else if (CONFIG.activePet.equals("horse")) {
-                            CONFIG.horseName = name;
-                        } else if (CONFIG.activePet.equals("mooshroom")) {
-                            CONFIG.mooshroomName = name;
-                        } else if (CONFIG.activePet.equals("mule")) {
-                            CONFIG.muleName = name;
-                        } else if (CONFIG.activePet.equals("parrot")) {
-                            CONFIG.parrotName = name;
-                        } else if (CONFIG.activePet.equals("pig")) {
-                            CONFIG.pigName = name;
-                        } else if (CONFIG.activePet.equals("rabbit")) {
-                            CONFIG.rabbitName = name;
-                        } else if (CONFIG.activePet.equals("salmon")) {
-                            CONFIG.salmonName = name;
-                        } else if (CONFIG.activePet.equals("sniffer")) {
-                            CONFIG.snifferName = name;
-                        } else if (CONFIG.activePet.equals("snow_golem")) {
-                            CONFIG.snowGolemName = name;
-                        } else if (CONFIG.activePet.equals("squid")) {
-                            CONFIG.squidName = name;
-                        } else if (CONFIG.activePet.equals("strider")) {
-                            CONFIG.striderName = name;
-                        } else if (CONFIG.activePet.equals("tadpole")) {
-                            CONFIG.tadpoleName = name;
-                        } else if (CONFIG.activePet.equals("tropical_fish")) {
-                            CONFIG.tropicalFishName = name;
-                        } else if (CONFIG.activePet.equals("turtle")) {
-                            CONFIG.turtleName = name;
-                        } else if (CONFIG.activePet.equals("villager")) {
-                            CONFIG.villagerName = name;
-                        } else if (CONFIG.activePet.equals("wandering_trader")) {
-                            CONFIG.wanderingTraderName = name;
-                        } else if (CONFIG.activePet.equals("bee")) {
-                            CONFIG.beeName = name;
-                        } else if (CONFIG.activePet.equals("cave_spider")) {
-                            CONFIG.caveSpiderName = name;
-                        } else if (CONFIG.activePet.equals("dolphin")) {
-                            CONFIG.dolphinName = name;
-                        } else if (CONFIG.activePet.equals("enderman")) {
-                            CONFIG.endermanName = name;
-                        } else if (CONFIG.activePet.equals("fox")) {
-                            CONFIG.foxName = name;
-                        } else if (CONFIG.activePet.equals("goat")) {
-                            CONFIG.goatName = name;
-                        } else if (CONFIG.activePet.equals("iron_golem")) {
-                            CONFIG.ironGolemName = name;
-                        } else if (CONFIG.activePet.equals("llama")) {
-                            CONFIG.llamaName = name;
-                        } else if (CONFIG.activePet.equals("nautilus")) {
-                            CONFIG.nautilusName = name;
-                        } else if (CONFIG.activePet.equals("panda")) {
-                            CONFIG.pandaName = name;
-                        } else if (CONFIG.activePet.equals("piglin")) {
-                            CONFIG.piglinName = name;
-                        } else if (CONFIG.activePet.equals("polar_bear")) {
-                            CONFIG.polarBearName = name;
-                        } else if (CONFIG.activePet.equals("pufferfish")) {
-                            CONFIG.pufferFishName = name;
-                        } else if (CONFIG.activePet.equals("spider")) {
-                            CONFIG.spiderName = name;
-                        } else if (CONFIG.activePet.equals("wolf")) {
-                            CONFIG.wolfName = name;
-                        } else if (CONFIG.activePet.equals("blaze")) {
-                            CONFIG.blazeName = name;
-                        } else if (CONFIG.activePet.equals("breeze")) {
-                            CONFIG.breezeName = name;
-                        } else if (CONFIG.activePet.equals("creaking")) {
-                            CONFIG.creakingName = name;
-                        } else if (CONFIG.activePet.equals("creeper")) {
-                            CONFIG.creeperName = name;
-                        } else if (CONFIG.activePet.equals("elder_guardian")) {
-                            CONFIG.elderGuardianName = name;
-                        } else if (CONFIG.activePet.equals("endermite")) {
-                            CONFIG.endermiteName = name;
-                        } else if (CONFIG.activePet.equals("evoker")) {
-                            CONFIG.evokerName = name;
-                        } else if (CONFIG.activePet.equals("happy_ghast")) {
-                            CONFIG.happyGhastName = name;
-                        } else if (CONFIG.activePet.equals("ghast")) {
-                            CONFIG.ghastName = name;
-                        } else if (CONFIG.activePet.equals("guardian")) {
-                            CONFIG.guardianName = name;
-                        } else if (CONFIG.activePet.equals("hoglin")) {
-                            CONFIG.hoglinName = name;
-                        } else if (CONFIG.activePet.equals("magma_cube")) {
-                            CONFIG.magmaCubeName = name;
-                        } else if (CONFIG.activePet.equals("phantom")) {
-                            CONFIG.phantomName = name;
-                        } else if (CONFIG.activePet.equals("pillager")) {
-                            CONFIG.pillagerName = name;
-                        } else if (CONFIG.activePet.equals("ravager")) {
-                            CONFIG.ravagerName = name;
-                        } else if (CONFIG.activePet.equals("shulker")) {
-                            CONFIG.shulkerName = name;
-                        } else if (CONFIG.activePet.equals("silverfish")) {
-                            CONFIG.silverfishName = name;
-                        } else if (CONFIG.activePet.equals("skeleton")) {
-                            CONFIG.skeletonName = name;
-                        } else if (CONFIG.activePet.equals("slime")) {
-                            CONFIG.slimeName = name;
-                        } else if (CONFIG.activePet.equals("vex")) {
-                            CONFIG.vexName = name;
-                        } else if (CONFIG.activePet.equals("vindicator")) {
-                            CONFIG.vindicatorName = name;
-                        } else if (CONFIG.activePet.equals("warden")) {
-                            CONFIG.wardenName = name;
-                        } else if (CONFIG.activePet.equals("witch")) {
-                            CONFIG.witchName = name;
-                        } else if (CONFIG.activePet.equals("zombie")) {
-                            CONFIG.zombieName = name;
-                        } else if (CONFIG.activePet.equals("zombie_villager")) {
-                            CONFIG.zombieVillagerName = name;
-                        } else if (CONFIG.activePet.equals("husk")) {
-                            CONFIG.huskName = name;
-                        } else if (CONFIG.activePet.equals("drowned")) {
-                            CONFIG.drownedName = name;
-                        } else if (CONFIG.activePet.equals("bogged")) {
-                            CONFIG.boggedName = name;
-                        } else if (CONFIG.activePet.equals("parched")) {
-                            CONFIG.parchedName = name;
-                        } else if (CONFIG.activePet.equals("stray")) {
-                            CONFIG.strayName = name;
-                        } else if (CONFIG.activePet.equals("wither_skeleton")) {
-                            CONFIG.witherSkeletonName = name;
-                        } else if (CONFIG.activePet.equals("ender_dragon")) {
-                            CONFIG.enderDragonName = name;
-                        } else if (CONFIG.activePet.equals("wither")) {
-                            CONFIG.witherName = name;
-                        } else if (CONFIG.activePet.equals("angry_ghast")) {
-                            CONFIG.angryGhastName = name;
-                        } else if (CONFIG.activePet.equals("batato")) {
-                            CONFIG.batatoName = name;
-                        } else if (CONFIG.activePet.equals("diamond_chicken")) {
-                            CONFIG.diamondChickenName = name;
-                        } else if (CONFIG.activePet.equals("love_golem")) {
-                            CONFIG.loveGolemName = name;
-                        } else if (CONFIG.activePet.equals("mega_spud")) {
-                            CONFIG.megaSpudName = name;
-                        } else if (CONFIG.activePet.equals("moon_cow")) {
-                            CONFIG.moonCowName = name;
-                        } else if (CONFIG.activePet.equals("nerd_creeper")) {
-                            CONFIG.nerdCreeperName = name;
-                        } else if (CONFIG.activePet.equals("pink_wither")) {
-                            CONFIG.pinkWitherName = name;
-                        } else if (CONFIG.activePet.equals("plaguewhale_slab")) {
-                            CONFIG.plaguewhaleSlabName = name;
-                        } else if (CONFIG.activePet.equals("poisonous_potato_zombie")) {
-                            CONFIG.poisonousPotatoZombieName = name;
-                        } else if (CONFIG.activePet.equals("ray_tracing")) {
-                            CONFIG.rayTracingName = name;
-                        } else if (CONFIG.activePet.equals("redstone_bug")) {
-                            CONFIG.redstoneBugName = name;
-                        } else if (CONFIG.activePet.equals("smiling_creeper")) {
-                            CONFIG.smilingCreeperName = name;
-                        } else if (CONFIG.activePet.equals("toxifin_slab")) {
-                            CONFIG.toxfinSlabName = name;
-                        } else if (CONFIG.activePet.equals("potato_husk")) {
-                            CONFIG.potatoHuskName = name;
-                        } else if (CONFIG.activePet.equals("head")) {
-                            CONFIG.headName = name;
-                        } else if (CONFIG.activePet.equals("traitor")) {
-                            CONFIG.traitorName = name;
-                        } else if (CONFIG.activePet.equals("dumbo_octopus")) {
-                            CONFIG.dumboOctopusName = name;
-                        } else if (CONFIG.activePet.equals("koi")) {
-                            CONFIG.koiName = name;
-                        } else if (CONFIG.activePet.equals("stingray")) {
-                            CONFIG.stingrayName = name;
-                        } else if (CONFIG.activePet.equals("zombie_pigman")) {
-                            CONFIG.zombiePigmanName = name;
-                        }
-                        AutoConfig.getConfigHolder(PetsConfig.class).save();
-                    }
+                    Utils.setActivePetName(name);
                 });
             }
             @Override
@@ -1657,14 +1460,17 @@ public class Central {
             @Override
             public void func_71515_b(ICommandSender sender, String[] args)  {
                 String preference = args.length > 0 ? args[0] : "";
+                String uuid = Minecraft.getInstance().player.getGameProfile().getId().toString();
                 if (Objects.equals(preference, "off")) {
                     CONFIG.petOn = false;
                     Minecraft.getInstance().player.sendMessage(new ChatComponentText("§b[PetsMod] §7Pet §coff."));
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
+                    NetworkManager.get().broadcastTogglePet(uuid, Utils.getActivePetName(), CONFIG.petOn);
                 } else if (Objects.equals(preference, "on")) {
                     CONFIG.petOn = true;
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
                     Minecraft.getInstance().player.sendMessage(new ChatComponentText("§b[PetsMod] §7Pet §aon."));
+                    NetworkManager.get().broadcastTogglePet(uuid, Utils.getActivePetName(), CONFIG.petOn);
                 } else {
                     Minecraft.getInstance().player.sendMessage(new ChatComponentText("§b[PetsMod] §c§lUnknown value " + preference + "! Possible values: §r§aon, §6off"));
                 }

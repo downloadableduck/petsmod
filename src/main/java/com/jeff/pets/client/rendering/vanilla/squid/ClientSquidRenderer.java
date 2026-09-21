@@ -23,7 +23,7 @@ public class ClientSquidRenderer extends PetRenderer<ClientSquid, ModelSquid> {
 
     @Override
     public void preRenderCallback(ClientSquid livingEntityRenderState, float f) {
-        if (CONFIG.isBaby) {
+        if (livingEntityRenderState.isChild()) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
 

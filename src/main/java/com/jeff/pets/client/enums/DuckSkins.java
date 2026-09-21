@@ -1,7 +1,12 @@
 package com.jeff.pets.client.enums;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableList;
+import net.minecraft.util.IChatComponent; import net.minecraft.util.ChatComponentText;
 
-public enum DuckSkins implements NameableEnum {
+import java.util.List;
+
+public enum DuckSkins implements NameableEnum, EnumImpl {
 
     mallard,
     pekin,
@@ -9,7 +14,12 @@ public enum DuckSkins implements NameableEnum {
     bronze;
 
     @Override
-    public net.minecraft.util.IChatComponent getDisplayName() {
-        return new net.minecraft.util.ChatComponentText(String.valueOf(this).replace("_", " "));
+    public IChatComponent getDisplayName() {
+        return new ChatComponentText(String.valueOf(this).replace("_", " "));
+    }
+
+    @Override
+    public List<Enum> getAllValues() {
+        return ImmutableList.of(mallard, pekin, rubber, bronze);
     }
 }

@@ -14,7 +14,7 @@ public class ClientWolfRenderer extends PetRenderer<ClientWolf, ClientWolfModel>
 
     @Override
     public void preRenderCallback(ClientWolf livingEntityRenderState, float f) {
-        if (CONFIG.isBaby) {
+        if (livingEntityRenderState.isChild()) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
 

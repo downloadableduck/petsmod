@@ -19,7 +19,7 @@ public class ClientDonkeyRenderer extends PetRenderer<ClientDonkey, ClientHorseM
 
     @Override
     public void preRenderCallback(ClientDonkey state, float f) {
-        if (CONFIG.isBaby) {
+        if (state.isChild()) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
 

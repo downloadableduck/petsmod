@@ -5,6 +5,7 @@ import com.jeff.pets.mob.vanilla.passive.ClientPig;
 import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
+import static com.jeff.pets.client.Central.stingray;
 
 public class ClientPigRenderer extends PetRenderer<ClientPig, ClientPigModel> {
     public String pigTexturePath;
@@ -15,7 +16,7 @@ public class ClientPigRenderer extends PetRenderer<ClientPig, ClientPigModel> {
 
     @Override
     public void preRenderCallback(ClientPig livingEntityRenderState, float f) {
-        if (CONFIG.isBaby) {
+        if (livingEntityRenderState.isChild()) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
 

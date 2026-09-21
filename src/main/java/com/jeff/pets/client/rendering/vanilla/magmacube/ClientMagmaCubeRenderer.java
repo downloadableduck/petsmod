@@ -16,7 +16,7 @@ public class ClientMagmaCubeRenderer extends PetRenderer<ClientMagmaCube, ModelS
     @Override
     public void preRenderCallback(ClientMagmaCube slimeRenderState, float a) {
         int magmaCubeScale;
-        switch (CONFIG.magmaCubeSkin) {
+        switch (slimeRenderState.petSkin) {
             case "small":
                 magmaCubeScale = 1;
                 break;

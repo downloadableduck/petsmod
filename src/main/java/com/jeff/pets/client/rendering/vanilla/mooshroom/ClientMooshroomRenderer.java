@@ -19,7 +19,7 @@ public class ClientMooshroomRenderer extends PetRenderer<ClientMooshroom, Client
 
     @Override
     public void preRenderCallback(ClientMooshroom state, float f) {
-        if (CONFIG.isBaby) {
+        if (state.isChild()) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
 

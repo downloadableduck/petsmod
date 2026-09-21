@@ -1,10 +1,15 @@
 package com.jeff.pets.client.rendering;
 
+import com.jeff.pets.client.PetsConfigScreen;
+import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.AbstractPet;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
+
+import static com.jeff.pets.client.Central.CONFIG;
 
 /**
  * Used as a shared piece of code across all of the renderers. The main point of this class
@@ -21,7 +26,19 @@ public abstract class PetRenderer<D extends AbstractPet, K extends ModelBase> ex
         if (entity.field_70154_o != null) {
             net.minecraft.client.renderer.GlStateManager.translatef(0, -0.35f, 0);
         }
+        if (entity.getOwner().equals(Minecraft.getInstance().player)) {
+            entity.petSkin = Utils.getActivePetSkin();
+            entity.setBaby(CONFIG.isBaby);
+        }
         super.renderModel(entity, f, g, h, i, j, k);
         net.minecraft.client.renderer.GlStateManager.popMatrix();
+    }
+
+    @Override
+    public boolean canRenderName(D entity) {
+        if (CONFIG.alwaysRenderNametag && !(Minecraft.getInstance().currentScreen instanceof PetsConfigScreen)) {
+            return true;
+        }
+        return super.canRenderName(entity);
     }
 }

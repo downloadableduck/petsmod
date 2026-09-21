@@ -14,14 +14,14 @@ public class ClientCatRenderer extends PetRenderer<ClientCat, ClientCatModel> {
 
     @Override
     public void preRenderCallback(ClientCat state, float f) {
-        if (CONFIG.isBaby) {
+        if (state.isChild()) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
     public ResourceLocation getEntityTexture(ClientCat livingEntityRenderState) {
-        switch (CONFIG.catSkin) {
+        switch (livingEntityRenderState.petSkin) {
             case "black":
                 return new ResourceLocation("minecraft", "textures/entity/cat/all_black.png");
             case "tuxedo":

@@ -7,11 +7,15 @@
   "client": [
     "ChatAccessor",
     "EntityRendererDispatcherMixin",
+    "NoHitboxMixin",
     "SplashManagerMixin",
     "TickMixin",
     "TitleScreenRenderingMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "mixins": [
+    "GhostHandMixin"
+  ]
 }

@@ -20,7 +20,7 @@ public class ClientChickenRenderer extends PetRenderer<ClientChicken, ClientChic
 
     @Override
     public void preRenderCallback(ClientChicken state, float f) {
-        if (CONFIG.isBaby) {
+        if (state.isChild()) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }

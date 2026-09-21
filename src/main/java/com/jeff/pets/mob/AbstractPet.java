@@ -1,6 +1,8 @@
 package com.jeff.pets.mob;
 
 import com.jeff.pets.mob.custom.first.Duck;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
@@ -28,6 +30,8 @@ import java.util.Random;
  * @see GroundPet
  */
 public abstract class AbstractPet extends EntityTameable {
+
+    public String petSkin = "";
 
     protected int waitingTime = 0;
     private boolean isReturningToOwner = false;
@@ -115,6 +119,9 @@ public abstract class AbstractPet extends EntityTameable {
      */
     @Override
     public boolean func_70085_c(EntityPlayer player) {
+        if (!(player.func_70694_bm() == null)) {
+            return false;
+        }
 
         if (this.isTamed() && player.func_70694_bm() == null && !player.isSneaking()) {
             this.world.func_175682_a(
@@ -138,7 +145,7 @@ public abstract class AbstractPet extends EntityTameable {
             return true;
         }
         return super.func_70085_c(player);
-    }
+    }/*
 
     /**
      * IMPORTANT: Allows the entity to exist on servers, if only in the {@code ClientLevel}.
@@ -278,5 +285,16 @@ public abstract class AbstractPet extends EntityTameable {
     @Override
     public boolean isTamed() {
         return true;
+    }
+
+    public void setBaby(boolean baby) {
+        this.setGrowingAge(baby ? -24000 : 0);
+    }
+
+    @Override
+    public boolean canBeCollidedWith() {
+        EntityPlayer player = Minecraft.getInstance().player;
+        ItemStack itemStack = player.func_70694_bm();
+        return itemStack == null;
     }
 }
