@@ -8,6 +8,7 @@ import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.ai.*;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
@@ -80,7 +81,6 @@ public class Racoon extends AbstractPet {
         EntityLivingBase owner = this.getOwner();
         if (owner != null) {
 
-
             if (this.field_70154_o == owner) {
                 if (owner.isSneaking() && owner.isJumping) {
                     this.func_70078_a(null);
@@ -114,7 +114,7 @@ public class Racoon extends AbstractPet {
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setRotationYawHead(this.getYRot());
-                this.renderYawOffset = net.minecraft.util.MathHelper.clamp(this.renderYawOffset, this.rotationYawHead, 50.0f);
+                this.renderYawOffset = this.renderYawOffset + MathHelper.clamp(this.rotationYawHead - this.renderYawOffset, -50.0f, 50.0f);
 
                 double speed = owner.getAIMoveSpeed() * 2;
                 this.setVelocity(dir.x * speed, this.motionY, dir.z * speed);
@@ -127,10 +127,16 @@ public class Racoon extends AbstractPet {
 
             if (this.collidedHorizontally && this.onGround) {
                 this.jump();
+                //this.processFlappingMovement();
             }
 
             if (yHeightToOwner > -1) {
                 this.setVelocity(this.motionX, this.motionY - 0.01, this.motionZ);
+                //this.processFlappingMovement();
+            }
+
+            if (!this.onGround) {
+                // this.processFlappingMovement();
             }
 
             if (owner.motionX * owner.motionX + owner.motionY * owner.motionY + owner.motionZ * owner.motionZ < 0.01) {
@@ -140,19 +146,14 @@ public class Racoon extends AbstractPet {
                 this.waitingTime = 0;
             }
 
-            if (!this.onGround) {
-                //this.processFlappingMovement();
-            }
-
             this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
             this.setRotationYawHead(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
                 this.renderYawOffset = this.rotationYawHead - (Math.signum(bodyYawDiff) * 50);
             } else {
-                this.renderYawOffset = net.minecraft.util.MathHelper.clamp(this.renderYawOffset, this.rotationYawHead, 10);
+                this.renderYawOffset = this.renderYawOffset + MathHelper.clamp(this.rotationYawHead - this.renderYawOffset, -10, 10);
             }
-            //
 
             this.move(this.motionX, this.motionY, this.motionZ);
 
@@ -164,6 +165,11 @@ public class Racoon extends AbstractPet {
             if (getDistance(owner) >= 10) {
                 this.setPositionAndUpdate(owner.posX, owner.posY, owner.posZ);
             }
+        }
+
+        int ambient = (int) (Math.random() * (60 * 20));
+        if (ambient == 1) {
+            //this.world.playLocalSound(this.posX, this.posY, this.posZ, PetsSounds.DUCK_AMBIENT, SoundCategory.NEUTRAL, 1.0f, 1.0f, true);
         }
 
         /*int ambient = (int) (Math2.random() * (60 * 20));

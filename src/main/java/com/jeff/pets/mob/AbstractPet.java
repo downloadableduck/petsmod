@@ -199,6 +199,7 @@ public abstract class AbstractPet extends EntityTameable {
         if (distance > 5) {
             this.reCalcPos();
             this.isReturningToOwner = true;
+            this.waitingTime = 15;
         } else if (distance < 2) {
             this.reCalcPos();
             this.isReturningToOwner = false;

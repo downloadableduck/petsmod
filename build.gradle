@@ -105,6 +105,7 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 shadowJar {
+    shadowJar.archiveName = "pets-mod-${project.mod_version}-${project.minecraft_version}-forge${project.build}.jar"
     exclude 'module-info.class'
     exclude 'META-INF/versions/**'
     dependencies {
