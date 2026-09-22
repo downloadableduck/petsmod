@@ -15,7 +15,7 @@ version = project.mod_version
 group = project.maven_group
 
 base {
-    archivesName = project.archives_base_name + "-" + project.mod_version + "-" + project.minecraft_version
+    archivesName = project.archives_base_name + "-" + project.mod_version + "-" + project.minecraft_version + project.build
 }
 
 repositories {
@@ -58,10 +58,11 @@ dependencies {
     include "com.davidehrmann.vcdiff:vcdiff-core:${project.vcdiff_version}"
     include "org.java-websocket:Java-WebSocket:${project.java_websocket_version}"
     include "org.msgpack:msgpack-core:${project.msgpack_version}"
+    runtimeOnly 'maven.modrinth:u6dRKJwZ:JUOOv4iy'
 }
 
 processResources {
-    inputs.property "version", project.version
+    inputs.property "version", project.version + project.build
     inputs.property "ably_version", project.ably_version
 
     filesMatching("fabric.mod.json") {
@@ -145,7 +146,7 @@ mavenPublishing {
 tasks.named('jar') {
     archiveBaseName = project.archives_base_name
     archiveVersion = project.mod_version
-    archiveClassifier = project.minecraft_version + "-fabric"
+    archiveClassifier = project.minecraft_version + "-fabric" + project.build
     exclude 'ably.mod.json'
     exclude 'msgpack.mod.json'
     exclude 'vcdiff.mod.json'
