@@ -38,7 +38,7 @@ repositories {
 }
 
 base {
-    archivesName = "pets-mod" + "-" + project.minecraft_version + "-" + "neo"
+    archivesName = "pets-mod" + "-" + project.minecraft_version + "-" + "neo" + project.build
 }
 
 // Mojang ships Java 25 to end users in 26.1, so mods should target Java 25.
@@ -131,6 +131,7 @@ dependencies {
     jarJar "com.davidehrmann.vcdiff:vcdiff-core:${project.vcdiff_version}"
     jarJar "org.java-websocket:Java-WebSocket:${project.java_websocket_version}"
     jarJar "org.msgpack:msgpack-core:${project.msgpack_version}"
+    runtimeOnly "maven.modrinth:u6dRKJwZ:wBLomp3s"
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
@@ -164,7 +165,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             mod_id                 : mod_id,
             mod_name               : mod_name,
             mod_license            : mod_license,
-            mod_version            : mod_version
+            mod_version            : mod_version + project.build
     ]
     inputs.properties replaceProperties
     expand replaceProperties
@@ -205,7 +206,7 @@ idea {
 tasks.named('jar') {
     archiveBaseName = "pets-mod"
     archiveVersion = project.mod_version
-    archiveClassifier = project.minecraft_version + "-neo"
+    archiveClassifier = project.minecraft_version + "-neo" + project.build
     exclude 'ably.mod.toml'
     exclude 'msgpack.mod.toml'
     exclude 'vcdiff.mod.toml'
