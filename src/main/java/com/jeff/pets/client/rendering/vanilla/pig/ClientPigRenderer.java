@@ -38,7 +38,6 @@ public class ClientPigRenderer extends PetRenderer<@NotNull ClientPig, @NotNull 
     public @NotNull Identifier getTextureLocation(LivingEntityRenderState pigRenderState) {
         String skin = ((IPetRenderState) pigRenderState).pets$getPetSkin();
         switch (skin) {
-            case "temperate" -> pigTexturePath = "textures/entity/pig/pig_temperate.png";
             case "warm" -> pigTexturePath = "textures/entity/pig/pig_warm.png";
             case "cold" -> pigTexturePath = "textures/entity/pig/pig_cold.png";
             case null, default -> pigTexturePath = "textures/entity/pig/pig_temperate.png";

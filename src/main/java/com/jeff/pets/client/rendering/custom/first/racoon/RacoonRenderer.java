@@ -22,7 +22,7 @@ public class RacoonRenderer extends PetRenderer<@NotNull Racoon, @NotNull Racoon
 
     @Override
     protected void scale(@NotNull RacoonRenderState livingEntityRenderState, @NotNull PoseStack poseStack) {
-        if ((livingEntityRenderState.isBaby && !livingEntityRenderState.isServerEntity) || (livingEntityRenderState.isBaby && livingEntityRenderState.isServerEntity)) {
+        if (livingEntityRenderState.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
@@ -32,9 +32,7 @@ public class RacoonRenderer extends PetRenderer<@NotNull Racoon, @NotNull Racoon
         String racoonTexturePath;
         if (!state.isServerEntity) {
             String skin = ((IPetRenderState) state).pets$getPetSkin();
-            if (Objects.equals(skin, "normal")) {
-                racoonTexturePath = "textures/entity/racoon/racoon.png";
-            } else if (Objects.equals(skin, "albino")) {
+            if (Objects.equals(skin, "albino")) {
                 racoonTexturePath = "textures/entity/racoon/albino.png";
             } else {
                 racoonTexturePath = "textures/entity/racoon/racoon.png";
@@ -53,7 +51,7 @@ public class RacoonRenderer extends PetRenderer<@NotNull Racoon, @NotNull Racoon
     @Override
     public void extractRenderState(Racoon racoon, RacoonRenderState state, float f) {
         super.extractRenderState(racoon, state, f);
-        state.isPassenger = racoon.isPassenger();
+        state.isPassenger = racoon.isPassenger() || racoon.sitting;
         state.isServerEntity = racoon.getEntityData().get(Racoon.IS_SERVER_ENTITY);
     }
 }

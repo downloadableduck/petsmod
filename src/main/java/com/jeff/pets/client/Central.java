@@ -929,6 +929,7 @@ public class Central {
                                     CONFIG.catSkin = "all_black";
                                     break;
                                 case "tuxedo":
+                                    sulfur cubbe not added to the cherry pick i think
                                     CONFIG.catSkin = "tuxedo";
                                     break;
                                 case "tabby":

@@ -43,6 +43,6 @@ public class ClientStrayRenderer extends PetRenderer<@NotNull ClientStray, @NotN
     @Override
     public void extractRenderState(ClientStray stray, SkeletonRenderState state, float f) {
         super.extractRenderState(stray, state, f);
-        state.isPassenger = stray.isPassenger();
+        state.isPassenger = stray.isPassenger() || stray.sitting;
     }
 }

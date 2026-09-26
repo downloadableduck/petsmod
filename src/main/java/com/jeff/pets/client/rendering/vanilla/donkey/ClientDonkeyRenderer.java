@@ -15,7 +15,7 @@ import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientDonkeyRenderer extends PetRenderer<@NotNull ClientDonkey, @NotNull DonkeyRenderState, @NotNull DonkeyModel> {
-    public static ModelLayerLocation DONKEY_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientdonkey"), "main");
+    public static final ModelLayerLocation DONKEY_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientdonkey"), "main");
 
     public ClientDonkeyRenderer(EntityRendererProvider.Context context) {
         super(context, new DonkeyModel(context.bakeLayer(ModelLayers.DONKEY)), 0.5f);

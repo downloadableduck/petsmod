@@ -25,7 +25,6 @@ public class ClientShulkerRenderer extends PetRenderer<@NotNull ClientShulker, @
         String folderPath = "textures/entity/shulker/";
         String skin = ((IPetRenderState) state).pets$getPetSkin();
         switch (skin) {
-            case "normal" -> shulkerFile = "shulker.png";
             case "black" -> shulkerFile = "shulker_black.png";
             case "brown" -> shulkerFile = "shulker_brown.png";
             case "cyan" -> shulkerFile = "shulker_cyan.png";

@@ -40,7 +40,6 @@ public class ClientLlamaRenderer extends PetRenderer<@NotNull ClientLlama, @NotN
     public @NotNull Identifier getTextureLocation(LlamaRenderState livingEntityRenderState) {
         String skin = ((IPetRenderState) livingEntityRenderState).pets$getPetSkin();
         switch (skin) {
-            case "brown" -> llamaTexturePath = "textures/entity/llama/llama_brown.png";
             case "creamy" -> llamaTexturePath = "textures/entity/llama/llama_creamy.png";
             case "gray" -> llamaTexturePath = "textures/entity/llama/llama_gray.png";
             case "white" -> llamaTexturePath = "textures/entity/llama/llama_white.png";

@@ -47,6 +47,6 @@ public class ClientHuskRenderer extends PetRenderer<@NotNull ClientHusk, @NotNul
     @Override
     public void extractRenderState(ClientHusk husk, ZombieRenderState state, float f) {
         super.extractRenderState(husk, state, f);
-        state.isPassenger = husk.isPassenger();
+        state.isPassenger = husk.isPassenger() || husk.sitting;
     }
 }

@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientPiglinRenderer extends PetRenderer<@NotNull ClientPiglin, @NotNull PiglinRenderState, @NotNull ClientPiglinModel> {
 
-    public static ModelLayerLocation PIGLIN_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientpiglin"), "main");
+    public static final ModelLayerLocation PIGLIN_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientpiglin"), "main");
     private String piglinTexturePath;
 
     public ClientPiglinRenderer(EntityRendererProvider.Context context) {

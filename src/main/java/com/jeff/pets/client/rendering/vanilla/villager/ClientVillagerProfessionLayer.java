@@ -29,11 +29,9 @@ public class ClientVillagerProfessionLayer extends RenderLayer<@NotNull Villager
     public static final ModelLayerLocation SHEPHERD_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/villager/profession/shepherd.png"), "main");
     public static final ModelLayerLocation TOOLSMITH_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/villager/profession/toolsmith.png"), "main");
     public static final ModelLayerLocation WEAPONSMITH_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/villager/profession/weaponsmith.png"), "main");
-    private ClientVillagerRenderer renderer;
 
     public ClientVillagerProfessionLayer(ClientVillagerRenderer renderLayerParent) {
         super(renderLayerParent);
-        this.renderer = renderLayerParent;
     }
 
     @Override

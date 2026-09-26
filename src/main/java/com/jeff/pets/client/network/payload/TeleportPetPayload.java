@@ -2,9 +2,9 @@ package com.jeff.pets.client.network.payload;
 
 public class TeleportPetPayload extends Payload {
 
-    public double x;
-    public double y;
-    public double z;
+    public final double x;
+    public final double y;
+    public final double z;
 
     public TeleportPetPayload(String uuid, double x, double y, double z) {
         super(uuid);

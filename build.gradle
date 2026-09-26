@@ -4,7 +4,7 @@ import java.nio.file.Files
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.147'
+    id 'net.neoforged.moddev' version '2.0.141'
     id 'idea'
 }
 
@@ -38,7 +38,7 @@ repositories {
 }
 
 base {
-    archivesName = "pets-mod" + "-" + project.minecraft_version + "-" + "neo" + project.build
+    archivesName = "pets-mod" + "-" + project.minecraft_version + "-" + "neo"
 }
 
 // Mojang ships Java 25 to end users in 26.1, so mods should target Java 25.
@@ -121,7 +121,7 @@ configurations {
 }
 
 dependencies {
-    implementation "me.shedaniel.cloth:cloth-config-neoforge:26.3.158"
+    //implementation "me.shedaniel.cloth:cloth-config-neoforge:26.1.154"
     // Fabric API. This is technically optional, but you probably want it anyway.
     //implementation "maven.modrinth:mod-menu-for-neoforge:17.0.1"
     //implementation "maven.modrinth:tpan:3.0.0+26.1"
@@ -131,7 +131,6 @@ dependencies {
     jarJar "com.davidehrmann.vcdiff:vcdiff-core:${project.vcdiff_version}"
     jarJar "org.java-websocket:Java-WebSocket:${project.java_websocket_version}"
     jarJar "org.msgpack:msgpack-core:${project.msgpack_version}"
-    runtimeOnly "maven.modrinth:u6dRKJwZ:wBLomp3s"
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
@@ -165,7 +164,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             mod_id                 : mod_id,
             mod_name               : mod_name,
             mod_license            : mod_license,
-            mod_version            : mod_version + project.build
+            mod_version            : mod_version
     ]
     inputs.properties replaceProperties
     expand replaceProperties
@@ -206,7 +205,7 @@ idea {
 tasks.named('jar') {
     archiveBaseName = "pets-mod"
     archiveVersion = project.mod_version
-    archiveClassifier = project.minecraft_version + "-neo" + project.build
+    archiveClassifier = project.minecraft_version + "-neo"
     exclude 'ably.mod.toml'
     exclude 'msgpack.mod.toml'
     exclude 'vcdiff.mod.toml'

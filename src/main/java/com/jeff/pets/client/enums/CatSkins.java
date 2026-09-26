@@ -24,7 +24,7 @@ public enum CatSkins implements NameableEnum, EnumImpl {
     }
 
     @Override
-    public List<Enum> getAllValues() {
+    public List<Enum<?>> getAllValues() {
         return List.of(black, british_shorthair, calico, jellie, ocelot, persian, ragdoll, red, siamese, tabby, tuxedo, white);
     }
 }
