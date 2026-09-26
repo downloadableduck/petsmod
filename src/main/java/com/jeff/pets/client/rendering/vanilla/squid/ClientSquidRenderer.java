@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.squid;
 
 import com.jeff.pets.client.rendering.IPetRenderState;
-import com.jeff.pets.mob.vanilla.passive.ClientSquid;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientSquid;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.animal.squid.SquidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -13,8 +13,6 @@ import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
-
-import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientSquidRenderer extends PetRenderer<@NotNull ClientSquid, @NotNull SquidRenderState, @NotNull SquidModel> {
     public static final ModelLayerLocation SQUID_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientsquid"), "main");

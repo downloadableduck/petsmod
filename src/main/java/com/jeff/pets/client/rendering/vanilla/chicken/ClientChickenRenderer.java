@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.chicken;
 
 import com.jeff.pets.client.rendering.IPetRenderState;
-import com.jeff.pets.mob.vanilla.passive.ClientChicken;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientChicken;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -12,8 +12,6 @@ import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
-
-import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientChickenRenderer extends PetRenderer<@NotNull ClientChicken, @NotNull ChickenRenderState, @NotNull ClientChickenModel> {
     public static final ModelLayerLocation CHICKEN_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientchicken"), "main");

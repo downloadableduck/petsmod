@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.husk;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientHusk;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.zombie.ClientZombieModel;
+import com.jeff.pets.mob.vanilla.hostile.ClientHusk;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -10,8 +10,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.ZombieRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
-
-import static com.jeff.pets.client.Central.CONFIG;
 
 
 public class ClientHuskRenderer extends PetRenderer<@NotNull ClientHusk, @NotNull ZombieRenderState, @NotNull ClientZombieModel> {
@@ -49,6 +47,6 @@ public class ClientHuskRenderer extends PetRenderer<@NotNull ClientHusk, @NotNul
     @Override
     public void extractRenderState(ClientHusk husk, ZombieRenderState state, float f) {
         super.extractRenderState(husk, state, f);
-        state.isPassenger = husk.isPassenger();
+        state.isPassenger = husk.isPassenger() || husk.sitting;
     }
 }

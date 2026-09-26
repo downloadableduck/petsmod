@@ -5,8 +5,6 @@ import net.minecraft.client.model.monster.zombie.ZombieVillagerModel;
 import net.minecraft.client.renderer.entity.state.ZombieVillagerRenderState;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.client.Central.CONFIG;
-
 public class ClientZombieVillagerModel extends ZombieVillagerModel<@NotNull ZombieVillagerRenderState> {
 
     private final ModelPart head;

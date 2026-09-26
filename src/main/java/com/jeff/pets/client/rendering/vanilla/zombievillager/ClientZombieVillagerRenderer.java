@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.zombievillager;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -10,8 +10,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.ZombieVillagerRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
-
-import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientZombieVillagerRenderer extends PetRenderer<@NotNull ClientZombieVillager, @NotNull ZombieVillagerRenderState, @NotNull ZombieVillagerModel<@NotNull ZombieVillagerRenderState>> {
 
@@ -50,6 +48,6 @@ public class ClientZombieVillagerRenderer extends PetRenderer<@NotNull ClientZom
     @Override
     public void extractRenderState(ClientZombieVillager zombieVillager, ZombieVillagerRenderState state, float f) {
         super.extractRenderState(zombieVillager, state, f);
-        state.isPassenger = zombieVillager.isPassenger();
+        state.isPassenger = zombieVillager.isPassenger() || zombieVillager.sitting;
     }
 }

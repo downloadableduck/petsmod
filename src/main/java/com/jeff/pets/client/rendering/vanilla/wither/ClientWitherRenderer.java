@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.wither;
 
 import com.jeff.pets.client.rendering.IPetRenderState;
-import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -15,8 +15,6 @@ import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
-
-import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientWitherRenderer extends PetRenderer<@NotNull ClientWither, @NotNull WitherRenderState, @NotNull WitherBossModel> {
 

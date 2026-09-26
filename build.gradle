@@ -1,6 +1,7 @@
 import com.vanniktech.maven.publish.SonatypeHost
-import java.nio.file.Path;
-import java.nio.file.FileSystems;
+
+import java.nio.file.Path
+import java.nio.file.FileSystems
 import java.nio.file.Files
 
 plugins {
@@ -15,7 +16,7 @@ version = project.mod_version
 group = project.maven_group
 
 base {
-    archivesName = project.archives_base_name + "-" + project.mod_version + "-" + project.minecraft_version + project.build
+    archivesName = project.archives_base_name + "-" + project.mod_version + "-" + project.minecraft_version
 }
 
 repositories {
@@ -48,7 +49,7 @@ dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     implementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    implementation "me.shedaniel.cloth:cloth-config-fabric:26.3.158"
+    //implementation "me.shedaniel.cloth:cloth-config-fabric:26.1.154"
     // Fabric API. This is technically optional, but you probably want it anyway.
     implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
     implementation("com.terraformersmc:modmenu:${project.modmenu_version}")
@@ -58,11 +59,10 @@ dependencies {
     include "com.davidehrmann.vcdiff:vcdiff-core:${project.vcdiff_version}"
     include "org.java-websocket:Java-WebSocket:${project.java_websocket_version}"
     include "org.msgpack:msgpack-core:${project.msgpack_version}"
-    runtimeOnly 'maven.modrinth:u6dRKJwZ:JUOOv4iy'
 }
 
 processResources {
-    inputs.property "version", project.version + project.build
+    inputs.property "version", project.version
     inputs.property "ably_version", project.ably_version
 
     filesMatching("fabric.mod.json") {
@@ -87,7 +87,7 @@ java {
 
 jar {
     inputs.property "archivesName", project.base.archivesName
-    from sourceSets.main.allSource
+    //from sourceSets.main.allSource
 
     from("LICENSE") {
         rename { "${it}_${inputs.properties.archivesName}"}
@@ -146,7 +146,7 @@ mavenPublishing {
 tasks.named('jar') {
     archiveBaseName = project.archives_base_name
     archiveVersion = project.mod_version
-    archiveClassifier = project.minecraft_version + "-fabric" + project.build
+    archiveClassifier = project.minecraft_version + "-fabric"
     exclude 'ably.mod.json'
     exclude 'msgpack.mod.json'
     exclude 'vcdiff.mod.json'

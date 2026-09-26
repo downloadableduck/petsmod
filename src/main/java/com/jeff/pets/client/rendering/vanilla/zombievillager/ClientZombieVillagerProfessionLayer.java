@@ -5,14 +5,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.monster.zombie.ZombieVillagerModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.ZombieVillagerRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
-
-import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientZombieVillagerProfessionLayer extends RenderLayer<@NotNull ZombieVillagerRenderState, @NotNull ZombieVillagerModel<@NotNull ZombieVillagerRenderState>> {
 
@@ -30,11 +27,9 @@ public class ClientZombieVillagerProfessionLayer extends RenderLayer<@NotNull Zo
     public static final ModelLayerLocation SHEPHERD_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/zombie_villager/profession/shepherd.png"), "main");
     public static final ModelLayerLocation TOOLSMITH_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/zombie_villager/profession/toolsmith.png"), "main");
     public static final ModelLayerLocation WEAPONSMITH_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/zombie_villager/profession/weaponsmith.png"), "main");
-    private ClientZombieVillagerRenderer renderer;
 
     public ClientZombieVillagerProfessionLayer(ClientZombieVillagerRenderer renderLayerParent) {
         super(renderLayerParent);
-        this.renderer = renderLayerParent;
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.snowgolem;
 
 import com.jeff.pets.client.rendering.IPetRenderState;
-import com.jeff.pets.mob.vanilla.passive.ClientSnowGolem;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientSnowGolem;
 import net.minecraft.client.model.animal.golem.SnowGolemModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -14,8 +14,6 @@ import net.minecraft.client.renderer.entity.state.SnowGolemRenderState;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
-
-import static com.jeff.pets.client.Central.CONFIG;
 
 
 public class ClientSnowGolemRenderer extends PetRenderer<@NotNull ClientSnowGolem, @NotNull SnowGolemRenderState, @NotNull SnowGolemModel> {

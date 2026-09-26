@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.cow;
 
 import com.jeff.pets.client.rendering.IPetRenderState;
-import com.jeff.pets.mob.vanilla.passive.ClientCow;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientCow;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -11,10 +11,8 @@ import net.minecraft.client.renderer.entity.state.CowRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.client.Central.CONFIG;
-
 public class ClientCowRenderer extends PetRenderer<@NotNull ClientCow, @NotNull CowRenderState, @NotNull ClientCowModel> {
-    public static ModelLayerLocation COW_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientcow"), "main");
+    public static final ModelLayerLocation COW_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientcow"), "main");
     String cowTexturePath;
 
     public ClientCowRenderer(EntityRendererProvider.Context context) {
@@ -25,7 +23,6 @@ public class ClientCowRenderer extends PetRenderer<@NotNull ClientCow, @NotNull 
     public @NotNull Identifier getTextureLocation(CowRenderState cowRenderState) {
         String skin = ((IPetRenderState) cowRenderState).pets$getPetSkin();
         switch (skin) {
-            case "temperate" -> cowTexturePath = "textures/entity/cow/cow_temperate.png";
             case "warm" -> cowTexturePath = "textures/entity/cow/cow_warm.png";
             case "cold" -> cowTexturePath = "textures/entity/cow/cow_cold.png";
             case null, default -> cowTexturePath = "textures/entity/cow/cow_temperate.png";

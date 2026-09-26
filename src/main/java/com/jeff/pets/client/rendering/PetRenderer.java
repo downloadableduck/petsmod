@@ -16,7 +16,6 @@ import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.core.Direction;
-import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -24,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.jeff.pets.client.Central.CONFIG;
 
 /**
- * Used as a shared piece of code across all of the renderers. The main point of this class
+ * Used as a shared piece of code across all the renderers. The main point of this class
  * is to provide a {@code state.isUpsideDown} check for all mobs.
  */
 public abstract class PetRenderer<D extends AbstractPet, U extends LivingEntityRenderState, K extends EntityModel<? super U>> extends MobRenderer<@NotNull D, @NotNull U, @NotNull K> {
@@ -42,7 +41,7 @@ public abstract class PetRenderer<D extends AbstractPet, U extends LivingEntityR
         }
         try {
             super.extractRenderState(entity, state, f);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
 
         state.isUpsideDown = entity.getPlainTextName().equals("Grumm") || entity.getPlainTextName().equals("Dinnerbone");
@@ -53,16 +52,16 @@ public abstract class PetRenderer<D extends AbstractPet, U extends LivingEntityR
             state.passengerOffset = new Vec3(state.passengerOffset.x, state.passengerOffset.y + 0.35, state.passengerOffset.z);
         }
         IPetRenderState petRenderState = (IPetRenderState) state;
-            boolean isOwner = entity.getOwner() != null &&
-                    entity.getOwner().equals(Minecraft.getInstance().player);
+        boolean isOwner = entity.getOwner() != null &&
+                entity.getOwner().equals(Minecraft.getInstance().player);
 
-            petRenderState.pets$setMyPet(isOwner);
-            petRenderState.pets$setPetSkin(entity.petSkin != null ? entity.petSkin : "");
-            if (petRenderState.pets$isMyPet()) {
-                state.isBaby = CONFIG.isBaby;
-            } else {
-                state.isBaby = entity.isBaby();
-            }
+        petRenderState.pets$setMyPet(isOwner);
+        petRenderState.pets$setPetSkin(entity.petSkin != null ? entity.petSkin : "");
+        if (petRenderState.pets$isMyPet()) {
+            state.isBaby = CONFIG.isBaby;
+        } else {
+            state.isBaby = entity.isBaby();
+        }
     }
 
     @Override
@@ -74,7 +73,7 @@ public abstract class PetRenderer<D extends AbstractPet, U extends LivingEntityR
     }
 
     @Override
-    public void submit(U state, PoseStack poseStack, SubmitNodeCollector node, CameraRenderState cameraRenderState) {
+    public void submit(U state, PoseStack poseStack, @NotNull SubmitNodeCollector node, @NotNull CameraRenderState cameraRenderState) {
         poseStack.pushPose();
         if (state.hasPose(Pose.SLEEPING)) {
             Direction bedOrientation = state.bedOrientation;
@@ -95,15 +94,13 @@ public abstract class PetRenderer<D extends AbstractPet, U extends LivingEntityR
         RenderType renderType = this.getRenderType(state, isBodyVisible, forceTransparent, state.appearsGlowing());
         if (renderType != null) {
             int overlayCoords = getOverlayCoords(state, this.getWhiteOverlayProgress(state));
-            int baseColor = forceTransparent ? 654311423 : -1;
-            int tintedColor = ARGB.multiply(baseColor, this.getModelTint(state));
             node.submitModel(this.model, state, poseStack, renderType, state.lightCoords, overlayCoords, this.getColor(), null, state.outlineColor);
         }
 
         if (this.shouldRenderLayers(state) && !this.layers.isEmpty()) {
             this.model.setupAnim(state);
 
-            for (RenderLayer<U, K> layer : this.layers) {
+            for (RenderLayer<@NotNull U, @NotNull K> layer : this.layers) {
                 layer.submit(poseStack, node, state.lightCoords, state, state.yRot, state.xRot);
             }
         }
@@ -131,6 +128,9 @@ public abstract class PetRenderer<D extends AbstractPet, U extends LivingEntityR
 
     @Override
     public boolean shouldShowName(D entity, double distanceToCamera) {
+        if (entity.getName().getString().isEmpty()) {
+            return false;
+        }
         if (CONFIG.alwaysRenderNametag && !(Minecraft.getInstance().gui.screen() instanceof PetsConfigScreen)) {
             return true;
         }

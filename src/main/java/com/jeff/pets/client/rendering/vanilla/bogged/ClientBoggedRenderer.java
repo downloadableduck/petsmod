@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.bogged;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientBogged;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientBogged;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -43,6 +43,6 @@ public class ClientBoggedRenderer extends PetRenderer<@NotNull ClientBogged, @No
     @Override
     public void extractRenderState(ClientBogged bogged, BoggedRenderState state, float f) {
         super.extractRenderState(bogged, state, f);
-        state.isPassenger = bogged.isPassenger();
+        state.isPassenger = bogged.isPassenger() || bogged.sitting;
     }
 }

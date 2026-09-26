@@ -5,8 +5,6 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.LlamaRenderState;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.client.Central.CONFIG;
-
 public class ClientLlamaModel extends LlamaModel {
 
     private final ModelPart head;

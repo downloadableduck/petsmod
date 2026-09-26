@@ -18,17 +18,12 @@ public class MegaSpudOuterLayer extends RenderLayer<@NotNull SlimeRenderState, @
 
     public static final ModelLayerLocation MEGA_SPUD_OUTER_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("mega_spud_outer"), "main");
 
-    private final EntityModel model;
+    private final EntityModel<? super SlimeRenderState> model;
 
     public MegaSpudOuterLayer(RenderLayerParent<@NotNull SlimeRenderState, @NotNull MegaSpudModel> renderLayerParent, EntityRendererProvider.Context context) {
         super(renderLayerParent);
         this.model = new SlimeModel(context.bakeLayer(MEGA_SPUD_OUTER_LOCATION));
     }
-
-    public static Identifier megaSpud() {
-        return Identifier.withDefaultNamespace("textures/entity/slime/mega_spud.png");
-    }
-
 
     @Override
     public void submit(@NotNull PoseStack poseStack, @NotNull SubmitNodeCollector submitNodeCollector, int i, SlimeRenderState entityRenderState, float f, float g) {

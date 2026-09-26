@@ -15,7 +15,7 @@ public enum TraitorSkins implements NameableEnum, EnumImpl {
     swamp;
 
     @Override
-    public List<Enum> getAllValues() {
+    public List<Enum<?>> getAllValues() {
         return List.of(plains,
                 desert,
                 savanna,

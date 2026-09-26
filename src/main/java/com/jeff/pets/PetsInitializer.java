@@ -22,23 +22,17 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.function.Function;
-
 /**
- * Registers all of the blocks and entities used in this mod, as well as providing the {@link #MOD_ID}.
+ * Registers all the blocks and entities used in this mod, as well as providing the {@link #MOD_ID}.
  */
 public class PetsInitializer implements ModInitializer {
     public static final String MOD_ID = "pets-mod";
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+    public static final Logger LOGGER = LoggerFactory.getLogger("Pets Mod");
     private static final ResourceKey<@NotNull EntityType<?>> RACOON_KEY =
             ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(MOD_ID, "racoon"));
     public static final EntityType<@NotNull Racoon> RACOON = Registry.register(

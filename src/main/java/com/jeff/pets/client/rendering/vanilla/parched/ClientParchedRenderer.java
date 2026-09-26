@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.parched;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientParched;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientParched;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -40,6 +40,6 @@ public class ClientParchedRenderer extends PetRenderer<@NotNull ClientParched, @
     @Override
     public void extractRenderState(ClientParched parched, SkeletonRenderState state, float f) {
         super.extractRenderState(parched, state, f);
-        state.isPassenger = parched.isPassenger();
+        state.isPassenger = parched.isPassenger() || parched.sitting;
     }
 }

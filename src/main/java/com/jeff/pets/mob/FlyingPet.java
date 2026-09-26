@@ -1,7 +1,6 @@
 package com.jeff.pets.mob;
 
 import com.jeff.pets.client.network.NetworkManager;
-import com.jeff.pets.client.network.PetsNetworked;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.client.Minecraft;
 import net.minecraft.sounds.SoundSource;
@@ -17,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 /**
- * Abstract class representing any pet tht can fly (ghasts, vexes, etc). Contains custom movement
+ * Abstract class representing any pet tht can fly (ghasts, vexes, etc.). Contains custom movement
  * logic that allow the pets to move on the client side.
  *
  * @see AbstractPet
@@ -38,7 +37,8 @@ public abstract class FlyingPet extends AbstractPet {
     public void tick() {
         try {
             super.tick();
-        } catch (Exception _) {}
+        } catch (Exception _) {
+        }
         LivingEntity owner = this.getOwner();
         if (owner != null) {
 
@@ -46,7 +46,7 @@ public abstract class FlyingPet extends AbstractPet {
                 if (owner.isCrouching() && owner.isJumping()) {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, 0.1, 0));
-                    NetworkManager.get().broadcastHeadPayload(Minecraft.getInstance().player.getStringUUID(), false);
+                    NetworkManager.get().broadcastHeadPayload(Objects.requireNonNull(Minecraft.getInstance().player).getStringUUID(), false);
                 } else {
                     this.setOrderedToSit(true);
                 }
@@ -111,21 +111,22 @@ public abstract class FlyingPet extends AbstractPet {
                 this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.getYHeadRot(), 10);
             }
 
-            this.move(MoverType.SELF, this.getDeltaMovement());
-
-            //if (!this.onGround()) {
-            //  this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
-            //}
+            if (!this.sitting) {
+                this.move(MoverType.SELF, this.getDeltaMovement());
+            }
         }
         if (owner != null) {
-            if (distanceTo(owner) >= 10) {
+            if (distanceTo(owner) >= 10 && !this.sitting) {
                 this.tryToTeleportToOwner();
             }
         }
 
         int ambient = (int) (Math.random() * (60 * 20));
-        if (ambient == 1 && this.level() != null) {
-            level().playLocalSound(this, Objects.requireNonNull(this.getAmbientSound()), SoundSource.AMBIENT, 1.0f, 1.0f);
+        try (Level level = this.level()) {
+            if (ambient == 1) {
+                level.playLocalSound(this, Objects.requireNonNull(this.getAmbientSound()), SoundSource.AMBIENT, 1.0f, 1.0f);
+            }
+        } catch (Exception ignored) {
         }
     }
 }

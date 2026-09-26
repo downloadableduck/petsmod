@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.blaze;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientBlaze;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientBlaze;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.monster.blaze.BlazeModel;

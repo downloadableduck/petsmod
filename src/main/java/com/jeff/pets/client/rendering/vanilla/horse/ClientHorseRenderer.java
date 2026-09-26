@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.horse;
 
 import com.jeff.pets.client.rendering.IPetRenderState;
-import com.jeff.pets.mob.vanilla.passive.ClientHorse;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientHorse;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.animal.equine.HorseModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -14,8 +14,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.EquineRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
-
-import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientHorseRenderer extends PetRenderer<@NotNull ClientHorse, @NotNull EquineRenderState, @NotNull HorseModel> {
     public static final ModelLayerLocation HORSE_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clienthorse"), "main");
@@ -39,11 +37,10 @@ public class ClientHorseRenderer extends PetRenderer<@NotNull ClientHorse, @NotN
     public @NotNull Identifier getTextureLocation(EquineRenderState horseRenderState) {
         String skin = ((IPetRenderState) horseRenderState).pets$getPetSkin();
         switch (skin) {
-            case "black" -> horseTextureLocation = "textures/entity/horse/horse_black.png";
             case "brown" -> horseTextureLocation = "textures/entity/horse/horse_brown.png";
             case "chestnut" -> horseTextureLocation = "textures/entity/horse/horse_chestnut.png";
             case "creamy" -> horseTextureLocation = "textures/entity/horse/horse_creamy.png";
-            case "dark_brown" -> horseTextureLocation = "textures/entity/horse/horse_brown.png";
+            case "dark_brown" -> horseTextureLocation = "textures/entity/horse/horse_darkbrown.png";
             case "gray" -> horseTextureLocation = "textures/entity/horse/horse_gray.png";
             case "white" -> horseTextureLocation = "textures/entity/horse/horse_white.png";
             case "skeleton" -> horseTextureLocation = "textures/entity/horse/horse_skeleton.png";

@@ -5,8 +5,6 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.ChickenRenderState;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.client.Central.CONFIG;
-
 public class ClientChickenModel extends AdultChickenModel {
 
     private final ModelPart head;

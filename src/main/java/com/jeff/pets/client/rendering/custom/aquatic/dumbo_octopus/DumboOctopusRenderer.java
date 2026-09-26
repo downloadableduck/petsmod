@@ -1,22 +1,21 @@
 package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 
 import com.jeff.pets.client.rendering.IPetRenderState;
-import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.client.Central.CONFIG;
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 
 public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopusRenderState, DumboOctopusModel> {
 
     public static final ModelLayerLocation DUMBO_OCTOPUS_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(MOD_ID, "dumbo_octopus"), "main");
+    final float speed = 0.5f;
     double i = 45;
     float direction = 1;
-    float speed = 0.5f;
 
     public DumboOctopusRenderer(EntityRendererProvider.Context context) {
         super(context, new DumboOctopusModel(context.bakeLayer(DUMBO_OCTOPUS_LOCATION)), 0.5f);
@@ -34,7 +33,6 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
         if (!state.isServerEntity) {
             String skin = ((IPetRenderState) state).pets$getPetSkin();
             switch (skin) {
-                case "yellow" -> path = yellow;
                 case "red" -> path = red;
                 case "blue" -> path = blue;
                 case "green" -> path = green;
@@ -44,7 +42,6 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
             }
         } else {
             switch (state.dumboOctopusSkin) {
-                case 1 -> path = yellow;
                 case 2 -> path = red;
                 case 3 -> path = blue;
                 case 4 -> path = green;
