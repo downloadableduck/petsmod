@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.stray;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientStray;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientStray;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -43,6 +43,6 @@ public class ClientStrayRenderer extends PetRenderer<@NotNull ClientStray, @NotN
     @Override
     public void extractRenderState(ClientStray stray, SkeletonRenderState state, float f) {
         super.extractRenderState(stray, state, f);
-        state.isPassenger = stray.isPassenger();
+        state.isPassenger = stray.isPassenger() || stray.sitting;
     }
 }

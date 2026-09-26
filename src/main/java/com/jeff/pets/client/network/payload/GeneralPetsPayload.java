@@ -3,12 +3,12 @@ package com.jeff.pets.client.network.payload;
 import java.util.UUID;
 
 public class GeneralPetsPayload extends Payload {
-    public UUID playerUUID;
-    public String petSpecies;
-    public String petName;
-    public String petSkin;
-    public boolean petOn;
-    public boolean isBaby;
+    public final UUID playerUUID;
+    public final String petSpecies;
+    public final String petName;
+    public final String petSkin;
+    public final boolean petOn;
+    public final boolean isBaby;
 
     public GeneralPetsPayload(String uuid, boolean petOn, String petSpecies, String petName, String petSkin, boolean isBaby) {
         super(uuid);

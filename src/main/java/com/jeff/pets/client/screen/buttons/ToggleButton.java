@@ -1,4 +1,4 @@
-package com.jeff.pets.client.buttons;
+package com.jeff.pets.client.screen.buttons;
 
 import com.jeff.pets.client.PetsConfigScreen;
 import com.jeff.pets.client.Utils;
@@ -7,11 +7,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.toasts.SystemToast;
 import net.minecraft.client.input.InputWithModifiers;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -20,26 +20,25 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ToggleButton extends Button {
 
     private final Font font;
-    private Supplier<Boolean> toggle;
     private final PetsConfigScreen screen;
-    private final int offset;
+    private final Supplier<Boolean> toggle;
 
-    public ToggleButton(int x, int y, Component message, OnPress onPress, Supplier<Boolean> bool, PetsConfigScreen screen, int offset) {
+    public ToggleButton(int x, int y, Component message, OnPress onPress, Supplier<Boolean> bool, PetsConfigScreen screen) {
         super(x, y, 32, 16, message, onPress, Supplier::get);
         this.toggle = bool;
         this.screen = screen;
         this.font = screen.getFont();
-        this.offset = offset;
-    }
-
-    public ToggleButton(int x, int y, Component message, OnPress onPress, Supplier<Boolean> bool, PetsConfigScreen screen) {
-        this(x, y, message, onPress, bool, screen, 0);
     }
 
     @Override
     protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, this.getTexture(), this.getX(), this.getY(), this.width, this.height, this.screen.button.color);
-        graphics.text(this.font, this.message, this.getX() - offset, this.getY() - (this.font.lineHeight - this.width), this.screen.button.color);
+        String[] strings = this.message.getString().split("\n");
+        int y = this.getY() - (this.font.lineHeight - this.width) - 10;
+        for (String string : strings) {
+            y += this.font.lineHeight;
+            graphics.text(this.font, string, this.getX() + this.width / 2 - this.font.width(string) / 2, y, this.screen.button.color);
+        }
     }
 
     public Identifier getTexture() {
@@ -56,14 +55,14 @@ public class ToggleButton extends Button {
     }
 
     @Override
-    public void onPress(InputWithModifiers input) {
+    public void onPress(@NotNull InputWithModifiers input) {
         super.onPress(input);
         //this.toggle = !this.toggle;
         if (Minecraft.getInstance().player != null) {
             NetworkManager.get().broadcastGeneral(Minecraft.getInstance().player.getStringUUID(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby);
         }
     }
-    
+
     private boolean toggle() {
         return this.toggle.get();
     }

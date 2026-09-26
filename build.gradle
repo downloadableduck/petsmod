@@ -1,6 +1,7 @@
 import com.vanniktech.maven.publish.SonatypeHost
-import java.nio.file.Path;
-import java.nio.file.FileSystems;
+
+import java.nio.file.Path
+import java.nio.file.FileSystems
 import java.nio.file.Files
 
 plugins {
@@ -48,7 +49,7 @@ dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     implementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    implementation "me.shedaniel.cloth:cloth-config-fabric:26.1.154"
+    //implementation "me.shedaniel.cloth:cloth-config-fabric:26.1.154"
     // Fabric API. This is technically optional, but you probably want it anyway.
     implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
     implementation("com.terraformersmc:modmenu:${project.modmenu_version}")
@@ -86,7 +87,7 @@ java {
 
 jar {
     inputs.property "archivesName", project.base.archivesName
-    from sourceSets.main.allSource
+    //from sourceSets.main.allSource
 
     from("LICENSE") {
         rename { "${it}_${inputs.properties.archivesName}"}

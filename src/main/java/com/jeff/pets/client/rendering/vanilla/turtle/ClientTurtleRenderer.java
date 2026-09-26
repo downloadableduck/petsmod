@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.turtle;
 
-import com.jeff.pets.mob.vanilla.passive.ClientTurtle;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientTurtle;
 import net.minecraft.client.model.animal.turtle.AdultTurtleModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;

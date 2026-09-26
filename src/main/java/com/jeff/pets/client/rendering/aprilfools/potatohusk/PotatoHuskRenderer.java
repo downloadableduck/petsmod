@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.aprilfools.potatohusk;
 
-import com.jeff.pets.mob.aprilfools.PotatoHusk;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.zombie.ClientZombieModel;
+import com.jeff.pets.mob.aprilfools.PotatoHusk;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -40,6 +40,6 @@ public class PotatoHuskRenderer extends PetRenderer<@NotNull PotatoHusk, @NotNul
     @Override
     public void extractRenderState(PotatoHusk husk, ZombieRenderState state, float f) {
         super.extractRenderState(husk, state, f);
-        state.isPassenger = husk.isPassenger();
+        state.isPassenger = husk.isPassenger() || husk.sitting;
     }
 }

@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.piglin;
 
 import com.jeff.pets.client.rendering.IPetRenderState;
-import com.jeff.pets.mob.vanilla.neutral.ClientPiglin;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.neutral.ClientPiglin;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -16,11 +16,9 @@ import net.minecraft.client.renderer.entity.state.PiglinRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.client.Central.CONFIG;
-
 public class ClientPiglinRenderer extends PetRenderer<@NotNull ClientPiglin, @NotNull PiglinRenderState, @NotNull ClientPiglinModel> {
 
-    public static ModelLayerLocation PIGLIN_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientpiglin"), "main");
+    public static final ModelLayerLocation PIGLIN_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientpiglin"), "main");
     private String piglinTexturePath;
 
     public ClientPiglinRenderer(EntityRendererProvider.Context context) {

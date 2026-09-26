@@ -14,11 +14,12 @@
   "license": "MIT",
   "icon": "websocket.png",
   "environment": "client",
-
   "custom": {
     "modmenu": {
       "parent": "pets-mod",
-      "badges": [ "library" ]
+      "badges": [
+        "library"
+      ]
     }
   }
 }

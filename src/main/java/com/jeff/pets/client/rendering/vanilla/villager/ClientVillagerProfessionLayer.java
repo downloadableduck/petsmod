@@ -5,7 +5,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.npc.VillagerModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.VillagerRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -13,9 +12,6 @@ import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
-
-import static com.jeff.pets.client.Central.CONFIG;
-import static com.jeff.pets.client.Central.villager;
 
 public class ClientVillagerProfessionLayer extends RenderLayer<@NotNull VillagerRenderState, @NotNull VillagerModel> {
 
@@ -33,11 +29,9 @@ public class ClientVillagerProfessionLayer extends RenderLayer<@NotNull Villager
     public static final ModelLayerLocation SHEPHERD_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/villager/profession/shepherd.png"), "main");
     public static final ModelLayerLocation TOOLSMITH_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/villager/profession/toolsmith.png"), "main");
     public static final ModelLayerLocation WEAPONSMITH_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/villager/profession/weaponsmith.png"), "main");
-    private ClientVillagerRenderer renderer;
 
     public ClientVillagerProfessionLayer(ClientVillagerRenderer renderLayerParent) {
         super(renderLayerParent);
-        this.renderer = renderLayerParent;
     }
 
     @Override

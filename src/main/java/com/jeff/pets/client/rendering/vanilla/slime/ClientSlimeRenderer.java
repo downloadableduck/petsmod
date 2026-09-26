@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.slime;
 
 import com.jeff.pets.client.rendering.IPetRenderState;
-import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -13,8 +13,6 @@ import net.minecraft.client.renderer.entity.layers.SlimeOuterLayer;
 import net.minecraft.client.renderer.entity.state.SlimeRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
-
-import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientSlimeRenderer extends PetRenderer<@NotNull ClientSlime, @NotNull SlimeRenderState, @NotNull SlimeModel> {
 
@@ -29,7 +27,6 @@ public class ClientSlimeRenderer extends PetRenderer<@NotNull ClientSlime, @NotN
     protected void scale(SlimeRenderState slimeRenderState, @NotNull PoseStack poseStack) {
         String skin = ((IPetRenderState) slimeRenderState).pets$getPetSkin();
         int slimeScale = switch (skin) {
-            case "small" -> 1;
             case "medium" -> 2;
             case "large" -> 4;
             case null, default -> 1;

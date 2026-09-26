@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.wolf;
 
 import com.jeff.pets.client.rendering.IPetRenderState;
-import com.jeff.pets.mob.vanilla.neutral.ClientWolf;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.neutral.ClientWolf;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -13,8 +13,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.WolfRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
-
-import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientWolfRenderer extends PetRenderer<@NotNull ClientWolf, @NotNull WolfRenderState, @NotNull ClientWolfModel> {
 
@@ -42,7 +40,6 @@ public class ClientWolfRenderer extends PetRenderer<@NotNull ClientWolf, @NotNul
         String skin = ((IPetRenderState) livingEntityRenderState).pets$getPetSkin();
 
         switch (skin) {
-            case "pale" -> wolfTexturePath = "textures/entity/wolf/wolf.png";
             case "ashen" -> wolfTexturePath = "textures/entity/wolf/wolf_ashen.png";
             case "black" -> wolfTexturePath = "textures/entity/wolf/wolf_black.png";
             case "chestnut" -> wolfTexturePath = "textures/entity/wolf/wolf_chestnut.png";

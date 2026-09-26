@@ -4,8 +4,6 @@ import net.minecraft.client.model.animal.cow.CowModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 
-import static com.jeff.pets.client.Central.CONFIG;
-
 public class ClientCowModel extends CowModel {
 
     private final ModelPart head;

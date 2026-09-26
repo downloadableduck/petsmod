@@ -1,7 +1,6 @@
 package com.jeff.pets.client;
 
-import me.shedaniel.autoconfig.ConfigData;
-import me.shedaniel.autoconfig.annotation.Config;
+import com.jeff.pets.client.enums.Action;
 
 /**
  * Stores all the values that are serialized into a JSON config located at {@code ./minecraft/config/petsconfig.json}
@@ -11,11 +10,9 @@ import me.shedaniel.autoconfig.annotation.Config;
  *
  * @see com.jeff.pets.client.Central
  * @see com.jeff.pets.client.Central#CONFIG
- * @see me.shedaniel.autoconfig.ConfigData
  */
-@Config(name = "petsconfig")
-public class PetsConfig implements ConfigData {
-    public Boolean petOn;
+public class PetsConfig {
+    public boolean petOn = true;
     public Boolean customTitleEnabled;
     public String activePet;
     public String penguinName;
@@ -165,4 +162,11 @@ public class PetsConfig implements ConfigData {
 
     public boolean renderPetHitbox = true;
     public boolean alwaysRenderNametag = false;
+    public boolean wanderingEnabled = true;
+
+    public boolean hitThroughPets = false;
+
+    public Action pickUp = Action.Right_click_and_Sneak;
+    public Action interaction = Action.Right_Click;
+    public Action sit = Action.Right_Click_and_Jump;
 }

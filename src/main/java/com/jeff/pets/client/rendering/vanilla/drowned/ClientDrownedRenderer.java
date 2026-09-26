@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.drowned;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientDrowned;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientDrowned;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -58,6 +58,6 @@ public class ClientDrownedRenderer extends PetRenderer<@NotNull ClientDrowned, @
     public void extractRenderState(ClientDrowned drowned, ZombieRenderState state, float f) {
         super.extractRenderState(drowned, state, f);
         state.isBaby = CONFIG.isBaby;
-        state.isPassenger = drowned.isPassenger();
+        state.isPassenger = drowned.isPassenger() || drowned.sitting;
     }
 }

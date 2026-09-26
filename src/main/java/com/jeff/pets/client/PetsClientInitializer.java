@@ -193,7 +193,7 @@ import static com.jeff.pets.PetsInitializer.LOGGER;
  */
 public class PetsClientInitializer implements ClientModInitializer {
 
-    public static List<String> ADDONS = new ArrayList<>();
+    public static final List<String> ADDONS = new ArrayList<>();
 
     /**
      * Misc rendering stuff
@@ -404,9 +404,7 @@ public class PetsClientInitializer implements ClientModInitializer {
         ModelLayerRegistry.registerModelLayer(KoiRenderer.KOI_LOCATION, KoiModel::createBodyLayer);
         ModelLayerRegistry.registerModelLayer(StingrayRenderer.STINGRAY_LOCATION, StingrayModel::createBodyLayer);
 
-        ClientLifecycleEvents.CLIENT_STARTED.register((mc) -> {
-            LOGGER.info("PetsMod addons loaded:{}", ADDONS);
-        });
+        ClientLifecycleEvents.CLIENT_STARTED.register((_) -> LOGGER.info("PetsMod addons loaded:{}", ADDONS));
     }
 
     /**
