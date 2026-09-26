@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Unique;
 public class EntityRenderStateMixin implements IPetRenderState {
     @Unique
     private boolean pets$isMyPet;
-    
+
     @Unique
     private String pets$petSkin = "";
 

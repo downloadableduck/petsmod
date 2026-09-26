@@ -173,7 +173,6 @@ import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
@@ -197,7 +196,7 @@ import static com.jeff.pets.PetsInitializer.MOD_ID;
  * @see PetsInitializer
  * @see Central
  */
-@Mod(value=MOD_ID, dist = Dist.CLIENT)
+@Mod(value = MOD_ID, dist = Dist.CLIENT)
 public class PetsClientInitializer {
 
     public static List<String> ADDONS = new ArrayList<>();
@@ -211,6 +210,13 @@ public class PetsClientInitializer {
         bus.addListener(this::registerModelLayers);
         bus.addListener(this::register);
         bus.addListener(this::createKeyBinding);
+    }
+
+    @SubscribeEvent
+    public static void printAddons(FMLClientSetupEvent event) {
+        event.enqueueWork(() -> {
+            PetsInitializer.LOGGER.info("PetsMod addons loaded:{}", ADDONS);
+        });
     }
 
     void registerModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
@@ -424,16 +430,9 @@ public class PetsClientInitializer {
      * is pressed
      */
 
-     void createKeyBinding(RegisterKeyMappingsEvent event) {
+    void createKeyBinding(RegisterKeyMappingsEvent event) {
         openConfigScreen = new KeyMapping("Open Pets Menu", GLFW.GLFW_KEY_P, new KeyMapping.Category(Identifier.fromNamespaceAndPath(MOD_ID, "petsmod.keymapping")));
 
         event.register(openConfigScreen);
-    }
-
-    @SubscribeEvent
-    public static void printAddons(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> {
-            PetsInitializer.LOGGER.info("PetsMod addons loaded:{}", ADDONS);
-        });
     }
 }

@@ -15,7 +15,7 @@ public enum ChickenSkins implements NameableEnum, EnumImpl {
     }
 
     @Override
-    public List<Enum> getAllValues() {
+    public List<Enum<?>> getAllValues() {
         return List.of(cold, temperate, warm);
     }
 }

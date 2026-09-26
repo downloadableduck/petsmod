@@ -46,8 +46,6 @@ public class TraitorBiomeLayer extends RenderLayer<@NotNull EvokerRenderState, @
                     renderColoredCutoutModel(this.getParentModel(), SWAMP_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
             case "taiga" ->
                     renderColoredCutoutModel(this.getParentModel(), TAIGA_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
-            case "plains" ->
-                    renderColoredCutoutModel(this.getParentModel(), PLAINS_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
 
             case null, default ->
                     renderColoredCutoutModel(this.getParentModel(), PLAINS_LOCATION.model(), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);

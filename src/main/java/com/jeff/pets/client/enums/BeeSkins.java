@@ -14,7 +14,7 @@ public enum BeeSkins implements NameableEnum, EnumImpl {
     }
 
     @Override
-    public List<Enum> getAllValues() {
+    public List<Enum<?>> getAllValues() {
         return List.of(happy, angry);
     }
 }

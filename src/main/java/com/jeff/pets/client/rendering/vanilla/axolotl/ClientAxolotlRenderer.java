@@ -25,7 +25,6 @@ public class ClientAxolotlRenderer extends PetRenderer<@NotNull ClientAxolotl, @
     public @NotNull Identifier getTextureLocation(AxolotlRenderState axolotlRenderState) {
         String skin = ((IPetRenderState) axolotlRenderState).pets$getPetSkin();
         switch (skin) {
-            case "pink" -> axolotlTextureLocation = "textures/entity/axolotl/axolotl_lucy.png";
             case "brown" -> axolotlTextureLocation = "textures/entity/axolotl/axolotl_wild.png";
             case "gold" -> axolotlTextureLocation = "textures/entity/axolotl/axolotl_gold.png";
             case "cyan" -> axolotlTextureLocation = "textures/entity/axolotl/axolotl_cyan.png";

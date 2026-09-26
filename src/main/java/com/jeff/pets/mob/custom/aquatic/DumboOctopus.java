@@ -6,15 +6,10 @@ import com.jeff.pets.mob.FlyingPet;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -39,6 +34,8 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
 
+import java.util.Objects;
+
 import static com.jeff.pets.PetsInitializer.DUMBO_OCTOPUS;
 
 public class DumboOctopus extends FlyingPet {
@@ -47,8 +44,6 @@ public class DumboOctopus extends FlyingPet {
             SynchedEntityData.defineId(DumboOctopus.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<@NotNull Integer> OCTOPUS_SKIN =
             SynchedEntityData.defineId(DumboOctopus.class, EntityDataSerializers.INT);
-    private final float nextFlap = 1.0F;
-    public ServerPlayer owner = (ServerPlayer) this.getOwner();
 
     public DumboOctopus(final EntityType<? extends @NotNull DumboOctopus> type, final Level level) {
         super(type, level);
@@ -72,10 +67,6 @@ public class DumboOctopus extends FlyingPet {
 
     public void setServerEntity(Boolean value) {
         this.entityData.set(IS_SERVER_ENTITY, value);
-    }
-
-    public void aiStep() {
-        super.aiStep();
     }
 
     @Override
@@ -106,7 +97,7 @@ public class DumboOctopus extends FlyingPet {
 
     public @Nullable DumboOctopus getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgeableMob partner) {
         DumboOctopus octopus = DUMBO_OCTOPUS.get().create(level, EntitySpawnReason.BREEDING);
-        octopus.setServerEntity(true);
+        Objects.requireNonNull(octopus).setServerEntity(true);
         return octopus;
     }
 
@@ -123,7 +114,7 @@ public class DumboOctopus extends FlyingPet {
     @Override
     public void registerGoals() {
 
-        /**Using false in this statement causes the mob to sink to the bottom and reptitively spin.*/
+        /*Using false in this statement causes the mob to sink to the bottom and reptitively spin.*/
         this.moveControl = new SmoothSwimmingMoveControl(this, 10, 10, 1, 1, true);
         this.getNavigation().setCanFloat(true);
         this.goalSelector.addGoal(1, new RandomSwimmingGoal(this, 1, 1));
@@ -148,7 +139,7 @@ public class DumboOctopus extends FlyingPet {
                 if (owner.isCrouching() && owner.isJumping()) {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, 0.1, 0));
-                    NetworkManager.get().broadcastHeadPayload(Minecraft.getInstance().player.getStringUUID(), false);
+                    NetworkManager.get().broadcastHeadPayload(Objects.requireNonNull(Minecraft.getInstance().player).getStringUUID(), false);
                 } else {
                     this.setOrderedToSit(true);
                 }
@@ -216,17 +207,22 @@ public class DumboOctopus extends FlyingPet {
                 this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.getYHeadRot(), 10);
             }
 
-            this.move(MoverType.SELF, this.getDeltaMovement());
+            if (!this.sitting) {
+                this.move(MoverType.SELF, this.getDeltaMovement());
+            }
         }
         if (owner != null) {
-            if (distanceTo(owner) >= 10) {
+            if (distanceTo(owner) >= 10 && !this.sitting) {
                 this.tryToTeleportToOwner();
             }
         }
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level().playLocalSound(this, SoundEvents.SQUID_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f);
+            try (Level level = this.level()) {
+                level.playLocalSound(this, SoundEvents.SQUID_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f);
+            } catch (Exception ignored) {
+            }
         }
     }
 
@@ -242,22 +238,6 @@ public class DumboOctopus extends FlyingPet {
         super.readAdditionalSaveData(input);
         this.setServerEntity(input.getBooleanOr("isServerEntity", true));
         this.entityData.set(OCTOPUS_SKIN, input.getIntOr("variant", 1));
-    }
-
-    @Override
-    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
-        if (this.level() != null && !this.level().isClientSide()) {
-            super.onSyncedDataUpdated(key);
-        }
-    }
-
-    @Override
-    public @NotNull Packet<@NotNull ClientGamePacketListener> getAddEntityPacket(@NotNull ServerEntity serverEntity) {
-        if (this.level().isClientSide()) {
-            return new ClientboundAddEntityPacket(this, serverEntity);
-        } else {
-            return super.getAddEntityPacket(serverEntity);
-        }
     }
 
     @Override

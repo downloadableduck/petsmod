@@ -14,7 +14,7 @@ public enum SquidSkins implements NameableEnum, EnumImpl {
     }
 
     @Override
-    public List<Enum> getAllValues() {
+    public List<Enum<?>> getAllValues() {
         return List.of(squid, glow_squid);
     }
 }

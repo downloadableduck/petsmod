@@ -3,13 +3,12 @@ package com.jeff.pets.client.network;
 import net.minecraft.client.Minecraft;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.jeff.pets.PetsInitializer.MOD_ID;
+import java.util.Objects;
 
 @EventBusSubscriber
 public final class PetsNetworked {
@@ -20,15 +19,17 @@ public final class PetsNetworked {
     @SubscribeEvent
     public static void createConnectHandler(ClientPlayerNetworkEvent.LoggingIn event) {
         try {
-            NetworkManager.get().connect(Minecraft.getInstance().getCurrentServer().ip);
-        } catch (Exception e) {}
+            NetworkManager.get().connect(Objects.requireNonNull(Minecraft.getInstance().getCurrentServer()).ip);
+        } catch (Exception ignored) {
+        }
     }
 
     @SubscribeEvent
     public static void createDisconnectHandler(ClientPlayerNetworkEvent.LoggingOut event) {
         try {
             NetworkManager.get().disconnect();
-        } catch (Exception e) {}
+        } catch (Exception ignored) {
+        }
     }
 
     @SubscribeEvent
@@ -42,6 +43,7 @@ public final class PetsNetworked {
                     NetworkManager.get().connect(Minecraft.getInstance().getCurrentServer().ip);
                 }
             }
-        } catch (Exception e) {}
+        } catch (Exception ignored) {
+        }
     }
 }
