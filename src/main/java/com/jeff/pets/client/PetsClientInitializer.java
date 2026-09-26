@@ -124,7 +124,6 @@ import com.jeff.pets.client.rendering.vanilla.wolf.ClientWolfRenderer;
 import com.jeff.pets.client.rendering.vanilla.zombie.ClientZombieRenderer;
 import com.jeff.pets.client.rendering.vanilla.zombievillager.ClientZombieVillagerModel;
 import com.jeff.pets.client.rendering.vanilla.zombievillager.ClientZombieVillagerRenderer;
-import com.terraformersmc.modmenu.util.mod.Mod;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -174,7 +173,6 @@ import net.minecraft.client.model.monster.vex.VexModel;
 import net.minecraft.client.model.monster.warden.WardenModel;
 import net.minecraft.client.model.monster.witch.WitchModel;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.client.renderer.entity.SulfurCubeRenderer;
 import net.minecraft.resources.Identifier;
 import org.lwjgl.glfw.GLFW;
 
@@ -197,7 +195,7 @@ import static com.jeff.pets.PetsInitializer.LOGGER;
  */
 public class PetsClientInitializer implements ClientModInitializer {
 
-    public static List<String> ADDONS = new ArrayList<>();
+    public static final List<String> ADDONS = new ArrayList<>();
 
     /**
      * Misc rendering stuff
@@ -410,9 +408,7 @@ public class PetsClientInitializer implements ClientModInitializer {
         ModelLayerRegistry.registerModelLayer(StingrayRenderer.STINGRAY_LOCATION, StingrayModel::createBodyLayer);
         ModelLayerRegistry.registerModelLayer(ClientSulfurCubeRenderer.SULFUR_CUBE_LOCATION, SulfurCubeModel::createOuterBodyLayer);
 
-        ClientLifecycleEvents.CLIENT_STARTED.register((mc) -> {
-            LOGGER.info("PetsMod addons loaded:{}", ADDONS);
-        });
+        ClientLifecycleEvents.CLIENT_STARTED.register((_) -> LOGGER.info("PetsMod addons loaded:{}", ADDONS));
     }
 
     /**

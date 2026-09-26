@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.fox;
 
 import com.jeff.pets.client.rendering.IPetRenderState;
-import com.jeff.pets.mob.vanilla.neutral.ClientFox;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.neutral.ClientFox;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -12,8 +12,6 @@ import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
-
-import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientFoxRenderer extends PetRenderer<@NotNull ClientFox, @NotNull FoxRenderState, @NotNull ClientFoxModel> {
     public static final ModelLayerLocation FOX_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientfox"), "main");

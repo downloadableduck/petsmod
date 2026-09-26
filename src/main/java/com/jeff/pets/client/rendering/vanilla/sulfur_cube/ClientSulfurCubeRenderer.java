@@ -3,27 +3,26 @@ package com.jeff.pets.client.rendering.vanilla.sulfur_cube;
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientSulfurCube;
-import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.monster.slime.SulfurCubeModel;
-import net.minecraft.client.renderer.block.BlockModelRenderState;
 import net.minecraft.client.renderer.block.BlockModelResolver;
 import net.minecraft.client.renderer.block.model.BlockDisplayContext;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.SulfurCubeRenderer;
 import net.minecraft.client.renderer.entity.layers.SulfurCubeInnerLayer;
 import net.minecraft.client.renderer.entity.state.SulfurCubeRenderState;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
+import static com.jeff.pets.PetsInitializer.MOD_ID;
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientSulfurCubeRenderer extends PetRenderer<ClientSulfurCube, SulfurCubeRenderState, SulfurCubeModel> {
 
+    public static final ModelLayerLocation SULFUR_CUBE_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(MOD_ID, "sulfur_cube"), "main");
     private final BlockModelResolver blockModelResolver;
-    public static final ModelLayerLocation SULFUR_CUBE_LOCATION = Utils.createModelLayer("sulfur_cube");
 
     public ClientSulfurCubeRenderer(EntityRendererProvider.Context context) {
         super(context, new SulfurCubeModel(context.bakeLayer(SULFUR_CUBE_LOCATION)), 0.5f);
@@ -32,7 +31,7 @@ public class ClientSulfurCubeRenderer extends PetRenderer<ClientSulfurCube, Sulf
     }
 
     @Override
-    public Identifier getTextureLocation(SulfurCubeRenderState state) {
+    public @NotNull Identifier getTextureLocation(SulfurCubeRenderState state) {
         return Identifier.withDefaultNamespace("textures/entity/sulfur_cube/sulfur_cube_outer.png");
     }
 

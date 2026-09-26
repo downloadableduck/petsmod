@@ -15,11 +15,12 @@
   "license": "Apache 2.0",
   "icon": "ably.png",
   "environment": "client",
-
   "custom": {
     "modmenu": {
       "parent": "pets-mod",
-      "badges": [ "library" ]
+      "badges": [
+        "library"
+      ]
     }
   }
 }

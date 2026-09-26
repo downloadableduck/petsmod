@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.nautilus;
 
 import com.jeff.pets.client.rendering.IPetRenderState;
-import com.jeff.pets.mob.vanilla.neutral.ClientNautilus;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.neutral.ClientNautilus;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.animal.nautilus.NautilusModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -11,8 +11,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.NautilusRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
-
-import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientNautilusRenderer extends PetRenderer<@NotNull ClientNautilus, @NotNull NautilusRenderState, @NotNull NautilusModel> {
 
@@ -33,7 +31,6 @@ public class ClientNautilusRenderer extends PetRenderer<@NotNull ClientNautilus,
         state.yRot = 180;
         String skin = ((IPetRenderState) state).pets$getPetSkin();
         String nautilusTexturePath = switch (skin) {
-            case "nautilus" -> "textures/entity/nautilus/nautilus.png";
             case "zombie" -> "textures/entity/nautilus/zombie_nautilus.png";
             case "coral_zombie" -> "textures/entity/nautilus/zombie_nautilus_coral.png";
             case null, default -> "textures/entity/nautilus/nautilus.png";

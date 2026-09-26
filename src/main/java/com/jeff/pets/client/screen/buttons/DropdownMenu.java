@@ -1,11 +1,13 @@
-package com.jeff.pets.client.buttons;
+package com.jeff.pets.client.screen.buttons;
 
 
 import com.jeff.pets.client.Central;
-import com.jeff.pets.client.Utils;
 import com.jeff.pets.client.PetsConfigScreen;
-import com.jeff.pets.client.enums.EnumImpl;
+import com.jeff.pets.client.Utils;
+import com.jeff.pets.client.enums.Action;
 import com.jeff.pets.client.enums.BlankEnum;
+import com.jeff.pets.client.enums.EnumImpl;
+import com.jeff.pets.client.network.NetworkManager;
 import net.fabricmc.loader.impl.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -15,6 +17,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWScrollCallback;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,18 +33,20 @@ public class DropdownMenu {
     static int max;
     static int petMin;
     static int petMax;
-    private final boolean isPet;
-    ArrayList<Enum> values;
-    int color;
-    PetsConfigScreen screen;
+    final ArrayList<Enum<?>> values;
+    final int color;
+    final PetsConfigScreen screen;
+    private final Type type;
+    public String name;
 
-    public DropdownMenu(PetsConfigScreen screen, EnumImpl enumimpl, boolean isPet) {
-        this.values = new ArrayList<Enum>((Collection) Arrays.asList(enumimpl.getClass().getEnumConstants()));
+    @SuppressWarnings("unchecked")
+    public DropdownMenu(PetsConfigScreen screen, EnumImpl enumimpl, Type type) {
+        this.values = new ArrayList<>((Collection<? extends Enum<?>>) Arrays.asList(enumimpl.getClass().getEnumConstants()));
         this.values.sort((e1, e2) -> e2.name().compareToIgnoreCase(e1.name()));
         this.color = screen.button.color;
         this.screen = screen;
-        this.isPet = isPet;
-        if (this.isPet) {
+        this.type = type;
+        if (this.type == Type.PET) {
             if (petMax > this.values.size() || petMin < 0 || petMax == 0) {
                 petMin = Math.max(0, this.values.size() - 8);
                 petMax = petMin + 8;
@@ -53,9 +58,9 @@ public class DropdownMenu {
             }
         }
 
-        GLFW.glfwSetScrollCallback(Minecraft.getInstance().getWindow().handle(), (handle, xo, yo) -> {
-            this.onScroll(yo < 0);
-        });
+        try (GLFWScrollCallback ignored = GLFW.glfwSetScrollCallback(Minecraft.getInstance().getWindow().handle(), (_, _, yo) -> this.onScroll(yo < 0))) {
+        } catch (Exception ignored) {
+        }
     }
 
     public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, int x, int y) {
@@ -65,9 +70,9 @@ public class DropdownMenu {
         int padding = 2;
         int availableTextWidth = width - (padding * 2);
 
-        for (Enum value : values) {
+        for (Enum<?> value : values) {
             int index = values.indexOf(value);
-            if (this.isPet) {
+            if (this.type == Type.PET) {
                 if (index >= petMax || index < petMin) {
                     continue;
                 }
@@ -87,7 +92,7 @@ public class DropdownMenu {
             boolean hovered = mouseX >= x && mouseX < x + width &&
                     mouseY >= y && mouseY < y + slotHeight;
 
-            Identifier id = hovered ? Utils.withModNamespace("dropdown_menu_slot_highlighted") : Utils.withModNamespace("dropdown_menu_slot");
+            Identifier id = this.getTexture(value, hovered);
             graphics.pose().pushMatrix();
             graphics.blitSprite(RenderPipelines.GUI_TEXTURED, id, x, y, width, slotHeight, color);
             for (int i = 0; i < lines.size(); i++) {
@@ -99,23 +104,33 @@ public class DropdownMenu {
             long window = Minecraft.getInstance().getWindow().handle();
             boolean pressed = GLFW.glfwGetMouseButton(window, GLFW.GLFW_MOUSE_BUTTON_1) == GLFW.GLFW_PRESS;
 
-            if (hovered && pressed && !value.equals(BlankEnum.no_skins_are_available) && !(value instanceof com.jeff.pets.client.enums.PetList)) {
+
+            if (hovered && pressed && !value.equals(BlankEnum.no_skins_are_available) && type == Type.SKIN) {
                 Utils.setActivePetSkin(String.valueOf(value));
-            } else if (hovered && pressed && value instanceof com.jeff.pets.client.enums.PetList) {
+            } else if (hovered && pressed && type == Type.PET) {
                 Utils.setActivePet(Utils.getPet(value.toString()), value.toString());
                 if (Minecraft.getInstance().player != null) {
                     Central.despawnPet();
-                    com.jeff.pets.client.network.NetworkManager.get().broadcastGeneral(Minecraft.getInstance().player.getStringUUID(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby);
+                    NetworkManager.get().broadcastGeneral(Minecraft.getInstance().player.getStringUUID(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby);
                     Central.summonPet();
                     Central.updateSuggestions(Minecraft.getInstance());
                 }
                 PetsConfigScreen petsConfigScreen = new PetsConfigScreen();
                 petsConfigScreen.ticks = 20;
-                if (Minecraft.getInstance().gui.screen() instanceof PetsConfigScreen petsConfigScreen1) {
-                    petsConfigScreen.size = petsConfigScreen1.size;
-                }
                 Minecraft.getInstance().gui.setScreen(null);
                 Minecraft.getInstance().gui.setScreen(petsConfigScreen);
+                petsConfigScreen.petsButton.opened = true;
+                //fix this
+            } else if (hovered && pressed && type == Type.KEYBIND) {
+                Action action = Action.valueOf(value.toString().replaceAll(" ", "_"));
+                if (this.name != null) {
+                    switch (this.name.toLowerCase()) {
+                        case "interact" -> CONFIG.interaction = action;
+                        case "pick up" -> CONFIG.pickUp = action;
+                        case "sit" -> CONFIG.sit = action;
+                    }
+                    Central.saveConfig();
+                }
             }
         }
     }
@@ -131,7 +146,7 @@ public class DropdownMenu {
         if (this.values.size() < 8) return;
         int maxScroll = Math.max(0, this.values.size() - 8);
 
-        if (this.isPet) {
+        if (this.type == Type.PET) {
             if (down) {
                 petMin = Math.max(0, petMin - 1);
             } else {
@@ -146,5 +161,42 @@ public class DropdownMenu {
             }
             max = min + 8;
         }
+    }
+
+    public Identifier getTexture(Enum<?> value, boolean hovered) {
+        Identifier selected = Utils.withModNamespace("dropdown_menu_slot_selected");
+        Identifier id = hovered ? Utils.withModNamespace("dropdown_menu_slot_highlighted") : Utils.withModNamespace("dropdown_menu_slot");
+        if (this.type == Type.KEYBIND) {
+            return switch (this.name.toLowerCase()) {
+                case "interact" -> {
+                    if (CONFIG.interaction.equals(value)) {
+                        yield selected;
+                    }
+                    yield id;
+                }
+                case "pick up" -> {
+                    if (CONFIG.pickUp.equals(value)) {
+                        yield selected;
+                    }
+                    yield id;
+                }
+                case "sit" -> {
+                    if (CONFIG.sit.equals(value)) {
+                        yield selected;
+                    }
+                    yield id;
+                }
+                default -> id;
+            };
+        } else if (this.type == Type.SKIN && !value.name().equals("not_a_skin")) {
+            if (Utils.getActivePetSkin().equals(value.name())) {
+                return Utils.withModNamespace("dropdown_menu_slot_selected");
+            }
+        } else if (this.type == Type.PET) {
+            if (CONFIG.activePet.equals(value.name())) {
+                return Utils.withModNamespace("dropdown_menu_slot_selected");
+            }
+        }
+        return id;
     }
 }

@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.zombie;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientZombie;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientZombie;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -48,6 +48,6 @@ public class ClientZombieRenderer extends PetRenderer<@NotNull ClientZombie, @No
     @Override
     public void extractRenderState(ClientZombie zombie, ZombieRenderState state, float f) {
         super.extractRenderState(zombie, state, f);
-        state.isPassenger = zombie.isPassenger();
+        state.isPassenger = zombie.isPassenger() || zombie.sitting;
     }
 }

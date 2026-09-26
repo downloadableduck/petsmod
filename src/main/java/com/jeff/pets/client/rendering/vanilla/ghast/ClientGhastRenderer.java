@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.ghast;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientGhast;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientGhast;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.monster.ghast.GhastModel;

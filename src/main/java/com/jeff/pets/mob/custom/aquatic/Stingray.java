@@ -33,12 +33,13 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
 
+import java.util.Objects;
+
 import static com.jeff.pets.PetsInitializer.STINGRAY;
 
 public class Stingray extends FlyingPet {
     public static final EntityDataAccessor<@NotNull Boolean> IS_SERVER_ENTITY =
             SynchedEntityData.defineId(Stingray.class, EntityDataSerializers.BOOLEAN);
-    private final float nextFlap = 1.0F;
     public float flap;
     public float flapping = 1.0F;
 
@@ -98,7 +99,7 @@ public class Stingray extends FlyingPet {
 
     public @Nullable Stingray getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgeableMob partner) {
         Stingray stringray = STINGRAY.create(level, EntitySpawnReason.BREEDING);
-        stringray.setServerEntity(true);
+        Objects.requireNonNull(stringray).setServerEntity(true);
         return stringray;
     }
 
@@ -114,8 +115,8 @@ public class Stingray extends FlyingPet {
     @Override
     public void registerGoals() {
 
-        /**Using false in this statement causes the mob to sink to the bottom and reptitively spin.*/
-        this.moveControl = new SmoothSwimmingMoveControl(this, 10, 10, 1, 1, true);
+        /*Using false in this statement causes the mob to sink to the bottom and reptitively spin.*/
+        this.moveControl = new SmoothSwimmingMoveControl<>(this, 10, 10, 1, 1, true);
         this.getNavigation().setCanFloat(true);
         this.goalSelector.addGoal(1, new RandomSwimmingGoal(this, 1, 1));
         this.goalSelector.addGoal(2, new TryFindWaterGoal(this));
@@ -166,7 +167,7 @@ public class Stingray extends FlyingPet {
                 if (owner.isCrouching() && owner.isJumping()) {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, 0.1, 0));
-                    NetworkManager.get().broadcastHeadPayload(Minecraft.getInstance().player.getStringUUID(), false);
+                    NetworkManager.get().broadcastHeadPayload(Objects.requireNonNull(Minecraft.getInstance().player).getStringUUID(), false);
                 } else {
                     this.setOrderedToSit(true);
                 }
@@ -234,17 +235,22 @@ public class Stingray extends FlyingPet {
                 this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.getYHeadRot(), 10);
             }
 
-            this.move(MoverType.SELF, this.getDeltaMovement());
+            if (!this.sitting) {
+                this.move(MoverType.SELF, this.getDeltaMovement());
+            }
         }
         if (owner != null) {
-            if (distanceTo(owner) >= 10) {
+            if (distanceTo(owner) >= 10 && !this.sitting) {
                 this.tryToTeleportToOwner();
             }
         }
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level().playLocalSound(this, SoundEvents.SQUID_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f);
+            try (Level level = this.level()) {
+                level.playLocalSound(this, SoundEvents.SQUID_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f);
+            } catch (Exception ignored) {
+            }
         }
     }
 }

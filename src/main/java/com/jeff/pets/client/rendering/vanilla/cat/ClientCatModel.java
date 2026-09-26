@@ -4,8 +4,6 @@ import net.minecraft.client.model.animal.feline.AdultCatModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.CatRenderState;
 
-import static com.jeff.pets.client.Central.CONFIG;
-
 public class ClientCatModel extends AdultCatModel {
     public ClientCatModel(ModelPart modelPart) {
         super(modelPart);

@@ -5,8 +5,6 @@ import net.minecraft.client.model.monster.hoglin.HoglinModel;
 import net.minecraft.client.renderer.entity.state.HoglinRenderState;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.client.Central.CONFIG;
-
 public class ClientHoglinModel extends HoglinModel {
 
     private final ModelPart head;

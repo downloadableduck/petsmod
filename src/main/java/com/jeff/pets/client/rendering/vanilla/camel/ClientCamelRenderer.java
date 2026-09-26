@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.camel;
 
 import com.jeff.pets.client.rendering.IPetRenderState;
-import com.jeff.pets.mob.vanilla.passive.ClientCamel;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.passive.ClientCamel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.animal.camel.AdultCamelModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -13,8 +13,6 @@ import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
-
-import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientCamelRenderer extends PetRenderer<@NotNull ClientCamel, @NotNull CamelRenderState, @NotNull AdultCamelModel> {
     public static final ModelLayerLocation CAMEL_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientcamel"), "main");

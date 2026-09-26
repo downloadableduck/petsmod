@@ -1,9 +1,9 @@
 package com.jeff.pets.client.rendering.vanilla.mooshroom;
 
 import com.jeff.pets.client.rendering.IPetRenderState;
-import com.jeff.pets.mob.vanilla.passive.ClientMooshroom;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.cow.ClientCowModel;
+import com.jeff.pets.mob.vanilla.passive.ClientMooshroom;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.animal.cow.CowModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -15,8 +15,6 @@ import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
-
-import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientMooshroomRenderer extends PetRenderer<@NotNull ClientMooshroom, @NotNull MushroomCowRenderState, @NotNull CowModel> {
     public static final ModelLayerLocation MOOSHROOM_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientmooshroom"), "main");

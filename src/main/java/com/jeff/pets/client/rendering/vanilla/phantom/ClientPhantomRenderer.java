@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.phantom;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientPhantom;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.vanilla.hostile.ClientPhantom;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.monster.phantom.PhantomModel;
