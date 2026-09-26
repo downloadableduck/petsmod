@@ -22,7 +22,7 @@ public class PenguinRenderer extends PetRenderer<@NotNull Penguin, @NotNull Peng
 
     @Override
     protected void scale(@NotNull PenguinRenderState livingEntityRenderState, @NotNull PoseStack poseStack) {
-        if ((livingEntityRenderState.isBaby && !livingEntityRenderState.isServerEntity) || (livingEntityRenderState.isBaby && livingEntityRenderState.isServerEntity)) {
+        if (livingEntityRenderState.isBaby) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
     }
@@ -33,7 +33,7 @@ public class PenguinRenderer extends PetRenderer<@NotNull Penguin, @NotNull Peng
         state.flap = Mth.lerp(partialTicks, penguin.oFlap, penguin.flap);
         state.flapSpeed = Mth.lerp(partialTicks, penguin.oFlapSpeed, penguin.flapSpeed);
         super.extractRenderState(penguin, state, partialTicks);
-        state.isPassenger = penguin.isPassenger();
+        state.isPassenger = penguin.isPassenger() || penguin.sitting;
     }
 
     @Override

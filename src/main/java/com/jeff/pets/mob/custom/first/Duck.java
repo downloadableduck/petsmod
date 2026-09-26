@@ -1,22 +1,15 @@
 package com.jeff.pets.mob.custom.first;
 
-import com.jeff.pets.PetsSounds;
 import com.jeff.pets.client.network.NetworkManager;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
@@ -36,6 +29,8 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
 
+import java.util.Objects;
+
 import static com.jeff.pets.PetsInitializer.DUCK;
 
 public class Duck extends AbstractPet {
@@ -51,7 +46,6 @@ public class Duck extends AbstractPet {
     public float flapping = 1.0F;
     public boolean isOnHead;
 
-    public ServerPlayer owner = (ServerPlayer) this.getOwner();
     private float nextFlap = 1.0F;
 
     public Duck(final EntityType<? extends @NotNull Duck> type, final Level level) {
@@ -139,7 +133,7 @@ public class Duck extends AbstractPet {
 
     public @Nullable Duck getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgeableMob partner) {
         Duck duck = DUCK.create(level, EntitySpawnReason.BREEDING);
-        duck.setServerEntity(true);
+        Objects.requireNonNull(duck).setServerEntity(true);
         return duck;
     }
 
@@ -180,7 +174,7 @@ public class Duck extends AbstractPet {
                 if (owner.isCrouching() && owner.isJumping()) {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
-                    NetworkManager.get().broadcastHeadPayload(Minecraft.getInstance().player.getStringUUID(), false);
+                    NetworkManager.get().broadcastHeadPayload(Objects.requireNonNull(Minecraft.getInstance().player).getStringUUID(), false);
                     this.isOnHead = false;
                 } else {
                     this.setOrderedToSit(true);
@@ -214,8 +208,10 @@ public class Duck extends AbstractPet {
 
                 double speed = owner.getSpeed() * 2.0;
                 this.setDeltaMovement(dir.x * speed, this.getDeltaMovement().y, dir.z * speed);
+                if (this.waitingTime < 30 && !this.isReturningToOwner) this.lookAt(owner, 5, 5);
+                else this.lookAt(this.dummy, 5, 5);
             } else {
-                this.lookAt(owner, 5, 0);
+                this.lookAt(this.dummy, 5, 5);
                 this.setDeltaMovement(this.getDeltaMovement().multiply(0.8, 1.0, 0.8));
             }
 
@@ -238,6 +234,7 @@ public class Duck extends AbstractPet {
                 if (this.waitingTime > 30) this.wander();
             } else {
                 this.waitingTime = 0;
+                this.isReturningToOwner = false;
             }
 
             this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
@@ -249,25 +246,18 @@ public class Duck extends AbstractPet {
                 this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.getYHeadRot(), 10);
             }
 
-            this.move(MoverType.SELF, this.getDeltaMovement());
+            if (!this.sitting) {
+                this.move(MoverType.SELF, this.getDeltaMovement());
+            }
 
             if (!this.onGround()) {
                 this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
             }
         }
         if (owner != null) {
-            if (distanceTo(owner) >= 10 && !this.isServerEntity()) {
+            if (distanceTo(owner) >= 10 && !this.sitting) {
                 this.tryToTeleportToOwner();
             }
-        }
-
-        /*if (this.walkAnimation.isMoving()) {
-            level().playLocalSound(this, SoundEvents.CHICKEN_STEP, SoundSource.NEUTRAL, 1.0f, 1.0f);
-        }*/
-
-        int ambient = (int) (Math.random() * (60 * 20));
-        if (ambient == 1) {
-            //level().playLocalSound(this, PetsSounds.DUCK_AMBIENT, SoundSource.NEUTRAL, 1.0f, 1.0f);
         }
     }
 
@@ -283,21 +273,5 @@ public class Duck extends AbstractPet {
         super.readAdditionalSaveData(input);
         this.setServerEntity(input.getBooleanOr("isServerEntity", true));
         this.entityData.set(DUCK_SKIN, input.getIntOr("variant", 1));
-    }
-
-    @Override
-    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
-        if (this.level() != null && !this.level().isClientSide()) {
-            super.onSyncedDataUpdated(key);
-        }
-    }
-
-    @Override
-    public @NotNull Packet<@NotNull ClientGamePacketListener> getAddEntityPacket(@NotNull ServerEntity serverEntity) {
-        if (this.level().isClientSide()) {
-            return new ClientboundAddEntityPacket(this, serverEntity);
-        } else {
-            return super.getAddEntityPacket(serverEntity);
-        }
     }
 }

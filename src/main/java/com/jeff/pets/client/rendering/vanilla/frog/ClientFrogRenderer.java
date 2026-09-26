@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientFrogRenderer extends PetRenderer<@NotNull ClientFrog, @NotNull FrogRenderState, @NotNull FrogModel> {
 
-    public static ModelLayerLocation FROG_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientfrog"), "main");
+    public static final ModelLayerLocation FROG_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientfrog"), "main");
     public String frogTexturePath;
 
     public ClientFrogRenderer(EntityRendererProvider.Context context) {
@@ -23,7 +23,6 @@ public class ClientFrogRenderer extends PetRenderer<@NotNull ClientFrog, @NotNul
     public @NotNull Identifier getTextureLocation(FrogRenderState frogRenderState) {
         String skin = ((IPetRenderState) frogRenderState).pets$getPetSkin();
         switch (skin) {
-            case "temperate" -> frogTexturePath = "textures/entity/frog/frog_temperate.png";
             case "warm" -> frogTexturePath = "textures/entity/frog/frog_warm.png";
             case "cold" -> frogTexturePath = "textures/entity/frog/frog_cold.png";
             case null, default -> frogTexturePath = "textures/entity/frog/frog_temperate.png";

@@ -3,11 +3,6 @@ package com.jeff.pets.client.network;
 import com.google.gson.Gson;
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.client.network.payload.*;
-import com.jeff.pets.client.network.payload.ChangePetNamePayload;
-import com.jeff.pets.client.network.payload.ChangePetSkinPayload;
-import com.jeff.pets.client.network.payload.GeneralPetsPayload;
-import com.jeff.pets.client.network.payload.TeleportPetPayload;
-import com.jeff.pets.client.network.payload.TogglePetPayload;
 import com.jeff.pets.mob.AbstractPet;
 import io.ably.lib.realtime.AblyRealtime;
 import io.ably.lib.realtime.Channel;
@@ -16,25 +11,32 @@ import io.ably.lib.types.ClientOptions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 
-import java.beans.Beans;
-import java.util.*;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.jeff.pets.client.Central.CONFIG;
-import static com.jeff.pets.client.network.PetsNetworked.LOGGER;
 
 public class NetworkManager {
 
+    public static final Map<UUID, AbstractPet> map = new ConcurrentHashMap<>();
     private static final NetworkManager INSTANCE = new NetworkManager();
-    public static Map<UUID, AbstractPet> map = new ConcurrentHashMap<>();
+    private static final long delay = 200;
+    private static long lastMessage = 0;
     private final Gson GSON = new Gson();
+    private final ClientOptions options;
     private AblyRealtime ably;
     private Channel channel;
-    private ClientOptions options;
-    private static long delay = 200;
-    private static long lastMessage = 0;
+
+    public NetworkManager() {
+        this.options = new ClientOptions();
+        this.options.authUrl = "https://petsmod.downloadableduck.workers.dev";
+        this.options.echoMessages = false;
+        this.options.logLevel = 0;
+    }
 
     public static NetworkManager get() {
         return INSTANCE;
@@ -47,17 +49,10 @@ public class NetworkManager {
             String channelName = "petsmod:server:" + this.getIp(ip);
             this.log(channelName);
             channel = ably.channels.get(channelName);
-            try {
-                this.options.clientId = Minecraft.getInstance().player.getName().getString();
-            } catch (NullPointerException e) {
-                this.options.clientId = "Unknown";
-            }
-            channel.subscribe("requestPetState", (message) -> {
+            channel.subscribe("requestPetState", (_) -> {
                 try {
                     this.log("Received a request for current pet state");
-                    Minecraft.getInstance().execute(() -> {
-                        this.broadcastGeneral(Minecraft.getInstance().player.getStringUUID(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby);
-                    });
+                    Minecraft.getInstance().execute(() -> this.broadcastGeneral(Objects.requireNonNull(Minecraft.getInstance().player).getStringUUID(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby));
                 } catch (Throwable t) {
                     this.log(t);
                 }
@@ -71,16 +66,18 @@ public class NetworkManager {
                     this.log("Received packet: {}", message.data);
                     Minecraft.getInstance().execute(() -> {
                         AbstractPet pet = Utils.getPet(payload.petSpecies);
-                        Player player = Minecraft.getInstance().level.getPlayerByUUID(payload.playerUUID);
-                        AbstractPet entity = map.get(player.getUUID());
+                        Player player = Objects.requireNonNull(Minecraft.getInstance().level).getPlayerByUUID(payload.playerUUID);
+                        AbstractPet entity = map.get(Objects.requireNonNull(player).getUUID());
                         if (entity != null) {
                             Utils.despawnEntity(entity);
                         }
                         if (player.getUUID().equals(payload.playerUUID)) {
                             Utils.summonPet(pet, payload.petName, player);
-                            pet.petSkin = payload.petSkin;
-                            pet.setBaby(payload.isBaby);
-                            this.put(player.getUUID(), pet);
+                            if (pet != null) {
+                                pet.petSkin = payload.petSkin;
+                                pet.setBaby(payload.isBaby);
+                                this.put(player.getUUID(), pet);
+                            }
                         }
                     });
                 } catch (Exception e) {
@@ -140,8 +137,9 @@ public class NetworkManager {
                     Minecraft.getInstance().execute(() -> {
                         AbstractPet pet = map.get(UUID.fromString(payload.uuid));
                         if (payload.on) {
-                            Player player = Minecraft.getInstance().level.getPlayerByUUID(UUID.fromString(payload.uuid));
-                            if (player.getUUID().equals(Minecraft.getInstance().player.getUUID())) return;
+                            Player player = Objects.requireNonNull(Minecraft.getInstance().level).getPlayerByUUID(UUID.fromString(payload.uuid));
+                            if (Objects.requireNonNull(player).getUUID().equals(Objects.requireNonNull(Minecraft.getInstance().player).getUUID()))
+                                return;
                             if (player.getUUID().equals(UUID.fromString(payload.uuid))) {
                                 Utils.summonPet(pet, payload.petName, player);
                                 this.put(player.getUUID(), pet);
@@ -158,10 +156,10 @@ public class NetworkManager {
                 try {
                     String json = (String) message.data;
                     ToggleBabyPayload payload = GSON.fromJson(json, ToggleBabyPayload.class);
-                    Player player = Minecraft.getInstance().level.getPlayerByUUID(UUID.fromString(payload.uuid));
+                    Player player = Objects.requireNonNull(Minecraft.getInstance().level).getPlayerByUUID(UUID.fromString(payload.uuid));
                     if (this.isMe(payload.uuid)) return;
                     this.log("Received baby toggle payload: {}", payload);
-                    AbstractPet pet = map.get(player);
+                    AbstractPet pet = map.get(Objects.requireNonNull(player).getUUID());
                     pet.setBaby(payload.isBaby);
                 } catch (Exception e) {
                     this.log(e);
@@ -172,10 +170,10 @@ public class NetworkManager {
                 try {
                     String json = (String) message.data;
                     PutPetOnHeadPayload payload = GSON.fromJson(json, PutPetOnHeadPayload.class);
-                    Player player = Minecraft.getInstance().level.getPlayerByUUID(UUID.fromString(payload.uuid));
+                    Player player = Objects.requireNonNull(Minecraft.getInstance().level).getPlayerByUUID(UUID.fromString(payload.uuid));
                     if (this.isMe(payload.uuid)) return;
                     this.log("Received put on head packet: {}", payload);
-                    AbstractPet pet = map.get(player);
+                    AbstractPet pet = map.get(Objects.requireNonNull(player).getUUID());
                     if (payload.onHead) {
                         pet.startRiding(player);
                     } else {
@@ -207,7 +205,9 @@ public class NetworkManager {
 
     public void disconnect() {
         this.log("Disconnected.");
-        ably.close();
+        if (ably != null) {
+            ably.close();
+        }
     }
 
     public void broadcastGeneral(String playerUuid,
@@ -291,13 +291,6 @@ public class NetworkManager {
         map.put(uuid, pet);
     }
 
-    public NetworkManager() {
-        this.options = new ClientOptions();
-        this.options.authUrl = "https://petsmod.downloadableduck.workers.dev";
-        this.options.echoMessages = false;
-        this.options.logLevel = 0;
-    }
-
     private String getIp(String ip) {
         if (ip == null || ip.isEmpty()) {
             return "singleplayer";
@@ -343,7 +336,7 @@ public class NetworkManager {
             try {
                 channel.publish("put_on_head", new PutPetOnHeadPayload(uuid, onHead));
             } catch (AblyException e) {
-                this.log(e.getMessage());;
+                this.log(e.getMessage());
             }
         }
     }
@@ -352,7 +345,7 @@ public class NetworkManager {
         if (shouldReturn()) return;
         if (channel != null) {
             try {
-                channel.publish("bye", Minecraft.getInstance().player.getStringUUID());
+                channel.publish("bye", Objects.requireNonNull(Minecraft.getInstance().player).getStringUUID());
             } catch (Exception e) {
                 this.log(e.getMessage());
             }
@@ -361,7 +354,7 @@ public class NetworkManager {
 
     public boolean isMe(UUID uuid) {
         try {
-            return Minecraft.getInstance().player.getUUID().equals(uuid);
+            return Objects.requireNonNull(Minecraft.getInstance().player).getUUID().equals(uuid);
         } catch (NullPointerException e) {
             return true;
         }
@@ -371,14 +364,7 @@ public class NetworkManager {
         return this.isMe(UUID.fromString(uuid));
     }
 
-    public void log(String string, Object ... optionals) {
-        if (false) {
-            String message2 = string;
-            for (Object arg : optionals) {
-                message2 = message2.replaceFirst("\\{\\}", String.valueOf(arg));
-            }
-            LOGGER.info(message2);
-        }
+    public void log(String string, Object... optionals) {
     }
 
     public void log(Throwable e) {
@@ -387,14 +373,10 @@ public class NetworkManager {
 
     protected boolean shouldReturn() {
         long time = System.currentTimeMillis();
-        boolean shouldReturn = false;
-        if (time - lastMessage < delay) {
-            shouldReturn = true;
-        }
+        boolean shouldReturn = time - lastMessage < delay;
         if (channel == null) {
             lastMessage = time;
-            shouldReturn = true;
-            return shouldReturn;
+            return true;
         }
         lastMessage = time;
         return shouldReturn;

@@ -48,6 +48,6 @@ public class ClientZombieVillagerRenderer extends PetRenderer<@NotNull ClientZom
     @Override
     public void extractRenderState(ClientZombieVillager zombieVillager, ZombieVillagerRenderState state, float f) {
         super.extractRenderState(zombieVillager, state, f);
-        state.isPassenger = zombieVillager.isPassenger();
+        state.isPassenger = zombieVillager.isPassenger() || zombieVillager.sitting;
     }
 }

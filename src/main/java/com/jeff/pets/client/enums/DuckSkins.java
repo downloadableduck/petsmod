@@ -17,7 +17,7 @@ public enum DuckSkins implements NameableEnum, EnumImpl {
     }
 
     @Override
-    public List<Enum> getAllValues() {
+    public List<Enum<?>> getAllValues() {
         return List.of(mallard, pekin, rubber, bronze);
     }
 }

@@ -33,12 +33,13 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
 
+import java.util.Objects;
+
 import static com.jeff.pets.PetsInitializer.STINGRAY;
 
 public class Stingray extends FlyingPet {
     public static final EntityDataAccessor<@NotNull Boolean> IS_SERVER_ENTITY =
             SynchedEntityData.defineId(Stingray.class, EntityDataSerializers.BOOLEAN);
-    private final float nextFlap = 1.0F;
     public float flap;
     public float flapping = 1.0F;
 
@@ -98,7 +99,7 @@ public class Stingray extends FlyingPet {
 
     public @Nullable Stingray getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgeableMob partner) {
         Stingray stringray = STINGRAY.create(level, EntitySpawnReason.BREEDING);
-        stringray.setServerEntity(true);
+        Objects.requireNonNull(stringray).setServerEntity(true);
         return stringray;
     }
 
@@ -114,7 +115,7 @@ public class Stingray extends FlyingPet {
     @Override
     public void registerGoals() {
 
-        /**Using false in this statement causes the mob to sink to the bottom and reptitively spin.*/
+        /*Using false in this statement causes the mob to sink to the bottom and reptitively spin.*/
         this.moveControl = new SmoothSwimmingMoveControl(this, 10, 10, 1, 1, true);
         this.getNavigation().setCanFloat(true);
         this.goalSelector.addGoal(1, new RandomSwimmingGoal(this, 1, 1));
@@ -166,7 +167,7 @@ public class Stingray extends FlyingPet {
                 if (owner.isCrouching() && owner.isJumping()) {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, 0.1, 0));
-                    NetworkManager.get().broadcastHeadPayload(Minecraft.getInstance().player.getStringUUID(), false);
+                    NetworkManager.get().broadcastHeadPayload(Objects.requireNonNull(Minecraft.getInstance().player).getStringUUID(), false);
                 } else {
                     this.setOrderedToSit(true);
                 }
@@ -191,16 +192,19 @@ public class Stingray extends FlyingPet {
 
                 this.walkAnimation.setSpeed(0.5F);
 
-                Vec3 dir = vecToOwner.normalize();
-                double speed = 0.2;
+                Vec3 targetPos = owner.position();
+                Vec3 dir = targetPos.subtract(this.position()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setYHeadRot(this.getYRot());
                 this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.yHeadRot, 50.0f);
 
-                this.setDeltaMovement(dir.x * speed, dir.y * speed, dir.z * speed);
+                double speed = owner.getSpeed() * 2.0;
+                this.setDeltaMovement(dir.x * speed, this.getDeltaMovement().y, dir.z * speed);
+                if (this.waitingTime < 30 && !this.isReturningToOwner) this.lookAt(owner, 5, 5);
+                else this.lookAt(this.dummy, 5, 5);
             } else {
-                this.lookAt(owner, 5, 0);
+                this.lookAt(owner, 5, 5);
                 this.setDeltaMovement(this.getDeltaMovement().scale(0.8));
             }
 
@@ -223,6 +227,7 @@ public class Stingray extends FlyingPet {
                 if (this.waitingTime > 30) this.wander();
             } else {
                 this.waitingTime = 0;
+                this.isReturningToOwner = false;
             }
 
             this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
@@ -234,17 +239,22 @@ public class Stingray extends FlyingPet {
                 this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.getYHeadRot(), 10);
             }
 
-            this.move(MoverType.SELF, this.getDeltaMovement());
+            if (!this.sitting) {
+                this.move(MoverType.SELF, this.getDeltaMovement());
+            }
         }
         if (owner != null) {
-            if (distanceTo(owner) >= 10) {
+            if (distanceTo(owner) >= 10 && !this.sitting) {
                 this.tryToTeleportToOwner();
             }
         }
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            level().playLocalSound(this, SoundEvents.SQUID_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f);
+            try (Level level = this.level()) {
+                level.playLocalSound(this, SoundEvents.SQUID_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f);
+            } catch (Exception ignored) {
+            }
         }
     }
 }

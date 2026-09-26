@@ -40,6 +40,6 @@ public class ClientParchedRenderer extends PetRenderer<@NotNull ClientParched, @
     @Override
     public void extractRenderState(ClientParched parched, SkeletonRenderState state, float f) {
         super.extractRenderState(parched, state, f);
-        state.isPassenger = parched.isPassenger();
+        state.isPassenger = parched.isPassenger() || parched.sitting;
     }
 }

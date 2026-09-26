@@ -17,7 +17,7 @@ public enum ParrotSkins implements NameableEnum, EnumImpl {
     }
 
     @Override
-    public List<Enum> getAllValues() {
+    public List<Enum<?>> getAllValues() {
         return List.of(blue, cyan, gray, green, red);
     }
 }

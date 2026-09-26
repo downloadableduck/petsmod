@@ -41,7 +41,6 @@ public class ClientCatRenderer extends PetRenderer<@NotNull ClientCat, @NotNull 
         String skin = ((IPetRenderState) livingEntityRenderState).pets$getPetSkin();
         return switch (skin) {
             case "black" -> Identifier.withDefaultNamespace("textures/entity/cat/cat_all_black.png");
-            case "tuxedo" -> Identifier.withDefaultNamespace("textures/entity/cat/cat_black.png");
             case "british_shorthair" ->
                     Identifier.withDefaultNamespace("textures/entity/cat/cat_british_shorthair.png");
             case "calico" -> Identifier.withDefaultNamespace("textures/entity/cat/cat_calico.png");

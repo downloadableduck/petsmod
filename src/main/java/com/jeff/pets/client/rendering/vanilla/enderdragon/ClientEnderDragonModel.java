@@ -77,7 +77,6 @@ public class ClientEnderDragonModel extends EntityModel<@NotNull ClientEnderDrag
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshDefinition = new MeshDefinition();
         PartDefinition partDefinition = meshDefinition.getRoot();
-        float f = -16.0F;
         PartDefinition partDefinition2 = partDefinition.addOrReplaceChild("head", CubeListBuilder.create().addBox("upperlip", -6.0F, -1.0F, -24.0F, 12, 5, 16, 176, 44).addBox("upperhead", -8.0F, -8.0F, -10.0F, 16, 16, 16, 112, 30).mirror().addBox("scale", -5.0F, -12.0F, -4.0F, 2, 4, 6, 0, 0).addBox("nostril", -5.0F, -3.0F, -22.0F, 2, 2, 4, 112, 0).mirror().addBox("scale", 3.0F, -12.0F, -4.0F, 2, 4, 6, 0, 0).addBox("nostril", 3.0F, -3.0F, -22.0F, 2, 2, 4, 112, 0), PartPose.offset(0.0F, 20.0F, -62.0F));
         partDefinition2.addOrReplaceChild("jaw", CubeListBuilder.create().addBox("jaw", -6.0F, 0.0F, -16.0F, 12, 4, 16, 176, 65), PartPose.offset(0.0F, 4.0F, -8.0F));
         CubeListBuilder cubeListBuilder = CubeListBuilder.create().addBox("box", -5.0F, -5.0F, -5.0F, 10, 10, 10, 192, 104).addBox("scale", -1.0F, -9.0F, -3.0F, 2, 4, 6, 48, 0);
@@ -122,7 +121,6 @@ public class ClientEnderDragonModel extends EntityModel<@NotNull ClientEnderDrag
         float h = this.neckParts[0].x;
         float i = this.neckParts[0].y;
         float j = this.neckParts[0].z;
-        float k = 1.5F;
         DragonFlightHistory.Sample sample = enderDragonRenderState.getHistoricalPos(6);
         float l = Mth.wrapDegrees(enderDragonRenderState.getHistoricalPos(5).yRot() - enderDragonRenderState.getHistoricalPos(10).yRot());
         float m = Mth.wrapDegrees(enderDragonRenderState.getHistoricalPos(5).yRot() + l / 2.0F);

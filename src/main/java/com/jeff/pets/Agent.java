@@ -2,37 +2,18 @@ package com.jeff.pets;
 
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.mixin.client.*;
-import com.sun.tools.attach.AttachNotSupportedException;
-import com.sun.tools.attach.VirtualMachine;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.toasts.SystemToast;
-import net.minecraft.client.renderer.debug.EntityHitboxDebugRenderer;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.packs.FilePackResources;
-import net.minecraft.server.packs.PackLocationInfo;
-import net.minecraft.server.packs.PackSelectionConfig;
-import net.minecraft.server.packs.PackType;
-import net.minecraft.server.packs.repository.KnownPack;
-import net.minecraft.server.packs.repository.Pack;
-import net.minecraft.server.packs.repository.PackSource;
 import nilloader.NilAgent;
-import nilloader.api.NilLoader;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 import sun.misc.Unsafe;
 
-import java.io.File;
-import java.io.IOException;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.lang.instrument.Instrumentation;
-import java.lang.management.ManagementFactory;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.nio.file.Path;
 import java.security.ProtectionDomain;
-import java.util.Optional;
 
 public class Agent implements Runnable {
 
@@ -51,7 +32,7 @@ public class Agent implements Runnable {
                     return WitherRenderStateAccessor.transform(classfileBuffer);
                 }
                 if ("net/minecraft/client/Minecraft".equals(className)) {
-                    byte[] byt =  ClientTickMixin.transform(classfileBuffer);
+                    byte[] byt = ClientTickMixin.transform(classfileBuffer);
                     checkforNullObjects();
                     return byt;
                 }
@@ -72,19 +53,22 @@ public class Agent implements Runnable {
                 }
                 if ("net/minecraft/client/renderer/entity/EntityRenderDispatcher".equals(className)) {
                     return EntityRenderDispatcherTransformer.transform(classfileBuffer);
-                } if ("net/minecraft/client/gui/components/EditBox".equals(className)) {
+                }
+                if ("net/minecraft/client/gui/components/EditBox".equals(className)) {
                     ClassReader reader = new ClassReader(classfileBuffer);
                     ClassWriter writer = new ClassWriter(reader, ClassWriter.COMPUTE_FRAMES);
                     ButtonClassVisitor transformer = new ButtonClassVisitor(Opcodes.ASM9, writer);
                     reader.accept(transformer, 0);
                     return writer.toByteArray();
-                } if ("net/minecraft/client/renderer/entity/state/EntityRenderState".equals(className)) {
+                }
+                if ("net/minecraft/client/renderer/entity/state/EntityRenderState".equals(className)) {
                     ClassReader reader = new ClassReader(classfileBuffer);
                     ClassWriter writer = new ClassWriter(reader, ClassWriter.COMPUTE_FRAMES);
                     EntityRenderStateClassVisitor visitor = new EntityRenderStateClassVisitor(Opcodes.ASM9, writer);
                     reader.accept(visitor, 0);
                     return writer.toByteArray();
-                } if ("net/minecraft/client/renderer/debug/EntityHitboxDebugRenderer".equals(className)) {
+                }
+                if ("net/minecraft/client/renderer/debug/EntityHitboxDebugRenderer".equals(className)) {
                     return NoHitboxMixin.transform(classfileBuffer);
                 }
                 return ClassFileTransformer.super.transform(loader, className, classBeingRedefined, protectionDomain, classfileBuffer);
@@ -111,7 +95,8 @@ public class Agent implements Runnable {
                 } catch (ClassNotFoundException ignored) {
                     try {
                         Thread.sleep(100);
-                    } catch (InterruptedException ignored2) {}
+                    } catch (InterruptedException ignored2) {
+                    }
                 }
             }
             try {
@@ -124,7 +109,8 @@ public class Agent implements Runnable {
                     if (mcInstance == null) {
                         try {
                             Thread.sleep(100);
-                        } catch (InterruptedException ignored) {}
+                        } catch (InterruptedException ignored) {
+                        }
                     }
                 }
 

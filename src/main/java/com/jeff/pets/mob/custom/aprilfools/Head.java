@@ -4,7 +4,6 @@ import com.jeff.pets.client.network.NetworkManager;
 import com.jeff.pets.mob.AbstractPet;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -13,14 +12,11 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -30,6 +26,8 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
+
+import java.util.Objects;
 
 import static com.jeff.pets.PetsInitializer.HEAD;
 
@@ -112,52 +110,6 @@ public class Head extends AbstractPet {
     }
 
     @Override
-    public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
-        ItemStack itemStack = player.getItemInHand(hand);
-
-        var x = this.getX();
-        var y = this.getY();
-        var z = this.getZ();
-
-        if (!this.isTame() && this.isFood(itemStack)) {
-            if (this.random.nextInt(3) == 0) {
-                this.tame(player);
-                this.navigation.stop();
-                this.level().addParticle(
-                        ParticleTypes.HEART,
-
-                        x + (player.getRandom().nextFloat() * 0.4 - 0.25),
-                        y + (player.getRandom().nextFloat() * 0.4 - 0.25),
-                        z + (player.getRandom().nextFloat() * 0.4 - 0.25),
-                        0, 5, 0
-                );
-            }
-        }
-
-        if (this.isTame() && itemStack.isEmpty()) {
-            this.level().addParticle(
-                    ParticleTypes.HEART,
-                    this.getX(),
-                    this.getY() + 1,
-                    this.getZ(),
-                    5, 5, 5
-            );
-        }
-
-        if (this.isTame() && itemStack.isEmpty() && player.isShiftKeyDown()) {
-            if (!this.isPassenger()) {
-                this.startRiding(player);
-                this.lookAt(player, 1f, 1f);
-                NetworkManager.get().broadcastHeadPayload(Minecraft.getInstance().player.getStringUUID(), true);
-                this.setOrderedToSit(true);
-            } else {
-                this.stopRiding();
-            }
-        }
-        return InteractionResult.SUCCESS;
-    }
-
-    @Override
     public void tick() {
         super.tick();
         LivingEntity owner = this.getOwner();
@@ -167,7 +119,7 @@ public class Head extends AbstractPet {
                 if (owner.isCrouching() && owner.isJumping()) {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
-                    NetworkManager.get().broadcastHeadPayload(Minecraft.getInstance().player.getStringUUID(), false);
+                    NetworkManager.get().broadcastHeadPayload(Objects.requireNonNull(Minecraft.getInstance().player).getStringUUID(), false);
                 } else {
                     this.setOrderedToSit(true);
                 }
@@ -201,7 +153,7 @@ public class Head extends AbstractPet {
                 double speed = 0.15;
                 this.setDeltaMovement(dir.x * speed, this.getDeltaMovement().y, dir.z * speed);
             } else {
-                this.lookAt(owner, 5, 0);
+                this.lookAt(owner, 5, 5);
                 this.setDeltaMovement(this.getDeltaMovement().multiply(0.8, 1.0, 0.8));
             }
 
@@ -220,6 +172,15 @@ public class Head extends AbstractPet {
             if (!this.onGround()) {
                 this.processFlappingMovement();
             }
+
+            if (owner.getDeltaMovement().lengthSqr() < 0.01) {
+                this.waitingTime++;
+                if (this.waitingTime > 30) this.wander();
+            } else {
+                this.waitingTime = 0;
+                this.isReturningToOwner = false;
+            }
+
             this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
             this.setYHeadRot(this.getYRot());
 
@@ -229,32 +190,18 @@ public class Head extends AbstractPet {
                 this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.getYHeadRot(), 10);
             }
 
-            this.move(MoverType.SELF, this.getDeltaMovement());
+            if (!this.sitting) {
+                this.move(MoverType.SELF, this.getDeltaMovement());
+            }
 
             if (!this.onGround()) {
                 this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
             }
         }
         if (owner != null) {
-            if (distanceTo(owner) >= 10) {
+            if (distanceTo(owner) >= 10 && !this.sitting) {
                 this.tryToTeleportToOwner();
             }
-        }
-
-        /*if (this.walkAnimation.isMoving()) {
-            level().playLocalSound(this, SoundEvents., SoundSource.NEUTRAL, 1.0f, 1.0f);
-        }*/
-
-        /*int ambient = (int) (Math.random() * (60 * 20));
-        if (ambient == 1) {
-            level().playLocalSound(this, PetsSounds.PENGUIN_AMBIENT, SoundSource.NEUTRAL, 1.0f, 1.0f);
-        }*/
-    }
-
-    @Override
-    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
-        if (this.level() != null && !this.level().isClientSide()) {
-            super.onSyncedDataUpdated(key);
         }
     }
 

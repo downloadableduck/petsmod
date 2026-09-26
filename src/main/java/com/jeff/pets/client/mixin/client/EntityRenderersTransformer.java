@@ -1,6 +1,5 @@
 package com.jeff.pets.client.mixin.client;
 
-import com.jeff.pets.client.PetsClientInitializer;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;

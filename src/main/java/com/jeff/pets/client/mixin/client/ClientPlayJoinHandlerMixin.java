@@ -1,6 +1,5 @@
 package com.jeff.pets.client.mixin.client;
 
-import net.minecraft.client.multiplayer.ClientPacketListener;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
@@ -45,8 +44,8 @@ public class ClientPlayJoinHandlerMixin {
             }
         }
 
-            ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
-            classNode.accept(writer);
-            return writer.toByteArray();
+        ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+        classNode.accept(writer);
+        return writer.toByteArray();
     }
 }

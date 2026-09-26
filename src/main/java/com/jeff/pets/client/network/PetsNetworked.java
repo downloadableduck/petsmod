@@ -11,13 +11,15 @@ public final class PetsNetworked {
     public static void createConnectHandler() {
         try {
             NetworkManager.get().connect(Minecraft.getInstance().getCurrentServer().ip);
-        } catch (Exception e) {}
+        } catch (Exception ignored) {
+        }
     }
 
     public static void createDisconnectHandler() {
         try {
             NetworkManager.get().disconnect();
-        } catch (Exception e) {}
+        } catch (Exception ignored) {
+        }
     }
 
     public static void createLevelChangeHandler() {
@@ -30,6 +32,7 @@ public final class PetsNetworked {
                 NetworkManager.get().disconnect();
                 NetworkManager.get().connect(minecraft.getCurrentServer().ip);
             }
-        } catch (Exception e) {}
+        } catch (Exception ignored) {
+        }
     }
 }

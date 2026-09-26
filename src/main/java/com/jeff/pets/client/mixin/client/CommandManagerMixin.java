@@ -2,6 +2,7 @@ package com.jeff.pets.client.mixin.client;
 
 import com.jeff.pets.client.Central;
 import com.mojang.brigadier.CommandDispatcher;
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
@@ -16,8 +17,8 @@ public class CommandManagerMixin {
         try {
             Field field = Commands.class.getDeclaredField("dispatcher");
             field.setAccessible(true);
-            CommandDispatcher dispatcher;
-            dispatcher = (CommandDispatcher) field.get(commands);
+            CommandDispatcher<CommandSourceStack> dispatcher;
+            dispatcher = (CommandDispatcher<CommandSourceStack>) field.get(commands);
             Central.get().createPetSkinCommand(dispatcher);
             Central.get().createPetNameCommand(dispatcher);
             Central.get().createPetHelpCommand(dispatcher);
