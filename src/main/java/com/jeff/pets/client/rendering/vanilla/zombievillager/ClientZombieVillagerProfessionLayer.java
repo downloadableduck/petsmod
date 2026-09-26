@@ -27,11 +27,9 @@ public class ClientZombieVillagerProfessionLayer extends RenderLayer<@NotNull Zo
     public static final ModelLayerLocation SHEPHERD_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/zombie_villager/profession/shepherd.png"), "main");
     public static final ModelLayerLocation TOOLSMITH_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/zombie_villager/profession/toolsmith.png"), "main");
     public static final ModelLayerLocation WEAPONSMITH_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/zombie_villager/profession/weaponsmith.png"), "main");
-    private ClientZombieVillagerRenderer renderer;
 
     public ClientZombieVillagerProfessionLayer(ClientZombieVillagerRenderer renderLayerParent) {
         super(renderLayerParent);
-        this.renderer = renderLayerParent;
     }
 
     @Override

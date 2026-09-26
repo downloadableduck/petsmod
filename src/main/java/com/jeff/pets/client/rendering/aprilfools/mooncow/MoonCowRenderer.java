@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Alright I give up. I'll try and add the glass helmet on the moon cow back if and when Minecraft
- * makes it easier to do, since this is rediculous.
+ * makes it easier to do, since this is ridiculous.
  */
 public class MoonCowRenderer extends PetRenderer<@NotNull MoonCow, @NotNull MoonCowRenderState, @NotNull LegacyCowModel> {
 

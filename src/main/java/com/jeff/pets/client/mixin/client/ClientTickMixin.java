@@ -1,12 +1,9 @@
 package com.jeff.pets.client.mixin.client;
 
-import net.minecraft.client.Minecraft;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.*;
-
-import static com.mojang.text2speech.Narrator.LOGGER;
 
 public class ClientTickMixin {
     public static byte[] transform(byte[] basicClass) {
@@ -59,6 +56,23 @@ public class ClientTickMixin {
                                 false
                         ));
 
+
+                        toInject.add(new VarInsnNode(Opcodes.ALOAD, 1));
+
+                        toInject.add(new FieldInsnNode(
+                                Opcodes.GETFIELD,
+                                "net/minecraft/client/main/GameConfig",
+                                "location",
+                                "Lnet/minecraft/client/main/GameConfig$FolderData;"
+                        ));
+
+                        toInject.add(new MethodInsnNode(
+                                Opcodes.INVOKESTATIC,
+                                "com/jeff/pets/client/Central",
+                                "setupConfig",
+                                "(Lnet/minecraft/client/main/GameConfig$FolderData;)V"
+                        ));
+
                         method.instructions.insertBefore(insn, toInject);
                     }
                 }
@@ -89,7 +103,8 @@ public class ClientTickMixin {
                 }
             }
         }
-        ClassWriter writer = new ClassWriter(reader, ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);                classNode.accept(writer);
-                return writer.toByteArray();
-            }
-        }
+        ClassWriter writer = new ClassWriter(reader, ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+        classNode.accept(writer);
+        return writer.toByteArray();
+    }
+}

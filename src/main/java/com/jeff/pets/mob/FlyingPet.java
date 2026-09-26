@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 /**
- * Abstract class representing any pet tht can fly (ghasts, vexes, etc). Contains custom movement
+ * Abstract class representing any pet tht can fly (ghasts, vexes, etc.). Contains custom movement
  * logic that allow the pets to move on the client side.
  *
  * @see AbstractPet
@@ -37,7 +37,8 @@ public abstract class FlyingPet extends AbstractPet {
     public void tick() {
         try {
             super.tick();
-        } catch (Exception _) {}
+        } catch (Exception _) {
+        }
         LivingEntity owner = this.getOwner();
         if (owner != null) {
 
@@ -45,7 +46,7 @@ public abstract class FlyingPet extends AbstractPet {
                 if (owner.isCrouching() && owner.isJumping()) {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, 0.1, 0));
-                    NetworkManager.get().broadcastHeadPayload(Minecraft.getInstance().player.getStringUUID(), false);
+                    NetworkManager.get().broadcastHeadPayload(Objects.requireNonNull(Minecraft.getInstance().player).getStringUUID(), false);
                 } else {
                     this.setOrderedToSit(true);
                 }
@@ -70,16 +71,19 @@ public abstract class FlyingPet extends AbstractPet {
 
                 this.walkAnimation.setSpeed(0.5F);
 
-                Vec3 dir = vecToOwner.normalize();
-                double speed = owner.getSpeed() * 1.5;
+                Vec3 targetPos = owner.position();
+                Vec3 dir = targetPos.subtract(this.position()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setYHeadRot(this.getYRot());
                 this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.yHeadRot, 50.0f);
 
-                this.setDeltaMovement(dir.x * speed, dir.y * speed, dir.z * speed);
+                double speed = owner.getSpeed() * 2.0;
+                this.setDeltaMovement(dir.x * speed, this.getDeltaMovement().y, dir.z * speed);
+                if (this.waitingTime < 30 && !this.isReturningToOwner) this.lookAt(owner, 5, 5);
+                else this.lookAt(this.dummy, 5, 5);
             } else {
-                this.lookAt(owner, 5, 0);
+                this.lookAt(owner, 5, 5);
                 this.setDeltaMovement(this.getDeltaMovement().scale(0.8));
             }
 
@@ -98,6 +102,7 @@ public abstract class FlyingPet extends AbstractPet {
                 if (this.waitingTime > 30) this.wander();
             } else {
                 this.waitingTime = 0;
+                this.isReturningToOwner = false;
             }
 
 
@@ -110,21 +115,22 @@ public abstract class FlyingPet extends AbstractPet {
                 this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.getYHeadRot(), 10);
             }
 
-            this.move(MoverType.SELF, this.getDeltaMovement());
-
-            //if (!this.onGround()) {
-            //  this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
-            //}
+            if (!this.sitting) {
+                this.move(MoverType.SELF, this.getDeltaMovement());
+            }
         }
         if (owner != null) {
-            if (distanceTo(owner) >= 10) {
+            if (distanceTo(owner) >= 10 && !this.sitting) {
                 this.tryToTeleportToOwner();
             }
         }
 
         int ambient = (int) (Math.random() * (60 * 20));
-        if (ambient == 1 && this.level() != null) {
-            level().playLocalSound(this, Objects.requireNonNull(this.getAmbientSound()), SoundSource.AMBIENT, 1.0f, 1.0f);
+        try (Level level = this.level()) {
+            if (ambient == 1) {
+                level.playLocalSound(this, Objects.requireNonNull(this.getAmbientSound()), SoundSource.AMBIENT, 1.0f, 1.0f);
+            }
+        } catch (Exception ignored) {
         }
     }
 }

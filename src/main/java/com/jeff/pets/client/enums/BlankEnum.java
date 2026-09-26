@@ -13,7 +13,7 @@ public enum BlankEnum implements NameableEnum, EnumImpl {
     }
 
     @Override
-    public List<Enum> getAllValues() {
+    public List<Enum<?>> getAllValues() {
         return List.of(no_skins_are_available);
     }
 }

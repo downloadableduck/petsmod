@@ -29,7 +29,7 @@ public enum SheepSkins implements NameableEnum, EnumImpl {
     }
 
     @Override
-    public List<Enum> getAllValues() {
+    public List<Enum<?>> getAllValues() {
         return List.of(black,
                 blue,
                 brown,

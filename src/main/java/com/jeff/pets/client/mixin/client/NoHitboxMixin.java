@@ -1,14 +1,9 @@
 package com.jeff.pets.client.mixin.client;
 
-import net.minecraft.client.renderer.debug.EntityHitboxDebugRenderer;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.*;
-
-import java.lang.reflect.Method;
-
-import static com.jeff.pets.client.Central.CONFIG;
 
 public class NoHitboxMixin {
     public static byte[] transform(byte[] basicClass) {

@@ -1,7 +1,6 @@
 package com.jeff.pets.client;
 
 import com.jeff.pets.PetsInitializer;
-import com.jeff.pets.client.mixin.client.EntityRenderersAccessor;
 import com.jeff.pets.client.mixin.client.ModelLayersAccessor;
 import com.jeff.pets.client.rendering.aprilfools.angryghast.AngryGhastRenderer;
 import com.jeff.pets.client.rendering.aprilfools.batato.BatatoModel;
@@ -25,7 +24,6 @@ import com.jeff.pets.client.rendering.aprilfools.toxifin.ToxifinRenderer;
 import com.jeff.pets.client.rendering.aprilfools.toxifin.ToxifinSlabModel;
 import com.jeff.pets.client.rendering.aprilfools.traitor.TraitorRenderer;
 import com.jeff.pets.client.rendering.custom.aprilfools.head.HeadModel;
-import com.jeff.pets.client.rendering.custom.aprilfools.head.HeadRenderer;
 import com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus.DumboOctopusModel;
 import com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus.DumboOctopusRenderer;
 import com.jeff.pets.client.rendering.custom.aquatic.koi.KoiModel;
@@ -33,9 +31,7 @@ import com.jeff.pets.client.rendering.custom.aquatic.koi.KoiRenderer;
 import com.jeff.pets.client.rendering.custom.aquatic.stingray.StingrayModel;
 import com.jeff.pets.client.rendering.custom.aquatic.stingray.StingrayRenderer;
 import com.jeff.pets.client.rendering.custom.first.duck.DuckModel;
-import com.jeff.pets.client.rendering.custom.first.duck.DuckRenderer;
 import com.jeff.pets.client.rendering.custom.first.penguin.PenguinModel;
-import com.jeff.pets.client.rendering.custom.first.penguin.PenguinRenderer;
 import com.jeff.pets.client.rendering.custom.first.racoon.RacoonModel;
 import com.jeff.pets.client.rendering.custom.first.racoon.RacoonRenderer;
 import com.jeff.pets.client.rendering.vanilla.allay.ClientAllayRenderer;
@@ -148,6 +144,7 @@ import net.minecraft.client.model.animal.parrot.ParrotModel;
 import net.minecraft.client.model.animal.sniffer.SnifferModel;
 import net.minecraft.client.model.animal.squid.SquidModel;
 import net.minecraft.client.model.animal.turtle.AdultTurtleModel;
+import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.monster.blaze.BlazeModel;
 import net.minecraft.client.model.monster.breeze.BreezeModel;
@@ -173,16 +170,11 @@ import net.minecraft.client.model.monster.witch.WitchModel;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.Identifier;
 import org.lwjgl.glfw.GLFW;
-
-import java.lang.instrument.Instrumentation;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import sun.misc.Unsafe;
 
-import static com.jeff.pets.PetsInitializer.LOGGER;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Another {@code initializer} class. This class does a couple of things:
@@ -309,7 +301,7 @@ public class PetsClientInitializer {
         ModelLayersAccessor.registerModelLayer(StingrayRenderer.STINGRAY_LOCATION, StingrayModel::createBodyLayer);
 
         //ClientLifecycleEvents.CLIENT_STARTED.register((mc) -> {
-            //LOGGER.info("PetsMod addons loaded:{}", ADDONS);
+        //LOGGER.info("PetsMod addons loaded:{}", ADDONS);
         //});
     }
 
@@ -338,7 +330,7 @@ public class PetsClientInitializer {
     }
 
     @FunctionalInterface
-    public static interface TexturedLayerDefinitionProvider {
+    public interface TexturedLayerDefinitionProvider {
         /**
          * Creates the textured layer definition for use in a {@link ModelLayerLocation}.
          *

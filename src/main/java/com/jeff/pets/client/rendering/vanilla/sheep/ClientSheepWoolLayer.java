@@ -17,15 +17,11 @@ import org.jetbrains.annotations.NotNull;
 public class ClientSheepWoolLayer extends RenderLayer<@NotNull SheepRenderState, @NotNull ClientSheepModel> {
     public static final ModelLayerLocation SHEEP_WOOL_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("textures/entity/sheep/sheep_wool.png"), "main");
     private final EntityModel<@NotNull SheepRenderState> adultModel;
-    private final EntityModel<@NotNull SheepRenderState> babyModel;
     int woolColor;
-    private final ClientSheepRenderer renderer;
 
     public ClientSheepWoolLayer(ClientSheepRenderer renderLayerParent, EntityModelSet entityModelSet) {
         super(renderLayerParent);
-        this.renderer = renderLayerParent;
         this.adultModel = new ClientSheepFurModel(entityModelSet.bakeLayer(ModelLayers.SHEEP_WOOL));
-        this.babyModel = new ClientSheepFurModel(entityModelSet.bakeLayer(ModelLayers.SHEEP_BABY_WOOL));
     }
 
     public void submit(@NotNull PoseStack poseStack, @NotNull SubmitNodeCollector submitNodeCollector, int i, SheepRenderState sheepRenderState, float f, float g) {
@@ -46,7 +42,6 @@ public class ClientSheepWoolLayer extends RenderLayer<@NotNull SheepRenderState,
             case "brown" -> woolColor = 6438693;
             case "green" -> woolColor = 4611344;
             case "red" -> woolColor = 8659484;
-            case "black" -> woolColor = 1381656;
             case null, default -> woolColor = 1381656;
         }
 

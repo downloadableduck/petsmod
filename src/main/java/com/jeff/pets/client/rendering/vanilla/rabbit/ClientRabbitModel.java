@@ -28,8 +28,7 @@ public class ClientRabbitModel extends AdultRabbitModel {
                 head.yScale = 1.5f;
                 head.zScale = 1.5f;
             }
-        } catch (Exception e) {
-
+        } catch (Exception ignored) {
         }
     }
 }
