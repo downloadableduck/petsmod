@@ -62,7 +62,7 @@ public abstract class PetRenderer<D extends AbstractPet, U extends LivingEntityR
 
     @Override
     public RenderType getRenderType(U state, boolean transparent, boolean force, boolean glowing) {
-        if (Minecraft.getInstance().screen instanceof PetsConfigScreen) {
+        if (Minecraft.getInstance().gui.screen() instanceof PetsConfigScreen) {
             return RenderTypes.entityTranslucent(this.getTextureLocation(state));
         }
         return super.getRenderType(state, transparent, force, glowing);
@@ -112,7 +112,7 @@ public abstract class PetRenderer<D extends AbstractPet, U extends LivingEntityR
     }
 
     private int getColor() {
-        if (Minecraft.getInstance().screen instanceof PetsConfigScreen screen) {
+        if (Minecraft.getInstance().gui.screen() instanceof PetsConfigScreen screen) {
             return screen.button.color;
         }
         return 0xFFFFFFFF;
@@ -127,7 +127,7 @@ public abstract class PetRenderer<D extends AbstractPet, U extends LivingEntityR
         if (entity.getName().getString().isEmpty()) {
             return false;
         }
-        if (CONFIG.alwaysRenderNametag && !(Minecraft.getInstance().screen instanceof PetsConfigScreen)) {
+        if (CONFIG.alwaysRenderNametag && !(Minecraft.getInstance().gui.screen() instanceof PetsConfigScreen)) {
             return true;
         }
         return super.shouldShowName(entity, distanceToCamera);

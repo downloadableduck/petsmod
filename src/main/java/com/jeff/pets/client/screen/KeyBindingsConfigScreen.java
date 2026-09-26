@@ -34,10 +34,10 @@ public class KeyBindingsConfigScreen extends Screen {
 
     @Override
     public void init() {
-        this.addRenderableWidget(new PanelButton(this.width / 2 - 35, 0, 70, 20, Component.translatable("message.pets-mod.screen.general"), (_) -> Minecraft.getInstance().setScreen(this.screen), this.screen, () -> Minecraft.getInstance().screen instanceof PetsConfigScreen));
-        this.addRenderableWidget(new PanelButton(this.width / 2 + 45, 0, 70, 20, Component.translatable("message.pets-mod.screen.other"), (_) -> Minecraft.getInstance().setScreen(new OtherConfigScreen(this.screen)), this.screen, () -> Minecraft.getInstance().screen instanceof OtherConfigScreen));
+        this.addRenderableWidget(new PanelButton(this.width / 2 - 35, 0, 70, 20, Component.translatable("message.pets-mod.screen.general"), (_) -> Minecraft.getInstance().gui.setScreen(this.screen), this.screen, () -> Minecraft.getInstance().gui.screen() instanceof PetsConfigScreen));
+        this.addRenderableWidget(new PanelButton(this.width / 2 + 45, 0, 70, 20, Component.translatable("message.pets-mod.screen.other"), (_) -> Minecraft.getInstance().gui.setScreen(new OtherConfigScreen(this.screen)), this.screen, () -> Minecraft.getInstance().gui.screen() instanceof OtherConfigScreen));
         this.addRenderableWidget(new PanelButton(this.width / 2 - 115, 0, 70, 20, Component.translatable("message.pets-mod.screen.keybinding"), (_) -> {
-        }, this.screen, () -> Minecraft.getInstance().screen instanceof KeyBindingsConfigScreen));
+        }, this.screen, () -> Minecraft.getInstance().gui.screen() instanceof KeyBindingsConfigScreen));
         this.addRenderableWidget(new ExitButton(this.screen, 10, 10, 80, 20));
         this.addRenderableWidget(new DropDownButton(this.screen, this.width / 2 - 40, this.height / 2, 80, 20, Component.translatable("message.pets-mod.screen.interact"), Type.KEYBIND, "interact"));
         this.addRenderableWidget(new DropDownButton(this.screen, this.width / 2 - 130, this.height / 2, 80, 20, Component.translatable("message.pets-mod.screen.pick-up"), Type.KEYBIND, "pick up"));
