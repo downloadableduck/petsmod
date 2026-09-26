@@ -27,6 +27,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static com.jeff.pets.PetsInitializer.MOD_ID;
@@ -1225,5 +1227,20 @@ public class Utils {
                 }
             }
         }
+    }
+
+    public static List<String> getAllBlocks() {
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            Field[] fields = Blocks.class.getDeclaredFields();
+
+            for (Field field : fields) {
+                if (!Block.class.isAssignableFrom(field.getType())) continue;
+                list.add(field.getName().replace("_", " ").toLowerCase());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

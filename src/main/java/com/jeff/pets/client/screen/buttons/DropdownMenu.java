@@ -116,8 +116,8 @@ public class DropdownMenu {
                 }
                 PetsConfigScreen petsConfigScreen = new PetsConfigScreen();
                 petsConfigScreen.ticks = 20;
-                Minecraft.getInstance().setScreen(null);
-                Minecraft.getInstance().setScreen(petsConfigScreen);
+                Minecraft.getInstance().gui.setScreen(null);
+                Minecraft.getInstance().gui.setScreen(petsConfigScreen);
                 petsConfigScreen.petsButton.opened = true;
                 //fix this
             } else if (hovered && pressed && type == Type.KEYBIND) {

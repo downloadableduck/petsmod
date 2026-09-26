@@ -33,7 +33,7 @@ public class TipsScreen extends Screen {
 
     @Override
     public void init() {
-        this.addRenderableWidget(new ExitButton(this.screen, 10, 10, 80, 20, (_) -> Minecraft.getInstance().setScreen(new OtherConfigScreen(this.screen))));
+        this.addRenderableWidget(new ExitButton(this.screen, 10, 10, 80, 20, (_) -> Minecraft.getInstance().gui.setScreen(new OtherConfigScreen(this.screen))));
         Component component = Component.translatable("message.pets-mod.tips-text");
         this.addRenderableWidget(new BasicButton(this.screen, 40, 40, this.width - 40 * 2, this.height - 40 * 2, component, (_) -> Util.getPlatform().openUri("https://www.youtube.com/watch?v=dQw4w9WgXcQ")));
     }

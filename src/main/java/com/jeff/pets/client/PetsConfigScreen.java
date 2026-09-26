@@ -109,9 +109,9 @@ public class PetsConfigScreen extends Screen {
         }, () -> CONFIG.isBaby, this));
         this.addRenderableWidget(new PanelButton(this.width / 2 - 35, 0, 70, 20, Component.translatable("message.pets-mod.screen.general"), (_) -> {
 
-        }, this, () -> Minecraft.getInstance().screen instanceof PetsConfigScreen));
-        this.addRenderableWidget(new PanelButton(this.width / 2 + 45, 0, 70, 20, Component.translatable("message.pets-mod.screen.other"), (_) -> Minecraft.getInstance().setScreen(new OtherConfigScreen(this)), this, () -> Minecraft.getInstance().screen instanceof OtherConfigScreen));
-        this.addRenderableWidget(new PanelButton(this.width / 2 - 115, 0, 70, 20, Component.translatable("message.pets-mod.screen.keybinding"), (_) -> Minecraft.getInstance().setScreen(new KeyBindingsConfigScreen(this)), this, () -> false));
+        }, this, () -> Minecraft.getInstance().gui.screen() instanceof PetsConfigScreen));
+        this.addRenderableWidget(new PanelButton(this.width / 2 + 45, 0, 70, 20, Component.translatable("message.pets-mod.screen.other"), (_) -> Minecraft.getInstance().gui.setScreen(new OtherConfigScreen(this)), this, () -> Minecraft.getInstance().gui.screen() instanceof OtherConfigScreen));
+        this.addRenderableWidget(new PanelButton(this.width / 2 - 115, 0, 70, 20, Component.translatable("message.pets-mod.screen.keybinding"), (_) -> Minecraft.getInstance().gui.setScreen(new KeyBindingsConfigScreen(this)), this, () -> false));
         this.addRenderableWidget(new ExitButton(this, 10, 10, 80, 20));
     }
 

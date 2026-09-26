@@ -15,12 +15,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 
+import static com.jeff.pets.PetsInitializer.MOD_ID;
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientSulfurCubeRenderer extends PetRenderer<ClientSulfurCube, SulfurCubeRenderState, SulfurCubeModel> {
 
     private final BlockModelResolver blockModelResolver;
-    public static final ModelLayerLocation SULFUR_CUBE_LOCATION = Utils.createModelLayer("sulfur_cube");
+    public static final ModelLayerLocation SULFUR_CUBE_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(MOD_ID, "sulfur_cube"), "main");
 
     public ClientSulfurCubeRenderer(EntityRendererProvider.Context context) {
         super(context, new SulfurCubeModel(context.bakeLayer(SULFUR_CUBE_LOCATION)), 0.5f);
