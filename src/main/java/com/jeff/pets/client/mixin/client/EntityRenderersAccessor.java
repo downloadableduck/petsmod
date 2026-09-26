@@ -12,7 +12,7 @@ import org.objectweb.asm.tree.*;
 import java.lang.reflect.Method;
 
 public interface EntityRenderersAccessor {
-    public static <T extends Entity> void register(final EntityType<? extends T> type, final EntityRendererProvider<T> renderer) {
+    static <T extends Entity> void register(final EntityType<? extends T> type, final EntityRendererProvider<T> renderer) {
         try {
             Method method = EntityRenderers.class.getDeclaredMethod("register", EntityType.class, EntityRendererProvider.class);
             method.setAccessible(true);
@@ -23,7 +23,7 @@ public interface EntityRenderersAccessor {
         }
     }
 
-    public static byte[] transform(byte[] basicClass) {
+    static byte[] transform(byte[] basicClass) {
         ClassReader reader = new ClassReader(basicClass);
         ClassNode classNode = new ClassNode();
         reader.accept(classNode, 0);

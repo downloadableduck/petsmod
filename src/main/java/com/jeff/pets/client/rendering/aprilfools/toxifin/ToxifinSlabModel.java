@@ -22,12 +22,7 @@ public class ToxifinSlabModel extends EntityModel<@NotNull GuardianRenderState> 
     private static final float[] SPIKE_X_SLAB_OFFSET;
     private static final float[] SPIKE_X_SLAB;
     private static final float[] SPIKE_Y_SLAB;
-    private static final float SPIKE_Y_BASE_SLAB = 19.0F;
     private static final float[] SPIKE_Z_SLAB;
-    private static final String EYE = "eye";
-    private static final String TAIL_0 = "tail0";
-    private static final String TAIL_1 = "tail1";
-    private static final String TAIL_2 = "tail2";
 
     static {
         A2 = (float) Math.atan2(2.0F, 1.0F);
@@ -59,18 +54,12 @@ public class ToxifinSlabModel extends EntityModel<@NotNull GuardianRenderState> 
     private final ModelPart root;
     private final ModelPart head;
     private final ModelPart eye;
-    private final ModelPart[] spikeParts;
     private final ModelPart[] tailParts;
 
     public ToxifinSlabModel(ModelPart modelPart) {
         super(modelPart);
         this.root = modelPart;
-        this.spikeParts = new ModelPart[12];
         this.head = modelPart.getChild("head");
-
-        for (int i = 0; i < this.spikeParts.length; ++i) {
-            this.spikeParts[i] = this.head.getChild(createSpikeName(i));
-        }
 
         this.eye = this.head.getChild("eye");
         this.tailParts = new ModelPart[3];

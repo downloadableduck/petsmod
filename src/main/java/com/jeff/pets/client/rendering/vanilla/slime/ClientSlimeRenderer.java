@@ -27,7 +27,6 @@ public class ClientSlimeRenderer extends PetRenderer<@NotNull ClientSlime, @NotN
     protected void scale(SlimeRenderState slimeRenderState, @NotNull PoseStack poseStack) {
         String skin = ((IPetRenderState) slimeRenderState).pets$getPetSkin();
         int slimeScale = switch (skin) {
-            case "small" -> 1;
             case "medium" -> 2;
             case "large" -> 4;
             case null, default -> 1;

@@ -43,6 +43,6 @@ public class ClientBoggedRenderer extends PetRenderer<@NotNull ClientBogged, @No
     @Override
     public void extractRenderState(ClientBogged bogged, BoggedRenderState state, float f) {
         super.extractRenderState(bogged, state, f);
-        state.isPassenger = bogged.isPassenger();
+        state.isPassenger = bogged.isPassenger() || bogged.sitting;
     }
 }

@@ -31,7 +31,6 @@ public class ClientPandaRenderer extends PetRenderer<@NotNull ClientPanda, @NotN
         String pandaTexturePath;
         String skin = ((IPetRenderState) livingEntityRenderState).pets$getPetSkin();
         switch (skin) {
-            case "normal" -> pandaTexturePath = "textures/entity/panda/panda.png";
             case "lazy" -> pandaTexturePath = "textures/entity/panda/panda_lazy.png";
             case "agressive" -> pandaTexturePath = "textures/entity/panda/panda_aggressive.png";
             case "worried" -> pandaTexturePath = "textures/entity/panda/panda_worried.png";

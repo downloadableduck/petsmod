@@ -1,8 +1,6 @@
 package com.jeff.pets;
 
 import com.jeff.pets.client.Central;
-import com.jeff.pets.client.PetsClientInitializer;
-import com.jeff.pets.client.PetsConfig;
 import com.jeff.pets.mob.aprilfools.*;
 import com.jeff.pets.mob.custom.aprilfools.Head;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
@@ -16,9 +14,6 @@ import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import com.jeff.pets.mob.vanilla.hostile.*;
 import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
-import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -26,12 +21,17 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.packs.*;
-import net.minecraft.server.packs.repository.*;
+import net.minecraft.server.packs.PackLocationInfo;
+import net.minecraft.server.packs.PackSelectionConfig;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.PathPackResources;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackRepository;
+import net.minecraft.server.packs.repository.PackSource;
+import net.minecraft.server.packs.repository.RepositorySource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import org.jetbrains.annotations.NotNull;
-import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1199,9 +1199,6 @@ public class PetsInitializer {
      * ends up working fine in-game - likely a mixup in either the Fabric API or IntelliJ.
      */
     public static void agentmain(String string, Instrumentation instrumentation) {
-        AutoConfig.register(PetsConfig.class, GsonConfigSerializer::new);
-        Central.CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
-
         Central.checkForNullObjects();
         Central.createPetsList();
         Central.updateSuggestions(Minecraft.getInstance());

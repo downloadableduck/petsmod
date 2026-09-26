@@ -10,7 +10,7 @@ import java.lang.reflect.Field;
  * Accesses the {@link ChatScreen#commandSuggestions} field for use in {@link Central#refreshChatSuggestor}
  */
 public interface ChatAccessor {
-    public static CommandSuggestions getChatInputSuggestor(ChatScreen chatScreen) {
+    static CommandSuggestions getChatInputSuggestor(ChatScreen chatScreen) {
         try {
             Field field = ChatScreen.class.getDeclaredField("commandSuggestions");
             field.setAccessible(true);

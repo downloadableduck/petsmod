@@ -40,7 +40,8 @@ public abstract class SlimeLikePet extends AbstractPet {
     public void tick() {
         try {
             super.tick();
-        } catch (Exception e) {}
+        } catch (Exception ignored) {
+        }
         LivingEntity owner = this.getOwner();
         if (owner != null) {
 
@@ -48,7 +49,7 @@ public abstract class SlimeLikePet extends AbstractPet {
                 if (owner.isCrouching() && owner.isJumping()) {
                     this.stopRiding();
                     this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
-                    NetworkManager.get().broadcastHeadPayload(Minecraft.getInstance().player.getStringUUID(), false);
+                    NetworkManager.get().broadcastHeadPayload(Objects.requireNonNull(Minecraft.getInstance().player).getStringUUID(), false);
                 } else {
                     this.setOrderedToSit(true);
                 }
@@ -79,10 +80,12 @@ public abstract class SlimeLikePet extends AbstractPet {
                 this.setYHeadRot(this.getYRot());
                 this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.yHeadRot, 50.0f);
 
-                double speed = owner.getSpeed() * 2;
+                double speed = owner.getSpeed() * 2.0;
                 this.setDeltaMovement(dir.x * speed, this.getDeltaMovement().y, dir.z * speed);
+                if (this.waitingTime < 30 && !this.isReturningToOwner) this.lookAt(owner, 5, 5);
+                else this.lookAt(this.dummy, 5, 5);
             } else {
-                this.lookAt(owner, 5, 0);
+                this.lookAt(this.dummy, 5, 5);
                 this.setDeltaMovement(this.getDeltaMovement().multiply(0.8, 1.0, 0.8));
             }
 
@@ -105,6 +108,7 @@ public abstract class SlimeLikePet extends AbstractPet {
                 if (this.waitingTime > 30) this.wander();
             } else {
                 this.waitingTime = 0;
+                this.isReturningToOwner = false;
             }
 
             this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
@@ -116,14 +120,16 @@ public abstract class SlimeLikePet extends AbstractPet {
                 this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.getYHeadRot(), 10);
             }
 
-            this.move(MoverType.SELF, this.getDeltaMovement());
+            if (!this.sitting) {
+                this.move(MoverType.SELF, this.getDeltaMovement());
+            }
 
             if (!this.onGround()) {
                 this.setDeltaMovement(this.getDeltaMovement().add(0, -0.02, 0));
             }
         }
         if (owner != null) {
-            if (distanceTo(owner) >= 10) {
+            if (distanceTo(owner) >= 10 && !this.sitting) {
                 this.tryToTeleportToOwner();
             }
         }
@@ -132,8 +138,11 @@ public abstract class SlimeLikePet extends AbstractPet {
         }
 
         int ambient = (int) (Math.random() * (60 * 20));
-        if (ambient == 1) {
-            level().playLocalSound(this, Objects.requireNonNull(this.getAmbientSound()), SoundSource.AMBIENT, 1.0f, 1.0f);
+        try (Level level = this.level()) {
+            if (ambient == 1) {
+                level.playLocalSound(this, Objects.requireNonNull(this.getAmbientSound()), SoundSource.AMBIENT, 1.0f, 1.0f);
+            }
+        } catch (Exception ignored) {
         }
     }
 }

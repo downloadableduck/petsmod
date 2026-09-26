@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class ClientCopperGolemRenderer extends PetRenderer<@NotNull ClientCopperGolem, @NotNull CopperGolemRenderState, @NotNull CopperGolemModel> {
-    public static ModelLayerLocation COPPER_GOLEM_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientcoppergolem"), "main");
+    public static final ModelLayerLocation COPPER_GOLEM_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientcoppergolem"), "main");
 
     public String copperGolemTexturePath;
 
@@ -32,10 +32,10 @@ public class ClientCopperGolemRenderer extends PetRenderer<@NotNull ClientCopper
                 renderColoredCutoutModel(this.getParentModel(), Identifier.withDefaultNamespace("textures/entity/copper_golem/copper_golem_eyes.png"), poseStack, submitNodeCollector, entityRenderState.lightCoords, entityRenderState, -1, OverlayTexture.NO_OVERLAY);
             }
         });
-        this.addLayer(new ItemInHandLayer(this));
+        this.addLayer(new ItemInHandLayer<>(this));
         CopperGolemModel var10005 = this.model;
         Objects.requireNonNull(var10005);
-        this.addLayer(new CustomHeadLayer(this, context.getModelSet(), context.getPlayerSkinRenderCache()));
+        this.addLayer(new CustomHeadLayer<>(this, context.getModelSet(), context.getPlayerSkinRenderCache()));
     }
 
     @Override

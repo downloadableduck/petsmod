@@ -1,7 +1,6 @@
 package com.jeff.pets.client;
 
 import com.jeff.pets.Agent;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.*;
@@ -9,6 +8,7 @@ import net.minecraft.server.packs.repository.BuiltInPackSource;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.level.validation.DirectoryValidator;
+import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
 
 import java.io.File;
@@ -24,17 +24,17 @@ public class PetsPackSource extends BuiltInPackSource {
     }
 
     @Override
-    public Component getPackTitle(String id) {
+    public @NotNull Component getPackTitle(@NotNull String id) {
         return Component.nullToEmpty("PetsMod Resources");
     }
 
     @Override
-    protected @Nullable Pack createBuiltinPack(String id, Pack.ResourcesSupplier resources, Component name) {
+    protected @Nullable Pack createBuiltinPack(@NotNull String id, Pack.@NotNull ResourcesSupplier resources, @NotNull Component name) {
         return this.createPetsPack();
     }
 
     @Override
-    public void loadPacks(Consumer<Pack> consumer) {
+    public void loadPacks(@NotNull Consumer<Pack> consumer) {
         Pack pack = createPetsPack();
         if (pack != null) {
             consumer.accept(pack);
@@ -42,7 +42,7 @@ public class PetsPackSource extends BuiltInPackSource {
     }
 
     @Override
-    protected Pack createVanillaPack(PackResources resources) {
+    protected Pack createVanillaPack(@NotNull PackResources resources) {
         return createPetsPack();
     }
 

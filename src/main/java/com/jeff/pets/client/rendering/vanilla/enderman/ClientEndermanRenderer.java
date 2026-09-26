@@ -12,11 +12,11 @@ import net.minecraft.client.renderer.entity.state.EndermanRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientEndermanRenderer extends PetRenderer<@NotNull ClientEnderman, @NotNull EndermanRenderState, @NotNull EndermanModel<EndermanRenderState>> {
+public class ClientEndermanRenderer extends PetRenderer<@NotNull ClientEnderman, @NotNull EndermanRenderState, @NotNull EndermanModel<@NotNull EndermanRenderState>> {
     public static final ModelLayerLocation ENDERMAN_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientenderman"), "main");
 
     public ClientEndermanRenderer(EntityRendererProvider.Context context) {
-        super(context, new EndermanModel(context.bakeLayer(ModelLayers.ENDERMAN)), 0.5f);
+        super(context, new EndermanModel<>(context.bakeLayer(ModelLayers.ENDERMAN)), 0.5f);
         this.addLayer(new EnderEyesLayer(this));
         this.addLayer(new CarriedBlockLayer(this));
     }

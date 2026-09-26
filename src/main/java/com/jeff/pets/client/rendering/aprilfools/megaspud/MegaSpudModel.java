@@ -11,11 +11,9 @@ import net.minecraft.client.renderer.entity.state.SlimeRenderState;
 import org.jetbrains.annotations.NotNull;
 
 public class MegaSpudModel extends EntityModel<@NotNull SlimeRenderState> {
-    private final ModelPart root;
 
     public MegaSpudModel(ModelPart modelPart) {
         super(modelPart);
-        this.root = modelPart;
     }
 
     public static LayerDefinition createOuterBodyLayer() {

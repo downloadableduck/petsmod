@@ -40,6 +40,6 @@ public class ClientSkeletonRenderer extends PetRenderer<@NotNull ClientSkeleton,
     @Override
     public void extractRenderState(ClientSkeleton skeleton, SkeletonRenderState state, float f) {
         super.extractRenderState(skeleton, state, f);
-        state.isPassenger = skeleton.isPassenger();
+        state.isPassenger = skeleton.isPassenger() || skeleton.sitting;
     }
 }

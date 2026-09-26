@@ -31,7 +31,6 @@ public class ClientNautilusRenderer extends PetRenderer<@NotNull ClientNautilus,
         state.yRot = 180;
         String skin = ((IPetRenderState) state).pets$getPetSkin();
         String nautilusTexturePath = switch (skin) {
-            case "nautilus" -> "textures/entity/nautilus/nautilus.png";
             case "zombie" -> "textures/entity/nautilus/zombie_nautilus.png";
             case "coral_zombie" -> "textures/entity/nautilus/zombie_nautilus_coral.png";
             case null, default -> "textures/entity/nautilus/nautilus.png";

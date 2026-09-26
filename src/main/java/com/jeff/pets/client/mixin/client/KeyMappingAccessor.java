@@ -6,7 +6,7 @@ import net.minecraft.client.KeyMapping;
 import java.lang.reflect.Field;
 
 public interface KeyMappingAccessor {
-    public static InputConstants.Key getKey(KeyMapping keyMapping) {
+    static InputConstants.Key getKey(KeyMapping keyMapping) {
         try {
             Field field = KeyMapping.class.getDeclaredField("key");
             field.setAccessible(true);

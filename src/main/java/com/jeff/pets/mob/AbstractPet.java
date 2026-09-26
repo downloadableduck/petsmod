@@ -14,12 +14,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.chicken.Chicken;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -27,7 +26,10 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
 
+import java.util.Objects;
 import java.util.UUID;
+
+import static com.jeff.pets.client.Central.CONFIG;
 
 /**
  * Abstract class that extends {@link TamableAnimal}, providing multiple utilities
@@ -43,21 +45,28 @@ import java.util.UUID;
  */
 public abstract class AbstractPet extends TamableAnimal {
 
+    protected final Entity dummy;
     public String petSkin = "";
-
-    private boolean isReturningToOwner = false;
-    private float randomX = (float) (Math.random() - 1f);
-    private float randomZ = (float) (Math.random() - 1);
+    public boolean sitting = false;
     protected int waitingTime = 0;
+    protected boolean isReturningToOwner = false;
+    private float randomZ = (float) (Math.random() - 1);
 
     protected AbstractPet(EntityType<? extends @NotNull TamableAnimal> type, Level level) {
         super(type, level);
         this.setSpeed(0.5f);
         this.setId(UUID.randomUUID().hashCode());
+        this.dummy = new Chicken(EntityTypes.CHICKEN, level);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createAnimalAttributes().add(Attributes.MAX_HEALTH, 8.0F).add(Attributes.MOVEMENT_SPEED, 0.23F);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        this.dummy.setPos(this.position().multiply(10, 1, 10));
     }
 
     /**
@@ -115,28 +124,37 @@ public abstract class AbstractPet extends TamableAnimal {
      */
     @Override
     public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
+        //if (hand == InteractionHand.MAIN_HAND) return super.mobInteract(player, hand);
         ItemStack itemStack = player.getItemInHand(hand);
 
-        if (this.isTame() && itemStack.isEmpty() && !player.isShiftKeyDown()) {
-            this.level().addParticle(
-                    ParticleTypes.HEART,
-                    this.getX(),
-                    this.getY() + this.heartHeight(),
-                    this.getZ(),
-                    5, 5, 5
-            );
+        if (this.isTame() && itemStack.isEmpty() && CONFIG.interaction.isDown() && !CONFIG.pickUp.isDown() && !CONFIG.sit.isDown()) {
+            try (Level level = this.level()) {
+                level.addParticle(
+                        ParticleTypes.HEART,
+                        this.getX(),
+                        this.getY() + this.heartHeight(),
+                        this.getZ(),
+                        5, 5, 5
+                );
+            } catch (Exception ignored) {
+            }
             return InteractionResult.SUCCESS;
         }
 
-        if (player instanceof LocalPlayer && this.isTame() && itemStack.isEmpty() && player.isShiftKeyDown()) {
+        if (player instanceof LocalPlayer && this.isTame() && itemStack.isEmpty() && CONFIG.pickUp.isDown() && !CONFIG.sit.isDown()) {
+            this.sitting = false;
             if (!this.isPassenger()) {
                 this.startRiding(player);
-                this.lookAt(player, 1f, 1f);
-                NetworkManager.get().broadcastHeadPayload(Minecraft.getInstance().player.getStringUUID(), true);
+                NetworkManager.get().broadcastHeadPayload(Objects.requireNonNull(Minecraft.getInstance().player).getStringUUID(), true);
                 return InteractionResult.SUCCESS;
             } else {
                 this.stopRiding();
             }
+            return InteractionResult.SUCCESS;
+        }
+
+        if (this.isTame() && itemStack.isEmpty() && CONFIG.sit.isDown()) {
+            this.sitting = !this.sitting;
             return InteractionResult.SUCCESS;
         }
         return super.mobInteract(player, hand);
@@ -148,8 +166,11 @@ public abstract class AbstractPet extends TamableAnimal {
      */
     @Override
     public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
-        if (this.level() != null && !this.level().isClientSide()) {
-            super.onSyncedDataUpdated(key);
+        try (Level level = this.level()) {
+            if (!level.isClientSide()) {
+                super.onSyncedDataUpdated(key);
+            }
+        } catch (Exception ignored) {
         }
     }
 
@@ -159,10 +180,14 @@ public abstract class AbstractPet extends TamableAnimal {
      */
     @Override
     public @NotNull Packet<@NotNull ClientGamePacketListener> getAddEntityPacket(@NotNull ServerEntity serverEntity) {
-        if (this.level().isClientSide()) {
-            return new ClientboundAddEntityPacket(this, serverEntity);
-        } else {
-            return super.getAddEntityPacket(serverEntity);
+        try (Level level = this.level()) {
+            if (level.isClientSide()) {
+                return new ClientboundAddEntityPacket(this, serverEntity);
+            } else {
+                return super.getAddEntityPacket(serverEntity);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -196,13 +221,13 @@ public abstract class AbstractPet extends TamableAnimal {
     }
 
     public void wander() {
+        if (!CONFIG.wanderingEnabled) return;
         float speed = (float) (this.getSpeed() - 0.35);
         Vec3 lookDir;
         float z = speed * this.randomZ;
 
-        float distance = this.distanceTo(this.getOwner());
+        float distance = this.distanceTo(Objects.requireNonNull(this.getOwner()));
         float yVelo = (float) this.getDeltaMovement().y;
-
         float absDistance = Math.abs(distance);
 
         if (absDistance > 5) {
@@ -242,9 +267,10 @@ public abstract class AbstractPet extends TamableAnimal {
             this.yBodyRot = smoothYaw;
         }
 
-        if (this.horizontalCollision && this.onGround()) {
+        if (this.horizontalCollision & this.onGround()) {
             this.jumpFromGround();
-        } if (!this.onGround()) {
+        }
+        if (!this.onGround()) {
             this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
         }
         double dx = lookDir.x - this.getX();
@@ -257,7 +283,6 @@ public abstract class AbstractPet extends TamableAnimal {
     }
 
     private void reCalcPos() {
-        this.randomX = (float) (Math.random() - 1);
         this.randomZ = (float) (Math.random() - 1);
     }
 
@@ -273,7 +298,24 @@ public abstract class AbstractPet extends TamableAnimal {
     public boolean updateFluidInteraction() {
         try {
             return super.updateFluidInteraction();
-        } catch (Exception e) {}
+        } catch (Exception ignored) {
+        }
         return false;
+    }
+
+    @Override
+    public boolean canBeCollidedWith(Entity entity) {
+        if (entity instanceof Player && CONFIG.hitThroughPets && ((Player) entity).getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
+            return false;
+        }
+        return super.canBeCollidedWith(entity);
+    }
+
+    @Override
+    public boolean isPickable() {
+        if (CONFIG.hitThroughPets && !Objects.requireNonNull(this.getOwner()).getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
+            return false;
+        }
+        return super.isPickable();
     }
 }

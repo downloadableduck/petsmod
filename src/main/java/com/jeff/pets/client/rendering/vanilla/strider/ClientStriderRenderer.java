@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class ClientStriderRenderer extends PetRenderer<@NotNull ClientStrider, @NotNull StriderRenderState, @NotNull AdultStriderModel> {
-    public static ModelLayerLocation STRIDER_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientstrider"), "main");
+    public static final ModelLayerLocation STRIDER_LOCATION = new ModelLayerLocation(Identifier.withDefaultNamespace("clientstrider"), "main");
 
     public String striderTexturePath;
 

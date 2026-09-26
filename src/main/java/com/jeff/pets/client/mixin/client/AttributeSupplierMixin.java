@@ -1,6 +1,5 @@
 package com.jeff.pets.client.mixin.client;
 
-import com.google.common.collect.ImmutableList;
 import com.jeff.pets.mob.aprilfools.*;
 import com.jeff.pets.mob.custom.aprilfools.Head;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
@@ -14,7 +13,6 @@ import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import com.jeff.pets.mob.vanilla.hostile.*;
 import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -147,6 +145,7 @@ public class AttributeSupplierMixin {
             throw new RuntimeException(e);
         }
     }
+
     public static byte[] transform(byte[] basicClass) {
         ClassReader reader = new ClassReader(basicClass);
         ClassNode classNode = new ClassNode();

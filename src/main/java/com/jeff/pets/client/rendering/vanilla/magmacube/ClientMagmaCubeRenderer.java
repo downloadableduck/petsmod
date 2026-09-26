@@ -24,7 +24,6 @@ public class ClientMagmaCubeRenderer extends PetRenderer<@NotNull ClientMagmaCub
     protected void scale(SlimeRenderState slimeRenderState, @NotNull PoseStack poseStack) {
         String skin = ((IPetRenderState) slimeRenderState).pets$getPetSkin();
         int magmaCubeScale = switch (skin) {
-            case "small" -> 1;
             case "medium" -> 2;
             case "large" -> 4;
             case null, default -> 1;

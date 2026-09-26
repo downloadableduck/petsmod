@@ -10,7 +10,7 @@ import net.minecraft.sounds.SoundEvent;
  * Mob Packs get introduced.
  */
 public class PetsSounds {
-   // public static final SoundEvent DUCK_AMBIENT = registerSound();
+    // public static final SoundEvent DUCK_AMBIENT = registerSound();
     //public static final SoundEvent PENGUIN_AMBIENT = registerPenguinSound();
 
     private static SoundEvent registerSound() {
