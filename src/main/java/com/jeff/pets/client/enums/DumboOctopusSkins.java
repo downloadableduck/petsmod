@@ -18,7 +18,7 @@ public enum DumboOctopusSkins implements NameableEnum, EnumImpl {
     }
 
     @Override
-    public List<Enum> getAllValues() {
+    public List<Enum<?>> getAllValues() {
         return List.of(blue, green, orange, pink, red, yellow);
     }
 }

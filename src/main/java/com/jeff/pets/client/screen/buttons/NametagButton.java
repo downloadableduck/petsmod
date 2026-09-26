@@ -1,4 +1,4 @@
-package com.jeff.pets.client.buttons;
+package com.jeff.pets.client.screen.buttons;
 
 import com.jeff.pets.client.Utils;
 import net.minecraft.client.gui.Font;
@@ -7,13 +7,14 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 public class NametagButton extends EditBox {
 
+    public final int width;
+    final Font font;
+    final int screenWidth;
     public int color;
-    public int width;
-    Font font;
-    int screenWidth;
 
     public NametagButton(int screenWidth, int y, Font font, int width, int height,
                          Component narration
@@ -49,7 +50,7 @@ public class NametagButton extends EditBox {
     }
 
     @Override
-    public void onValueChange(String value) {
+    public void onValueChange(@NotNull String value) {
         super.onValueChange(value);
         Utils.setActivePetName(value);
         this.centerX();

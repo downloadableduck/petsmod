@@ -58,6 +58,6 @@ public class ClientDrownedRenderer extends PetRenderer<@NotNull ClientDrowned, @
     public void extractRenderState(ClientDrowned drowned, ZombieRenderState state, float f) {
         super.extractRenderState(drowned, state, f);
         state.isBaby = CONFIG.isBaby;
-        state.isPassenger = drowned.isPassenger();
+        state.isPassenger = drowned.isPassenger() || drowned.sitting;
     }
 }

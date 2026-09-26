@@ -10,8 +10,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
 public class DuckRenderer extends PetRenderer<@NotNull Duck, @NotNull DuckRenderState, @NotNull DuckModel> {
     public String duckTexturePath;
 
@@ -21,14 +19,8 @@ public class DuckRenderer extends PetRenderer<@NotNull Duck, @NotNull DuckRender
 
     @Override
     protected void scale(@NotNull DuckRenderState livingEntityRenderState, @NotNull PoseStack poseStack) {
-        if (!livingEntityRenderState.isServerEntity) {
-            if (livingEntityRenderState.isBaby) {
-                poseStack.scale(0.6f, 0.6f, 0.6f);
-            }
-        } else {
-            if (livingEntityRenderState.isBaby) {
-                poseStack.scale(0.6f, 0.6f, 0.6f);
-            }
+        if (livingEntityRenderState.isBaby) {
+            poseStack.scale(0.6f, 0.6f, 0.6f);
         }
     }
 
@@ -44,21 +36,19 @@ public class DuckRenderer extends PetRenderer<@NotNull Duck, @NotNull DuckRender
         state.flap = Mth.lerp(partialTicks, duck.oFlap, duck.flap);
         state.flapSpeed = Mth.lerp(partialTicks, duck.oFlapSpeed, duck.flapSpeed);
         super.extractRenderState(duck, state, partialTicks);
-        state.isPassenger = duck.isPassenger();
+        state.isPassenger = duck.isPassenger() || duck.sitting;
     }
 
     @Override
     public @NotNull Identifier getTextureLocation(final DuckRenderState state) {
         if (!state.isServerEntity) {
             String skin = ((IPetRenderState) state).pets$getPetSkin();
-            if (Objects.equals(skin, "pekin")) {
-                duckTexturePath = "textures/entity/duck/pekin.png";
-            } else if (Objects.equals(skin, "mallard")) {
-                duckTexturePath = "textures/entity/duck/mallard_male.png";
-            } else if (Objects.equals(skin, "rubber")) {
-                duckTexturePath = "textures/entity/duck/rubber.png";
-            } else if (skin.equals("bronze")) {
-                duckTexturePath = "textures/entity/duck/bronze.png";
+            switch (skin) {
+                case "pekin" -> duckTexturePath = "textures/entity/duck/pekin.png";
+                case "rubber" -> duckTexturePath = "textures/entity/duck/rubber.png";
+                case "bronze" -> duckTexturePath = "textures/entity/duck/bronze.png";
+                case "silver" -> duckTexturePath = "textures/entity/duck/silver.png";
+                case null, default -> duckTexturePath = "textures/entity/duck/mallard_male.png";
             }
             return Identifier.fromNamespaceAndPath(PetsInitializer.MOD_ID, duckTexturePath);
         } else {

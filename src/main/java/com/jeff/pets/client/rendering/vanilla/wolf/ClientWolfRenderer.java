@@ -40,7 +40,6 @@ public class ClientWolfRenderer extends PetRenderer<@NotNull ClientWolf, @NotNul
         String skin = ((IPetRenderState) livingEntityRenderState).pets$getPetSkin();
 
         switch (skin) {
-            case "pale" -> wolfTexturePath = "textures/entity/wolf/wolf.png";
             case "ashen" -> wolfTexturePath = "textures/entity/wolf/wolf_ashen.png";
             case "black" -> wolfTexturePath = "textures/entity/wolf/wolf_black.png";
             case "chestnut" -> wolfTexturePath = "textures/entity/wolf/wolf_chestnut.png";
