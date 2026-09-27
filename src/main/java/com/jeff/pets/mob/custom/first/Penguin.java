@@ -193,10 +193,12 @@ public class Penguin extends AbstractPet {
                 this.setYHeadRot(this.getYRot());
                 this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.yHeadRot, 50.0f);
 
-                double speed = owner.getSpeed() * 2;
+                double speed = owner.getSpeed() * 2.0;
                 this.setDeltaMovement(dir.x * speed, this.getDeltaMovement().y, dir.z * speed);
+                if (this.waitingTime < 30 && !this.isReturningToOwner) this.lookAt(owner, 5, 5);
+                else this.lookAt(this.dummy, 5, 5);
             } else {
-                this.lookAt(owner, 5, 0);
+                this.lookAt(this.dummy, 5, 5);
                 this.setDeltaMovement(this.getDeltaMovement().multiply(0.8, 1.0, 0.8));
             }
 
@@ -221,6 +223,7 @@ public class Penguin extends AbstractPet {
                 if (this.waitingTime > 30) this.wander();
             } else {
                 this.waitingTime = 0;
+                this.isReturningToOwner = false;
             }
 
             this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));

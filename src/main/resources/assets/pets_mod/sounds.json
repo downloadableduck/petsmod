@@ -2,13 +2,13 @@
   "duck_ambient": {
     "subtitle": "sound.pets-mod.duck_ambient",
     "sounds": [
-      "pets-mod:duck_ambient"
+      "pets_mod:duck_ambient"
     ]
   },
   "penguin_ambient": {
     "subtitle": "sound.pets-mod.penguin_ambient",
     "sounds": [
-      "pets-mod:penguin_ambient"
+      "pets_mod:penguin_ambient"
     ]
   }
 }

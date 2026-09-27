@@ -274,6 +274,7 @@ public class Utils {
             case "dumbo_octopus" -> new DumboOctopus(PetsInitializer.DUMBO_OCTOPUS.get(), world);
             case "koi" -> new Koi(PetsInitializer.KOI.get(), world);
             case "stingray" -> new Stingray(PetsInitializer.STINGRAY.get(), world);
+            case "sulfur_cube" -> new ClientSulfurCube(PetsInitializer.SULFUR_CUBE.get(), world);
             default -> null;
         };
     }
@@ -371,6 +372,7 @@ public class Utils {
             case "koi" -> CONFIG.koiName;
             case "stingray" -> CONFIG.stingrayName;
             case "traitor" -> CONFIG.traitorName;
+            case "sulfur_cube" -> CONFIG.sulfurCubeName;
             default -> "";
         };
     }
@@ -477,6 +479,7 @@ public class Utils {
             case "dumbo_octopus" -> CONFIG.dumboOctopusName = name;
             case "koi" -> CONFIG.koiName = name;
             case "stingray" -> CONFIG.stingrayName = name;
+            case "sulfur_cube"-> CONFIG.sulfurCubeName = name;
         }
         if (Minecraft.getInstance().player != null) {
             NetworkManager.get().broadcastChangePetName(Minecraft.getInstance().player.getStringUUID(), Utils.getActivePetName());
@@ -522,6 +525,7 @@ public class Utils {
             case "wither" -> CONFIG.witherSkin;
             case "dumbo_octopus" -> CONFIG.dumboOctopusSkin;
             case "traitor" -> CONFIG.traitorSkin;
+            case "sulfur_cube" -> CONFIG.sulfurCubeSkin;
             default -> "not_a_skin";
         };
     }
@@ -1197,6 +1201,8 @@ public class Utils {
                     case "pink" -> CONFIG.dumboOctopusSkin = "pink";
                     case null, default -> isValid = false;
                 }
+            } else if (Objects.equals(CONFIG.activePet, "sulfur_cube")) {
+                CONFIG.sulfurCubeSkin = skin.replace(" ", "_");
             }
         }
         return isValid;
