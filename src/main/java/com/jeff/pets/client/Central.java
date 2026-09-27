@@ -229,7 +229,6 @@ public class Central {
     public static DumboOctopus dumboOctopus;
     public static Koi koi;
     public static Stingray stingray;
-    static int i = 1;
 
     /**
      * Required call to {@link ClientModInitializer#onInitializeClient()} that calls the initial code.
@@ -870,10 +869,10 @@ public class Central {
                     boolean isValid = Utils.setActivePetSkin(skin);
 
                     if (isValid) {
-                        Objects.requireNonNull(Minecraft.getInstance().player).sendSystemMessage(Component.nullToEmpty("§b[PetsMod] §aYour pet's skin has been updated."));
+                        Objects.requireNonNull(Minecraft.getInstance().player).sendSystemMessage(Component.translatable("message.pets-mod.pet-skin-change-success"));
                         NetworkManager.get().broadcastChangePetSkin(Minecraft.getInstance().player.getUUID().toString(), skin);
                     } else {
-                        Objects.requireNonNull(Minecraft.getInstance().player).sendSystemMessage(Component.nullToEmpty("§b[PetsMod] §cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else."));
+                        Objects.requireNonNull(Minecraft.getInstance().player).sendSystemMessage(Component.translatable("message.pets-mod.pet-skin-change-fail"));
                     }
                     Central.saveConfig();
 
@@ -1027,7 +1026,6 @@ public class Central {
         ModContainer container = ModList.get().getModContainerById(MOD_ID).get();
         Minecraft client = Minecraft.getInstance();
         client.execute(() -> {
-            ++i;
             Minecraft minecraft = Minecraft.getInstance();
             ClientLevel world = minecraft.level;
             petSkin = (int) (Math.random() * (double) 3.0F);
@@ -1056,22 +1054,7 @@ public class Central {
     @SubscribeEvent
     static void createPetHelpCommand(RegisterClientCommandsEvent event) {
         event.getDispatcher().register(LiteralArgumentBuilder.<CommandSourceStack>literal("pethelp").executes(_ -> {
-            Objects.requireNonNull(Minecraft.getInstance().player).sendSystemMessage(Component.nullToEmpty("""
-                    §b[PetsMod] §aPossible commands:\
-                    
-                    §a/pethelp: §rdisplays a list of commands\
-                    
-                    §a/pet <on/off> §rtoggles whether your pet will appear or not\
-                    
-                    §a/petspecies <species>: §rchanges the species of your pet\
-                    
-                    §a/petskin <skin>: §rchanges the skin of your selected pet\
-                    
-                    §a/teleportpet: §rteleports your pet to you. will not work if you are not on the ground.\
-                    
-                    §a/petname: §rchanges the name of your currently selected pet\
-                    
-                    """));
+            Objects.requireNonNull(Minecraft.getInstance().player).sendSystemMessage(Component.translatable("message.pets-mod.pet-help"));
             return 1;
         }));
     }
@@ -1102,16 +1085,16 @@ public class Central {
             String uuid = Objects.requireNonNull(Minecraft.getInstance().player).getStringUUID();
             if (Objects.equals(preference, "off")) {
                 CONFIG.petOn = false;
-                Minecraft.getInstance().player.sendSystemMessage(Component.nullToEmpty("§b[PetsMod] §7Pet §coff."));
+                Minecraft.getInstance().player.sendSystemMessage(Component.translatable("message.pets-mod.pet-off"));
                 Central.saveConfig();
                 NetworkManager.get().broadcastTogglePet(uuid, Utils.getActivePetName(), CONFIG.petOn);
             } else if (Objects.equals(preference, "on")) {
                 CONFIG.petOn = true;
                 Central.saveConfig();
                 NetworkManager.get().broadcastTogglePet(uuid, Utils.getActivePetName(), CONFIG.petOn);
-                Minecraft.getInstance().player.sendSystemMessage(Component.nullToEmpty("§b[PetsMod] §7Pet §aon."));
+                Minecraft.getInstance().player.sendSystemMessage(Component.translatable("message.pets-mod.pet-on"));
             } else {
-                Minecraft.getInstance().player.sendSystemMessage(Component.nullToEmpty("§b[PetsMod] §c§lUnknown value " + preference + "! Possible values: §r§aon, §6off"));
+                Minecraft.getInstance().player.sendSystemMessage(Component.translatable("message.pets-mod.unknown-value"));
             }
 
             return 1;
@@ -1133,14 +1116,14 @@ public class Central {
 
     public static void checkValidPet(boolean isValid, CommandContext<CommandSourceStack> ignored, String species) {
         if (!isValid) {
-            Objects.requireNonNull(Minecraft.getInstance().player).sendSystemMessage(Component.nullToEmpty("§b[PetsMod] §cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")"));
+            Objects.requireNonNull(Minecraft.getInstance().player).sendSystemMessage(Component.translatable("message.pets-mod.unsupported-species", species));
         } else if (CONFIG.petOn) {
             despawnPet();
-            Objects.requireNonNull(Minecraft.getInstance().player).sendSystemMessage(Component.nullToEmpty("§b[PetsMod] §aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + "."));
+            Objects.requireNonNull(Minecraft.getInstance().player).sendSystemMessage(Component.translatable("message.pets-mod.pet-switched-to", CONFIG.activePet.replace("_", " ") + "."));
             NetworkManager.get().broadcastGeneral(Minecraft.getInstance().player.getStringUUID(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby);
             summonPet();
         } else {
-            Objects.requireNonNull(Minecraft.getInstance().player).sendSystemMessage(Component.nullToEmpty("§b[PetsMod] §cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet enabled. Run §l/pet on§r§c to change this."));
+            Objects.requireNonNull(Minecraft.getInstance().player).sendSystemMessage(Component.translatable("message.pets-mod.pet-switched-to-not-on", CONFIG.activePet.replace("_", " ")));
         }
     }
 
