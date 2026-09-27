@@ -553,7 +553,7 @@ public class Central implements ClientModInitializer {
     public static void createTickWatcher() {
         Minecraft minecraft = Minecraft.getInstance();
         ClientWorld world = minecraft.world;
-        minecraft.execute(() -> {
+        minecraft.executeTask(() -> {
             petSkin = (int) (Math.random() * (double) 3.0F);
             if (minecraft.player != null && CONFIG.petOn && summonedEntity.isEmpty()) {
                 summonPet();
@@ -576,7 +576,7 @@ public class Central implements ClientModInitializer {
     public static void createJoinHandler() {
         List var10001 = summonedEntity;
         Objects.requireNonNull(var10001);
-        Minecraft.getInstance().execute(var10001::clear);
+        Minecraft.getInstance().executeTask(var10001::clear);
     }
 
     /**
@@ -603,23 +603,9 @@ public class Central implements ClientModInitializer {
      * slightly malformed (specifically the {@code switch} statements) as this file was
      * re-created from an bytecode after a change messed it up around version {@code 0.6.0}
      */
-    public void createPetSkinCommand(CommandRegistry registry) {
-        registry.register(new AbstractCommand() {
-            @Override
-            public String getName() {
-                return "petskin";
-            }
-
-            @Override
-            public String getUsage(CommandSource source) {
-                return "petskin <skin>";
-            }
-
-            @Override
-            public void run(MinecraftServer server, CommandSource source, String[] args)  {
-                Minecraft.getInstance().execute(() -> {
+    public void executePetSkinCommand(String skin) {
+                Minecraft.getInstance().executeTask(() -> {
                     boolean isValid = true;
-                    String skin = String.join(" ", args);
 
                     if (Objects.equals(skin, "baby")) {
                         CONFIG.isBaby = true;
@@ -1165,12 +1151,6 @@ public class Central implements ClientModInitializer {
                     }
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
                 });
-            }
-            @Override
-            public List<String> getSuggestions(MinecraftServer server, CommandSource commandSource, String[] args, BlockPos blockPos) {
-                return currentSuggestions;
-            }
-        });
     }
 
     /**
@@ -1379,47 +1359,18 @@ public class Central implements ClientModInitializer {
     /**
      * Creates the command that allows the user to use {@code /teleportpet}.
      */
-    public void createPetTeleportCommand(CommandRegistry registry) {
-        registry.register(new AbstractCommand() {
-            @Override
-            public String getName() {
-                return "teleportpet";
-            }
-
-            @Override
-            public String getUsage(CommandSource source) {
-                return "teleportpet";
-            }
-
-            @Override
-            public void run(MinecraftServer server, CommandSource source, String[] args)  {
-                Minecraft.getInstance().execute(() -> {
-                    despawnPet();
-                    summonPet();
-                });
-            }
-        });
+    public void executePetTeleportCommand() {
+                 Minecraft.getInstance().executeTask(() -> {
+                     despawnPet();
+                     summonPet();
+                 });
     }
 
     /**
      * Creates the command that allows the user to use {@code /petspecies}.
      */
-    public void createPetSpeciesCommand(CommandRegistry registry) {
-        registry.register(new AbstractCommand() {
-            @Override
-            public String getName() {
-                return "petspecies";
-            }
-
-            @Override
-            public String getUsage(CommandSource source) {
-                return "petspecies <species>";
-            }
-
-            @Override
-            public void run(MinecraftServer server, CommandSource source, String[] args) {
-                boolean isValid = true;
-                String species = String.join(" ", args);
+    public void executePetSpeciesCommand(String species) {
+        boolean isValid = true;
 
                 if (Objects.equals(species, "duck")) {
                 Utils.setActivePet(duck, "duck");
@@ -1515,61 +1466,25 @@ public class Central implements ClientModInitializer {
 
             AutoConfig.getConfigHolder(PetsConfig.class).save();
             updateSuggestions(Minecraft.getInstance());
-            }
-
-            @Override
-            public List<String> getSuggestions(MinecraftServer server, CommandSource commandSource, String[] args, BlockPos blockPos) {
-                return PETS_LIST;
-            }
-        });
     }
 
     /**
      * Creates a help command to let the user easily view the commands at their disposal.
      */
-    public void createPetHelpCommand(CommandRegistry registry) {
-        registry.register(new AbstractCommand() {
-            @Override
-            public String getName() {
-                return "pethelp";
-            }
-
-            @Override
-            public String getUsage(CommandSource source) {
-                return "pethelp";
-            }
-
-            @Override
-            public void run(MinecraftServer server, CommandSource source, String[] args)  {
-                Minecraft.getInstance().execute(() -> {
+    public void executePetHelpCommand() {
+                Minecraft.getInstance().executeTask(() -> {
                     Minecraft.getInstance().player.addMessage(new LiteralText(
                             "\u00A7b[PetsMod] \u00A7aPossible commands: \u00A7a/pethelp: \u00A7rdisplays a list of commands \u00A7a/pet <on/off> \u00A7rtoggles whether your pet will appear or not\u00A7a/petspecies <species>: \u00A7rchanges the species of your pet\u00A7a/petskin <skin>: \u00A7rchanges the skin of your selected pet\u00A7a/teleportpet: \u00A7rteleports your pet to you. will not work if you are not on the ground.\u00A7a/petname: \u00A7rchanges the name of your currently selected pet"
                     ));
                 });
-            }
-        });
     }
 
     /**
      * Creates the command that allows the user to change their pet's name.
      */
-    public void createPetNameCommand(CommandRegistry registry) {
-        registry.register(new AbstractCommand() {
-            @Override
-            public String getName() {
-                return "petname";
-            }
-
-            @Override
-            public String getUsage(CommandSource source) {
-                return "petname <name>";
-            }
-
-            @Override
-            public void run(MinecraftServer server, CommandSource source, String[] args)  {
-                Minecraft.getInstance().execute(() -> {
-                    String name = String.join(" ", args);
-                    if (!summonedEntity.isEmpty()) {
+    public void executePetNameCommand(String name) {
+        Minecraft.getInstance().executeTask(() -> {
+            if (!summonedEntity.isEmpty()) {
                 if (CONFIG.activePet.equals("penguin")) {
                     CONFIG.penguinName = name;
                 } else if (CONFIG.activePet.equals("duck")) {
@@ -1773,29 +1688,13 @@ public class Central implements ClientModInitializer {
                 }
                 AutoConfig.getConfigHolder(PetsConfig.class).save();
             }
-                });
-            }
         });
     }
 
     /**
      * Creates the command that allows the user to toggle their pet on and off.
      */
-    public void createToggleCommand(CommandRegistry registry) {
-        registry.register(new AbstractCommand() {
-            @Override
-            public String getName() {
-                return "pet";
-            }
-
-            @Override
-            public String getUsage(CommandSource source) {
-                return "pet <on|off>";
-            }
-
-            @Override
-            public void run(MinecraftServer server, CommandSource source, String[] args)  {
-                String preference = args.length > 0 ? args[0] : "";
+    public void executeToggleCommand(String preference) {
                 if (Objects.equals(preference, "off")) {
                     CONFIG.petOn = false;
                     Minecraft.getInstance().player.addMessage(new LiteralText("\u00A7b[PetsMod] \u00A77Pet \u00A7coff."));
@@ -1807,12 +1706,6 @@ public class Central implements ClientModInitializer {
                 } else {
                     Minecraft.getInstance().player.addMessage(new LiteralText("\u00A7b[PetsMod] \u00A7c\u00A7lUnknown value " + preference + "! Possible values: \u00A7r\u00A7aon, \u00A76off"));
                 }
-            }
-            @Override
-            public List<String> getSuggestions(MinecraftServer server, CommandSource commandSource, String[] args, BlockPos blockPos) {
-                return ON_OFF;
-            }
-        });
     }
 
     void createPetsList() {
@@ -1843,7 +1736,7 @@ public class Central implements ClientModInitializer {
     }
 
     public void checkValidPet(boolean isValid, String species) {
-        Minecraft.getInstance().execute(() -> {
+        Minecraft.getInstance().executeTask(() -> {
             if (!isValid) {
                 Minecraft.getInstance().player.addMessage(new LiteralText("\u00A7b[PetsMod] \u00A7cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")"));
             } else if (isValid && CONFIG.petOn) {

@@ -1,30 +1,28 @@
 package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
 
 public class ClientCreeper extends GroundPet {
+   public boolean isPowered = false;
 
-    public boolean isPowered = false;
+   public ClientCreeper(World world) {
+      super(world);
+        this.setSize(0.6f, 1.7f);
+   }
 
-    public ClientCreeper(World world) {
-        super(world);
-    }
+   @Override
+   protected int stopDistance() {
+      return 2;
+   }
 
-    @Override
-    protected int stopDistance() {
-        return 2;
-    }
+   @Override
+   protected float heartHeight() {
+      return 1.5F;
+   }
 
-    @Override
-    protected float heartHeight() {
-        return 1.5f;
-    }
-
-    @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_CREEPER_PRIMED;
-    }
+   @Override
+   protected String getAmbientSound() {
+      return "creeper.primed";
+   }
 }

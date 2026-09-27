@@ -27,7 +27,7 @@ public class ClientSnowGolemHeadLayer implements EntityRenderLayer<ClientSnowGol
     @Override
     public void render(ClientSnowGolem snowGolem, float f, float g, float h, float i, float j, float k, float l) {
         if (CONFIG.snowGolemSkin.equals("pumpkin_on")) {
-            boolean bl = snowGolem.isGlowing() && snowGolem.isInvisible();
+boolean bl = false;
             if (!snowGolem.isInvisible() || bl) {
                 net.minecraft.client.render.platform.GlStateManager.pushMatrix();
                 //this.getContextModel().method_2834().rotate(poseStack);
@@ -37,15 +37,7 @@ public class ClientSnowGolemHeadLayer implements EntityRenderLayer<ClientSnowGol
                 net.minecraft.client.render.platform.GlStateManager.scalef(0.625F, -0.625F, -0.625F);
                 GlStateManager.rotatef(180.0F, 0.0F, 1.0F, 0.0F);
                     ItemStack itemStack = new ItemStack(Blocks.PUMPKIN);
-                if (bl) {
-                    BlockState blockState = Blocks.PUMPKIN.defaultState();
-                    BakedModel bakedModel = this.blockRenderer.getModel(blockState);
-                    int n = 0;
-                    net.minecraft.client.render.platform.GlStateManager.translatef(-0.5F, -0.5F, -0.5F);
-                    this.blockRenderer.getModelRenderer().render(blockState, bakedModel, 0.0F, 0.0F, 0.0F, i);
-                } else {
-                    this.itemRenderer.renderItemInHand(itemStack, ModelTransformations.Type.HEAD);
-                }
+                this.itemRenderer.renderItemInHand(itemStack, ModelTransformations.Type.HEAD);
 
                 net.minecraft.client.render.platform.GlStateManager.popMatrix();
             }

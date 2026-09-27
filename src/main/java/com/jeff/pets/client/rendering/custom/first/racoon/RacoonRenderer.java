@@ -44,6 +44,6 @@ public class RacoonRenderer extends PetRenderer<@NotNull Racoon> {
     @Override
     public void renderModel(Racoon racoon, float g, float f, float u, float h, float m, float i) {
         super.renderModel(racoon, g, f, u, h, m, i);
-        racoon.setServerEntity(racoon.getSyncedData().get(Racoon.IS_SERVER_ENTITY));
+        racoon.setServerEntity(racoon.getSyncedData().getByte(Racoon.IS_SERVER_ENTITY) == 1);
     }
 }

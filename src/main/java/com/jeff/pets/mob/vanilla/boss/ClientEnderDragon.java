@@ -2,88 +2,77 @@ package com.jeff.pets.mob.vanilla.boss;
 
 import com.jeff.pets.client.Math2;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.entity.living.mob.monster.boss.dragon.EnderDragonPhase;
-import net.minecraft.entity.living.mob.monster.boss.dragon.EnderDragonPhaseInstance;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-
 public class ClientEnderDragon extends FlyingPet {
-    public final double[][] positions = new double[64][3];
-    public float oFlapTime;
-    public float flapTime;
-    public int posPointer = -1;
+   public final double[][] positions = new double[64][3];
+   public float oFlapTime;
+   public float flapTime;
+   public int posPointer = -1;
 
-    public ClientEnderDragon(World world) {
-        super(world);
-    }
+   public ClientEnderDragon(World world) {
+      super(world);
+        this.setSize(16f, 8f);
+   }
 
-    @Override
-    protected int stopDistance() {
-        return 10;
-    }
+   @Override
+   protected int stopDistance() {
+      return 10;
+   }
 
-    @Override
-    protected float heartHeight() {
-        return 3;
-    }
+   @Override
+   protected float heartHeight() {
+      return 3.0F;
+   }
 
-    @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_ENDERDRAGON_AMBIENT;
-    }
+   @Override
+   protected String getAmbientSound() {
+      return "mob.enderdragon.growl";
+   }
 
-    @Override
-    public void tick() {
-        super.tick();
-        this.oFlapTime = this.flapTime;
-        Vec3d vec3 = this.getVelocity();
-        float g = 0.2F / ((float) vec3.y * 10.0F + 1.0F);
-        g *= (float) Math.pow(2.0F, vec3.y);
-        if (this.isInWall()) {
-            this.flapTime += g * 0.5F;
-        } else {
-            this.flapTime += g;
-        }
-    }
+   @Override
+   public void tick() {
+      super.tick();
+      this.oFlapTime = this.flapTime;
+      Vec3d vec3 = this.getVelocity();
+      float g = 0.2F / ((float)vec3.y * 10.0F + 1.0F);
+      g *= (float)Math.pow(2.0, vec3.y);
+      if (this.isInWall()) {
+         this.flapTime += g * 0.5F;
+      } else {
+         this.flapTime += g;
+      }
+   }
 
-    public double[] getLatencyPos(int i, float f) {
-        if (this.dead) {
-            f = 0.0F;
-        }
+   public double[] getLatencyPos(int i, float f) {
+      if (this.dead) {
+         f = 0.0F;
+      }
 
-        f = 1.0F - f;
-        int j = this.posPointer - i & 63;
-        int k = this.posPointer - i - 1 & 63;
-        double[] ds = new double[3];
-        double d = this.positions[j][0];
-        double e = MathHelper.wrapDegrees(this.positions[k][0] - d);
-        ds[0] = d + e * (double) f;
-        d = this.positions[j][1];
-        e = this.positions[k][1] - d;
-        ds[1] = d + e * (double) f;
-        ds[2] = Math2.lerp(f, this.positions[j][2], this.positions[k][2]); //lerp
-        return ds;
-    }
+      f = 1.0F - f;
+      int j = this.posPointer - i & 63;
+      int k = this.posPointer - i - 1 & 63;
+      double[] ds = new double[3];
+      double d = this.positions[j][0];
+      double e = MathHelper.wrapDegrees(this.positions[k][0] - d);
+      ds[0] = d + e * f;
+      d = this.positions[j][1];
+      e = this.positions[k][1] - d;
+      ds[1] = d + e * f;
+      ds[2] = Math2.lerp(f, this.positions[j][2], this.positions[k][2]);
+      return ds;
+   }
 
-    public float getHeadPartYOffset(int i, double[] ds, double[] es) {
-        EnderDragonPhase<? extends EnderDragonPhaseInstance> enderDragonPhase = EnderDragonPhase.HOLDING_PATTERN;
-        double e;
-        if (enderDragonPhase != EnderDragonPhase.LANDING && enderDragonPhase != EnderDragonPhase.TAKEOFF) {
-            if (i == 6) {
-                e = 0.0F;
-            } else {
-                e = es[1] - ds[1];
-            }
-        } else {
-            double d = Math.max(Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z) / (double) 4.0F, 1.0F);
-            e = (double) i / d;
-        }
+   public float getHeadPartYOffset(int i, double[] ds, double[] es) {
+      double e;
+      if (i == 6) {
+         e = 0.0;
+      } else {
+         e = es[1] - ds[1];
+      }
 
-        return (float) e;
-    }
+      return (float)e;
+   }
 }

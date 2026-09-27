@@ -38,13 +38,13 @@ dependencies {
     //nests ploceus.nests(project.nests_build)
     mappings ploceus.featherMappings(project.feather_build)
 
-    //modImplementation "net.legacyfabric.legacy-fabric-api:legacy-fabric-api:1.13.5+1.12.2"
+
     ploceus.dependOsl(project.osl_version)
 
     implementation("blue.endless:jankson:${rootProject.jankson_version}")
     implementation("com.moandjiezana.toml:toml4j:${rootProject.toml4j_version}")
-    modImplementation "maven.modrinth:LIGlLgiL:${project.modmenu_version}"}
-
+    modImplementation("maven.modrinth:LIGlLgiL:71EHHNXc")
+}
 processResources {
     inputs.property 'version', project.mod_version
 

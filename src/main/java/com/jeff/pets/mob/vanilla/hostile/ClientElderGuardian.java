@@ -1,28 +1,26 @@
 package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
 
-
 public class ClientElderGuardian extends FlyingPet {
-    public ClientElderGuardian(World world) {
-        super(world);
-    }
+   public ClientElderGuardian(World world) {
+      super(world);
+        this.setSize(1.9975f, 1.9975f);
+   }
 
-    @Override
-    protected int stopDistance() {
-        return 4;
-    }
+   @Override
+   protected int stopDistance() {
+      return 4;
+   }
 
-    @Override
-    protected float heartHeight() {
-        return 4;
-    }
+   @Override
+   protected float heartHeight() {
+      return 4.0F;
+   }
 
-    @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_ELDER_GUARDIAN_AMBIENT;
-    }
+   @Override
+   protected String getAmbientSound() {
+      return "mob.guardian.elder.idle";
+   }
 }

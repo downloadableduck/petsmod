@@ -5,7 +5,6 @@ import com.jeff.pets.mob.custom.aprilfools.Head;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
-import net.minecraft.block.entity.SkullBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resource.skin.DefaultSkinUtils;
 import net.minecraft.resource.Identifier;
@@ -28,7 +27,8 @@ public class HeadRenderer extends PetRenderer<@NotNull Head> {
     }
 
     private static CompletableFuture<Optional<GameProfile>> fetchGameProfile(String string) {
-        GameProfileCache loadingCache = SkullBlockEntity.playerCache;
+        Minecraft minecraft = Minecraft.getInstance();
+        GameProfileCache loadingCache = minecraft.getServer() != null ? minecraft.getServer().getGameProfileCache() : null;
         return loadingCache != null
                 ? CompletableFuture.completedFuture(Optional.ofNullable(loadingCache.get(string)))
                 : CompletableFuture.completedFuture(Optional.empty());

@@ -1,16 +1,15 @@
 package com.jeff.pets.mob;
 
-import net.minecraft.entity.data.DataAttribute;
 import net.minecraft.entity.living.attribute.EntityAttributes;
+import net.minecraft.entity.living.LivingEntity;
 import net.minecraft.entity.living.mob.passive.PassiveEntity;
 import net.minecraft.entity.living.mob.passive.animal.tameable.TameableEntity;
 import net.minecraft.entity.living.player.PlayerEntity;
 import net.minecraft.entity.particle.ParticleType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.InteractionHand;
+// import net.minecraft.world.InteractionHand;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -66,13 +65,13 @@ public abstract class AbstractPet extends TameableEntity {
      * Used to define the entity's default ambient sound. For the uses of these last three
      * methods, please refer to {@link FlyingPet} and {@link GroundPet}.
      */
-    protected abstract SoundEvent getAmbientSound();
+    protected abstract String getAmbientSound();
 
     /**
      * Custom interactions.
      * - Right clicking on a pet with an empty hand will let make hearts appear above it:
      * <pre>
-     *     {@code if (this.isTame() && itemStack.getItem() == null && !player.isShiftKeyDown()) {
+     *     {@code if (this.isTame() && itemStack == null && !player.isShiftKeyDown()) {
      *         this.level.addParticle(
      *                 ParticleTypes.HEART,
      *                 this.x,
@@ -84,13 +83,13 @@ public abstract class AbstractPet extends TameableEntity {
      *     }}</pre>
      * - Shifting and right clicking on a pet with an empty hand will pick it up:
      * <pre>
-     *     {@code if (this.isTame() && itemStack.getItem() == null && player.isShiftKeyDown()) {
+     *     {@code if (this.isTame() && itemStack == null && player.isShiftKeyDown()) {
      *         if (!this.isPassenger()) {
      *             this.startRiding(player);
      *             this.lookAt(player, 1f, 1f);
      *             return InteractionResult.SUCCESS;
      *         } else {
-     *             this.stopRiding();
+     *             this.dismountFromVehicle();
      *         }
      *         return InteractionResult.SUCCESS;
      *     }
@@ -100,9 +99,10 @@ public abstract class AbstractPet extends TameableEntity {
      * @return It's super method
      */
     @Override
-    public boolean interactMob(@NotNull PlayerEntity player, @NotNull InteractionHand hand, ItemStack itemStack) {
+    public boolean interactMob(@NotNull PlayerEntity player) {
+        ItemStack itemStack = player.getItemInHand();
 
-        if (this.isTamed() && itemStack.getItem() == null && !player.isSneaking()) {
+        if (this.isTamed() && itemStack == null && !player.isSneaking()) {
             this.world.addParticle(
                     ParticleType.HEART,
                     this.x,
@@ -113,17 +113,17 @@ public abstract class AbstractPet extends TameableEntity {
             return true;
         }
 
-        if (this.isTamed() && itemStack.getItem() == null && player.isSneaking()) {
+        if (this.isTamed() && itemStack == null && player.isSneaking()) {
             if (!this.isRiding()) {
                 this.startRiding(player);
                 this.lookAt(player, 1f, 1f);
                 return true;
             } else {
-                this.stopRiding();
+                this.dismountFromVehicle();
             }
             return true;
         }
-        return super.interactMob(player, hand, itemStack);
+        return super.interactMob(player);
     }
 
     /**
@@ -131,7 +131,7 @@ public abstract class AbstractPet extends TameableEntity {
      * <p> Calls: It's super method, if the level is not client-sided.
      */
     @Override
-    public void onDataValueChanged(@NotNull DataAttribute<?> key) {
+    public void onDataValueChanged(int key) {
         if (!this.world.isClient) {
             super.onDataValueChanged(key);
         }
@@ -246,6 +246,12 @@ public abstract class AbstractPet extends TameableEntity {
         return this.isRiding();
     }
 
+    public void dismountFromVehicle() {
+        if (this.vehicle != null) {
+            ((LivingEntity) this.vehicle).dismountRider(this);
+        }
+    }
+
     public Vec3d getPosVec() {
         return new Vec3d(this.x, this.y, this.z);
     }
@@ -256,5 +262,10 @@ public abstract class AbstractPet extends TameableEntity {
 
     public Vec3d getVelocity() {
         return new Vec3d(this.velocityX, this.velocityY, this.velocityZ);
+    }
+
+    @Override
+    public boolean isTamed() {
+        return true;
     }
 }

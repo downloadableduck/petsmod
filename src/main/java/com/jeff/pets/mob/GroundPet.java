@@ -5,7 +5,6 @@ import com.jeff.pets.mob.custom.first.Duck;
 
 import net.minecraft.entity.living.LivingEntity;
 import net.minecraft.entity.living.mob.passive.animal.tameable.TameableEntity;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -43,9 +42,9 @@ public abstract class GroundPet extends AbstractPet {
         LivingEntity owner = this.getOwner();
         if (owner != null) {
 
-            if (owner.hasPassenger(this)) {
+            if (this.vehicle == owner) {
                 if (owner.isSneaking() && owner.jumping) {
-                    this.stopRiding();
+                    this.dismountFromVehicle();
                     this.lerpVelocity(this.getVelocity().add(0, -0.04, 0));
                 } else {
                     this.setSitting(true);
@@ -130,7 +129,7 @@ public abstract class GroundPet extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            world.playSound(this.x, this.y, this.z, Objects.requireNonNull(this.getAmbientSound()), SoundCategory.AMBIENT, 1.0f, 1.0f, true);
+            world.playSound(this.x, this.y, this.z, Objects.requireNonNull(this.getAmbientSound()), 1.0f, 1.0f, true);
         }
     }
 }

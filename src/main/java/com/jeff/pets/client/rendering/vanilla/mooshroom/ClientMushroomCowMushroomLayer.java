@@ -27,7 +27,7 @@ public class ClientMushroomCowMushroomLayer implements EntityRenderLayer<ClientM
             BlockState blockState = CONFIG.mooshroomSkin.equals("brown") ? Blocks.BROWN_MUSHROOM.defaultState() : Blocks.RED_MUSHROOM.defaultState();
             this.renderer.bindTexture(TextureAtlas.BLOCKS_LOCATION);
             GlStateManager.enableCull();
-            GlStateManager.cullFace(GlStateManager.CullFace.FRONT);
+            GlStateManager.cullFace(1029);
             GlStateManager.pushMatrix();
             GlStateManager.scalef(1.0F, -1.0F, 1.0F);
             GlStateManager.translatef(0.2F, 0.35F, 0.5F);
@@ -51,7 +51,7 @@ public class ClientMushroomCowMushroomLayer implements EntityRenderLayer<ClientM
             GlStateManager.translatef(-0.5F, -0.5F, 0.5F);
             blockRenderManager.renderAsItem(blockState, 1.0F);
             GlStateManager.popMatrix();
-            GlStateManager.cullFace(GlStateManager.CullFace.BACK);
+            GlStateManager.cullFace(1028);
             GlStateManager.disableCull();
         }
     }

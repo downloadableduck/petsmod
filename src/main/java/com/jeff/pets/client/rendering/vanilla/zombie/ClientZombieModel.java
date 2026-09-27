@@ -3,6 +3,7 @@ package com.jeff.pets.client.rendering.vanilla.zombie;
 import com.jeff.pets.client.Math2;
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.client.rendering.AnimationUtils;
+import com.jeff.pets.client.rendering.ArmPose;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.client.render.model.Model;
 import net.minecraft.client.render.model.ModelPart;
@@ -20,8 +21,8 @@ public class ClientZombieModel extends Model {
     private final ModelPart right_arm;
     private final ModelPart left_leg;
     private final ModelPart right_leg;
-    public HumanoidModel.ArmPose leftArmPose = HumanoidModel.ArmPose.EMPTY;
-    public HumanoidModel.ArmPose rightArmPose = HumanoidModel.ArmPose.EMPTY;
+    public ArmPose leftArmPose = ArmPose.EMPTY;
+    public ArmPose rightArmPose = ArmPose.EMPTY;
     public boolean crouching;
     public float swimAmount;
     private float itemUseTicks;
@@ -210,7 +211,7 @@ public class ClientZombieModel extends Model {
         this.left_arm.rotationZ = this.left_arm.rotationZ - (MathHelper.cos(h * 0.09F) * 0.05F + 0.05F);
         this.right_arm.rotationX = this.right_arm.rotationX + MathHelper.sin(h * 0.067F) * 0.05F;
         this.left_arm.rotationX = this.left_arm.rotationX - MathHelper.sin(h * 0.067F) * 0.05F;
-        if (this.rightArmPose == HumanoidModel.ArmPose.BOW_AND_ARROW) {
+        if (this.rightArmPose == ArmPose.BOW_AND_ARROW) {
             this.right_arm.rotationY = -0.1F + this.head.rotationY;
             this.left_arm.rotationY = 0.1F + this.head.rotationY + 0.4F;
             this.right_arm.rotationX = (float) (-Math.PI / 2) + this.head.rotationX;
@@ -219,14 +220,14 @@ public class ClientZombieModel extends Model {
 
         float o = 64;
         /* Crossbows don't exist in 1.13
-        if (this.rightArmPose == HumanoidModel.ArmPose.CROSSBOW_CHARGE) {
+        if (this.rightArmPose == ArmPose.CROSSBOW_CHARGE) {
             this.right_arm.rotationY = -0.8F;
             this.right_arm.rotationX = -0.97079635F;
             this.left_arm.rotationX = -0.97079635F;
             float p = MathHelper.clamp(this.itemUseTicks, 0.0F, o);
             this.left_arm.rotationY = (float) Math2.lerp(p / o, 0.4F, 0.85F);
             this.left_arm.rotationX = (float) Math2.lerp(p / o, this.left_arm.rotationX, (float) (-Math.PI / 2));
-        } else if (this.leftArmPose == HumanoidModel.ArmPose.CROSSBOW_CHARGE) {
+        } else if (this.leftArmPose == ArmPose.CROSSBOW_CHARGE) {
             this.left_arm.rotationY = 0.8F;
             this.right_arm.rotationX = -0.97079635F;
             this.left_arm.rotationX = -0.97079635F;
@@ -235,12 +236,12 @@ public class ClientZombieModel extends Model {
             this.right_arm.rotationX = (float) Math2.lerp(p / o, this.right_arm.rotationX, (float) (-Math.PI / 2));
         }
 
-        if (this.rightArmPose == HumanoidModel.ArmPose.CROSSBOW_HOLD && this.attackAnimationProgress <= 0.0F) {
+        if (this.rightArmPose == ArmPose.CROSSBOW_HOLD && this.attackAnimationProgress <= 0.0F) {
             this.right_arm.rotationY = -0.3F + this.head.rotationY;
             this.left_arm.rotationY = 0.6F + this.head.rotationY;
             this.right_arm.rotationX = (float) (-Math.PI / 2) + this.head.rotationX + 0.1F;
             this.left_arm.rotationX = -1.5F + this.head.rotationX;
-        } else if (this.leftArmPose == HumanoidModel.ArmPose.CROSSBOW_HOLD) {
+        } else if (this.leftArmPose == ArmPose.CROSSBOW_HOLD) {
             this.right_arm.rotationY = -0.6F + this.head.rotationY;
             this.left_arm.rotationY = 0.3F + this.head.rotationY;
             this.right_arm.rotationX = -1.5F + this.head.rotationX;

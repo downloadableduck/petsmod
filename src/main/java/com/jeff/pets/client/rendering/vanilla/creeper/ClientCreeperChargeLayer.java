@@ -36,7 +36,7 @@ public class ClientCreeperChargeLayer implements EntityRenderLayer<ClientCreeper
             float n = 0.5F;
             GlStateManager.color4f(0.5F, 0.5F, 0.5F, 1.0F);
             GlStateManager.disableLighting();
-            GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+            GlStateManager.blendFunc(1, 1);
             this.model.copyPropertiesFrom(this.renderer.getModel());
             this.model.render(creeperEntity, f, g, i, j, k, l);
             GlStateManager.matrixMode(5890);

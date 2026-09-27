@@ -9,14 +9,12 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.client.render.model.entity.HumanoidModel;
-import net.minecraft.client.render.model.entity.HumanoidModel.ArmPose;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.living.Arm;
 import net.minecraft.entity.living.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.InteractionHand;
+// import net.minecraft.world.InteractionHand;
 
 @Environment(EnvType.CLIENT)
 public class SkeletonModel extends HumanoidModel {
@@ -46,24 +44,13 @@ public class SkeletonModel extends HumanoidModel {
     }
 
     public void prepare(LivingEntity mob, float walkAnimationProgress, float walkAnimationSpeed, float tickDelta) {
-        this.rightArmPose = ArmPose.EMPTY;
-        this.leftArmPose = ArmPose.EMPTY;
-        ItemStack itemStack = mob.getItemInHand(InteractionHand.MAIN_HAND);
-        if (itemStack.getItem() == Items.BOW) {
-            if (mob.getMainArm() == Arm.RIGHT) {
-                this.rightArmPose = ArmPose.BOW_AND_ARROW;
-            } else {
-                this.leftArmPose = ArmPose.BOW_AND_ARROW;
-            }
-        }
-
         super.prepare(mob, walkAnimationProgress, walkAnimationSpeed, tickDelta);
     }
 
     public void setupAnimation(float walkAnimationProgress, float walkAnimationSpeed, float bob, float yaw, float pitch, float scale, Entity entity) {
         super.setupAnimation(walkAnimationProgress, walkAnimationSpeed, bob, yaw, pitch, scale, entity);
-        ItemStack itemStack = ((LivingEntity)entity).getItemInMainHand();
-        if ((itemStack.getItem() == null || itemStack.getItem() != Items.BOW)) {
+        ItemStack itemStack = ((LivingEntity)entity).getEquipment(0);
+        if ((itemStack == null || itemStack.getItem() != Items.BOW)) {
             float f = MathHelper.sin(this.attackAnimationProgress * (float)Math.PI);
             float g = MathHelper.sin((1.0F - (1.0F - this.attackAnimationProgress) * (1.0F - this.attackAnimationProgress)) * (float)Math.PI);
             /*this.rightArm.rotationZ = 0.0F;
@@ -86,13 +73,5 @@ public class SkeletonModel extends HumanoidModel {
             var10000.rotationX -= MathHelper.sin(bob * 0.067F) * 0.05F;
         }
 
-    }
-
-    public void translateArm(float tickDelta, Arm arm) {
-        /*float f = arm == Arm.RIGHT ? 1.0F : -1.0F;
-        ModelPart modelPart = this.getArmModel(arm);
-        modelPart.x += f;
-        modelPart.transform(tickDelta);
-        modelPart.x -= f;*/
     }
 }

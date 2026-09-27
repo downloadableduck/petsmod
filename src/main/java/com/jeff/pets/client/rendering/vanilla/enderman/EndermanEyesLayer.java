@@ -13,8 +13,6 @@ import net.minecraft.client.render.entity.EndermanRenderer;
 import net.minecraft.client.render.entity.layer.EntityRenderLayer;
 import net.minecraft.client.render.platform.GLX;
 import net.minecraft.client.render.platform.GlStateManager;
-import net.minecraft.client.render.platform.GlStateManager.DestFactor;
-import net.minecraft.client.render.platform.GlStateManager.SourceFactor;
 import net.minecraft.entity.living.mob.monster.EndermanEntity;
 import net.minecraft.resource.Identifier;
 
@@ -31,7 +29,7 @@ public class EndermanEyesLayer implements EntityRenderLayer<ClientEnderman> {
         this.parent.bindTexture(ENDERMAN_EYES_LOCATION);
         GlStateManager.enableBlend();
         GlStateManager.disableAlphaTest();
-        GlStateManager.blendFunc(SourceFactor.ONE, DestFactor.ONE);
+        GlStateManager.blendFunc(1, 1);
         GlStateManager.disableLighting();
         GlStateManager.depthMask(!endermanEntity.isInvisible());
         int m = 61680;

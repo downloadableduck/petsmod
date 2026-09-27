@@ -1,50 +1,48 @@
 package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class ClientChicken extends GroundPet {
+   public float oFlap;
+   public float flap;
+   public float oFlapSpeed;
+   public float flapSpeed;
+   public float flapping = 1.0F;
 
-    public float oFlap;
-    public float flap;
-    public float oFlapSpeed;
-    public float flapSpeed;
-    public float flapping = 1.0F;
+   public ClientChicken(World world) {
+      super(world);
+        this.setSize(0.4f, 0.7f);
+   }
 
-    public ClientChicken(World world) {
-        super(world);
-    }
+   @Override
+   protected int stopDistance() {
+      return 2;
+   }
 
-    @Override
-    protected int stopDistance() {
-        return 2;
-    }
+   @Override
+   protected float heartHeight() {
+      return 0.5F;
+   }
 
-    @Override
-    protected float heartHeight() {
-        return 0.5f;
-    }
+   @Override
+   protected String getAmbientSound() {
+      return "mob.chicken.say";
+   }
 
-    @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_CHICKEN_AMBIENT;
-    }
+   @Override
+   public void tick() {
+      super.tick();
+      this.oFlap = this.flap;
+      this.oFlapSpeed = this.flapSpeed;
+      this.flapSpeed = this.flapSpeed + (this.onGround ? -1.0F : 4.0F) * 0.3F;
+      this.flapSpeed = MathHelper.clamp(this.flapSpeed, 0.0F, 1.0F);
+      if (!this.onGround && this.flapping < 1.0F) {
+         this.flapping = 1.0F;
+      }
 
-    @Override
-    public void tick() {
-        super.tick();
-        this.oFlap = this.flap;
-        this.oFlapSpeed = this.flapSpeed;
-        this.flapSpeed += (this.onGround ? -1.0F : 4.0F) * 0.3F;
-        this.flapSpeed = MathHelper.clamp(this.flapSpeed, 0.0F, 1.0F);
-        if (!this.onGround && this.flapping < 1.0F) {
-            this.flapping = 1.0F;
-        }
-
-        this.flapping *= 0.9F;
-        this.flap += this.flapping * 2.0F;
-    }
+      this.flapping *= 0.9F;
+      this.flap = this.flap + this.flapping * 2.0F;
+   }
 }

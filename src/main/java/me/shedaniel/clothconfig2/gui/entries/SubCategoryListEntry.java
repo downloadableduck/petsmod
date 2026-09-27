@@ -11,7 +11,7 @@ import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.sound.instance.SimpleSoundInstance;
 import net.minecraft.resource.Identifier;
-import net.minecraft.sound.SoundEvents;
+import com.jeff.pets.sound.SoundEvents;
 
 import java.awt.*;
 import java.util.List;
@@ -129,7 +129,7 @@ public class SubCategoryListEntry extends TooltipListEntry {
         public boolean mouseClicked(double double_1, double double_2, int int_1) {
             if (rectangle.contains(double_1, double_2)) {
                 expended = !expended;
-                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.of(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.of(new Identifier(SoundEvents.UI_BUTTON_CLICK), 1.0F));
                 return true;
             }
             return false;
