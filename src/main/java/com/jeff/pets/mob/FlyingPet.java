@@ -54,8 +54,6 @@ public abstract class FlyingPet extends AbstractPet {
 
             double dx = owner.getX() - this.getX();
             double dz = owner.getZ() - this.getZ();
-            Vec3 ownerPos = owner.position().add(0, owner.getEyeHeight() * 0.8, 0);
-            Vec3 vecToOwner = ownerPos.subtract(this.position());
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.distanceTo(owner);
@@ -71,16 +69,19 @@ public abstract class FlyingPet extends AbstractPet {
 
                 this.walkAnimation.setSpeed(0.5F);
 
-                Vec3 dir = vecToOwner.normalize();
-                double speed = owner.getSpeed() * 1.5;
+                Vec3 targetPos = owner.position();
+                Vec3 dir = targetPos.subtract(this.position()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setYHeadRot(this.getYRot());
                 this.yBodyRot = Mth.rotateIfNecessary(this.yBodyRot, this.yHeadRot, 50.0f);
 
-                this.setDeltaMovement(dir.x * speed, dir.y * speed, dir.z * speed);
+                double speed = owner.getSpeed() * 2.0;
+                this.setDeltaMovement(dir.x * speed, this.getDeltaMovement().y, dir.z * speed);
+                if (this.waitingTime < 30 && !this.isReturningToOwner) this.lookAt(owner, 5, 5);
+                else this.lookAt(this.dummy, 5, 5);
             } else {
-                this.lookAt(owner, 5, 0);
+                this.lookAt(owner, 5, 5);
                 this.setDeltaMovement(this.getDeltaMovement().scale(0.8));
             }
 
@@ -99,6 +100,7 @@ public abstract class FlyingPet extends AbstractPet {
                 if (this.waitingTime > 30) this.wander();
             } else {
                 this.waitingTime = 0;
+                this.isReturningToOwner = false;
             }
 
 

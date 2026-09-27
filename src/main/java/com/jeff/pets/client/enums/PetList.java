@@ -102,7 +102,8 @@ public enum PetList implements NameableEnum, EnumImpl {
     wither,
     wolf,
     zombie,
-    zombie_villager;
+    zombie_villager,
+    sulfur_cube;
 
     @Override
     public Component getDisplayName() {

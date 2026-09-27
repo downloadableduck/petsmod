@@ -14,13 +14,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.chicken.Chicken;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -47,20 +45,28 @@ import static com.jeff.pets.client.Central.CONFIG;
  */
 public abstract class AbstractPet extends TamableAnimal {
 
+    protected final Entity dummy;
     public String petSkin = "";
     public boolean sitting = false;
     protected int waitingTime = 0;
-    private boolean isReturningToOwner = false;
+    protected boolean isReturningToOwner = false;
     private float randomZ = (float) (Math.random() - 1);
 
     protected AbstractPet(EntityType<? extends @NotNull TamableAnimal> type, Level level) {
         super(type, level);
         this.setSpeed(0.5f);
         this.setId(UUID.randomUUID().hashCode());
+        this.dummy = new Chicken(EntityTypes.CHICKEN, level);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createAnimalAttributes().add(Attributes.MAX_HEALTH, 8.0F).add(Attributes.MOVEMENT_SPEED, 0.23F);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        this.dummy.setPos(this.position().multiply(10, 1, 10));
     }
 
     /**
@@ -139,7 +145,6 @@ public abstract class AbstractPet extends TamableAnimal {
             this.sitting = false;
             if (!this.isPassenger()) {
                 this.startRiding(player);
-                this.lookAt(player, 1f, 1f);
                 NetworkManager.get().broadcastHeadPayload(Objects.requireNonNull(Minecraft.getInstance().player).getStringUUID(), true);
                 return InteractionResult.SUCCESS;
             } else {
