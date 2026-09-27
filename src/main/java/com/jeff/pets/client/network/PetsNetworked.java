@@ -7,8 +7,6 @@ import net.minecraft.client.Minecraft;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Objects;
-
 public final class PetsNetworked implements ClientModInitializer {
     public static final String MOD_ID = "pets_networked";
     public static final Logger LOGGER = LoggerFactory.getLogger("Pets Networking");
@@ -21,8 +19,9 @@ public final class PetsNetworked implements ClientModInitializer {
         this.createLevelChangeHandler();
     }
 
+    @SuppressWarnings("all")
     private void createConnectHandler() {
-        ClientPlayConnectionEvents.JOIN.register((_, _, _) -> NetworkManager.get().connect(Objects.requireNonNull(Minecraft.getInstance().getCurrentServer()).ip));
+        ClientPlayConnectionEvents.JOIN.register((_, _, _) -> NetworkManager.get().connect(Minecraft.getInstance().getCurrentServer().ip));
     }
 
     private void createDisconnectHandler() {
