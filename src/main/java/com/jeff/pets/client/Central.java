@@ -36,6 +36,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -794,9 +795,12 @@ public class Central implements ClientModInitializer {
      * @see ChatAccessor
      */
     public static void refreshChatSuggestor(Minecraft client) {
-        Screen screen = client.gui.screen();
-        if ((screen instanceof ChatScreen chatScreen)) {
-            ((ChatAccessor) chatScreen).getChatInputSuggestor().updateCommandInfo();
+        Gui gui = client.gui;
+        if (gui != null) {
+            Screen screen = gui.screen();
+            if ((screen instanceof ChatScreen chatScreen)) {
+                ((ChatAccessor) chatScreen).getChatInputSuggestor().updateCommandInfo();
+            }
         }
     }
 

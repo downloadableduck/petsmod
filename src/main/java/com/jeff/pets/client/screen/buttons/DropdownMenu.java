@@ -16,8 +16,6 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
-import org.lwjgl.glfw.GLFW;
-import org.lwjgl.glfw.GLFWScrollCallback;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +23,8 @@ import java.util.Collection;
 import java.util.List;
 
 import static com.jeff.pets.client.Central.CONFIG;
+import static org.lwjgl.sdl.SDLMouse.SDL_BUTTON_LMASK;
+import static org.lwjgl.sdl.SDLMouse.SDL_GetMouseState;
 
 
 public class DropdownMenu {
@@ -98,7 +98,8 @@ public class DropdownMenu {
             graphics.pose().popMatrix();
 
             long window = Minecraft.getInstance().getWindow().handle();
-            boolean pressed = GLFW.glfwGetMouseButton(window, GLFW.GLFW_MOUSE_BUTTON_1) == GLFW.GLFW_PRESS;
+            int mouseState = SDL_GetMouseState(null, null);
+            boolean pressed = (mouseState & SDL_BUTTON_LMASK) != 0;
 
 
             if (hovered && pressed && !value.equals(BlankEnum.no_skins_are_available) && type == Type.SKIN) {
