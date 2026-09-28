@@ -7,16 +7,18 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 
+import java.net.URI;
 import java.util.function.Supplier;
 
 import static com.jeff.pets.PetsInitializer.MOD_ID;
+import static com.mojang.blaze3d.Blaze3D.openUri;
 import static net.minecraft.util.Util.getPlatform;
 
 public class BuyMeACoffeeButton extends Button {
     private final PetsConfigScreen screen;
 
     public BuyMeACoffeeButton(PetsConfigScreen screen, int x, int y, int width, int height) {
-        super(x, y, width, height, Component.translatable("message.pets-mod.screen.donate"), (_ -> getPlatform().openUri("https://buymeacoffee.com/downloadableduck")), Supplier::get);
+        super(x, y, width, height, Component.translatable("message.pets-mod.screen.donate"), (_ -> openUri(URI.create("https://buymeacoffee.com/downloadableduck"))), Supplier::get);
         this.screen = screen;
     }
 
