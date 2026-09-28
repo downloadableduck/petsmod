@@ -69,7 +69,7 @@ public abstract class AbstractPet extends TamableAnimal {
     @Override
     public void tick() {
         super.tick();
-        this.dummy.setPos(this.position().multiply(10, 0, 10));
+        this.dummy.setPos(this.position().multiply(10, 1, 10));
     }
 
     /**
