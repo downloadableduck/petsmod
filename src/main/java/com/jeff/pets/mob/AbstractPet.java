@@ -16,10 +16,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
@@ -61,7 +58,7 @@ public abstract class AbstractPet extends TamableAnimal {
         super(type, level);
         this.setSpeed(0.5f);
         this.setId(UUID.randomUUID().hashCode());
-        this.dummy = new Chicken(EntityType.CHICKEN, level);
+        this.dummy = new Chicken(EntityTypes.CHICKEN, level);
     }
 
     @Override
