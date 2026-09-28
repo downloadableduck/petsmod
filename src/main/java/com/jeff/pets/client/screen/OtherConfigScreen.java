@@ -12,7 +12,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.Util;
 import org.jetbrains.annotations.NotNull;
 
+import java.net.URI;
+
 import static com.jeff.pets.client.Central.CONFIG;
+import static com.mojang.blaze3d.Blaze3D.openUri;
 
 public class OtherConfigScreen extends Screen {
 
@@ -46,8 +49,8 @@ public class OtherConfigScreen extends Screen {
         this.addRenderableWidget(new ToggleButton(this.getRectangle().left() + 42, this.height / 2 - 40, Component.translatable("option.pets-mod.show-pet-hitboxes"), (_) -> CONFIG.renderPetHitbox = !CONFIG.renderPetHitbox, () -> CONFIG.renderPetHitbox, this.screen));
         this.addRenderableWidget(new ToggleButton(this.getRectangle().left() + 130, this.height / 2 + 40, Component.translatable("option.pets-mod.pet-wandering"), (_) -> CONFIG.wanderingEnabled = !CONFIG.wanderingEnabled, () -> CONFIG.wanderingEnabled, this.screen));
         this.addRenderableWidget(new ToggleButton(this.getRectangle().left() + 130, this.height / 2 - 40, Component.translatable("option.pets-mod.ghost-hand-pets"), (_) -> CONFIG.hitThroughPets = !CONFIG.hitThroughPets, () -> CONFIG.hitThroughPets, this.screen));
-        this.addRenderableWidget(new BasicButton(this.screen, this.getRectangle().right() - 90, this.getRectangle().bottom() - 55, 80, 20, Component.translatable("link.pets-mod.report-issues"), (_) -> Util.getPlatform().openUri("https://github.com/downloadableduck/petsmod/issues")));
-        this.addRenderableWidget(new BasicButton(this.screen, this.getRectangle().right() - 90, this.getRectangle().bottom() - 85, 80, 20, Component.translatable("link.pets-mod.browse-addons"), (_) -> Util.getPlatform().openUri("https://modrinth.com/organization/pets")));
+        this.addRenderableWidget(new BasicButton(this.screen, this.getRectangle().right() - 90, this.getRectangle().bottom() - 55, 80, 20, Component.translatable("link.pets-mod.report-issues"), (_) -> openUri(URI.create("https://github.com/downloadableduck/petsmod/issues"))));
+        this.addRenderableWidget(new BasicButton(this.screen, this.getRectangle().right() - 90, this.getRectangle().bottom() - 85, 80, 20, Component.translatable("link.pets-mod.browse-addons"), (_) -> openUri(URI.create("https://modrinth.com/organization/pets"))));
         this.addRenderableWidget(new BasicButton(this.screen, this.getRectangle().right() - 90, this.getRectangle().bottom() - 115, 80, 20, Component.translatable("message.pets-mod.screen.tips"), (_) -> Minecraft.getInstance().gui.setScreen(new TipsScreen(this.screen))));
     }
 }

@@ -13,6 +13,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.Util;
 import org.jetbrains.annotations.NotNull;
 
+import java.net.URI;
+
+import static com.mojang.blaze3d.Blaze3D.openUri;
+
 public class TipsScreen extends Screen {
 
     private final PetsConfigScreen screen;
@@ -35,6 +39,6 @@ public class TipsScreen extends Screen {
     public void init() {
         this.addRenderableWidget(new ExitButton(this.screen, 10, 10, 80, 20, (_) -> Minecraft.getInstance().gui.setScreen(new OtherConfigScreen(this.screen))));
         Component component = Component.translatable("message.pets-mod.tips-text");
-        this.addRenderableWidget(new BasicButton(this.screen, 40, 40, this.width - 40 * 2, this.height - 40 * 2, component, (_) -> Util.getPlatform().openUri("https://www.youtube.com/watch?v=dQw4w9WgXcQ")));
+        this.addRenderableWidget(new BasicButton(this.screen, 40, 40, this.width - 40 * 2, this.height - 40 * 2, component, (_) -> openUri(URI.create("https://www.youtube.com/watch?v=dQw4w9WgXcQ"))));
     }
 }

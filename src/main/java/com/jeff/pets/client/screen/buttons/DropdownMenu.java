@@ -96,7 +96,6 @@ public class DropdownMenu {
             }
             graphics.pose().popMatrix();
 
-            long window = Minecraft.getInstance().getWindow().handle();
             int mouseState = SDL_GetMouseState(null, null);
             boolean pressed = (mouseState & SDL_BUTTON_LMASK) != 0;
 
