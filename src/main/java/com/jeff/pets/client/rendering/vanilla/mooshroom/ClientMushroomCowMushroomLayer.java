@@ -26,7 +26,7 @@ public class ClientMushroomCowMushroomLayer implements FeatureRenderer<ClientMoo
             BlockState blockState = CONFIG.mooshroomSkin.equals("brown") ? Blocks.BROWN_MUSHROOM.getDefaultState() : Blocks.RED_MUSHROOM.getDefaultState();
             this.renderer.bindTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEX);
             GlStateManager.enableCull();
-            GlStateManager.method_12284(GlStateManager.class_2865.FRONT);
+            GlStateManager.cullFace(1028);
             GlStateManager.pushMatrix();
             GlStateManager.scale(1.0F, -1.0F, 1.0F);
             GlStateManager.translate(0.2F, 0.35F, 0.5F);
@@ -51,7 +51,7 @@ public class ClientMushroomCowMushroomLayer implements FeatureRenderer<ClientMoo
             GlStateManager.translate(-0.5F, -0.5F, 0.5F);
             blockRenderManager.renderBlockEntity(blockState, 1.0F);
             GlStateManager.popMatrix();
-            GlStateManager.method_12284(GlStateManager.class_2865.BACK);
+            GlStateManager.cullFace(1029);
             GlStateManager.disableCull();
         }
     }

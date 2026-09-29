@@ -40,10 +40,4 @@ public class RacoonRenderer extends MobEntityRenderer<@NotNull Racoon> {
         }
         return new Identifier(MOD_ID, racoonTexturePath);
     }
-
-    @Override
-    protected void renderModel(final Racoon racoon, float g, float f, float u, float h, float m, float i) {
-        super.renderModel(racoon, g, f, u, h, m, i);
-        racoon.setServerEntity(racoon.getDataTracker().get(Racoon.IS_SERVER_ENTITY));
-    }
 }

@@ -1,15 +1,12 @@
 package com.jeff.pets.mob;
 
 import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.client.sound.SoundCategory;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-
-import java.util.Objects;
 
 /**
  * Abstract representing any pet that cannot fly (ducks, chickens, etc).
@@ -35,12 +32,13 @@ public abstract class GroundPet extends AbstractPet {
         super.tick();
         LivingEntity owner = this.getOwner();
         if (owner != null) {
-            if (owner.hasPassenger(this)) {
+            if (this.vehicle == owner) {
                 if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
                     this.addVelocity(0, -0.04, 0);
                 } else {
                     this.setSitting(true);
+                    return;
                 }
             }
 
@@ -63,11 +61,8 @@ public abstract class GroundPet extends AbstractPet {
                 double speed = owner.getMovementSpeed() * 2.0;
                 this.velocityX = dir.x * speed;
                 this.velocityZ = dir.z * speed;
-            } else if (distance < 1.5) {
-                this.setLimbDistance(0);
-            } else {
-                this.lookAtEntity(owner, 5, 0);
-                this.setLimbDistance(this.getLimbDistance() + 0.1f);
+            } else if (distance >= 1.5) {
+                ////this.lookAtEntity(owner, 5, 0);
                 this.velocityX *= 0.8;
                 this.velocityZ *= 0.8;
             }
@@ -98,7 +93,7 @@ public abstract class GroundPet extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            world.playSound(this.x, this.y, this.z, Objects.requireNonNull(this.getAmbientSound()), SoundCategory.AMBIENT, 1.0f, 1.0f, true);
+            world.playSound(this.x, this.y, this.z, this.getAmbientSound(), 1.0f, 1.0f, true);
         }
     }
 }

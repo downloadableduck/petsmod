@@ -46,7 +46,7 @@ public class DuckRenderer extends PetRenderer<@NotNull Duck> {
 
     @Override
     public void renderModel(final Duck duck, float f, final float k, float u, float g, float h, float i) {
-        float partialTick = MinecraftClient.getInstance().method_12143();
+        float partialTick = 1.0F;
         duck.flap = duck.oFlap + (duck.flap - duck.oFlap) * partialTick;
         duck.flapSpeed = duck.oFlapSpeed + (duck.flapSpeed - duck.oFlapSpeed) * partialTick;
         super.renderModel(duck, f, k, u, g, h, i);

@@ -167,7 +167,7 @@ public class ClientCatModel extends EntityModel {
             this.ocelotTail.posX = ((float)Math.PI / 2F);
             this.ocelotTail2.posX = ((float)Math.PI / 2F);
             this.state = 2;
-        } else if (LivingEntityIn.getOwner() != null && LivingEntityIn.hasPassengerDeep(LivingEntityIn.getOwner())) {
+        } else if (isOwnerRiding(LivingEntityIn)) {
             this.ocelotBody.posX = ((float)Math.PI / 4F);
             this.ocelotBody.pivotY += -4.0F;
             this.ocelotBody.pivotZ += 5.0F;
@@ -195,5 +195,20 @@ public class ClientCatModel extends EntityModel {
         } else {
             this.state = 1;
         }
+    }
+
+    private boolean isOwnerRiding(ClientCat entity) {
+        Entity owner = entity.getOwner();
+        if (owner == null) {
+            return false;
+        }
+        Entity vehicle = owner.vehicle;
+        while (vehicle != null) {
+            if (vehicle == entity) {
+                return true;
+            }
+            vehicle = vehicle.vehicle;
+        }
+        return false;
     }
 }

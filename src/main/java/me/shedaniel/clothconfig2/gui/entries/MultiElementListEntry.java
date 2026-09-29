@@ -165,7 +165,7 @@ public class MultiElementListEntry<T> extends TooltipListEntry<T> {
         public boolean mouseClicked(double double_1, double double_2, int int_1) {
             if (rectangle.contains(double_1, double_2)) {
                 expanded = !expanded;
-                MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.method_12521(Sounds.UI_BUTTON_CLICK, 1.0F));
+                MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(new Identifier(Sounds.UI_BUTTON_CLICK), 1.0F));
                 return true;
             }
             return false;

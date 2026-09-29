@@ -18,8 +18,8 @@ public abstract class PetRenderer<T extends MobEntity> extends MobEntityRenderer
     @Override
     public void render(T entity, double x, double y, double z, float yaw, float pitch) {
         GlStateManager.pushMatrix();
-        if (entity.getVehicle() != null) {
-            GlStateManager.translate(0.0F, -0.35F, 0.0F);
+        if (entity.vehicle != null) {
+            GlStateManager.translate(0.0F, 0.35F, 0.0F);
         }
         super.render(entity, x, y, z, yaw, pitch);
         GlStateManager.popMatrix();

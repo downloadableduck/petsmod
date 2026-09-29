@@ -19,7 +19,6 @@ public class PenguinRenderer extends PetRenderer<@NotNull Penguin> {
 
     @Override
     public void renderModel(final Penguin penguin, float f, float partialTicks, float h, float i, float j, float k) {
-        float partialTick = MinecraftClient.getInstance().method_12143();
         super.renderModel(penguin, f, partialTicks, h, i, j, k);
     }
 

@@ -15,7 +15,7 @@ public class ClientSkeletonRenderer extends PetRenderer<@NotNull ClientSkeleton>
     @Override
     public void method_5777(ClientSkeleton state, float f, float g, float h) {
         super.method_5777(state, f, g, h);
-        if (state.getVehicle() != null) {
+        if (state.vehicle != null) {
             com.mojang.blaze3d.platform.GlStateManager.translate(0, -0.5f, 0);
         }
     }

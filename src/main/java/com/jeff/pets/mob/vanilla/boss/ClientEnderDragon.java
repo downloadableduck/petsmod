@@ -2,17 +2,12 @@ package com.jeff.pets.mob.vanilla.boss;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.dragon.class_2987;
-import net.minecraft.dragon.class_2993;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.sound.Sound;
 import net.minecraft.sound.Sounds;
 import net.minecraft.util.math.MathHelper;
 
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.EndExitPortalFeature;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.NotNull;
 
@@ -39,7 +34,7 @@ public class ClientEnderDragon extends FlyingPet {
     }
 
     @Override
-    protected Sound getAmbientSound() {
+    protected String getAmbientSound() {
         return Sounds.ENTITY_ENDERDRAGON_AMBIENT;
     }
 
@@ -77,18 +72,11 @@ public class ClientEnderDragon extends FlyingPet {
     }
 
     public float getHeadPartYOffset(int i, double[] ds, double[] es) {
-        class_2993<? extends class_2987> enderDragonPhase = class_2993.HOLDING_PATTERN;
         double e;
-        if (enderDragonPhase != class_2993.LANDING && enderDragonPhase != class_2993.TAKEOFF) {
-            if (i == 6) {
-                e = 0.0F;
-            } else {
-                e = es[1] - ds[1];
-            }
+        if (i == 6) {
+            e = 0.0F;
         } else {
-            BlockPos blockPos = new BlockPos(EndExitPortalFeature.ORIGIN);
-            double d = Math.max(Math.sqrt(blockPos.squaredDistanceTo(this.getPos().x, this.getPos().y, this.getPos().z)) / (double) 4.0F, 1.0F);
-            e = (double) i / d;
+            e = es[1] - ds[1];
         }
 
         return (float) e;

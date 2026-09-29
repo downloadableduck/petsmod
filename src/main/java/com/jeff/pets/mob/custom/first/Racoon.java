@@ -13,12 +13,9 @@ import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.TemptGoal;
 import net.minecraft.entity.ai.goal.WanderAroundGoal;
 import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.sound.Sound;
 import net.minecraft.sound.Sounds;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -29,13 +26,13 @@ import org.jetbrains.annotations.Nullable;
 
 public class Racoon extends AbstractPet {
 
-    public static final TrackedData<@NotNull Boolean> IS_SERVER_ENTITY =
-            DataTracker.registerData(Racoon.class, TrackedDataHandlerRegistry.BOOLEAN);
+    public static final int IS_SERVER_ENTITY = 10;
     public boolean isOnHead;
 
     public Racoon(World level) {
         super(level);
         this.setBounds(1.0F, 1.0F);
+        this.initGoals();
     }
 
     @Override
@@ -49,7 +46,7 @@ public class Racoon extends AbstractPet {
     }
 
     @Override
-    protected Sound getAmbientSound() {
+    protected String getAmbientSound() {
         return Sounds.ENTITY_CHICKEN_STEP;
     }
 
@@ -58,7 +55,6 @@ public @Nullable EntityData initialize(@NotNull LocalDifficulty difficulty, @Nul
         return super.initialize(difficulty, groupData);
     }
 
-    @Override
     public void initGoals() {
 
         this.goals.add(1, new BreedGoal(this, 1));
@@ -74,15 +70,15 @@ public @Nullable EntityData initialize(@NotNull LocalDifficulty difficulty, @Nul
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking(IS_SERVER_ENTITY, false);
+        this.dataTracker.track(IS_SERVER_ENTITY, (byte) 0);
     }
 
     public boolean isServerEntity() {
-        return this.dataTracker.get(IS_SERVER_ENTITY);
+        return this.dataTracker.getByte(IS_SERVER_ENTITY) != 0;
     }
 
     public void setServerEntity(Boolean value) {
-        this.dataTracker.set(IS_SERVER_ENTITY, value);
+        this.dataTracker.setProperty(IS_SERVER_ENTITY, (byte) (value ? 1 : 0));
     }
 
     @Override
@@ -97,13 +93,14 @@ public @Nullable EntityData initialize(@NotNull LocalDifficulty difficulty, @Nul
         if (owner != null) {
 
 
-            if (owner.hasPassenger(this)) {
+            if (this.vehicle == owner) {
                 if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
                     this.setVelocity(this.getVelocity().add(0, -0.04, 0));
                     this.isOnHead = false;
                 } else {
                     this.setSitting(true);
+                    return;
                 }
             }
 
@@ -135,7 +132,7 @@ public @Nullable EntityData initialize(@NotNull LocalDifficulty difficulty, @Nul
                 double speed = owner.getMovementSpeed() * 2;
                 this.setVelocity(dir.x * speed, this.getVelocity().y, dir.z * speed);
             } else {
-                this.lookAtEntity(owner, 5, 0);
+                //this.lookAtEntity(owner, 5, 0);
                 this.setVelocity(this.velocityX * 0.8, this.velocityY, this.velocityZ * 0.8);
             }
 
@@ -190,10 +187,4 @@ public @Nullable EntityData initialize(@NotNull LocalDifficulty difficulty, @Nul
         return null;
     }
 
-    @Override
-    public void onTrackedDataSet(@NotNull TrackedData<?> key) {
-        if (!this.world.isClient) {
-            super.onTrackedDataSet(key);
-        }
     }
-}

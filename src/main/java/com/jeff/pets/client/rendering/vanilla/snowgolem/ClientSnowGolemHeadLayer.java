@@ -21,14 +21,13 @@ public class ClientSnowGolemHeadLayer implements FeatureRenderer<ClientSnowGolem
     @Override
     public void render(ClientSnowGolem snowGolem, float f, float g, float h, float i, float j, float k, float l) {
         if (CONFIG.snowGolemSkin.equals("pumpkin_on")) {
-            boolean bl = snowGolem.isGlowing() && snowGolem.isInvisible();
-            if (!snowGolem.isInvisible() || bl) {
+            if (!snowGolem.isInvisible()) {
                 com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
                 ((SnowmanEntityModel) this.renderer.getModel()).field_1532.preRender(0.0625F);
                 GlStateManager.translate(0.0F, -0F, 0.0F);
                 com.mojang.blaze3d.platform.GlStateManager.scale(0.625F, -0.625F, -0.625F);
                 GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
-                MinecraftClient.getInstance().getItemRenderer().method_12458(new ItemStack(Blocks.PUMPKIN), ModelTransformation.Mode.HEAD);
+                MinecraftClient.getInstance().getItemRenderer().renderItem(new ItemStack(Blocks.PUMPKIN), ModelTransformation.Mode.HEAD);
                 com.mojang.blaze3d.platform.GlStateManager.popMatrix();
             }
         }

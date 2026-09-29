@@ -4,7 +4,6 @@
   "compatibilityLevel": "JAVA_6",
   "mixins": [
     "ChatAccessor",
-    "CommandManagerMixin",
     "TitleScreenRenderingMixin"
   ],
   "injectors": {
@@ -16,6 +15,7 @@
   "client": [
     "ClientPlayJoinHandlerMixin",
     "EndClientTickMixin",
-    "EntityRendererDispatcherMixin"
+    "EntityRendererDispatcherMixin",
+    "PlayerSendMessageMixin"
   ]
 }

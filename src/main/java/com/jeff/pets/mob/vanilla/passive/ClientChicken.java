@@ -1,7 +1,6 @@
 package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.sound.Sound;
 import net.minecraft.sound.Sounds;
 import net.minecraft.util.math.MathHelper;
 
@@ -33,7 +32,7 @@ public class ClientChicken extends GroundPet {
     }
 
     @Override
-    protected Sound getAmbientSound() {
+    protected String getAmbientSound() {
         return Sounds.ENTITY_CHICKEN_AMBIENT;
     }
 

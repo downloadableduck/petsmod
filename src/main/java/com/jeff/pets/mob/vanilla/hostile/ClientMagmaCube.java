@@ -1,7 +1,6 @@
 package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.SlimeLikePet;
-import net.minecraft.sound.Sound;
 import net.minecraft.sound.Sounds;
 
 import net.minecraft.entity.passive.TameableEntity;
@@ -26,7 +25,7 @@ public class ClientMagmaCube extends SlimeLikePet {
     }
 
     @Override
-    protected Sound getAmbientSound() {
+    protected String getAmbientSound() {
         return Sounds.ENTITY_MAGMACUBE_JUMP;
     }
 }

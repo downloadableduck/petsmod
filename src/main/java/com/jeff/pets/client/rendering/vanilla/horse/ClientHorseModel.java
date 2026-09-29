@@ -98,7 +98,7 @@ public class ClientHorseModel extends EntityModel {
         boolean bl = horseEntity.isBaby();
         float l = 1.0F;
         boolean bl2 = false;
-        boolean bl3 = horseEntity.hasPassengers();
+        boolean bl3 = horseEntity.rider != null;
 
         for (ModelPart ModelPart : this.field_3304) {
             ModelPart.visible = bl2;

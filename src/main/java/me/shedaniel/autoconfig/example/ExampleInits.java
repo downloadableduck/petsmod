@@ -23,9 +23,9 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.serializer.DummyConfigSerializer;
 import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
+import me.shedaniel.autoconfig.event.ActionResult;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.util.ActionResult;
 import org.jetbrains.annotations.ApiStatus;
 
 @ApiStatus.Internal

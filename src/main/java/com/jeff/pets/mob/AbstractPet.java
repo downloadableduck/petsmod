@@ -1,12 +1,9 @@
 package com.jeff.pets.mob;
 
-import net.minecraft.client.MinecraftClient;
+import com.jeff.pets.PetsInitializer;
 import net.minecraft.client.particle.ParticleType;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.player.ClientPlayerEntity;
-import net.minecraft.sound.Sound;
-import net.minecraft.util.Hand;
 import net.minecraft.entity.Entity;
 
 import net.minecraft.entity.LivingEntity;
@@ -15,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.Sys;
 
@@ -36,17 +34,12 @@ public abstract class AbstractPet extends TameableEntity {
     private boolean isReturningToOwner = false;
     private float randomX = (float) (Math.random() - 1f);
     private float randomZ = (float) (Math.random() - 1);
+    private int registeredChunkX = Integer.MIN_VALUE;
+    private int registeredChunkZ = Integer.MIN_VALUE;
 
 protected AbstractPet(World level) {
         super(level);
         this.setMovementSpeed(0.5f);
-    }
-
-    @Override
-    public void initializeAttributes() {
-        super.initializeAttributes();
-        this.getAttributeContainer().get(net.minecraft.entity.attribute.EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(8);
-        this.getAttributeContainer().get(net.minecraft.entity.attribute.EntityAttributes.GENERIC_MOVEMENT_SPEED).setBaseValue(0.23);
     }
 
     /**
@@ -69,7 +62,7 @@ protected AbstractPet(World level) {
      * Used to define the entity's default ambient sound. For the uses of these last three
      * methods, please refer to {@link FlyingPet} and {@link GroundPet}.
      */
-    protected abstract Sound getAmbientSound();
+    protected abstract String getAmbientSound();
 
     /**
      * Custom interactions.
@@ -103,24 +96,29 @@ protected AbstractPet(World level) {
      * @return It's super method
      */
     @Override
-    public boolean method_6100(@NotNull PlayerEntity player, ItemStack itemStack, @NotNull Hand hand) {
+    public boolean interactAt(PlayerEntity player, Vec3d pos) {
+        ItemStack itemStack = player.getStackInHand();
 
-if (this.isTamed() && itemStack.getItem() == null && !player.isSneaking()) {
+        if (this.isTamed() && itemStack == null && !player.isSneaking()) {
             this.world.addParticle(ParticleType.HEART, this.x, this.y + this.heartHeight(), this.z, 0.0, 0.0, 0.0);
             return true;
         }
 
-        if (this.isTamed() && itemStack.getItem() == null && player.isSneaking()) {
+        if (this.isTamed() && itemStack == null && player.isSneaking()) {
             if (!this.hasMount()) {
                 this.startRiding(player);
-                this.lookAtEntity(player, 1f, 1f);
-                return true;
+                this.lookAtEntity(player, 0f, 0f);
             } else {
                 this.stopRiding();
             }
             return true;
         }
-        return super.method_6100(player, itemStack, hand);
+        return super.interactAt(player, pos);
+    }
+
+    @Override
+    public boolean method_2537(PlayerEntity player) {
+        return this.interactAt(player, this.getPos());
     }
 
     @Override
@@ -131,14 +129,48 @@ if (this.isTamed() && itemStack.getItem() == null && !player.isSneaking()) {
         this.prevTickX = this.x;
         this.prevTickY = this.y;
         this.prevTickZ = this.z;
+        // the walk cycle is driven by the limb distance, so fade it out when nothing
+        // sets it again - otherwise the animation keeps running (and speeding up) forever
+        this.setLimbDistance(this.getLimbDistance() * 0.7F);
         super.tick();
+        this.updateChunkRegistration();
     }
 
-    @Override
-    public void onTrackedDataSet(@NotNull TrackedData<?> key) {
-        if (!this.world.isClient) {
-            super.onTrackedDataSet(key);
+    /**
+     * Keeps this pet registered in the entity list of the chunk it currently stands in.
+     * <p>
+     * Pets are added to the world with {@code World#addEntity}, which only appends them to the
+     * world's tick list. The crosshair raycast ({@code GameRenderer#updateTargetedEntity} ->
+     * {@code World#getEntitiesIn}) however walks the entity lists of the chunks inside the reach
+     * box, so a pet that was never registered with its chunk can never be picked - left clicks
+     * pass straight through it and right clicks never reach {@code #interactAt}.
+     */
+    public void updateChunkRegistration() {
+        if (this.world == null) {
+            return;
         }
+
+        int chunkX = MathHelper.floor(this.x / 16.0D);
+        int chunkZ = MathHelper.floor(this.z / 16.0D);
+
+        if (chunkX == this.registeredChunkX && chunkZ == this.registeredChunkZ) {
+            return;
+        }
+
+        if (this.registeredChunkX != Integer.MIN_VALUE) {
+            Chunk previous = this.world.getChunk(this.registeredChunkX, this.registeredChunkZ);
+            if (previous != null) {
+                previous.removeEntity(this);
+            }
+        }
+
+        Chunk chunk = this.world.getChunk(chunkX, chunkZ);
+        if (chunk != null) {
+            chunk.addEntity(this);
+        }
+
+        this.registeredChunkX = chunkX;
+        this.registeredChunkZ = chunkZ;
     }
 
     /**
@@ -202,37 +234,34 @@ public void setName(String string) {
         );
         this.getLookControl().lookAt(lookDir.x, lookDir.y, lookDir.z, 1.0F, (float) this.getLookPitchSpeed());
 
-        if (moveX * moveX + moveZ * moveZ > 0.001) {
-            float targetYaw = (float) (Math.atan2(-moveX, moveZ) * (180D / Math.PI));
-            float smoothYaw = MathHelper.clamp(0.2f, this.getYRot(), targetYaw); //lerpAngleDegrees
-
-            this.setYRot(smoothYaw);
-            this.setHeadYaw(smoothYaw);
-            this.bodyYaw = smoothYaw;
-        }
-
         if (this.horizontalCollision && this.onGround) {
             this.jump();
         }
         if (!this.onGround) {
             this.addVelocity(0, -0.04, 0);
         }
+
         double dx = lookDir.x - this.x;
         double dz = lookDir.z - this.z;
         float targetYaw = (float) (Math.atan2(-dx, dz) * (180D / Math.PI));
 
         this.setYRot(targetYaw);
-        this.setHeadYaw(targetYaw);
-        this.bodyYaw = targetYaw;
+        this.setLimbDistance(0.4F);
     }
 
     public float getYRot() {
         return this.bodyYaw;
     }
 
+    /**
+     * Turns the pet. {@link net.minecraft.entity.LivingEntity#bodyYaw} and
+     * {@link net.minecraft.entity.LivingEntity#headYaw} are the fields the renderer actually
+     * interpolates when it draws the model, so they have to be written alongside the entity yaw,
+     * otherwise the model never turns.
+     */
     public void setYRot(float targetYaw) {
+        this.yaw = targetYaw;
         this.setHeadYaw(targetYaw);
-        this.setYaw(targetYaw);
         this.bodyYaw = targetYaw;
     }
 
@@ -277,8 +306,29 @@ public void setName(String string) {
         this.updatePosition(x, y, z);
     }
 
-    public boolean startRiding(Entity entity) {
-        return this.startRiding(entity, true);
+    public void stopRiding() {
+        this.startRiding(null);
+    }
+
+    public boolean hasMount() {
+        return this.vehicle != null;
+    }
+
+    @Override
+    public void lookAtEntity(Entity target, float maxYawChange, float maxPitchChange) {
+        super.lookAtEntity(target, maxYawChange, maxPitchChange);
+        double dx = target.x - this.x;
+        double dy = (target.y + (double) target.getEyeHeight()) - (this.y + (double) this.getEyeHeight());
+        double dz = target.z - this.z;
+        double dist = Math.sqrt(dx * dx + dz * dz);
+        this.pitch = (float) (-(Math.atan2(dy, dist) * (180D / Math.PI)));
+        float targetYaw = (float) (Math.atan2(dz, dx) * (180D / Math.PI)) - 90.0F;
+
+        // step the body and the head towards the target instead of snapping them, so the
+        // model actually turns towards whatever the pet is looking at
+        this.bodyYaw = this.bodyYaw + MathHelper.clamp(MathHelper.wrapDegrees(targetYaw - this.bodyYaw), -maxYawChange, maxYawChange);
+        this.headYaw = this.headYaw + MathHelper.clamp(MathHelper.wrapDegrees(targetYaw - this.headYaw), -maxYawChange, maxYawChange);
+        this.yaw = this.bodyYaw;
     }
 
     public float getLimbDistance() {
@@ -292,5 +342,17 @@ public void setName(String string) {
     @Override
     public PassiveEntity breed(PassiveEntity entity) {
         return null;
+    }
+
+    @Override
+    public boolean isTamed() {
+        return true;
+    }
+
+    @Override
+    public void initializeAttributes() {
+        super.initializeAttributes();
+        this.initializeAttribute(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(8);
+        this.initializeAttribute(EntityAttributes.GENERIC_MOVEMENT_SPEED).setBaseValue(0.23);
     }
 }

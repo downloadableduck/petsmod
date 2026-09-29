@@ -243,7 +243,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
                     widgets.add(cell);
                 }
                 getScreen().setEdited(true, isRequiresRestart());
-                MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.method_12521(Sounds.UI_BUTTON_CLICK, 1.0F));
+                MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(new Identifier(Sounds.UI_BUTTON_CLICK), 1.0F));
                 return true;
             } else if (isDeleteButtonEnabled() && isInsideDelete(double_1, double_2)) {
                 if (expanded && !cells.isEmpty()) {
@@ -251,12 +251,12 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
                     cells.remove(cell);
                     widgets.remove(cell);
                     getScreen().setEdited(true, isRequiresRestart());
-                    MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.method_12521(Sounds.UI_BUTTON_CLICK, 1.0F));
+                    MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(new Identifier(Sounds.UI_BUTTON_CLICK), 1.0F));
                 }
                 return true;
             } else if (rectangle.contains(double_1, double_2)) {
                 expanded = !expanded;
-                MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.method_12521(Sounds.UI_BUTTON_CLICK, 1.0F));
+                MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(new Identifier(Sounds.UI_BUTTON_CLICK), 1.0F));
                 return true;
             }
             return false;

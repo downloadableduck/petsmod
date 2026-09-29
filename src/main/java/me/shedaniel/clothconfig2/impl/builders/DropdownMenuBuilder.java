@@ -153,7 +153,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                     textFieldWidget.render();
                     ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
                     ItemStack stack = hasConfigError() ? BARRIER : new ItemStack(Item.REGISTRY.get(getValue()));
-                    itemRenderer.method_12455(stack, x + width - 18, y + 2);
+                    itemRenderer.renderInGuiWithOverrides(stack, x + width - 18, y + 2);
                 }
             };
         }
@@ -170,7 +170,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                     textFieldWidget.render();
                     ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
                     ItemStack stack = hasConfigError() ? BARRIER : new ItemStack(Block.REGISTRY.get(getValue()));
-                    itemRenderer.method_12455(stack, x + width - 18, y + 2);
+                    itemRenderer.renderInGuiWithOverrides(stack, x + width - 18, y + 2);
                 }
             };
         }
@@ -187,7 +187,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                     textFieldWidget.render();
                     ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
                     ItemStack stack = hasConfigError() ? BARRIER : new ItemStack(getValue());
-                    itemRenderer.method_12455(stack, x + width - 18, y + 2);
+                    itemRenderer.renderInGuiWithOverrides(stack, x + width - 18, y + 2);
                 }
             };
         }
@@ -204,7 +204,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                     textFieldWidget.render();
                     ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
                     ItemStack stack = hasConfigError() ? BARRIER : new ItemStack(getValue());
-                    itemRenderer.method_12455(stack, x + width - 18, y + 2);
+                    itemRenderer.renderInGuiWithOverrides(stack, x + width - 18, y + 2);
                 }
             };
         }
@@ -347,7 +347,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                                 DrawableHelper.fill(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
                             MinecraftClient.getInstance().textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
                             ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
-                            itemRenderer.method_12455(s, x + 4, y + 2);
+                            itemRenderer.renderInGuiWithOverrides(s, x + 4, y + 2);
                         }
                     };
                 }
@@ -396,7 +396,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                                 DrawableHelper.fill(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
                             MinecraftClient.getInstance().textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
                             ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
-                            itemRenderer.method_12455(s, x + 4, y + 2);
+                            itemRenderer.renderInGuiWithOverrides(s, x + 4, y + 2);
                         }
                     };
                 }
@@ -444,7 +444,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                                 DrawableHelper.fill(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
                             MinecraftClient.getInstance().textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
                             ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
-                            itemRenderer.method_12455(s, x + 4, y + 2);
+                            itemRenderer.renderInGuiWithOverrides(s, x + 4, y + 2);
                         }
                     };
                 }
@@ -492,7 +492,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                                 DrawableHelper.fill(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
                             MinecraftClient.getInstance().textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
                             ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
-                            itemRenderer.method_12455(s, x + 4, y + 2);
+                            itemRenderer.renderInGuiWithOverrides(s, x + 4, y + 2);
                         }
                     };
                 }

@@ -21,8 +21,8 @@ package me.shedaniel.autoconfig;
 
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.event.ConfigSerializeEvent;
+import me.shedaniel.autoconfig.event.ActionResult;
 import me.shedaniel.autoconfig.serializer.ConfigSerializer;
-import net.minecraft.util.ActionResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.ApiStatus;

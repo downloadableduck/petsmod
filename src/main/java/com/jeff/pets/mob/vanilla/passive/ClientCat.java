@@ -1,7 +1,6 @@
 package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.sound.Sound;
 import net.minecraft.sound.Sounds;
 
 import net.minecraft.entity.passive.TameableEntity;
@@ -28,7 +27,7 @@ public class ClientCat extends GroundPet {
     }
 
     @Override
-    protected Sound getAmbientSound() {
+    protected String getAmbientSound() {
         return Sounds.ENTITY_CAT_AMBIENT;
     }
 }

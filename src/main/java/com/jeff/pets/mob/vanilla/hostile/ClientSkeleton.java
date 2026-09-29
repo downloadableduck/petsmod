@@ -1,7 +1,6 @@
 package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.sound.Sound;
 import net.minecraft.sound.Sounds;
 
 import net.minecraft.entity.LivingEntity;
@@ -28,7 +27,7 @@ public class ClientSkeleton extends GroundPet implements RangedAttackMob {
     }
 
     @Override
-    protected Sound getAmbientSound() {
+    protected String getAmbientSound() {
         return Sounds.ENTITY_SKELETON_AMBIENT;
     }
 

@@ -20,8 +20,8 @@ public class AnimationUtils {
         part3.pivotY = bl ? -0.8F : 0.8F;
         part3.pivotX = -0.97079635F;
         part4.pivotX = part3.pivotX;
-        float f = (float) livingEntity.method_13064().getMaxUseTime();
-        float g = MathHelper.clamp((float) livingEntity.method_13065(), 0.0F, f);
+        float f = 72000.0F;
+        float g = 0.0F;
         float h = g / f;
         part4.pivotY = (float) MathHelper.clampedLerp(h, 0.4F, 0.85F) * (bl ? 1 : -1);
         part4.pivotX = (float) MathHelper.clampedLerp(h, part4.pivotX, (float) (-Math.PI / 2));

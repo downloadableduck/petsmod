@@ -1,7 +1,6 @@
 package com.jeff.pets.mob.vanilla.neutral;
 
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.sound.Sound;
 import net.minecraft.sound.Sounds;
 
 import net.minecraft.entity.passive.TameableEntity;
@@ -25,7 +24,7 @@ public class ClientPufferFish extends FlyingPet {
     }
 
     @Override
-    protected Sound getAmbientSound() {
+    protected String getAmbientSound() {
         return Sounds.ENTITY_SQUID_AMBIENT;
     }
 }

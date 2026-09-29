@@ -4,7 +4,6 @@ import com.jeff.pets.PetsSounds;
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.sound.SoundCategory;
 import net.minecraft.entity.EntityData;
 
 import net.minecraft.entity.LivingEntity;
@@ -18,15 +17,12 @@ import net.minecraft.entity.ai.goal.WanderAroundGoal;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.sound.Sound;
 import net.minecraft.sound.Sounds;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -37,8 +33,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class Penguin extends AbstractPet {
-    public static final TrackedData<@NotNull Boolean> IS_SERVER_ENTITY =
-            DataTracker.registerData(Penguin.class, TrackedDataHandlerRegistry.BOOLEAN);
+    public static final int IS_SERVER_ENTITY = 10;
     private final float nextFlap = 1.0F;
     public float flap;
     public float flapSpeed;
@@ -52,6 +47,7 @@ public class Penguin extends AbstractPet {
     public Penguin(World level) {
         super(level);
         this.setBounds(1.0F, 1.5F);
+        this.initGoals();
     }
 
     @Override
@@ -73,15 +69,15 @@ public class Penguin extends AbstractPet {
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking(IS_SERVER_ENTITY, false);
+        this.dataTracker.track(IS_SERVER_ENTITY, (byte) 0);
     }
 
     public boolean isServerEntity() {
-        return this.dataTracker.get(IS_SERVER_ENTITY);
+        return this.dataTracker.getByte(IS_SERVER_ENTITY) != 0;
     }
 
     public void setServerEntity(Boolean value) {
-        this.dataTracker.set(IS_SERVER_ENTITY, value);
+        this.dataTracker.setProperty(IS_SERVER_ENTITY, (byte) (value ? 1 : 0));
     }
 
     public void tickMovement() {
@@ -111,15 +107,15 @@ public class Penguin extends AbstractPet {
         //this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
     }
 
-    protected Sound getAmbientSound() {
+    protected String getAmbientSound() {
         return PetsSounds.PENGUIN_AMBIENT;
     }
 
-    protected Sound getHurtSound(final @NotNull DamageSource source) {
+    protected String getHurtSound(final @NotNull DamageSource source) {
         return PetsSounds.PENGUIN_AMBIENT;
     }
 
-    protected Sound getDeathSound() {
+    protected String getDeathSound() {
         return PetsSounds.PENGUIN_AMBIENT;
     }
 
@@ -140,7 +136,6 @@ public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @N
         return ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.RAW_FISH, 1, 2)) || ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.RAW_FISH, 1, 0)) || ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.RAW_FISH, 1, 1));
     }
 
-    @Override
     public void initGoals() {
 
         this.goals.add(1, new BreedGoal(this, 1));
@@ -159,7 +154,7 @@ public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @N
         LivingEntity owner = this.getOwner();
         if (owner != null) {
 
-            if (owner.hasPassenger(this)) {
+            if (this.vehicle == owner) {
                 this.isFlapping = false;
                 if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
@@ -167,6 +162,7 @@ public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @N
                     this.isOnHead = false;
                 } else {
                     this.setSitting(true);
+                    return;
                 }
             }
 
@@ -198,7 +194,7 @@ public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @N
                 double speed = owner.getMovementSpeed() * 2;
                 this.setVelocity(dir.x * speed, this.getVelocity().y, dir.z * speed);
             } else {
-                this.lookAtEntity(owner, 5, 0);
+                //this.lookAtEntity(owner, 5, 0);
                 this.setVelocity(this.velocityX * 0.8, this.velocityY, this.velocityZ * 0.8);
             }
 
@@ -248,17 +244,11 @@ public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @N
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            world.playSound(this.x, this.y, this.z, PetsSounds.PENGUIN_AMBIENT, SoundCategory.AMBIENT, 1.0f, 1.0f, true);
+            world.playSound(this.x, this.y, this.z, PetsSounds.PENGUIN_AMBIENT, 1.0f, 1.0f, true);
         }
     }
 
-    @Override
-    public void onTrackedDataSet(@NotNull TrackedData<?> key) {
-        if (!this.world.isClient) {
-            super.onTrackedDataSet(key);
-        }
-    }
-
+    
     @Override
     public void writeCustomDataToNbt(@NotNull NbtCompound output) {
         super.writeCustomDataToNbt(output);

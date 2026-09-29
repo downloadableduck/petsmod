@@ -53,7 +53,8 @@ public class Utils {
         entity.updatePosition(x, y, z);
         entity.setName(entityName);
         world.addEntity(entity);
-        entity.method_13092(player.getUuid());
+        entity.updateChunkRegistration();
+        entity.method_2713(player.getUuid().toString());
         Central.summonedEntity.add(entity);
     }
 

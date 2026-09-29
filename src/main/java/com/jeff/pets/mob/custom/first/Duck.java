@@ -3,10 +3,9 @@ package com.jeff.pets.mob.custom.first;
 import com.jeff.pets.PetsSounds;
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.AbstractPet;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.sound.SoundCategory;
 import net.minecraft.entity.EntityData;
-
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.BreedGoal;
 import net.minecraft.entity.ai.goal.EatGrassGoal;
@@ -18,15 +17,11 @@ import net.minecraft.entity.ai.goal.TemptGoal;
 import net.minecraft.entity.ai.goal.WanderAroundGoal;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.sound.Sound;
 import net.minecraft.sound.Sounds;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -38,10 +33,8 @@ import org.jetbrains.annotations.Nullable;
 
 public class Duck extends AbstractPet {
 
-    public static final TrackedData<@NotNull Boolean> IS_SERVER_ENTITY =
-            DataTracker.registerData(Duck.class, TrackedDataHandlerRegistry.BOOLEAN);
-    public static final TrackedData<@NotNull Integer> DUCK_SKIN =
-            DataTracker.registerData(Duck.class, TrackedDataHandlerRegistry.INTEGER);
+    public static final int IS_SERVER_ENTITY = 10;
+    public static final int DUCK_SKIN = 11;
     private final float flyDist = 0;
     public float flap;
     public float flapSpeed;
@@ -55,6 +48,7 @@ public class Duck extends AbstractPet {
     public Duck(final World level) {
         super(level);
         this.setBounds(0.4F, 0.7F);
+        this.initGoals();
     }
 
     public static float rotlerp(float start, float end) {
@@ -73,16 +67,16 @@ public class Duck extends AbstractPet {
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking(DUCK_SKIN, 1);
-        this.dataTracker.startTracking(IS_SERVER_ENTITY, false);
+        this.dataTracker.track(DUCK_SKIN, 1);
+        this.dataTracker.track(IS_SERVER_ENTITY, (byte) 0);
     }
 
     public boolean isServerEntity() {
-        return this.dataTracker.get(IS_SERVER_ENTITY);
+        return this.dataTracker.getByte(IS_SERVER_ENTITY) == 1;
     }
 
     public void setServerEntity(Boolean value) {
-        this.dataTracker.set(IS_SERVER_ENTITY, value);
+        this.dataTracker.setProperty(IS_SERVER_ENTITY, (byte) (value ? 1 : 0));
     }
 
     public void tickMovement() {
@@ -123,19 +117,19 @@ public class Duck extends AbstractPet {
         return 0.5f;
     }
 
-    protected Sound getAmbientSound() {
+    protected String getAmbientSound() {
         return PetsSounds.DUCK_AMBIENT;
     }
 
-    protected Sound getHurtSound(final @NotNull DamageSource source) {
+    protected String getHurtSound(final @NotNull DamageSource source) {
         return PetsSounds.DUCK_AMBIENT;
     }
 
-    protected Sound getDeathSound() {
+    protected String getDeathSound() {
         return PetsSounds.DUCK_AMBIENT;
     }
 
-    protected void playStepSound(final @NotNull BlockPos pos, final @NotNull BlockState blockState) {
+    protected void playStepSound(final @NotNull BlockPos pos, final @NotNull Block block) {
         this.playSound(Sounds.ENTITY_CHICKEN_STEP, 0.15F, 1.0F);
     }
 
@@ -145,7 +139,7 @@ public class Duck extends AbstractPet {
 
 public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @Nullable EntityData groupData) {
         this.setServerEntity(true);
-        this.dataTracker.set(DUCK_SKIN, this.random.nextInt(2));
+        this.dataTracker.setProperty(DUCK_SKIN, this.random.nextInt(2));
         return super.initialize(difficulty, groupData);
     }
 
@@ -153,7 +147,6 @@ public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @N
         return ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.RAW_FISH, 1, 2)) || ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.RAW_FISH, 1, 0)) || ItemStack.equalsIgnoreDamage(itemStack, new ItemStack(Items.RAW_FISH, 1, 1));
     }
 
-    @Override
     public void initGoals() {
 
         this.goals.add(1, new WanderAroundGoal(this, 1.0D));
@@ -176,13 +169,14 @@ public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @N
         LivingEntity owner = this.getOwner();
         if (owner != null) {
 
-            if (owner.hasPassenger(this)) {
+            if (this.vehicle == owner) {
                 if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
                     this.setVelocity(this.getVelocity().add(0, -0.04, 0));
                     this.isOnHead = false;
                 } else {
                     this.setSitting(true);
+                    return;
                 }
             }
 
@@ -214,7 +208,7 @@ public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @N
                 double speed = owner.getMovementSpeed() * 2;
                 this.setVelocity(dir.x * speed, this.getVelocity().y, dir.z * speed);
             } else {
-                this.lookAtEntity(owner, 5, 0);
+                //this.lookAtEntity(owner, 5, 0);
                 this.setVelocity(this.velocityX * 0.8, this.velocityY, this.velocityZ * 0.8);
             }
 
@@ -264,7 +258,7 @@ public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @N
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            world.playSound(this.x, this.y, this.z, PetsSounds.DUCK_AMBIENT, SoundCategory.AMBIENT, 1.0f, 1.0f, true);
+            world.playSound(this.x, this.y, this.z, PetsSounds.DUCK_AMBIENT, 1.0f, 1.0f, true);
         }
     }
 
@@ -272,20 +266,13 @@ public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @N
     public void writeCustomDataToNbt(@NotNull NbtCompound output) {
         super.writeCustomDataToNbt(output);
         output.putBoolean("isServerEntity", true);
-        output.putInt("variant", this.dataTracker.get(DUCK_SKIN));
+        output.putInt("variant", this.dataTracker.getInt(DUCK_SKIN));
     }
 
     @Override
     public void readCustomDataFromNbt(@NotNull NbtCompound input) {
         super.readCustomDataFromNbt(input);
         this.setServerEntity(input.getBoolean("isServerEntity"));
-        this.dataTracker.set(DUCK_SKIN, input.getInt("variant"));
-    }
-
-    @Override
-    public void onTrackedDataSet(@NotNull TrackedData<?> key) {
-        if (!this.world.isClient) {
-            super.onTrackedDataSet(key);
-        }
+        this.dataTracker.setProperty(DUCK_SKIN, input.getInt("variant"));
     }
 }

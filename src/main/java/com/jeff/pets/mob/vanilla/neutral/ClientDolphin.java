@@ -2,7 +2,6 @@ package com.jeff.pets.mob.vanilla.neutral;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.sound.Sound;
 import net.minecraft.sound.Sounds;
 
 import net.minecraft.entity.passive.TameableEntity;
@@ -27,7 +26,7 @@ public class ClientDolphin extends FlyingPet {
     }
 
     @Override
-    protected Sound getAmbientSound() {
+    protected String getAmbientSound() {
         return Sounds.ENTITY_GENERIC_SWIM;
     }
 }

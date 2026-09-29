@@ -2,15 +2,12 @@ package com.jeff.pets.mob;
 
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.client.sound.SoundCategory;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-
-import java.util.Objects;
 
 /**
  * Abstract class representing any pet that can fly (ghasts, vexes, etc). Contains custom movement
@@ -42,12 +39,13 @@ public abstract class FlyingPet extends AbstractPet {
         LivingEntity owner = this.getOwner();
         if (owner != null) {
 
-            if (owner.hasPassenger(this)) {
+            if (this.vehicle == owner) {
                 if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
                     this.setVelocity(this.getVelocity().add(0, 0.1, 0));
                 } else {
                     this.setSitting(true);
+                    return;
                 }
             }
 
@@ -79,8 +77,9 @@ public abstract class FlyingPet extends AbstractPet {
 
                 this.setVelocity(dir.x * speed, dir.y * speed, dir.z * speed);
             } else {
-                this.lookAtEntity(owner, 5, 0);
-                this.setVelocity(this.getVelocity().multiply(0.8));
+                ////this.lookAtEntity(owner, 5, 0);
+                Vec3d vel = this.getVelocity();
+                this.setVelocity(vel.x * 0.8, vel.y * 0.8, vel.z * 0.8);
             }
 
             int yHeightToOwner = (int) (owner.y - this.y);
@@ -115,7 +114,7 @@ public abstract class FlyingPet extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            world.playSound(this.x, this.y, this.z, Objects.requireNonNull(this.getAmbientSound()), SoundCategory.AMBIENT, 1.0f, 1.0f, true);
+            world.playSound(this.x, this.y, this.z, this.getAmbientSound(), 1.0f, 1.0f, true);
         }
     }
 }

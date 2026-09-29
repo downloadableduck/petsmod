@@ -17,12 +17,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.sound.Sound;
 import net.minecraft.sound.Sounds;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.LocalDifficulty;
@@ -31,12 +27,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class Head extends AbstractPet {
-    public static final TrackedData<@NotNull Boolean> IS_SERVER_ENTITY =
-            DataTracker.registerData(Head.class, TrackedDataHandlerRegistry.BOOLEAN);
+    public static final int IS_SERVER_ENTITY = 10;
 
     public Head(World level) {
         super(level);
         this.setBounds(0.5F, 0.5F);
+        this.initGoals();
     }
 
     public @Nullable PassiveEntity createChild(@NotNull PassiveEntity AgableMob) {
@@ -46,15 +42,15 @@ public class Head extends AbstractPet {
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking(IS_SERVER_ENTITY, false);
+        this.dataTracker.track(IS_SERVER_ENTITY, (byte) 0);
     }
 
     public boolean isServerEntity() {
-        return this.dataTracker.get(IS_SERVER_ENTITY);
+        return this.dataTracker.getByte(IS_SERVER_ENTITY) != 0;
     }
 
     public void setServerEntity(Boolean value) {
-        this.dataTracker.set(IS_SERVER_ENTITY, value);
+        this.dataTracker.setProperty(IS_SERVER_ENTITY, (byte) (value ? 1 : 0));
     }
 
     public void tickMovement() {
@@ -76,7 +72,6 @@ public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @N
         return super.initialize(difficulty, groupData);
     }
 
-    @Override
     public void initGoals() {
 
         this.goals.add(2, new SwimGoal(this));
@@ -99,7 +94,7 @@ public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @N
     }
 
     @Override
-    protected Sound getAmbientSound() {
+    protected String getAmbientSound() {
         return Sounds.ENTITY_CHICKEN_STEP;
     }
 
@@ -109,12 +104,13 @@ public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @N
         LivingEntity owner = this.getOwner();
         if (owner != null) {
 
-            if (owner.hasPassenger(this)) {
+            if (this.vehicle == owner) {
                 if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
                     this.setVelocity(this.getVelocity().add(0, -0.04, 0));
                 } else {
                     this.setSitting(true);
+                    return;
                 }
             }
 
@@ -145,7 +141,7 @@ public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @N
                 double speed = 0.15;
                 this.setVelocity(dir.x * speed, this.getVelocity().y, dir.z * speed);
             } else {
-                this.lookAtEntity(owner, 5, 0);
+                //this.lookAtEntity(owner, 5, 0);
                 this.setVelocity(this.velocityX * 0.8, this.velocityY, this.velocityZ * 0.8);
             }
 
@@ -186,13 +182,7 @@ public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @N
         }
     }
 
-    @Override
-    public void onTrackedDataSet(@NotNull TrackedData<?> key) {
-        if (!this.world.isClient) {
-            super.onTrackedDataSet(key);
-        }
-    }
-
+    
     @Override
     public void writeCustomDataToNbt(@NotNull NbtCompound output) {
         super.writeCustomDataToNbt(output);

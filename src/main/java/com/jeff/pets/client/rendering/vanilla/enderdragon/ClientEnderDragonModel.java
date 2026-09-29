@@ -7,8 +7,6 @@ import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.entity.Entity;
 
-import static com.mojang.blaze3d.platform.GlStateManager.class_2865.FRONT;
-
 public class ClientEnderDragonModel extends EntityModel {
     private final ModelPart head;
     private final ModelPart neck;
@@ -154,12 +152,12 @@ public class ClientEnderDragonModel extends EntityModel {
             this.rearLeg.render(p_78088_7_);
             GlStateManager.scale(-1.0F, 1.0F, 1.0F);
             if (j == 0) {
-                GlStateManager.method_12284(FRONT);
+                GlStateManager.cullFace(1028);
             }
         }
 
         GlStateManager.popMatrix();
-        GlStateManager.method_12284(GlStateManager.class_2865.BACK);
+        GlStateManager.cullFace(1029);
         GlStateManager.disableCull();
         float f10 = -((float) Math.sin(f * ((float) Math.PI * 2F))) * 0.0F;
         f8 = f * ((float) Math.PI * 2F);

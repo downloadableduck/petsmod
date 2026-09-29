@@ -1,7 +1,6 @@
 package com.jeff.pets.client.rendering.vanilla.zombie_pigman;
 
 import com.jeff.pets.client.Math2;
-import net.minecraft.client.render.entity.model.BiPedModel;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.entity.Entity;
@@ -10,6 +9,10 @@ import net.minecraft.util.math.MathHelper;
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientZombiePigmanModel extends EntityModel {
+    private static final int ARM_POSE_EMPTY = 0;
+    private static final int ARM_POSE_BLOCK = 1;
+    private static final int ARM_POSE_ITEM = 2;
+    private static final int ARM_POSE_BOW_AND_ARROW = 3;
     private final ModelPart head;
     private final ModelPart headwear;
     private final ModelPart body;
@@ -17,8 +20,8 @@ public class ClientZombiePigmanModel extends EntityModel {
     private final ModelPart right_arm;
     private final ModelPart left_leg;
     private final ModelPart right_leg;
-    public BiPedModel.class_2850 field_13384 = BiPedModel.class_2850.EMPTY;
-    public BiPedModel.class_2850 field_13385 = BiPedModel.class_2850.EMPTY;
+    public int field_13384 = ARM_POSE_EMPTY;
+    public int field_13385 = ARM_POSE_EMPTY;
     public boolean crouching;
     public float swimAmount;
     private float itemUseTicks;
@@ -99,7 +102,7 @@ public class ClientZombiePigmanModel extends EntityModel {
         this.left_leg.posY = 0.0F;
         this.right_leg.posZ = 0.0F;
         this.left_leg.posZ = 0.0F;
-        if (state.hasMount()) {
+        if (state.vehicle != null) {
             this.right_arm.posX += (float) (-Math.PI / 5);
             this.left_arm.posX += (float) (-Math.PI / 5);
             this.right_leg.posX = -1.4137167F;
@@ -113,36 +116,36 @@ public class ClientZombiePigmanModel extends EntityModel {
         this.right_arm.posY = 0.0F;
         this.right_arm.posZ = 0.0F;
         switch (this.field_13384) {
-            case EMPTY:
+            case ARM_POSE_EMPTY:
                 this.left_arm.posY = 0.0F;
                 break;
-            case BLOCK:
+            case ARM_POSE_BLOCK:
                 this.left_arm.posX = this.left_arm.posX * 0.5F - 0.9424779F;
                 this.left_arm.posY = (float) (Math.PI / 6);
                 break;
-            case ITEM:
+            case ARM_POSE_ITEM:
                 this.left_arm.posX = this.left_arm.posX * 0.5F - (float) (Math.PI / 10);
                 this.left_arm.posY = 0.0F;
         }
 
         switch (this.field_13385) {
-            case EMPTY:
+            case ARM_POSE_EMPTY:
                 this.right_arm.posY = 0.0F;
                 break;
-            case BLOCK:
+            case ARM_POSE_BLOCK:
                 this.right_arm.posX = this.right_arm.posX * 0.5F - 0.9424779F;
                 this.right_arm.posY = (float) (-Math.PI / 6);
                 break;
-            case ITEM:
+            case ARM_POSE_ITEM:
                 this.right_arm.posX = this.right_arm.posX * 0.5F - (float) (Math.PI / 10);
                 this.right_arm.posY = 0.0F;
                 break;
         }
 
-        if (this.field_13384 == BiPedModel.class_2850.BOW_AND_ARROW
-                && this.field_13385 != BiPedModel.class_2850.BLOCK
-                && this.field_13385 != BiPedModel.class_2850.BOW_AND_ARROW
-                && this.field_13385 != BiPedModel.class_2850.BOW_AND_ARROW) {
+        if (this.field_13384 == ARM_POSE_BOW_AND_ARROW
+                && this.field_13385 != ARM_POSE_BLOCK
+                && this.field_13385 != ARM_POSE_BOW_AND_ARROW
+                && this.field_13385 != ARM_POSE_BOW_AND_ARROW) {
             this.left_arm.posX = this.left_arm.posX * 0.5F - (float) Math.PI;
             this.left_arm.posY = 0.0F;
         }
@@ -198,14 +201,14 @@ public class ClientZombiePigmanModel extends EntityModel {
         this.left_arm.posZ = this.left_arm.posZ - (MathHelper.cos(h * 0.09F) * 0.05F + 0.05F);
         this.right_arm.posX = this.right_arm.posX + MathHelper.sin(h * 0.067F) * 0.05F;
         this.left_arm.posX = this.left_arm.posX - MathHelper.sin(h * 0.067F) * 0.05F;
-        if (this.field_13385 == BiPedModel.class_2850.BOW_AND_ARROW) {
+        if (this.field_13385 == ARM_POSE_BOW_AND_ARROW) {
             this.right_arm.posY = -0.1F + this.head.posY;
             this.left_arm.posY = 0.1F + this.head.posY + 0.4F;
             this.right_arm.posX = (float) (-Math.PI / 2) + this.head.posX;
             this.left_arm.posX = (float) (-Math.PI / 2) + this.head.posX;
-        } else if (this.field_13384 == BiPedModel.class_2850.BOW_AND_ARROW
-                && this.field_13385 != BiPedModel.class_2850.BOW_AND_ARROW
-                && this.field_13385 != BiPedModel.class_2850.BLOCK) {
+        } else if (this.field_13384 == ARM_POSE_BOW_AND_ARROW
+                && this.field_13385 != ARM_POSE_BOW_AND_ARROW
+                && this.field_13385 != ARM_POSE_BLOCK) {
             this.right_arm.posY = -0.1F + this.head.posY - 0.4F;
             this.left_arm.posY = 0.1F + this.head.posY;
             this.right_arm.posX = (float) (-Math.PI / 2) + this.head.posX;

@@ -2,10 +2,8 @@ package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.sound.Sound;
 import net.minecraft.sound.Sounds;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.entity.effect.StatusEffects;
 
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.world.World;
@@ -47,7 +45,7 @@ public class ClientSquid extends FlyingPet {
     }
 
     @Override
-    protected Sound getAmbientSound() {
+    protected String getAmbientSound() {
         return Sounds.ENTITY_SQUID_AMBIENT;
     }
 
@@ -102,11 +100,7 @@ public class ClientSquid extends FlyingPet {
             this.tentacleAngle = MathHelper.abs(MathHelper.sin(this.tentacleMovement)) * (float) Math.PI * 0.25F;
             if (!this.world.isClient) {
                 double e = this.getVelocity().y;
-                if (this.hasStatusEffect(StatusEffects.LEVITATION)) {
-                    e = 0.05 * (double) (this.getEffectInstance(StatusEffects.LEVITATION).getAmplifier() + 1);
-                } else {
-                    e -= 1;
-                }
+                e -= 1;
 
                 this.setVelocity(0.0F, e * (double) 0.98F, 0.0F);
             }

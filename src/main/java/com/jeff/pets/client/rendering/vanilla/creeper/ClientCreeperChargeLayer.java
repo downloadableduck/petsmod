@@ -33,7 +33,7 @@ public class ClientCreeperChargeLayer implements FeatureRenderer<ClientCreeper> 
             GlStateManager.enableBlend();
             GlStateManager.color(0.5F, 0.5F, 0.5F, 1.0F);
             GlStateManager.disableLighting();
-            GlStateManager.method_12287(GlStateManager.class_2870.ONE, GlStateManager.class_2866.ONE);
+            GlStateManager.blendFunc(1, 1);
             this.model.copy(this.renderer.getModel());
             this.model.render(creeperEntity, f, g, i, j, k, l);
             GlStateManager.matrixMode(5890);

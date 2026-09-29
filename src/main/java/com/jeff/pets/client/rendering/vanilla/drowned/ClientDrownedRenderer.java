@@ -20,7 +20,7 @@ public class ClientDrownedRenderer extends PetRenderer<@NotNull ClientDrowned> {
     @Override
     public void method_5777(ClientDrowned state, float f, float g, float h) {
         super.method_5777(state, f, g, h);
-        if (state.getVehicle() != null) {
+        if (state.vehicle != null) {
             com.mojang.blaze3d.platform.GlStateManager.translate(0, -0.5f, 0);
         }
     }
