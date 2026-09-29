@@ -794,9 +794,11 @@ public class Central implements ClientModInitializer {
      * @see ChatAccessor
      */
     public static void refreshChatSuggestor(Minecraft client) {
-        Screen screen = client.gui.screen();
-        if ((screen instanceof ChatScreen chatScreen)) {
-            ((ChatAccessor) chatScreen).getChatInputSuggestor().updateCommandInfo();
+        if (client.gui != null) {
+            Screen screen = client.gui.screen();
+            if ((screen instanceof ChatScreen chatScreen)) {
+                ((ChatAccessor) chatScreen).getChatInputSuggestor().updateCommandInfo();
+            }
         }
     }
 
