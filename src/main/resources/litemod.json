@@ -1,7 +1,7 @@
 {
   "displayName": "Pets Mod",
     "name": "petsmod",
-    "version": "0.7.9",
+    "version": "0.7.9+build.2",
   "author": "downloadableduck",
     "mcversion": "1.8.9",
   "class": "com.jeff.pets.LiteModPetsMod",

@@ -91,7 +91,7 @@ jar {
         include 'litemod.json'
         include 'pets.client.mixins.json'
     }
-    archiveName = "pets-mod-" + project.version + "-" + project.mcVersion + "-lite.litemod"
+    archiveName = "pets-mod-" + project.version + "-" + project.mcVersion + "-lite" + project.build + ".litemod"
     archivesBaseName = "pets-mod"
 }
 

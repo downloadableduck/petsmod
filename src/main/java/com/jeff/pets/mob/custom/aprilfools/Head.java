@@ -11,12 +11,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class Head extends AbstractPet {
     public static final int IS_SERVER_ENTITY = 10;
+    public ResourceLocation skin = new ResourceLocation("missingno");
+    public boolean isLoading = false;
 
     public Head(final World level) {
         super(level);
