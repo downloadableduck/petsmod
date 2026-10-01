@@ -1,5 +1,6 @@
 package com.jeff.pets.client.rendering.custom.aprilfools.head;
 
+import net.minecraft.client.model.ModelBox;
 import net.minecraft.entity.Entity;
 
 // Made with Blockbench 5.1.4
@@ -18,10 +19,9 @@ public class HeadModel extends ModelBase {
         textureHeight = 64;
 
         Head = new ModelRenderer(this);
-        Head.setRotationPoint(0.0F, 0.0F, 0.0F);
-        setRotationAngle(Head, -0.1047F, 0.0873F, 0.0F);
-        Head.setTextureOffset(0, 0).addBox(-8.0F, 16.0F, 0.0F, (int) 8.0F, (int) 8.0F, (int) 8.0F, 0.0F);
-        Head.setTextureOffset(32, 0).addBox(-4.0F, -8.0F, -4.0F, (int) 8.0F, (int) 8.0F, (int) 8.0F, 0.5F);
+        Head.setRotationPoint(5.0F, 0.0F, -5.0F);
+        Head.cubeList.add(new ModelBox(Head, 0, 0, -8.0F, 16.0F, 0.0F, 8, 8, 8, 0.0F, false));
+        Head.cubeList.add(new ModelBox(Head, 32, 0, -8.0F, 16.0F, 0.0F, 8, 8, 8, 0.5F, false));
     }
 
     public void setRotationAngles(net.minecraft.entity.Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float f) {

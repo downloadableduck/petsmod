@@ -428,6 +428,7 @@ public class Central {
         Utils.checkName("koi", koi, CONFIG.koiName);
         Utils.checkName("stingray", stingray, CONFIG.stingrayName);
         Utils.checkName("zombie_pigman", zombiePigman, CONFIG.zombiePigmanName);
+        Utils.checkName("witch", witch, CONFIG.witchName);
     }
 
     /**
