@@ -15,15 +15,9 @@ public class ClientMagmaCubeRenderer extends PetRenderer<ClientMagmaCube> {
     }
 
     @Override
-<<<<<<< HEAD
     protected void applyScale(ClientMagmaCube slimeRenderState, float a) {
         int magmaCubeapplyScale;
         switch (CONFIG.magmaCubeSkin) {
-=======
-    public void preRenderCallback(ClientMagmaCube slimeRenderState, float a) {
-        int magmaCubeScale;
-        switch (slimeRenderState.petSkin) {
->>>>>>> 908063cb (backport the 0.8.x updates to 1.8.9, as well as allow users to place and break blocks on top of the pet)
             case "small":
                 magmaCubeapplyScale = 1;
                 break;

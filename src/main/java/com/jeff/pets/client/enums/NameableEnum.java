@@ -1,8 +1,8 @@
 package com.jeff.pets.client.enums;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.util.IChatComponent; import net.minecraft.util.ChatComponentText;
+import net.minecraft.text.Text; import net.minecraft.text.LiteralText;
 
 public interface NameableEnum {
-    IChatComponent getDisplayName();
+    Text getDisplayName();
 }

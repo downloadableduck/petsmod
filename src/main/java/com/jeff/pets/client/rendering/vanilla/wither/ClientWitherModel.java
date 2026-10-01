@@ -60,7 +60,7 @@ public class ClientWitherModel extends Model {
     }
 
     @Override
-    public void prepare(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h) {
+    public void prepare(LivingEntity entity, float f, float g, float h) {
         ClientWither witherBoss = (ClientWither) entity;
         for (int i = 1; i < 3; ++i) {
             this.heads[i].rotationY = (witherBoss.getHeadYaw() - witherBoss.yaw) * ((float) Math.PI / 180F);

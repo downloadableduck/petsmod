@@ -17,15 +17,9 @@ public class ClientSlimeRenderer extends PetRenderer<ClientSlime> {
     }
 
     @Override
-<<<<<<< HEAD
     protected void applyScale(ClientSlime slimeRenderState, float f) {
         int slimeapplyScale;
         switch (CONFIG.slimeSkin) {
-=======
-    public void preRenderCallback(ClientSlime slimeRenderState, float f) {
-        int slimeScale;
-        switch (slimeRenderState.petSkin) {
->>>>>>> 908063cb (backport the 0.8.x updates to 1.8.9, as well as allow users to place and break blocks on top of the pet)
             case "small":
                 slimeapplyScale = 1;
                 break;

@@ -30,12 +30,12 @@ public class ClientChickenModel extends ChickenModel {
     @Override
     public void render(net.minecraft.entity.Entity entity, float f, float g, float h, float j, float k, float d) {
         super.render(entity, f, g, h, j, k, d);
-        net.minecraft.client.render.platform.GlStateManager.pushMatrix();
+        GlStateManager.pushMatrix();
         if (CONFIG.isBaby) {
             GlStateManager.scalef(2, 2, 2);
         } else {
-            net.minecraft.client.render.platform.GlStateManager.scalef(1, 1, 1);
+            GlStateManager.scalef(1, 1, 1);
         }
-        net.minecraft.client.render.platform.GlStateManager.popMatrix();
+        GlStateManager.popMatrix();
     }
 }

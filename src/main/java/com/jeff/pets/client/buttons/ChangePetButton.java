@@ -3,7 +3,6 @@ package com.jeff.pets.client.buttons;
 import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.client.PetsConfigScreen;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
 
 import java.util.Random;
 

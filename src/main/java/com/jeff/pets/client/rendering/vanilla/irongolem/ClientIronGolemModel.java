@@ -66,7 +66,7 @@ public class ClientIronGolemModel extends Model {
         this.field_3416.rotationY = 0.0F;
     }
 
-    public void prepare(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h) {
+    public void prepare(LivingEntity entity, float f, float g, float h) {
         int i = 0;
         if (i > 0) {
             this.field_3414.rotationX = -2.0F + 1.5F * this.method_2810((float) i - h, 10.0F);

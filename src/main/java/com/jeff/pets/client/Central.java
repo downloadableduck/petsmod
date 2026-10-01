@@ -1108,6 +1108,7 @@ public class Central implements ClientModInitializer {
                             }
                         } else if (Objects.equals(CONFIG.activePet, "head")) {
                             CONFIG.headSkin = skin.toLowerCase();
+                            head.isLoading = false;
                         } else if (Objects.equals(CONFIG.activePet, "traitor")) {
                             if (skin.equals("desert")) {
                                 CONFIG.traitorSkin = "desert";

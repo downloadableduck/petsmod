@@ -142,7 +142,7 @@ public class ClientHorseModel extends Model {
     }
 
     @Override
-    public void prepare(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h) {
+    public void prepare(LivingEntity entity, float f, float g, float h) {
         super.prepare(entity, f, g, h);
         AbstractPet horseBaseEntity = (AbstractPet) entity;
         float i = this.method_2790(horseBaseEntity.lastBodyYaw, horseBaseEntity.bodyYaw, h);

@@ -12,7 +12,7 @@ public class ClientCowModel extends CowModel {
     }
 
     @Override
-    public void render(net.minecraft.entity.Entity entity, float f, float g, float h, float j, float k, float d) {
+    public void render(Entity entity, float f, float g, float h, float j, float k, float d) {
         super.render(entity, f, g, h, j, k, d);
         net.minecraft.client.render.platform.GlStateManager.pushMatrix();
         if (CONFIG.isBaby) {

@@ -29,6 +29,8 @@ import org.jetbrains.annotations.Nullable;
  */
 public abstract class AbstractPet extends TameableEntity {
 
+    public String petSkin = "";
+
     protected int waitingTime = 0;
     private boolean isReturningToOwner = false;
     private float randomX = (float) (Math.random() - 1f);
@@ -274,7 +276,7 @@ public abstract class AbstractPet extends TameableEntity {
     @Override
     public boolean canBeCollidedWith() {
         PlayerEntity player = Minecraft.getInstance().player;
-        ItemStack itemStack = player.func_70694_bm();
+        ItemStack itemStack = player.getItemInHand();
         return itemStack == null;
     }
 }

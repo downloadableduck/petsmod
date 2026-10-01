@@ -19,9 +19,9 @@ public class ClientWitherRenderer extends PetRenderer<ClientWither> {
     @Override
     public @NotNull Identifier getTextureLocation(ClientWither livingEntityRenderState) {
         String witherTexturePath;
-        if (Objects.equals(livingEntityRenderState.petSkin, "normal")) {
+        if (Objects.equals(CONFIG.witherSkin, "normal")) {
             witherTexturePath = "textures/entity/wither/wither.png";
-        } else if (Objects.equals(livingEntityRenderState.petSkin, "invulnerable")) {
+        } else if (Objects.equals(CONFIG.witherSkin, "invulnerable")) {
             witherTexturePath = "textures/entity/wither/wither_invulnerable.png";
         } else {
             witherTexturePath = "textures/entity/wither/wither.png";

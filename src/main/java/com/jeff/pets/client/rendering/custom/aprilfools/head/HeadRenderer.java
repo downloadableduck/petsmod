@@ -1,82 +1,89 @@
 package com.jeff.pets.client.rendering.custom.aprilfools.head;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.aprilfools.Head;
-import com.mojang.authlib.Agent;
 import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.GameProfileRepository;
-import com.mojang.authlib.ProfileLookupCallback;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
-import com.mojang.authlib.minecraft.MinecraftSessionService;
-import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resource.skin.DefaultSkinUtils;
-import net.minecraft.entity.living.player.PlayerEntity;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.resource.Identifier;
-import net.minecraft.server.GameProfileCache;
-import org.jetbrains.annotations.NotNull;
 
-import java.net.Proxy;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class HeadRenderer extends PetRenderer<@NotNull Head> {
+public class HeadRenderer extends PetRenderer<Head, HeadModel> {
 
     private final Map<String, GameProfile> PROFILLES = new ConcurrentHashMap<>();
-    private final GameProfile dummyProfile = new GameProfile(UUID.fromString("966b21b5-55d5-4a51-b41c-433a96e6050b"), "empty");
 
-    public HeadRenderer(final net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+    public HeadRenderer(final EntityRenderDispatcher context, PetsClientInitializer.Context context2) {
         super(context, new HeadModel(), 0.3F);
     }
 
-    private GameProfile fetchGameProfile(Head head, String string) {
-        YggdrasilAuthenticationService authService = new YggdrasilAuthenticationService(Proxy.NO_PROXY, UUID.randomUUID().toString());
-        GameProfileRepository repository = authService.createProfileRepository();
-        AtomicReference<GameProfile> result = new AtomicReference<>();
-        repository.findProfilesByNames(new String[]{string}, Agent.MINECRAFT, new ProfileLookupCallback() {
-            @Override
-            public void onProfileLookupSucceeded(GameProfile profile) {
-                result.set(profile);
-            }
-
-            @Override
-            public void onProfileLookupFailed(GameProfile profile, Exception exception) {
-                result.set(null);
-            }
-        });
-        if (result.get() != null) {
-            PROFILLES.put(CONFIG.headSkin, result.get());
-        } else {
-            PROFILLES.put(CONFIG.headSkin, dummyProfile);
-            return dummyProfile;
+    @Override
+    public Identifier getTextureLocation(Head entity) {
+        entity.petSkin = CONFIG.headSkin;
+        if (entity.petSkin.equals(Minecraft.getInstance().player.getGameProfile().getName())) {
+            return Minecraft.getInstance().player.getLocationSkin();
         }
-        return Minecraft.getInstance().getSessionService().fillProfileProperties(result.get(), true);
+        if (!entity.isLoading) {
+            this.fetchSkin(entity);
+        }
+        return entity.skin;
     }
 
-    @Override
-    public @NotNull Identifier getTextureLocation(final Head state) {
-        GameProfile profile = PROFILLES.get(CONFIG.headSkin);
-        Identifier identifier = DefaultSkinUtils.getDefaultSkin();
-        if (profile == null) {
-            profile = fetchGameProfile(state, CONFIG.headSkin);
-        }
-        if (profile.equals(dummyProfile)) {
-            return identifier;
-        }
-        Minecraft minecraft = Minecraft.getInstance();
-        Map<MinecraftProfileTexture.Type, MinecraftProfileTexture> map = minecraft.getSkinManager().getTextures(profile);
-        if (map.containsKey(MinecraftProfileTexture.Type.SKIN)) {
-            identifier = minecraft.getSkinManager().register(map.get(MinecraftProfileTexture.Type.SKIN), MinecraftProfileTexture.Type.SKIN);
-        } else {
-            UUID uUID = PlayerEntity.getUuid(profile);
-            identifier = DefaultSkinUtils.getDefaultSkin(uUID);
-        }
-        return identifier;
+    private void fetchSkin(Head entity) {
+        new Thread(() -> {
+            GameProfile gameProfile = PROFILLES.get(entity.petSkin);
+            if (gameProfile == null) {
+                UUID uuid = null;
+                try {
+                    HttpURLConnection stream = (HttpURLConnection) new URL("https://api.mojang.com/users/profiles/minecraft/" + entity.petSkin).openConnection();
+                    stream.setRequestMethod("GET");
+                    if (stream.getResponseCode() == 200) {
+                        InputStreamReader reader = new InputStreamReader(stream.getInputStream());
+                        JsonObject object = JsonParser.parseReader(reader).getAsJsonObject();
+                        String response = object.get("id").getAsString();
+                        uuid = UUID.fromString(response.replaceAll(
+                                "(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})",
+                                "$1-$2-$3-$4-$5"
+                        ));
+                    }
+
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                GameProfile profile = Minecraft.getInstance().getSessionService().fillProfileProperties(new GameProfile(uuid, entity.petSkin), true);
+                PROFILLES.put(entity.petSkin, profile);
+                Minecraft lvt_11_1_ = Minecraft.getInstance();
+                if (profile != null) {
+                    lvt_11_1_.addScheduledTask(() -> {
+                        Map<MinecraftProfileTexture.Type, MinecraftProfileTexture> lvt_12_1_ = lvt_11_1_.getSkinManager().loadSkinFromCache(profile);
+                        if (lvt_12_1_.containsKey(MinecraftProfileTexture.Type.SKIN)) {
+                            entity.skin = (lvt_11_1_.getSkinManager().loadSkin(lvt_12_1_.get(MinecraftProfileTexture.Type.SKIN), MinecraftProfileTexture.Type.SKIN));
+                        } else {
+                            lvt_11_1_.getSkinManager().loadProfileTextures(
+                                    profile,
+                                    (type, location, profileTexture) -> {
+                                        if (type == MinecraftProfileTexture.Type.SKIN) {
+                                            entity.skin = location;
+                                        }
+                                    },
+                                    true
+                            );
+                        }
+                    });
+                }
+            }
+            entity.isLoading = true;
+        }, "petsmod-thread").start();
     }
 }

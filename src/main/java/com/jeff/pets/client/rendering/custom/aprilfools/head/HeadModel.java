@@ -1,9 +1,10 @@
 package com.jeff.pets.client.rendering.custom.aprilfools.head;
+
+// Made with Blockbench 5.1.4
 // Exported for Minecraft version 1.15 - 1.16 with Mojang mappings
 // Paste this class into your mod and generate all required imports
 
 
-import com.jeff.pets.mob.custom.aprilfools.Head;
 import net.minecraft.client.render.model.Box;
 import net.minecraft.client.render.model.Model;
 import net.minecraft.client.render.model.ModelPart;
@@ -21,19 +22,12 @@ public class HeadModel extends Model {
         Head.boxes.add(new Box(Head, 32, 0, -8.0F, 16.0F, 0.0F, 8, 8, 8, 0.5F, false));
     }
 
-    @Override
-    public void setupAnimation(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadrotationY, float headrotationX, float s, net.minecraft.entity.Entity entity) {
+    public void setRotationAngles(net.minecraft.entity.Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float f) {
         //previously the render function, render code was moved to a method below
     }
 
     @Override
-    public void render(net.minecraft.entity.Entity entity, float f, float g, float h, float i, float j, float alpha) {
+    public void render(net.minecraft.entity.Entity entity, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
         Head.render(alpha);
-    }
-
-    public void setRotationAngle(ModelPart ModelPart, float x, float y, float z) {
-        ModelPart.rotationX = x;
-        ModelPart.rotationY = y;
-        ModelPart.rotationZ = z;
     }
 }

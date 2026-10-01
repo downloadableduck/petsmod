@@ -1,7 +1,7 @@
 package com.jeff.pets.client.enums;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.util.IChatComponent; import net.minecraft.util.ChatComponentText;
+import net.minecraft.text.Text; import net.minecraft.text.LiteralText;
 
 import java.util.List;
 
@@ -25,8 +25,8 @@ public enum SheepSkins implements NameableEnum, EnumImpl {
 
 
     @Override
-    public IChatComponent getDisplayName() {
-        return new ChatComponentText(String.valueOf(this).replace("_", " "));
+    public Text getDisplayName() {
+        return new LiteralText(String.valueOf(this).replace("_", " "));
     }
 
     @Override

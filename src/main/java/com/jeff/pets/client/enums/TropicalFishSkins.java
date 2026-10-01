@@ -2,7 +2,7 @@ package com.jeff.pets.client.enums;
 
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.util.IChatComponent; import net.minecraft.util.ChatComponentText;
+import net.minecraft.text.Text; import net.minecraft.text.LiteralText;
 
 public enum TropicalFishSkins implements NameableEnum {
     chichlid,
@@ -17,7 +17,7 @@ public enum TropicalFishSkins implements NameableEnum {
     yellowtail_parrotfish;
 
     @Override
-    public IChatComponent getDisplayName() {
-        return new ChatComponentText(String.valueOf(this).replace("_", " "));
+    public Text getDisplayName() {
+        return new LiteralText(String.valueOf(this).replace("_", " "));
     }
 }

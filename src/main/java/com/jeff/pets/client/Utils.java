@@ -1,5 +1,6 @@
 package com.jeff.pets.client;
 
+import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.client.network.NetworkManager;
 import com.jeff.pets.mob.AbstractPet;
 import com.jeff.pets.mob.custom.aprilfools.Head;
@@ -16,15 +17,20 @@ import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.living.player.PlayerEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
+import static com.jeff.pets.client.Central.MOD_ID;
 
 /**
  * A utility class used mainly in {@link Central} and misc rendering classes. Contains various
@@ -50,10 +56,10 @@ public class Utils {
         summonPet(entity, enttiyName, Minecraft.getInstance().player);
     }
 
-    public static void summonPet(AbstractPet entity, String entityName, EntityPlayer player) {
+    public static void summonPet(AbstractPet entity, String entityName, PlayerEntity player) {
 
         Minecraft minecraft = Minecraft.getInstance();
-        WorldClient world = minecraft.world;
+        ClientWorld world = minecraft.world;
 
         if (entity == null || world == null || player == null) return;
 
@@ -1378,5 +1384,9 @@ public class Utils {
         if (Minecraft.getInstance().player != null) {
             NetworkManager.get().broadcastChangePetSkin(Minecraft.getInstance().player.getGameProfile().getId().toString(), getActivePetSkin());
         }
+    }
+
+    public static double squaredDistanceToOrigin(Vec3d vec3d) {
+        return vec3d.x * vec3d.x + vec3d.y * vec3d.y + vec3d.z * vec3d.z;
     }
 }

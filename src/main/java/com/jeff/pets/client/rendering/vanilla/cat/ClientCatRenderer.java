@@ -1,6 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.cat;
 
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.AbstractPet;
 import com.jeff.pets.mob.vanilla.passive.ClientCat;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.living.LivingEntity;
@@ -16,26 +17,15 @@ public class ClientCatRenderer extends PetRenderer {
     }
 
     @Override
-<<<<<<< HEAD
     protected void applyScale(LivingEntity state, float f) {
         if (CONFIG.isBaby) {
             net.minecraft.client.render.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
-=======
-    public void preRenderCallback(ClientCat state, float f) {
-        if (state.isChild()) {
-            net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
->>>>>>> 908063cb (backport the 0.8.x updates to 1.8.9, as well as allow users to place and break blocks on top of the pet)
         }
     }
 
     @Override
-<<<<<<< HEAD
     public @NotNull Identifier getTextureLocation(Entity livingEntityRenderState) {
         switch (CONFIG.catSkin) {
-=======
-    public ResourceLocation getEntityTexture(ClientCat livingEntityRenderState) {
-        switch (livingEntityRenderState.petSkin) {
->>>>>>> 908063cb (backport the 0.8.x updates to 1.8.9, as well as allow users to place and break blocks on top of the pet)
             case "black":
                 return new Identifier("minecraft", "textures/entity/cat/all_black.png");
             case "tuxedo":
@@ -68,7 +58,7 @@ public class ClientCatRenderer extends PetRenderer {
     @Override
     public void renderModel(LivingEntity entity, float f, float g, float h, float i, float j, float k) {
         ClientCat cat = (ClientCat) entity;
-        super.renderModel(entity, f, g, h, i, j, k);
+        super.renderModel((AbstractPet) entity, f, g, h, i, j, k);
         cat.setSitting(cat.isRiding());
     }
 }

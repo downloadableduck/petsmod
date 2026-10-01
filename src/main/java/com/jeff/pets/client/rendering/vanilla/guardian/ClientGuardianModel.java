@@ -54,13 +54,13 @@ public class ClientGuardianModel extends Model {
     }
 
     @Override
-    public void render(net.minecraft.entity.Entity entity, float f, float g, float h, float i, float j, float k) {
+    public void render(Entity entity, float f, float g, float h, float i, float j, float k) {
         this.setupAnimation(f, g, h, i, j, k, entity);
         this.field_3379.render(k);
     }
 
     @Override
-    public void setupAnimation(float f, float g, float h, float i, float j, float k, net.minecraft.entity.Entity entity) {
+    public void setupAnimation(float f, float g, float h, float i, float j, float k, Entity entity) {
         AbstractPet guardianEntity = (AbstractPet) entity;
         float l = h - (float) guardianEntity.ticks;
         this.field_3379.rotationY = i * ((float) Math.PI / 180F);
