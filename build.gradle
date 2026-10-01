@@ -46,7 +46,7 @@ dependencies {
     modImplementation("maven.modrinth:LIGlLgiL:71EHHNXc")
 }
 processResources {
-    inputs.property 'version', project.mod_version
+    inputs.property 'version', project.mod_version + project.build
 
     filesMatching('fabric.mod.json') {
         expand 'version': project.mod_version + project.build
