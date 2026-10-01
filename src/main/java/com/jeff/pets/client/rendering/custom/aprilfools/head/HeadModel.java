@@ -4,6 +4,7 @@ package com.jeff.pets.client.rendering.custom.aprilfools.head;
 
 
 import com.jeff.pets.mob.custom.aprilfools.Head;
+import net.minecraft.client.render.model.Box;
 import net.minecraft.client.render.model.Model;
 import net.minecraft.client.render.model.ModelPart;
 
@@ -11,14 +12,13 @@ public class HeadModel extends Model {
     private final ModelPart Head;
 
     public HeadModel() {
-        textureWidth /*textureWidth*/ = 64;
-        textureHeight /*textureHeight*/ = 64;
+        textureWidth = 64;
+        textureHeight = 64;
 
         Head = new ModelPart(this);
-        Head.setPos(0.0F, 0.0F, 0.0F);
-        setRotationAngle(Head, -0.1047F, 0.0873F, 0.0F);
-        Head.setTextureCoords(0, 0).addBox(-8.0F, 16.0F, 0.0F, 8, 8, 8, 0.0F);
-        Head.setTextureCoords(32, 0).addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.5F);
+        Head.setPos(5.0F, 0.0F, -5.0F);
+        Head.boxes.add(new Box(Head, 0, 0, -8.0F, 16.0F, 0.0F, 8, 8, 8, 0.0F, false));
+        Head.boxes.add(new Box(Head, 32, 0, -8.0F, 16.0F, 0.0F, 8, 8, 8, 0.5F, false));
     }
 
     @Override
