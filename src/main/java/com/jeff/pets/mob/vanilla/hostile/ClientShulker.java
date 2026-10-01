@@ -1,8 +1,6 @@
 package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundEvent;
 
 public class ClientShulker extends GroundPet {
     public ClientShulker(net.minecraft.world.World level) {
@@ -21,7 +19,7 @@ public class ClientShulker extends GroundPet {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_SHULKER_AMBIENT;
+    protected String getAmbientSound() {
+        return "mob.shulker.ambient";
     }
 }

@@ -17,9 +17,9 @@ public class ClientChickenModel extends ModelChicken {
     }
 
     protected float getBob(ClientChicken chicken, float f) {
-        float g = (float) net.minecraft.util.math.MathHelper.clampedLerp(f, chicken.oFlap, chicken.flap);
-        float h = (float) net.minecraft.util.math.MathHelper.clampedLerp(f, chicken.oFlapSpeed, chicken.flapSpeed);
-        return (net.minecraft.util.math.MathHelper.sin(g) + 1.0F) * h;
+        float g = (float) net.minecraft.util.MathHelper.clampedLerp(f, chicken.oFlap, chicken.flap);
+        float h = (float) net.minecraft.util.MathHelper.clampedLerp(f, chicken.oFlapSpeed, chicken.flapSpeed);
+        return (net.minecraft.util.MathHelper.sin(g) + 1.0F) * h;
     }
 
     @Override

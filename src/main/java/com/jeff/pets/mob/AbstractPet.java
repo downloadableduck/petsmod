@@ -8,12 +8,10 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
 /**
@@ -37,7 +35,16 @@ public abstract class AbstractPet extends EntityTameable {
 
     protected AbstractPet(World level) {
         super(level);
+        this.initEntityAI();
         this.setAIMoveSpeed(0.5f);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+    }
+
+    public void initEntityAI() {
     }
 
     public static float rotlerp(float pct, float start, float end) {
@@ -76,13 +83,13 @@ public abstract class AbstractPet extends EntityTameable {
      * Used to define the entity's default ambient sound. For the uses of these last three
      * methods, please refer to {@link FlyingPet} and {@link GroundPet}.
      */
-    protected abstract SoundEvent getAmbientSound();
+    protected abstract String getAmbientSound();
 
     /**
      * Custom interactions.
      * - Right clicking on a pet with an empty hand will let make hearts appear above it:
      * <pre>
-     *     {@code if (this.isTamed() && itemStack.getItem() == null && !player.isSneaking()) {
+     *     {@code if (this.isTamed() && player.getHeldItem() == null && !player.isSneaking()) {
      *         this.world.addParticle(
      *                 ParticleTypes.HEART,
      *                 this.x,
@@ -94,7 +101,7 @@ public abstract class AbstractPet extends EntityTameable {
      *     }}</pre>
      * - Shifting and right clicking on a pet with an empty hand will pick it up:
      * <pre>
-     *     {@code if (this.isTamed() && itemStack.getItem() == null && player.isSneaking()) {
+     *     {@code if (this.isTamed() && player.getHeldItem() == null && player.isSneaking()) {
      *         if (!this.isPassenger()) {
      *             this.startRiding(player);
      *             this.lookAt(player, 1f, 1f);
@@ -110,9 +117,9 @@ public abstract class AbstractPet extends EntityTameable {
      * @return It's super method
      */
     @Override
-    public boolean processInteract(EntityPlayer player, EnumHand hand, ItemStack itemStack) {
+    public boolean func_174825_a(EntityPlayer player, Vec3 pos) {
 
-        if (this.isTamed() && itemStack.getItem() == null && !player.isSneaking()) {
+        if (this.isTamed() && player.func_70694_bm() == null && !player.isSneaking()) {
             this.world.func_175682_a(
                     EnumParticleTypes.HEART,
                     false,
@@ -124,17 +131,18 @@ public abstract class AbstractPet extends EntityTameable {
             return true;
         }
 
-        if (this.isTamed() && itemStack.getItem() == null && player.isSneaking()) {
-            if (!this.isPassenger()) {
-                this.startRiding(player);
+        if (this.isTamed() && player.func_70694_bm() == null && player.isSneaking()) {
+            if (this.field_70153_n == null) {
+                this.func_70078_a(player);
+
                 //this.lookAt(player, 1f, 1f);
                 return true;
             } else {
-                this.stopRiding();
+                this.func_70078_a(null);
             }
             return true;
         }
-        return super.processInteract(player, hand, itemStack);
+        return super.func_174825_a(player, pos);
     }
 
     /**
@@ -149,17 +157,6 @@ public abstract class AbstractPet extends EntityTameable {
             return super.getAddEntityPacket();
         }
     }*/
-
-    /**
-     * Custom method required for making the mob work on servers.
-     * <p> Calls: It's super method, if the level is not client-sided.
-     */
-    @Override
-    public void notifyDataManagerChange(net.minecraft.network.datasync.DataParameter<?> key) {
-        if (this.world != null && !this.world.isRemote) {
-            super.notifyDataManagerChange(key);
-        }
-    }
 
     /**
      * Calls the previous abstract method so other classes extending this one don't have to.
@@ -216,7 +213,7 @@ public abstract class AbstractPet extends EntityTameable {
         double moveX = this.motionX;
         double moveZ = this.motionZ;
 
-        Vec3d lookDir = new Vec3d(
+        Vec3 lookDir = new Vec3(
                 this.posX + (moveX * 2),
                 this.posY + this.getEyeHeight(),
                 this.posZ + (moveZ * 2)
@@ -261,7 +258,7 @@ public abstract class AbstractPet extends EntityTameable {
         this.randomZ = (float) (Math.random() - 1);
     }
 
-    public double horizontalDistance(Vec3d vec3) {
+    public double horizontalDistance(Vec3 vec3) {
         return Math.sqrt(vec3.x * vec3.x + vec3.z * vec3.z);
     }
 
@@ -282,4 +279,15 @@ public abstract class AbstractPet extends EntityTameable {
         this.rotationPitch = rotlerp(this.rotationPitch, xRotD, xMax);
         this.setYRot(rotlerp(this.getYRot(), yRotD, yMax));
     }
+
+    @Override
+    public boolean func_70085_c(EntityPlayer player) {
+        return this.func_174825_a(player, new Vec3(this.posX, this.posY, this.posZ));
+    }
+
+    @Override
+    public boolean isTamed() {
+        return true;
+    }
 }
+

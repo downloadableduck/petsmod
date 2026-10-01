@@ -28,8 +28,8 @@ import me.shedaniel.forge.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.forge.clothconfig2.api.ConfigCategory;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.IChatComponent;
+import net.minecraft.util.ChatComponentTranslation;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -144,7 +144,7 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<GuiS
         if (field.isAnnotationPresent(ConfigEntry.Category.class))
             categoryName = field.getAnnotation(ConfigEntry.Category.class).value();
 
-        ITextComponent categoryKey = new TextComponentTranslation(categoryFunction.apply(baseI13n, categoryName));
+        IChatComponent categoryKey = new ChatComponentTranslation(categoryFunction.apply(baseI13n, categoryName));
 
         if (!screenBuilder.hasCategory(categoryKey.getUnformattedComponentText())) {
             ConfigCategory category = screenBuilder.getOrCreateCategory(categoryKey.getUnformattedComponentText());

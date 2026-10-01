@@ -56,10 +56,10 @@ public class StingrayModel extends PetModel {
     public void setRotationAngles(float f, float g, float m, float k, float p, float o, Entity entity) {
         Stingray state = (Stingray) entity;
         float partialTick = m;
-        float flapTime = (float) net.minecraft.util.math.MathHelper.clampedLerp(partialTick, state.oFlap, state.flap);
+        float flapTime = (float) net.minecraft.util.MathHelper.clampedLerp(partialTick, state.oFlap, state.flap);
         if (state.limbSwingAmount > 0) {
             float anim = flapTime * 7.448451F * ((float) Math.PI / 180F);
-            this.left_fin.rotateAngleZ = net.minecraft.util.math.MathHelper.cos(anim) * 16.0F * ((float) Math.PI / 180F);
+            this.left_fin.rotateAngleZ = net.minecraft.util.MathHelper.cos(anim) * 16.0F * ((float) Math.PI / 180F);
             this.right_fin.rotateAngleZ = -this.left_fin.rotateAngleZ;
             this.tail.rotateAngleY = this.left_fin.rotateAngleZ;
         }

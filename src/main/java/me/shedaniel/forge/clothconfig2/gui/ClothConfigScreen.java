@@ -13,12 +13,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.ChatComponentTranslation;
 
 import org.lwjgl.input.Mouse;
 
@@ -404,18 +404,18 @@ public abstract class ClothConfigScreen extends GuiScreen {
         GlStateManager.shadeModel(7425);
         GlStateManager.disableTexture2D();
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer buffer = tessellator.getBuffer();
+        WorldRenderer buffer = tessellator.getBuffer();
         buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-        buffer.pos(tabsBounds.getMinX() + 20, tabsBounds.getMinY() + 4, 0.0D).tex(0, 1f).color(0, 0, 0, lightColor).endVertex();
-        buffer.pos(tabsBounds.getMaxX() - 20, tabsBounds.getMinY() + 4, 0.0D).tex(1f, 1f).color(0, 0, 0, lightColor).endVertex();
-        buffer.pos(tabsBounds.getMaxX() - 20, tabsBounds.getMinY(), 0.0D).tex(1f, 0).color(0, 0, 0, darkColor).endVertex();
-        buffer.pos(tabsBounds.getMinX() + 20, tabsBounds.getMinY(), 0.0D).tex(0, 0).color(0, 0, 0, darkColor).endVertex();
+        buffer.pos(tabsBounds.getMinX() + 20, tabsBounds.getMinY() + 4, 0.0D).func_181673_a(0, 1f).color(0, 0, 0, lightColor).endVertex();
+        buffer.pos(tabsBounds.getMaxX() - 20, tabsBounds.getMinY() + 4, 0.0D).func_181673_a(1f, 1f).color(0, 0, 0, lightColor).endVertex();
+        buffer.pos(tabsBounds.getMaxX() - 20, tabsBounds.getMinY(), 0.0D).func_181673_a(1f, 0).color(0, 0, 0, darkColor).endVertex();
+        buffer.pos(tabsBounds.getMinX() + 20, tabsBounds.getMinY(), 0.0D).func_181673_a(0.0D, 0.0D).color(0, 0, 0, darkColor).endVertex();
         tessellator.draw();
         buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-        buffer.pos(tabsBounds.getMinX() + 20, tabsBounds.getMaxY(), 0.0D).tex(0, 1f).color(0, 0, 0, darkColor).endVertex();
-        buffer.pos(tabsBounds.getMaxX() - 20, tabsBounds.getMaxY(), 0.0D).tex(1f, 1f).color(0, 0, 0, darkColor).endVertex();
-        buffer.pos(tabsBounds.getMaxX() - 20, tabsBounds.getMaxY() - 4, 0.0D).tex(1f, 0).color(0, 0, 0, lightColor).endVertex();
-        buffer.pos(tabsBounds.getMinX() + 20, tabsBounds.getMaxY() - 4, 0.0D).tex(0, 0).color(0, 0, 0, lightColor).endVertex();
+        buffer.pos(tabsBounds.getMinX() + 20, tabsBounds.getMaxY(), 0.0D).func_181673_a(0, 1f).color(0, 0, 0, darkColor).endVertex();
+        buffer.pos(tabsBounds.getMaxX() - 20, tabsBounds.getMaxY(), 0.0D).func_181673_a(1f, 1f).color(0, 0, 0, darkColor).endVertex();
+        buffer.pos(tabsBounds.getMaxX() - 20, tabsBounds.getMaxY() - 4, 0.0D).func_181673_a(1f, 0).color(0, 0, 0, lightColor).endVertex();
+        buffer.pos(tabsBounds.getMinX() + 20, tabsBounds.getMaxY() - 4, 0.0D).func_181673_a(0.0D, 0.0D).color(0, 0, 0, lightColor).endVertex();
         tessellator.draw();
         GlStateManager.enableTexture2D();
         GlStateManager.shadeModel(7424);
@@ -428,15 +428,15 @@ public abstract class ClothConfigScreen extends GuiScreen {
         if (isTransparentBackground())
             return;
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer buffer = tessellator.getBuffer();
+        WorldRenderer buffer = tessellator.getBuffer();
         minecraft.getTextureManager().bindTexture(getBackgroundLocation());
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         float f = 32.0F;
         buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-        buffer.pos(rect.getMinX(), rect.getMaxY(), 0.0D).tex(rect.getMinX() / 32.0F, rect.getMaxY() / 32.0F).color(red, green, blue, endAlpha).endVertex();
-        buffer.pos(rect.getMaxX(), rect.getMaxY(), 0.0D).tex(rect.getMaxX() / 32.0F, rect.getMaxY() / 32.0F).color(red, green, blue, endAlpha).endVertex();
-        buffer.pos(rect.getMaxX(), rect.getMinY(), 0.0D).tex(rect.getMaxX() / 32.0F, rect.getMinY() / 32.0F).color(red, green, blue, startAlpha).endVertex();
-        buffer.pos(rect.getMinX(), rect.getMinY(), 0.0D).tex(rect.getMinX() / 32.0F, rect.getMinY() / 32.0F).color(red, green, blue, startAlpha).endVertex();
+        buffer.pos(rect.getMinX(), rect.getMaxY(), 0.0D).func_181673_a(rect.getMinX() / 32.0F, rect.getMaxY() / 32.0F).color(red, green, blue, endAlpha).endVertex();
+        buffer.pos(rect.getMaxX(), rect.getMaxY(), 0.0D).func_181673_a(rect.getMaxX() / 32.0F, rect.getMaxY() / 32.0F).color(red, green, blue, endAlpha).endVertex();
+        buffer.pos(rect.getMaxX(), rect.getMinY(), 0.0D).func_181673_a(rect.getMaxX() / 32.0F, rect.getMinY() / 32.0F).color(red, green, blue, startAlpha).endVertex();
+        buffer.pos(rect.getMinX(), rect.getMinY(), 0.0D).func_181673_a(rect.getMinX() / 32.0F, rect.getMinY() / 32.0F).color(red, green, blue, startAlpha).endVertex();
         tessellator.draw();
     }
 
@@ -580,7 +580,7 @@ public abstract class ClothConfigScreen extends GuiScreen {
             return;
         if (keyCode == 1 && this.allowCloseWithEscape()) {
             if (confirmSave && edited)
-                minecraft.displayGuiScreen(new GuiYesNo(new QuitSaveConsumer(), new TextComponentTranslation("text.cloth-config.quit_config").toString(), new TextComponentTranslation("text.cloth-config.quit_config_sure").toString(), I18n.format("text.cloth-config.quit_discard"), I18n.format("gui.cancel"), new Random().nextInt()));
+                minecraft.displayGuiScreen(new GuiYesNo(new QuitSaveConsumer(), new ChatComponentTranslation("text.cloth-config.quit_config").toString(), new ChatComponentTranslation("text.cloth-config.quit_config_sure").toString(), I18n.format("text.cloth-config.quit_discard"), I18n.format("gui.cancel"), new Random().nextInt()));
             else
                 minecraft.displayGuiScreen(parent);
             return;
@@ -598,7 +598,7 @@ public abstract class ClothConfigScreen extends GuiScreen {
     protected void func_146284_a(GuiButton button) {
         if (button == quitButton) {
             if (confirmSave && edited)
-                minecraft.displayGuiScreen(new GuiYesNo(new QuitSaveConsumer(), new TextComponentTranslation("text.cloth-config.quit_config").toString(), new TextComponentTranslation("text.cloth-config.quit_config_sure").toString(), I18n.format("text.cloth-config.quit_discard"), I18n.format("gui.cancel"), 1));
+                minecraft.displayGuiScreen(new GuiYesNo(new QuitSaveConsumer(), new ChatComponentTranslation("text.cloth-config.quit_config").toString(), new ChatComponentTranslation("text.cloth-config.quit_config_sure").toString(), I18n.format("text.cloth-config.quit_discard"), I18n.format("gui.cancel"), 1));
             else {
                 button.func_146118_a(0, 0);
                 minecraft.displayGuiScreen(parent);
@@ -688,7 +688,7 @@ public abstract class ClothConfigScreen extends GuiScreen {
         }
 
         @Override
-        protected void renderBackBackground(VertexBuffer buffer, Tessellator tessellator) {
+        protected void renderBackBackground(WorldRenderer buffer, Tessellator tessellator) {
             if (!isTransparentBackground())
                 super.renderBackBackground(buffer, tessellator);
             else {

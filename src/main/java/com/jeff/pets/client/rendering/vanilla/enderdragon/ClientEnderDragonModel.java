@@ -6,6 +6,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import org.lwjgl.opengl.GL11;
 
 public class ClientEnderDragonModel extends ModelBase {
     private final ModelRenderer head;
@@ -152,12 +153,12 @@ public class ClientEnderDragonModel extends ModelBase {
             this.rearLeg.render(p_78088_7_);
             GlStateManager.scalef(-1.0F, 1.0F, 1.0F);
             if (j == 0) {
-                GlStateManager.cullFace(GlStateManager.CullFace.FRONT);
+                GlStateManager.cullFace(GL11.GL_FRONT);
             }
         }
 
         GlStateManager.popMatrix();
-        GlStateManager.cullFace(GlStateManager.CullFace.BACK);
+        GlStateManager.cullFace(GL11.GL_BACK);
         GlStateManager.disableCull();
         float f10 = -((float) Math.sin(f * ((float) Math.PI * 2F))) * 0.0F;
         f8 = f * ((float) Math.PI * 2F);

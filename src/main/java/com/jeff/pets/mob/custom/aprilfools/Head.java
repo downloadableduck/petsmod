@@ -7,21 +7,16 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class Head extends AbstractPet {
-    public static final net.minecraft.network.datasync.DataParameter<Boolean> IS_SERVER_ENTITY =
-            EntityDataManager.createKey(Head.class, net.minecraft.network.datasync.DataSerializers.BOOLEAN);
+    public static final int IS_SERVER_ENTITY = 10;
 
     public Head(final World level) {
         super(level);
@@ -42,15 +37,15 @@ public class Head extends AbstractPet {
     @Override
     protected void registerData() {
         super.registerData();
-        this.dataManager.register(IS_SERVER_ENTITY, false);
+        this.dataManager.func_75682_a(IS_SERVER_ENTITY, (byte) 0);
     }
 
     public boolean isServerEntity() {
-        return this.dataManager.get(IS_SERVER_ENTITY);
+        return this.dataManager.func_75683_a(IS_SERVER_ENTITY) != 0;
     }
 
     public void setServerEntity(Boolean value) {
-        this.dataManager.set(IS_SERVER_ENTITY, value);
+        this.dataManager.func_75692_b(IS_SERVER_ENTITY, value ? (byte) 1 : (byte) 0);
     }
 
     @Override
@@ -96,8 +91,8 @@ public class Head extends AbstractPet {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_CHICKEN_STEP;
+    protected String getAmbientSound() {
+        return "mob.chicken.step";
     }
 
     @Override
@@ -106,9 +101,9 @@ public class Head extends AbstractPet {
         EntityLivingBase owner = this.getOwner();
         if (owner != null) {
 
-            if (owner.isRidingOrBeingRiddenBy(this)) {
-                if (owner.isSneaking() && Utils.isJumping(owner)) {
-                    this.stopRiding();
+            if (owner.field_70153_n == this || owner.field_70154_o == this) {
+                if (owner.isSneaking() && !owner.onGround) {
+                    this.func_70078_a(null);
                     this.setVelocity(this.motionX, this.motionY - 0.04, this.motionZ);
                 } else {
                     this.setSitting(true);
@@ -133,8 +128,8 @@ public class Head extends AbstractPet {
 
                 this.limbSwingAmount = (0.5F);
 
-                Vec3d targetPos = owner.getPositionVector();
-                Vec3d dir = targetPos.subtract(this.getPositionVector()).normalize();
+                Vec3 targetPos = owner.getPositionVector();
+                Vec3 dir = targetPos.subtract(this.getPositionVector()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setRotationYawHead(this.getYRot());
@@ -184,26 +179,19 @@ public class Head extends AbstractPet {
         }
 
         /*if (this.walkAnimation.isMoving()) {
-            level.playLocalSound(this, SoundEvents., SoundCategory.NEUTRAL, 1.0f, 1.0f);
+            level.playLocalSound(this, "mob.chicken.step", SoundCategory.NEUTRAL, 1.0f, 1.0f);
         }*/
 
         /*int ambient = (int) (Math2.random() * (60 * 20));
         if (ambient == 1) {
-            level.playLocalSound(this, PetsSounds.PENGUIN_AMBIENT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
+            level.playSound(this, PetsSounds.PENGUIN_AMBIENT, 1.0f, 1.0f);
         }*/
-    }
-
-    @Override
-    public void notifyDataManagerChange(net.minecraft.network.datasync.DataParameter<?> key) {
-        if (!this.world.isRemote) {
-            super.notifyDataManagerChange(key);
-        }
     }
 
     @Override
     public void writeAdditional(NBTTagCompound output) {
         super.writeAdditional(output);
-        output.setBoolean("isServerEntity", true);
+        output.setBoolean("isServerEntity", this.isServerEntity());
     }
 
     @Override

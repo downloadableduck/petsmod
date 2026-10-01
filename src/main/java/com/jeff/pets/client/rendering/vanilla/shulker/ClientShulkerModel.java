@@ -28,13 +28,13 @@ public class ClientShulkerModel extends ModelBase {
     public void setRotationAngles(float f, float g, float h, float i, float j, float u, Entity entity) {
         float k = h - (float) entity.ticksExisted;
         float l = (0.5F + 180 * (float) Math.PI);
-        float m = -1.0F + net.minecraft.util.math.MathHelper.sin(l);
+        float m = -1.0F + net.minecraft.util.MathHelper.sin(l);
         float n = 0.0F;
         if (l > (float) Math.PI) {
-            n = net.minecraft.util.math.MathHelper.sin(h * 0.1F) * 0.7F;
+            n = net.minecraft.util.MathHelper.sin(h * 0.1F) * 0.7F;
         }
 
-        this.lid.setRotationPoint(0.0F, 16.0F + net.minecraft.util.math.MathHelper.sin(l) * 8.0F + n, 0.0F);
+        this.lid.setRotationPoint(0.0F, 16.0F + net.minecraft.util.MathHelper.sin(l) * 8.0F + n, 0.0F);
         if (1 > 0.3F) {
             this.lid.rotateAngleY = m * m * m * m * (float) Math.PI * 0.125F;
         } else {

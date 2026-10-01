@@ -3,25 +3,22 @@ package com.jeff.pets.mob.custom.first;
 import com.jeff.pets.PetsSounds;
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.AbstractPet;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import org.lwjgl.Sys;
 
 public class Duck extends AbstractPet {
 
-    public static final DataParameter<Boolean> IS_SERVER_ENTITY =
-            EntityDataManager.createKey(Duck.class, net.minecraft.network.datasync.DataSerializers.BOOLEAN);
-    public static final DataParameter<Integer> DUCK_SKIN =
-            EntityDataManager.createKey(Duck.class, net.minecraft.network.datasync.DataSerializers.VARINT);
+    public static final int IS_SERVER_ENTITY = 10;
+    public static final int DUCK_SKIN = 11;
     private final float flyDist = 0;
     public float flap;
     public float flapSpeed;
@@ -53,16 +50,16 @@ public class Duck extends AbstractPet {
     @Override
     protected void registerData() {
         super.registerData();
-        this.dataManager.register(DUCK_SKIN, 1);
-        this.dataManager.register(IS_SERVER_ENTITY, false);
+        this.dataManager.func_75682_a(DUCK_SKIN, 1);
+        this.dataManager.func_75682_a(IS_SERVER_ENTITY, (byte) 0);
     }
 
     public boolean isServerEntity() {
-        return this.dataManager.get(IS_SERVER_ENTITY);
+        return this.dataManager.func_75683_a(IS_SERVER_ENTITY) != 0;
     }
 
     public void setServerEntity(Boolean value) {
-        this.dataManager.set(IS_SERVER_ENTITY, value);
+        this.dataManager.func_75692_b(IS_SERVER_ENTITY, value ? (byte) 1 : (byte) 0);
     }
 
     @Override
@@ -77,7 +74,7 @@ public class Duck extends AbstractPet {
         }
 
         this.flapping *= 0.9F;
-        Vec3d movement = new Vec3d(this.motionX, this.motionY, this.motionZ);
+        Vec3 movement = new Vec3(this.motionX, this.motionY, this.motionZ);
         if (!this.onGround && movement.y < (double) 0.0F) {
             this.setVelocity(movement.x * 1.0F, movement.y * 0.6, movement.z * 1.0F);
         }
@@ -87,9 +84,9 @@ public class Duck extends AbstractPet {
         EntityLivingBase owner = this.getOwner();
         if (owner != null) {
 
-            if (owner.isRidingOrBeingRiddenBy(this)) {
-                if (owner.isSneaking() && Utils.isJumping(owner)) {
-                    this.stopRiding();
+            if (this.field_70154_o == owner) {
+                if (owner.isSneaking() && !owner.onGround) {
+                    this.func_70078_a(null);
                     this.setVelocity(this.motionX, this.motionY - 0.04, this.motionZ);
                     this.isOnHead = false;
                 } else {
@@ -115,8 +112,8 @@ public class Duck extends AbstractPet {
 
                 this.limbSwingAmount = (0.5F);
 
-                Vec3d targetPos = owner.getPositionVector();
-                Vec3d dir = targetPos.subtract(this.getPositionVector()).normalize();
+                Vec3 targetPos = owner.getPositionVector();
+                Vec3 dir = targetPos.subtract(this.getPositionVector()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setRotationYawHead(this.getYRot());
@@ -183,21 +180,14 @@ public class Duck extends AbstractPet {
     public void writeAdditional(NBTTagCompound output) {
         super.writeAdditional(output);
         output.setBoolean("isServerEntity", true);
-        output.setInt("floatiant", this.dataManager.get(DUCK_SKIN));
+        output.setInt("floatiant", this.dataManager.func_75679_c(DUCK_SKIN));
     }
 
     @Override
     public void readAdditional(NBTTagCompound input) {
         super.readAdditional(input);
         this.setServerEntity(input.getBoolean("isServerEntity"));
-        this.dataManager.set(DUCK_SKIN, input.getInt("floatiant"));
-    }
-
-    @Override
-    public void notifyDataManagerChange(DataParameter<?> key) {
-        if (!this.world.isRemote) {
-            super.notifyDataManagerChange(key);
-        }
+        this.dataManager.func_75692_b(DUCK_SKIN, input.getInt("floatiant"));
     }
 
     // @Override - does not exist as override in 1.13
@@ -220,7 +210,7 @@ public class Duck extends AbstractPet {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
+    protected String getAmbientSound() {
         return PetsSounds.DUCK_AMBIENT;
     }
 }

@@ -5,7 +5,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.MathHelper;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
@@ -17,8 +17,14 @@ public class ClientZombiePigmanModel extends ModelBase {
     private final ModelRenderer right_arm;
     private final ModelRenderer left_leg;
     private final ModelRenderer right_leg;
-    public ModelBiped.ArmPose leftArmPose = ModelBiped.ArmPose.EMPTY;
-    public ModelBiped.ArmPose rightArmPose = ModelBiped.ArmPose.EMPTY;
+    // 1.8.9 ModelBiped has no ArmPose enum; it stores the arm pose as an int.
+    public static final int ARM_POSE_EMPTY = 0;
+    public static final int ARM_POSE_BLOCK = 1;
+    public static final int ARM_POSE_ITEM = 2;
+    public static final int ARM_POSE_BOW_AND_ARROW = 3;
+
+    public int leftArmPose = ARM_POSE_EMPTY;
+    public int rightArmPose = ARM_POSE_EMPTY;
     public boolean crouching;
     public float swimAmount;
     public float swingProgress = 0.0F;
@@ -100,7 +106,7 @@ public class ClientZombiePigmanModel extends ModelBase {
         this.left_leg.rotateAngleY = 0.0F;
         this.right_leg.rotateAngleZ = 0.0F;
         this.left_leg.rotateAngleZ = 0.0F;
-        if (state.isPassenger()) {
+        if (state.field_70153_n != null) {
             this.right_arm.rotateAngleX += (float) (-Math.PI / 5);
             this.left_arm.rotateAngleX += (float) (-Math.PI / 5);
             this.right_leg.rotateAngleX = -1.4137167F;
@@ -114,27 +120,27 @@ public class ClientZombiePigmanModel extends ModelBase {
         this.right_arm.rotateAngleY = 0.0F;
         this.right_arm.rotateAngleZ = 0.0F;
         switch (this.leftArmPose) {
-            case EMPTY:
+            case ARM_POSE_EMPTY:
                 this.left_arm.rotateAngleY = 0.0F;
                 break;
-            case BLOCK:
+            case ARM_POSE_BLOCK:
                 this.left_arm.rotateAngleX = this.left_arm.rotateAngleX * 0.5F - 0.9424779F;
                 this.left_arm.rotateAngleY = (float) (Math.PI / 6);
                 break;
-            case ITEM:
+            case ARM_POSE_ITEM:
                 this.left_arm.rotateAngleX = this.left_arm.rotateAngleX * 0.5F - (float) (Math.PI / 10);
                 this.left_arm.rotateAngleY = 0.0F;
         }
 
         switch (this.rightArmPose) {
-            case EMPTY:
+            case ARM_POSE_EMPTY:
                 this.right_arm.rotateAngleY = 0.0F;
                 break;
-            case BLOCK:
+            case ARM_POSE_BLOCK:
                 this.right_arm.rotateAngleX = this.right_arm.rotateAngleX * 0.5F - 0.9424779F;
                 this.right_arm.rotateAngleY = (float) (-Math.PI / 6);
                 break;
-            case ITEM:
+            case ARM_POSE_ITEM:
                 this.right_arm.rotateAngleX = this.right_arm.rotateAngleX * 0.5F - (float) (Math.PI / 10);
                 this.right_arm.rotateAngleY = 0.0F;
                 break;
@@ -192,7 +198,7 @@ public class ClientZombiePigmanModel extends ModelBase {
         this.left_arm.rotateAngleZ = this.left_arm.rotateAngleZ - (MathHelper.cos(h * 0.09F) * 0.05F + 0.05F);
         this.right_arm.rotateAngleX = this.right_arm.rotateAngleX + MathHelper.sin(h * 0.067F) * 0.05F;
         this.left_arm.rotateAngleX = this.left_arm.rotateAngleX - MathHelper.sin(h * 0.067F) * 0.05F;
-        if (this.rightArmPose == ModelBiped.ArmPose.BOW_AND_ARROW) {
+        if (this.rightArmPose == ARM_POSE_BOW_AND_ARROW) {
             this.right_arm.rotateAngleY = -0.1F + this.head.rotateAngleY;
             this.left_arm.rotateAngleY = 0.1F + this.head.rotateAngleY + 0.4F;
             this.right_arm.rotateAngleX = (float) (-Math.PI / 2) + this.head.rotateAngleX;

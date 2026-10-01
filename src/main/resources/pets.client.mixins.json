@@ -5,10 +5,7 @@
   "minVersion": "0.1",
   "refmap": "pets_mod.refmap.json",
   "client": [
-    "ChatAccessor",
-    "SplashManagerMixin",
-    "TickMixin",
-    "TitleScreenRenderingMixin"
+    "CommandMixin"
   ],
   "injectors": {
     "defaultRequire": 1

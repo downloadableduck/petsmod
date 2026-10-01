@@ -49,9 +49,9 @@ public class ClientWitherModel extends ModelBase {
     }
 
     public void setRotationAngles(float f, float g, float h, float i, float j, float k, Entity entityIn) {
-        float l = net.minecraft.util.math.MathHelper.cos(h * 0.1F);
+        float l = net.minecraft.util.MathHelper.cos(h * 0.1F);
         this.upperBodyParts[1].rotateAngleX = (0.065F + 0.05F * l) * (float) Math.PI;
-        this.upperBodyParts[2].setRotationPoint(-2.0F, 6.9F + net.minecraft.util.math.MathHelper.cos(this.upperBodyParts[1].rotateAngleX) * 10.0F, -0.5F + net.minecraft.util.math.MathHelper.sin(this.upperBodyParts[1].rotateAngleX) * 10.0F);
+        this.upperBodyParts[2].setRotationPoint(-2.0F, 6.9F + net.minecraft.util.MathHelper.cos(this.upperBodyParts[1].rotateAngleX) * 10.0F, -0.5F + net.minecraft.util.MathHelper.sin(this.upperBodyParts[1].rotateAngleX) * 10.0F);
         this.upperBodyParts[2].rotateAngleX = (0.265F + 0.1F * l) * (float) Math.PI;
         this.heads[0].rotateAngleY = i * ((float) Math.PI / 180F);
         this.heads[0].rotateAngleX = j * ((float) Math.PI / 180F);

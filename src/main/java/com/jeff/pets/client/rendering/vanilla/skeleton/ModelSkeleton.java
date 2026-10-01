@@ -11,8 +11,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHandSide;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.MathHelper;
 
 
 
@@ -44,15 +43,20 @@ public class ModelSkeleton extends ModelBiped {
 
     @Override
     public void setLivingAnimations(EntityLivingBase p_78086_1_, float p_78086_2_, float p_78086_3_, float p_78086_4_) {
-        this.rightArmPose = ArmPose.EMPTY;
-        this.leftArmPose = ArmPose.EMPTY;
+        // 1.8.9 ModelBiped has no ArmPose enum; the poses are plain int fields.
+        this.field_78120_m = 0;
+        this.field_78119_l = 0;
         super.setLivingAnimations(p_78086_1_, p_78086_2_, p_78086_3_, p_78086_4_);
+    }
+
+    private ModelRenderer getArmForSide(boolean right) {
+        return right ? this.bipedRightArm : this.bipedLeftArm;
     }
 
     @Override
     public void setRotationAngles(float p_78087_1_, float p_78087_2_, float p_78087_3_, float p_78087_4_, float p_78087_5_, float p_78087_6_, Entity p_78087_7_) {
         super.setRotationAngles(p_78087_1_, p_78087_2_, p_78087_3_, p_78087_4_, p_78087_5_, p_78087_6_, p_78087_7_);
-        ItemStack itemstack = ((EntityLivingBase) p_78087_7_).getHeldItemMainhand();
+        ItemStack itemstack = ((EntityLivingBase) p_78087_7_).func_70694_bm();
         if (((EntityLivingBase) p_78087_7_).isSwingInProgress && (itemstack.getItem() == null || !(itemstack.getItem() instanceof ItemBow))) {
             float f = MathHelper.sin(this.swingProgress * (float) Math.PI);
             float f1 = MathHelper.sin((1.0F - (1.0F - this.swingProgress) * (1.0F - this.swingProgress)) * (float) Math.PI);
@@ -78,9 +82,9 @@ public class ModelSkeleton extends ModelBiped {
 
     }
 
-    public void postRenderArm(float p_187073_1_, EnumHandSide p_187073_2_) {
-        float f = p_187073_2_ == EnumHandSide.RIGHT ? 1.0F : -1.0F;
-        ModelRenderer modelrenderer = this.getArmForSide(p_187073_2_);
+    public void postRenderArm(float p_187073_1_, boolean right) {
+        float f = right ? 1.0F : -1.0F;
+        ModelRenderer modelrenderer = this.getArmForSide(right);
         modelrenderer.rotationPointX += f;
         modelrenderer.postRender(p_187073_1_);
         modelrenderer.rotationPointX -= f;

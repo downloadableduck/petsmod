@@ -2,7 +2,7 @@ package com.jeff.pets.mob.vanilla.boss;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.init.SoundEvents;
+
 
 @CanFly
 public class ClientWither extends FlyingPet {
@@ -22,7 +22,7 @@ public class ClientWither extends FlyingPet {
     }
 
     @Override
-    protected net.minecraft.util.SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_CHICKEN_STEP;
+    protected String getAmbientSound() {
+        return "mob.chicken.step";
     }
 }

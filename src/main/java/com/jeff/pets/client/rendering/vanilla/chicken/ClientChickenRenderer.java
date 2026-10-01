@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.vanilla.chicken;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientChicken;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.MathHelper;
 
 import static com.jeff.pets.client.Central.CONFIG;
 

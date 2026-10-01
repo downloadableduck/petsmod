@@ -10,7 +10,7 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.Vec3;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -46,7 +46,7 @@ public class Utils {
 
         if (entity == null || world == null || player == null) return;
 
-        Vec3d lookAngle = player.getLook(1.0f);
+        Vec3 lookAngle = player.getLook(1.0f);
 
         double x = player.posX - lookAngle.x * (double) 0.5F;
         double y = player.posY + (double) 0.5F;
@@ -55,7 +55,7 @@ public class Utils {
         entity.setPosition(x, y, z);
         entity.setName(entityName);
         world.addEntityToWorld(entity.getEntityId(), entity);
-        entity.setOwnerId(player.getUniqueID());
+        entity.func_152115_b(player.getUniqueID().toString());
         Central.summonedEntity.add(entity);
     }
 
@@ -132,6 +132,7 @@ public class Utils {
      */
     public static void despawnEntity(Entity e) {
         if (e != null) {
+            e.world.removeEntity(e);
             e.remove();
         }
     }
@@ -150,15 +151,6 @@ public class Utils {
 
     public static float triangleWave(float p_78172_1_, float p_78172_2_) {
         return (Math.abs(p_78172_1_ % p_78172_2_ - p_78172_2_ * 0.5F) - p_78172_2_ * 0.25F) / (p_78172_2_ * 0.25F);
-    }
-
-    public static boolean isJumping(EntityLivingBase entity) {
-        try {
-            Field field = entity.getClass().getDeclaredField("isJumping");
-            field.setAccessible(true);
-            boolean bl = field.getBoolean(entity);
-            return bl;
-        } catch (Exception e) {return false;}
     }
 
     public static int getWidth(GuiTextField textField) {

@@ -4,9 +4,8 @@ import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.entity.EntityLivingBase;
 
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 
 /**
  * Abstract class representing any pet tht can fly (ghasts, vexes, etc). Contains custom movement
@@ -27,9 +26,9 @@ public abstract class FlyingPet extends AbstractPet {
         EntityLivingBase owner = this.getOwner();
         if (owner != null) {
 
-            if (owner.isRidingOrBeingRiddenBy(this)) {
-                if (owner.isSneaking() && Utils.isJumping(owner)) {
-                    this.stopRiding();
+            if (owner.field_70153_n == this || owner.field_70154_o == this) {
+                if (owner.isSneaking() && !owner.onGround) {
+                    this.func_70078_a(null);
                     this.setVelocity(this.motionX, this.motionY + 0.1, this.motionZ);
                 } else {
                     this.setSitting(true);
@@ -38,9 +37,9 @@ public abstract class FlyingPet extends AbstractPet {
 
             double dx = owner.posX - this.posX;
             double dz = owner.posZ - this.posZ;
-            Vec3d ownerPos = owner.getPositionVector().add(0, owner.getEyeHeight() * 0.8, 0);
-            Vec3d vecToOwner = ownerPos.subtract(this.getPositionVector());
-            Vec3d dir = vecToOwner.normalize();
+            Vec3 ownerPos = owner.getPositionVector().add(0, owner.getEyeHeight() * 0.8, 0);
+            Vec3 vecToOwner = ownerPos.subtract(this.getPositionVector());
+            Vec3 dir = vecToOwner.normalize();
 
             float targetYaw = (float) (Math.atan2(dz, dx) * (180.0 / Math.PI)) - 90.0F;
 
@@ -109,7 +108,7 @@ public abstract class FlyingPet extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            this.playSound(SoundEvents.ENTITY_SQUID_AMBIENT, 1.0f, 1.0f);
+            this.world.func_72956_a(this, "mob.squid.ambient", 1.0f, 1.0f);
         }
     }
 }

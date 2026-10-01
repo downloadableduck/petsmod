@@ -2,15 +2,15 @@ package com.jeff.pets.client.rendering.vanilla.villager;
 
 import com.jeff.pets.mob.vanilla.passive.ClientVillager;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderLivingBase;
+import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 
 public class ClientVillagerDefaultLayer implements LayerRenderer<ClientVillager> {
 
-    private final RenderLivingBase<ClientVillager> renderer;
+    private final RenderLiving<ClientVillager> renderer;
 
-    public ClientVillagerDefaultLayer(RenderLivingBase<ClientVillager> renderLayerParent) {
+    public ClientVillagerDefaultLayer(RenderLiving<ClientVillager> renderLayerParent) {
         this.renderer = renderLayerParent;
     }
 

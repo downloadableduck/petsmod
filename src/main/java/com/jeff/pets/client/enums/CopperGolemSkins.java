@@ -8,7 +8,7 @@ public enum CopperGolemSkins implements NameableEnum {
     weathered;
 
     @Override
-    public net.minecraft.util.text.ITextComponent getDisplayName() {
-        return new net.minecraft.util.text.TextComponentString(String.valueOf(this).replace("_", " "));
+    public net.minecraft.util.IChatComponent getDisplayName() {
+        return new net.minecraft.util.ChatComponentText(String.valueOf(this).replace("_", " "));
     }
 }

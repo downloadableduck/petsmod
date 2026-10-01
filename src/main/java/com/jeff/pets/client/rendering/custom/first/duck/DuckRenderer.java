@@ -5,6 +5,7 @@ import com.jeff.pets.client.Math2;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Objects;
@@ -28,7 +29,7 @@ public class DuckRenderer extends PetRenderer<Duck, DuckModel> {
 
     @Override
     public void renderModel(final Duck duck, float f, final float k, float u, float g, float h, float i) {
-        float partialTick = Minecraft.getInstance().getRenderPartialTicks();
+        float partialTick = u - MathHelper.floor(u);
         duck.flap = Math2.lerp(partialTick, duck.oFlap, duck.flap);
         duck.flapSpeed = Math2.lerp(partialTick, duck.oFlapSpeed, duck.flapSpeed);
         super.renderModel(duck, f, k, u, g, h, i);

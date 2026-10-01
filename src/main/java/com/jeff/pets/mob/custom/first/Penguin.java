@@ -8,20 +8,17 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class Penguin extends AbstractPet {
-    public static final net.minecraft.network.datasync.DataParameter<Boolean> IS_SERVER_ENTITY =
-            net.minecraft.network.datasync.EntityDataManager.createKey(Penguin.class, net.minecraft.network.datasync.DataSerializers.BOOLEAN);
+    public static final int IS_SERVER_ENTITY = 10;
     public float flap;
     public float flapSpeed;
     public float oFlapSpeed;
@@ -56,15 +53,15 @@ public class Penguin extends AbstractPet {
     @Override
     protected void registerData() {
         super.registerData();
-        this.dataManager.register(IS_SERVER_ENTITY, false);
+        this.dataManager.func_75682_a(IS_SERVER_ENTITY, (byte) 0);
     }
 
     public boolean isServerEntity() {
-        return this.dataManager.get(IS_SERVER_ENTITY);
+        return this.dataManager.func_75683_a(IS_SERVER_ENTITY) != 0;
     }
 
     public void setServerEntity(Boolean value) {
-        this.dataManager.set(IS_SERVER_ENTITY, value);
+        this.dataManager.func_75692_b(IS_SERVER_ENTITY, value ? (byte) 1 : (byte) 0);
     }
 
     @Override
@@ -79,7 +76,7 @@ public class Penguin extends AbstractPet {
         }
 
         this.flapping *= 0.9F;
-        Vec3d movement = new Vec3d(this.motionX, this.motionY, this.motionZ);
+        Vec3 movement = new Vec3(this.motionX, this.motionY, this.motionZ);
         if (!this.onGround && movement.y < (double) 0.0F) {
             this.setVelocity(movement.x * 1.0F, movement.y * 0.6, movement.z * 1.0F);
         }
@@ -88,10 +85,10 @@ public class Penguin extends AbstractPet {
         EntityLivingBase owner = this.getOwner();
         if (owner != null) {
 
-            if (owner.isRidingOrBeingRiddenBy(this)) {
+            if (owner.field_70153_n == this || owner.field_70154_o == this) {
                 this.isFlapping = false;
-                if (owner.isSneaking() && Utils.isJumping(owner)) {
-                    this.stopRiding();
+                if (owner.isSneaking() && !owner.onGround) {
+                    this.func_70078_a(null);
                     this.setVelocity(this.motionX, this.motionY - 0.04, this.motionZ);
                     this.isOnHead = false;
                 } else {
@@ -117,8 +114,8 @@ public class Penguin extends AbstractPet {
 
                 this.limbSwingAmount = (0.5F);
 
-                Vec3d targetPos = owner.getPositionVector();
-                Vec3d dir = targetPos.subtract(this.getPositionVector()).normalize();
+                Vec3 targetPos = owner.getPositionVector();
+                Vec3 dir = targetPos.subtract(this.getPositionVector()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setRotationYawHead(this.getYRot());
@@ -189,20 +186,20 @@ public class Penguin extends AbstractPet {
         //this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
     }
 
-    protected SoundEvent getAmbientSound() {
+    protected String getAmbientSound() {
         return PetsSounds.PENGUIN_AMBIENT;
     }
 
-    protected SoundEvent getHurtSound(final DamageSource source) {
+    protected String getHurtSound(final DamageSource source) {
         return PetsSounds.PENGUIN_AMBIENT;
     }
 
-    protected SoundEvent getDeathSound() {
+    protected String getDeathSound() {
         return PetsSounds.PENGUIN_AMBIENT;
     }
 
     protected void playStepSound(final BlockPos pos, final IBlockState blockState) {
-        this.playSound(SoundEvents.ENTITY_CHICKEN_STEP, 0.15F, 1.0F);
+        this.world.func_72956_a(this, "mob.chicken.step", 0.15F, 1.0F);
     }
 
     public Penguin createChild(final EntityAgeable partner) {
@@ -231,13 +228,6 @@ public class Penguin extends AbstractPet {
         this.tasks.addTask(5, new EntityAILookIdle(this));
         this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
         this.tasks.addTask(8, new EntityAIFollowOwner(this, 1, 2, 10));
-    }
-
-    @Override
-    public void notifyDataManagerChange(net.minecraft.network.datasync.DataParameter<?> key) {
-        if (!this.world.isRemote) {
-            super.notifyDataManagerChange(key);
-        }
     }
 
     @Override

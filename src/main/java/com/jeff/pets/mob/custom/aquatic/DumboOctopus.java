@@ -12,23 +12,18 @@ import net.minecraft.entity.ai.EntityAIMate;
 import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class DumboOctopus extends FlyingPet {
 
-    public static final net.minecraft.network.datasync.DataParameter<Boolean> IS_SERVER_ENTITY =
-            net.minecraft.network.datasync.EntityDataManager.createKey(DumboOctopus.class, net.minecraft.network.datasync.DataSerializers.BOOLEAN);
-    public static final net.minecraft.network.datasync.DataParameter<Integer> OCTOPUS_SKIN =
-            net.minecraft.network.datasync.EntityDataManager.createKey(DumboOctopus.class, net.minecraft.network.datasync.DataSerializers.VARINT);
+    public static final int IS_SERVER_ENTITY = 10;
+    public static final int OCTOPUS_SKIN = 11;
     private final float nextFlap = 1.0F;
     public float tentacleAngle = 0;
     public EntityPlayerMP owner = (EntityPlayerMP) this.getOwner();
@@ -36,7 +31,6 @@ public class DumboOctopus extends FlyingPet {
     public DumboOctopus(final World level) {
         super(level);
         this.setSize(0.5f, 0.5f);
-        this.setPathPriority(PathNodeType.WATER, 0.0f);
     }
 
     @Override
@@ -48,16 +42,16 @@ public class DumboOctopus extends FlyingPet {
     @Override
     protected void registerData() {
         super.registerData();
-        this.dataManager.register(OCTOPUS_SKIN, 1);
-        this.dataManager.register(IS_SERVER_ENTITY, false);
+        this.dataManager.func_75682_a(OCTOPUS_SKIN, 1);
+        this.dataManager.func_75682_a(IS_SERVER_ENTITY, (byte) 0);
     }
 
     public boolean isServerEntity() {
-        return this.dataManager.get(IS_SERVER_ENTITY);
+        return this.dataManager.func_75683_a(IS_SERVER_ENTITY) != 0;
     }
 
     public void setServerEntity(Boolean value) {
-        this.dataManager.set(IS_SERVER_ENTITY, value);
+        this.dataManager.func_75692_b(IS_SERVER_ENTITY, value ? (byte) 1 : (byte) 0);
     }
 
     @Override
@@ -70,20 +64,20 @@ public class DumboOctopus extends FlyingPet {
         return 1.5f;
     }
 
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_SQUID_AMBIENT;
+    protected String getAmbientSound() {
+        return "mob.squid.ambient";
     }
 
-    protected SoundEvent getHurtSound(final DamageSource source) {
+    protected String getHurtSound(final DamageSource source) {
         return PetsSounds.DUCK_AMBIENT;
     }
 
-    protected SoundEvent getDeathSound() {
+    protected String getDeathSound() {
         return PetsSounds.DUCK_AMBIENT;
     }
 
     protected void playStepSound(final BlockPos pos, final IBlockState blockState) {
-        this.playSound(SoundEvents.ENTITY_CHICKEN_STEP, 0.15F, 1.0F);
+        this.world.func_72956_a(this, "mob.chicken.step", 0.15F, 1.0F);
     }
 
     public DumboOctopus createChild(final EntityAgeable partner) {
@@ -94,7 +88,7 @@ public class DumboOctopus extends FlyingPet {
 
     public IEntityLivingData func_180482_a(DifficultyInstance difficulty, IEntityLivingData groupData) {
         this.setServerEntity(true);
-        this.dataManager.set(OCTOPUS_SKIN, this.rand.nextInt(6));
+        this.dataManager.func_75692_b(OCTOPUS_SKIN, this.rand.nextInt(6));
         return super.func_180482_a(difficulty, groupData);
     }
 
@@ -126,9 +120,9 @@ public class DumboOctopus extends FlyingPet {
         EntityLivingBase owner = this.getOwner();
         if (owner != null) {
 
-            if (owner.isRidingOrBeingRiddenBy(this)) {
-                if (owner.isSneaking() && Utils.isJumping(owner)) {
-                    this.stopRiding();
+            if (owner.field_70153_n == this || owner.field_70154_o == this) {
+                if (owner.isSneaking() && !owner.onGround) {
+                    this.func_70078_a(null);
                     this.setVelocity(this.motionX, this.motionY + 0.1, this.motionZ);
                 } else {
                     this.setSitting(true);
@@ -137,8 +131,8 @@ public class DumboOctopus extends FlyingPet {
 
             double dx = owner.posX - this.posX;
             double dz = owner.posZ - this.posZ;
-            net.minecraft.util.math.Vec3d ownerPos = owner.getPositionVector().add(0, owner.getEyeHeight() * 0.8, 0);
-            net.minecraft.util.math.Vec3d vecToOwner = ownerPos.subtract(this.getPositionVector());
+            net.minecraft.util.Vec3 ownerPos = owner.getPositionVector().add(0, owner.getEyeHeight() * 0.8, 0);
+            net.minecraft.util.Vec3 vecToOwner = ownerPos.subtract(this.getPositionVector());
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.getDistance(owner);
@@ -154,7 +148,7 @@ public class DumboOctopus extends FlyingPet {
 
                 this.limbSwingAmount = (0.5F);
 
-                net.minecraft.util.math.Vec3d dir = vecToOwner.normalize();
+                net.minecraft.util.Vec3 dir = vecToOwner.normalize();
                 double speed = 0.2;
 
                 this.setRenderYawOffset(Duck.rotlerp(this.renderYawOffset, (float) targetYaw));
@@ -207,7 +201,7 @@ public class DumboOctopus extends FlyingPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            this.playSound(SoundEvents.ENTITY_SQUID_AMBIENT, 1.0f, 1.0f);
+            this.world.func_72956_a(this, "mob.squid.ambient", 1.0f, 1.0f);
         }
     }
 
@@ -215,21 +209,14 @@ public class DumboOctopus extends FlyingPet {
     public void writeAdditional(NBTTagCompound output) {
         super.writeAdditional(output);
         output.setBoolean("isServerEntity", true);
-        output.setInt("floatiant", this.dataManager.get(OCTOPUS_SKIN));
+        output.setInt("floatiant", this.dataManager.func_75679_c(OCTOPUS_SKIN));
     }
 
     @Override
     public void readAdditional(NBTTagCompound input) {
         super.readAdditional(input);
         this.setServerEntity(input.getBoolean("isServerEntity"));
-        this.dataManager.set(OCTOPUS_SKIN, input.getInt("floatiant"));
-    }
-
-    @Override
-    public void notifyDataManagerChange(net.minecraft.network.datasync.DataParameter<?> key) {
-        if (!this.world.isRemote) {
-            super.notifyDataManagerChange(key);
-        }
+        this.dataManager.func_75692_b(OCTOPUS_SKIN, input.getInt("floatiant"));
     }
 
     /*

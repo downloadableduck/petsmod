@@ -95,7 +95,7 @@ public class KoiModel extends PetModel {
     @Override
     public void setRotationAngles(float f, float g, float ageInTicks, float m, float k, float u, Entity entity) {
         Koi state = (Koi) entity;
-        this.body.rotateAngleY = -1.0f * 0.25F * net.minecraft.util.math.MathHelper.sin(1.0f * 0.6F * ageInTicks);
+        this.body.rotateAngleY = -1.0f * 0.25F * net.minecraft.util.MathHelper.sin(1.0f * 0.6F * ageInTicks);
         this.tail_fin.rotateAngleY = -this.body.rotateAngleY * 1.75f;
     }
 }

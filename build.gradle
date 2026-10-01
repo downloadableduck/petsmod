@@ -69,8 +69,12 @@ minecraft {
 sourceSets {
     main {
         // Refmap declaration must match the refmap name specified in the json config
-        ext.refMap = "mixins.example.refmap.json"
+        ext.refMap = "pets_mod.refmap.json"
     }
+}
+
+tasks.withType(JavaCompile).configureEach {task ->
+    options.compilerArgs << "-Xmaxerrs" << "10000"
 }
 
 mixin {

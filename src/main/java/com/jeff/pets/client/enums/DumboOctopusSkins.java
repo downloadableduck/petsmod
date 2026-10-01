@@ -10,7 +10,7 @@ public enum DumboOctopusSkins implements NameableEnum {
     yellow;
 
     @Override
-    public net.minecraft.util.text.ITextComponent getDisplayName() {
-        return new net.minecraft.util.text.TextComponentString(String.valueOf(this));
+    public net.minecraft.util.IChatComponent getDisplayName() {
+        return new net.minecraft.util.ChatComponentText(String.valueOf(this));
     }
 }

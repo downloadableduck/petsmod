@@ -2,8 +2,6 @@ package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundEvent;
 
 @CanFly
 public class ClientGuardian extends GroundPet {
@@ -23,7 +21,7 @@ public class ClientGuardian extends GroundPet {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_GUARDIAN_AMBIENT;
+    protected String getAmbientSound() {
+        return "mob.guardian.ambient";
     }
 }

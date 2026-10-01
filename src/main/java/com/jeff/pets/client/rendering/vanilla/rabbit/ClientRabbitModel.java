@@ -127,7 +127,7 @@ public class ClientRabbitModel extends ModelBase {
         this.head.rotateAngleY = i * ((float) Math.PI / 180F);
         this.earRight.rotateAngleY = this.nose.rotateAngleY - 0.2617994F;
         this.earLeft.rotateAngleY = this.nose.rotateAngleY + 0.2617994F;
-        this.jumpRotation = net.minecraft.util.math.MathHelper.sin((float) Math.PI);
+        this.jumpRotation = net.minecraft.util.MathHelper.sin((float) Math.PI);
         this.haunchLeft.rotateAngleX = (this.jumpRotation * 50.0F - 21.0F) * ((float) Math.PI / 180F);
         this.haunchRight.rotateAngleX = (this.jumpRotation * 50.0F - 21.0F) * ((float) Math.PI / 180F);
         this.rearFootLeft.rotateAngleX = this.jumpRotation * 50.0F * ((float) Math.PI / 180F);

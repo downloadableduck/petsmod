@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.vanilla.zombievillager;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.MathHelper;
 
 public class ClientZombieVillagerModel extends ModelBiped {
     private ModelRenderer hatRim;
