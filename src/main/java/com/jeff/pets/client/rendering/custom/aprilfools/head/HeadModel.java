@@ -4,6 +4,7 @@ package com.jeff.pets.client.rendering.custom.aprilfools.head;// Made with Block
 
 
 import com.jeff.pets.client.rendering.PetModel;
+import net.minecraft.client.render.ModelBox;
 import net.minecraft.client.render.model.ModelPart;
 
 public class HeadModel extends PetModel {
@@ -14,10 +15,9 @@ public class HeadModel extends PetModel {
         textureHeight = 64;
 
         Head = new ModelPart(this);
-        Head.setPivot(0.0F, 0.0F, 0.0F);
-        setRotationAngle(Head, -0.1047F, 0.0873F, 0.0F);
-        Head.setTextureOffset(0, 0).addCuboid(-8.0F, 16.0F, 0.0F, (int) 8.0F, (int) 8.0F, (int) 8.0F, 0.0F);
-        Head.setTextureOffset(32, 0).addCuboid(-4.0F, -8.0F, -4.0F, (int) 8.0F, (int) 8.0F, (int) 8.0F, 0.5F);
+        Head.setPivot(5.0F, 0.0F, -5.0F);
+        Head.cuboids.add(new ModelBox(Head, 0, 0, -8.0F, 16.0F, 0.0F, 8, 8, 8, 0.0F, false));
+        Head.cuboids.add(new ModelBox(Head, 32, 0, -8.0F, 16.0F, 0.0F, 8, 8, 8, 0.5F, false));
     }
 
     public void setAngles(net.minecraft.entity.Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float f) {

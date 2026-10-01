@@ -52,8 +52,7 @@ public class Utils {
 
         entity.updatePosition(x, y, z);
         entity.setName(entityName);
-        world.addEntity(entity);
-        entity.updateChunkRegistration();
+        world.spawnEntity(entity);
         entity.method_2713(player.getUuid().toString());
         Central.summonedEntity.add(entity);
     }
@@ -130,8 +129,8 @@ public class Utils {
      * @param e The entity to despawn
      */
     public static void despawnEntity(Entity e) {
-        if (e != null) {
-            e.remove();
+        if (e != null && e.world != null) {
+            e.world.removeEntity(e);
         }
     }
 

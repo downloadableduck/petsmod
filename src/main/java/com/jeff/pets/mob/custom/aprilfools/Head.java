@@ -1,5 +1,7 @@
 package com.jeff.pets.mob.custom.aprilfools;
 
+import com.jeff.pets.PetsSounds;
+import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.AbstractPet;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.entity.EntityData;
@@ -19,6 +21,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.Sounds;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.LocalDifficulty;
@@ -28,6 +31,8 @@ import org.jetbrains.annotations.Nullable;
 
 public class Head extends AbstractPet {
     public static final int IS_SERVER_ENTITY = 10;
+    public boolean isLoading = false;
+    public Identifier skin = new Identifier("missingno");
 
     public Head(World level) {
         super(level);
@@ -137,8 +142,9 @@ public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @N
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setHeadYaw(this.getYRot());
-                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.headYaw - this.bodyYaw /*bodyYaw*/, -10, 10);
-                double speed = 0.15;
+                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.headYaw - this.bodyYaw /*bodyYaw*/, -50, 50);
+
+                double speed = owner.getMovementSpeed() * 2;
                 this.setVelocity(dir.x * speed, this.getVelocity().y, dir.z * speed);
             } else {
                 //this.lookAtEntity(owner, 5, 0);
@@ -147,7 +153,7 @@ public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @N
 
             int yHeightToOwner = (int) (owner.y - this.y);
 
-            if (yHeightToOwner > 1) {
+            if (this.horizontalCollision && this.onGround) {
                 this.jump();
                 //this.processFlappingMovement();
             }
@@ -158,15 +164,23 @@ public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @N
             }
 
             if (!this.onGround) {
-                //this.processFlappingMovement();
+                // this.processFlappingMovement();
             }
+
+            if (Utils.squaredDistanceToOrigin(new Vec3d(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
+                this.waitingTime++;
+                if (this.waitingTime > 30) this.wander();
+            } else {
+                this.waitingTime = 0;
+            }
+
             this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
             this.setHeadYaw(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
                 this.bodyYaw = this.headYaw - (float) Math.signum(bodyYawDiff) * 50;
             } else {
-                                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.headYaw - this.bodyYaw /*bodyYaw*/, -10, 10);
+                this.bodyYaw = this.bodyYaw + MathHelper.clamp(this.headYaw - this.bodyYaw, -10, 10);
             }
 
             this.move(this.velocityX, this.velocityY, this.velocityZ);
@@ -179,6 +193,11 @@ public EntityData initialize(final @NotNull LocalDifficulty difficulty, final @N
             if (distanceTo(owner) >= 10) {
                 this.requestTeleport(owner.x, owner.y, owner.z);
             }
+        }
+
+        int ambient = (int) (Math.random() * (60 * 20));
+        if (ambient == 1) {
+            world.playSound(this.x, this.y, this.z, PetsSounds.DUCK_AMBIENT, 1.0f, 1.0f, true);
         }
     }
 

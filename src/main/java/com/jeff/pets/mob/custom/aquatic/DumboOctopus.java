@@ -42,6 +42,7 @@ public class DumboOctopus extends FlyingPet {
     public DumboOctopus(final World level) {
         super(level);
         this.setBounds(0.5F, 0.5F);
+        this.setMovementSpeed(0.3f);
         this.initGoals();
     }
 

@@ -12,7 +12,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.Sys;
 
@@ -34,8 +33,6 @@ public abstract class AbstractPet extends TameableEntity {
     private boolean isReturningToOwner = false;
     private float randomX = (float) (Math.random() - 1f);
     private float randomZ = (float) (Math.random() - 1);
-    private int registeredChunkX = Integer.MIN_VALUE;
-    private int registeredChunkZ = Integer.MIN_VALUE;
 
 protected AbstractPet(World level) {
         super(level);
@@ -107,7 +104,7 @@ protected AbstractPet(World level) {
         if (this.isTamed() && itemStack == null && player.isSneaking()) {
             if (!this.hasMount()) {
                 this.startRiding(player);
-                this.lookAtEntity(player, 0f, 0f);
+                //this.lookAtEntity(player, 0f, 0f);
             } else {
                 this.stopRiding();
             }
@@ -133,44 +130,6 @@ protected AbstractPet(World level) {
         // sets it again - otherwise the animation keeps running (and speeding up) forever
         this.setLimbDistance(this.getLimbDistance() * 0.7F);
         super.tick();
-        this.updateChunkRegistration();
-    }
-
-    /**
-     * Keeps this pet registered in the entity list of the chunk it currently stands in.
-     * <p>
-     * Pets are added to the world with {@code World#addEntity}, which only appends them to the
-     * world's tick list. The crosshair raycast ({@code GameRenderer#updateTargetedEntity} ->
-     * {@code World#getEntitiesIn}) however walks the entity lists of the chunks inside the reach
-     * box, so a pet that was never registered with its chunk can never be picked - left clicks
-     * pass straight through it and right clicks never reach {@code #interactAt}.
-     */
-    public void updateChunkRegistration() {
-        if (this.world == null) {
-            return;
-        }
-
-        int chunkX = MathHelper.floor(this.x / 16.0D);
-        int chunkZ = MathHelper.floor(this.z / 16.0D);
-
-        if (chunkX == this.registeredChunkX && chunkZ == this.registeredChunkZ) {
-            return;
-        }
-
-        if (this.registeredChunkX != Integer.MIN_VALUE) {
-            Chunk previous = this.world.getChunk(this.registeredChunkX, this.registeredChunkZ);
-            if (previous != null) {
-                previous.removeEntity(this);
-            }
-        }
-
-        Chunk chunk = this.world.getChunk(chunkX, chunkZ);
-        if (chunk != null) {
-            chunk.addEntity(this);
-        }
-
-        this.registeredChunkX = chunkX;
-        this.registeredChunkZ = chunkZ;
     }
 
     /**
