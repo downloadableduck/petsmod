@@ -34,7 +34,6 @@ public class PetsConfigScreen extends GuiScreen {
     public AbstractPet entity;
     public DropdownMenu dropdownMenu;
     public String entityName;
-    private int size = 0;
 
     public PetsConfigScreen() {
         super();
@@ -92,20 +91,11 @@ public class PetsConfigScreen extends GuiScreen {
             String component = "⚠ Could not load 3D model of your pet because you are not in a level.";
             this.drawString(Minecraft.getInstance().fontRenderer, component, this.width - this.fontRenderer.getStringWidth(component) - (Minecraft.getInstance().gameSettings.fullScreen ? 10 : 30), this.height / 2, color);
         }
-        if (ticks <= 0) {
-            Minecraft.getInstance().gameSettings.guiScale = (this.size);
-            Minecraft.getInstance().gameSettings.saveOptions();
-        }
         super.render(mousex, mousey, a);
     }
 
     @Override
     public void initGui() {
-        if (this.size == 0) {
-            this.size = Minecraft.getInstance().gameSettings.guiScale;
-        }
-        Minecraft.getInstance().gameSettings.guiScale = 5;
-        Minecraft.getInstance().gameSettings.saveOptions();
         ScaledResolution res = new ScaledResolution(Minecraft.getInstance());
         this.width = res.func_78326_a();
         this.height = res.func_78328_b();
@@ -134,10 +124,6 @@ public class PetsConfigScreen extends GuiScreen {
 
     @Override
     public void onGuiClosed() {
-        if (this.size != 0) {
-            Minecraft.getInstance().gameSettings.guiScale = this.size;
-            Minecraft.getInstance().gameSettings.saveOptions();
-        }
         if (!this.closing) {
             this.closing = true;
             return;

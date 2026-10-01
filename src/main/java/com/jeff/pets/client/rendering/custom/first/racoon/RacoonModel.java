@@ -1,5 +1,6 @@
 package com.jeff.pets.client.rendering.custom.first.racoon;
 
+import com.jeff.pets.client.Math2;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.first.Racoon;
 import net.minecraft.client.model.ModelRenderer;
@@ -81,7 +82,7 @@ public class RacoonModel extends PetModel {
     @Override
     public void setLivingAnimations(EntityLivingBase entity, float f, float g, float h) {
         Racoon fox = (Racoon) entity;
-        //this.body.rotateAngleX = ((float) Math2.PI / 2F);
+        this.body.rotateAngleX = ((float) Math.PI / 2F);
         this.tail.rotateAngleX = -0.05235988F;
         this.right_hind_leg.rotateAngleX = net.minecraft.util.MathHelper.cos(f * 0.6662F) * 1.4F * g;
         this.left_hind_leg.rotateAngleX = net.minecraft.util.MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g;

@@ -28,6 +28,7 @@ public class DumboOctopus extends FlyingPet {
     public DumboOctopus(final World level) {
         super(level);
         this.setSize(0.5f, 0.5f);
+        this.setAIMoveSpeed(0.3f);
     }
 
     @Override
@@ -120,7 +121,7 @@ public class DumboOctopus extends FlyingPet {
             if (this.field_70154_o == owner) {
                 if (owner.isSneaking() && owner.isJumping) {
                     this.func_70078_a(null);
-                    this.setVelocity(this.motionX, this.motionY + 0.1, this.motionZ);
+                    this.setVelocity(this.motionX, this.motionY - 0.04, this.motionZ);
                 } else {
                     this.setSitting(true);
                 }
@@ -128,8 +129,7 @@ public class DumboOctopus extends FlyingPet {
 
             double dx = owner.posX - this.posX;
             double dz = owner.posZ - this.posZ;
-            net.minecraft.util.Vec3 ownerPos = owner.getPositionVector().add(0, owner.getEyeHeight() * 0.8, 0);
-            net.minecraft.util.Vec3 vecToOwner = ownerPos.subtract(this.getPositionVector());
+
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.getDistance(owner);
@@ -145,31 +145,34 @@ public class DumboOctopus extends FlyingPet {
 
                 this.limbSwingAmount = (0.5F);
 
-                net.minecraft.util.Vec3 dir = vecToOwner.normalize();
-                double speed = 0.2;
+                net.minecraft.util.Vec3 targetPos = owner.getPositionVector();
+                net.minecraft.util.Vec3 dir = targetPos.subtract(this.getPositionVector()).normalize();
 
-                this.setRenderYawOffset(Duck.rotlerp(this.renderYawOffset, (float) targetYaw));
+                this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setRotationYawHead(this.getYRot());
                 this.renderYawOffset = this.renderYawOffset + MathHelper.clamp(this.rotationYawHead - this.renderYawOffset, -50.0f, 50.0f);
 
-                this.setVelocity(dir.x * speed, dir.y * speed, dir.z * speed);
+                double speed = owner.getAIMoveSpeed() * 2;
+                this.setVelocity(dir.x * speed, this.motionY, dir.z * speed);
             } else {
 
-                this.setVelocity(this.motionX * 0.8, this.motionY * 0.8, this.motionZ * 0.8);
+                this.setVelocity(this.motionX * 0.8, this.motionY, this.motionZ * 0.8);
             }
 
             int yHeightToOwner = (int) (owner.posY - this.posY);
 
-            if (yHeightToOwner > 1 || this.collidedHorizontally) {
+            if (this.collidedHorizontally && this.onGround) {
                 this.jump();
+                //this.processFlappingMovement();
             }
 
             if (yHeightToOwner > -1) {
                 this.setVelocity(this.motionX, this.motionY - 0.01, this.motionZ);
+                //this.processFlappingMovement();
             }
 
             if (!this.onGround) {
-                //this.processFlappingMovement();
+                // this.processFlappingMovement();
             }
 
             if (owner.motionX * owner.motionX + owner.motionY * owner.motionY + owner.motionZ * owner.motionZ < 0.01) {
@@ -189,6 +192,10 @@ public class DumboOctopus extends FlyingPet {
             }
 
             this.move(this.motionX, this.motionY, this.motionZ);
+
+            if (!this.onGround) {
+                this.setVelocity(this.motionX, this.motionY - 0.04, this.motionZ);
+            }
         }
         if (owner != null) {
             if (getDistance(owner) >= 10) {
@@ -198,7 +205,7 @@ public class DumboOctopus extends FlyingPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            this.func_85030_a("mob.squid.ambient", 1.0f, 1.0f);
+            //this.world.playLocalSound(this.posX, this.posY, this.posZ, PetsSounds.DUCK_AMBIENT, SoundCategory.NEUTRAL, 1.0f, 1.0f, true);
         }
     }
 

@@ -26,8 +26,7 @@ import net.minecraft.util.Vec3;
 
 import java.util.Objects;
 
-import static com.jeff.pets.client.Central.CONFIG;
-import static com.jeff.pets.client.Central.MOD_ID;
+import static com.jeff.pets.client.Central.*;
 
 /**
  * A utility class used mainly in {@link Central} and misc rendering classes. Contains various
@@ -45,7 +44,7 @@ public class Utils {
      *
      * @param entity     the entity to be summoned.
      * @param entityName the name to set the custom entity to. (Technically not required since
-     *                   we use a method to refresh the names in {@link Central}, but still.
+     *                   we use a method to refresh the names in {@link Central}, but still).
      * @return If the {@code entity}, {@code player}, or {@code world} is {@code null}
      */
 
@@ -76,7 +75,7 @@ public class Utils {
     /**
      * The method used in
      * {@link Central#refreshPetNames()}. Checks whether the entities' name is equal to the name
-     * in the config, and assigns it the correct name if not.. Additionally, this method provides a layer of safety that ensures that Minecraft will not
+     * in the config, and assigns it the correct name if not. Additionally, this method provides a layer of safety that ensures that Minecraft will not
      * throw a {@code NullPointerException} if {@code entity} is {@code null}.
      *
      * @param activePet The {@code activePet} value that matches {@code entity}
@@ -253,6 +252,8 @@ public class Utils {
                 return new Koi(world);
             case "stingray":
                 return new Stingray(world);
+            case "zombie_pigman":
+                return new ClientZombiePigman(world);
             default:
                 return null;
         }
@@ -749,6 +750,7 @@ public class Utils {
             case "stingray":
                 CONFIG.stingrayName = name;
                 break;
+
         }
         if (Minecraft.getInstance().player != null) {
             NetworkManager.get().broadcastChangePetName(Minecraft.getInstance().player.getGameProfile().getId().toString(), Utils.getActivePetName());
@@ -838,6 +840,10 @@ public class Utils {
 
     public static void setActivePetSkin(String val) {
         switch (CONFIG.activePet) {
+            case "head" :
+                CONFIG.headSkin = val;
+                head.isLoading = false;
+                break;
             case "duck":
                 if (Objects.equals(val, "mallard")) {
                     CONFIG.duckSkin = "mallard";
