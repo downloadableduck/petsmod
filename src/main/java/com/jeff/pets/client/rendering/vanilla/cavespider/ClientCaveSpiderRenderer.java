@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.cavespider;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientCaveSpider;
 import net.minecraft.client.model.ModelSpider;
@@ -12,12 +14,14 @@ public class ClientCaveSpiderRenderer extends PetRenderer<ClientCaveSpider, Mode
     }
 
     @Override
-    public void preRenderCallback(ClientCaveSpider caveSpider, float f) {
+    public void preRenderCallback(EntityLivingBase __e, float f) {
+        ClientCaveSpider caveSpider = (ClientCaveSpider) __e;
         net.minecraft.client.renderer.GlStateManager.scalef(0.7F, 0.7F, 0.7F);
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientCaveSpider livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        ClientCaveSpider livingEntityRenderState = (ClientCaveSpider) __e;
         return new ResourceLocation("minecraft", "textures/entity/spider/cave_spider.png");
     }
 }

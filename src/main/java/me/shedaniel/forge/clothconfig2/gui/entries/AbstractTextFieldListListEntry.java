@@ -54,7 +54,12 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
                     super.func_146194_f();
                 }
             };
-            widget.func_175205_a(this::isValidText);
+            widget.func_175205_a(new com.google.common.base.Predicate() {
+                @Override
+                public boolean apply(Object input) {
+                    return isValidText((String) input);
+                }
+            });
             widget.setMaxStringLength(Integer.MAX_VALUE);
             widget.setEnableBackgroundDrawing(false);
             widget.setText(Objects.toString(finalValue));

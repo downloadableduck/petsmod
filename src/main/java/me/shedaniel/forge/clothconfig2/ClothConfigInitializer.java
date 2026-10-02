@@ -166,14 +166,14 @@ public class ClothConfigInitializer {
                 /*@Override
                 public boolean mouseClicked(double d, double u, int i) {
                     boolean bl = super.func_146118_a(d, u, i);
-                     boolean bl = super.func_146116_c(mc, mouseX, mouseY); if (bl) { LiteModPetsMod.LOGGER.info("mouse pressed");
+                     boolean bl = super.func_146116_c(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
                         easingMethodEntry.getSelectionElement().getTopRenderer().setValue(EasingMethodImpl.LINEAR);
                         scrollDurationEntry.setValue(600);
                         scrollStepEntry.setValue("19.0");
                         bounceMultiplierEntry.setValue(240);
                         getScreen().setEdited(true, isRequiresRestart());
                     }
-                    
+
                 }*/
             };
             private final List<GuiButton> children = ImmutableList.of(buttonWidget);
@@ -209,14 +209,14 @@ public class ClothConfigInitializer {
                 /*@Override
                 public boolean mouseClicked(double d, double u, int i) {
                     boolean bl = super.mouseClicked(d, u, i);
-                     boolean bl = super.func_146116_c(mc, mouseX, mouseY); if (bl) { LiteModPetsMod.LOGGER.info("mouse pressed");
+                     boolean bl = super.func_146116_c(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
                         easingMethodEntry.getSelectionElement().getTopRenderer().setValue(EasingMethodImpl.NONE);
                         scrollDurationEntry.setValue(0);
                         scrollStepEntry.setValue("16.0");
                         bounceMultiplierEntry.setValue(-10);
                         getScreen().setEdited(true, isRequiresRestart());
                     }
-                    
+
                 }*/
             };
             private final List<GuiButton> children = ImmutableList.of(buttonWidget);
@@ -267,11 +267,11 @@ public class ClothConfigInitializer {
         SubCategoryBuilder colors = entryBuilder.startSubCategory("Colors").setExpanded(true);
         colors.add(entryBuilder.startColorField("A color field", 0x00ffff).setDefaultValue(0x00ffff).build());
         colors.add(entryBuilder.startColorField("An alpha color field", 0xff00ffff).setDefaultValue(0xff00ffff).setAlphaMode(true).build());
-        colors.add(entryBuilder.startDropdownMenu("lol apple", DropdownMenuBuilder.TopCellElementBuilder.ofItemObject(Items.APPLE), DropdownMenuBuilder.CellCreatorBuilder.ofItemObject()).setDefaultValue(Items.APPLE).setSelections(StreamSupport.stream(Item.REGISTRY.spliterator(), false).sorted(Comparator.comparing(Item::toString)).collect(Collectors.toCollection(LinkedHashSet::new))).setSaveConsumer(item -> System.out.println("save this " + item)).build());
-        colors.add(entryBuilder.startDropdownMenu("lol apple", DropdownMenuBuilder.TopCellElementBuilder.ofItemObject(Items.APPLE), DropdownMenuBuilder.CellCreatorBuilder.ofItemObject()).setDefaultValue(Items.APPLE).setSelections(StreamSupport.stream(Item.REGISTRY.spliterator(), false).sorted(Comparator.comparing(Item::toString)).collect(Collectors.toCollection(LinkedHashSet::new))).setSaveConsumer(item -> System.out.println("save this " + item)).build());
-        colors.add(entryBuilder.startDropdownMenu("lol apple", DropdownMenuBuilder.TopCellElementBuilder.ofItemObject(Items.APPLE), DropdownMenuBuilder.CellCreatorBuilder.ofItemObject()).setDefaultValue(Items.APPLE).setSelections(StreamSupport.stream(Item.REGISTRY.spliterator(), false).sorted(Comparator.comparing(Item::toString)).collect(Collectors.toCollection(LinkedHashSet::new))).setSaveConsumer(item -> System.out.println("save this " + item)).build());
-        colors.add(entryBuilder.startDropdownMenu("lol apple", DropdownMenuBuilder.TopCellElementBuilder.ofItemObject(Items.APPLE), DropdownMenuBuilder.CellCreatorBuilder.ofItemObject()).setDefaultValue(Items.APPLE).setSelections(StreamSupport.stream(Item.REGISTRY.spliterator(), false).sorted(Comparator.comparing(Item::toString)).collect(Collectors.toCollection(LinkedHashSet::new))).setSaveConsumer(item -> System.out.println("save this " + item)).build());
-        colors.add(entryBuilder.startDropdownMenu("lol apple", DropdownMenuBuilder.TopCellElementBuilder.ofItemObject(Items.APPLE), DropdownMenuBuilder.CellCreatorBuilder.ofItemObject()).setDefaultValue(Items.APPLE).setSelections(StreamSupport.stream(Item.REGISTRY.spliterator(), false).sorted(Comparator.comparing(Item::toString)).collect(Collectors.toCollection(LinkedHashSet::new))).setSaveConsumer(item -> System.out.println("save this " + item)).build());
+        colors.add(entryBuilder.startDropdownMenu("lol apple", DropdownMenuBuilder.TopCellElementBuilder.ofItemObject(Items.APPLE), DropdownMenuBuilder.CellCreatorBuilder.ofItemObject()).setDefaultValue(Items.APPLE).setSelections((Iterable<Item>) StreamSupport.stream(Item.REGISTRY.spliterator(), false).sorted(Comparator.comparing(Item::toString)).collect(Collectors.toCollection(LinkedHashSet::new))).setSaveConsumer(item -> System.out.println("save this " + item)).build());
+        colors.add(entryBuilder.startDropdownMenu("lol apple", DropdownMenuBuilder.TopCellElementBuilder.ofItemObject(Items.APPLE), DropdownMenuBuilder.CellCreatorBuilder.ofItemObject()).setDefaultValue(Items.APPLE).setSelections((Iterable<Item>) StreamSupport.stream(Item.REGISTRY.spliterator(), false).sorted(Comparator.comparing(Item::toString)).collect(Collectors.toCollection(LinkedHashSet::new))).setSaveConsumer(item -> System.out.println("save this " + item)).build());
+        colors.add(entryBuilder.startDropdownMenu("lol apple", DropdownMenuBuilder.TopCellElementBuilder.ofItemObject(Items.APPLE), DropdownMenuBuilder.CellCreatorBuilder.ofItemObject()).setDefaultValue(Items.APPLE).setSelections((Iterable<Item>) StreamSupport.stream(Item.REGISTRY.spliterator(), false).sorted(Comparator.comparing(Item::toString)).collect(Collectors.toCollection(LinkedHashSet::new))).setSaveConsumer(item -> System.out.println("save this " + item)).build());
+        colors.add(entryBuilder.startDropdownMenu("lol apple", DropdownMenuBuilder.TopCellElementBuilder.ofItemObject(Items.APPLE), DropdownMenuBuilder.CellCreatorBuilder.ofItemObject()).setDefaultValue(Items.APPLE).setSelections((Iterable<Item>) StreamSupport.stream(Item.REGISTRY.spliterator(), false).sorted(Comparator.comparing(Item::toString)).collect(Collectors.toCollection(LinkedHashSet::new))).setSaveConsumer(item -> System.out.println("save this " + item)).build());
+        colors.add(entryBuilder.startDropdownMenu("lol apple", DropdownMenuBuilder.TopCellElementBuilder.ofItemObject(Items.APPLE), DropdownMenuBuilder.CellCreatorBuilder.ofItemObject()).setDefaultValue(Items.APPLE).setSelections((Iterable<Item>) StreamSupport.stream(Item.REGISTRY.spliterator(), false).sorted(Comparator.comparing(Item::toString)).collect(Collectors.toCollection(LinkedHashSet::new))).setSaveConsumer(item -> System.out.println("save this " + item)).build());
         testing.addEntry(colors.build());
         return builder;
     }

@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.custom.first.penguin;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Penguin;
@@ -14,12 +16,14 @@ public class PenguinRenderer extends PetRenderer<Penguin, PenguinModel> {
     }
 
     @Override
-    public ResourceLocation getEntityTexture(Penguin livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        Penguin livingEntityRenderState = (Penguin) __e;
         return new ResourceLocation(Central.MOD_ID, "textures/entity/penguin/penguin.png");
     }
 
     @Override
-    public void preRenderCallback(Penguin livingEntityRenderState, float f) {
+    public void preRenderCallback(EntityLivingBase __e, float f) {
+        Penguin livingEntityRenderState = (Penguin) __e;
         if (CONFIG.isBaby) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }

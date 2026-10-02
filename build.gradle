@@ -33,7 +33,6 @@ buildscript {
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:' + project.forgeGradleVersion
-        classpath 'org.spongepowered:mixingradle:0.5-SNAPSHOT'
     }
 }
 
@@ -42,7 +41,6 @@ configurations {
 }
 
 apply plugin: 'net.minecraftforge.gradle.liteloader'
-apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'idea'
 
 group = "com.jeff.pets" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -66,20 +64,8 @@ minecraft {
     runDir = "run"
 }
 
-sourceSets {
-    main {
-        // Refmap declaration must match the refmap name specified in the json config
-        ext.refMap = "pets_mod.refmap.json"
-    }
-}
-
 tasks.withType(JavaCompile).configureEach {task ->
     options.compilerArgs << "-Xmaxerrs" << "10000"
-}
-
-mixin {
-    // liteloader does not do runtime deobfuscation, so in production we use "notch names", mixin needs to know this
-    defaultObfuscationEnv notch
 }
 
 litemod {
@@ -89,7 +75,6 @@ jar {
     // The litemod task above generates the litemod.json dynamically, you can replace it with a resource if you want more control
     from(sourceSets.main.resources.srcDirs) {
         include 'litemod.json'
-        include 'pets.client.mixins.json'
     }
     archiveName = "pets-mod-" + project.version + "-" + project.mcVersion + "-lite" + project.build + ".litemod"
     archivesBaseName = "pets-mod"

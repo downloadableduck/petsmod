@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.wither;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import net.minecraft.util.ResourceLocation;
@@ -16,7 +18,8 @@ public class ClientWitherRenderer extends PetRenderer<ClientWither, ClientWither
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientWither livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        ClientWither livingEntityRenderState = (ClientWither) __e;
         String witherTexturePath;
         if (Objects.equals(CONFIG.witherSkin, "normal")) {
             witherTexturePath = "textures/entity/wither/wither.png";

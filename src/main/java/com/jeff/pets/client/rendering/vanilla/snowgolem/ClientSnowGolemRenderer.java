@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.snowgolem;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientSnowGolem;
 import net.minecraft.client.Minecraft;
@@ -14,7 +16,8 @@ public class ClientSnowGolemRenderer extends PetRenderer<ClientSnowGolem, ModelS
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientSnowGolem snowGolemRenderState) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        ClientSnowGolem snowGolemRenderState = (ClientSnowGolem) __e;
         return new ResourceLocation("minecraft", "textures/entity/snow_golem.png");
     }
 

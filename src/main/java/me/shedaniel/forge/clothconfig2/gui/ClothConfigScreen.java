@@ -11,16 +11,13 @@ import me.shedaniel.forge.clothconfig2.impl.KeyInput;
 import me.shedaniel.forge.math.Rectangle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ChatComponentTranslation;
-
-import org.lwjgl.input.Mouse;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
@@ -28,7 +25,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @SuppressWarnings({"deprecation", "rawtypes", "unchecked", "DuplicatedCode"})
-
 public abstract class ClothConfigScreen extends GuiScreen {
 
     private static final ResourceLocation CONFIG_TEX = new ResourceLocation("cloth-config2", "textures/gui/cloth_config.png");
@@ -295,7 +291,7 @@ public abstract class ClothConfigScreen extends GuiScreen {
     public void clampTabsScrolled() {
         int xx = 0;
         for (ClothConfigTabButton tabButton : tabButtons)
-            xx += tabButton.getWidth() + 2;
+            xx += tabButton.width + 2;
         if (xx > width - 40)
             tabsScrollProgress = MathHelper.clamp(tabsScrollProgress, 0, getTabsMaximumScrolled() - width + 40);
         else
@@ -326,7 +322,7 @@ public abstract class ClothConfigScreen extends GuiScreen {
             int xx = 24 - (int) tabsScrollProgress;
             for (ClothConfigTabButton tabButton : tabButtons) {
                 tabButton.x = xx;
-                xx += tabButton.getWidth() + 2;
+                xx += tabButton.width + 2;
             }
             if (buttonLeftTab != null)
                 buttonLeftTab.enabled = tabsScrollProgress > 0d;
@@ -369,7 +365,7 @@ public abstract class ClothConfigScreen extends GuiScreen {
             if (errors.size() > 0) {
                 minecraft.getTextureManager().bindTexture(CONFIG_TEX);
                 GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-                String text = "§c" + (errors.size() == 1 ? errors.get(0) : I18n.format("text.cloth-config.multi_error"));
+                String text = "Â§c" + (errors.size() == 1 ? errors.get(0) : I18n.format("text.cloth-config.multi_error"));
                 if (isTransparentBackground()) {
                     int stringWidth = minecraft.fontRenderer.getStringWidth(text);
                     drawGradientRect(8, 9, 20 + stringWidth, 14 + minecraft.fontRenderer.FONT_HEIGHT, 0x68000000, 0x68000000);
@@ -380,7 +376,7 @@ public abstract class ClothConfigScreen extends GuiScreen {
         } else if (!isEditable()) {
             minecraft.getTextureManager().bindTexture(CONFIG_TEX);
             GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-            String text = "§c" + I18n.format("text.cloth-config.not_editable");
+            String text = "Â§c" + I18n.format("text.cloth-config.not_editable");
             if (isTransparentBackground()) {
                 int stringWidth = minecraft.fontRenderer.getStringWidth(text);
                 drawGradientRect(8, 9, 20 + stringWidth, 14 + minecraft.fontRenderer.FONT_HEIGHT, 0x68000000, 0x68000000);
@@ -405,17 +401,21 @@ public abstract class ClothConfigScreen extends GuiScreen {
         GlStateManager.disableTexture2D();
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer buffer = tessellator.getBuffer();
-        buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-        buffer.pos(tabsBounds.getMinX() + 20, tabsBounds.getMinY() + 4, 0.0D).func_181673_a(0, 1f).color(0, 0, 0, lightColor).endVertex();
-        buffer.pos(tabsBounds.getMaxX() - 20, tabsBounds.getMinY() + 4, 0.0D).func_181673_a(1f, 1f).color(0, 0, 0, lightColor).endVertex();
-        buffer.pos(tabsBounds.getMaxX() - 20, tabsBounds.getMinY(), 0.0D).func_181673_a(1f, 0).color(0, 0, 0, darkColor).endVertex();
-        buffer.pos(tabsBounds.getMinX() + 20, tabsBounds.getMinY(), 0.0D).func_181673_a(0.0D, 0.0D).color(0, 0, 0, darkColor).endVertex();
+        buffer.func_178970_b();
+        buffer.func_178961_b(0, 0, 0, lightColor);
+        buffer.func_178985_a(tabsBounds.getMinX() + 20, tabsBounds.getMinY() + 4, 0.0D, 0, 1f);
+        buffer.func_178985_a(tabsBounds.getMaxX() - 20, tabsBounds.getMinY() + 4, 0.0D, 1f, 1f);
+        buffer.func_178961_b(0, 0, 0, darkColor);
+        buffer.func_178985_a(tabsBounds.getMaxX() - 20, tabsBounds.getMinY(), 0.0D, 1f, 0);
+        buffer.func_178985_a(tabsBounds.getMinX() + 20, tabsBounds.getMinY(), 0.0D, 0, 0);
         tessellator.draw();
-        buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-        buffer.pos(tabsBounds.getMinX() + 20, tabsBounds.getMaxY(), 0.0D).func_181673_a(0, 1f).color(0, 0, 0, darkColor).endVertex();
-        buffer.pos(tabsBounds.getMaxX() - 20, tabsBounds.getMaxY(), 0.0D).func_181673_a(1f, 1f).color(0, 0, 0, darkColor).endVertex();
-        buffer.pos(tabsBounds.getMaxX() - 20, tabsBounds.getMaxY() - 4, 0.0D).func_181673_a(1f, 0).color(0, 0, 0, lightColor).endVertex();
-        buffer.pos(tabsBounds.getMinX() + 20, tabsBounds.getMaxY() - 4, 0.0D).func_181673_a(0.0D, 0.0D).color(0, 0, 0, lightColor).endVertex();
+        buffer.func_178970_b();
+        buffer.func_178961_b(0, 0, 0, darkColor);
+        buffer.func_178985_a(tabsBounds.getMinX() + 20, tabsBounds.getMaxY(), 0.0D, 0, 1f);
+        buffer.func_178985_a(tabsBounds.getMaxX() - 20, tabsBounds.getMaxY(), 0.0D, 1f, 1f);
+        buffer.func_178961_b(0, 0, 0, lightColor);
+        buffer.func_178985_a(tabsBounds.getMaxX() - 20, tabsBounds.getMaxY() - 4, 0.0D, 1f, 0);
+        buffer.func_178985_a(tabsBounds.getMinX() + 20, tabsBounds.getMaxY() - 4, 0.0D, 0, 0);
         tessellator.draw();
         GlStateManager.enableTexture2D();
         GlStateManager.shadeModel(7424);
@@ -432,11 +432,13 @@ public abstract class ClothConfigScreen extends GuiScreen {
         minecraft.getTextureManager().bindTexture(getBackgroundLocation());
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         float f = 32.0F;
-        buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-        buffer.pos(rect.getMinX(), rect.getMaxY(), 0.0D).func_181673_a(rect.getMinX() / 32.0F, rect.getMaxY() / 32.0F).color(red, green, blue, endAlpha).endVertex();
-        buffer.pos(rect.getMaxX(), rect.getMaxY(), 0.0D).func_181673_a(rect.getMaxX() / 32.0F, rect.getMaxY() / 32.0F).color(red, green, blue, endAlpha).endVertex();
-        buffer.pos(rect.getMaxX(), rect.getMinY(), 0.0D).func_181673_a(rect.getMaxX() / 32.0F, rect.getMinY() / 32.0F).color(red, green, blue, startAlpha).endVertex();
-        buffer.pos(rect.getMinX(), rect.getMinY(), 0.0D).func_181673_a(rect.getMinX() / 32.0F, rect.getMinY() / 32.0F).color(red, green, blue, startAlpha).endVertex();
+        buffer.func_178970_b();
+        buffer.func_178961_b(red, green, blue, endAlpha);
+        buffer.func_178985_a(rect.getMinX(), rect.getMaxY(), 0.0D, rect.getMinX() / 32.0F, rect.getMaxY() / 32.0F);
+        buffer.func_178985_a(rect.getMaxX(), rect.getMaxY(), 0.0D, rect.getMaxX() / 32.0F, rect.getMaxY() / 32.0F);
+        buffer.func_178961_b(red, green, blue, startAlpha);
+        buffer.func_178985_a(rect.getMaxX(), rect.getMinY(), 0.0D, rect.getMaxX() / 32.0F, rect.getMinY() / 32.0F);
+        buffer.func_178985_a(rect.getMinX(), rect.getMinY(), 0.0D, rect.getMinX() / 32.0F, rect.getMinY() / 32.0F);
         tessellator.draw();
     }
 

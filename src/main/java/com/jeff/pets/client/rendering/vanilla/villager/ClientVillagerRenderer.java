@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.villager;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientVillager;
 import net.minecraft.client.model.ModelVillager;
@@ -22,7 +24,8 @@ public class ClientVillagerRenderer extends PetRenderer<ClientVillager, ModelVil
     }
 
     @Override
-    public void preRenderCallback(ClientVillager state, float f) {
+    public void preRenderCallback(EntityLivingBase __e, float f) {
+        ClientVillager state = (ClientVillager) __e;
         if (CONFIG.isBaby) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
@@ -30,7 +33,8 @@ public class ClientVillagerRenderer extends PetRenderer<ClientVillager, ModelVil
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientVillager villagerRenderState) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        ClientVillager villagerRenderState = (ClientVillager) __e;
         if (Objects.equals(CONFIG.villagerSkin, "butcher")) {
             return (BUTCHER_LOCATION);
         } else if (Objects.equals(CONFIG.villagerSkin, "farmer")) {

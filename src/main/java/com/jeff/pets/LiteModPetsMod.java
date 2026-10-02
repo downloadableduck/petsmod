@@ -4,8 +4,6 @@ import com.jeff.pets.client.Central;
 import com.jeff.pets.client.PetsClientInitializer;
 import com.mojang.realmsclient.dto.RealmsServer;
 import com.mumfrey.liteloader.*;
-import com.mumfrey.liteloader.api.MixinConfigProvider;
-import com.mumfrey.liteloader.client.ducks.IRenderManager;
 import com.mumfrey.liteloader.core.LiteLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ServerData;
@@ -15,26 +13,21 @@ import net.minecraft.network.play.server.S01PacketJoinGame;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.spongepowered.asm.mixin.MixinEnvironment;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.Map;
 
-public class LiteModPetsMod implements LiteMod, Tickable, JoinGameListener, InitCompleteListener, MixinConfigProvider, OutboundChatFilter {
+public class LiteModPetsMod implements LiteMod, Tickable, JoinGameListener, InitCompleteListener, OutboundChatFilter {
 
     public static final String MOD_ID = "pets_mod";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
-
 
     public LiteModPetsMod() {
         PetsClientInitializer.register();
         PetsSounds.initialize();
         new Central();
         new PetsClientInitializer();
-    }
-
-    static {
-        MixinEnvironment.setCompatibilityLevel(MixinEnvironment.CompatibilityLevel.JAVA_8);
     }
 
     @Override
@@ -74,30 +67,21 @@ public class LiteModPetsMod implements LiteMod, Tickable, JoinGameListener, Init
 
     @Override
     public void onInitCompleted(Minecraft minecraft, LiteLoader loader) {
-        PetsClientInitializer.register();
-        RenderManager manager = minecraft.getRenderManager();
-        Map map = ((IRenderManager) manager).getRenderMap();
-        synchronized (PetsClientInitializer.renderManagerMap.keySet()) {
-            PetsClientInitializer.renderManagerMap.put(manager, new PetsClientInitializer.Context(map));
-            for (Map.Entry<Class, PetsClientInitializer.Factory> entry : PetsClientInitializer.renderSupplierMap.entrySet()) {
-                map.put(entry.getKey(), entry.getValue().create(manager, new PetsClientInitializer.Context((Map) map)));
+        try {
+            PetsClientInitializer.register();
+            RenderManager manager = minecraft.getRenderManager();
+            Field field = manager.getClass().getDeclaredField("k");
+            field.setAccessible(true);
+            Map map = (Map) field.get(manager);
+            synchronized (PetsClientInitializer.renderManagerMap.keySet()) {
+                PetsClientInitializer.renderManagerMap.put(manager, new PetsClientInitializer.Context(map));
+                for (Map.Entry<Class, PetsClientInitializer.Factory> entry : PetsClientInitializer.renderSupplierMap.entrySet()) {
+                    map.put(entry.getKey(), entry.getValue().create(manager, new PetsClientInitializer.Context((Map) map)));
+                }
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public MixinEnvironment.CompatibilityLevel getCompatibilityLevel() {
-        return MixinEnvironment.CompatibilityLevel.JAVA_8;
-    }
-
-    @Override
-    public String[] getMixinConfigs() {
-        return new String[]{"pets.client.mixins.json"};
-    }
-
-    @Override
-    public String[] getErrorHandlers() {
-        return new String[0];
     }
 
     @Override

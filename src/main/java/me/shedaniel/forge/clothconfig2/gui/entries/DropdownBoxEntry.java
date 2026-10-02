@@ -2,8 +2,6 @@ package me.shedaniel.forge.clothconfig2.gui.entries;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.jeff.pets.LiteModPetsMod;
-import com.jeff.pets.client.Utils;
 import me.shedaniel.forge.clothconfig2.ClothConfigInitializer;
 import me.shedaniel.forge.clothconfig2.api.ScissorsHandler;
 import me.shedaniel.forge.math.Rectangle;
@@ -17,10 +15,8 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.MathHelper;
-
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -31,7 +27,6 @@ import java.util.function.Supplier;
 import static me.shedaniel.forge.clothconfig2.ClothConfigInitializer.handleScrollingPosition;
 
 @SuppressWarnings("deprecation")
-
 public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
 
     protected GuiButton resetButton;
@@ -52,8 +47,8 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         this.resetButton = new GuiButton(new Random().nextInt(), 0, 0, Minecraft.getInstance().fontRenderer.getStringWidth(I18n.format(resetButtonKey)) + 6, 20, I18n.format(resetButtonKey)) {
             @Override
             public boolean func_146116_c(Minecraft mc,  int mouseX, int mouseY) {
-                
-                 boolean bl = super.func_146116_c(mc, mouseX, mouseY); if (bl) { LiteModPetsMod.LOGGER.info("mouse pressed");
+
+                boolean bl = super.func_146116_c(mc, mouseX, mouseY); if (bl) {
                     selectionElement.topRenderer.setValue(defaultValue.get());
 
                     getScreen().setEdited(true, isRequiresRestart());
@@ -67,7 +62,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
     @Override
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-        int windowWidth = new ScaledResolution(Minecraft.getInstance()).func_78326_a();
+        int windowWidth = new ScaledResolution(Minecraft.getInstance(), Minecraft.getInstance().field_71443_c, Minecraft.getInstance().field_71440_d).func_78326_a();
         this.resetButton.enabled = isEditable() && getDefaultValue().isPresent() && (!defaultValue.get().equals(getValue()) || getConfigError().isPresent());
         this.resetButton.y = y;
         this.selectionElement.active = isEditable();
@@ -172,7 +167,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
 
         public boolean mouseScrolled(double double_1) {
             //if (menu.isExpanded())
-                //return menu.(double_1);
+            //return menu.(double_1);
             return false;
         }
 
@@ -389,19 +384,21 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
                 WorldRenderer buffer = tessellator.getBuffer();
 
                 // Bottom
-                buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-                buffer.pos(scrollbarPositionMinX, minY + height, 0.0D).func_181673_a(0.0D, 1.0D).color(bottomc, bottomc, bottomc, 255).endVertex();
-                buffer.pos(scrollbarPositionMaxX, minY + height, 0.0D).func_181673_a(1.0D, 1.0D).color(bottomc, bottomc, bottomc, 255).endVertex();
-                buffer.pos(scrollbarPositionMaxX, minY, 0.0D).func_181673_a(1.0D, 0.0D).color(bottomc, bottomc, bottomc, 255).endVertex();
-                buffer.pos(scrollbarPositionMinX, minY, 0.0D).func_181673_a(0.0D, 0.0D).color(bottomc, bottomc, bottomc, 255).endVertex();
+                buffer.func_178970_b();
+                buffer.func_178961_b(bottomc, bottomc, bottomc, 255);
+                buffer.func_178985_a(scrollbarPositionMinX, minY + height, 0.0D, 0, 1);
+                buffer.func_178985_a(scrollbarPositionMaxX, minY + height, 0.0D, 1, 1);
+                buffer.func_178985_a(scrollbarPositionMaxX, minY, 0.0D, 1, 0);
+                buffer.func_178985_a(scrollbarPositionMinX, minY, 0.0D, 0, 0);
                 tessellator.draw();
 
                 // Top
-                buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-                buffer.pos(scrollbarPositionMinX, (minY + height - 1), 0.0D).func_181673_a(0.0D, 1.0D).color(topc, topc, topc, 255).endVertex();
-                buffer.pos((scrollbarPositionMaxX - 1), (minY + height - 1), 0.0D).func_181673_a(1.0D, 1.0D).color(topc, topc, topc, 255).endVertex();
-                buffer.pos((scrollbarPositionMaxX - 1), minY, 0.0D).func_181673_a(1.0D, 0.0D).color(topc, topc, topc, 255).endVertex();
-                buffer.pos(scrollbarPositionMinX, minY, 0.0D).func_181673_a(0.0D, 0.0D).color(topc, topc, topc, 255).endVertex();
+                buffer.func_178970_b();
+                buffer.func_178961_b(topc, topc, topc, 255);
+                buffer.func_178985_a(scrollbarPositionMinX, (minY + height - 1), 0.0D, 0, 1);
+                buffer.func_178985_a((scrollbarPositionMaxX - 1), (minY + height - 1), 0.0D, 1, 1);
+                buffer.func_178985_a((scrollbarPositionMaxX - 1), minY, 0.0D, 1, 0);
+                buffer.func_178985_a(scrollbarPositionMinX, minY, 0.0D, 0, 0);
                 tessellator.draw();
                 GlStateManager.enableTexture2D();
             }
@@ -658,7 +655,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
             textFieldWidget.x = x + 4;
             textFieldWidget.y = y + 6;
-            Utils.setWidth(textFieldWidget, width - 8);
+            textFieldWidget.width = (width - 8);
             textFieldWidget.setEnabled(getParent().isEditable());
             textFieldWidget.setTextColor(getPreferredTextColor());
             textFieldWidget.func_146194_f();

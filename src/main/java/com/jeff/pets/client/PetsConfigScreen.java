@@ -1,8 +1,6 @@
 package com.jeff.pets.client;
 
 import com.jeff.pets.client.enums.*;
-import com.jeff.pets.client.mixin.client.SplashManagerMixin;
-import com.jeff.pets.client.mixin.client.TitleScreenRenderingMixin;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.forge.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.forge.clothconfig2.api.ConfigCategory;
@@ -84,8 +82,6 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
      * it will require a restart to change, but everything else will adjust instantly. (Note: a restart
      * is not forced upon the user, as it is only splash text and won't impact gameplay severely.)
      *
-     * @see SplashManagerMixin
-     * @see TitleScreenRenderingMixin
      */
     public PetsConfigScreen() {
         /*ModContainer modContainer = ModLoadingContext.get().getActiveContainer();

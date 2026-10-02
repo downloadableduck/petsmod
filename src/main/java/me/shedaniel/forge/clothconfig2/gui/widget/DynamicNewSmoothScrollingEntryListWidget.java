@@ -9,12 +9,10 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.MathHelper;
-
 import org.lwjgl.input.Mouse;
 
 import static me.shedaniel.forge.clothconfig2.ClothConfigInitializer.clamp;
 import static me.shedaniel.forge.clothconfig2.ClothConfigInitializer.handleScrollingPosition;
-
 
 public abstract class DynamicNewSmoothScrollingEntryListWidget<E extends DynamicEntryListWidget.Entry<E>> extends DynamicEntryListWidget<E> {
 
@@ -126,27 +124,30 @@ public abstract class DynamicNewSmoothScrollingEntryListWidget<E extends Dynamic
             int topc = new Rectangle(scrollbarPositionMinX, minY, scrollbarPositionMaxX - scrollbarPositionMinX, height).contains(PointHelper.ofMouse()) ? 222 : 172;
 
             // Black Bar
-            buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-            buffer.pos(scrollbarPositionMinX, this.bottom, 0.0D).func_181673_a(0.0D, 1.0D).color(0, 0, 0, 255).endVertex();
-            buffer.pos(scrollbarPositionMaxX, this.bottom, 0.0D).func_181673_a(1.0D, 1.0D).color(0, 0, 0, 255).endVertex();
-            buffer.pos(scrollbarPositionMaxX, this.top, 0.0D).func_181673_a(1.0D, 0.0D).color(0, 0, 0, 255).endVertex();
-            buffer.pos(scrollbarPositionMinX, this.top, 0.0D).func_181673_a(0.0D, 0.0D).color(0, 0, 0, 255).endVertex();
+            buffer.func_178970_b();
+            buffer.func_178961_b(0, 0, 0, 255);
+            buffer.func_178985_a(scrollbarPositionMinX, this.bottom, 0.0D, 0, 1);
+            buffer.func_178985_a(scrollbarPositionMaxX, this.bottom, 0.0D, 1, 1);
+            buffer.func_178985_a(scrollbarPositionMaxX, this.top, 0.0D, 1, 0);
+            buffer.func_178985_a(scrollbarPositionMinX, this.top, 0.0D, 0, 0);
             tessellator.draw();
 
             // Bottom
-            buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-            buffer.pos(scrollbarPositionMinX, minY + height, 0.0D).func_181673_a(0.0D, 1.0D).color(bottomc, bottomc, bottomc, 255).endVertex();
-            buffer.pos(scrollbarPositionMaxX, minY + height, 0.0D).func_181673_a(1.0D, 1.0D).color(bottomc, bottomc, bottomc, 255).endVertex();
-            buffer.pos(scrollbarPositionMaxX, minY, 0.0D).func_181673_a(1.0D, 0.0D).color(bottomc, bottomc, bottomc, 255).endVertex();
-            buffer.pos(scrollbarPositionMinX, minY, 0.0D).func_181673_a(0.0D, 0.0D).color(bottomc, bottomc, bottomc, 255).endVertex();
+            buffer.func_178970_b();
+            buffer.func_178961_b(bottomc, bottomc, bottomc, 255);
+            buffer.func_178985_a(scrollbarPositionMinX, minY + height, 0.0D, 0, 1);
+            buffer.func_178985_a(scrollbarPositionMaxX, minY + height, 0.0D, 1, 1);
+            buffer.func_178985_a(scrollbarPositionMaxX, minY, 0.0D, 1, 0);
+            buffer.func_178985_a(scrollbarPositionMinX, minY, 0.0D, 0, 0);
             tessellator.draw();
 
             // Top
-            buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-            buffer.pos(scrollbarPositionMinX, (minY + height - 1), 0.0D).func_181673_a(0.0D, 1.0D).color(topc, topc, topc, 255).endVertex();
-            buffer.pos((scrollbarPositionMaxX - 1), (minY + height - 1), 0.0D).func_181673_a(1.0D, 1.0D).color(topc, topc, topc, 255).endVertex();
-            buffer.pos((scrollbarPositionMaxX - 1), minY, 0.0D).func_181673_a(1.0D, 0.0D).color(topc, topc, topc, 255).endVertex();
-            buffer.pos(scrollbarPositionMinX, minY, 0.0D).func_181673_a(0.0D, 0.0D).color(topc, topc, topc, 255).endVertex();
+            buffer.func_178970_b();
+            buffer.func_178961_b(topc, topc, topc, 255);
+            buffer.func_178985_a(scrollbarPositionMinX, (minY + height - 1), 0.0D, 0, 1);
+            buffer.func_178985_a((scrollbarPositionMaxX - 1), (minY + height - 1), 0.0D, 1, 1);
+            buffer.func_178985_a((scrollbarPositionMaxX - 1), minY, 0.0D, 1, 0);
+            buffer.func_178985_a(scrollbarPositionMinX, minY, 0.0D, 0, 0);
             tessellator.draw();
         }
     }

@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.custom.aquatic.stingray;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.aquatic.Stingray;
 import net.minecraft.util.ResourceLocation;
@@ -13,7 +15,8 @@ public class StingrayRenderer extends PetRenderer<Stingray, StingrayModel> {
     }
 
     @Override
-    public ResourceLocation getEntityTexture(Stingray state) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        Stingray state = (Stingray) __e;
         return new ResourceLocation(MOD_ID, "textures/entity/stingray/stingray.png");
     }
 }

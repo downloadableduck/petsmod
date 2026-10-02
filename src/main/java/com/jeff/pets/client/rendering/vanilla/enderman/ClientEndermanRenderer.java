@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.enderman;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientEnderman;
 import net.minecraft.client.model.ModelEnderman;
@@ -13,7 +15,8 @@ public class ClientEndermanRenderer extends PetRenderer<ClientEnderman, ModelEnd
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientEnderman enderman) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        ClientEnderman enderman = (ClientEnderman) __e;
         return new ResourceLocation("minecraft", "textures/entity/enderman/enderman.png");
     }
 }

@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.elderguardian;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.guardian.ClientGuardianModel;
 import com.jeff.pets.mob.vanilla.hostile.ClientElderGuardian;
@@ -12,13 +14,15 @@ public class ClientElderGuardianRenderer extends PetRenderer<ClientElderGuardian
     }
 
     @Override
-    public void preRenderCallback(ClientElderGuardian elderGuardian, float f) {
+    public void preRenderCallback(EntityLivingBase __e, float f) {
+        ClientElderGuardian elderGuardian = (ClientElderGuardian) __e;
         net.minecraft.client.renderer.GlStateManager.scalef(2.35f, 2.35f, 2.35f);
 
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientElderGuardian livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        ClientElderGuardian livingEntityRenderState = (ClientElderGuardian) __e;
         //livingEntityRenderState.spike = 1;
         return new ResourceLocation("minecraft", "textures/entity/guardian_elder.png");
     }

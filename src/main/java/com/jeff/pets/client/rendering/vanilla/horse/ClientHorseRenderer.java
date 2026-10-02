@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.horse;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientHorse;
 import net.minecraft.util.ResourceLocation;
@@ -14,7 +16,8 @@ public class ClientHorseRenderer extends PetRenderer<ClientHorse, ClientHorseMod
     }
 
     @Override
-    public void preRenderCallback(ClientHorse state, float f) {
+    public void preRenderCallback(EntityLivingBase __e, float f) {
+        ClientHorse state = (ClientHorse) __e;
         if (CONFIG.isBaby) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
@@ -22,7 +25,8 @@ public class ClientHorseRenderer extends PetRenderer<ClientHorse, ClientHorseMod
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientHorse horseRenderState) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        ClientHorse horseRenderState = (ClientHorse) __e;
         if (CONFIG.horseSkin.equals("black")) {
             horseTextureLocation = "textures/entity/horse/horse_black.png";
         } else if (CONFIG.horseSkin.equals("brown")) {

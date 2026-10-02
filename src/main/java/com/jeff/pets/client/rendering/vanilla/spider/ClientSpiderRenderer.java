@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.spider;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientSpider;
 import net.minecraft.client.model.ModelSpider;
@@ -12,7 +14,8 @@ public class ClientSpiderRenderer extends PetRenderer<ClientSpider, ModelSpider>
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientSpider livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        ClientSpider livingEntityRenderState = (ClientSpider) __e;
         return new ResourceLocation("minecraft", "textures/entity/spider/spider.png");
     }
 }

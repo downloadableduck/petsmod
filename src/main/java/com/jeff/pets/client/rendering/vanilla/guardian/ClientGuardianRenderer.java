@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.guardian;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientGuardian;
 import net.minecraft.util.ResourceLocation;
@@ -12,7 +14,8 @@ public class ClientGuardianRenderer extends PetRenderer<ClientGuardian, ClientGu
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientGuardian livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        ClientGuardian livingEntityRenderState = (ClientGuardian) __e;
         return new ResourceLocation("minecraft", "textures/entity/guardian.png");
     }
 }

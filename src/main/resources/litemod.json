@@ -1,11 +1,8 @@
 {
   "displayName": "Pets Mod",
-    "name": "petsmod",
-    "version": "0.7.9+build.2",
+  "name": "petsmod",
+  "version": "0.7.9",
   "author": "downloadableduck",
-    "mcversion": "1.8.9",
-  "class": "com.jeff.pets.LiteModPetsMod",
-    "mixinConfigs": [
-        "pets.client.mixins.json"
-    ]
+  "mcversion": "1.8",
+  "class": "com.jeff.pets.LiteModPetsMod"
 }

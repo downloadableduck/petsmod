@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.zombie_pigman;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientZombiePigman;
@@ -15,7 +17,8 @@ public class ClientZOmbiePigmanRenderer extends PetRenderer<ClientZombiePigman, 
 
     @Nullable
     @Override
-    protected ResourceLocation getEntityTexture(ClientZombiePigman p_110775_1_) {
+    protected ResourceLocation getEntityTexture(Entity __e) {
+        ClientZombiePigman p_110775_1_ = (ClientZombiePigman) __e;
         return new ResourceLocation("minecraft", "textures/entity/zombie_pigman.png");
     }
 }

@@ -6,8 +6,6 @@ package com.jeff.pets.client;
  */
 
 import com.google.common.collect.ImmutableList;
-import com.jeff.pets.client.mixin.client.SplashManagerMixin;
-import com.jeff.pets.client.mixin.client.TitleScreenRenderingMixin;
 import com.jeff.pets.client.rendering.custom.aprilfools.head.HeadSkin;
 import com.jeff.pets.mob.custom.aprilfools.Head;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
@@ -563,7 +561,7 @@ public class Central {
     }
 
     /**
-     * Used to re-assign the logo, edition texts, and splashes in {@link SplashManagerMixin} and {@link TitleScreenRenderingMixin}.
+     * Used to re-assign the logo, edition texts, and splashes in the splash/title screen and the splash/title screen.
      *
      * @param bl: Whether to re-assign the logo or use the default ones.
      */

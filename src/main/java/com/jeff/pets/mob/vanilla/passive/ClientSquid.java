@@ -84,10 +84,10 @@ public class ClientSquid extends FlyingPet {
             }
 
             double d = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
-            this.renderYawOffset += (-((float) net.minecraft.util.MathHelper.atan2(this.motionX, this.motionZ)) * (180F / (float) Math.PI) - this.renderYawOffset) * 0.1F;
+            this.renderYawOffset += (-((float) Math.atan2(this.motionX, this.motionZ)) * (180F / (float) Math.PI) - this.renderYawOffset) * 0.1F;
             this.setYRot(this.renderYawOffset);
             this.zBodyRot += (float) Math.PI * this.rotateSpeed * 1.5F;
-            this.xBodyRot += (-((float) net.minecraft.util.MathHelper.atan2(d, this.motionY)) * (180F / (float) Math.PI) - this.xBodyRot) * 0.1F;
+            this.xBodyRot += (-((float) Math.atan2(d, this.motionY)) * (180F / (float) Math.PI) - this.xBodyRot) * 0.1F;
         } else {
             this.tentacleAngle = net.minecraft.util.MathHelper.abs(net.minecraft.util.MathHelper.sin(this.tentacleMovement)) * (float) Math.PI * 0.25F;
             if (!this.world.isRemote) {

@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.donkey;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.horse.ClientHorseModel;
 import com.jeff.pets.mob.vanilla.passive.ClientDonkey;
@@ -13,12 +15,14 @@ public class ClientDonkeyRenderer extends PetRenderer<ClientDonkey, ClientHorseM
         super(context, new ClientHorseModel(0), 0.5f);
     }
 
-    public ResourceLocation getEntityTexture(ClientDonkey donkeyRenderState) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        ClientDonkey donkeyRenderState = (ClientDonkey) __e;
         return new ResourceLocation("minecraft", "textures/entity/horse/donkey.png");
     }
 
     @Override
-    public void preRenderCallback(ClientDonkey state, float f) {
+    public void preRenderCallback(EntityLivingBase __e, float f) {
+        ClientDonkey state = (ClientDonkey) __e;
         if (CONFIG.isBaby) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }

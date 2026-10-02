@@ -1,5 +1,6 @@
 package me.shedaniel.forge.clothconfig2.gui.entries;
 
+import me.shedaniel.forge.compat.ScaledResolutionCompat;
 import com.google.common.collect.Lists;
 import com.jeff.pets.LiteModPetsMod;
 import net.minecraft.client.Minecraft;
@@ -115,7 +116,7 @@ public class IntegerSliderEntry extends TooltipListEntry<Integer> {
     @Override
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-        int windowWidth = new ScaledResolution(Minecraft.getInstance()).func_78326_a();
+        int windowWidth = ScaledResolutionCompat.get(Minecraft.getInstance()).func_78326_a();
         this.resetButton.enabled = isEditable() && getDefaultValue().isPresent() && defaultValue.get() != value.get();
         this.resetButton.y = y;
         this.sliderWidget.enabled = isEditable();

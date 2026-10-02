@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.blaze;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientBlaze;
 import net.minecraft.client.model.ModelBlaze;
@@ -12,7 +14,8 @@ public class ClientBlazeRenderer extends PetRenderer<ClientBlaze, ModelBlaze> {
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientBlaze livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        ClientBlaze livingEntityRenderState = (ClientBlaze) __e;
         return new ResourceLocation("minecraft", "textures/entity/blaze.png");
     }
 }

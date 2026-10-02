@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.witherskeleton;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.skeleton.ModelSkeleton;
 import com.jeff.pets.mob.vanilla.hostile.ClientWitherSkeleton;
@@ -12,7 +14,8 @@ public class ClientWitherSkeletonRenderer extends PetRenderer<ClientWitherSkelet
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientWitherSkeleton livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        ClientWitherSkeleton livingEntityRenderState = (ClientWitherSkeleton) __e;
         return new ResourceLocation("minecraft", "textures/entity/skeleton/wither_skeleton.png");
     }
 }

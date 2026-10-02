@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.enderdragon;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.boss.ClientEnderDragon;
 import net.minecraft.util.ResourceLocation;
@@ -14,7 +16,8 @@ public class ClientEnderDragonRenderer extends PetRenderer<ClientEnderDragon, Cl
     }
 
     @Override
-    public void preRenderCallback(ClientEnderDragon livingEntityRenderState, float f) {
+    public void preRenderCallback(EntityLivingBase __e, float f) {
+        ClientEnderDragon livingEntityRenderState = (ClientEnderDragon) __e;
         if (CONFIG.isBaby) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.25f, 0.25f, 0.25f);
         }
@@ -22,7 +25,8 @@ public class ClientEnderDragonRenderer extends PetRenderer<ClientEnderDragon, Cl
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientEnderDragon livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        ClientEnderDragon livingEntityRenderState = (ClientEnderDragon) __e;
         return new ResourceLocation("minecraft", "textures/entity/enderdragon/dragon.png");
     }
 }

@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.sheep;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientSheep;
 import net.minecraft.util.ResourceLocation;
@@ -14,7 +16,8 @@ public class ClientSheepRenderer extends PetRenderer<ClientSheep, ClientSheepMod
     }
 
     @Override
-    public void preRenderCallback(ClientSheep livingEntityRenderState, float f) {
+    public void preRenderCallback(EntityLivingBase __e, float f) {
+        ClientSheep livingEntityRenderState = (ClientSheep) __e;
         if (CONFIG.isBaby) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
@@ -22,7 +25,8 @@ public class ClientSheepRenderer extends PetRenderer<ClientSheep, ClientSheepMod
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientSheep livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        ClientSheep livingEntityRenderState = (ClientSheep) __e;
         return new ResourceLocation("minecraft", "textures/entity/sheep/sheep.png");
     }
 

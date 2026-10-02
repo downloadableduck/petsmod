@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.endermite;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientEndermite;
 import net.minecraft.client.model.ModelEnderMite;
@@ -12,7 +14,8 @@ public class ClientEndermiteRenderer extends PetRenderer<ClientEndermite, ModelE
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientEndermite livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        ClientEndermite livingEntityRenderState = (ClientEndermite) __e;
         return new ResourceLocation("minecraft", "textures/entity/endermite.png");
     }
 }

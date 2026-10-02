@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.witch;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientWitch;
 import net.minecraft.client.model.ModelWitch;
@@ -12,7 +14,8 @@ public class ClientWitchRenderer extends PetRenderer<ClientWitch, ModelWitch> {
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientWitch livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        ClientWitch livingEntityRenderState = (ClientWitch) __e;
         return new ResourceLocation("minecraft", "textures/entity/witch.png");
     }
 }

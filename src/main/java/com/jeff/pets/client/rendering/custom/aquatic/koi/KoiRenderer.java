@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.custom.aquatic.koi;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.aquatic.Koi;
 import net.minecraft.util.ResourceLocation;
@@ -13,7 +15,8 @@ public class KoiRenderer extends PetRenderer<Koi, KoiModel> {
     }
 
     @Override
-    public ResourceLocation getEntityTexture(Koi state) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        Koi state = (Koi) __e;
         return new ResourceLocation(MOD_ID, "textures/entity/koi/koi.png");
     }
 }

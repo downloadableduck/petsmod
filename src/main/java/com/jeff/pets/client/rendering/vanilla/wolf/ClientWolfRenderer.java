@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.wolf;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientWolf;
 import net.minecraft.util.ResourceLocation;
@@ -13,7 +15,8 @@ public class ClientWolfRenderer extends PetRenderer<ClientWolf, ClientWolfModel>
     }
 
     @Override
-    public void preRenderCallback(ClientWolf livingEntityRenderState, float f) {
+    public void preRenderCallback(EntityLivingBase __e, float f) {
+        ClientWolf livingEntityRenderState = (ClientWolf) __e;
         if (CONFIG.isBaby) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
@@ -21,14 +24,16 @@ public class ClientWolfRenderer extends PetRenderer<ClientWolf, ClientWolfModel>
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientWolf livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        ClientWolf livingEntityRenderState = (ClientWolf) __e;
         String wolfTexturePath = "textures/entity/wolf/wolf.png";
 
         return new ResourceLocation("minecraft", wolfTexturePath);
     }
 
     @Override
-    public void renderModel(ClientWolf wolf, float f, float g, float h, float i, float j, float k) {
+    public void renderModel(EntityLivingBase __e, float f, float g, float h, float i, float j, float k) {
+        ClientWolf wolf = (ClientWolf) __e;
         super.renderModel(wolf, f, g, h, i, j, k);
         wolf.setSitting(wolf.field_70153_n != null);
     }

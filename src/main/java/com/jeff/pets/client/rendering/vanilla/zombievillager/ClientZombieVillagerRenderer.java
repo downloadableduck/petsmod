@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.zombievillager;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
 import net.minecraft.util.ResourceLocation;
@@ -23,7 +25,8 @@ public class ClientZombieVillagerRenderer extends PetRenderer<ClientZombieVillag
     }
 
     @Override
-    public void preRenderCallback(ClientZombieVillager livingEntityRenderState, float f) {
+    public void preRenderCallback(EntityLivingBase __e, float f) {
+        ClientZombieVillager livingEntityRenderState = (ClientZombieVillager) __e;
         if (CONFIG.isBaby) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
@@ -31,7 +34,8 @@ public class ClientZombieVillagerRenderer extends PetRenderer<ClientZombieVillag
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientZombieVillager villagerRenderState) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        ClientZombieVillager villagerRenderState = (ClientZombieVillager) __e;
         if (Objects.equals(CONFIG.zombieVillagerSkin, "butcher")) {
             return (BUTCHER_LOCATION);
         } else if (Objects.equals(CONFIG.zombieVillagerSkin, "farmer")) {
@@ -47,9 +51,10 @@ public class ClientZombieVillagerRenderer extends PetRenderer<ClientZombieVillag
     }
 
     @Override
-    public void applyRotations(ClientZombieVillager state, float f, float g, float h) {
-        super.applyRotations(state, f, g, h);
-        if (state.field_70153_n != null) {
+    protected void applyRotations(EntityLivingBase __e, float f, float g, float h) {
+        ClientZombieVillager state = (ClientZombieVillager) __e;
+        super.applyRotations(__e, f, g, h);
+        if (__e.field_70153_n != null) {
             net.minecraft.client.renderer.GlStateManager.translatef(0, -0.5f, 0);
         }
     }

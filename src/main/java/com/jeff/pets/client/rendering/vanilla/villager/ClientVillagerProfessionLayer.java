@@ -1,11 +1,12 @@
 package com.jeff.pets.client.rendering.vanilla.villager;
 
+import net.minecraft.entity.EntityLivingBase;
 import com.jeff.pets.mob.vanilla.passive.ClientVillager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 
-public class ClientVillagerProfessionLayer implements LayerRenderer<ClientVillager> {
+public class ClientVillagerProfessionLayer implements LayerRenderer {
 
     public static final ResourceLocation ARMORER_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/armorer.png");
     public static final ResourceLocation BUTCHER_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/butcher.png");
@@ -22,17 +23,18 @@ public class ClientVillagerProfessionLayer implements LayerRenderer<ClientVillag
     public static final ResourceLocation TOOLSMITH_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/toolsmith.png");
     public static final ResourceLocation WEAPONSMITH_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/weaponsmith.png");
 
-    private final RenderLiving<ClientVillager> renderer;
+    private final RenderLiving renderer;
 
-    public ClientVillagerProfessionLayer(RenderLiving<ClientVillager> renderLayerParent) {
+    public ClientVillagerProfessionLayer(RenderLiving renderLayerParent) {
         this.renderer = renderLayerParent;
     }
 
     @Override
-    public void render(ClientVillager villager, float f, float g, float h, float i, float j, float k, float l) {
+    public void render(EntityLivingBase __e, float f, float g, float h, float i, float j, float k, float l) {
+        ClientVillager villager = (ClientVillager) __e;
         net.minecraft.client.renderer.GlStateManager.pushMatrix();
         net.minecraft.client.renderer.GlStateManager.scalef(1.001f, 1.001f, 1.001f);
-        this.renderer.getMainModel().render(villager, f, g, i, j, k, l);
+        this.renderer.getMainModel().render(__e, f, g, i, j, k, l);
         net.minecraft.client.renderer.GlStateManager.popMatrix();
     }
 

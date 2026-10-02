@@ -4,6 +4,7 @@ import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
@@ -187,6 +188,12 @@ public abstract class AbstractPet extends EntityTameable {
         this.func_96094_a((string));
     }
 
+    @Override
+    public EntityLivingBase getOwner() {
+        Entity owner = this.func_180492_cm();
+        return owner instanceof EntityLivingBase ? (EntityLivingBase) owner : null;
+    }
+
     public void wander() {
         float speed = (float) (this.getAIMoveSpeed() - 0.35);
         float z = speed * this.randomZ;
@@ -250,7 +257,7 @@ public abstract class AbstractPet extends EntityTameable {
 
     public void setYRot(float targetYaw) {
         this.setRotationYawHead(targetYaw);
-        this.setRenderYawOffset(targetYaw);
+        this.renderYawOffset = targetYaw;
     }
 
     private void reCalcPos() {
@@ -274,8 +281,8 @@ public abstract class AbstractPet extends EntityTameable {
         }
 
         double sd = Math.sqrt(xd * xd + zd * zd);
-        float yRotD = (float) (MathHelper.atan2(zd, xd) * (double) (180F / (float) Math.PI)) - 90.0F;
-        float xRotD = (float) (-(MathHelper.atan2(yd, sd) * (double) (180F / (float) Math.PI)));
+        float yRotD = (float) (Math.atan2(zd, xd) * (double) (180F / (float) Math.PI)) - 90.0F;
+        float xRotD = (float) (-(Math.atan2(yd, sd) * (double) (180F / (float) Math.PI)));
         this.rotationPitch = rotlerp(this.rotationPitch, xRotD, xMax);
         this.setYRot(rotlerp(this.getYRot(), yRotD, yMax));
     }

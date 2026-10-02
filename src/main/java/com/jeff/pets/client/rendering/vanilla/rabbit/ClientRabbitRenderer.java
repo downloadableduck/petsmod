@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.rabbit;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientRabbit;
 import net.minecraft.util.ResourceLocation;
@@ -14,7 +16,8 @@ public class ClientRabbitRenderer extends PetRenderer<ClientRabbit, ClientRabbit
     }
 
     @Override
-    public void preRenderCallback(ClientRabbit livingEntityRenderState, float f) {
+    public void preRenderCallback(EntityLivingBase __e, float f) {
+        ClientRabbit livingEntityRenderState = (ClientRabbit) __e;
         if (CONFIG.isBaby) {
             net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
@@ -22,7 +25,8 @@ public class ClientRabbitRenderer extends PetRenderer<ClientRabbit, ClientRabbit
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientRabbit rabbitRenderState) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        ClientRabbit rabbitRenderState = (ClientRabbit) __e;
         if (CONFIG.activePet.equals("brown")) {
             rabbitTextureLocation = "textures/entity/rabbit/brown.png";
         } else if (CONFIG.activePet.equals("white")) {

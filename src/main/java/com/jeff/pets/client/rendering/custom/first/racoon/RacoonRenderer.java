@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.custom.first.racoon;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Racoon;
 import net.minecraft.client.renderer.GlStateManager;
@@ -17,14 +19,16 @@ public class RacoonRenderer extends PetRenderer<Racoon, RacoonModel> {
     }
 
     @Override
-    public void preRenderCallback(Racoon livingEntityRenderState, float f) {
+    public void preRenderCallback(EntityLivingBase __e, float f) {
+        Racoon livingEntityRenderState = (Racoon) __e;
         if ((CONFIG.isBaby && !livingEntityRenderState.isServerEntity()) || (livingEntityRenderState.isChild() && livingEntityRenderState.isServerEntity())) {
             GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public ResourceLocation getEntityTexture(Racoon state) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        Racoon state = (Racoon) __e;
         String racoonTexturePath;
         if (!state.isServerEntity()) {
             if (Objects.equals(CONFIG.racoonSkin, "normal")) {
@@ -41,7 +45,8 @@ public class RacoonRenderer extends PetRenderer<Racoon, RacoonModel> {
     }
 
     @Override
-    public void renderModel(Racoon racoon, float g, float f, float k, float h, float i, float j) {
+    public void renderModel(EntityLivingBase __e, float g, float f, float k, float h, float i, float j) {
+        Racoon racoon = (Racoon) __e;
         super.renderModel(racoon, g, f, k, h, i, j);
         racoon.setServerEntity(racoon.func_70096_w().func_75683_a(Racoon.IS_SERVER_ENTITY) != 0);
     }

@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.custom.aprilfools.head;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.aprilfools.Head;
 import com.mojang.authlib.Agent;
@@ -59,7 +61,8 @@ public class HeadRenderer extends PetRenderer<Head, HeadModel> {
     }
 
     @Override
-    public ResourceLocation getEntityTexture(final Head state) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        Head state = (Head) __e;
         GameProfile profile = PROFILLES.get(CONFIG.headSkin);
         ResourceLocation identifier = DefaultPlayerSkin.getDefaultSkinLegacy();
         if (profile == null) {

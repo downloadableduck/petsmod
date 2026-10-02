@@ -1,5 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.slime;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
 import net.minecraft.client.model.ModelSlime;
@@ -15,7 +17,8 @@ public class ClientSlimeRenderer extends PetRenderer<ClientSlime, ModelSlime> {
     }
 
     @Override
-    public void preRenderCallback(ClientSlime slimeRenderState, float f) {
+    public void preRenderCallback(EntityLivingBase __e, float f) {
+        ClientSlime slimeRenderState = (ClientSlime) __e;
         int slimeScale;
         switch (CONFIG.slimeSkin) {
             case "small":
@@ -36,7 +39,8 @@ public class ClientSlimeRenderer extends PetRenderer<ClientSlime, ModelSlime> {
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ClientSlime livingEntityRenderState) {
+    public ResourceLocation getEntityTexture(Entity __e) {
+        ClientSlime livingEntityRenderState = (ClientSlime) __e;
         return new ResourceLocation("minecraft", "textures/entity/slime/slime.png");
     }
 }

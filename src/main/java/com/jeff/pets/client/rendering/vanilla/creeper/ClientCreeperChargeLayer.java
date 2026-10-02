@@ -1,5 +1,6 @@
 package com.jeff.pets.client.rendering.vanilla.creeper;
 
+import net.minecraft.entity.EntityLivingBase;
 import com.jeff.pets.mob.vanilla.hostile.ClientCreeper;
 import net.minecraft.client.model.ModelCreeper;
 import net.minecraft.client.renderer.GlStateManager;
@@ -10,25 +11,26 @@ import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientCreeperChargeLayer implements LayerRenderer<ClientCreeper> {
+public class ClientCreeperChargeLayer implements LayerRenderer {
     private static final ResourceLocation SKIN = new ResourceLocation("textures/entity/creeper/creeper_armor.png");
-    private final RenderLiving<ClientCreeper> renderer;
+    private final RenderLiving renderer;
     private final ModelCreeper creeperModel;
 
-    public ClientCreeperChargeLayer(RenderLiving<ClientCreeper> renderLayerParent) {
+    public ClientCreeperChargeLayer(RenderLiving renderLayerParent) {
         this.renderer = renderLayerParent;
         this.creeperModel = new ModelCreeper(0.25F);
     }
 
     @Override
-    public void render(ClientCreeper creeperEntity, float f, float g, float h, float i, float j, float k, float l) {
+    public void render(EntityLivingBase __e, float f, float g, float h, float i, float j, float k, float l) {
+        ClientCreeper creeperEntity = (ClientCreeper) __e;
         if (CONFIG.creeperSkin.equals("charged")) {
-            boolean bl = creeperEntity.isInvisible();
+            boolean bl = __e.isInvisible();
             GlStateManager.depthMask(!bl);
             this.renderer.bindTexture(SKIN);
             GlStateManager.matrixMode(5890);
             GlStateManager.loadIdentity();
-            float m = (float) creeperEntity.ticksExisted + h;
+            float m = (float) __e.ticksExisted + h;
             GlStateManager.translatef(m * 0.01F, m * 0.01F, 0.0F);
             GlStateManager.matrixMode(5888);
             GlStateManager.enableBlend();
@@ -37,7 +39,7 @@ public class ClientCreeperChargeLayer implements LayerRenderer<ClientCreeper> {
             GlStateManager.disableLighting();
             GlStateManager.blendFunc(GL11.GL_ONE, GL11.GL_ONE);
             this.creeperModel.setModelAttributes(this.renderer.getMainModel());
-            this.creeperModel.render(creeperEntity, f, g, i, j, k, l);
+            this.creeperModel.render(__e, f, g, i, j, k, l);
             GlStateManager.matrixMode(5890);
             GlStateManager.loadIdentity();
             GlStateManager.matrixMode(5888);
