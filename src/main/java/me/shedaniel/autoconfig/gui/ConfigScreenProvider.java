@@ -146,14 +146,14 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<GuiS
 
         IChatComponent categoryKey = new ChatComponentTranslation(categoryFunction.apply(baseI13n, categoryName));
 
-        if (!screenBuilder.hasCategory(categoryKey.getUnformattedComponentText())) {
-            ConfigCategory category = screenBuilder.getOrCreateCategory(categoryKey.getUnformattedComponentText());
+        if (!screenBuilder.hasCategory(categoryKey.getUnformattedText())) {
+            ConfigCategory category = screenBuilder.getOrCreateCategory(categoryKey.getUnformattedText());
             if (backgroundMap.containsKey(categoryName)) {
                 category.setCategoryBackground(backgroundMap.get(categoryName));
             }
             return category;
         }
 
-        return screenBuilder.getOrCreateCategory(categoryKey.getUnformattedComponentText());
+        return screenBuilder.getOrCreateCategory(categoryKey.getUnformattedText());
     }
 }

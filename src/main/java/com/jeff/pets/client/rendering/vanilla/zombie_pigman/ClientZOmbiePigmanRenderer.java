@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 
-public class ClientZOmbiePigmanRenderer extends PetRenderer {
+public class  ClientZOmbiePigmanRenderer extends PetRenderer {
     public ClientZOmbiePigmanRenderer(RenderManager context, PetsClientInitializer.Context context2) {
         super(context, new ClientZombiePigmanModel(), 0.75f);
     }

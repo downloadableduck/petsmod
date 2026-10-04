@@ -100,7 +100,7 @@ public class RacoonModel extends PetModel {
         //this.left_hind_leg.setRotationPoint(-1.0F, 17.5F, 7.0F);
         this.tail.rotateAngleX = 2f;
 
-        if (fox.field_70154_o != null) {
+        if (fox.ridingEntity != null) {
             //this.body.rotateAngleX = 1.35f;
             //this.tail.z = 7;
         }

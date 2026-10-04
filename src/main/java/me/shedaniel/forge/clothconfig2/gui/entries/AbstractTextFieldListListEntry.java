@@ -3,8 +3,8 @@ package me.shedaniel.forge.clothconfig2.gui.entries;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -47,24 +47,24 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
 
             final T finalValue = substituteDefault(value);
 
-            widget = new GuiTextField(0, Minecraft.getInstance().fontRenderer, 0, 100, 18, 0) {
+            widget = new GuiTextField(Minecraft.getMinecraft().fontRenderer, 0, 100, 18, 0) {
                 @Override
-                public void func_146194_f() {
+                public void drawTextBox() {
                     setFocused(isSelected);
-                    super.func_146194_f();
+                    super.drawTextBox();
                 }
             };
-            widget.func_175205_a((com.google.common.base.Predicate<String>) s -> this.isValidText(s));
+            //widget.func_175205_a((com.google.common.base.Predicate<String>) s -> this.isValidText(s));
             widget.setMaxStringLength(Integer.MAX_VALUE);
             widget.setEnableBackgroundDrawing(false);
             widget.setText(Objects.toString(finalValue));
-            widget.func_175205_a((s) -> {
+            /*widget.func_175205_a((s) -> {
                 widget.setTextColor(getPreferredTextColor());
                 if (listListEntry.getScreen() != null && !Objects.equals(s, Objects.toString(finalValue))) {
                     this.listListEntry.getScreen().setEdited(true, this.listListEntry.isRequiresRestart());
                 }
                 return false;
-            });
+            });*/
         }
 
         @Override
@@ -97,10 +97,10 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
         @Override
         public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
             widget.width = (entryWidth - 12);
-            widget.x = x;
-            widget.y = y + 1;
+            widget.xPosition = x;
+            widget.yPosition = y + 1;
             widget.setEnabled(listListEntry.isEditable());
-            widget.func_146194_f();
+            widget.drawTextBox();
             if (isSelected && listListEntry.isEditable())
                 Gui.drawRect(x, y + 12, x + entryWidth - 12, y + 13, getConfigError().isPresent() ? 0xffff5555 : 0xffe0e0e0);
         }

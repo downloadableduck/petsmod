@@ -3,8 +3,8 @@ package me.shedaniel.forge.clothconfig2.impl.builders;
 import com.google.common.collect.Lists;
 import me.shedaniel.forge.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.forge.clothconfig2.gui.entries.SubCategoryListEntry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 import java.util.*;
 import java.util.function.Function;

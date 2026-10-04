@@ -10,8 +10,8 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 import java.util.List;
 import java.util.Map;
@@ -33,7 +33,7 @@ public class ConfigBuilderImpl implements ConfigBuilder {
     private boolean doesProcessErrors = true;
     private boolean doesConfirmSave = true;
     private boolean transparentBackground = false;
-    private ResourceLocation defaultBackground = Gui.OPTIONS_BACKGROUND;
+    private ResourceLocation defaultBackground = Gui.optionsBackground;
     private Consumer<GuiScreen> afterInitConsumer = screen -> {
     };
     private String fallbackCategory = null;

@@ -2,8 +2,8 @@ package me.shedaniel.forge.clothconfig2.impl.builders;
 
 import me.shedaniel.forge.clothconfig2.gui.entries.LongListListEntry;
 import net.minecraft.client.resources.I18n;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 import java.util.List;
 import java.util.Optional;

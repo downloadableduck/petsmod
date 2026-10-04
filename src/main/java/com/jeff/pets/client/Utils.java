@@ -35,22 +35,22 @@ public class Utils {
      */
     public static void summonPet(AbstractPet entity, String entityName) {
 
-        Minecraft minecraft = Minecraft.getInstance();
-        EntityPlayerSP player = minecraft.player;
-        WorldClient world = minecraft.world;
+        Minecraft minecraft = Minecraft.getMinecraft();
+        EntityPlayerSP player = minecraft.thePlayer;
+        WorldClient world = minecraft.theWorld;
 
         if (entity == null || world == null || player == null) return;
 
         Vec3 lookAngle = player.getLook(1.0f);
 
-        double x = player.posX - lookAngle.x * (double) 0.5F;
+        double x = player.posX - lookAngle.xCoord * (double) 0.5F;
         double y = player.posY + (double) 0.5F;
-        double z = player.posZ - lookAngle.z * (double) 0.5F;
+        double z = player.posZ - lookAngle.zCoord * (double) 0.5F;
 
         entity.setPosition(x, y, z);
         entity.setName(entityName);
         world.addEntityToWorld(entity.getEntityId(), entity);
-        entity.func_152115_b(EntityPlayer.getUUID(player.getGameProfile()).toString());
+        entity.func_152115_b(EntityPlayer.func_146094_a(player.getGameProfile()).toString());
         Central.summonedEntity.add(entity);
     }
 
@@ -66,7 +66,7 @@ public class Utils {
      *                  current name is checked off of.
      */
     public static void checkName(String activePet, AbstractPet entity, String petName) {
-        if (Objects.equals(CONFIG.activePet, activePet) && entity != null && !entity.func_95999_t().equals(petName)) {
+        if (Objects.equals(CONFIG.activePet, activePet) && entity != null && !entity.getCustomNameTag().equals(petName)) {
             entity.setName(petName);
         }
     }
@@ -127,7 +127,7 @@ public class Utils {
      */
     public static void despawnEntity(Entity e) {
         if (e != null) {
-            e.remove();
+            e.worldObj.removeEntity(e);
         }
     }
 

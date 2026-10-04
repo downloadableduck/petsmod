@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientBat;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class ClientBatRenderer extends PetRenderer {
 
@@ -16,7 +17,7 @@ public class ClientBatRenderer extends PetRenderer {
     @Override
     public void preRenderCallback( final EntityLivingBase bat, float f) {
         super.preRenderCallback(bat, f);
-        net.minecraft.client.renderer.GlStateManager.scalef(0.35F, 0.35F, 0.35F);
+        GL11.glScalef(0.35F, 0.35F, 0.35F);
     }
 
     @Override

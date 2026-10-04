@@ -1,11 +1,11 @@
 package com.jeff.pets.client.rendering.vanilla.horse;
 
 import net.minecraft.entity.Entity;
+import org.lwjgl.opengl.GL11;
 
 import com.jeff.pets.client.Math2;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 
@@ -100,7 +100,7 @@ public class ClientHorseModel extends ModelBase {
         boolean bl = horseEntity.isChild();
         float l = 1.0F;
         boolean bl2 = false;
-        boolean bl3 = horseEntity.field_70153_n != null;
+        boolean bl3 = horseEntity.riddenByEntity != null;
 
         for (ModelRenderer ModelRenderer : this.field_3304) {
             ModelRenderer.showModel = bl2;
@@ -111,9 +111,9 @@ public class ClientHorseModel extends ModelBase {
         }
 
         if (bl) {
-            GlStateManager.pushMatrix();
-            GlStateManager.scalef(l, 0.5F + l * 0.5F, l);
-            GlStateManager.translatef(0.0F, 0.95F * (1.0F - l), 0.0F);
+            GL11.glPushMatrix();
+            GL11.glScalef(l, 0.5F + l * 0.5F, l);
+            GL11.glTranslatef(0.0F, 0.95F * (1.0F - l), 0.0F);
         }
 
         this.field_3306.render(k);
@@ -121,24 +121,24 @@ public class ClientHorseModel extends ModelBase {
         this.field_3302.render(k);
         this.field_3308.render(k);
         if (bl) {
-            GlStateManager.popMatrix();
-            GlStateManager.pushMatrix();
-            GlStateManager.scalef(l, l, l);
-            GlStateManager.translatef(0.0F, 2.3F * (1.0F - l), 0.0F);
+            GL11.glPopMatrix();
+            GL11.glPushMatrix();
+            GL11.glScalef(l, l, l);
+            GL11.glTranslatef(0.0F, 2.3F * (1.0F - l), 0.0F);
         }
 
         this.field_3305.render(k);
         if (bl) {
-            GlStateManager.popMatrix();
-            GlStateManager.pushMatrix();
+            GL11.glPopMatrix();
+            GL11.glPushMatrix();
             float m = l + 0.1F * l;
-            GlStateManager.scalef(m, m, m);
-            GlStateManager.translatef(0.0F, 2.25F * (1.0F - m), 0.1F * (1.4F - m));
+            GL11.glScalef(m, m, m);
+            GL11.glTranslatef(0.0F, 2.25F * (1.0F - m), 0.1F * (1.4F - m));
         }
 
         this.field_3307.render(k);
         if (bl) {
-            GlStateManager.popMatrix();
+            GL11.glPopMatrix();
         }
 
     }

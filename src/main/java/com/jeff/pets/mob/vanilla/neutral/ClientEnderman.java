@@ -19,7 +19,7 @@ public class ClientEnderman extends GroundPet {
     }
 
     @Override
-    protected String func_70639_aQ() {
+    protected String getLivingSound() {
         return "mob.endermen.idle";
     }
 }

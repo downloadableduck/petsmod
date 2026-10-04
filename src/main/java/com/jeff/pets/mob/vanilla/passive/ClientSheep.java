@@ -20,7 +20,7 @@ public class ClientSheep extends GroundPet {
     }
 
     @Override
-    protected String func_70639_aQ() {
+    protected String getLivingSound() {
         return "mob.sheep.say";
     }
 }

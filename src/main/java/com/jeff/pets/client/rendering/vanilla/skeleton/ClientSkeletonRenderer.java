@@ -6,7 +6,8 @@ import net.minecraft.entity.EntityLivingBase;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientSkeleton;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.CoreModManager;
+import cpw.mods.fml.relauncher.CoreModManager;
+import org.lwjgl.opengl.GL11;
 
 public class ClientSkeletonRenderer extends PetRenderer {
 
@@ -20,10 +21,10 @@ public class ClientSkeletonRenderer extends PetRenderer {
     }
 
     @Override
-    public void applyRotations(EntityLivingBase state, float f, float g, float h) {
-        super.applyRotations(state, f, g, h);
-        if (state.field_70154_o != null) {
-            net.minecraft.client.renderer.GlStateManager.translatef(0, -0.5f, 0);
+    public void rotateCorpse(EntityLivingBase state, float f, float g, float h) {
+        super.rotateCorpse(state, f, g, h);
+        if (state.ridingEntity != null) {
+            GL11.glTranslatef(0, -0.5f, 0);
         }
     }
 }

@@ -7,6 +7,7 @@ import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
 import net.minecraft.client.model.ModelSlime;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
@@ -14,7 +15,7 @@ public class ClientSlimeRenderer extends PetRenderer {
 
     public ClientSlimeRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ModelSlime(16), 0.75f);
-        this.addLayer(new LayerSlimeGel(this));
+        this.setPetLayer(new LayerSlimeGel(context, this));
     }
 
     @Override
@@ -34,7 +35,7 @@ public class ClientSlimeRenderer extends PetRenderer {
                 slimeScale = 1;
                 break;
         }
-        net.minecraft.client.renderer.GlStateManager.scalef(slimeScale, slimeScale, slimeScale);
+        GL11.glScalef(slimeScale, slimeScale, slimeScale);
 
     }
 

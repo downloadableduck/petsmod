@@ -23,7 +23,7 @@ public abstract class EntityRendererDispatcherMixin {
     public Map<Class<? extends Entity>, Render> field_78729_o;
 
     @Inject(at = @At("TAIL"), method = "<init>")
-    public void onFunc(TextureManager p_i46180_1_, RenderItem p_i46180_2_, CallbackInfo ci) {
+    public void onFunc(CallbackInfo ci) {
         PetsClientInitializer.register();
         synchronized (PetsClientInitializer.renderManagerMap.keySet()) {
             for (Map.Entry<Class, PetsClientInitializer.Factory> entry : PetsClientInitializer.renderSupplierMap.entrySet()) {

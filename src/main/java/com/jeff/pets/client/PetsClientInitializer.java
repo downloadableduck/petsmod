@@ -19,7 +19,6 @@ import com.jeff.pets.client.rendering.vanilla.donkey.ClientDonkeyRenderer;
 import com.jeff.pets.client.rendering.vanilla.elderguardian.ClientElderGuardianRenderer;
 import com.jeff.pets.client.rendering.vanilla.enderdragon.ClientEnderDragonRenderer;
 import com.jeff.pets.client.rendering.vanilla.enderman.ClientEndermanRenderer;
-import com.jeff.pets.client.rendering.vanilla.endermite.ClientEndermiteRenderer;
 import com.jeff.pets.client.rendering.vanilla.ghast.ClientGhastRenderer;
 import com.jeff.pets.client.rendering.vanilla.guardian.ClientGuardianRenderer;
 import com.jeff.pets.client.rendering.vanilla.horse.ClientHorseRenderer;
@@ -59,7 +58,7 @@ import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.ClientRegistry;
 import org.lwjgl.input.Keyboard;
 
 import java.util.*;
@@ -211,7 +210,6 @@ public class PetsClientInitializer {
         register(ClientElderGuardian.class, ClientElderGuardianRenderer::new);
         register(ClientBlaze.class, ClientBlazeRenderer::new);
         register(ClientCreeper.class, ClientCreeperRenderer::new);
-        register(ClientEndermite.class, ClientEndermiteRenderer::new);
         register(ClientGhast.class, ClientGhastRenderer::new);
         register(ClientGuardian.class, ClientGuardianRenderer::new);
         register(ClientMagmaCube.class, ClientMagmaCubeRenderer::new);

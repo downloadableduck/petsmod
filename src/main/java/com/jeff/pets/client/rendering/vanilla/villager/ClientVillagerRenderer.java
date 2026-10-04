@@ -9,6 +9,7 @@ import net.minecraft.client.model.ModelVillager;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Objects;
+import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
@@ -27,7 +28,7 @@ public class ClientVillagerRenderer extends PetRenderer {
     @Override
     public void preRenderCallback( final EntityLivingBase state, float f) {
         if (CONFIG.isBaby) {
-            net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            GL11.glScalef(0.5f, 0.5f, 0.5f);
         }
 
     }

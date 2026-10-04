@@ -2,13 +2,15 @@ package com.jeff.pets;
 
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.PetsClientInitializer;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.launchwrapper.IClassTransformer;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.asm.transformers.AccessTransformer;
-import net.minecraftforge.fml.common.asm.transformers.ModAccessTransformer;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.asm.transformers.AccessTransformer;
+import cpw.mods.fml.common.asm.transformers.ModAccessTransformer;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,7 +23,8 @@ import java.util.jar.JarFile;
 
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 
-@Mod(modid=MOD_ID, acceptedMinecraftVersions = "[1.8,1.8.9]")
+@SideOnly(Side.CLIENT)
+@Mod(modid=MOD_ID, acceptedMinecraftVersions = "[1.7.2,1.7.10]")
 public class PetsInitializer {
 
     public static final String MOD_ID = "pets_mod";

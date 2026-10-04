@@ -15,7 +15,6 @@ public enum PetList implements NameableEnum {
     elder_guardian,
     ender_dragon,
     enderman,
-    endermite,
     ghast,
     guardian,
     happy_ghast,

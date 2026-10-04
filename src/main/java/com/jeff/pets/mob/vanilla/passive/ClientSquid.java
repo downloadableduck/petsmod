@@ -38,20 +38,20 @@ public class ClientSquid extends FlyingPet {
     }
 
     @Override
-    protected String func_70639_aQ() {
+    protected String getLivingSound() {
         return "mob.squid.ambient";
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void updateAITick() {
+        super.updateAITick();
         this.xBodyRotO = this.xBodyRot;
         this.zBodyRotO = this.zBodyRot;
         this.oldTentacleMovement = this.tentacleMovement;
         this.oldTentacleAngle = this.tentacleAngle;
         this.tentacleMovement += this.tentacleSpeed;
         if ((double) this.tentacleMovement > (Math.PI * 2D)) {
-            if (this.world.isRemote) {
+            if (this.worldObj.isRemote) {
                 this.tentacleMovement = ((float) Math.PI * 2F);
             } else {
                 this.tentacleMovement -= ((float) Math.PI * 2F);
@@ -59,7 +59,7 @@ public class ClientSquid extends FlyingPet {
                     this.tentacleSpeed = 1.0F / (this.rand.nextFloat() + 1.0F) * 0.2F;
                 }
 
-                this.world.setEntityState(this, (byte) 19);
+                this.worldObj.setEntityState(this, (byte) 19);
             }
         }
 
@@ -79,7 +79,7 @@ public class ClientSquid extends FlyingPet {
                 this.rotateSpeed *= 0.99F;
             }
 
-            if (!this.world.isRemote) {
+            if (!this.worldObj.isRemote) {
                 this.setVelocity(this.tx * this.speed, this.ty * this.speed, this.tz * this.speed);
             }
 
@@ -90,7 +90,7 @@ public class ClientSquid extends FlyingPet {
             this.xBodyRot += (-((float) Math.atan2(d, this.motionY)) * (180F / (float) Math.PI) - this.xBodyRot) * 0.1F;
         } else {
             this.tentacleAngle = net.minecraft.util.MathHelper.abs(net.minecraft.util.MathHelper.sin(this.tentacleMovement)) * (float) Math.PI * 0.25F;
-            if (!this.world.isRemote) {
+            if (!this.worldObj.isRemote) {
                 double e = this.motionY;
                 e -= 1;
 

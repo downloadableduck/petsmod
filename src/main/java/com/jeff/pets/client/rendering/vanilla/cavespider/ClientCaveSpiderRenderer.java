@@ -7,6 +7,7 @@ import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientCaveSpider;
 import net.minecraft.client.model.ModelSpider;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class ClientCaveSpiderRenderer extends PetRenderer {
 
@@ -16,7 +17,7 @@ public class ClientCaveSpiderRenderer extends PetRenderer {
 
     @Override
     public void preRenderCallback( final EntityLivingBase caveSpider, float f) {
-        net.minecraft.client.renderer.GlStateManager.scalef(0.7F, 0.7F, 0.7F);
+        GL11.glScalef(0.7F, 0.7F, 0.7F);
     }
 
     @Override

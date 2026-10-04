@@ -20,8 +20,8 @@ public class HeadModel extends ModelBase {
 
         Head = new ModelRenderer(this);
         Head.setRotationPoint(5.0F, 0.0F, -5.0F);
-        Head.cubeList.add(new ModelBox(Head, 0, 0, -8.0F, 16.0F, 0.0F, 8, 8, 8, 0.0F, false));
-        Head.cubeList.add(new ModelBox(Head, 32, 0, -8.0F, 16.0F, 0.0F, 8, 8, 8, 0.5F, false));
+        Head.cubeList.add(new ModelBox(Head, 0, 0, -8.0F, 16.0F, 0.0F, 8, 8, 8, 0.0F));
+        Head.cubeList.add(new ModelBox(Head, 32, 0, -8.0F, 16.0F, 0.0F, 8, 8, 8, 0.5F));
     }
 
     public void setRotationAngles(net.minecraft.entity.Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float f) {

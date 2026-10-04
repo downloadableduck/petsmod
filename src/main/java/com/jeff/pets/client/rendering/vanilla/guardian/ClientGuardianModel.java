@@ -77,12 +77,12 @@ public class ClientGuardianModel extends ModelBase {
         }
 
         this.field_3381.rotationPointZ = -8.25F;
-        Entity entity = Minecraft.getInstance().getRenderViewEntity();
+        Entity entity = Minecraft.getMinecraft().renderViewEntity;
 
         if (entity != null) {
-            Vec3 vec3d = entity.getEyePosition(0.0F);
-            Vec3 vec3d2 = entity2.getEyePosition(0.0F);
-            double d = vec3d.y - vec3d2.y;
+            Vec3 vec3d = Vec3.createVectorHelper(entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ);
+            Vec3 vec3d2 = Vec3.createVectorHelper(entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ);
+            double d = vec3d.yCoord - vec3d2.yCoord;
             if (d > (double) 0.0F) {
                 this.field_3381.rotationPointY = 0.0F;
             } else {
@@ -90,10 +90,11 @@ public class ClientGuardianModel extends ModelBase {
             }
 
             Vec3 vec3d3 = entity2.getLookVec();
-            vec3d3 = new Vec3(vec3d3.x, 0.0F, vec3d3.z);
-            Vec3 vec3d4 = (new Vec3(vec3d2.x - vec3d.x, 0.0F, vec3d2.z - vec3d.z)).normalize().rotateYaw(((float) Math.PI / 2F));
+            vec3d3 = Vec3.createVectorHelper(vec3d3.xCoord, 0.0F, vec3d3.zCoord);
+            Vec3 vec3d4 = (Vec3.createVectorHelper(vec3d2.xCoord - vec3d.xCoord, 0.0F, vec3d2.zCoord - vec3d.zCoord)).normalize();
+            vec3d4.rotateAroundY(((float) Math.PI / 2F));
             double e = vec3d3.dotProduct(vec3d4);
-            this.field_3381.rotationPointX = MathHelper.sqrt((float) Math.abs(e)) * 2.0F * (float) Math.signum(e);
+            this.field_3381.rotationPointX = MathHelper.sqrt_double((float) Math.abs(e)) * 2.0F * (float) Math.signum(e);
         }
 
         this.field_3381.showModel = true;

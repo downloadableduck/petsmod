@@ -10,10 +10,10 @@ import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.resources.DefaultPlayerSkin;
+import net.minecraft.client.resources.SkinManager;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
 import java.net.Proxy;
@@ -56,26 +56,29 @@ public class HeadRenderer extends PetRenderer {
             PROFILLES.put(CONFIG.headSkin, dummyProfile);
             return dummyProfile;
         }
-        return Minecraft.getInstance().getSessionService().fillProfileProperties(result.get(), true);
+        return Minecraft.getMinecraft().func_152347_ac().fillProfileProperties(result.get(), true);
     }
 
     @Override
     public ResourceLocation getEntityTexture(final Entity state) {
         GameProfile profile = PROFILLES.get(CONFIG.headSkin);
-        ResourceLocation identifier = DefaultPlayerSkin.getDefaultSkinLegacy();
+        // 1.7.10 has no DefaultPlayerSkin helper; AbstractClientPlayer.locationStevePng is the
+        // same default-steve fallback that getDefaultSkinLegacy() returns in 1.8.
+        ResourceLocation identifier = AbstractClientPlayer.locationStevePng;
         if (profile == null) {
             profile = fetchGameProfile(state, CONFIG.headSkin);
         }
         if (profile.equals(dummyProfile)) {
             return identifier;
         }
-        Minecraft minecraft = Minecraft.getInstance();
-        Map<MinecraftProfileTexture.Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(profile);
+        Minecraft minecraft = Minecraft.getMinecraft();
+        Map<MinecraftProfileTexture.Type, MinecraftProfileTexture> map = minecraft.func_152342_ad().func_152788_a(profile);
         if (map.containsKey(MinecraftProfileTexture.Type.SKIN)) {
-            identifier = minecraft.getSkinManager().loadSkin(map.get(MinecraftProfileTexture.Type.SKIN), MinecraftProfileTexture.Type.SKIN);
+            identifier = minecraft.func_152342_ad().func_152792_a(map.get(MinecraftProfileTexture.Type.SKIN), MinecraftProfileTexture.Type.SKIN);
         } else {
-            UUID uUID = EntityPlayer.getUUID(profile);
-            identifier = DefaultPlayerSkin.getDefaultSkin(uUID);
+            // getDefaultSkin(UUID) has no 1.7.10 counterpart -- 1.7.10 has no per-UUID
+            // default skin variants, so fall back to the same default steve texture.
+            identifier = AbstractClientPlayer.locationStevePng;
         }
         return identifier;
     }

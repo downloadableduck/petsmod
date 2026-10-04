@@ -1,8 +1,8 @@
 package me.shedaniel.forge.clothconfig2.gui.entries;
 
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,10 +40,10 @@ public class TextListEntry extends TooltipListEntry<Object> {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
         this.savedWidth = entryWidth;
         int yy = y + 4;
-        List<String> strings = Minecraft.getInstance().fontRenderer.listFormattedStringToWidth(text, savedWidth);
+        List<String> strings = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(text, savedWidth);
         for (String string : strings) {
-            Minecraft.getInstance().fontRenderer.drawStringWithShadow(string, x, yy, color);
-            yy += Minecraft.getInstance().fontRenderer.FONT_HEIGHT + 3;
+            Minecraft.getMinecraft().fontRenderer.drawStringWithShadow(string, x, yy, color);
+            yy += Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT + 3;
         }
     }
 
@@ -51,7 +51,7 @@ public class TextListEntry extends TooltipListEntry<Object> {
     public int getItemHeight() {
         if (savedWidth == -1)
             return 12;
-        List<String> strings = Minecraft.getInstance().fontRenderer.listFormattedStringToWidth(text, savedWidth);
+        List<String> strings = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(text, savedWidth);
         if (strings.isEmpty())
             return 0;
         return 15 + strings.size() * 12;

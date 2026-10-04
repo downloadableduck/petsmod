@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientCat;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
@@ -18,7 +19,7 @@ public class ClientCatRenderer extends PetRenderer {
     @Override
     public void preRenderCallback( final EntityLivingBase state, float f) {
         if (CONFIG.isBaby) {
-            net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            GL11.glScalef(0.5f, 0.5f, 0.5f);
         }
     }
 
@@ -57,7 +58,7 @@ public class ClientCatRenderer extends PetRenderer {
     @Override
     public void renderModel( final EntityLivingBase cat, float f, float g, float h, float i, float j, float k) {
         super.renderModel(cat, f, g, h, i, j, k);
-        ((com.jeff.pets.mob.vanilla.passive.ClientCat) cat).setSitting(cat.field_70154_o != null);
+        ((com.jeff.pets.mob.vanilla.passive.ClientCat) cat).setSitting(cat.ridingEntity != null);
     }
 }
 

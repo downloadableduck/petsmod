@@ -13,8 +13,8 @@ import me.shedaniel.forge.clothconfig2.impl.builders.EnumSelectorBuilder;
 import me.shedaniel.forge.clothconfig2.impl.builders.StringFieldBuilder;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.ForgeModContainer;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.ModContainer;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.ModContainer;
 
 import java.util.Objects;
 
@@ -32,7 +32,6 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
 
     static {
         PetsConfigScreen this_ = new PetsConfigScreen();
-        ModContainer modContainer = ForgeModContainer.getInstance();
         /*modContainer.bindMetadata(ExtensionPoint.CONFIGGUIFACTORY, () -> {
             PetsConfig CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
             return ((minecraft, s) -> {
@@ -716,7 +715,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
         }
         return builder.startEnumSelector("Pet Skin", enumClass, initialValue)
                 .setSaveConsumer((value) -> {
-                    String val = value.getDisplayName().func_150260_c().replace(" ", "_");
+                    String val = value.getDisplayName().toString().replace(" ", "_");
                     switch (CONFIG.activePet) {
                         case "duck":
                             enumClass = (Class<T>) DuckSkins.class;

@@ -7,8 +7,8 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.resources.I18n;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 import java.util.List;
 import java.util.Objects;
@@ -44,13 +44,13 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
         super(fieldName, tooltipSupplier);
         this.defaultValue = defaultValue;
         this.original = original;
-        this.textFieldWidget = new GuiTextField(0, Minecraft.getInstance().fontRenderer, 0, 0, 148, 20) {
+        this.textFieldWidget = new GuiTextField(Minecraft.getMinecraft().fontRenderer, 0, 0, 148, 20) {
             @Override
-            public void func_146194_f() {
+            public void drawTextBox() {
                 //boolean f = isFocused();
                 //setFocused(isSelected);
                 textFieldPreRender(this);
-                super.func_146194_f();
+                super.drawTextBox();
                 //setFocused(f);
             }
 
@@ -61,13 +61,13 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
         };
         textFieldWidget.setMaxStringLength(999999);
         textFieldWidget.setText(String.valueOf(original));
-        textFieldWidget.func_175205_a((s) -> {
+        /*textFieldWidget.func_175205_a((s) -> {
             if (getScreen() != null && !original.equals(s)) {
                 getScreen().setEdited(true, isRequiresRestart());
             }
             return true;
-        });
-        this.resetButton = new ResetButton(0, 0, Minecraft.getInstance().fontRenderer.getStringWidth(I18n.format(resetButtonKey)) + 6, 20, I18n.format(resetButtonKey), widget -> {
+        });*/
+        this.resetButton = new ResetButton(0, 0, Minecraft.getMinecraft().fontRenderer.getStringWidth(I18n.format(resetButtonKey)) + 6, 20, I18n.format(resetButtonKey), widget -> {
             TextFieldListEntry.this.textFieldWidget.setText(String.valueOf(defaultValue.get()));
             getScreen().setEdited(true, isRequiresRestart());
         });
@@ -99,23 +99,23 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
     @Override
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-        int windowWidth = new ScaledResolution(Minecraft.getInstance(), Minecraft.getInstance().field_71443_c, Minecraft.getInstance().field_71440_d).func_78326_a();
+        int windowWidth = new ScaledResolution(Minecraft.getMinecraft(), Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight).getScaledWidth();
         this.resetButton.enabled = isEditable() && getDefaultValue().isPresent() && !isMatchDefault(textFieldWidget.getText());
-        this.resetButton.y = y;
+        this.resetButton.yPosition = y;
         this.textFieldWidget.setEnabled(isEditable());
-        this.textFieldWidget.y = y + 1;
-        if (Minecraft.getInstance().fontRenderer.getBidiFlag()) {
-            Minecraft.getInstance().fontRenderer.drawStringWithShadow(I18n.format(getFieldName()), windowWidth - x - Minecraft.getInstance().fontRenderer.getStringWidth(I18n.format(getFieldName())), y + 5, getPreferredTextColor());
-            this.resetButton.x = x;
-            this.textFieldWidget.x = x + resetButton.getWidth();
+        this.textFieldWidget.yPosition = y + 1;
+        if (Minecraft.getMinecraft().fontRenderer.getBidiFlag()) {
+            Minecraft.getMinecraft().fontRenderer.drawStringWithShadow(I18n.format(getFieldName()), windowWidth - x - Minecraft.getMinecraft().fontRenderer.getStringWidth(I18n.format(getFieldName())), y + 5, getPreferredTextColor());
+            this.resetButton.xPosition = x;
+            this.textFieldWidget.xPosition = x + resetButton.getButtonWidth();
         } else {
-            Minecraft.getInstance().fontRenderer.drawStringWithShadow(I18n.format(getFieldName()), x, y + 5, getPreferredTextColor());
-            this.resetButton.x = x + entryWidth - resetButton.getWidth();
-            this.textFieldWidget.x = x + entryWidth - 148;
+            Minecraft.getMinecraft().fontRenderer.drawStringWithShadow(I18n.format(getFieldName()), x, y + 5, getPreferredTextColor());
+            this.resetButton.xPosition = x + entryWidth - resetButton.getButtonWidth();
+            this.textFieldWidget.xPosition = x + entryWidth - 148;
         }
-        setTextFieldWidth(textFieldWidget, 148 - resetButton.getWidth() - 4);
-        resetButton.func_146112_a(Minecraft.getInstance(), mouseX, mouseY);
-        textFieldWidget.func_146194_f();
+        setTextFieldWidth(textFieldWidget, 148 - resetButton.getButtonWidth() - 4);
+        resetButton.drawButton(Minecraft.getMinecraft(), mouseX, mouseY);
+        textFieldWidget.drawTextBox();
     }
 
     protected abstract boolean isMatchDefault(String text);
@@ -134,9 +134,9 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
         }
 
         @Override
-        public boolean func_146116_c(Minecraft mc,  int mouseX, int mouseY) {
+        public boolean mousePressed(Minecraft mc,  int mouseX, int mouseY) {
             
-             boolean bl = super.func_146116_c(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
+             boolean bl = super.mousePressed(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
                 onPress.onPress(this);
             }
             return bl;
@@ -154,17 +154,17 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
 
     @Override
     public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
-        boolean clickedReset = this.resetButton.func_146116_c(Minecraft.getInstance(), mouseX, mouseY);
+        boolean clickedReset = this.resetButton.mousePressed(Minecraft.getMinecraft(), mouseX, mouseY);
         if (clickedReset) {
             return true;
         }
 
-        boolean isInsideField = mouseX >= this.textFieldWidget.x && mouseX < this.textFieldWidget.x + this.textFieldWidget.width
-                && mouseY >= this.textFieldWidget.y && mouseY < this.textFieldWidget.y + this.textFieldWidget.height;
+        boolean isInsideField = mouseX >= this.textFieldWidget.xPosition && mouseX < this.textFieldWidget.xPosition + this.textFieldWidget.width
+                && mouseY >= this.textFieldWidget.yPosition && mouseY < this.textFieldWidget.yPosition + this.textFieldWidget.height;
 
         this.textFieldWidget.setFocused(isInsideField);
         if (isInsideField) {
-            this.textFieldWidget.func_146192_a(mouseX, mouseY, mouseButton);
+            this.textFieldWidget.mouseClicked(mouseX, mouseY, mouseButton);
             return true;
         }
 
@@ -175,7 +175,7 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
     public boolean keyTyped(char cha, int i) {
         if (this.textFieldWidget.isFocused()) {
             String textBefore = this.textFieldWidget.getText();
-            boolean handled = this.textFieldWidget.func_146201_a(cha, i);
+            boolean handled = this.textFieldWidget.textboxKeyTyped(cha, i);
             String textAfter = this.textFieldWidget.getText();
 
             if (!Objects.equals(textBefore, textAfter) && getScreen() != null) {

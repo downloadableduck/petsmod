@@ -7,6 +7,7 @@ import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientGhast;
 import net.minecraft.client.model.ModelGhast;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class ClientGhastRenderer extends PetRenderer {
 
@@ -21,7 +22,7 @@ public class ClientGhastRenderer extends PetRenderer {
 
     @Override
     public void preRenderCallback( final EntityLivingBase ghast, float f) {
-        net.minecraft.client.renderer.GlStateManager.scalef(4.5F, 4.5F, 4.5F);
+        GL11.glScalef(4.5F, 4.5F, 4.5F);
 
     }
 }

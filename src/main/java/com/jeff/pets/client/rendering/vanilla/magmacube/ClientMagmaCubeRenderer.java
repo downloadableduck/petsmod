@@ -7,6 +7,7 @@ import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientMagmaCube;
 import net.minecraft.client.model.ModelSlime;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
@@ -33,7 +34,7 @@ public class ClientMagmaCubeRenderer extends PetRenderer {
                 magmaCubeScale = 1;
                 break;
         }
-        net.minecraft.client.renderer.GlStateManager.scalef(magmaCubeScale, magmaCubeScale, magmaCubeScale);
+        GL11.glScalef(magmaCubeScale, magmaCubeScale, magmaCubeScale);
     }
 
     @Override

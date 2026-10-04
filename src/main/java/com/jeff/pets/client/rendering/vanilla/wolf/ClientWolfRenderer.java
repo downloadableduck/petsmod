@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientWolf;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
@@ -18,7 +19,7 @@ public class ClientWolfRenderer extends PetRenderer {
     @Override
     public void preRenderCallback( final EntityLivingBase livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            GL11.glScalef(0.5f, 0.5f, 0.5f);
         }
 
     }
@@ -33,7 +34,7 @@ public class ClientWolfRenderer extends PetRenderer {
     @Override
     public void renderModel( final EntityLivingBase wolf, float f, float g, float h, float i, float j, float k) {
         super.renderModel(wolf, f, g, h, i, j, k);
-        ((ClientWolf) wolf).setSitting(wolf.field_70154_o != null);
+        ((ClientWolf) wolf).setSitting(wolf.ridingEntity != null);
     }
 }
 

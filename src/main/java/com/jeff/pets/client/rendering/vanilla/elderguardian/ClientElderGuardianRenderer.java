@@ -7,6 +7,7 @@ import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.guardian.ClientGuardianModel;
 import com.jeff.pets.mob.vanilla.hostile.ClientElderGuardian;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class ClientElderGuardianRenderer extends PetRenderer {
 
@@ -16,7 +17,7 @@ public class ClientElderGuardianRenderer extends PetRenderer {
 
     @Override
     public void preRenderCallback( final EntityLivingBase elderGuardian, float f) {
-        net.minecraft.client.renderer.GlStateManager.scalef(2.35f, 2.35f, 2.35f);
+        GL11.glScalef(2.35f, 2.35f, 2.35f);
 
     }
 

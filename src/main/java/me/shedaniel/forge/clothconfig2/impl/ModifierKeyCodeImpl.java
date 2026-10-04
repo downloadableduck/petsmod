@@ -3,8 +3,8 @@ package me.shedaniel.forge.clothconfig2.impl;
 import me.shedaniel.forge.clothconfig2.api.Modifier;
 import me.shedaniel.forge.clothconfig2.api.ModifierKeyCode;
 import net.minecraft.client.resources.I18n;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
 @SideOnly(Side.CLIENT)

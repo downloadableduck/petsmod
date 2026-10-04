@@ -1,11 +1,11 @@
 package com.jeff.pets.client.rendering.custom.first.racoon;
 
 import net.minecraft.entity.EntityLivingBase;
+import org.lwjgl.opengl.GL11;
 import net.minecraft.entity.Entity;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Racoon;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Objects;
@@ -22,7 +22,7 @@ public class RacoonRenderer extends PetRenderer {
     @Override
     public void preRenderCallback( final EntityLivingBase livingEntityRenderState, float f) {
         if ((CONFIG.isBaby && !((Racoon) livingEntityRenderState).isServerEntity()) || (livingEntityRenderState.isChild() && ((Racoon) livingEntityRenderState).isServerEntity())) {
-            GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            GL11.glScalef(0.5f, 0.5f, 0.5f);
         }
     }
 

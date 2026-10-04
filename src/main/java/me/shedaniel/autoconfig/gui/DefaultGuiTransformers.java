@@ -87,8 +87,8 @@ public class DefaultGuiTransformers {
                 (guis, i18n, field, config, defaults, guiProvider) -> {
                     ArrayList<AbstractConfigListEntry> ret = new ArrayList<>(guis);
                     String text = String.format("%s.%s", i18n, "@PrefixText");
-                    TextListEntry element = ENTRY_BUILDER.startTextDescription(new ChatComponentTranslation(text).getUnformattedComponentText()).build();
-                    String s = new ChatComponentTranslation(i18n).getUnformattedComponentText().toLowerCase(Locale.ROOT);
+                    TextListEntry element = ENTRY_BUILDER.startTextDescription(new ChatComponentTranslation(text).getUnformattedText()).build();
+                    String s = new ChatComponentTranslation(i18n).getUnformattedText().toLowerCase(Locale.ROOT);
                     if (!s.isEmpty()) {
                         //element.appendSearchTags(Lists.newArrayList(s.split(" ")));
                     }

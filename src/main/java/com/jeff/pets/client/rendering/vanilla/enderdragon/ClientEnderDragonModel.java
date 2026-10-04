@@ -1,12 +1,12 @@
 package com.jeff.pets.client.rendering.vanilla.enderdragon;
 
 import net.minecraft.entity.EntityLivingBase;
+import org.lwjgl.opengl.GL11;
 
 import com.jeff.pets.client.Math2;
 import com.jeff.pets.mob.vanilla.boss.ClientEnderDragon;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 
 public class ClientEnderDragonModel extends ModelBase {
@@ -90,13 +90,13 @@ public class ClientEnderDragonModel extends ModelBase {
     @Override
     public void render( final Entity p_78088_1_, float p_78088_2_, float p_78088_3_, float p_78088_4_, float p_78088_5_, float p_78088_6_, float p_78088_7_) {
         ClientEnderDragon dragon = (ClientEnderDragon) p_78088_1_;
-        GlStateManager.pushMatrix();
+        GL11.glPushMatrix();
         float f = Math2.lerp(this.a, dragon.oFlapTime, dragon.flapTime);
         this.jaw.rotateAngleX = (float) (Math.sin(f * ((float) Math.PI * 2F)) + 1.0D) * 0.2F;
         float f1 = (float) (Math.sin(f * ((float) Math.PI * 2F) - 1.0F) + 1.0D);
         f1 = (f1 * f1 + f1 * 2.0F) * 0.05F;
-        GlStateManager.translatef(0.0F, f1 - 2.0F, -3.0F);
-        GlStateManager.rotatef(f1 * 2.0F, 1.0F, 0.0F, 0.0F);
+        GL11.glTranslatef(0.0F, f1 - 2.0F, -3.0F);
+        GL11.glRotatef(f1 * 2.0F, 1.0F, 0.0F, 0.0F);
         float f2 = 0.0F;
         float f3 = 20.0F;
         float f4 = -12.0F;
@@ -129,15 +129,15 @@ public class ClientEnderDragonModel extends ModelBase {
         this.head.rotateAngleX = this.rotWrap(dragon.getHeadPartYOffset(6, adouble, adouble2)) * ((float) Math.PI / 180F) * 1.5F * 5.0F;
         this.head.rotateAngleZ = -this.rotWrap(adouble2[0] - (double) f7) * ((float) Math.PI / 180F);
         this.head.render(p_78088_7_);
-        GlStateManager.pushMatrix();
-        GlStateManager.translatef(0.0F, 1.0F, 0.0F);
-        GlStateManager.rotatef(-f6 * 1.5F, 0.0F, 0.0F, 1.0F);
-        GlStateManager.translatef(0.0F, -1.0F, 0.0F);
+        GL11.glPushMatrix();
+        GL11.glTranslatef(0.0F, 1.0F, 0.0F);
+        GL11.glRotatef(-f6 * 1.5F, 0.0F, 0.0F, 1.0F);
+        GL11.glTranslatef(0.0F, -1.0F, 0.0F);
         this.body.rotateAngleZ = 0.0F;
         this.body.render(p_78088_7_);
 
         for (int j = 0; j < 2; ++j) {
-            GlStateManager.enableCull();
+            GL11.glEnable(GL11.GL_CULL_FACE);
             float f11 = f * ((float) Math.PI * 2F);
             this.wing.rotateAngleX = 0.125F - (float) Math.cos(f11) * 0.2F;
             this.wing.rotateAngleY = 0.25F;
@@ -152,15 +152,15 @@ public class ClientEnderDragonModel extends ModelBase {
             this.wing.render(p_78088_7_);
             this.frontLeg.render(p_78088_7_);
             this.rearLeg.render(p_78088_7_);
-            GlStateManager.scalef(-1.0F, 1.0F, 1.0F);
+            GL11.glScalef(-1.0F, 1.0F, 1.0F);
             if (j == 0) {
-                GlStateManager.cullFace(1028);
+                GL11.glCullFace(1028);
             }
         }
 
-        GlStateManager.popMatrix();
-        GlStateManager.cullFace(1029);
-        GlStateManager.disableCull();
+        GL11.glPopMatrix();
+        GL11.glCullFace(1029);
+        GL11.glDisable(GL11.GL_CULL_FACE);
         float f10 = -((float) Math.sin(f * ((float) Math.PI * 2F))) * 0.0F;
         f8 = f * ((float) Math.PI * 2F);
         f3 = 10.0F;
@@ -183,7 +183,7 @@ public class ClientEnderDragonModel extends ModelBase {
             this.neck.render(p_78088_7_);
         }
 
-        GlStateManager.popMatrix();
+        GL11.glPopMatrix();
     }
 
     private float rotWrap(double p_78214_1_) {

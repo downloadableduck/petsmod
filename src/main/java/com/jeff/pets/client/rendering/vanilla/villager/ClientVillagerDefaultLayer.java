@@ -1,34 +1,33 @@
 package com.jeff.pets.client.rendering.vanilla.villager;
 
+import com.jeff.pets.client.rendering.PetLayer;
+import com.jeff.pets.client.rendering.PetRenderer;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.Entity;
-
-import com.jeff.pets.mob.vanilla.passive.ClientVillager;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RendererLivingEntity;
-import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
-public class ClientVillagerDefaultLayer implements LayerRenderer {
+/**
+ * Undead villager "default"/type overlay. 1.7.10 has no {@code LayerRenderer}, so this is
+ * driven from {@link PetRenderer#renderModel} and re-renders the parent's main model.
+ */
+public class ClientVillagerDefaultLayer implements PetLayer {
+    private static final ResourceLocation PLAINS =
+            new ResourceLocation("minecraft", "textures/entity/villager/type/plains.png");
 
-    private final RendererLivingEntity renderer;
+    private final PetRenderer parent;
 
-    public ClientVillagerDefaultLayer(RendererLivingEntity renderLayerParent) {
-        this.renderer = renderLayerParent;
+    public ClientVillagerDefaultLayer(RenderManager context, PetRenderer parent) {
+        this.parent = parent;
     }
 
     @Override
-    public void render( final EntityLivingBase villager, float f, float g, float h, float i, float j, float k, float l) {
-        GlStateManager.pushMatrix();
-        this.renderer.bindTexture(new ResourceLocation("minecraft", "textures/entity/villager/type/plains.png"));
-        this.renderer.getMainModel().render(villager, f, g, i, j, k, l);
-        GlStateManager.popMatrix();
-    }
-
-    @Override
-    public boolean shouldCombineTextures() {
-        return false;
+    public void render(EntityLivingBase villager, float limbSwing, float limbSwingAmount, float ageInTicks,
+                       float netHeadYaw, float headPitch, float scale) {
+        GL11.glPushMatrix();
+        this.parent.bindTexture(PLAINS);
+        this.parent.getMainModel().render(villager, limbSwing, limbSwingAmount, ageInTicks,
+                netHeadYaw, headPitch, scale);
+        GL11.glPopMatrix();
     }
 }
-
-

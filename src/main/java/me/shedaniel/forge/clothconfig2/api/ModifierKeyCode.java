@@ -3,8 +3,8 @@ package me.shedaniel.forge.clothconfig2.api;
 import me.shedaniel.forge.clothconfig2.impl.InputCompat;
 import me.shedaniel.forge.clothconfig2.impl.KeyInput;
 import me.shedaniel.forge.clothconfig2.impl.ModifierKeyCodeImpl;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public interface ModifierKeyCode {

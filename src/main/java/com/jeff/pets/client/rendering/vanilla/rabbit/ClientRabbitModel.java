@@ -7,6 +7,7 @@ import com.jeff.pets.mob.vanilla.passive.ClientRabbit;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import org.lwjgl.opengl.GL11;
 
 public class ClientRabbitModel extends ModelBase {
     public final ModelRenderer head;
@@ -99,22 +100,22 @@ public class ClientRabbitModel extends ModelBase {
         ClientRabbit rabbit = (ClientRabbit) entity;
         if (this.isChild) {
             float l = 1.5F;
-            net.minecraft.client.renderer.GlStateManager.pushMatrix();
-            net.minecraft.client.renderer.GlStateManager.scalef(0.56666666F, 0.56666666F, 0.56666666F);
-            net.minecraft.client.renderer.GlStateManager.translatef(0.0F, 1.375F, 0.125F);
+            GL11.glPushMatrix();
+            GL11.glScalef(0.56666666F, 0.56666666F, 0.56666666F);
+            GL11.glTranslatef(0.0F, 1.375F, 0.125F);
             ImmutableList.of(this.head, this.earLeft, this.earRight, this.nose).forEach((modelPart) -> modelPart.render(k));
-            net.minecraft.client.renderer.GlStateManager.popMatrix();
-            net.minecraft.client.renderer.GlStateManager.pushMatrix();
-            net.minecraft.client.renderer.GlStateManager.scalef(0.4F, 0.4F, 0.4F);
-            net.minecraft.client.renderer.GlStateManager.translatef(0.0F, 2.25F, 0.0F);
+            GL11.glPopMatrix();
+            GL11.glPushMatrix();
+            GL11.glScalef(0.4F, 0.4F, 0.4F);
+            GL11.glTranslatef(0.0F, 2.25F, 0.0F);
             ImmutableList.of(this.rearFootLeft, this.rearFootRight, this.haunchLeft, this.haunchRight, this.body, this.frontLegLeft, this.frontLegRight, this.tail).forEach((modelPart) -> modelPart.render(k));
-            net.minecraft.client.renderer.GlStateManager.popMatrix();
+            GL11.glPopMatrix();
         } else {
-            net.minecraft.client.renderer.GlStateManager.pushMatrix();
-            net.minecraft.client.renderer.GlStateManager.scalef(0.6F, 0.6F, 0.6F);
-            net.minecraft.client.renderer.GlStateManager.translatef(0.0F, 1.0F, 0.0F);
+            GL11.glPushMatrix();
+            GL11.glScalef(0.6F, 0.6F, 0.6F);
+            GL11.glTranslatef(0.0F, 1.0F, 0.0F);
             ImmutableList.of(this.rearFootLeft, this.rearFootRight, this.haunchLeft, this.haunchRight, this.body, this.frontLegLeft, this.frontLegRight, this.head, this.earRight, this.earLeft, this.tail, this.nose).forEach((modelPart) -> modelPart.render(k));
-            net.minecraft.client.renderer.GlStateManager.popMatrix();
+            GL11.glPopMatrix();
         }
 
     }

@@ -4,8 +4,8 @@ import me.shedaniel.forge.clothconfig2.api.Modifier;
 import me.shedaniel.forge.clothconfig2.api.ModifierKeyCode;
 import me.shedaniel.forge.clothconfig2.gui.entries.KeyCodeEntry;
 import me.shedaniel.forge.clothconfig2.impl.KeyInput;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.Optional;

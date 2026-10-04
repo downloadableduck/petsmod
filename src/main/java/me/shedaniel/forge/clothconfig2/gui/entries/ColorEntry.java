@@ -40,14 +40,14 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
     @Override
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-        this.colorDisplayWidget.y = y;
+        this.colorDisplayWidget.yPosition = y;
         ColorValue value = getColorValue(textFieldWidget.getText());
         if (!value.hasError())
             colorDisplayWidget.setColor(alpha ? value.getColor() : 0xff000000 | value.getColor());
-        if (Minecraft.getInstance().fontRenderer.getBidiFlag()) {
-            this.colorDisplayWidget.x = x + resetButton.getWidth() + textFieldWidget.getWidth();
+        if (Minecraft.getMinecraft().fontRenderer.getBidiFlag()) {
+            this.colorDisplayWidget.xPosition = x + resetButton.getButtonWidth() + textFieldWidget.getWidth();
         } else {
-            this.colorDisplayWidget.x = textFieldWidget.x - 23;
+            this.colorDisplayWidget.xPosition = textFieldWidget.xPosition - 23;
         }
         colorDisplayWidget.render(mouseX, mouseY, delta);
     }

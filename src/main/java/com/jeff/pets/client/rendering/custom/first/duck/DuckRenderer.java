@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Objects;
+import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
@@ -24,7 +25,7 @@ public class DuckRenderer extends PetRenderer {
     @Override
     public void preRenderCallback( final EntityLivingBase livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            net.minecraft.client.renderer.GlStateManager.scalef(0.6f, 0.6f, 0.6f);
+            GL11.glScalef(0.6f, 0.6f, 0.6f);
         }
 
     }

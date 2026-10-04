@@ -92,7 +92,7 @@ public class DuckModel extends PetModel {
         this.right_wing.rotateAngleZ = flapAngle;
         this.left_wing.rotateAngleZ = -flapAngle;
         //thing is weird af in 1.16.5 and below, base y is 15, base x is 0, base z is -4
-        if (state.field_70154_o != null) {
+        if (state.ridingEntity != null) {
             this.root.setRotationPoint(0.4F, 17.5F, -4.0F);
             this.right_leg.showModel = false;
             this.left_leg.showModel = false;

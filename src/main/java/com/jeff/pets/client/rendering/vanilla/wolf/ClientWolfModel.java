@@ -68,7 +68,7 @@ public class ClientWolfModel extends ModelBase {
     public void setLivingAnimations(ClientWolf wolf, float f, float g, float h) {
         //this.tail.rotateAngleY = net.minecraft.util.MathHelper.cos(f * 0.6662F) * 1.4F * g;
 
-        if (wolf.field_70154_o != null) {
+        if (wolf.ridingEntity != null) {
             this.upperBody.setRotationPoint(-1.0F, 16.0F, -3.0F);
             this.upperBody.rotateAngleX = 1.2566371F;
             this.upperBody.rotateAngleY = 0.0F;

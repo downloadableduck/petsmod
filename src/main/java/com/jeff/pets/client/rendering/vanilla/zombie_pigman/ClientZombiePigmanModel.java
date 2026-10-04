@@ -6,6 +6,7 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
+import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
@@ -100,7 +101,7 @@ public class ClientZombiePigmanModel extends ModelBase {
         this.left_leg.rotateAngleY = 0.0F;
         this.right_leg.rotateAngleZ = 0.0F;
         this.left_leg.rotateAngleZ = 0.0F;
-        if (state.field_70154_o != null) {
+        if (state.ridingEntity != null) {
             this.right_arm.rotateAngleX += (float) (-Math.PI / 5);
             this.left_arm.rotateAngleX += (float) (-Math.PI / 5);
             this.right_leg.rotateAngleX = -1.4137167F;
@@ -144,7 +145,7 @@ public class ClientZombiePigmanModel extends ModelBase {
         if (this.swingProgress > 0.0F) {
             ModelRenderer ModelRenderer = right_arm;
             float l = this.swingProgress;
-            this.body.rotateAngleY = MathHelper.sin(MathHelper.sqrt(l) * (float) (Math.PI * 2)) * 0.2F;
+            this.body.rotateAngleY = MathHelper.sin(MathHelper.sqrt_double(l) * (float) (Math.PI * 2)) * 0.2F;
 
             this.right_arm.rotationPointZ = MathHelper.sin(this.body.rotateAngleY) * 5.0F;
             this.right_arm.rotationPointX = -MathHelper.cos(this.body.rotateAngleY) * 5.0F;
@@ -264,13 +265,13 @@ public class ClientZombiePigmanModel extends ModelBase {
 
         public void render (Entity zombie,float b, float j, float f, float g, float h, float k, int i){
             super.render(zombie, b, j, f, g, h, k);
-            net.minecraft.client.renderer.GlStateManager.pushMatrix();
+            GL11.glPushMatrix();
             if (CONFIG.isBaby) {
-                net.minecraft.client.renderer.GlStateManager.scalef(1.5f, 1.5f, 1.5f);
+                GL11.glScalef(1.5f, 1.5f, 1.5f);
             } else {
-                net.minecraft.client.renderer.GlStateManager.scalef(1, 1, 1);
+                GL11.glScalef(1, 1, 1);
             }
-            net.minecraft.client.renderer.GlStateManager.popMatrix();
+            GL11.glPopMatrix();
         }
 
         private float quadraticArmUpdate ( float f){

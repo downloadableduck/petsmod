@@ -17,19 +17,6 @@ public class ModelUtils {
         ModelRenderer5.rotateAngleX = -1.5F + ModelRenderer3.rotateAngleX;
     }
 
-    public static void animateCrossbowCharge(ModelRenderer ModelRenderer, ModelRenderer ModelRenderer2, EntityLivingBase livingEntity, boolean bl) {
-        ModelRenderer ModelRenderer3 = bl ? ModelRenderer : ModelRenderer2;
-        ModelRenderer ModelRenderer4 = bl ? ModelRenderer2 : ModelRenderer;
-        ModelRenderer3.rotateAngleY = bl ? -0.8F : 0.8F;
-        ModelRenderer3.rotateAngleX = -0.97079635F;
-        ModelRenderer4.rotateAngleX = ModelRenderer3.rotateAngleX;
-        float f = 1.0F;
-        float g = 1.0F;
-        float h = g / f;
-        ModelRenderer4.rotateAngleY = (float) MathHelper.clampedLerp(h, 0.4D, 0.85D) * (bl ? 1 : -1);
-        ModelRenderer4.rotateAngleX = (float) MathHelper.clampedLerp(h, ModelRenderer4.rotateAngleX, -((float) Math.PI / 2));
-    }
-
     public static <T extends EntityLiving> void swingWeaponDown(ModelRenderer ModelRenderer, ModelRenderer ModelRenderer2, T mob, float f, float g) {
         float h = MathHelper.sin(f * (float) Math.PI);
         float i = MathHelper.sin((1.0F - (1.0F - f) * (1.0F - f)) * (float) Math.PI);

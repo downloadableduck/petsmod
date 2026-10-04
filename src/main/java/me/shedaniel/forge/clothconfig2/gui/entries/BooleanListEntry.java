@@ -6,8 +6,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.resources.I18n;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,19 +52,19 @@ public class BooleanListEntry extends TooltipListEntry<Boolean> {
         this.bool = new AtomicBoolean(bool);
         this.buttonWidget = new GuiButton(new Random().nextInt(), 0, 0, 150, 20, "") {
             @Override
-            public boolean func_146116_c(Minecraft mc, int mouseX, int mouseY) {
+            public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
                 
-                 boolean bl = super.func_146116_c(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
+                 boolean bl = super.mousePressed(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
                     PetsInitializer.LOGGER.info("mouse pressed");
                     BooleanListEntry.this.bool.set(!BooleanListEntry.this.bool.get());
                     getScreen().setEdited(true, isRequiresRestart());
                 } return bl;
             }
         };
-        this.resetButton = new GuiButton(new Random().nextInt(), 0, 0, Minecraft.getInstance().fontRenderer.getStringWidth(I18n.format(resetButtonKey)) + 6, 20, I18n.format(resetButtonKey)) {
+        this.resetButton = new GuiButton(new Random().nextInt(), 0, 0, Minecraft.getMinecraft().fontRenderer.getStringWidth(I18n.format(resetButtonKey)) + 6, 20, I18n.format(resetButtonKey)) {
             @Override
-            public boolean func_146116_c(Minecraft mc,  int mouseX, int mouseY) {
-                 boolean bl = super.func_146116_c(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
+            public boolean mousePressed(Minecraft mc,  int mouseX, int mouseY) {
+                 boolean bl = super.mousePressed(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
                     PetsInitializer.LOGGER.info("mouse pressed");
                     BooleanListEntry.this.bool.set(defaultValue.get());
                     getScreen().setEdited(true, isRequiresRestart());
@@ -94,24 +94,24 @@ public class BooleanListEntry extends TooltipListEntry<Boolean> {
     @Override
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-        int windowWidth = new ScaledResolution(Minecraft.getInstance(), Minecraft.getInstance().field_71443_c, Minecraft.getInstance().field_71440_d).func_78326_a();
+        int windowWidth = new ScaledResolution(Minecraft.getMinecraft(), Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight).getScaledWidth();
         this.resetButton.enabled = isEditable() && getDefaultValue().isPresent() && defaultValue.get() != bool.get();
-        this.resetButton.y = y;
+        this.resetButton.yPosition = y;
         this.buttonWidget.enabled = isEditable();
-        this.buttonWidget.y = y;
+        this.buttonWidget.yPosition = y;
         this.buttonWidget.displayString = (getYesNoText(bool.get()));
-        if (Minecraft.getInstance().fontRenderer.getBidiFlag()) {
-            Minecraft.getInstance().fontRenderer.drawStringWithShadow(I18n.format(getFieldName()), windowWidth - x - Minecraft.getInstance().fontRenderer.getStringWidth(I18n.format(getFieldName())), y + 5, 16777215);
-            this.resetButton.x = x;
-            this.buttonWidget.x = x + resetButton.getWidth() + 2;
+        if (Minecraft.getMinecraft().fontRenderer.getBidiFlag()) {
+            Minecraft.getMinecraft().fontRenderer.drawStringWithShadow(I18n.format(getFieldName()), windowWidth - x - Minecraft.getMinecraft().fontRenderer.getStringWidth(I18n.format(getFieldName())), y + 5, 16777215);
+            this.resetButton.xPosition = x;
+            this.buttonWidget.xPosition = x + resetButton.getButtonWidth() + 2;
         } else {
-            Minecraft.getInstance().fontRenderer.drawStringWithShadow(I18n.format(getFieldName()), x, y + 5, getPreferredTextColor());
-            this.resetButton.x = x + entryWidth - resetButton.getWidth();
-            this.buttonWidget.x = x + entryWidth - 150;
+            Minecraft.getMinecraft().fontRenderer.drawStringWithShadow(I18n.format(getFieldName()), x, y + 5, getPreferredTextColor());
+            this.resetButton.xPosition = x + entryWidth - resetButton.getButtonWidth();
+            this.buttonWidget.xPosition = x + entryWidth - 150;
         }
-        this.buttonWidget.setWidth(150 - resetButton.getWidth() - 2);
-        resetButton.func_146112_a(Minecraft.getInstance(), mouseX, mouseY);
-        buttonWidget.func_146112_a(Minecraft.getInstance(), mouseX, mouseY);
+        this.buttonWidget.width = (150 - resetButton.getButtonWidth() - 2);
+        resetButton.drawButton(Minecraft.getMinecraft(), mouseX, mouseY);
+        buttonWidget.drawButton(Minecraft.getMinecraft(), mouseX, mouseY);
     }
 
     public String getYesNoText(boolean bool) {
@@ -121,10 +121,10 @@ public class BooleanListEntry extends TooltipListEntry<Boolean> {
     @Override
     public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
         if (mouseButton == 0) {
-            if (this.buttonWidget.func_146116_c(Minecraft.getInstance(), mouseX, mouseY)) {
+            if (this.buttonWidget.mousePressed(Minecraft.getMinecraft(), mouseX, mouseY)) {
                 return true;
             }
-            if (this.resetButton.func_146116_c(Minecraft.getInstance(), mouseX, mouseY)) {
+            if (this.resetButton.mousePressed(Minecraft.getMinecraft(), mouseX, mouseY)) {
                 return true;
             }
         }

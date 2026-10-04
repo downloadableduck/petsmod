@@ -19,7 +19,7 @@ public class ClientSlime extends SlimeLikePet {
     }
 
     @Override
-    protected String func_70639_aQ() {
+    protected String getLivingSound() {
         return "mob.slime.small";
     }
 }

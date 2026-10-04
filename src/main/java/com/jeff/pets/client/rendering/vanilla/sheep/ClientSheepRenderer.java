@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientSheep;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
@@ -13,13 +14,13 @@ public class ClientSheepRenderer extends PetRenderer {
 
     public ClientSheepRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientSheepModel(), 0.7F);
-        this.addLayer(new ClientSheepWoolLayer(this));
+        this.setPetLayer(new ClientSheepWoolLayer(context, this));
     }
 
     @Override
     public void preRenderCallback( final EntityLivingBase livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            GL11.glScalef(0.5f, 0.5f, 0.5f);
         }
 
     }

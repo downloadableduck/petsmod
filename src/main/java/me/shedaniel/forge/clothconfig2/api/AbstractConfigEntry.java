@@ -2,8 +2,8 @@ package me.shedaniel.forge.clothconfig2.api;
 
 import me.shedaniel.forge.clothconfig2.gui.ClothConfigScreen;
 import me.shedaniel.forge.clothconfig2.gui.widget.DynamicElementListWidget;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 import java.util.Optional;
 import java.util.function.Supplier;

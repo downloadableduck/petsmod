@@ -8,6 +8,7 @@ import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Objects;
+import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
@@ -22,13 +23,13 @@ public class ClientZombieVillagerRenderer extends PetRenderer {
 
     public ClientZombieVillagerRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientZombieVillagerModel(0, 0, false), 0.75f);
-        this.addLayer(new ClientZombieVillagerProfessionLayer(this));
+        this.setPetLayer(new ClientZombieVillagerProfessionLayer(context, this));
     }
 
     @Override
     public void preRenderCallback( final EntityLivingBase livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            GL11.glScalef(0.5f, 0.5f, 0.5f);
         }
 
     }
@@ -50,10 +51,10 @@ public class ClientZombieVillagerRenderer extends PetRenderer {
     }
 
     @Override
-    public void applyRotations(EntityLivingBase state, float f, float g, float h) {
-        super.applyRotations(state, f, g, h);
-        if (state.field_70154_o != null) {
-            net.minecraft.client.renderer.GlStateManager.translatef(0, -0.5f, 0);
+    public void rotateCorpse(EntityLivingBase state, float f, float g, float h) {
+        super.rotateCorpse(state, f, g, h);
+        if (state.ridingEntity != null) {
+            GL11.glTranslatef(0, -0.5f, 0);
         }
     }
 }

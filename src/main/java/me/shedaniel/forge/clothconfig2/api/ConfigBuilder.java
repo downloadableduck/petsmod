@@ -4,8 +4,8 @@ import me.shedaniel.forge.clothconfig2.impl.ConfigBuilderImpl;
 import me.shedaniel.forge.clothconfig2.impl.ConfigEntryBuilderImpl;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 import java.util.function.Consumer;
 

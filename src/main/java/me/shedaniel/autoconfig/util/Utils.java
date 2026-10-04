@@ -37,7 +37,7 @@ public class Utils {
     }
 
     public static Path getConfigFolder() {
-        return new File(Minecraft.getInstance().gameDir.getAbsolutePath() + "/config/").toPath();
+        return new File(Minecraft.getMinecraft().mcDataDir.getAbsolutePath() + "/config/").toPath();
     }
 
     public static <V> V constructUnsafely(Class<V> cls) {
