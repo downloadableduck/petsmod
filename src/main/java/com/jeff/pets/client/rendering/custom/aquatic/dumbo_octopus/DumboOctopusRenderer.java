@@ -2,6 +2,7 @@ package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -11,7 +12,7 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
 
     double i = 45;
     float direction = 1;
-    float speed = 0.5f;
+    float speed = 0.1f;
 
     public DumboOctopusRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new DumboOctopusModel(), 0.5f);
@@ -42,21 +43,5 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
             path = yellow;
         }
         return new ResourceLocation(MOD_ID, path);
-    }
-
-    @Override
-    public void renderModel(DumboOctopus octopus, float f, float g, float h, float i, float j, float k) {
-        super.renderModel(octopus, f, g, h, i, j, k);
-        float currentSpeed;
-        if (i > 67.5f) {
-            currentSpeed = speed;
-        } else {
-            currentSpeed = 1.0f;
-        }
-        i += (int) (direction * currentSpeed);
-        if (i >= 90 || i <= 45) {
-            direction *= -1;
-        }
-        octopus.tentacleAngle = i % 360;
     }
 }

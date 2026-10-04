@@ -24,6 +24,7 @@ public class DumboOctopus extends FlyingPet {
     private final float nextFlap = 1.0F;
     public float tentacleAngle = 0;
     public EntityPlayerMP owner = (EntityPlayerMP) this.getOwner();
+    int direction = 1;
 
     public DumboOctopus(final World level) {
         super(level);

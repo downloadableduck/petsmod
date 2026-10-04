@@ -40,6 +40,7 @@ public abstract class AbstractPet extends EntityTameable {
 
     protected AbstractPet(World level) {
         super(level);
+        this.preventEntitySpawning = false;
         this.setAIMoveSpeed(0.5f);
         this.initEntityAI();
         this.setEntityId(new Random().nextInt());

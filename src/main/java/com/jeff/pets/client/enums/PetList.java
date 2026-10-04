@@ -22,7 +22,6 @@ public enum PetList implements NameableEnum, EnumImpl {
     endermite,
     ghast,
     guardian,
-    happy_ghast,
     head,
     horse,
     iron_golem,

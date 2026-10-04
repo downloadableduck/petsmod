@@ -102,22 +102,4 @@ public class DumboOctopusModel extends PetModel {
         ModelRenderer.rotateAngleY = y;
         ModelRenderer.rotateAngleZ = z;
     }
-
-
-    @Override
-    public void setRotationAngles(float f, float g, float h, float i, float k, float u, Entity entity) {
-        super.setRotationAngles(f, g, h, i, k, u, entity);
-        DumboOctopus state = (DumboOctopus) entity;
-        if (state.limbSwingAmount > 0) {
-            leg1.rotateAngleZ = -state.tentacleAngle / 10;
-            float rot = leg1.rotateAngleZ;
-            leg2.rotateAngleZ = rot;
-            leg3.rotateAngleX = -rot;
-            leg4.rotateAngleX = -rot;
-            leg5.rotateAngleZ = -rot;
-            leg6.rotateAngleZ = -rot;
-            leg7.rotateAngleX = rot;
-            leg8.rotateAngleX = rot;
-        }
-    }
 }
