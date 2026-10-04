@@ -1,6 +1,5 @@
 package com.jeff.pets.client;
 
-import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.client.network.NetworkManager;
 import com.jeff.pets.mob.AbstractPet;
 import com.jeff.pets.mob.custom.aprilfools.Head;
@@ -17,20 +16,16 @@ import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.living.player.PlayerEntity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
+import net.minecraft.resource.Identifier;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.Objects;
 
+import static com.jeff.pets.PetsInitializer.MOD_ID;
 import static com.jeff.pets.client.Central.CONFIG;
-import static com.jeff.pets.client.Central.MOD_ID;
 
 /**
  * A utility class used mainly in {@link Central} and misc rendering classes. Contains various
@@ -63,16 +58,16 @@ public class Utils {
 
         if (entity == null || world == null || player == null) return;
 
-        Vec3 lookAngle = player.getLook(1.0f);
+        Vec3d lookAngle = player.getRotationVec(1.0f);
 
-        double x = player.posX - lookAngle.x * (double) 0.5F;
-        double y = player.posY + (double) 0.5F;
-        double z = player.posZ - lookAngle.z * (double) 0.5F;
+        double x = player.x - lookAngle.x * (double) 0.5F;
+        double y = player.y + (double) 0.5F;
+        double z = player.z - lookAngle.z * (double) 0.5F;
 
         entity.setPosition(x, y, z);
         entity.setName(entityName);
-        world.addEntityToWorld(entity.getEntityId(), entity);
-        entity.func_152115_b(EntityPlayer.getUUID(player.getGameProfile()).toString());
+        world.forceEntity(entity.getNetworkId(), entity);
+        entity.setOwnerName(PlayerEntity.getUuid(player.getGameProfile()).toString());
         Central.summonedEntity.add(entity);
     }
 
@@ -88,7 +83,7 @@ public class Utils {
      *                  current name is checked off of.
      */
     public static void checkName(String activePet, AbstractPet entity, String petName) {
-        if (Objects.equals(CONFIG.activePet, activePet) && entity != null && !entity.func_95999_t().equals(petName)) {
+        if (Objects.equals(CONFIG.activePet, activePet) && entity != null && !entity.getName().equals(petName)) {
             entity.setName(petName);
         }
     }
@@ -138,8 +133,8 @@ public class Utils {
      * @return {@link ResourceLocation#fromNamespaceAndPath}, with the parameter {@code namespace} set to
      * {@link Central#MOD_ID} and the parameter {@code path} set to the user's input
      */
-    public static ResourceLocation withModNamespace(String path) {
-        return new ResourceLocation(MOD_ID, path);
+    public static Identifier withModNamespace(String path) {
+        return new Identifier(MOD_ID, path);
     }
 
     /**
@@ -171,7 +166,7 @@ public class Utils {
 
     public static AbstractPet getPet(String string) {
         Minecraft minecraft = Minecraft.getInstance();
-        WorldClient world = minecraft.world;
+        ClientWorld world = minecraft.world;
 
         switch (string) {
             case "duck":

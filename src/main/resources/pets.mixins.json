@@ -17,6 +17,7 @@
     "EndClientTickMixin",
     "EntityRenderDispatcherMixin",
     "IntermediaryVerifierMixin",
+    "NoHitboxMixin",
     "PlayerSendMessageMixin"
   ]
 }

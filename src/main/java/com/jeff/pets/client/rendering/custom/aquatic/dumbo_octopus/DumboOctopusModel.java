@@ -102,22 +102,4 @@ public class DumboOctopusModel extends PetModel {
         ModelPart.rotationY = y;
         ModelPart.rotationZ = z;
     }
-
-
-    @Override
-    public void setupAnimation(float f, float g, float h, float i, float k, float s, net.minecraft.entity.Entity entity) {
-        DumboOctopus state = (DumboOctopus) entity;
-        super.setupAnimation(f, g, h, i, k, s, entity);
-        if (state.walkAnimationSpeed > 0) {
-            leg1.rotationZ = -state.tentacleAngle / 10;
-            float rot = leg1.rotationZ;
-            leg2.rotationZ = rot;
-            leg3.rotationX = -rot;
-            leg4.rotationX = -rot;
-            leg5.rotationZ = -rot;
-            leg6.rotationZ = -rot;
-            leg7.rotationX = rot;
-            leg8.rotationX = rot;
-        }
-    }
 }

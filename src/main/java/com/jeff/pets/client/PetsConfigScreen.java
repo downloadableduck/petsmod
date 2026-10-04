@@ -7,26 +7,22 @@ import com.jeff.pets.client.network.NetworkManager;
 import com.jeff.pets.mob.AbstractPet;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.gui.GuiElement;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.inventory.menu.SurvivalInventoryScreen;
+import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.render.Window;
+import net.minecraft.client.render.platform.GlStateManager;
+import net.minecraft.resource.Identifier;
+import net.minecraft.util.math.Box;
 import org.apache.commons.lang3.StringUtils;
-import org.lwjgl.Sys;
-import org.lwjgl.input.Mouse;
-import scala.collection.parallel.ParIterableLike;
-
-import java.io.IOException;
-import java.util.function.Supplier;
 
 import static com.jeff.pets.client.Central.CONFIG;
 /**
  * func_78326_a() = getSclaedWidth
  * func_78328_b() = getScaledHeight
  * */
-public class PetsConfigScreen extends GuiScreen {
+public class PetsConfigScreen extends Screen {
 
     public float ticks;
     public NametagButton button;
@@ -40,7 +36,7 @@ public class PetsConfigScreen extends GuiScreen {
         ticks = 0;
         if (Minecraft.getInstance().world != null) {
             entity = Utils.getPet(CONFIG.activePet);
-            entity.func_152115_b(Minecraft.getInstance().player.getGameProfile().getId().toString());
+            entity.setOwnerName(Minecraft.getInstance().player.getGameProfile().getId().toString());
         }
         this.entityName = Utils.getActivePetName();
     }
@@ -55,54 +51,54 @@ public class PetsConfigScreen extends GuiScreen {
         }
 
         if (this.closing && this.ticks <= 0) {
-            super.onGuiClosed();
+            super.removed();
         }
         int alpha = (int) (ticks * 255);
 
         int color = (alpha << 24) | 0xFFFFFF;
         if (this.button != null) {
             this.button.color = color;
-            this.button.func_146194_f();
+            this.button.render();
         }
-        ScaledResolution window = new ScaledResolution(Minecraft.getInstance());
+        Window window = new Window(Minecraft.getInstance());
         int xo = this.width / 2;
         int yo = this.height / 2;
         int size = 0;
         if (this.entity != null) {
-            size = (int) (75 / Math.max(0.01, this.entity.getBoundingBox().getAverageEdgeLength()));
+            size = (int) (75 / Math.max(0.01, this.entity.getShape().getAverageSideLength()));
         }
         int boxsize = 250;
-        int x = ((this.width - fontRenderer.getStringWidth(CONFIG.activePet)) - (this.width / 2));
-        int y = this.height - this.fontRenderer.FONT_HEIGHT - 15;
-        this.blit(Utils.withModNamespace("textures/gui/background.png"), 0, 0, window.func_78326_a(), window.func_78328_b(), color);
-        this.drawString(this.fontRenderer, StringUtils.capitalize("Your currently selected pet is: "), (this.width - fontRenderer.getStringWidth("Your currently selected pet is: ")) / 2, this.height - this.fontRenderer.FONT_HEIGHT - 35, color);
+        int x = ((this.width - textRenderer.getWidth(CONFIG.activePet)) - (this.width / 2));
+        int y = this.height - this.textRenderer.fontHeight - 15;
+        this.blit(Utils.withModNamespace("textures/gui/background.png"), 0, 0, window.getWidth(), window.getHeight(), color);
+        this.drawString(this.textRenderer, StringUtils.capitalize("Your currently selected pet is: "), (this.width - textRenderer.getWidth("Your currently selected pet is: ")) / 2, this.height - this.textRenderer.fontHeight - 35, color);
         GlStateManager.pushMatrix();
         GlStateManager.translatef(x, y, 1);
         GlStateManager.scalef(2, 2, 0);
-        this.drawString(this.fontRenderer, (StringUtils.capitalize(CONFIG.activePet).replaceAll("_", " ")), 0, 0, color);
+        this.drawString(this.textRenderer, (StringUtils.capitalize(CONFIG.activePet).replaceAll("_", " ")), 0, 0, color);
         GlStateManager.popMatrix();
         if (entity != null) {
             try {
                 if (CONFIG.petOn)
-                    GuiInventory.drawEntityOnScreen(xo, yo + 50, size, 230, 0, entity);
+                    SurvivalInventoryScreen.renderEntity(xo, yo + 50, size, 230, 0, entity);
             } catch (Exception e) {
             }
         } else {
             String component = "⚠ Could not load 3D model of your pet because you are not in a level.";
-            this.drawString(Minecraft.getInstance().fontRenderer, component, this.width - this.fontRenderer.getStringWidth(component) - (Minecraft.getInstance().gameSettings.fullScreen ? 10 : 30), this.height / 2, color);
+            this.drawString(Minecraft.getInstance().textRenderer, component, this.width - this.textRenderer.getWidth(component) - (Minecraft.getInstance().options.fullscreen ? 10 : 30), this.height / 2, color);
         }
         super.render(mousex, mousey, a);
     }
 
     @Override
-    public void initGui() {
-        ScaledResolution res = new ScaledResolution(Minecraft.getInstance());
-        this.width = res.func_78326_a();
-        this.height = res.func_78328_b();
-        int fontWidth = fontRenderer.getStringWidth(CONFIG.activePet) * 2;
+    public void init() {
+        Window res = new Window(Minecraft.getInstance());
+        this.width = res.getWidth();
+        this.height = res.getHeight();
+        int fontWidth = textRenderer.getWidth(CONFIG.activePet) * 2;
         int width = this.width / 2;
-        int height = this.height - this.fontRenderer.FONT_HEIGHT - 15;
-        this.button = new NametagButton(this.width, this.height - 212, this.mc.fontRenderer, this.mc.fontRenderer.getStringWidth("1") * 16, this.mc.fontRenderer.FONT_HEIGHT, this.entityName);
+        int height = this.height - this.textRenderer.fontHeight - 15;
+        this.button = new NametagButton(this.width, this.height - 212, this.minecraft.textRenderer, this.minecraft.textRenderer.getWidth("1") * 16, this.minecraft.textRenderer.fontHeight, this.entityName);
         this.buttons.add(new ExitButton(this, 10, 10, 80, 20));
         this.buttons.add(new SwitchSkinsButton(this, width - (fontWidth / 2) - 10 - 80, height - 3, 80, 20));
         this.buttons.add(new ChangePetButton(this, width + (fontWidth / 2) + 10, height - 3, 80, 20));
@@ -123,13 +119,13 @@ public class PetsConfigScreen extends GuiScreen {
     }
 
     @Override
-    public void onGuiClosed() {
+    public void removed() {
         if (!this.closing) {
             this.closing = true;
             return;
         }
         AutoConfig.getConfigHolder(PetsConfig.class).save();
-        super.onGuiClosed();
+        super.removed();
     }
 
     public DropdownMenu getDropDownMenu() {
@@ -257,28 +253,28 @@ public class PetsConfigScreen extends GuiScreen {
     public void tick() {
         if (this.entity == null) return;
         this.entity.tick();
-        this.entity.limbSwingAmount = (0.3f);
+        this.entity.walkAnimationSpeed = (0.3f);
         super.tick();
     }
 
     @Override
-    public void func_146284_a(net.minecraft.client.gui.GuiButton button) throws IOException {
-        super.func_146284_a(button);
+    public void buttonClicked(ButtonWidget button) {
+        super.buttonClicked(button);
         if (button instanceof GuiButton) {
             ((GuiButton) button).onPress();
         }
     }
 
-    protected void blit(ResourceLocation resourceLocation, int x, int y, int width, int height, int color) {
+    protected void blit(Identifier resourceLocation, int x, int y, int width, int height, int color) {
         GlStateManager.enableBlend();
         //GlStateManager.color4f(255, 255, 255, color);
-        Minecraft.getInstance().getTextureManager().bindTexture(resourceLocation);
-        Gui.drawScaledCustomSizeModalRect(x, y, 0, 0, 128, 128, width, height, 128, 128);
+        Minecraft.getInstance().getTextureManager().bind(resourceLocation);
+        GuiElement.drawTexture(x, y, 0, 0, 128, 128, width, height, 128, 128);
         GlStateManager.disableBlend();
     }
 
     @Override
-    public boolean doesGuiPauseGame() {
+    public boolean shouldPauseGame() {
         return false;
     }
 }

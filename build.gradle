@@ -38,11 +38,15 @@ dependencies {
     //nests ploceus.nests(project.nests_build)
     mappings ploceus.featherMappings(project.feather_build)
 
-
     ploceus.dependOsl(project.osl_version)
 
     implementation("blue.endless:jankson:${rootProject.jankson_version}")
     implementation("com.moandjiezana.toml:toml4j:${rootProject.toml4j_version}")
+    include "com.davidehrmann.vcdiff:vcdiff-core:${project.vcdiff_version}"
+    include "org.java-websocket:Java-WebSocket:${project.java_websocket_version}"
+    include "org.msgpack:msgpack-core:${project.msgpack_version}"
+    implementation "io.ably:ably-java:${project.ably_version}"
+    include "io.ably:ably-java:${project.ably_version}"
     modImplementation("maven.modrinth:LIGlLgiL:71EHHNXc")
 }
 processResources {

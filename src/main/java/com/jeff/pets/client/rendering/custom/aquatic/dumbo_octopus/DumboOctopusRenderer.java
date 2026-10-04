@@ -44,20 +44,4 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus> {
         }
         return new Identifier(MOD_ID, path);
     }
-
-    @Override
-    public void render(DumboOctopus octopus, double f, double g, double h, float j, float i) {
-        super.render(octopus, f, g, h, j, i);
-        float currentSpeed;
-        if (i > 67.5f) {
-            currentSpeed = speed;
-        } else {
-            currentSpeed = 1.0f;
-        }
-        i += (int) (direction * currentSpeed);
-        if (i >= 90 || i <= 45) {
-            direction *= -1;
-        }
-        octopus.tentacleAngle = i % 360;
-    }
 }

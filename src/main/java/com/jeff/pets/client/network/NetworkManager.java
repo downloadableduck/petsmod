@@ -8,10 +8,9 @@ import io.ably.lib.realtime.AblyRealtime;
 import io.ably.lib.realtime.Channel;
 import io.ably.lib.types.AblyException;
 import io.ably.lib.types.ClientOptions;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.launchwrapper.Launch;
-import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
+import net.minecraft.entity.living.player.PlayerEntity;
 
 import java.util.Map;
 import java.util.Objects;
@@ -48,7 +47,7 @@ public class NetworkManager {
             channel.subscribe("requestPetState", (message) -> {
                 try {
                     this.log("Received a request for current pet state");
-                    Minecraft.getInstance().addScheduledTask(() -> {
+                    Minecraft.getInstance().execute(() -> {
                         this.broadcastGeneral(Minecraft.getInstance().player.getGameProfile().getId().toString(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby);
                     });
                 } catch (Throwable t) {
@@ -62,9 +61,9 @@ public class NetworkManager {
                     GeneralPetsPayload payload = GSON.fromJson(json, GeneralPetsPayload.class);
                     if (this.isMe(payload.uuid)) return;
                     this.log("Received packet: {}", message.data);
-                    Minecraft.getInstance().addScheduledTask(() -> {
+                    Minecraft.getInstance().execute(() -> {
                         AbstractPet pet = Utils.getPet(payload.petSpecies);
-                        EntityPlayer player = Minecraft.getInstance().world.getPlayerEntityByUUID(payload.playerUUID);
+                        PlayerEntity player = Minecraft.getInstance().world.getPlayer(payload.playerUUID);
                         AbstractPet entity = map.get(player.getGameProfile().getId());
                         if (entity != null) {
                             Utils.despawnEntity(entity);
@@ -85,7 +84,7 @@ public class NetworkManager {
                     String json = (String) message.data;
                     ChangePetSkinPayload payload = GSON.fromJson(json, ChangePetSkinPayload.class);
                     if (this.isMe(payload.uuid)) return;
-                    Minecraft.getInstance().addScheduledTask(() -> {
+                    Minecraft.getInstance().execute(() -> {
                         AbstractPet pet = map.get(UUID.fromString(payload.uuid));
                         if (!Objects.equals(payload.petSkin, "baby") && !Objects.equals(payload.petSkin, "adult")) {
                             pet.petSkin = payload.petSkin;
@@ -103,7 +102,7 @@ public class NetworkManager {
                     String json = (String) message.data;
                     ChangePetNamePayload payload = GSON.fromJson(json, ChangePetNamePayload.class);
                     if (this.isMe(payload.uuid)) return;
-                    Minecraft.getInstance().addScheduledTask(() -> {
+                    Minecraft.getInstance().execute(() -> {
                         AbstractPet pet = map.get(UUID.fromString(payload.uuid));
                         pet.setName(payload.petName);
                     });
@@ -116,9 +115,9 @@ public class NetworkManager {
                     String json = (String) message.data;
                     TeleportPetPayload payload = GSON.fromJson(json, TeleportPetPayload.class);
                     if (this.isMe(payload.uuid)) return;
-                    Minecraft.getInstance().addScheduledTask(() -> {
+                    Minecraft.getInstance().execute(() -> {
                         AbstractPet pet = map.get(UUID.fromString(payload.uuid));
-                        pet.setPositionAndUpdate(payload.x, payload.y, payload.z);
+                        pet.setPosition(payload.x, payload.y, payload.z);
                     });
                 } catch (Exception e) {
                     this.log(e);
@@ -130,10 +129,10 @@ public class NetworkManager {
                     TogglePetPayload payload = GSON.fromJson(json, TogglePetPayload.class);
                     if (this.isMe(payload.uuid)) return;
                     this.log("Received toggle pet payload: {}", payload);
-                    Minecraft.getInstance().addScheduledTask(() -> {
+                    Minecraft.getInstance().execute(() -> {
                         AbstractPet pet = map.get(UUID.fromString(payload.uuid));
                         if (payload.on) {
-                            EntityPlayer player = Minecraft.getInstance().world.getPlayerEntityByUUID(UUID.fromString(payload.uuid));
+                            PlayerEntity player = Minecraft.getInstance().world.getPlayer(UUID.fromString(payload.uuid));
                             if (player.getGameProfile().getId().equals(Minecraft.getInstance().player.getGameProfile().getId())) return;
                             if (player.getGameProfile().getId().equals(UUID.fromString(payload.uuid))) {
                                 Utils.summonPet(pet, payload.petName, player);
@@ -151,7 +150,7 @@ public class NetworkManager {
                 try {
                     String json = (String) message.data;
                     ToggleBabyPayload payload = GSON.fromJson(json, ToggleBabyPayload.class);
-                    EntityPlayer player = Minecraft.getInstance().world.getPlayerEntityByUUID(UUID.fromString(payload.uuid));
+                    PlayerEntity player = Minecraft.getInstance().world.getPlayer(UUID.fromString(payload.uuid));
                     if (this.isMe(payload.uuid)) return;
                     this.log("Received baby toggle payload: {}", payload);
                     AbstractPet pet = map.get(player);
@@ -165,7 +164,7 @@ public class NetworkManager {
                 try {
                     String json = (String) message.data;
                     PutPetOnHeadPayload payload = GSON.fromJson(json, PutPetOnHeadPayload.class);
-                    EntityPlayer player = Minecraft.getInstance().world.getPlayerEntityByUUID(UUID.fromString(payload.uuid));
+                    PlayerEntity player = Minecraft.getInstance().world.getPlayer(UUID.fromString(payload.uuid));
                     if (this.isMe(payload.uuid)) return;
                     this.log("Received put on head packet: {}", payload);
                     AbstractPet pet = map.get(player);
@@ -183,7 +182,7 @@ public class NetworkManager {
                 try {
                     String uuid = (String) message.data;
                     this.log("Received goodbye packet from: " + uuid);
-                    Minecraft.getInstance().addScheduledTask(() -> {
+                    Minecraft.getInstance().execute(() -> {
                         AbstractPet pet = map.get(UUID.fromString(uuid));
                         pet.remove();
                     });
@@ -290,7 +289,7 @@ public class NetworkManager {
         this.options = new ClientOptions();
         this.options.authUrl = "https://petsmod.downloadableduck.workers.dev";
         this.options.echoMessages = false;
-        this.options.logLevel = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment") ? 2 : 0;
+        this.options.logLevel = FabricLoader.getInstance().isDevelopmentEnvironment() ? 2 : 0;
     }
 
     private String getIp(String ip) {
@@ -367,7 +366,7 @@ public class NetworkManager {
     }
     
     public void log(String string, Object ... optionals) {
-        if ((Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment")) {
+        if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
             String message2 = string;
             for (Object arg : optionals) {
                 message2 = message2.replaceFirst("\\{\\}", String.valueOf(arg));

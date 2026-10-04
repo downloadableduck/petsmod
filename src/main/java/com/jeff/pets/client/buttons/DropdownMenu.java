@@ -8,21 +8,18 @@ import com.jeff.pets.client.enums.BlankEnum;
 import com.jeff.pets.client.enums.EnumImpl;
 import com.jeff.pets.client.network.NetworkManager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.MouseHelper;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.gui.GuiElement;
+import net.minecraft.client.render.TextRenderer;
+import net.minecraft.client.render.platform.GlStateManager;
+import net.minecraft.client.render.vertex.BufferBuilder;
+import net.minecraft.client.render.vertex.DefaultVertexFormat;
+import net.minecraft.client.render.vertex.Tesselator;
+import net.minecraft.client.render.world.WorldRenderer;
+import net.minecraft.resource.Identifier;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.input.Mouse;
-import scala.swing.event.MouseButtonEvent;
-import scala.swing.event.MousePressed;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -64,7 +61,7 @@ public class DropdownMenu {
     public void extractRenderState(int mouseX, int mouseY, int x, int y) {
         this.handleScrolling();
         y += 15;
-        FontRenderer font = Minecraft.getInstance().fontRenderer;
+        TextRenderer font = Minecraft.getInstance().textRenderer;
         int width = 80;
         int padding = 2;
         int availableTextWidth = width - (padding * 2);
@@ -82,20 +79,20 @@ public class DropdownMenu {
             }
             String formattedText = StringUtils.capitalize(value.toString().replaceAll("_", " "));
             String textComponent = formattedText;
-            List<String> lines = font.listFormattedStringToWidth(textComponent, availableTextWidth);
+            List<String> lines = font.split(textComponent, availableTextWidth);
 
             int lineCount = Math.max(1, lines.size());
-            int slotHeight = (font.FONT_HEIGHT * lineCount) + (padding * 2);
+            int slotHeight = (font.fontHeight * lineCount) + (padding * 2);
             y -= slotHeight;
 
             boolean hovered = mouseX >= x && mouseX < x + width &&
                     mouseY >= y && mouseY < y + slotHeight;
 
-            ResourceLocation id = hovered ? Utils.withModNamespace("textures/gui/sprites/dropdown_menu_slot_highlighted.png") : Utils.withModNamespace("textures/gui/sprites/dropdown_menu_slot.png");
+            Identifier id = hovered ? Utils.withModNamespace("textures/gui/sprites/dropdown_menu_slot_highlighted.png") : Utils.withModNamespace("textures/gui/sprites/dropdown_menu_slot.png");
             GlStateManager.pushMatrix();
             blit(id, x, y, width, slotHeight, color);
             for (int i = 0; i < lines.size(); i++) {
-                int lineY = y + padding + (i * font.FONT_HEIGHT);
+                int lineY = y + padding + (i * font.fontHeight);
                 this.drawString(font, lines.get(i), x + padding, lineY, color);
             }
             GlStateManager.popMatrix();
@@ -109,14 +106,14 @@ public class DropdownMenu {
                 Utils.setActivePet(Utils.getPet(value.toString()), value.toString());
                 if (Minecraft.getInstance().player != null) {
                     Central.despawnPet();
-                    NetworkManager.get().broadcastGeneral(Minecraft.getInstance().player.getUniqueID().toString(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby);
+                    NetworkManager.get().broadcastGeneral(Minecraft.getInstance().player.getUuid().toString(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby);
                     Central.summonPet();
                     Central.updateSuggestions(Minecraft.getInstance());
                 }
                 PetsConfigScreen petsConfigScreen = new PetsConfigScreen();
                 petsConfigScreen.ticks = 20;
-                Minecraft.getInstance().displayGuiScreen(null);
-                Minecraft.getInstance().displayGuiScreen(petsConfigScreen);
+                Minecraft.getInstance().openScreen(null);
+                Minecraft.getInstance().openScreen(petsConfigScreen);
             }
         }
     }
@@ -159,25 +156,25 @@ public class DropdownMenu {
     public void drawTexturedModalRect(int p_drawTexturedModalRect_1_, int p_drawTexturedModalRect_2_, int p_drawTexturedModalRect_3_, int p_drawTexturedModalRect_4_, int p_drawTexturedModalRect_5_, int p_drawTexturedModalRect_6_) {
         float lvt_7_1_ = 0.00390625F;
         float lvt_8_1_ = 0.00390625F;
-        Tessellator lvt_9_1_ = Tessellator.getInstance();
-        WorldRenderer lvt_10_1_ = lvt_9_1_.getBuffer();
-        lvt_10_1_.begin(7, DefaultVertexFormats.POSITION_TEX);
-        lvt_10_1_.pos((double) (p_drawTexturedModalRect_1_ + 0), (double) (p_drawTexturedModalRect_2_ + p_drawTexturedModalRect_6_), (double) 0).func_181673_a((double) ((float) (p_drawTexturedModalRect_3_ + 0) * lvt_7_1_), (double) ((float) (p_drawTexturedModalRect_4_ + p_drawTexturedModalRect_6_) * lvt_8_1_)).endVertex();
-        lvt_10_1_.pos((double) (p_drawTexturedModalRect_1_ + p_drawTexturedModalRect_5_), (double) (p_drawTexturedModalRect_2_ + p_drawTexturedModalRect_6_), (double) 0).func_181673_a((double) ((float) (p_drawTexturedModalRect_3_ + p_drawTexturedModalRect_5_) * lvt_7_1_), (double) ((float) (p_drawTexturedModalRect_4_ + p_drawTexturedModalRect_6_) * lvt_8_1_)).endVertex();
-        lvt_10_1_.pos((double) (p_drawTexturedModalRect_1_ + p_drawTexturedModalRect_5_), (double) (p_drawTexturedModalRect_2_ + 0), (double) 0).func_181673_a((double) ((float) (p_drawTexturedModalRect_3_ + p_drawTexturedModalRect_5_) * lvt_7_1_), (double) ((float) (p_drawTexturedModalRect_4_ + 0) * lvt_8_1_)).endVertex();
-        lvt_10_1_.pos((double) (p_drawTexturedModalRect_1_ + 0), (double) (p_drawTexturedModalRect_2_ + 0), (double) 0).func_181673_a((double) ((float) (p_drawTexturedModalRect_3_ + 0) * lvt_7_1_), (double) ((float) (p_drawTexturedModalRect_4_ + 0) * lvt_8_1_)).endVertex();
-        lvt_9_1_.draw();
+        Tesselator lvt_9_1_ = Tesselator.getInstance();
+        BufferBuilder lvt_10_1_ = lvt_9_1_.getBuffer();
+        lvt_10_1_.begin(7, DefaultVertexFormat.POSITION_TEX);
+        lvt_10_1_.vertex((double) (p_drawTexturedModalRect_1_ + 0), (double) (p_drawTexturedModalRect_2_ + p_drawTexturedModalRect_6_), (double) 0).texture((double) ((float) (p_drawTexturedModalRect_3_ + 0) * lvt_7_1_), (double) ((float) (p_drawTexturedModalRect_4_ + p_drawTexturedModalRect_6_) * lvt_8_1_)).end();
+        lvt_10_1_.vertex((double) (p_drawTexturedModalRect_1_ + p_drawTexturedModalRect_5_), (double) (p_drawTexturedModalRect_2_ + p_drawTexturedModalRect_6_), (double) 0).texture((double) ((float) (p_drawTexturedModalRect_3_ + p_drawTexturedModalRect_5_) * lvt_7_1_), (double) ((float) (p_drawTexturedModalRect_4_ + p_drawTexturedModalRect_6_) * lvt_8_1_)).end();
+        lvt_10_1_.vertex((double) (p_drawTexturedModalRect_1_ + p_drawTexturedModalRect_5_), (double) (p_drawTexturedModalRect_2_ + 0), (double) 0).texture((double) ((float) (p_drawTexturedModalRect_3_ + p_drawTexturedModalRect_5_) * lvt_7_1_), (double) ((float) (p_drawTexturedModalRect_4_ + 0) * lvt_8_1_)).end();
+        lvt_10_1_.vertex((double) (p_drawTexturedModalRect_1_ + 0), (double) (p_drawTexturedModalRect_2_ + 0), (double) 0).texture((double) ((float) (p_drawTexturedModalRect_3_ + 0) * lvt_7_1_), (double) ((float) (p_drawTexturedModalRect_4_ + 0) * lvt_8_1_)).end();
+        lvt_9_1_.end();
     }
 
-    protected void blit(ResourceLocation resourceLocation, int x, int y, int width, int height, int color) {
+    protected void blit(Identifier resourceLocation, int x, int y, int width, int height, int color) {
         GlStateManager.enableBlend();
         //GlStateManager.color4f(255, 255, 255, color);
-        Minecraft.getInstance().getTextureManager().bindTexture(resourceLocation);
-        Gui.drawScaledCustomSizeModalRect(x, y, 0, 0, 200, 20, width, height, 200, 20);
+        Minecraft.getInstance().getTextureManager().bind(resourceLocation);
+        GuiElement.drawTexture(x, y, 0, 0, 200, 20, width, height, 200, 20);
         GlStateManager.disableBlend();
     }
 
-    public void drawString(FontRenderer p_drawString_1_, String p_drawString_2_, int p_drawString_3_, int p_drawString_4_, int p_drawString_5_) {
-        p_drawString_1_.drawStringWithShadow(p_drawString_2_, (float)p_drawString_3_, (float)p_drawString_4_, p_drawString_5_);
+    public void drawString(TextRenderer p_drawString_1_, String p_drawString_2_, int p_drawString_3_, int p_drawString_4_, int p_drawString_5_) {
+        p_drawString_1_.drawWithShadow(p_drawString_2_, (float)p_drawString_3_, (float)p_drawString_4_, p_drawString_5_);
     }
 }

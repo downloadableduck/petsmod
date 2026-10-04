@@ -7,8 +7,6 @@ import net.minecraft.client.gui.screen.Screen;
 public class ModMenuEntrypoint implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return screen -> {
-            return new PetsConfigScreen<>().getModConfigScreenFactory();
-        };
+        return screen -> new PetsConfigScreen();
     }
 }

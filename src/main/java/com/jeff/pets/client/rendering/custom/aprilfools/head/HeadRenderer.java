@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class HeadRenderer extends PetRenderer<Head, HeadModel> {
+public class HeadRenderer extends PetRenderer<Head> {
 
     private final Map<String, GameProfile> PROFILLES = new ConcurrentHashMap<>();
 
@@ -32,7 +32,7 @@ public class HeadRenderer extends PetRenderer<Head, HeadModel> {
     public Identifier getTextureLocation(Head entity) {
         entity.petSkin = CONFIG.headSkin;
         if (entity.petSkin.equals(Minecraft.getInstance().player.getGameProfile().getName())) {
-            return Minecraft.getInstance().player.getLocationSkin();
+            return Minecraft.getInstance().player.getSkinTextureLocation();
         }
         if (!entity.isLoading) {
             this.fetchSkin(entity);
@@ -65,12 +65,12 @@ public class HeadRenderer extends PetRenderer<Head, HeadModel> {
                 PROFILLES.put(entity.petSkin, profile);
                 Minecraft lvt_11_1_ = Minecraft.getInstance();
                 if (profile != null) {
-                    lvt_11_1_.addScheduledTask(() -> {
-                        Map<MinecraftProfileTexture.Type, MinecraftProfileTexture> lvt_12_1_ = lvt_11_1_.getSkinManager().loadSkinFromCache(profile);
+                    lvt_11_1_.execute(() -> {
+                        Map<MinecraftProfileTexture.Type, MinecraftProfileTexture> lvt_12_1_ = lvt_11_1_.getSkinManager().getTextures(profile);
                         if (lvt_12_1_.containsKey(MinecraftProfileTexture.Type.SKIN)) {
-                            entity.skin = (lvt_11_1_.getSkinManager().loadSkin(lvt_12_1_.get(MinecraftProfileTexture.Type.SKIN), MinecraftProfileTexture.Type.SKIN));
+                            entity.skin = (lvt_11_1_.getSkinManager().register(lvt_12_1_.get(MinecraftProfileTexture.Type.SKIN), MinecraftProfileTexture.Type.SKIN));
                         } else {
-                            lvt_11_1_.getSkinManager().loadProfileTextures(
+                            lvt_11_1_.getSkinManager().register(
                                     profile,
                                     (type, location, profileTexture) -> {
                                         if (type == MinecraftProfileTexture.Type.SKIN) {

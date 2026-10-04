@@ -1,6 +1,7 @@
 package com.jeff.pets.mob;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.living.attribute.EntityAttributes;
 import net.minecraft.entity.living.LivingEntity;
 import net.minecraft.entity.living.mob.passive.PassiveEntity;
@@ -14,6 +15,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Random;
 
 /**
  * Abstract class that extends {@link TameableEntity}, providing multiple utilities
@@ -39,6 +42,9 @@ public abstract class AbstractPet extends TameableEntity {
     protected AbstractPet(World level) {
         super(level);
         this.setSpeed(0.5f);
+        this.blocksBuilding = false;
+        //this.initEntityAI();
+        this.setNetworkId(new Random().nextInt());
     }
 
     @Override
@@ -234,7 +240,7 @@ public abstract class AbstractPet extends TameableEntity {
 
     public void setYRot(float targetYaw) {
         this.setHeadYaw(targetYaw);
-        this.setBodyYaw(targetYaw);
+        //this.setBodyYaw(targetYaw);
     }
 
     private void reCalcPos() {
@@ -274,9 +280,13 @@ public abstract class AbstractPet extends TameableEntity {
     }
 
     @Override
-    public boolean canBeCollidedWith() {
+    public boolean hasCollision() {
         PlayerEntity player = Minecraft.getInstance().player;
         ItemStack itemStack = player.getItemInHand();
         return itemStack == null;
+    }
+
+    public void setBaby(boolean baby) {
+        this.setBreedingAge(baby ? -24000 : 0);
     }
 }

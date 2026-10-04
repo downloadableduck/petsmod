@@ -1,9 +1,7 @@
 package com.jeff.pets.client.network;
 
+import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,24 +9,22 @@ public final class PetsNetworked {
     public static final String MOD_ID = "pets_networked";
     public static final Logger LOGGER = LoggerFactory.getLogger("Pets Networking");
 
-    @SubscribeEvent
-    private void createConnectHandler(PlayerEvent.PlayerLoggedInEvent event) {
-        NetworkManager.get().connect(Minecraft.getInstance().getCurrentServerData().serverIP);
+
+    public static void createConnectHandler() {
+        NetworkManager.get().connect(Minecraft.getInstance().getCurrentServerEntry().ip);
     }
 
-    @SubscribeEvent
-    private void createDisconnectHandler(PlayerEvent.PlayerLoggedOutEvent event) {
+    public static void createDisconnectHandler() {
         NetworkManager.get().disconnect();
     }
 
-    @SubscribeEvent
-    private void createLevelChangeHandler(WorldEvent.Load event) {
+    public static void createLevelChangeHandler() {
         NetworkManager.get().sayByeBye();
         Minecraft minecraft = Minecraft.getInstance();
 
-        if (minecraft.getCurrentServerData() != null) {
+        if (minecraft.getCurrentServerEntry() != null) {
             NetworkManager.get().disconnect();
-            NetworkManager.get().connect(minecraft.getCurrentServerData().serverIP);
+            NetworkManager.get().connect(minecraft.getCurrentServerEntry().ip);
         }
     }
 }
