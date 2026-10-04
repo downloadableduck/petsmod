@@ -7,6 +7,7 @@ import net.minecraft.client.model.animal.golem.CopperGolemModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.entity.CopperGolemRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.layers.CustomHeadLayer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
@@ -44,11 +45,11 @@ public class ClientCopperGolemRenderer extends PetRenderer<@NotNull ClientCopper
         if (Objects.equals(CONFIG.copperGolemSkin, "unoxidized")) {
             copperGolemTexturePath = "textures/entity/copper_golem/copper_golem.png";
         } else if (Objects.equals(CONFIG.copperGolemSkin, "exposed")) {
-            copperGolemTexturePath = "textures/entity/copper_golem/copper_golem_exposed.png";
+            copperGolemTexturePath = "textures/entity/copper_golem/exposed_copper_golem.png";
         } else if (Objects.equals(CONFIG.copperGolemSkin, "oxidized")) {
-            copperGolemTexturePath = "textures/entity/copper_golem/copper_golem_oxidized.png";
+            copperGolemTexturePath = "textures/entity/copper_golem/oxidized_copper_golem.png";
         } else if (Objects.equals(CONFIG.copperGolemSkin, "weathered")) {
-            copperGolemTexturePath = "textures/entity/copper_golem/copper_golem_weathered.png";
+            copperGolemTexturePath = "textures/entity/copper_golem/weathered_copper_golem.png";
         }
         return Identifier.withDefaultNamespace(copperGolemTexturePath);
     }

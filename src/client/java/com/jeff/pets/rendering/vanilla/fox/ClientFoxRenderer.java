@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.FoxRenderer;
 import net.minecraft.client.renderer.entity.state.FoxRenderState;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
@@ -34,7 +35,7 @@ public class ClientFoxRenderer extends PetRenderer<@NotNull ClientFox, @NotNull 
         if (Objects.equals(CONFIG.foxSkin, "red")) {
             foxTexturePath = "textures/entity/fox/fox.png";
         } else if (Objects.equals(CONFIG.foxSkin, "snow")) {
-            foxTexturePath = "textures/entity/fox/fox_snow.png";
+            foxTexturePath = "textures/entity/fox/snow_fox.png";
         } else {
             foxTexturePath = "textures/entity/fox/fox.png";
         }
