@@ -34,7 +34,7 @@ public class ClientFoxRenderer extends PetRenderer<@NotNull ClientFox, @NotNull 
         if (Objects.equals(CONFIG.foxSkin, "red")) {
             foxTexturePath = "textures/entity/fox/fox.png";
         } else if (Objects.equals(CONFIG.foxSkin, "snow")) {
-            foxTexturePath = "textures/entity/fox/fox_snow.png";
+            foxTexturePath = "textures/entity/fox/snow_fox.png";
         } else {
             foxTexturePath = "textures/entity/fox/fox.png";
         }
