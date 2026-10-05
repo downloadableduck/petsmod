@@ -43,8 +43,8 @@ public class ClientSquid extends FlyingPet {
     }
 
     @Override
-    public void updateAITick() {
-        super.updateAITick();
+    public void onUpdate() {
+        super.onUpdate();
         this.xBodyRotO = this.xBodyRot;
         this.zBodyRotO = this.zBodyRot;
         this.oldTentacleMovement = this.tentacleMovement;

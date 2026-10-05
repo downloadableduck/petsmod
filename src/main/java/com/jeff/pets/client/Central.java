@@ -42,6 +42,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.Sys;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -152,8 +153,9 @@ public class Central {
         checkForNullObjects();
     }
     public Central() {
-        MinecraftForge.EVENT_BUS.register(this);
-        // AutoConfig.register(PetsConfig.class, GsonConfigSerializer::new);
+        // Registration is done once by PetsInitializer. Registering here meant every
+        // `new Central()` added two more @SubscribeEvent handlers, and this constructor
+        // used to run on every client tick, growing the handler list without bound.
         CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
         checkForNullObjects();
         createPetsList();
@@ -1698,10 +1700,14 @@ public class Central {
     }
 
     /**
-     * Clears the summon entities when the player joins a world so they are re-summoned
+     * Clears the summon entities when the player joins a world so they are re-summoned.
+     * The client world is loaded before the local player exists, so the actual summoning
+     * is left to {@link #createTickWatcher}, which retries until the player is available.
+     * The previous version cleared the list through a deferred task, which could land
+     * after the tick watcher had already summoned and make the pets re-summon forever.
      */
     @SubscribeEvent
-    void createJoinHandler(WorldEvent.Load event) {
+    public void createJoinHandler(WorldEvent.Load event) {
         if (event.world.isRemote) {
             Minecraft client = Minecraft.getMinecraft();
             List var10001 = summonedEntity;

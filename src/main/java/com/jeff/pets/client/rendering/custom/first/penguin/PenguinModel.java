@@ -4,6 +4,7 @@ import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.first.Penguin;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 
 public class PenguinModel extends PetModel {
 
@@ -107,5 +108,11 @@ public class PenguinModel extends PetModel {
         this.left_wing.rotateAngleY = flapAngle * 0.75F;
         this.body.rotateAngleZ = net.minecraft.util.MathHelper.cos(animationPos * 0.6662F) * 0.1F * limbSwingAmount;
         this.head.rotateAngleZ = net.minecraft.util.MathHelper.cos(animationPos * 0.6662F) * 0.1F * limbSwingAmount;
+    }
+
+    @Override
+    public void setLivingAnimations(EntityLivingBase entity, float f, float g, float h) {
+        this.right_foot.rotateAngleX = net.minecraft.util.MathHelper.cos(f * 0.6662F) * 1.4F * g;
+        this.left_foot.rotateAngleX = net.minecraft.util.MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g;
     }
 }

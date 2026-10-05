@@ -9,8 +9,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientSpiderRenderer extends PetRenderer {
 
-    public ClientSpiderRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ModelSpider(), 0.75f);
+    public ClientSpiderRenderer() {
+        super(new ModelSpider(), 0.75f);
     }
 
     @Override

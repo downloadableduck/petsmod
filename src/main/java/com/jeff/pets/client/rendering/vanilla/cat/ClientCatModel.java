@@ -183,7 +183,7 @@ public class ClientCatModel extends ModelBase {
             this.ocelotTail.rotateAngleX = ((float) Math.PI / 2F);
             this.ocelotTail2.rotateAngleX = ((float) Math.PI / 2F);
             this.state = 2;
-        } else if (entitylivingbaseIn.getOwner() != null && (entitylivingbaseIn.ridingEntity == entitylivingbaseIn.getOwner() || entitylivingbaseIn.riddenByEntity == entitylivingbaseIn.getOwner())) {
+        } else if (entitylivingbaseIn.getOwner() != null && (entitylivingbaseIn.ridingEntity == entitylivingbaseIn.getOwner() || entitylivingbaseIn.ridingEntity == entitylivingbaseIn.getOwner())) {
             this.ocelotBody.rotateAngleX = ((float) Math.PI / 4F);
             this.ocelotBody.rotationPointY += -4.0F;
             this.ocelotBody.rotationPointZ += 5.0F;

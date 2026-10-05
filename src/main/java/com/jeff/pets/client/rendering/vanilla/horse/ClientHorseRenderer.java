@@ -13,8 +13,8 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientHorseRenderer extends PetRenderer {
     public String horseTextureLocation;
 
-    public ClientHorseRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientHorseModel(0), 0.5f);
+    public ClientHorseRenderer() {
+        super(new ClientHorseModel(0), 0.5f);
     }
 
     @Override

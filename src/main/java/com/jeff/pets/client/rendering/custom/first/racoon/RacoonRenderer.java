@@ -15,8 +15,8 @@ import static com.jeff.pets.client.Central.MOD_ID;
 
 public class RacoonRenderer extends PetRenderer {
 
-    public RacoonRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new RacoonModel(), 0.75f);
+    public RacoonRenderer() {
+        super(new RacoonModel(), 0.75f);
     }
 
     @Override

@@ -24,7 +24,7 @@ public class ClientSheepWoolLayer implements PetLayer {
     private final PetRenderer parent;
     private int woolColor;
 
-    public ClientSheepWoolLayer(RenderManager context, PetRenderer parent) {
+    public ClientSheepWoolLayer(PetRenderer parent) {
         this.parent = parent;
     }
 
@@ -75,7 +75,7 @@ public class ClientSheepWoolLayer implements PetLayer {
         float b = (woolColor & 255) / 255.0F;
         GL11.glColor3f(r, g, b);
 
-        this.parent.bindTexture(SHEEP_FUR);
+        this.parent.bindTexturePublic(SHEEP_FUR);
         this.parent.getMainModel().render(sheep, limbSwing, limbSwingAmount, ageInTicks,
                 netHeadYaw, headPitch, scale);
 

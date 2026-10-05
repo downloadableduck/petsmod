@@ -13,8 +13,8 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientMagmaCubeRenderer extends PetRenderer {
 
-    public ClientMagmaCubeRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ModelSlime(0), 0.75f);
+    public ClientMagmaCubeRenderer() {
+        super(new ModelSlime(0), 0.75f);
     }
 
     @Override

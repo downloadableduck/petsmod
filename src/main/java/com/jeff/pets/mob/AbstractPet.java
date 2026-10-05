@@ -190,13 +190,33 @@ public abstract class AbstractPet extends EntityTameable {
         this.renderYawOffset = targetYaw;
     }
 
-public float getYRot() {
-        return this.renderYawOffset;
+/**
+     * 1.7.10 has no {@code getYRot()}/{@code setYRot()} accessors on {@link Entity};
+     * vanilla reads and writes the public {@code rotationYaw} field directly. These
+     * two helpers used to alias {@code renderYawOffset} instead, which left
+     * {@code rotationYaw} permanently at its spawn value. That field is what
+     * {@code Entity#moveRelative} uses to turn the AI's forward/strafe input into
+     * world-space velocity, and what {@code RenderLiving} uses for the body yaw, so
+     * aliasing it made pets slide along a fixed world axis and never face where they
+     * were heading. They now proxy {@code rotationYaw}, and the callers that also
+     * want the head to follow keep assigning {@code rotationYawHead} themselves.
+     */
+    public float getYRot() {
+        return this.rotationYaw;
     }
 
     public void setYRot(float targetYaw) {
-        this.setRotationYawHead(targetYaw);
-        this.renderYawOffset = targetYaw;
+        this.rotationYaw = targetYaw;
+    }
+
+    /**
+     * Pets only ever live in the client world (see {@code Utils#summonPet}), so the
+     * distance-based despawn check that {@code updateAITasks()} performs would drop
+     * them permanently - the tick watcher only re-summons when the list is empty.
+     */
+    @Override
+    protected boolean canDespawn() {
+        return false;
     }
 
     private void reCalcPos() {
@@ -239,6 +259,19 @@ public float getYRot() {
 
     @Override
     public boolean isTamed() {
+        return true;
+    }
+
+    /**
+     * 1.7.10 gates the entire "new" AI block behind this flag: when it is false,
+     * {@link EntityLivingBase#onLivingUpdate()} runs the legacy
+     * {@code updateEntityActionState()} instead, which skips the task system,
+     * the navigator, the move/look helpers and {@link #onUpdate()}.
+     * {@link EntityLiving} itself returns false, so every mob must opt in;
+     * without this the pets would only coast on their spawn velocity and then idle.
+     */
+    @Override
+    public boolean isAIEnabled() {
         return true;
     }
 

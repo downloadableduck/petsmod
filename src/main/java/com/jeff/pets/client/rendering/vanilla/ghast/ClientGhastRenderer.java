@@ -11,8 +11,8 @@ import org.lwjgl.opengl.GL11;
 
 public class ClientGhastRenderer extends PetRenderer {
 
-    public ClientGhastRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ModelGhast(), 0.75f);
+    public ClientGhastRenderer() {
+        super(new ModelGhast(), 0.75f);
     }
 
     @Override

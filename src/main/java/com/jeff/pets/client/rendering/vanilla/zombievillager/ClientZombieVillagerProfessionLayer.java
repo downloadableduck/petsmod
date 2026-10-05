@@ -37,7 +37,7 @@ public class ClientZombieVillagerProfessionLayer implements PetLayer {
 
     private final PetRenderer parent;
 
-    public ClientZombieVillagerProfessionLayer(RenderManager context, PetRenderer parent) {
+    public ClientZombieVillagerProfessionLayer(PetRenderer parent) {
         this.parent = parent;
     }
 
@@ -85,7 +85,7 @@ public class ClientZombieVillagerProfessionLayer implements PetLayer {
 
         GL11.glPushMatrix();
         GL11.glScalef(1.001F, 1.001F, 1.001F);
-        this.parent.bindTexture(texture);
+        this.parent.bindTexturePublic(texture);
         this.parent.getMainModel().render(zombieVillager, limbSwing, limbSwingAmount, ageInTicks,
                 netHeadYaw, headPitch, scale);
         GL11.glPopMatrix();

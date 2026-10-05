@@ -12,9 +12,9 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientSheepRenderer extends PetRenderer {
 
-    public ClientSheepRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientSheepModel(), 0.7F);
-        this.setPetLayer(new ClientSheepWoolLayer(context, this));
+    public ClientSheepRenderer() {
+        super(new ClientSheepModel(), 0.7F);
+        this.setPetLayer(new ClientSheepWoolLayer(this));
     }
 
     @Override

@@ -10,9 +10,9 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientSnowGolemRenderer extends PetRenderer {
 
-    public ClientSnowGolemRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ModelSnowMan(), 0.5F);
-        this.setPetLayer(new ClientSnowGolemHeadLayer(context, this));
+    public ClientSnowGolemRenderer() {
+        super(new ModelSnowMan(), 0.5F);
+        this.setPetLayer(new ClientSnowGolemHeadLayer(this));
     }
 
     @Override

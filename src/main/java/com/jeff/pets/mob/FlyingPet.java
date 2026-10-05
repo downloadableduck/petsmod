@@ -4,6 +4,7 @@ import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
+import org.lwjgl.Sys;
 
 /**
  * Abstract class representing any pet tht can fly (ghasts, vexes, etc). Contains custom movement
@@ -19,14 +20,14 @@ public abstract class FlyingPet extends AbstractPet {
     }
 
     @Override
-    public void updateAITick() {
-        super.updateAITick();
+    public void onUpdate() {
+        super.onUpdate();
         EntityLivingBase owner = this.getOwner();
         if (owner != null) {
 
-            if (this.riddenByEntity == owner) {
+            if (this.ridingEntity == owner) {
                 if (owner.isSneaking() && owner.isJumping) {
-                    this.riddenByEntity = (null);
+                    this.ridingEntity = null;
                     this.setVelocity(this.motionX, this.motionY + 0.1, this.motionZ);
                 } else {
                     this.setSitting(true);
@@ -60,7 +61,7 @@ public abstract class FlyingPet extends AbstractPet {
                 this.setRotationYawHead(this.getYRot());
                 this.renderYawOffset = this.renderYawOffset + MathHelper.clamp_float(this.rotationYawHead - this.renderYawOffset, -50.0f, 50.0f);
 
-                this.setVelocity(dir.xCoord * speed, dir.yCoord * speed, dir.zCoord * speed);
+                this.setVelocity(-dir.xCoord * speed, dir.yCoord * speed, -dir.zCoord * speed);
             } else {
 
                 this.setVelocity(this.motionX * 0.8, this.motionY * 0.8, this.motionZ * 0.8);
@@ -96,7 +97,6 @@ public abstract class FlyingPet extends AbstractPet {
                 this.renderYawOffset = this.renderYawOffset + MathHelper.clamp_float(this.rotationYawHead - this.renderYawOffset, -10, 10);
             }
 
-            this.moveEntity(this.motionX, this.motionY, this.motionZ);
         }
         if (owner != null) {
             if (getDistance(owner) >= 10) {

@@ -12,8 +12,8 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientWolfRenderer extends PetRenderer {
 
-    public ClientWolfRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientWolfModel(), 0.75f);
+    public ClientWolfRenderer() {
+        super(new ClientWolfModel(), 0.75f);
     }
 
     @Override

@@ -21,8 +21,8 @@ public class ClientVillagerRenderer extends PetRenderer {
     public static final ResourceLocation NITWIT_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/villager.png");
     public static final ResourceLocation TOOLSMITH_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/toolsmith.png");
 
-    public ClientVillagerRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ModelVillager(0), 0.5F);
+    public ClientVillagerRenderer() {
+        super(new ModelVillager(0), 0.5F);
     }
 
     @Override

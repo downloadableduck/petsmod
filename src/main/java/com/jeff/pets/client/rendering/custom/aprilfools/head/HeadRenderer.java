@@ -31,8 +31,8 @@ public class HeadRenderer extends PetRenderer {
     private final Map<String, GameProfile> PROFILLES = new ConcurrentHashMap<>();
     private final GameProfile dummyProfile = new GameProfile(UUID.fromString("966b21b5-55d5-4a51-b41c-433a96e6050b"), "empty");
 
-    public HeadRenderer(final RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new HeadModel(), 0.3F);
+    public HeadRenderer() {
+        super(new HeadModel(), 0.3F);
     }
 
     private GameProfile fetchGameProfile(Entity head, String string) {

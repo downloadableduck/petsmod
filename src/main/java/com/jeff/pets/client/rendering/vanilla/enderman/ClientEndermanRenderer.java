@@ -9,9 +9,9 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientEndermanRenderer extends PetRenderer {
 
-    public ClientEndermanRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ModelEnderman(), 0.5f);
-        this.setPetLayer(new LayerEndermanEyes(context, this));
+    public ClientEndermanRenderer() {
+        super(new ModelEnderman(), 0.5f);
+        this.setPetLayer(new LayerEndermanEyes(this));
     }
 
     @Override

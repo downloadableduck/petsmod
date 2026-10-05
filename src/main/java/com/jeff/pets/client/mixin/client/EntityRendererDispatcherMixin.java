@@ -24,7 +24,6 @@ public abstract class EntityRendererDispatcherMixin {
 
     @Inject(at = @At("TAIL"), method = "<init>")
     public void onFunc(CallbackInfo ci) {
-        PetsClientInitializer.register();
         synchronized (PetsClientInitializer.renderManagerMap.keySet()) {
             for (Map.Entry<Class, PetsClientInitializer.Factory> entry : PetsClientInitializer.renderSupplierMap.entrySet()) {
                 this.field_78729_o.put(entry.getKey(), entry.getValue().create((RenderManager) (Object) this, new PetsClientInitializer.Context((Map) field_78729_o)));

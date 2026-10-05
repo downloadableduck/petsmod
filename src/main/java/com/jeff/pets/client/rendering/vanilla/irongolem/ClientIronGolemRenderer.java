@@ -8,8 +8,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientIronGolemRenderer extends PetRenderer {
 
-    public ClientIronGolemRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientIronGolemModel(), 0.75f);
+    public ClientIronGolemRenderer() {
+        super(new ClientIronGolemModel(), 0.75f);
     }
 
     @Override

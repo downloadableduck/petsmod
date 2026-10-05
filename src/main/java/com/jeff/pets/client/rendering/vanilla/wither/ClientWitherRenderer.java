@@ -12,8 +12,8 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientWitherRenderer extends PetRenderer {
 
-    public ClientWitherRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientWitherModel(0), 0.75f);
+    public ClientWitherRenderer() {
+        super(new ClientWitherModel(0), 0.75f);
 
     }
 

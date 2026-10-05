@@ -30,7 +30,7 @@ public class ClientVillagerProfessionLayer implements PetLayer {
 
     private final PetRenderer parent;
 
-    public ClientVillagerProfessionLayer(RenderManager context, PetRenderer parent) {
+    public ClientVillagerProfessionLayer(PetRenderer parent) {
         this.parent = parent;
     }
 

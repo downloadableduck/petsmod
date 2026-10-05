@@ -35,8 +35,8 @@ public class ClientEnderDragon extends FlyingPet {
     }
 
     @Override
-    public void updateAITick() {
-        super.updateAITick();
+    public void onUpdate() {
+        super.onUpdate();
         this.oFlapTime = this.flapTime;
         float g = 0.2F / ((float) this.motionY * 10.0F + 1.0F);
         g *= (float) Math.pow(2.0F, this.motionY);

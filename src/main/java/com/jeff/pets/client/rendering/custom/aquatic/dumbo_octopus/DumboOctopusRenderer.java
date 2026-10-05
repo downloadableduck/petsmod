@@ -16,8 +16,8 @@ public class DumboOctopusRenderer extends PetRenderer {
     float direction = 1;
     float speed = 0.5f;
 
-    public DumboOctopusRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new DumboOctopusModel(), 0.5f);
+    public DumboOctopusRenderer() {
+        super(new DumboOctopusModel(), 0.5f);
     }
 
     @Override

@@ -10,8 +10,8 @@ import static com.jeff.pets.client.Central.MOD_ID;
 
 public class StingrayRenderer extends PetRenderer {
 
-    public StingrayRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new StingrayModel(), 0.75f);
+    public StingrayRenderer() {
+        super(new StingrayModel(), 0.75f);
     }
 
     @Override

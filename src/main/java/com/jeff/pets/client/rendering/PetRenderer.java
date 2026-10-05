@@ -1,6 +1,7 @@
 package com.jeff.pets.client.rendering;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -18,7 +19,7 @@ import net.minecraft.entity.EntityLivingBase;
 public abstract class PetRenderer extends RenderLiving {
     private PetLayer petLayer;
 
-    public PetRenderer(RenderManager context, ModelBase model, float shadow) {
+    public PetRenderer(ModelBase model, float shadow) {
         super(model, shadow);
     }
 
@@ -58,7 +59,7 @@ public abstract class PetRenderer extends RenderLiving {
     protected void renderModel( final EntityLivingBase entity, float f, float g, float h, float i, float j, float k) {
         GL11.glPushMatrix();
         if (entity.ridingEntity != null) {
-            GL11.glTranslatef(0, -0.35f, 0);
+            GL11.glTranslatef(0, (float) entity.ridingEntity.height - (entity.ridingEntity.isSneaking() ? 0.225F : 0), 0);
         }
         super.renderModel(entity, f, g, h, i, j, k);
         GL11.glPopMatrix();
@@ -67,9 +68,8 @@ public abstract class PetRenderer extends RenderLiving {
         }
     }
 
-    @Override
-    public void bindTexture(ResourceLocation location) {
-        super.bindTexture(location);
+    public void bindTexturePublic(ResourceLocation location) {
+        this.bindTexture(location);
     }
 }
 

@@ -11,8 +11,8 @@ import org.lwjgl.opengl.GL11;
 
 public class ClientSkeletonRenderer extends PetRenderer {
 
-    public ClientSkeletonRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ModelSkeleton(), 0.75f);
+    public ClientSkeletonRenderer() {
+        super(new ModelSkeleton(), 0.75f);
     }
 
     @Override

@@ -9,8 +9,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientBlazeRenderer extends PetRenderer {
 
-    public ClientBlazeRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ModelBlaze(), 0.75f);
+    public ClientBlazeRenderer() {
+        super(new ModelBlaze(), 0.75f);
     }
 
     @Override

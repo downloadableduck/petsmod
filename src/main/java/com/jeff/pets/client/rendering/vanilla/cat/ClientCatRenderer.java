@@ -12,8 +12,8 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientCatRenderer extends PetRenderer {
 
-    public ClientCatRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientCatModel(), 0.7F);
+    public ClientCatRenderer() {
+        super(new ClientCatModel(), 0.7F);
     }
 
     @Override

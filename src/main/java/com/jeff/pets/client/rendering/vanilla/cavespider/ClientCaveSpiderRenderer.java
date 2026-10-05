@@ -11,8 +11,8 @@ import org.lwjgl.opengl.GL11;
 
 public class ClientCaveSpiderRenderer extends PetRenderer {
 
-    public ClientCaveSpiderRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ModelSpider(), 0.75f);
+    public ClientCaveSpiderRenderer() {
+        super(new ModelSpider(), 0.75f);
     }
 
     @Override

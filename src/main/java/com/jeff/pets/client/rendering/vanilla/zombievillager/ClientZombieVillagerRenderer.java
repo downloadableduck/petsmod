@@ -21,9 +21,9 @@ public class ClientZombieVillagerRenderer extends PetRenderer {
     public static final ResourceLocation TOOLSMITH_LOCATION = new ResourceLocation("minecraft", "textures/entity/zombie_villager/zombie_toolsmith.png");
 
 
-    public ClientZombieVillagerRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientZombieVillagerModel(0, 0, false), 0.75f);
-        this.setPetLayer(new ClientZombieVillagerProfessionLayer(context, this));
+    public ClientZombieVillagerRenderer() {
+        super(new ClientZombieVillagerModel(0, 0, false), 0.75f);
+        this.setPetLayer(new ClientZombieVillagerProfessionLayer(this));
     }
 
     @Override

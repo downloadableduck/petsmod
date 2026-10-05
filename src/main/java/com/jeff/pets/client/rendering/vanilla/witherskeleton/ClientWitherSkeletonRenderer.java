@@ -9,8 +9,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientWitherSkeletonRenderer extends PetRenderer {
 
-    public ClientWitherSkeletonRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ModelSkeleton(), 0.75f);
+    public ClientWitherSkeletonRenderer() {
+        super(new ModelSkeleton(), 0.75f);
     }
 
     @Override

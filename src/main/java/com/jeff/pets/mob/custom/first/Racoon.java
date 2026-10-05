@@ -70,14 +70,14 @@ public class Racoon extends AbstractPet {
     }
 
     @Override
-    public void updateAITick() {
-        super.updateAITick();
+    public void onUpdate() {
+        super.onUpdate();
         EntityLivingBase owner = this.getOwner();
         if (owner != null) {
 
-            if (this.riddenByEntity == owner) {
+            if (this.ridingEntity == owner) {
                 if (owner.isSneaking() && owner.isJumping) {
-                    this.riddenByEntity = (null);
+                    this.ridingEntity = (null);
                     this.setVelocity(this.motionX, this.motionY - 0.04, this.motionZ);
                     this.isOnHead = false;
                 } else {
@@ -111,7 +111,7 @@ public class Racoon extends AbstractPet {
                 this.renderYawOffset = this.renderYawOffset + MathHelper.clamp_float(this.rotationYawHead - this.renderYawOffset, -50.0f, 50.0f);
 
                 double speed = owner.getAIMoveSpeed() * 2;
-                this.setVelocity(dir.xCoord * speed, this.motionY, dir.zCoord * speed);
+                this.setVelocity(-dir.xCoord * speed, this.motionY, -dir.zCoord * speed);
             } else {
 
                 this.setVelocity(this.motionX * 0.8, this.motionY, this.motionZ * 0.8);
@@ -149,7 +149,6 @@ public class Racoon extends AbstractPet {
                 this.renderYawOffset = this.renderYawOffset + MathHelper.clamp_float(this.rotationYawHead - this.renderYawOffset, -10, 10);
             }
 
-            this.moveEntity(this.motionX, this.motionY, this.motionZ);
 
             if (!this.onGround) {
                 this.setVelocity(this.motionX, this.motionY - 0.04, this.motionZ);

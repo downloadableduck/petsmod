@@ -23,7 +23,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientMushroomCowMushroomLayer implements PetLayer {
     private final PetRenderer parent;
 
-    public ClientMushroomCowMushroomLayer(RenderManager context, PetRenderer parent) {
+    public ClientMushroomCowMushroomLayer(PetRenderer parent) {
         this.parent = parent;
     }
 
@@ -36,7 +36,7 @@ public class ClientMushroomCowMushroomLayer implements PetLayer {
 
         Block mushroom = Objects.equals(CONFIG.mooshroomSkin, "brown") ? Blocks.brown_mushroom : Blocks.red_mushroom;
 
-        this.parent.bindTexture(TextureMap.locationBlocksTexture);
+        this.parent.bindTexturePublic(TextureMap.locationBlocksTexture);
         GL11.glEnable(GL11.GL_CULL_FACE);
         GL11.glCullFace(GL11.GL_FRONT);
 

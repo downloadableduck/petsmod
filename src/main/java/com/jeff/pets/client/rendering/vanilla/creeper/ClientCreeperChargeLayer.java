@@ -22,7 +22,7 @@ public class ClientCreeperChargeLayer implements PetLayer {
 
     private final PetRenderer parent;
 
-    public ClientCreeperChargeLayer(RenderManager context, PetRenderer parent) {
+    public ClientCreeperChargeLayer(PetRenderer parent) {
         this.parent = parent;
     }
 
@@ -45,7 +45,7 @@ public class ClientCreeperChargeLayer implements PetLayer {
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDepthMask(false);
 
-        this.parent.bindTexture(SKIN);
+        this.parent.bindTexturePublic(SKIN);
         this.parent.getMainModel().render(creeperEntity, limbSwing, limbSwingAmount, ageInTicks,
                 netHeadYaw, headPitch, scale);
 

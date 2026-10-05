@@ -100,7 +100,7 @@ public class ClientHorseModel extends ModelBase {
         boolean bl = horseEntity.isChild();
         float l = 1.0F;
         boolean bl2 = false;
-        boolean bl3 = horseEntity.riddenByEntity != null;
+        boolean bl3 = horseEntity.ridingEntity != null;
 
         for (ModelRenderer ModelRenderer : this.field_3304) {
             ModelRenderer.showModel = bl2;

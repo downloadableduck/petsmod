@@ -10,8 +10,8 @@ import org.lwjgl.opengl.GL11;
 
 public class ClientBatRenderer extends PetRenderer {
 
-    public ClientBatRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientBatModel(), 0.25F);
+    public ClientBatRenderer() {
+        super(new ClientBatModel(), 0.25F);
     }
 
     @Override

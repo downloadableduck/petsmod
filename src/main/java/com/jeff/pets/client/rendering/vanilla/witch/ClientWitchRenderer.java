@@ -9,8 +9,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientWitchRenderer extends PetRenderer {
 
-    public ClientWitchRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ModelWitch(0), 0.75f);
+    public ClientWitchRenderer() {
+        super(new ModelWitch(0), 0.75f);
     }
 
     @Override

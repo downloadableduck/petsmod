@@ -18,8 +18,8 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class DuckRenderer extends PetRenderer {
     public String duckTexturePath;
 
-    public DuckRenderer(final net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new DuckModel(), 0.3F);
+    public DuckRenderer() {
+        super(new DuckModel(), 0.3F);
     }
 
     @Override

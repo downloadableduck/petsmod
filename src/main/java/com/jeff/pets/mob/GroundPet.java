@@ -19,14 +19,14 @@ public abstract class GroundPet extends AbstractPet {
     }
 
     @Override
-    public void updateAITick() {
-        super.updateAITick();
+    public void onUpdate() {
+        super.onUpdate();
         EntityLivingBase owner = this.getOwner();
         if (owner != null) {
 
-            if (this.riddenByEntity == owner) {
+            if (this.ridingEntity == owner) {
                 if (owner.isSneaking() && owner.isJumping) {
-                    this.riddenByEntity = (null);
+                    this.ridingEntity = (null);
                     this.setVelocity(this.motionX, this.motionY - 0.04, this.motionZ);
                 } else {
                     this.setSitting(true);
@@ -59,9 +59,7 @@ public abstract class GroundPet extends AbstractPet {
                 this.renderYawOffset = this.renderYawOffset + net.minecraft.util.MathHelper.clamp_float(this.rotationYawHead - this.renderYawOffset, -50.0f, 50.0f);
 
                 double speed = owner.getAIMoveSpeed() * 2.0;
-                this.setVelocity(dir.xCoord * speed, this.motionY, dir.zCoord * speed);
-            } else if (distance < 1.5) {
-                this.limbSwingAmount = (0);
+                this.setVelocity(-dir.xCoord * speed, this.motionY, -dir.zCoord * speed);
             } else {
 
                 this.limbSwingAmount = (this.limbSwingAmount + 0.1f);
@@ -98,13 +96,11 @@ public abstract class GroundPet extends AbstractPet {
                 this.renderYawOffset = this.renderYawOffset + net.minecraft.util.MathHelper.clamp_float(this.rotationYawHead - this.renderYawOffset, -10, 10);
             }
 
-            this.moveEntity(this.motionX, this.motionY, this.motionZ);
-
             if (!this.onGround) {
                 this.setVelocity(this.motionX, this.motionY - 0.04, this.motionZ);
             }
         } else {
-            super.updateAITick();
+            super.onUpdate();
         }
         if (owner != null) {
             if (getDistance(owner) >= 10) {

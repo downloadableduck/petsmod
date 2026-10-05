@@ -11,8 +11,8 @@ import org.lwjgl.opengl.GL11;
 
 public class ClientElderGuardianRenderer extends PetRenderer {
 
-    public ClientElderGuardianRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientGuardianModel(), 0.75f);
+    public ClientElderGuardianRenderer() {
+        super(new ClientGuardianModel(), 0.75f);
     }
 
     @Override

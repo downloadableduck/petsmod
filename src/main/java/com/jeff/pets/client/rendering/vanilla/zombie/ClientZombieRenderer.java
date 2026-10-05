@@ -12,8 +12,8 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientZombieRenderer extends PetRenderer {
 
-    public ClientZombieRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientZombieModel(), 0.75f);
+    public ClientZombieRenderer() {
+        super(new ClientZombieModel(), 0.75f);
     }
 
     @Override

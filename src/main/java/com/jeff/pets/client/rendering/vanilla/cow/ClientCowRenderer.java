@@ -12,8 +12,8 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientCowRenderer extends PetRenderer {
 
-    public ClientCowRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientCowModel(), 0.7F);
+    public ClientCowRenderer() {
+        super(new ClientCowModel(), 0.7F);
     }
 
     public ResourceLocation getEntityTexture( final Entity LivingEntityRenderState) {

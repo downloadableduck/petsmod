@@ -16,8 +16,8 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientSquidRenderer extends PetRenderer {
     String squidTexturePath;
 
-    public ClientSquidRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ModelSquid(), 0.7F);
+    public ClientSquidRenderer() {
+        super(new ModelSquid(), 0.7F);
     }
 
     @Override

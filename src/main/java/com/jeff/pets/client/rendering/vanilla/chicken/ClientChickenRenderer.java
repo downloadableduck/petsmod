@@ -13,8 +13,8 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientChickenRenderer extends PetRenderer {
 
-    public ClientChickenRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientChickenModel(), 0.3F);
+    public ClientChickenRenderer() {
+        super(new ClientChickenModel(), 0.3F);
     }
 
     @Override

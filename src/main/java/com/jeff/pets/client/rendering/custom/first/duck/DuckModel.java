@@ -4,6 +4,7 @@ import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 
 public class DuckModel extends PetModel {
 
@@ -101,5 +102,11 @@ public class DuckModel extends PetModel {
             this.right_leg.showModel = true;
             this.left_leg.showModel = true;
         }
+    }
+
+    @Override
+    public void setLivingAnimations(EntityLivingBase entity, float f, float g, float h) {
+        this.right_leg.rotateAngleX = net.minecraft.util.MathHelper.cos(f * 0.6662F) * 1.4F * g;
+        this.left_leg.rotateAngleX = net.minecraft.util.MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g;
     }
 }

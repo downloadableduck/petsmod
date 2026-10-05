@@ -10,8 +10,8 @@ import static com.jeff.pets.client.Central.MOD_ID;
 
 public class KoiRenderer extends PetRenderer {
 
-    public KoiRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new KoiModel(), 0.5f);
+    public KoiRenderer() {
+        super(new KoiModel(), 0.5f);
     }
 
     @Override

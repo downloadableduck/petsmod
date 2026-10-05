@@ -14,7 +14,7 @@ import org.lwjgl.opengl.GL11;
 public class LayerSlimeGel implements PetLayer {
     private final PetRenderer parent;
 
-    public LayerSlimeGel(RenderManager context, PetRenderer parent) {
+    public LayerSlimeGel(PetRenderer parent) {
         this.parent = parent;
     }
 

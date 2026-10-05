@@ -24,7 +24,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientSnowGolemHeadLayer implements PetLayer {
     private final PetRenderer parent;
 
-    public ClientSnowGolemHeadLayer(RenderManager context, PetRenderer parent) {
+    public ClientSnowGolemHeadLayer(PetRenderer parent) {
         this.parent = parent;
     }
 

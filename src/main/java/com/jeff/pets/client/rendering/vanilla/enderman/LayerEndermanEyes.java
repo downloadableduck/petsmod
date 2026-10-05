@@ -20,7 +20,7 @@ public class LayerEndermanEyes implements PetLayer {
 
     private final PetRenderer parent;
 
-    public LayerEndermanEyes(RenderManager context, PetRenderer parent) {
+    public LayerEndermanEyes(PetRenderer parent) {
         this.parent = parent;
     }
 
@@ -28,7 +28,7 @@ public class LayerEndermanEyes implements PetLayer {
     public void render(EntityLivingBase entity, float limbSwing, float limbSwingAmount, float ageInTicks,
                        float netHeadYaw, float headPitch, float scale) {
         GL11.glPushMatrix();
-        this.parent.bindTexture(RES_ENDERMAN_EYES);
+        this.parent.bindTexturePublic(RES_ENDERMAN_EYES);
 
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);

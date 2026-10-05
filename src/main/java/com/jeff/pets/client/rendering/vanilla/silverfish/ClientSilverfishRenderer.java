@@ -9,8 +9,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientSilverfishRenderer extends PetRenderer {
 
-    public ClientSilverfishRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ModelSilverfish(), 0.75f);
+    public ClientSilverfishRenderer() {
+        super(new ModelSilverfish(), 0.75f);
     }
 
     @Override

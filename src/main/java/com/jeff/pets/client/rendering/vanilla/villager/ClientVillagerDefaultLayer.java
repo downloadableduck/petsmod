@@ -17,7 +17,7 @@ public class ClientVillagerDefaultLayer implements PetLayer {
 
     private final PetRenderer parent;
 
-    public ClientVillagerDefaultLayer(RenderManager context, PetRenderer parent) {
+    public ClientVillagerDefaultLayer(PetRenderer parent) {
         this.parent = parent;
     }
 
@@ -25,7 +25,7 @@ public class ClientVillagerDefaultLayer implements PetLayer {
     public void render(EntityLivingBase villager, float limbSwing, float limbSwingAmount, float ageInTicks,
                        float netHeadYaw, float headPitch, float scale) {
         GL11.glPushMatrix();
-        this.parent.bindTexture(PLAINS);
+        this.parent.bindTexturePublic(PLAINS);
         this.parent.getMainModel().render(villager, limbSwing, limbSwingAmount, ageInTicks,
                 netHeadYaw, headPitch, scale);
         GL11.glPopMatrix();
