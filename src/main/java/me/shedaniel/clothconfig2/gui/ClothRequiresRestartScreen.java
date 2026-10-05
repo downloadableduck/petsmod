@@ -9,14 +9,22 @@ import net.minecraft.text.TranslatableText;
 
 
 public class ClothRequiresRestartScreen extends ConfirmScreen {
-    
+
     public ClothRequiresRestartScreen(Screen parent) {
-        super((t, i) -> {
-            if (t)
-                Minecraft.getInstance().stop();
-            else
-                Minecraft.getInstance().openScreen(parent);
-        }, I18n.translate("text.cloth-config.restart_required"), I18n.translate("text.cloth-config.restart_required_sub"), 0);
+        super(createScreen(parent), I18n.translate("text.cloth-config.restart_required"), I18n.translate("text.cloth-config.restart_required_sub"), 0);
+    }
+
+    private static Screen createScreen(Screen parent) {
+        return new Screen() {
+            @Override
+            public void confirmResult(boolean bl, int i) {
+                if (bl)
+                    Minecraft.getInstance().stop();
+                else
+                    Minecraft.getInstance().openScreen(parent);
+
+            }
+        };
     }
     
 }

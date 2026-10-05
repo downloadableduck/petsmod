@@ -231,14 +231,20 @@ public abstract class ClothConfigScreen extends Screen {
         if (tabbedEntries.size() > selectedTabIndex)
             Lists.newArrayList(tabbedEntries.values()).get(selectedTabIndex).forEach(entry -> listWidget.children().add(entry));
         int buttonWidths = Math.min(200, (width - 50 - 12) / 3);
+        Screen screen = new Screen() {
+            @Override
+            public void confirmResult(boolean bl, int i) {
+                super.confirmResult(bl, i);
+                if (bl)
+                    minecraft.openScreen(parent);
+                else
+                    minecraft.openScreen(ClothConfigScreen.this);
+            }
+        };
         this.buttons.add(quitButton = new ButtonWidget(width / 2 - buttonWidths / 2 - buttonWidths - 6, height - 26, buttonWidths, 20, edited ? I18n.translate("text.cloth-config.cancel_discard") : I18n.translate("gui.cancel"), widget -> {
             if (confirmSave && edited)
-                minecraft.openScreen(new ConfirmScreen((t, i) -> {
-                    if (t)
-                        minecraft.openScreen(parent);
-                    else
-                        minecraft.openScreen(ClothConfigScreen.this);
-                }, I18n.translate("text.cloth-config.quit_config"), I18n.translate("text.cloth-config.quit_config_sure"), 0));
+                minecraft.openScreen(new ConfirmScreen(screen,
+                        I18n.translate("text.cloth-config.quit_config"), I18n.translate("text.cloth-config.quit_config_sure"), 0));
             else
                 minecraft.openScreen(parent);
         }));
@@ -652,13 +658,18 @@ public abstract class ClothConfigScreen extends Screen {
         if (this.focusedBinding != null && int_1 != 1)
             return;
         if (int_1 == 1) {
-            if (confirmSave && edited)
-                minecraft.openScreen(new ConfirmScreen((t, i) -> {
-                    if (t)
+            Screen screen = new Screen() {
+                @Override
+                public void confirmResult(boolean bl, int i) {
+                    super.confirmResult(bl, i);
+                    if (bl)
                         minecraft.openScreen(parent);
                     else
                         minecraft.openScreen(ClothConfigScreen.this);
-                }, I18n.translate("text.cloth-config.quit_config"), I18n.translate("text.cloth-config.quit_config_sure"), 0));
+                }
+            };
+            if (confirmSave && edited)
+                minecraft.openScreen(new ConfirmScreen(screen, I18n.translate("text.cloth-config.quit_config"), I18n.translate("text.cloth-config.quit_config_sure"), 0));
             else
                 minecraft.openScreen(parent);
             return;
