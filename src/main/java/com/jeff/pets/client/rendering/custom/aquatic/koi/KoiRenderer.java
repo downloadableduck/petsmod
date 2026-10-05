@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.custom.aquatic.koi;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.aquatic.Koi;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.PetsInitializer.MOD_ID;
@@ -14,7 +14,8 @@ public class KoiRenderer extends PetRenderer<Koi> {
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(@NotNull Koi state) {
+    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+        Koi state = (Koi) entity;
         return new Identifier(MOD_ID, "textures/entity/koi/koi.png");
     }
 }

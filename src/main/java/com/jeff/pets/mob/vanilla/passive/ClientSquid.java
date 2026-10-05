@@ -3,6 +3,7 @@ package com.jeff.pets.mob.vanilla.passive;
 import com.jeff.pets.mob.FlyingPet;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.world.World;
 
 public class ClientSquid extends FlyingPet {
@@ -25,6 +26,20 @@ public class ClientSquid extends FlyingPet {
       super(world);
         this.setSize(0.8f, 0.8f);
    }
+
+   /**
+    * 1.20-era {@code MathHelper.fastAtan2}, which does not exist on the 1.8
+    * {@code MathHelper}. Vanilla 1.8 squid code used plain
+    * {@code MathHelper.atan2} / {@code Math.atan2} here instead.
+    */
+   private static double fastAtan2(double y, double x) {
+      double z = Math.atan2(y, x);
+      if (Double.isNaN(z)) {
+         z = Math.atan2(0.0D, Double.doubleToRawLongBits(x) == 0L ? 1.0D : 0.0D);
+      }
+      return z - (Double.isInfinite(z) ? Math.signum(y) : 0.0D) * 1.5707963267948966D;
+   }
+
 
    @Override
    protected int stopDistance() {
@@ -50,7 +65,7 @@ public class ClientSquid extends FlyingPet {
       this.oldTentacleAngle = this.tentacleAngle;
       this.tentacleMovement = this.tentacleMovement + this.tentacleSpeed;
       if (this.tentacleMovement > Math.PI * 2) {
-         if (this.world.isClient) {
+         if (this.world instanceof ClientWorld) {
             this.tentacleMovement = (float) (Math.PI * 2);
          } else {
             this.tentacleMovement -= (float) (Math.PI * 2);
@@ -78,19 +93,19 @@ public class ClientSquid extends FlyingPet {
             this.rotateSpeed *= 0.99F;
          }
 
-         if (!this.world.isClient) {
+         if (!(this.world instanceof ClientWorld)) {
             this.addVelocity(this.tx * this.speed, this.ty * this.speed, this.tz * this.speed);
          }
 
          Vec3d vec3 = this.getVelocity();
          double d = Math.sqrt(vec3.x * vec3.x + vec3.z * vec3.z);
-         this.bodyYaw = this.bodyYaw + (-((float)MathHelper.fastAtan2(vec3.x, vec3.z)) * (180.0F / (float)Math.PI) - this.bodyYaw) * 0.1F;
+         this.bodyYaw = this.bodyYaw + (-(float) fastAtan2(vec3.x, vec3.z) * (180.0F / (float)Math.PI) - this.bodyYaw) * 0.1F;
          this.setYRot(this.bodyYaw);
          this.zBodyRot = this.zBodyRot + (float) Math.PI * this.rotateSpeed * 1.5F;
-         this.xBodyRot = this.xBodyRot + (-((float)MathHelper.fastAtan2(d, vec3.y)) * (180.0F / (float)Math.PI) - this.xBodyRot) * 0.1F;
+         this.xBodyRot = this.xBodyRot + (-(float) fastAtan2(d, vec3.y) * (180.0F / (float)Math.PI) - this.xBodyRot) * 0.1F;
       } else {
          this.tentacleAngle = MathHelper.abs(MathHelper.sin(this.tentacleMovement)) * (float) Math.PI * 0.25F;
-         if (!this.world.isClient) {
+         if (!(this.world instanceof ClientWorld)) {
             double e = this.getVelocity().y;
             if (this.hasStatusEffect(null)) {
                e = 0.05 * (this.getEffectInstance(null).getAmplifier() + 1);

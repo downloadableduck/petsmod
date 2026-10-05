@@ -5,12 +5,11 @@ import com.google.common.collect.Maps;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.gui.ClothConfigScreen;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.resource.Identifier;
-import net.minecraft.util.Pair;
+import net.minecraft.client.resource.Identifier;
+import me.shedaniel.clothconfig2.impl.ConfigPair;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +19,7 @@ import java.util.function.Consumer;
 import static net.minecraft.client.gui.GuiElement.BACKGROUND_LOCATION;
 
 @Deprecated
-@Environment(EnvType.CLIENT)
+
 public class ConfigBuilderImpl implements ConfigBuilder {
     
     private Runnable savingRunnable;
@@ -35,7 +34,7 @@ public class ConfigBuilderImpl implements ConfigBuilder {
     private Identifier defaultBackground = BACKGROUND_LOCATION;
     private Consumer<Screen> afterInitConsumer = screen -> {};
     private final Map<String, Identifier> categoryBackground = Maps.newHashMap();
-    private final Map<String, List<Pair<String, Object>>> dataMap = Maps.newLinkedHashMap();
+    private final Map<String, List<ConfigPair<String, Object>>> dataMap = Maps.newLinkedHashMap();
     private String fallbackCategory = null;
     private boolean alwaysShowTabs = false;
     

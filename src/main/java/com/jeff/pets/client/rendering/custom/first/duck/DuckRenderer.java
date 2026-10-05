@@ -5,7 +5,7 @@ import com.jeff.pets.client.Math2;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.client.Minecraft;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,14 +21,16 @@ public class DuckRenderer extends PetRenderer<@NotNull Duck> {
     }
 
     @Override
-    protected void applyScale(@NotNull Duck livingEntityRenderState, float f) {
+    protected void applyScale(net.minecraft.entity.living.LivingEntity entity, float f) {
+        Duck livingEntityRenderState = (Duck) entity;
         if (CONFIG.isBaby) {
-            net.minecraft.client.render.platform.GlStateManager.scalef(0.6f, 0.6f, 0.6f);
+            com.jeff.pets.compat.GlStateManager.scalef(0.6f, 0.6f, 0.6f);
         }
     }
 
     @Override
-    public void renderModel(final Duck duck, float f, final float k, float u, float g, float h, float i) {
+    public void renderModel(net.minecraft.entity.living.LivingEntity entity, float f, final float k, float u, float g, float h, float i) {
+        Duck duck = (Duck) entity;
         float partialTick = 1.0F;
         duck.flap = (float) Math2.lerp(partialTick, duck.oFlap, duck.flap);
         duck.flapSpeed = (float) Math2.lerp(partialTick, duck.oFlapSpeed, duck.flapSpeed);
@@ -36,7 +38,8 @@ public class DuckRenderer extends PetRenderer<@NotNull Duck> {
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(final Duck state) {
+    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+        Duck state = (Duck) entity;
         if (Objects.equals(CONFIG.duckSkin, "pekin")) {
             duckTexturePath = "textures/entity/duck/pekin.png";
         } else if (Objects.equals(CONFIG.duckSkin, "mallard")) {

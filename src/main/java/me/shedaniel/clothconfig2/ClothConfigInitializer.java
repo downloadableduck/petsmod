@@ -2,6 +2,8 @@ package me.shedaniel.clothconfig2;
 
 import com.google.common.collect.ImmutableList;
 import me.shedaniel.clothconfig2.compat.InputConstants;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import me.shedaniel.clothconfig2.api.*;
 import me.shedaniel.clothconfig2.gui.entries.DoubleListEntry;
@@ -14,16 +16,13 @@ import me.shedaniel.clothconfig2.impl.EasingMethod.EasingMethodImpl;
 import me.shedaniel.clothconfig2.impl.EasingMethods;
 import me.shedaniel.clothconfig2.impl.builders.DropdownMenuBuilder;
 import me.shedaniel.clothconfig2.impl.builders.SubCategoryBuilder;
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.loader.api.FabricLoader;
+
 import net.minecraft.client.Minecraft;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.LogManager;
@@ -37,7 +36,7 @@ import java.nio.file.Files;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Environment(EnvType.CLIENT)
+
 public class ClothConfigInitializer implements ClientModInitializer {
     
     public static final Logger LOGGER = LogManager.getFormatterLogger("ClothConfig");
@@ -222,7 +221,7 @@ public class ClothConfigInitializer implements ClientModInitializer {
                 this.buttonWidget.active = this.isEditable();
                 this.buttonWidget.y = y;
                 this.buttonWidget.x = x + entryWidth / 2 - width / 2;
-                this.buttonWidget.setWidth(width);
+                this.buttonWidget.width = width;
                 this.buttonWidget.render(mouseX, mouseY, delta);
             }
         });
@@ -266,7 +265,7 @@ public class ClothConfigInitializer implements ClientModInitializer {
                 this.buttonWidget.active = this.isEditable();
                 this.buttonWidget.y = y;
                 this.buttonWidget.x = x + entryWidth / 2 - width / 2;
-                this.buttonWidget.setWidth(width);
+                this.buttonWidget.width = width;
                 this.buttonWidget.render(mouseX, mouseY, delta);
             }
         });

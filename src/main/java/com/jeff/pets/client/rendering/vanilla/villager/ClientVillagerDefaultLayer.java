@@ -1,25 +1,27 @@
 package com.jeff.pets.client.rendering.vanilla.villager;
 
 import com.jeff.pets.mob.vanilla.passive.ClientVillager;
-import net.minecraft.client.render.platform.GlStateManager;
-import net.minecraft.client.render.entity.layer.EntityRenderLayer;
+import com.jeff.pets.compat.GlStateManager;
+import com.jeff.pets.client.rendering.PetRenderLayer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.model.entity.VillagerModel;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 
-public class ClientVillagerDefaultLayer implements EntityRenderLayer<ClientVillager> {
+public class ClientVillagerDefaultLayer implements PetRenderLayer {
 
-    private final net.minecraft.client.render.entity.MobRenderer renderer;
+    private final PetRenderer renderer;
 
-    public ClientVillagerDefaultLayer(net.minecraft.client.render.entity.MobRenderer renderer) {
+    public ClientVillagerDefaultLayer(PetRenderer renderer) {
         this.renderer = renderer;
     }
 
     @Override
-    public void render(ClientVillager villager, float f, float g, float h, float i, float j, float k, float l) {
+    public void render(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h, float i, float j, float k) {
+        ClientVillager villager = (ClientVillager) entity;
         GlStateManager.pushMatrix();
         this.renderer.bindTexture(new Identifier("minecraft", "textures/entity/villager/type/plains.png"));
-        this.renderer.getModel().render(villager, f, g, i, j, k, l);
+        this.renderer.getModel().render(villager, f, g, h, i, j, k);
         GlStateManager.popMatrix();
     }
 

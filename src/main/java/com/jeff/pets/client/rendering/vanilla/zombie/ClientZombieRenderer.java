@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.zombie;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientZombie;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -15,14 +15,16 @@ public class ClientZombieRenderer extends PetRenderer<ClientZombie> {
     }
 
     @Override
-    protected void applyScale(@NotNull ClientZombie livingEntityRenderState, float f) {
+    protected void applyScale(net.minecraft.entity.living.LivingEntity entity, float f) {
+        ClientZombie livingEntityRenderState = (ClientZombie) entity;
         if (CONFIG.isBaby) {
-            net.minecraft.client.render.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            com.jeff.pets.compat.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(ClientZombie livingEntityRenderState) {
+    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+        ClientZombie livingEntityRenderState = (ClientZombie) entity;
         return new Identifier("minecraft", "textures/entity/zombie/zombie.png");
     }
 }

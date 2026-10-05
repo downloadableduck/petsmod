@@ -3,10 +3,9 @@ package me.shedaniel.clothconfig2.api;
 import me.shedaniel.clothconfig2.compat.InputConstants;
 import me.shedaniel.clothconfig2.compat.MouseInput;
 import me.shedaniel.clothconfig2.impl.ModifierKeyCodeImpl;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
-@Environment(EnvType.CLIENT)
+
+
 public interface ModifierKeyCode {
     static ModifierKeyCode of(InputConstants.Key keyCode, Modifier modifier) {
         return new ModifierKeyCodeImpl().setKeyCodeAndModifier(keyCode, modifier);

@@ -5,7 +5,7 @@ import net.minecraft.entity.living.LivingEntity;
 import net.minecraft.entity.living.mob.passive.PassiveEntity;
 import net.minecraft.entity.living.mob.passive.animal.tameable.TameableEntity;
 import net.minecraft.entity.living.player.PlayerEntity;
-import net.minecraft.entity.particle.ParticleType;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -13,6 +13,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import com.jeff.pets.mob.custom.first.Duck;
 
 /**
  * Abstract class that extends {@link TameableEntity}, providing multiple utilities
@@ -43,6 +44,11 @@ public abstract class AbstractPet extends TameableEntity {
         super.initAttributes();
         this.getAttribute(EntityAttributes.MAX_HEALTH).setBase(8);
         this.getAttribute(EntityAttributes.MOVEMENT_SPEED).setBase(0.23);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
     }
 
     /**
@@ -104,7 +110,7 @@ public abstract class AbstractPet extends TameableEntity {
 
         if (this.isTamed() && itemStack == null && !player.isSneaking()) {
             this.world.addParticle(
-                    ParticleType.HEART,
+                    "heart",
                     this.x,
                     this.y + this.heartHeight(),
                     this.z,
@@ -132,7 +138,7 @@ public abstract class AbstractPet extends TameableEntity {
      */
     @Override
     public void onDataValueChanged(int key) {
-        if (!this.world.isClient) {
+        if (!(this.world instanceof ClientWorld)) {
             super.onDataValueChanged(key);
         }
     }
@@ -183,9 +189,9 @@ public abstract class AbstractPet extends TameableEntity {
         }
 
         if (!this.isReturningToOwner) {
-            this.lerpVelocity(new Vec3d(speed, yVelo, z)); //this.setVelocity()
+            this.lerpVelocity(Vec3d.of(speed, yVelo, z)); //this.setVelocity()
         } else {
-            this.lerpVelocity(new Vec3d(-speed, yVelo, -z));
+            this.lerpVelocity(Vec3d.of(-speed, yVelo, -z));
         }
 
         //this.lookAt(EntityAnchorArgument.Anchor.EYES, lookDir);
@@ -193,7 +199,7 @@ public abstract class AbstractPet extends TameableEntity {
         double moveX = this.getVelocity().x;
         double moveZ = this.getVelocity().z;
 
-        lookDir = new Vec3d(
+        lookDir = Vec3d.of(
                 this.x + (moveX * 2),
                 this.y + this.getEyeHeight(),
                 this.z + (moveZ * 2)
@@ -202,11 +208,10 @@ public abstract class AbstractPet extends TameableEntity {
 
         if (moveX * moveX + moveZ * moveZ > 0.001) {
             float targetYaw = (float) (Math.atan2(-moveX, moveZ) * (180D / Math.PI));
-            float smoothYaw = MathHelper.clamp(0.2f, this.getYRot(), targetYaw); //lerpAngleDegrees
-
-            this.setYRot(smoothYaw);
-            this.setHeadYaw(smoothYaw);
-            this.bodyYaw /*bodyYaw*/ = smoothYaw;
+            // Was MathHelper.clamp(0.2f, getYRot(), targetYaw), which is not an angle lerp at
+            // all - it just returns 0.2 whenever 0.2 lies between the two values. Use rotlerp
+            // so the body actually eases toward the wander direction.
+            this.setYRot(Duck.rotlerp(this.getYRot(), targetYaw));
         }
 
         if (this.collidingHorizontally && this.onGround) {
@@ -219,18 +224,27 @@ public abstract class AbstractPet extends TameableEntity {
         double dz = lookDir.z - this.z;
         float targetYaw = (float) (Math.atan2(-dx, dz) * (180D / Math.PI));
 
+        // Snap (not lerp) here: this is the terminal assignment for the wander tick, and the
+        // eased version above is intentionally superseded so the body ends up pointing exactly
+        // along the look target rather than trailing behind it.
         this.setYRot(targetYaw);
-        this.setHeadYaw(targetYaw);
-        this.bodyYaw /*bodyYaw*/ = targetYaw;
     }
 
+    /**
+     * The authoritative facing field. Ornithe recomputes {@code bodyYaw} every tick from
+     * {@link LivingEntity#bodyMovement(float, float)} as
+     * {@code yaw - clamp(wrapDegrees(yaw - bodyYaw), -75, 75)}, so writing only
+     * {@code bodyYaw}/{@code headYaw} leaves {@code yaw} pinned at 0 and vanilla drags the
+     * body back toward 0 every tick. Every yaw write must therefore go through {@code yaw}.
+     */
     public float getYRot() {
-        return this.bodyYaw /*bodyYaw*/;
+        return this.yaw;
     }
 
     public void setYRot(float targetYaw) {
+        this.yaw = targetYaw;
         this.setHeadYaw(targetYaw);
-        this.setBodyYaw(targetYaw);
+        this.bodyYaw = targetYaw;
     }
 
     private void reCalcPos() {
@@ -253,7 +267,7 @@ public abstract class AbstractPet extends TameableEntity {
     }
 
     public Vec3d getPosVec() {
-        return new Vec3d(this.x, this.y, this.z);
+        return Vec3d.of(this.x, this.y, this.z);
     }
 
     public void lerpVelocity(Vec3d vec3d) {
@@ -261,7 +275,7 @@ public abstract class AbstractPet extends TameableEntity {
     }
 
     public Vec3d getVelocity() {
-        return new Vec3d(this.velocityX, this.velocityY, this.velocityZ);
+        return Vec3d.of(this.velocityX, this.velocityY, this.velocityZ);
     }
 
     @Override

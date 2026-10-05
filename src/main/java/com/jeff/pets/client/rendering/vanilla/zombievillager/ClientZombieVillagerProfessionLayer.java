@@ -1,13 +1,14 @@
 package com.jeff.pets.client.rendering.vanilla.zombievillager;
 
 import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
-import net.minecraft.client.render.entity.layer.EntityRenderLayer;
+import com.jeff.pets.client.rendering.PetRenderLayer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientZombieVillagerProfessionLayer implements EntityRenderLayer<ClientZombieVillager> {
+public class ClientZombieVillagerProfessionLayer implements PetRenderLayer {
 
     public static final Identifier ARMORER_LOCATION = new Identifier("minecraft", "textures/entity/zombie_villager/profession/armorer.png");
     public static final Identifier BUTCHER_LOCATION = new Identifier("minecraft", "textures/entity/zombie_villager/profession/butcher.png");
@@ -24,16 +25,17 @@ public class ClientZombieVillagerProfessionLayer implements EntityRenderLayer<Cl
     public static final Identifier TOOLSMITH_LOCATION = new Identifier("minecraft", "textures/entity/zombie_villager/profession/toolsmith.png");
     public static final Identifier WEAPONSMITH_LOCATION = new Identifier("minecraft", "textures/entity/zombie_villager/profession/weaponsmith.png");
 
-    private final net.minecraft.client.render.entity.MobRenderer renderer;
+    private final PetRenderer renderer;
 
-    public ClientZombieVillagerProfessionLayer(net.minecraft.client.render.entity.MobRenderer renderer) {
+    public ClientZombieVillagerProfessionLayer(PetRenderer renderer) {
         this.renderer = renderer;
     }
 
     @Override
-    public void render(ClientZombieVillager zombieVillager, float f, float g, float h, float k, float l, float u, float v) {
-        net.minecraft.client.render.platform.GlStateManager.pushMatrix();
-        net.minecraft.client.render.platform.GlStateManager.scalef(1.001f, 1.001f, 1.001f);
+    public void render(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h, float k, float l, float u) {
+        ClientZombieVillager zombieVillager = (ClientZombieVillager) entity;
+        com.jeff.pets.compat.GlStateManager.pushMatrix();
+        com.jeff.pets.compat.GlStateManager.scalef(1.001f, 1.001f, 1.001f);
         if (CONFIG.zombieVillagerSkin.equals("armorer")) {
             this.renderer.bindTexture(ARMORER_LOCATION);
         } else if (CONFIG.zombieVillagerSkin.equals("butcher")) {
@@ -63,7 +65,7 @@ public class ClientZombieVillagerProfessionLayer implements EntityRenderLayer<Cl
         } else if (CONFIG.zombieVillagerSkin.equals("weaponsmith")) {
             this.renderer.bindTexture(WEAPONSMITH_LOCATION);
         }
-        net.minecraft.client.render.platform.GlStateManager.popMatrix();
+        com.jeff.pets.compat.GlStateManager.popMatrix();
     }
 
     @Override

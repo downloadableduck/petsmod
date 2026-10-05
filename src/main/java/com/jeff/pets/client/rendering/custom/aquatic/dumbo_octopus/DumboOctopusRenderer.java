@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.PetsInitializer.MOD_ID;
@@ -19,7 +19,8 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus> {
     }
 
 
-    public @NotNull Identifier getTextureLocation(@NotNull DumboOctopus state) {
+    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+        DumboOctopus state = (DumboOctopus) entity;
         String path;
         String yellow = "textures/entity/dumbo_octopus/yellow.png";
         String red = "textures/entity/dumbo_octopus/red.png";
@@ -46,8 +47,9 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus> {
     }
 
     @Override
-    public void render(DumboOctopus octopus, double f, double g, double h, float j, float i) {
-        super.render(octopus, f, g, h, j, i);
+    public void render(net.minecraft.entity.living.mob.MobEntity mobEntity, double f, double g, double h, float j, float i) {
+        super.render(mobEntity, f, g, h, j, i);
+        DumboOctopus octopus = (DumboOctopus) mobEntity;
         float currentSpeed;
         if (i > 67.5f) {
             currentSpeed = speed;

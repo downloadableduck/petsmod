@@ -3,7 +3,7 @@ package com.jeff.pets.mob.custom.aquatic;
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.FlyingPet;
 import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.living.LivingEntity;
 import net.minecraft.entity.living.attribute.EntityAttributes;
@@ -15,14 +15,15 @@ import net.minecraft.server.entity.living.player.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.Difficulty;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class DumboOctopus extends FlyingPet {
-   public static final int IS_SERVER_ENTITY = 10;
-   public static final int OCTOPUS_SKIN = 11;
+   public static final int IS_SERVER_ENTITY = 20;
+   public static final int OCTOPUS_SKIN = 21;
    private final float nextFlap = 1.0F;
    public float tentacleAngle = 0.0F;
    public ServerPlayerEntity owner = (ServerPlayerEntity)this.getOwner();
@@ -41,8 +42,8 @@ public class DumboOctopus extends FlyingPet {
 
    protected void registerSyncedData() {
       super.registerSyncedData();
-      this.syncedData.register(11, 1);
-      this.syncedData.register(10, (byte)0);
+      this.syncedData.register(21, 1);
+      this.syncedData.register(20, (byte)0);
    }
 
    public boolean isServerEntity() {
@@ -76,7 +77,7 @@ public class DumboOctopus extends FlyingPet {
       return "duck_ambient";
    }
 
-   protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState blockState) {
+   protected void playStepSound(@NotNull BlockPos pos, @NotNull Block Block) {
       this.playSound("mob.chicken.step", 0.15F, 1.0F);
    }
 
@@ -87,10 +88,10 @@ public class DumboOctopus extends FlyingPet {
       return octopus;
    }
 
-   public EntityData initialize(LocalDifficulty difficulty, @Nullable EntityData groupData) {
+   public DumboOctopus initialize(Difficulty difficulty, @Nullable EntityData groupData) {
       this.setServerEntity(true);
       this.syncedData.update(11, this.random.nextInt(6));
-      return super.initialize(difficulty, groupData);
+      return this;
    }
 
    @Override
@@ -116,8 +117,8 @@ public class DumboOctopus extends FlyingPet {
 
          double dx = owner.x - this.x;
          double dz = owner.z - this.z;
-         Vec3d ownerPos = new Vec3d(owner.x, owner.y, owner.z).add(0.0, owner.getEyeHeight() * 0.8, 0.0);
-         Vec3d vecToOwner = ownerPos.subtract(this.getPosVec());
+         Vec3d ownerPos = Vec3d.of(owner.x, owner.y, owner.z).add(0.0, owner.getEyeHeight() * 0.8, 0.0);
+         Vec3d vecToOwner = ownerPos.subtractFrom(this.getPosVec());
          double targetYaw = Math.atan2(dz, dx) * (180.0 / Math.PI) - 90.0;
          double distance = this.distanceTo(owner);
          float rotation = -this.pitch;
@@ -131,11 +132,11 @@ public class DumboOctopus extends FlyingPet {
             this.walkAnimationSpeed = 0.5F;
             Vec3d dir = vecToOwner.normalize();
             double speed = 0.2;
-            this.setBodyYaw(Duck.rotlerp(this.bodyYaw, (float)targetYaw));
+            this.bodyYaw = Duck.rotlerp(this.bodyYaw, (float)targetYaw);
             this.bodyYaw = this.bodyYaw + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw, -50.0F, 50.0F);
-            this.lerpVelocity(new Vec3d(dir.x * speed, dir.y * speed, dir.z * speed));
+            this.lerpVelocity(Vec3d.of(-dir.x * speed, dir.y * speed, -dir.z * speed));
          } else {
-            this.lerpVelocity(new Vec3d(this.getVelocity().x * 0.8, this.getVelocity().y * 0.8, this.getVelocity().z * 0.8));
+            this.lerpVelocity(Vec3d.of(this.getVelocity().x * 0.8, this.getVelocity().y * 0.8, this.getVelocity().z * 0.8));
          }
 
          int yHeightToOwner = (int)(owner.y - this.y);
@@ -150,7 +151,7 @@ public class DumboOctopus extends FlyingPet {
          if (!this.onGround) {
          }
 
-         if (Utils.squaredDistanceToOrigin(new Vec3d(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
+         if (Utils.squaredDistanceToOrigin(Vec3d.of(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
             this.waitingTime++;
             if (this.waitingTime > 30) {
                this.wander();
@@ -166,7 +167,9 @@ public class DumboOctopus extends FlyingPet {
             this.bodyYaw = this.bodyYaw + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw, -10.0F, 10.0F);
          }
 
-         this.move(this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
+          // No manual move() here: LivingEntity.mobTick() already calls moveRelative() ->
+          // move(this.velocityX, ...) on the client, so calling move() again moved the pet
+          // twice per tick and doubled its apparent speed.
       }
 
       if (owner != null && this.distanceTo(owner) >= 10.0F) {
@@ -188,12 +191,12 @@ public class DumboOctopus extends FlyingPet {
    public void readCustomNbt(@NotNull NbtCompound input) {
       super.readCustomNbt(input);
       this.setServerEntity(input.getBoolean("isServerEntity"));
-      this.syncedData.update(11, input.getInt("variant"));
+      this.syncedData.update(21, input.getInt("variant"));
    }
 
    @Override
    public void onDataValueChanged(int key) {
-      if (!this.world.isClient) {
+      if (!(this.world instanceof ClientWorld)) {
          super.onDataValueChanged(key);
       }
    }

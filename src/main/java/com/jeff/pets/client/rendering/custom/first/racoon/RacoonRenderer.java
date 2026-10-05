@@ -4,7 +4,7 @@ import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Racoon;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -14,18 +14,20 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class RacoonRenderer extends PetRenderer<@NotNull Racoon> {
 
-    public RacoonRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+    public RacoonRenderer(EntityRenderDispatcher context, PetsClientInitializer.Context context2) {
         super(context, new RacoonModel(), 0.75f);
     }
 
-    protected void applyScale(@NotNull Racoon livingEntityRenderState, float f) {
+    protected void applyScale(net.minecraft.entity.living.LivingEntity entity, float f) {
+        Racoon livingEntityRenderState = (Racoon) entity;
         if ((CONFIG.isBaby && !livingEntityRenderState.isServerEntity()) || (livingEntityRenderState.isBaby() && livingEntityRenderState.isServerEntity())) {
-            net.minecraft.client.render.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            com.jeff.pets.compat.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
 
-    public @NotNull Identifier getTextureLocation(Racoon state) {
+    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+        Racoon state = (Racoon) entity;
         String racoonTexturePath;
         if (!state.isServerEntity()) {
             if (Objects.equals(CONFIG.racoonSkin, "normal")) {
@@ -42,7 +44,8 @@ public class RacoonRenderer extends PetRenderer<@NotNull Racoon> {
     }
 
     @Override
-    public void renderModel(Racoon racoon, float g, float f, float u, float h, float m, float i) {
+    public void renderModel(net.minecraft.entity.living.LivingEntity entity, float g, float f, float u, float h, float m, float i) {
+        Racoon racoon = (Racoon) entity;
         super.renderModel(racoon, g, f, u, h, m, i);
         racoon.setServerEntity(racoon.getSyncedData().getByte(Racoon.IS_SERVER_ENTITY) == 1);
     }

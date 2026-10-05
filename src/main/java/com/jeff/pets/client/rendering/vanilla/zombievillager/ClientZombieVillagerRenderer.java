@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.zombievillager;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -23,14 +23,16 @@ public class ClientZombieVillagerRenderer extends PetRenderer<ClientZombieVillag
     }
 
     @Override
-    protected void applyScale(@NotNull ClientZombieVillager livingEntityRenderState, float f) {
+    protected void applyScale(net.minecraft.entity.living.LivingEntity entity, float f) {
+        ClientZombieVillager livingEntityRenderState = (ClientZombieVillager) entity;
         if (CONFIG.isBaby) {
-            net.minecraft.client.render.platform.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            com.jeff.pets.compat.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public Identifier getTextureLocation(ClientZombieVillager villagerRenderState) {
+    public Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+        ClientZombieVillager villagerRenderState = (ClientZombieVillager) entity;
         if (Objects.equals(CONFIG.zombieVillagerSkin, "butcher")) {
             return (BUTCHER_LOCATION);
         } else if (Objects.equals(CONFIG.zombieVillagerSkin, "farmer")) {
@@ -46,10 +48,11 @@ public class ClientZombieVillagerRenderer extends PetRenderer<ClientZombieVillag
     }
 
     @Override
-    public void applyRotation(ClientZombieVillager state, float f, float g, float h) {
+    public void applyRotation(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h) {
+        ClientZombieVillager state = (ClientZombieVillager) entity;
         super.applyRotation(state, f, g, h);
         if (state.isRiding()) {
-            net.minecraft.client.render.platform.GlStateManager.translatef(0, -0.5f, 0);
+            com.jeff.pets.compat.GlStateManager.translatef(0, -0.5f, 0);
         }
     }
 }

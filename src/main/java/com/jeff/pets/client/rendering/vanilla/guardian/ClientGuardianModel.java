@@ -1,5 +1,6 @@
 package com.jeff.pets.client.rendering.vanilla.guardian;
 
+import com.jeff.pets.compat.EntityCompat;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.model.Model;
@@ -54,13 +55,13 @@ public class ClientGuardianModel extends Model {
     }
 
     @Override
-    public void render(net.minecraft.entity.Entity entity, float f, float g, float h, float i, float j, float k) {
+    public void render(Entity entity, float f, float g, float h, float i, float j, float k) {
         this.setupAnimation(f, g, h, i, j, k, entity);
         this.field_3379.render(k);
     }
 
     @Override
-    public void setupAnimation(float f, float g, float h, float i, float j, float k, net.minecraft.entity.Entity entity) {
+    public void setupAnimation(float f, float g, float h, float i, float j, float k, Entity entity) {
         AbstractPet guardianEntity = (AbstractPet) entity;
         float l = h - (float) guardianEntity.ticks;
         this.field_3379.rotationY = i * ((float) Math.PI / 180F);
@@ -77,11 +78,11 @@ public class ClientGuardianModel extends Model {
         }
 
         this.field_3381.z = -8.25F;
-        Entity cameraEntity = Minecraft.getInstance().getCamera();
+        Entity cameraEntity = Minecraft.getInstance().camera;
 
         if (cameraEntity != null) {
-            Vec3d vec3d = cameraEntity.getEyePosition(0.0F);
-            Vec3d vec3d2 = guardianEntity.getEyePosition(0.0F);
+            Vec3d vec3d = EntityCompat.eyePosition(cameraEntity, 0.0F);
+            Vec3d vec3d2 = EntityCompat.eyePosition(guardianEntity, 0.0F);
             double d = vec3d.y - vec3d2.y;
             if (d > (double) 0.0F) {
                 this.field_3381.y = 0.0F;
@@ -89,9 +90,10 @@ public class ClientGuardianModel extends Model {
                 this.field_3381.y = 1.0F;
             }
 
-            Vec3d vec3d3 = guardianEntity.getRotationVec(0.0F);
-            vec3d3 = new Vec3d(vec3d3.x, 0.0F, vec3d3.z);
-            Vec3d vec3d4 = (new Vec3d(vec3d2.x - vec3d.x, 0.0F, vec3d2.z - vec3d.z)).normalize().rotateY(((float) Math.PI / 2F));
+            Vec3d vec3d3 = EntityCompat.lookVector(guardianEntity, 0.0F);
+            vec3d3 = Vec3d.of(vec3d3.x, 0.0F, vec3d3.z);
+            Vec3d vec3d4 = (Vec3d.of(vec3d2.x - vec3d.x, 0.0F, vec3d2.z - vec3d.z)).normalize();
+            vec3d4.rotateY((float) Math.PI / 2F);
             double e = vec3d3.dot(vec3d4);
             this.field_3381.x = MathHelper.sqrt((float) Math.abs(e)) * 2.0F * (float) Math.signum(e);
         }

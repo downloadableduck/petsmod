@@ -2,14 +2,13 @@ package me.shedaniel.clothconfig2.impl;
 
 import me.shedaniel.clothconfig2.api.Modifier;
 import me.shedaniel.clothconfig2.api.ModifierKeyCode;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import net.minecraft.client.options.KeyBinding;
 
 import java.util.UUID;
 import java.util.function.Consumer;
 
-@Environment(EnvType.CLIENT)
+
 public class FakeKeyBindings extends KeyBinding {
     private final UUID uuid;
     private final ModifierKeyCode keyCode;

@@ -8,7 +8,7 @@ import me.shedaniel.clothconfig2.ButtonWidget;
 import net.minecraft.client.Minecraft;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.gui.widget.OptionSliderWidget;
-import net.minecraft.client.options.GameOptions;
+import net.minecraft.client.options.GameOptions__Option;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.util.math.MathHelper;
 
@@ -118,11 +118,11 @@ public class IntegerSliderEntry extends TooltipListEntry {
         sliderWidget.render(mouseX, mouseY, delta);
     }
     
-    private class Slider extends OptionSliderWidget implements me.shedaniel.clothconfig2.compat.GuiEventListener {
+    private class Slider extends OptionSliderWidget implements GuiEventListener {
         private double progress;
         
         protected Slider(int int_1, int int_2, int int_3, int int_4, double double_1) {
-            super(0, int_2, int_3, GameOptions.Option.FOV, minimum, maximum);
+            super(0, int_2, int_3, GameOptions__Option.FOV, minimum, maximum);
             this.progress = double_1;
         }
         

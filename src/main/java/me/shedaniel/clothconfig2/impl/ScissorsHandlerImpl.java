@@ -7,9 +7,7 @@ import net.minecraft.client.Minecraft;
 import me.shedaniel.clothconfig2.ClothConfigInitializer;
 import me.shedaniel.clothconfig2.api.ScissorsHandler;
 import me.shedaniel.math.Rectangle;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.loader.api.FabricLoader;
+
 import net.minecraft.client.Minecraft;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.opengl.GL11;
@@ -18,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Executor;
 
-@Environment(EnvType.CLIENT)
+
 public final class ScissorsHandlerImpl implements ScissorsHandler {
     
     @Deprecated public static final ScissorsHandler INSTANCE = new ScissorsHandlerImpl();

@@ -20,13 +20,12 @@
 package me.shedaniel.autoconfig.gui.registry.api;
 
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 
 import java.lang.reflect.Field;
 import java.util.List;
 
-@Environment(EnvType.CLIENT)
+
 public interface GuiRegistryAccess extends GuiProvider, GuiTransformer {
     default List<AbstractConfigListEntry> getAndTransform(
             String i18n,

@@ -1,15 +1,14 @@
 package me.shedaniel.clothconfig2.impl.builders;
 
 import me.shedaniel.clothconfig2.gui.entries.TextListEntry;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 import java.util.function.Supplier;
 
-@Environment(EnvType.CLIENT)
+
 public class TextDescriptionBuilder extends FieldBuilder<String, TextListEntry> {
     
     private int color = -1;

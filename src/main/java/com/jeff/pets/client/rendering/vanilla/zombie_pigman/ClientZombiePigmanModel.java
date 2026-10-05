@@ -61,7 +61,7 @@ public class ClientZombiePigmanModel extends Model {
     }
 
     @Override
-    public void setupAnimation(float f, float g, float h, float i, float j, float s, net.minecraft.entity.Entity entity) {
+    public void setupAnimation(float f, float g, float h, float i, float j, float s, Entity entity) {
         ClientZombiePigman state = (ClientZombiePigman) entity;
         boolean bl = false;
         boolean bl2 = state.isInWater();
@@ -310,16 +310,16 @@ public class ClientZombiePigmanModel extends Model {
         return f + h * i;
     }
 
-    public void render(net.minecraft.entity.Entity entity, float b, float j, float f, float g, float h, float k, int i) {
+    public void render(Entity entity, float b, float j, float f, float g, float h, float k, int i) {
         super.render(entity, b, j, f, g, h, k);
-        net.minecraft.client.render.platform.GlStateManager.pushMatrix();
+        com.jeff.pets.compat.GlStateManager.pushMatrix();
         if (CONFIG.isBaby) {
-            net.minecraft.client.render.platform.GlStateManager.scalef(1.5f, 1.5f, 1.5f);
+            com.jeff.pets.compat.GlStateManager.scalef(1.5f, 1.5f, 1.5f);
         } else {
-            net.minecraft.client.render.platform.GlStateManager.scalef(1, 1, 1);
+            com.jeff.pets.compat.GlStateManager.scalef(1, 1, 1);
         }
         //this.head.rotate(poseStack);
-        net.minecraft.client.render.platform.GlStateManager.popMatrix();
+        com.jeff.pets.compat.GlStateManager.popMatrix();
     }
 
     private float quadraticArmUpdate(float f) {

@@ -5,7 +5,7 @@ import com.jeff.pets.mob.vanilla.hostile.ClientGhast;
 import net.minecraft.client.render.model.entity.GhastModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.living.LivingEntity;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientGhastRenderer extends PetRenderer {
@@ -21,6 +21,6 @@ public class ClientGhastRenderer extends PetRenderer {
 
     @Override
     public void applyScale(LivingEntity ghast, float f) {
-        net.minecraft.client.render.platform.GlStateManager.scalef(4.5F, 4.5F, 4.5F);
+        com.jeff.pets.compat.GlStateManager.scalef(4.5F, 4.5F, 4.5F);
     }
 }

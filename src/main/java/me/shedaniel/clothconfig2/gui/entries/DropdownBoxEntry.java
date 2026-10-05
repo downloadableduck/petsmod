@@ -5,18 +5,17 @@ import me.shedaniel.clothconfig2.impl.WindowUtil;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import net.minecraft.client.render.platform.GlStateManager;
+import com.jeff.pets.compat.GlStateManager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.render.vertex.BufferBuilder;
-import net.minecraft.client.render.vertex.DefaultVertexFormat;
+import me.shedaniel.clothconfig2.compat.GuiVertexCompat;
+import me.shedaniel.clothconfig2.compat.GuiVertexCompat.Builder;
 import net.minecraft.client.render.vertex.Tesselator;
 import me.shedaniel.clothconfig2.ButtonWidget;
 import me.shedaniel.clothconfig2.ClothConfigInitializer;
 import me.shedaniel.clothconfig2.api.ScissorsHandler;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import net.minecraft.client.Minecraft;
 import me.shedaniel.clothconfig2.compat.AbstractContainerEventHandler;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
@@ -36,7 +35,7 @@ import java.util.function.Supplier;
 import static me.shedaniel.clothconfig2.ClothConfigInitializer.handleScrollingPosition;
 
 @SuppressWarnings("deprecation")
-@Environment(EnvType.CLIENT)
+
 public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
     
     protected ButtonWidget resetButton;
@@ -397,7 +396,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             if (currentElements.isEmpty()) {
                 TextRenderer textRenderer = Minecraft.getInstance().textRenderer;
                 String s = I18n.translate("text.cloth-config.dropdown.value.unknown");
-                textRenderer.drawWithShadow(s, lastRectangle.x + getCellCreator().getCellWidth() / 2f - textRenderer.getWidth(s) / 2f, lastRectangle.y + lastRectangle.height + 3, -1);
+                textRenderer.drawWithShadow(s, (int)(lastRectangle.x + getCellCreator().getCellWidth() / 2f - textRenderer.getWidth(s) / 2f), lastRectangle.y + lastRectangle.height + 3, -1);
             }
             
             if (getMaxScrollPosition() > 6) {
@@ -413,11 +412,11 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
                 int bottomc = new Rectangle(scrollbarPositionMinX, minY, scrollbarPositionMaxX - scrollbarPositionMinX, height).contains(new Point(MouseInput.getX(), MouseInput.getY())) ? 168 : 128;
                 int topc = new Rectangle(scrollbarPositionMinX, minY, scrollbarPositionMaxX - scrollbarPositionMinX, height).contains(new Point(MouseInput.getX(), MouseInput.getY())) ? 222 : 172;
                 
-                Tesselator tesselator = Tesselator.getInstance();
-                BufferBuilder buffer = tesselator.getBuffer();
+                Tesselator tesselator = Tesselator.INSTANCE;
+                Builder buffer = Builder.of(tesselator);
                 
                 // Bottom
-                buffer.begin(7, DefaultVertexFormat.POSITION_TEX_COLOR);
+                buffer.begin(7, GuiVertexCompat.POSITION_TEX_COLOR);
                 buffer.vertex(scrollbarPositionMinX, minY + height, 0.0D).texture(0, 1).color(bottomc, bottomc, bottomc, 255).nextVertex();
                 buffer.vertex(scrollbarPositionMaxX, minY + height, 0.0D).texture(1, 1).color(bottomc, bottomc, bottomc, 255).nextVertex();
                 buffer.vertex(scrollbarPositionMaxX, minY, 0.0D).texture(1, 0).color(bottomc, bottomc, bottomc, 255).nextVertex();
@@ -425,7 +424,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
                 tesselator.end();
                 
                 // Top
-                buffer.begin(7, DefaultVertexFormat.POSITION_TEX_COLOR);//.texture(0, 1).color(topc, topc, topc, 255).nextVertex();
+                buffer.begin(7, GuiVertexCompat.POSITION_TEX_COLOR);//.texture(0, 1).color(topc, topc, topc, 255).nextVertex();
                 buffer.vertex((scrollbarPositionMaxX - 1), (minY + height - 1), 0.0D).texture(1, 1).color(topc, topc, topc, 255).nextVertex();
                 buffer.vertex((scrollbarPositionMaxX - 1), minY, 0.0D).texture(1, 0).color(topc, topc, topc, 255).nextVertex();
                 buffer.vertex(scrollbarPositionMinX, minY, 0.0D).texture(0, 0).color(topc, topc, topc, 255).nextVertex();
@@ -695,7 +694,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             this.value = Objects.requireNonNull(value);
             this.toObjectFunction = Objects.requireNonNull(toObjectFunction);
             this.toStringFunction = Objects.requireNonNull(toStringFunction);
-            textFieldWidget = new TextFieldWidget(0, Minecraft.getInstance().textRenderer, 0, 0, 148, 18) {
+            textFieldWidget = new TextFieldWidget(Minecraft.getInstance().textRenderer, 0, 0, 148, 18) {
                 @Override
                 public void render() {
                     // setFocused(isSuggestionMode() && isSelected && DefaultSelectionTopCellElement.this.getParent().getFocused() == DefaultSelectionTopCellElement.this.getParent().selectionElement && DefaultSelectionTopCellElement.this.getParent().selectionElement.setCharging() == DefaultSelectionTopCellElement.this && DefaultSelectionTopCellElement.this.setCharging() == this); // Not available in 1.13

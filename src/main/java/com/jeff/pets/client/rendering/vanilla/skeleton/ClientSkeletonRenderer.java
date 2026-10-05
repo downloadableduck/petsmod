@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.skeleton;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientSkeleton;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -13,15 +13,17 @@ public class ClientSkeletonRenderer extends PetRenderer<ClientSkeleton> {
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(ClientSkeleton livingEntityRenderState) {
+    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+        ClientSkeleton livingEntityRenderState = (ClientSkeleton) entity;
         return new Identifier("minecraft", "textures/entity/skeleton/skeleton.png");
     }
 
     @Override
-    public void applyRotation(ClientSkeleton state, float f, float g, float h) {
+    public void applyRotation(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h) {
+        ClientSkeleton state = (ClientSkeleton) entity;
         super.applyRotation(state, f, g, h);
         if (state.isRiding()) {
-            net.minecraft.client.render.platform.GlStateManager.translatef(0, -0.5f, 0);
+            com.jeff.pets.compat.GlStateManager.translatef(0, -0.5f, 0);
         }
     }
 }

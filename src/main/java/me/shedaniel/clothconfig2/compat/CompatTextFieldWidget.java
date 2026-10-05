@@ -9,10 +9,10 @@ import net.minecraft.client.render.TextRenderer;
  * by the ClothConfig entry widgets. All keyboard/char/mouse dispatch is delegated
  * to the underlying text field's 1.12 APIs.
  */
-public class CompatTextFieldWidget extends TextFieldWidget implements me.shedaniel.clothconfig2.compat.GuiEventListener {
+public class CompatTextFieldWidget extends TextFieldWidget implements GuiEventListener {
 
     public CompatTextFieldWidget(int id, TextRenderer textRenderer, int x, int y, int width, int height) {
-        super(id, textRenderer, x, y, width, height);
+        super(textRenderer, x, y, width, height);
     }
 
     @Override

@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.vanilla.witch;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientWitch;
 import net.minecraft.client.render.model.entity.WitchModel;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientWitchRenderer extends PetRenderer<ClientWitch> {
@@ -13,7 +13,8 @@ public class ClientWitchRenderer extends PetRenderer<ClientWitch> {
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(ClientWitch livingEntityRenderState) {
+    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+        ClientWitch livingEntityRenderState = (ClientWitch) entity;
         return new Identifier("minecraft", "textures/entity/witch.png");
     }
 }

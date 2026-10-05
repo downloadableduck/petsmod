@@ -2,8 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.endermite;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientEndermite;
-import net.minecraft.client.render.model.entity.EndermiteModel;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientEndermiteRenderer extends PetRenderer<ClientEndermite> {
@@ -13,7 +12,8 @@ public class ClientEndermiteRenderer extends PetRenderer<ClientEndermite> {
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(ClientEndermite livingEntityRenderState) {
+    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+        ClientEndermite livingEntityRenderState = (ClientEndermite) entity;
         return new Identifier("minecraft", "textures/entity/endermite.png");
     }
 }

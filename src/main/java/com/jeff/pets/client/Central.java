@@ -1371,9 +1371,10 @@ public class Central implements ClientModInitializer {
      * Creates the command that allows the user to use {@code /petspecies}.
      */
     public void executePetSpeciesCommand(String species) {
-        boolean isValid = true;
+        Minecraft.getInstance().execute(() -> {
+            boolean isValid = true;
 
-                if (Objects.equals(species, "duck")) {
+            if (Objects.equals(species, "duck")) {
                 Utils.setActivePet(duck, "duck");
             } else if (Objects.equals(species, "racoon") || Objects.equals(species, "raccoon")) {
                 Utils.setActivePet(racoon, "racoon");
@@ -1467,6 +1468,7 @@ public class Central implements ClientModInitializer {
 
             AutoConfig.getConfigHolder(PetsConfig.class).save();
             updateSuggestions(Minecraft.getInstance());
+        });
     }
 
     /**

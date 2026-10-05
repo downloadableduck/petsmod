@@ -27,8 +27,7 @@ import me.shedaniel.autoconfig.gui.registry.ComposedGuiRegistryAccess;
 import me.shedaniel.autoconfig.gui.registry.DefaultGuiRegistryAccess;
 import me.shedaniel.autoconfig.gui.registry.GuiRegistry;
 import me.shedaniel.autoconfig.serializer.ConfigSerializer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import net.minecraft.client.gui.screen.Screen;
 
 import java.util.HashMap;
@@ -78,12 +77,12 @@ public class AutoConfig {
         }
     }
 
-    @Environment(EnvType.CLIENT)
+    
     public static <T extends ConfigData> GuiRegistry getGuiRegistry(Class<T> configClass) {
         return guiRegistries.computeIfAbsent(configClass, n -> new GuiRegistry());
     }
 
-    @Environment(EnvType.CLIENT)
+    
     public static <T extends ConfigData> Supplier<Screen> getConfigScreen(Class<T> configClass, Screen parent) {
         return new ConfigScreenProvider<>(
                 (ConfigManager<T>) AutoConfig.getConfigHolder(configClass),
@@ -96,7 +95,7 @@ public class AutoConfig {
         );
     }
 
-    @Environment(EnvType.CLIENT)
+    
     private static class ClientOnly {
         private static final GuiRegistry defaultGuiRegistry =
                 DefaultGuiTransformers.apply(DefaultGuiProviders.apply(new GuiRegistry()));

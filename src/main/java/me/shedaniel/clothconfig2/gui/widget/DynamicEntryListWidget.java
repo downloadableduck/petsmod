@@ -1,20 +1,19 @@
 package me.shedaniel.clothconfig2.gui.widget;
 
 import com.google.common.collect.Lists;
-import net.minecraft.client.render.platform.GlStateManager;
-import net.minecraft.client.render.vertex.BufferBuilder;
-import net.minecraft.client.render.vertex.DefaultVertexFormat;
+import com.jeff.pets.compat.GlStateManager;
+import me.shedaniel.clothconfig2.compat.GuiVertexCompat;
+import me.shedaniel.clothconfig2.compat.GuiVertexCompat.Builder;
 import net.minecraft.client.render.vertex.Tesselator;
 import me.shedaniel.clothconfig2.api.ScissorsHandler;
 import me.shedaniel.math.Rectangle;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import net.minecraft.client.Minecraft;
 import me.shedaniel.clothconfig2.compat.AbstractContainerEventHandler;
 import net.minecraft.client.gui.GuiElement;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.gui.widget.EntryListWidget;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.AbstractList;
@@ -22,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Environment(EnvType.CLIENT)
+
 public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.Entry<E>> extends AbstractContainerEventHandler {
     protected static final int DRAG_OUTSIDE = -2;
     protected final Minecraft client;
@@ -164,16 +163,16 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
     }
     
     @Deprecated
-    protected void renderBackBackground(BufferBuilder buffer, Tesselator Tesselator) {
+    protected void renderBackBackground(Builder buffer, Tesselator Tesselator) {
         this.client.getTextureManager().bind(backgroundLocation);
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         float float_2 = 32.0F;
-        buffer.begin(7, DefaultVertexFormat.POSITION_COLOR);
+        buffer.begin(7, GuiVertexCompat.POSITION_COLOR);
         buffer.vertex(this.left, this.bottom, 0.0D).texture(this.left / 32.0F, ((this.bottom + (int) this.getScroll()) / 32.0F)).color(32, 32, 32, 255).nextVertex();
         buffer.vertex(this.right, this.bottom, 0.0D).texture(this.right / 32.0F, ((this.bottom + (int) this.getScroll()) / 32.0F)).color(32, 32, 32, 255).nextVertex();
         buffer.vertex(this.right, this.top, 0.0D).texture(this.right / 32.0F, ((this.top + (int) this.getScroll()) / 32.0F)).color(32, 32, 32, 255).nextVertex();
         buffer.vertex(this.left, this.top, 0.0D).texture(this.left / 32.0F, ((this.top + (int) this.getScroll()) / 32.0F)).color(32, 32, 32, 255).nextVertex();
-        Tesselator.end();
+        Tesselator.INSTANCE.end();
     }
     
     @SuppressWarnings("deprecation")
@@ -183,8 +182,8 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
         int int_4 = scrollbarPosition + 6;
         GlStateManager.disableLighting();
         GlStateManager.disableFog();
-        Tesselator tesselator = Tesselator.getInstance();
-        BufferBuilder buffer = tesselator.getBuffer();
+        Tesselator tesselator = Tesselator.INSTANCE;
+        Builder buffer = Builder.of(tesselator);
         renderBackBackground(buffer, tesselator);
         int rowLeft = this.getRowLeft();
         int startY = this.top + 4 - (int) this.getScroll();
@@ -201,13 +200,13 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
         // GlStateManager.disableAlphaFunc(); // Not available in 1.13
         GlStateManager.shadeModel(7425);
         // GlStateManager.disableBoundTexture(); // Not available in 1.13
-        buffer.begin(7, DefaultVertexFormat.POSITION_COLOR);
+        buffer.begin(7, GuiVertexCompat.POSITION_COLOR);
         buffer.vertex(this.left, this.top + 4, 0.0D).texture(0, 1).color(0, 0, 0, 0).nextVertex();
         buffer.vertex(this.right, this.top + 4, 0.0D).texture(1, 1).color(0, 0, 0, 0).nextVertex();
         buffer.vertex(this.right, this.top, 0.0D).texture(1, 0).color(0, 0, 0, 255).nextVertex();
         buffer.vertex(this.left, this.top, 0.0D).texture(0, 0).color(0, 0, 0, 255).nextVertex();
         tesselator.end();
-        buffer.begin(7, DefaultVertexFormat.POSITION_COLOR);
+        buffer.begin(7, GuiVertexCompat.POSITION_COLOR);
         buffer.vertex(this.left, this.bottom, 0.0D).texture(0, 1).color(0, 0, 0, 255).nextVertex();
         buffer.vertex(this.right, this.bottom, 0.0D).texture(1, 1).color(0, 0, 0, 255).nextVertex();
         buffer.vertex(this.right, this.bottom - 4, 0.0D).texture(1, 0).color(0, 0, 0, 0).nextVertex();
@@ -224,7 +223,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
     }
     
     @SuppressWarnings("deprecation")
-    protected void renderScrollBar(Tesselator Tesselator, BufferBuilder buffer, int maxScroll, int scrollbarPositionMinX, int scrollbarPositionMaxX) {
+    protected void renderScrollBar(Tesselator Tesselator, Builder buffer, int maxScroll, int scrollbarPositionMinX, int scrollbarPositionMaxX) {
         if (maxScroll > 0) {
             int int_9 = ((this.bottom - this.top) * (this.bottom - this.top)) / this.getMaxScrollPosition();
             int_9 = MathHelper.clamp(int_9, 32, this.bottom - this.top - 8);
@@ -233,24 +232,24 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
                 int_10 = this.top;
             }
             
-            buffer.begin(7, DefaultVertexFormat.POSITION_COLOR);
+            buffer.begin(7, GuiVertexCompat.POSITION_COLOR);
             buffer.vertex(scrollbarPositionMinX, this.bottom, 0.0D).texture(0, 1).color(0, 0, 0, 255).nextVertex();
             buffer.vertex(scrollbarPositionMaxX, this.bottom, 0.0D).texture(1, 1).color(0, 0, 0, 255).nextVertex();
             buffer.vertex(scrollbarPositionMaxX, this.top, 0.0D).texture(1, 0).color(0, 0, 0, 255).nextVertex();
             buffer.vertex(scrollbarPositionMinX, this.top, 0.0D).texture(0, 0).color(0, 0, 0, 255).nextVertex();
-            Tesselator.end();
-            buffer.begin(7, DefaultVertexFormat.POSITION_COLOR);
+            Tesselator.INSTANCE.end();
+            buffer.begin(7, GuiVertexCompat.POSITION_COLOR);
             buffer.vertex(scrollbarPositionMinX, int_10 + int_9, 0.0D).texture(0, 1).color(128, 128, 128, 255).nextVertex();
             buffer.vertex(scrollbarPositionMaxX, int_10 + int_9, 0.0D).texture(1, 1).color(128, 128, 128, 255).nextVertex();
             buffer.vertex(scrollbarPositionMaxX, int_10, 0.0D).texture(1, 0).color(128, 128, 128, 255).nextVertex();
             buffer.vertex(scrollbarPositionMinX, int_10, 0.0D).texture(0, 0).color(128, 128, 128, 255).nextVertex();
-            Tesselator.end();
-            buffer.begin(7, DefaultVertexFormat.POSITION_COLOR);
+            Tesselator.INSTANCE.end();
+            buffer.begin(7, GuiVertexCompat.POSITION_COLOR);
             buffer.vertex(scrollbarPositionMinX, (int_10 + int_9 - 1), 0.0D).texture(0, 1).color(192, 192, 192, 255).nextVertex();
             buffer.vertex((scrollbarPositionMaxX - 1), (int_10 + int_9 - 1), 0.0D).texture(1, 1).color(192, 192, 192, 255).nextVertex();
             buffer.vertex((scrollbarPositionMaxX - 1), int_10, 0.0D).texture(1, 0).color(192, 192, 192, 255).nextVertex();
             buffer.vertex(scrollbarPositionMinX, int_10, 0.0D).texture(0, 0).color(192, 192, 192, 255).nextVertex();
-            Tesselator.end();
+            Tesselator.INSTANCE.end();
         }
     }
     
@@ -392,8 +391,8 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
     
     protected void renderList(int startX, int startY, int int_3, int int_4, float float_1) {
         int itemCount = this.getItemCount();
-        Tesselator tesselator = Tesselator.getInstance();
-        BufferBuilder buffer = tesselator.getBuffer();
+        Tesselator tesselator = Tesselator.INSTANCE;
+        Builder buffer = Builder.of(tesselator);
         
         for (int renderIndex = 0; renderIndex < itemCount; ++renderIndex) {
             E item = this.getItem(renderIndex);
@@ -409,14 +408,14 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
                 // GlStateManager.disableBoundTexture(); // Not available in 1.13
                 float float_2 = this.isFocused() ? 1.0F : 0.5F;
                 GlStateManager.color4f(float_2, float_2, float_2, 1.0F);
-                buffer.begin(7, DefaultVertexFormat.POSITION);
+                buffer.begin(7, GuiVertexCompat.POSITION);
                 buffer.vertex(itemMinX, itemY + itemHeight + 2, 0.0D).nextVertex();
                 buffer.vertex(itemMaxX, itemY + itemHeight + 2, 0.0D).nextVertex();
                 buffer.vertex(itemMaxX, itemY - 2, 0.0D).nextVertex();
                 buffer.vertex(itemMinX, itemY - 2, 0.0D).nextVertex();
                 tesselator.end();
                 GlStateManager.color4f(0.0F, 0.0F, 0.0F, 1.0F);
-                buffer.begin(7, DefaultVertexFormat.POSITION);
+                buffer.begin(7, GuiVertexCompat.POSITION);
                 buffer.vertex(itemMinX + 1, itemY + itemHeight + 1, 0.0D).nextVertex();
                 buffer.vertex(itemMaxX - 1, itemY + itemHeight + 1, 0.0D).nextVertex();
                 buffer.vertex(itemMaxX - 1, itemY - 1, 0.0D).nextVertex();
@@ -454,12 +453,12 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
     
     @SuppressWarnings("deprecation")
     protected void renderHoleBackground(int int_1, int int_2, int int_3, int int_4) {
-        Tesselator tesselator = Tesselator.getInstance();
-        BufferBuilder buffer = tesselator.getBuffer();
+        Tesselator tesselator = Tesselator.INSTANCE;
+        Builder buffer = Builder.of(tesselator);
         this.client.getTextureManager().bind(backgroundLocation);
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         float float_1 = 32.0F;
-        buffer.begin(7, DefaultVertexFormat.POSITION_COLOR);
+        buffer.begin(7, GuiVertexCompat.POSITION_COLOR);
         buffer.vertex(this.left, int_2, 0.0D).texture(0, ((float) int_2 / 32.0F)).color(64, 64, 64, int_4).nextVertex();
         buffer.vertex(this.left + this.width, int_2, 0.0D).texture(((float) this.width / 32.0F), ((float) int_2 / 32.0F)).color(64, 64, 64, int_4).nextVertex();
         buffer.vertex(this.left + this.width, int_1, 0.0D).texture(((float) this.width / 32.0F), ((float) int_1 / 32.0F)).color(64, 64, 64, int_3).nextVertex();
@@ -487,7 +486,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
         private SmoothScrollingSettings() {}
     }
     
-    @Environment(EnvType.CLIENT)
+    
     public abstract static class Entry<E extends Entry<E>> extends GuiElement implements GuiEventListener {
         @Deprecated DynamicEntryListWidget<E> parent;
         
@@ -516,7 +515,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
         }
     }
     
-    @Environment(EnvType.CLIENT)
+    
     class Entries extends AbstractList<E> {
         private final ArrayList<E> items;
         

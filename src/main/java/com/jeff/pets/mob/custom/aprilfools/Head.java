@@ -10,7 +10,8 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.Difficulty;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -18,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 import static com.jeff.pets.mob.custom.first.Duck.rotlerp;
 
 public class Head extends AbstractPet {
-   public static final int IS_SERVER_ENTITY = 10;
+   public static final int IS_SERVER_ENTITY = 20;
 
    public Head(World level) {
       super(level);
@@ -33,7 +34,7 @@ public class Head extends AbstractPet {
 
    protected void registerSyncedData() {
       super.registerSyncedData();
-      this.syncedData.register(10, (byte)0);
+      this.syncedData.register(20, (byte)0);
    }
 
    public boolean isServerEntity() {
@@ -57,9 +58,9 @@ public class Head extends AbstractPet {
       return itemStack.matchesItem(new ItemStack(Items.CARROT));
    }
 
-   public EntityData initialize(LocalDifficulty difficulty, @Nullable EntityData groupData) {
+   public Head initialize(Difficulty difficulty, @Nullable EntityData groupData) {
       this.setServerEntity(true);
-      return super.initialize(difficulty, groupData);
+      return this;
    }
 
    @Override
@@ -79,7 +80,7 @@ public class Head extends AbstractPet {
 
    public void tick() {
        super.tick();
-       Vec3d movement = new Vec3d(this.velocityX, this.velocityY, this.velocityZ);
+       Vec3d movement = Vec3d.of(this.velocityX, this.velocityY, this.velocityZ);
        if (!this.onGround && movement.y < 0.0) {
            this.lerpVelocity(movement.x * 1.0, movement.y * 0.6, movement.z * 1.0);
        }
@@ -108,12 +109,12 @@ public class Head extends AbstractPet {
 
            if (distance > 2.0) {
                this.walkAnimationSpeed = 0.5F;
-               Vec3d targetPos = new Vec3d(owner.x, owner.y, owner.z);
-               Vec3d dir = targetPos.subtract(this.getPosVec()).normalize();
+               Vec3d targetPos = Vec3d.of(owner.x, owner.y, owner.z);
+               Vec3d dir = targetPos.subtractFrom(this.getPosVec()).normalize();
                this.setYRot(rotlerp(this.getYRot(), (float)targetYaw));
                this.bodyYaw = this.bodyYaw + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw, -50.0F, 50.0F);
                double speed = owner.getSpeed() * 2.0F;
-               this.lerpVelocity(new Vec3d(dir.x * speed, this.getVelocity().y, dir.z * speed));
+               this.lerpVelocity(Vec3d.of(-dir.x * speed, this.getVelocity().y, -dir.z * speed));
            } else {
                this.lookAt(this.getOwner(), 5.0F, 0.0F);
                this.lerpVelocity(this.velocityX * 0.8, this.velocityY * 1.0, this.velocityZ * 0.8);
@@ -131,7 +132,7 @@ public class Head extends AbstractPet {
            if (!this.onGround) {
            }
 
-           if (Utils.squaredDistanceToOrigin(new Vec3d(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
+           if (Utils.squaredDistanceToOrigin(Vec3d.of(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
                this.waitingTime++;
                if (this.waitingTime > 30) {
                    this.wander();
@@ -147,7 +148,9 @@ public class Head extends AbstractPet {
                this.bodyYaw = this.bodyYaw + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw, -10.0F, 10.0F);
            }
 
-           this.move(this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
+           // No manual move() here: LivingEntity.mobTick() already calls moveRelative() ->
+           // move(this.velocityX, ...) on the client, so calling move() again moved the pet
+           // twice per tick and doubled its apparent speed.
            if (!this.onGround) {
                this.lerpVelocity(this.getVelocity().add(0.0, -0.04, 0.0));
            }
@@ -165,7 +168,7 @@ public class Head extends AbstractPet {
 
    @Override
    public void onDataValueChanged(int key) {
-      if (!this.world.isClient) {
+      if (!(this.world instanceof ClientWorld)) {
          super.onDataValueChanged(key);
       }
    }

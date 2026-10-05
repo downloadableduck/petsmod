@@ -107,4 +107,10 @@ public class DuckModel extends PetModel {
             this.left_leg.visible = true;
         }
     }
+
+    @Override
+    public void prepare(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h) {
+        this.right_leg.rotationX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g;
+        this.left_leg.rotationX = MathHelper.cos(f * 0.6662F) * 1.4F * g;
+    }
 }

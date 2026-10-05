@@ -4,7 +4,7 @@ import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientZombiePigman;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 
 public class ClientZombiePigmanRenderer extends PetRenderer<ClientZombiePigman> {
     public ClientZombiePigmanRenderer(EntityRenderDispatcher context, PetsClientInitializer.Context context2) {
@@ -12,7 +12,7 @@ public class ClientZombiePigmanRenderer extends PetRenderer<ClientZombiePigman> 
     }
 
     @Override
-    public Identifier getTextureLocation(ClientZombiePigman entity) {
+    public Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
         return new Identifier("minecraft", "textures/entity/zombie_pigman.png");
     }
 }

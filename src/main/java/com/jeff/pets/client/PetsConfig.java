@@ -11,7 +11,7 @@ import me.shedaniel.autoconfig.annotation.Config;
  *
  * @see com.jeff.pets.Central
  * @see com.jeff.pets.Central#CONFIG
- * @see me.shedaniel.autoconfig.ConfigData
+ * @see ConfigData
  */
 @Config(name = "petsconfig")
 public class PetsConfig implements ConfigData {

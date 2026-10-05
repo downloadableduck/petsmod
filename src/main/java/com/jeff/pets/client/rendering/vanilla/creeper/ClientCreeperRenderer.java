@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.vanilla.creeper;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientCreeper;
 import net.minecraft.client.render.model.entity.CreeperModel;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -19,12 +19,14 @@ public class ClientCreeperRenderer extends PetRenderer<ClientCreeper> {
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(ClientCreeper livingEntityRenderState) {
+    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+        ClientCreeper livingEntityRenderState = (ClientCreeper) entity;
         return new Identifier("minecraft", "textures/entity/creeper/creeper.png");
     }
 
     @Override
-    public void renderModel(ClientCreeper creeper, float f, float g, float h, float i, float j, float k) {
+    public void renderModel(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h, float i, float j, float k) {
+        ClientCreeper creeper = (ClientCreeper) entity;
         super.renderModel(creeper, f, g, h, i, j, k);
         creeper.isPowered = Objects.equals(CONFIG.creeperSkin, "charged");
     }

@@ -49,7 +49,7 @@ public enum PetList implements NameableEnum {
     zombie_pigman;
 
     @Override
-    public net.minecraft.text.LiteralText getDisplayName() {
+    public LiteralText getDisplayName() {
         return new LiteralText(String.valueOf(this).replace("_", " "));
     }
 }

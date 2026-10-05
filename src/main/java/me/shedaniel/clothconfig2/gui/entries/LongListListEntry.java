@@ -1,7 +1,6 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.resource.language.I18n;
 import org.jetbrains.annotations.ApiStatus;
@@ -13,7 +12,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-@Environment(EnvType.CLIENT)
+
 public class LongListListEntry extends AbstractTextFieldListListEntry<Long, LongListListEntry.LongListCell, LongListListEntry> {
     
     private long minimum, maximum;

@@ -4,7 +4,7 @@ import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientBat;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.living.LivingEntity;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientBatRenderer extends PetRenderer {
@@ -16,7 +16,7 @@ public class ClientBatRenderer extends PetRenderer {
     @Override
     protected void applyScale(LivingEntity bat, float f) {
         super.applyScale(bat, f);
-        net.minecraft.client.render.platform.GlStateManager.scalef(0.35F, 0.35F, 0.35F);
+        com.jeff.pets.compat.GlStateManager.scalef(0.35F, 0.35F, 0.35F);
     }
 
     @Override

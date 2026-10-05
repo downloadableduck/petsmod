@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.enderdragon;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.boss.ClientEnderDragon;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -15,15 +15,17 @@ public class ClientEnderDragonRenderer extends PetRenderer<ClientEnderDragon> {
     }
 
     @Override
-    protected void applyScale(@NotNull ClientEnderDragon livingEntityRenderState, float f) {
+    protected void applyScale(net.minecraft.entity.living.LivingEntity entity, float f) {
+        ClientEnderDragon livingEntityRenderState = (ClientEnderDragon) entity;
         super.applyScale(livingEntityRenderState, f);
         if (CONFIG.isBaby) {
-            net.minecraft.client.render.platform.GlStateManager.scalef(0.25f, 0.25f, 0.25f);
+            com.jeff.pets.compat.GlStateManager.scalef(0.25f, 0.25f, 0.25f);
         }
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(ClientEnderDragon livingEntityRenderState) {
+    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+        ClientEnderDragon livingEntityRenderState = (ClientEnderDragon) entity;
         return new Identifier("minecraft", "textures/entity/enderdragon/dragon.png");
     }
 }

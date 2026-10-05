@@ -19,12 +19,12 @@ public class ClientPigModel extends PigModel {
     @Override
     public void render(net.minecraft.entity.Entity entity, float i, float j, float f, float g, float h, float k) {
         super.render(entity, i, j, f, g, h, k);
-        net.minecraft.client.render.platform.GlStateManager.pushMatrix();
+        com.jeff.pets.compat.GlStateManager.pushMatrix();
         if (CONFIG.isBaby) {
-            net.minecraft.client.render.platform.GlStateManager.scalef(1.5f, 1.5f, 1.5f);
+            com.jeff.pets.compat.GlStateManager.scalef(1.5f, 1.5f, 1.5f);
         } else {
-            net.minecraft.client.render.platform.GlStateManager.scalef(1, 1, 1);
+            com.jeff.pets.compat.GlStateManager.scalef(1, 1, 1);
         }
-        net.minecraft.client.render.platform.GlStateManager.popMatrix();
+        com.jeff.pets.compat.GlStateManager.popMatrix();
     }
 }

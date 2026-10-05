@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.vanilla.magmacube;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientMagmaCube;
 import net.minecraft.client.render.model.entity.SlimeModel;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -15,7 +15,8 @@ public class ClientMagmaCubeRenderer extends PetRenderer<ClientMagmaCube> {
     }
 
     @Override
-    protected void applyScale(ClientMagmaCube slimeRenderState, float a) {
+    protected void applyScale(net.minecraft.entity.living.LivingEntity entity, float a) {
+        ClientMagmaCube slimeRenderState = (ClientMagmaCube) entity;
         int magmaCubeapplyScale;
         switch (CONFIG.magmaCubeSkin) {
             case "small":
@@ -31,11 +32,12 @@ public class ClientMagmaCubeRenderer extends PetRenderer<ClientMagmaCube> {
                 magmaCubeapplyScale = 1;
                 break;
         }
-        net.minecraft.client.render.platform.GlStateManager.scalef(magmaCubeapplyScale, magmaCubeapplyScale, magmaCubeapplyScale);
+        com.jeff.pets.compat.GlStateManager.scalef(magmaCubeapplyScale, magmaCubeapplyScale, magmaCubeapplyScale);
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(ClientMagmaCube livingEntityRenderState) {
+    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+        ClientMagmaCube livingEntityRenderState = (ClientMagmaCube) entity;
         return new Identifier("minecraft", "textures/entity/slime/magmacube.png");
     }
 }

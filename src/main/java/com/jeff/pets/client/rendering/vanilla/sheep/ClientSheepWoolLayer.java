@@ -1,18 +1,18 @@
 package com.jeff.pets.client.rendering.vanilla.sheep;
 
 import com.jeff.pets.mob.vanilla.passive.ClientSheep;
-import net.minecraft.client.render.entity.layer.SheepFurLayer;
-import net.minecraft.client.render.platform.GlStateManager;
-import net.minecraft.client.render.entity.layer.EntityRenderLayer;
+import com.jeff.pets.compat.GlStateManager;
+import com.jeff.pets.client.rendering.PetRenderLayer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.model.Model;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSheepWoolLayer implements EntityRenderLayer<ClientSheep> {
+public class ClientSheepWoolLayer implements PetRenderLayer {
     private final ClientSheepRenderer renderer;
     private final ClientSheepFurModel model;
     int woolColor;
@@ -23,7 +23,8 @@ public class ClientSheepWoolLayer implements EntityRenderLayer<ClientSheep> {
     }
 
     @Override
-    public void render(ClientSheep sheep, float f, float a, float h, float i, float j, float k, float l) {
+    public void render(net.minecraft.entity.living.LivingEntity entity, float f, float a, float h, float i, float j, float k) {
+        ClientSheep sheep = (ClientSheep) entity;
         this.renderer.bindTexture(new Identifier("minecraft", "textures/entity/sheep/sheep_fur.png"));
         if (Objects.equals(CONFIG.sheepSkin, "white")) {
             woolColor = 15132390;
@@ -67,9 +68,9 @@ public class ClientSheepWoolLayer implements EntityRenderLayer<ClientSheep> {
             GlStateManager.color4f(r, g, b, 1.0F);
             this.model.isBaby = false;
 
-            this.model.copyPropertiesFrom(this.renderer.getModel());
+            
             this.model.prepare(sheep, f, a, h);
-            this.model.render(sheep, f, a, i, j, k, l);
+            this.model.render(sheep, f, a, h, i, j, k);
     }
 
     @Override

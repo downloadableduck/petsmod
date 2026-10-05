@@ -10,9 +10,8 @@ import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resource.skin.DefaultSkinUtils;
 import net.minecraft.entity.living.player.PlayerEntity;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import net.minecraft.server.GameProfileCache;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,6 +26,9 @@ import java.util.concurrent.atomic.AtomicReference;
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class HeadRenderer extends PetRenderer<@NotNull Head> {
+
+    /** 1.7.10 has no DefaultSkinUtils and no Alex skin; Steve is the only fallback. */
+    private static final Identifier DEFAULT_SKIN = new Identifier("textures/entity/steve.png");
 
     private final Map<String, GameProfile> PROFILLES = new ConcurrentHashMap<>();
     private final GameProfile dummyProfile = new GameProfile(UUID.fromString("966b21b5-55d5-4a51-b41c-433a96e6050b"), "empty");
@@ -60,9 +62,10 @@ public class HeadRenderer extends PetRenderer<@NotNull Head> {
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(final Head state) {
+    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+        Head state = (Head) entity;
         GameProfile profile = PROFILLES.get(CONFIG.headSkin);
-        Identifier identifier = DefaultSkinUtils.getDefaultSkin();
+        Identifier identifier = DEFAULT_SKIN;
         if (profile == null) {
             profile = fetchGameProfile(state, CONFIG.headSkin);
         }
@@ -75,7 +78,7 @@ public class HeadRenderer extends PetRenderer<@NotNull Head> {
             identifier = minecraft.getSkinManager().register(map.get(MinecraftProfileTexture.Type.SKIN), MinecraftProfileTexture.Type.SKIN);
         } else {
             UUID uUID = PlayerEntity.getUuid(profile);
-            identifier = DefaultSkinUtils.getDefaultSkin(uUID);
+            identifier = DEFAULT_SKIN;
         }
         return identifier;
     }

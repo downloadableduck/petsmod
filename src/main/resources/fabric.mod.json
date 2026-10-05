@@ -27,9 +27,6 @@
     "client": [
       "com.jeff.pets.client.PetsClientInitializer",
       "com.jeff.pets.client.Central"
-    ],
-    "modmenu": [
-      "com.jeff.pets.client.ModMenuEntrypoint"
     ]
   },
   "mixins": [
@@ -39,18 +36,11 @@
     }
   ],
   "depends": {
-    "fabricloader": ">=0.18",
+    "osl-core": "*",
     "minecraft": [
-      "~1.8"
+      "<=1.7.10",
+      ">=1.7.8"
     ],
-    "java": "*",
-    "osl-core": "*"
-  },
-  "custom": {
-    "modmenu": {
-      "links": {
-        "modmenu.modrinth": "https://modrinth.com/mod/pets-mod"
-      }
-    }
+    "java": "*"
   }
 }

@@ -69,20 +69,22 @@ public abstract class GroundPet extends AbstractPet {
 
                 this.walkAnimationSpeed = (0.5F);
 
-                Vec3d targetPos = new Vec3d(owner.x, owner.y, owner.z);
-                Vec3d dir = targetPos.subtract(this.getPosVec()).normalize();
+                Vec3d targetPos = Vec3d.of(owner.x, owner.y, owner.z);
+                Vec3d dir = targetPos.subtractFrom(this.getPosVec()).normalize();
 
                 
                 
                 this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/, -50, 50);
 
                 double speed = owner.getSpeed() * 2.0;
-                this.lerpVelocity(new Vec3d(dir.x * speed, this.getVelocity().y, dir.z * speed));
+                this.lerpVelocity(Vec3d.of(-dir.x * speed, this.getVelocity().y, -dir.z * speed));
             } else if (distance < 1.5) {
                 this.walkAnimationSpeed = (0);
             } else {
                                 this.walkAnimationSpeed = (this.walkAnimationSpeed + 0.1f);
-                this.lerpVelocity(this.velocityX * 0.8, this.velocityY * 1.0, this.velocityY* 0.8); //hopefully the right onw
+                // Z component was reading velocityY - a copy/paste slip that fed vertical
+                // velocity into horizontal motion, making pets skate or lunge when falling.
+                this.lerpVelocity(this.velocityX * 0.8, this.velocityY * 1.0, this.velocityZ * 0.8);
             }
 
             int yHeightToOwner = (int) (owner.y - this.y);
@@ -99,7 +101,7 @@ public abstract class GroundPet extends AbstractPet {
                 //this.processFlappingMovement();
             }
 
-            if (Utils.squaredDistanceToOrigin(new Vec3d(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
+            if (Utils.squaredDistanceToOrigin(Vec3d.of(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
                 this.waitingTime++;
                 if (this.waitingTime > 30) this.wander();
             } else {
@@ -107,7 +109,6 @@ public abstract class GroundPet extends AbstractPet {
             }
 
             this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
-            this.setHeadYaw(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
                 this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (Math.signum(bodyYawDiff) * 50);
@@ -115,7 +116,9 @@ public abstract class GroundPet extends AbstractPet {
                 this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/, -10, 10);
             }
 
-            this.move(this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
+            // No manual move() here: LivingEntity.mobTick() already calls moveRelative() ->
+            // move(this.velocityX, ...) on the client, so calling move() again moved the pet
+            // twice per tick and doubled its apparent speed.
 
             if (!this.onGround) {
                 this.lerpVelocity(this.getVelocity().add(0, -0.04, 0));

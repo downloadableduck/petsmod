@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.guardian;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientGuardian;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -13,7 +13,8 @@ public class ClientGuardianRenderer extends PetRenderer<ClientGuardian> {
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(ClientGuardian livingEntityRenderState) {
+    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+        ClientGuardian livingEntityRenderState = (ClientGuardian) entity;
         return new Identifier("minecraft", "textures/entity/guardian.png");
     }
 }

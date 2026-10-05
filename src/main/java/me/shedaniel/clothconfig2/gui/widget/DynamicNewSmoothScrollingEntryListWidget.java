@@ -1,22 +1,21 @@
 package me.shedaniel.clothconfig2.gui.widget;
 
-import net.minecraft.client.render.vertex.BufferBuilder;
-import net.minecraft.client.render.vertex.DefaultVertexFormat;
+import me.shedaniel.clothconfig2.compat.GuiVertexCompat;
+import me.shedaniel.clothconfig2.compat.GuiVertexCompat.Builder;
 import net.minecraft.client.render.vertex.Tesselator;
 import me.shedaniel.clothconfig2.ClothConfigInitializer;
 import me.shedaniel.clothconfig2.compat.MouseInput;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import net.minecraft.client.Minecraft;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import net.minecraft.util.math.MathHelper;
 
 import static me.shedaniel.clothconfig2.ClothConfigInitializer.clamp;
 import static me.shedaniel.clothconfig2.ClothConfigInitializer.handleScrollingPosition;
 
-@Environment(EnvType.CLIENT)
+
 public abstract class DynamicNewSmoothScrollingEntryListWidget<E extends DynamicEntryListWidget.Entry<E>> extends DynamicEntryListWidget<E> {
     
     protected double target;
@@ -113,7 +112,7 @@ public abstract class DynamicNewSmoothScrollingEntryListWidget<E extends Dynamic
     
     @SuppressWarnings("deprecation")
     @Override
-    protected void renderScrollBar(Tesselator Tesselator, BufferBuilder buffer, int maxScroll, int scrollbarPositionMinX, int scrollbarPositionMaxX) {
+    protected void renderScrollBar(Tesselator Tesselator, Builder buffer, int maxScroll, int scrollbarPositionMinX, int scrollbarPositionMaxX) {
         if (!smoothScrolling)
             super.renderScrollBar(Tesselator, buffer, maxScroll, scrollbarPositionMinX, scrollbarPositionMaxX);
         else if (maxScroll > 0) {
@@ -127,28 +126,28 @@ public abstract class DynamicNewSmoothScrollingEntryListWidget<E extends Dynamic
             int topc = new Rectangle(scrollbarPositionMinX, minY, scrollbarPositionMaxX - scrollbarPositionMinX, height).contains(new Point(MouseInput.getX(), MouseInput.getY())) ? 222 : 172;
             
             // Black Bar
-            buffer.begin(7, DefaultVertexFormat.POSITION_COLOR);
+            buffer.begin(7, GuiVertexCompat.POSITION_COLOR);
             buffer.vertex(scrollbarPositionMinX, this.bottom, 0.0D).texture(0, 1).color(0, 0, 0, 255).nextVertex();
             buffer.vertex(scrollbarPositionMaxX, this.bottom, 0.0D).texture(1, 1).color(0, 0, 0, 255).nextVertex();
             buffer.vertex(scrollbarPositionMaxX, this.top, 0.0D).texture(1, 0).color(0, 0, 0, 255).nextVertex();
             buffer.vertex(scrollbarPositionMinX, this.top, 0.0D).texture(0, 0).color(0, 0, 0, 255).nextVertex();
-            Tesselator.end();
+            Tesselator.INSTANCE.end();
             
             // Bottom
-            buffer.begin(7, DefaultVertexFormat.POSITION_COLOR);
+            buffer.begin(7, GuiVertexCompat.POSITION_COLOR);
             buffer.vertex(scrollbarPositionMinX, minY + height, 0.0D).texture(0, 1).color(bottomc, bottomc, bottomc, 255).nextVertex();
             buffer.vertex(scrollbarPositionMaxX, minY + height, 0.0D).texture(1, 1).color(bottomc, bottomc, bottomc, 255).nextVertex();
             buffer.vertex(scrollbarPositionMaxX, minY, 0.0D).texture(1, 0).color(bottomc, bottomc, bottomc, 255).nextVertex();
             buffer.vertex(scrollbarPositionMinX, minY, 0.0D).texture(0, 0).color(bottomc, bottomc, bottomc, 255).nextVertex();
-            Tesselator.end();
+            Tesselator.INSTANCE.end();
             
             // Top
-            buffer.begin(7, DefaultVertexFormat.POSITION_COLOR);
+            buffer.begin(7, GuiVertexCompat.POSITION_COLOR);
             buffer.vertex(scrollbarPositionMinX, (minY + height - 1), 0.0D).texture(0, 1).color(topc, topc, topc, 255).nextVertex();
             buffer.vertex((scrollbarPositionMaxX - 1), (minY + height - 1), 0.0D).texture(1, 1).color(topc, topc, topc, 255).nextVertex();
             buffer.vertex((scrollbarPositionMaxX - 1), minY, 0.0D).texture(1, 0).color(topc, topc, topc, 255).nextVertex();
             buffer.vertex(scrollbarPositionMinX, minY, 0.0D).texture(0, 0).color(topc, topc, topc, 255).nextVertex();
-            Tesselator.end();
+            Tesselator.INSTANCE.end();
         }
     }
     

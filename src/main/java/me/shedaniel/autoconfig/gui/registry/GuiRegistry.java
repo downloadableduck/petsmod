@@ -23,8 +23,7 @@ import me.shedaniel.autoconfig.gui.registry.api.GuiProvider;
 import me.shedaniel.autoconfig.gui.registry.api.GuiRegistryAccess;
 import me.shedaniel.autoconfig.gui.registry.api.GuiTransformer;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -34,7 +33,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Environment(EnvType.CLIENT)
+
 public final class GuiRegistry implements GuiRegistryAccess {
 
     private final Map<Priority, List<ProviderEntry>> providers = new HashMap<>();

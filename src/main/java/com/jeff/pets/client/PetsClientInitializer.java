@@ -164,9 +164,9 @@ public class PetsClientInitializer implements ClientModInitializer {
     public static final class Context {
         private final TextureManager textureManager;
         private final ItemRenderer itemRenderer;
-        private final Map<Class<? extends Entity>, EntityRenderer<? extends Entity>> rendererMap;
+        private final Map<Class<? extends Entity>, EntityRenderer> rendererMap;
 
-        public Context(TextureManager textureManager, ItemRenderer itemRenderer, Map<Class<? extends Entity>, EntityRenderer<? extends Entity>> rendererMap) {
+        public Context(TextureManager textureManager, ItemRenderer itemRenderer, Map<Class<? extends Entity>, EntityRenderer> rendererMap) {
             super();
             this.textureManager = textureManager;
             this.itemRenderer = itemRenderer;
@@ -185,6 +185,6 @@ public class PetsClientInitializer implements ClientModInitializer {
 
     @FunctionalInterface
     public interface Factory {
-        EntityRenderer<? extends Entity> create(EntityRenderDispatcher var1, Context var2);
+        EntityRenderer create(EntityRenderDispatcher var1, Context var2);
     }
 }

@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.vanilla.cat;
 import com.jeff.pets.mob.vanilla.passive.ClientCat;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.client.render.model.entity.OcelotModel;
-import net.minecraft.client.render.platform.GlStateManager;
+import com.jeff.pets.compat.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.living.LivingEntity;
 import net.minecraft.entity.living.mob.passive.animal.tameable.OcelotEntity;

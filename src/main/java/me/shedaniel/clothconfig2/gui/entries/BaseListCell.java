@@ -1,13 +1,12 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import me.shedaniel.clothconfig2.compat.AbstractContainerEventHandler;
 
 import java.util.Optional;
 import java.util.function.Supplier;
 
-@Environment(EnvType.CLIENT)
+
 public abstract class BaseListCell extends AbstractContainerEventHandler {
     
     private Supplier<Optional<String>> errorSupplier;

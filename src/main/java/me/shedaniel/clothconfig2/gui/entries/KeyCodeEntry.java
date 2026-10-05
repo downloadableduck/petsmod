@@ -6,8 +6,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import me.shedaniel.clothconfig2.ButtonWidget;
 import me.shedaniel.clothconfig2.api.ModifierKeyCode;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import net.minecraft.client.Minecraft;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.resource.language.I18n;
@@ -20,7 +19,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 @SuppressWarnings("DuplicatedCode")
-@Environment(EnvType.CLIENT)
+
 public class KeyCodeEntry extends TooltipListEntry<ModifierKeyCode> {
     
     private ModifierKeyCode value;

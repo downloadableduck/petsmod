@@ -1,18 +1,17 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
 import com.google.common.collect.Lists;
-import net.minecraft.client.render.platform.GlStateManager;
-import net.minecraft.client.render.platform.GlStateManager;
+import com.jeff.pets.compat.GlStateManager;
+import com.jeff.pets.compat.GlStateManager;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.math.Rectangle;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import net.minecraft.client.Minecraft;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.sound.instance.SimpleSoundInstance;
 import com.jeff.pets.sound.SoundEvents;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Environment(EnvType.CLIENT)
+
 public class MultiElementListEntry<T> extends TooltipListEntry<T> {
     
     private static final Identifier CONFIG_TEX = new Identifier("cloth-config2", "textures/gui/cloth_config.png");

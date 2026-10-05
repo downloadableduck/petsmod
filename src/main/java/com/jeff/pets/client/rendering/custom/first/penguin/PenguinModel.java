@@ -109,4 +109,10 @@ public class PenguinModel extends PetModel {
         this.body.rotationZ = MathHelper.cos(animationPos * 0.6662F) * 0.1F * animationSpeed;
         this.head.rotationZ = MathHelper.cos(animationPos * 0.6662F) * 0.1F * animationSpeed;
     }
+
+    @Override
+    public void prepare(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h) {
+        this.right_foot.rotationX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g;
+        this.left_foot.rotationX = MathHelper.cos(f * 0.6662F) * 1.4F * g;
+    }
 }

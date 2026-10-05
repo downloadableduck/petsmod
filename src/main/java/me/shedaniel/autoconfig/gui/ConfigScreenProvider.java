@@ -26,10 +26,9 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.autoconfig.gui.registry.api.GuiRegistryAccess;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 
@@ -43,7 +42,7 @@ import java.util.function.Supplier;
 
 import static java.util.stream.Collectors.*;
 
-@Environment(EnvType.CLIENT)
+
 public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Screen> {
 
     private static final Identifier TRANSPARENT_BACKGROUND = new Identifier(Config.Gui.Background.TRANSPARENT);

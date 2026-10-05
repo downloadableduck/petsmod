@@ -6,18 +6,18 @@
 package com.jeff.pets.client.rendering.vanilla.enderman;
 
 import com.jeff.pets.mob.vanilla.neutral.ClientEnderman;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.entity.EndermanRenderer;
-import net.minecraft.client.render.entity.layer.EntityRenderLayer;
-import net.minecraft.client.render.platform.GLX;
-import net.minecraft.client.render.platform.GlStateManager;
+import com.jeff.pets.client.rendering.PetRenderLayer;
+import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.compat.GLX;
+import com.jeff.pets.compat.GlStateManager;
 import net.minecraft.entity.living.mob.monster.EndermanEntity;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 
-@Environment(EnvType.CLIENT)
-public class EndermanEyesLayer implements EntityRenderLayer<ClientEnderman> {
+
+public class EndermanEyesLayer implements PetRenderLayer {
     private static final Identifier ENDERMAN_EYES_LOCATION = new Identifier("textures/entity/enderman/enderman_eyes.png");
     private final ClientEndermanRenderer parent;
 
@@ -25,7 +25,8 @@ public class EndermanEyesLayer implements EntityRenderLayer<ClientEnderman> {
         this.parent = parent;
     }
 
-    public void render(ClientEnderman endermanEntity, float f, float g, float h, float i, float j, float k, float l) {
+    public void render(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h, float i, float j, float k) {
+        ClientEnderman endermanEntity = (ClientEnderman) entity;
         this.parent.bindTexture(ENDERMAN_EYES_LOCATION);
         GlStateManager.enableBlend();
         GlStateManager.disableAlphaTest();
@@ -38,8 +39,8 @@ public class EndermanEyesLayer implements EntityRenderLayer<ClientEnderman> {
         GLX.multiTexCoord2f(GLX.GL_TEXTURE1, 61680.0F, 0.0F);
         GlStateManager.enableLighting();
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.parent.getModel().render(endermanEntity, f, g, i, j, k, l);
-        this.parent.setLightColor(endermanEntity, h);
+        this.parent.getModel().render(endermanEntity, f, g, h, i, j, k);
+        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.depthMask(true);
         GlStateManager.disableBlend();
         GlStateManager.enableAlphaTest();

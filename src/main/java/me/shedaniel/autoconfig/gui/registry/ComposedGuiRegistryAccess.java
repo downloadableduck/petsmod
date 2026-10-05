@@ -21,15 +21,14 @@ package me.shedaniel.autoconfig.gui.registry;
 
 import me.shedaniel.autoconfig.gui.registry.api.GuiRegistryAccess;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-@Environment(EnvType.CLIENT)
+
 public class ComposedGuiRegistryAccess implements GuiRegistryAccess {
 
     private final List<GuiRegistryAccess> children;

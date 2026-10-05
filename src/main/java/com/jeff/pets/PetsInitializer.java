@@ -14,7 +14,7 @@ import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.entity.Entity;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import net.minecraft.util.registry.IdRegistry;
 import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.LogManager;

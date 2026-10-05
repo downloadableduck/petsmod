@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.vanilla.witherskeleton;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.skeleton.SkeletonModel;
 import com.jeff.pets.mob.vanilla.hostile.ClientWitherSkeleton;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientWitherSkeletonRenderer extends PetRenderer<ClientWitherSkeleton> {
@@ -13,7 +13,8 @@ public class ClientWitherSkeletonRenderer extends PetRenderer<ClientWitherSkelet
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(ClientWitherSkeleton livingEntityRenderState) {
+    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+        ClientWitherSkeleton livingEntityRenderState = (ClientWitherSkeleton) entity;
         return new Identifier("minecraft", "textures/entity/skeleton/wither_skeleton.png");
     }
 }

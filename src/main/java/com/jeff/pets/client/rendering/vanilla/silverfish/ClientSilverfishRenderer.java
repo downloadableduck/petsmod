@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.vanilla.silverfish;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientSilverfish;
 import net.minecraft.client.render.model.entity.SilverfishModel;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientSilverfishRenderer extends PetRenderer<ClientSilverfish> {
@@ -13,7 +13,8 @@ public class ClientSilverfishRenderer extends PetRenderer<ClientSilverfish> {
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(ClientSilverfish livingEntityRenderState) {
+    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+        ClientSilverfish livingEntityRenderState = (ClientSilverfish) entity;
         return new Identifier("minecraft", "textures/entity/silverfish.png");
     }
 }

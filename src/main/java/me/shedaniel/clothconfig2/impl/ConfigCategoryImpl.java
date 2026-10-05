@@ -2,25 +2,24 @@ package me.shedaniel.clothconfig2.impl;
 
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.resource.Identifier;
-import net.minecraft.util.Pair;
+
+import net.minecraft.client.resource.Identifier;
+import me.shedaniel.clothconfig2.impl.ConfigPair;
 
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-@Environment(EnvType.CLIENT)
+
 public class ConfigCategoryImpl implements ConfigCategory {
     
-    private final Supplier<List<Pair<String, Object>>> listSupplier;
+    private final Supplier<List<ConfigPair<String, Object>>> listSupplier;
     private final Consumer<Identifier> backgroundConsumer;
     private final Runnable destroyCategory;
     private final String categoryKey;
     
-    ConfigCategoryImpl(String categoryKey, Consumer<Identifier> backgroundConsumer, Supplier<List<Pair<String, Object>>> listSupplier, Runnable destroyCategory) {
+    ConfigCategoryImpl(String categoryKey, Consumer<Identifier> backgroundConsumer, Supplier<List<ConfigPair<String, Object>>> listSupplier, Runnable destroyCategory) {
         this.listSupplier = listSupplier;
         this.backgroundConsumer = backgroundConsumer;
         this.categoryKey = categoryKey;
@@ -34,12 +33,12 @@ public class ConfigCategoryImpl implements ConfigCategory {
     
     @Override
     public List<Object> getEntries() {
-        return listSupplier.get().stream().map(Pair::getRight).collect(Collectors.toList());
+        return listSupplier.get().stream().map(ConfigPair::getRight).collect(Collectors.toList());
     }
     
     @Override
     public ConfigCategory addEntry(AbstractConfigListEntry entry) {
-        listSupplier.get().add(new Pair<>(entry.getFieldName(), entry));
+        listSupplier.get().add(new ConfigPair<>(entry.getFieldName(), entry));
         return this;
     }
     

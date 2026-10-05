@@ -6,17 +6,17 @@
 package com.jeff.pets.client.rendering.vanilla.slime;
 
 import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import net.minecraft.client.render.entity.SlimeRenderer;
-import net.minecraft.client.render.entity.layer.EntityRenderLayer;
+import com.jeff.pets.client.rendering.PetRenderLayer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.render.model.Model;
 import net.minecraft.client.render.model.entity.SlimeModel;
-import net.minecraft.client.render.platform.GlStateManager;
+import com.jeff.pets.compat.GlStateManager;
 import net.minecraft.entity.living.mob.monster.SlimeEntity;
 
-@Environment(EnvType.CLIENT)
-public class SlimeOuterLayer implements EntityRenderLayer<ClientSlime> {
+
+public class SlimeOuterLayer implements PetRenderLayer {
     private final ClientSlimeRenderer parent;
     private final Model model = new SlimeModel(0);
 
@@ -24,14 +24,15 @@ public class SlimeOuterLayer implements EntityRenderLayer<ClientSlime> {
         this.parent = parent;
     }
 
-    public void render(ClientSlime slimeEntity, float f, float g, float h, float i, float j, float k, float l) {
+    public void render(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h, float i, float j, float k) {
+        ClientSlime slimeEntity = (ClientSlime) entity;
         if (!slimeEntity.isInvisible()) {
             GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             GlStateManager.enableNormalize();
             GlStateManager.enableBlend();
             GlStateManager.blendFunc(770, 771);
-            this.model.copyPropertiesFrom(this.parent.getModel());
-            this.model.render(slimeEntity, f, g, i, j, k, l);
+            
+            this.model.render(slimeEntity, f, g, h, i, j, k);
             GlStateManager.disableBlend();
             GlStateManager.disableNormalize();
         }

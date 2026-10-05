@@ -47,8 +47,8 @@ public abstract class FlyingPet extends AbstractPet {
 
             double dx = owner.x - this.x;
             double dz = owner.z - this.z;
-            Vec3d ownerPos = new Vec3d(owner.x, owner.y, owner.z).add(0, owner.getEyeHeight() * 0.8, 0);
-            Vec3d vecToOwner = ownerPos.subtract(this.getPosVec());
+            Vec3d ownerPos = Vec3d.of(owner.x, owner.y, owner.z).add(0, owner.getEyeHeight() * 0.8, 0);
+            Vec3d vecToOwner = ownerPos.subtractFrom(this.getPosVec());
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.distanceTo(owner);
@@ -71,9 +71,9 @@ public abstract class FlyingPet extends AbstractPet {
                 
                 this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/, -50, 50); //m_82141949
 
-                this.lerpVelocity(new Vec3d(dir.x * speed, dir.y * speed, dir.z * speed));
+                this.lerpVelocity(Vec3d.of(-dir.x * speed, dir.y * speed, -dir.z * speed));
             } else {
-                                this.lerpVelocity(new Vec3d(this.getVelocity().x * 0.8, this.getVelocity().y * 0.8, this.getVelocity().z * 0.8));
+                                this.lerpVelocity(Vec3d.of(this.getVelocity().x * 0.8, this.getVelocity().y * 0.8, this.getVelocity().z * 0.8));
             }
 
             int yHeightToOwner = (int) (owner.y - this.y);
@@ -86,7 +86,7 @@ public abstract class FlyingPet extends AbstractPet {
                 //this.processFlappingMovement();
             }
 
-            if (Utils.squaredDistanceToOrigin(new Vec3d(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
+            if (Utils.squaredDistanceToOrigin(Vec3d.of(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
                 this.waitingTime++;
                 if (this.waitingTime > 30) this.wander();
             } else {
@@ -103,7 +103,9 @@ public abstract class FlyingPet extends AbstractPet {
                 this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/, -10, 10);
             }
 
-            this.move(this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
+            // No manual move() here: LivingEntity.mobTick() already calls moveRelative() ->
+            // move(this.velocityX, ...) on the client, so calling move() again moved the pet
+            // twice per tick and doubled its apparent speed.
 
             //if (!this.onGround) {
             //  this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));

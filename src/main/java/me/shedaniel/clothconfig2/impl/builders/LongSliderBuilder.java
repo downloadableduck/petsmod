@@ -1,8 +1,7 @@
 package me.shedaniel.clothconfig2.impl.builders;
 
 import me.shedaniel.clothconfig2.gui.entries.LongSliderEntry;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -10,7 +9,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-@Environment(EnvType.CLIENT)
+
 public class LongSliderBuilder extends FieldBuilder<Long, LongSliderEntry> {
     
     private Consumer<Long> saveConsumer = null;

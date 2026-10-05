@@ -5,8 +5,7 @@
 
 package com.jeff.pets.client.rendering.vanilla.skeleton;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.client.render.model.entity.HumanoidModel;
 import net.minecraft.entity.Entity;
@@ -16,7 +15,7 @@ import net.minecraft.item.Items;
 import net.minecraft.util.math.MathHelper;
 // import net.minecraft.world.InteractionHand;
 
-@Environment(EnvType.CLIENT)
+
 public class SkeletonModel extends HumanoidModel {
     public SkeletonModel() {
         this(0.0F, false);

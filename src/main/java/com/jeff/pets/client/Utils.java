@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.living.player.PlayerEntity;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import net.minecraft.util.math.Vec3d;
 
 import java.lang.reflect.Field;
@@ -37,14 +37,13 @@ public class Utils {
      * @return If the {@code entity}, {@code player}, or {@code world} is {@code null}
      */
     public static void summonPet(AbstractPet entity, String entityName) {
-
         Minecraft minecraft = Minecraft.getInstance();
         PlayerEntity player = minecraft.player;
         ClientWorld world = minecraft.world;
 
         if (entity == null || world == null || player == null) return;
 
-        Vec3d lookAngle = player.getLookVector();
+        Vec3d lookAngle = player.getLookVector(1);
 
         double x = player.x - lookAngle.x * (double) 0.5F;
         double y = player.y + (double) 0.5F;
@@ -54,7 +53,6 @@ public class Utils {
         entity.setCustomName(entityName);
         world.forceEntity(entity.getNetworkId(), entity);
         entity.setOwnerName(player.getUuid().toString());
-        System.out.println(entity.getOwner());
         Central.summonedEntity.add(entity);
     }
 
@@ -136,14 +134,26 @@ public class Utils {
     }
 
     /**
-     * Sets the active pet in {@link PetsConfig#activePet} as well as in {@link Central#summonedEntity}
+     * Sets the active pet in {@link PetsConfig#activePet} and tears down whatever is currently in
+     * {@link Central#summonedEntity} so the tick watcher re-summons the new species.
      *
-     * @param e The entity to be summoned and added to {@link Central#summonedEntity}
-     * @param s The value to set {@link PetsConfig#activePet} to that matches {@code e}
+     * <p>The pet statics on {@link Central} are only assigned inside {@link Central#summonPet()},
+     * so any argument passed here before the first successful spawn is {@code null}. The list must
+     * stay empty in that case: {@link Central#createTickWatcher()} only summons while
+     * {@code summonedEntity.isEmpty()}, so a {@code null} entry would wedge spawning off forever.
+     *
+     * @param e the previously built instance, retained so the 42 call sites in
+     *           {@link Central#executePetSpeciesCommand} stay unchanged. It is deliberately
+     *           ignored: the instance has to be rebuilt inside {@link Central#summonPet()}
+     *           before it can be added to the world.
+     * @param s the value to set {@link PetsConfig#activePet} to
      */
     public static void setActivePet(Entity e, String s) {
+        for (Entity existing : Central.summonedEntity) {
+            despawnEntity(existing);
+        }
+
         Central.summonedEntity.clear();
-        Central.summonedEntity.add(e);
         CONFIG.activePet = s;
     }
 

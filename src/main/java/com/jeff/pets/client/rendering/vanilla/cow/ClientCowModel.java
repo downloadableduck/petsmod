@@ -12,15 +12,15 @@ public class ClientCowModel extends CowModel {
     }
 
     @Override
-    public void render(net.minecraft.entity.Entity entity, float f, float g, float h, float j, float k, float d) {
+    public void render(Entity entity, float f, float g, float h, float j, float k, float d) {
         super.render(entity, f, g, h, j, k, d);
-        net.minecraft.client.render.platform.GlStateManager.pushMatrix();
+        com.jeff.pets.compat.GlStateManager.pushMatrix();
         if (CONFIG.isBaby) {
-            net.minecraft.client.render.platform.GlStateManager.scalef(2, 2, 2);
+            com.jeff.pets.compat.GlStateManager.scalef(2, 2, 2);
         } else {
-            net.minecraft.client.render.platform.GlStateManager.scalef(1, 1, 1);
+            com.jeff.pets.compat.GlStateManager.scalef(1, 1, 1);
         }
         //this.head.rotate(poseStack);
-        net.minecraft.client.render.platform.GlStateManager.popMatrix();
+        com.jeff.pets.compat.GlStateManager.popMatrix();
     }
 }

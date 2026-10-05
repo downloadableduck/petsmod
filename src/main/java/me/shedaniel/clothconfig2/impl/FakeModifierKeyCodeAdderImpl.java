@@ -2,8 +2,7 @@ package me.shedaniel.clothconfig2.impl;
 
 import me.shedaniel.clothconfig2.api.FakeModifierKeyCodeAdder;
 import me.shedaniel.clothconfig2.api.ModifierKeyCode;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.options.KeyBinding;
 
@@ -13,7 +12,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-@Environment(EnvType.CLIENT)
+
 public class FakeModifierKeyCodeAdderImpl implements FakeModifierKeyCodeAdder {
     private final List<Entry> entryList = new ArrayList<>();
     

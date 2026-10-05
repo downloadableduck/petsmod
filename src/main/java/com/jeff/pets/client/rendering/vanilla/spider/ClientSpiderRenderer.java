@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.vanilla.spider;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientSpider;
 import net.minecraft.client.render.model.entity.SpiderModel;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientSpiderRenderer extends PetRenderer<ClientSpider> {
@@ -13,7 +13,8 @@ public class ClientSpiderRenderer extends PetRenderer<ClientSpider> {
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(ClientSpider livingEntityRenderState) {
+    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+        ClientSpider livingEntityRenderState = (ClientSpider) entity;
         return new Identifier("minecraft", "textures/entity/spider/spider.png");
     }
 }

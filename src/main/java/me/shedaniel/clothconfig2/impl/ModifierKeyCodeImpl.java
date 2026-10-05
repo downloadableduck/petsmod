@@ -3,13 +3,12 @@ package me.shedaniel.clothconfig2.impl;
 import me.shedaniel.clothconfig2.compat.InputConstants;
 import me.shedaniel.clothconfig2.api.Modifier;
 import me.shedaniel.clothconfig2.api.ModifierKeyCode;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import net.minecraft.client.resource.language.I18n;
 
 import java.util.Objects;
 
-@Environment(EnvType.CLIENT)
+
 public class ModifierKeyCodeImpl implements ModifierKeyCode {
     private InputConstants.Key keyCode;
     private Modifier modifier;

@@ -9,8 +9,7 @@ import me.shedaniel.clothconfig2.gui.entries.KeyCodeEntry;
 import me.shedaniel.clothconfig2.gui.widget.DynamicElementListWidget;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiElement;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
@@ -19,16 +18,16 @@ import net.minecraft.client.gui.screen.Screen;
 import me.shedaniel.clothconfig2.ButtonWidget;
 import me.shedaniel.clothconfig2.compat.InputConstants;
 import net.minecraft.client.render.TextRenderer;
-import net.minecraft.client.render.platform.GlStateManager;
+import com.jeff.pets.compat.GlStateManager;
 import net.minecraft.client.render.texture.TextureAtlasSprite;
-import net.minecraft.client.render.vertex.BufferBuilder;
-import net.minecraft.client.render.vertex.DefaultVertexFormat;
+import me.shedaniel.clothconfig2.compat.GuiVertexCompat;
+import me.shedaniel.clothconfig2.compat.GuiVertexCompat.Builder;
 import net.minecraft.client.render.vertex.Tesselator;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
-import net.minecraft.resource.Identifier;
-import net.minecraft.util.Pair;
+import net.minecraft.client.resource.Identifier;
+import me.shedaniel.clothconfig2.impl.ConfigPair;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
@@ -37,7 +36,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @SuppressWarnings({"deprecation", "rawtypes", "unchecked", "DuplicatedCode"})
-@Environment(EnvType.CLIENT)
+
 public abstract class ClothConfigScreen extends Screen {
     
     private static final Identifier CONFIG_TEX = new Identifier("cloth-config2", "textures/gui/cloth_config.png");
@@ -51,7 +50,7 @@ public abstract class ClothConfigScreen extends Screen {
     public final List<GuiEventListener> children = Lists.newArrayList();
     private final Screen parent;
     private final LinkedHashMap<String, List<AbstractConfigEntry>> tabbedEntries;
-    private final List<Pair<String, Integer>> tabs;
+    private final List<ConfigPair<String, Integer>> tabs;
     private boolean edited;
     private boolean requiresRestart;
     private final boolean confirmSave;
@@ -74,7 +73,7 @@ public abstract class ClothConfigScreen extends Screen {
     private boolean hasLastMouse = false;
     
     @Deprecated
-    public ClothConfigScreen(Screen parent, String title, Map<String, List<Pair<String, Object>>> o, boolean confirmSave, boolean displayErrors, boolean smoothScrollingList, Identifier defaultBackgroundLocation, Map<String, Identifier> categoryBackgroundLocation) {
+    public ClothConfigScreen(Screen parent, String title, Map<String, List<ConfigPair<String, Object>>> o, boolean confirmSave, boolean displayErrors, boolean smoothScrollingList, Identifier defaultBackgroundLocation, Map<String, Identifier> categoryBackgroundLocation) {
         super();
         this.parent = parent;
         this.title = title;
@@ -83,7 +82,7 @@ public abstract class ClothConfigScreen extends Screen {
         this.defaultBackgroundLocation = defaultBackgroundLocation;
         o.forEach((tab, pairs) -> {
             List<AbstractConfigEntry> list = Lists.newArrayList();
-            for (Pair<String, Object> pair : pairs) {
+            for (ConfigPair<String, Object> pair : pairs) {
                 if (pair.getRight() instanceof AbstractConfigListEntry) {
                     list.add((AbstractConfigListEntry) pair.getRight());
                 } else {
@@ -94,11 +93,11 @@ public abstract class ClothConfigScreen extends Screen {
             tabbedEntries.put(tab, list);
         });
         TextRenderer textRenderer = Minecraft.getInstance().textRenderer;
-        this.tabs = tabbedEntries.keySet().stream().map(s -> new Pair<>(s, textRenderer.getWidth(I18n.translate(s)) + 8)).collect(Collectors.toList());
+        this.tabs = tabbedEntries.keySet().stream().map(s -> new ConfigPair<>(s, textRenderer.getWidth(I18n.translate(s)) + 8)).collect(Collectors.toList());
         this.nextVertexTabIndex = 0;
         this.selectedTabIndex = 0;
         for (int i = 0; i < tabs.size(); i++) {
-            Pair<String, Integer> pair = tabs.get(i);
+            ConfigPair<String, Integer> pair = tabs.get(i);
             if (pair.getLeft().equals(getFallbackCategory())) {
                 this.nextVertexTabIndex = i;
                 this.selectedTabIndex = i;
@@ -146,7 +145,7 @@ public abstract class ClothConfigScreen extends Screen {
     public void setFallbackCategory(@Nullable String defaultFallbackCategory) {
         this.defaultFallbackCategory = defaultFallbackCategory;
         for (int i = 0; i < tabs.size(); i++) {
-            Pair<String, Integer> pair = tabs.get(i);
+            ConfigPair<String, Integer> pair = tabs.get(i);
             if (pair.getLeft().equals(getFallbackCategory())) {
                 this.nextVertexTabIndex = i;
                 this.selectedTabIndex = i;
@@ -232,7 +231,7 @@ public abstract class ClothConfigScreen extends Screen {
         if (tabbedEntries.size() > selectedTabIndex)
             Lists.newArrayList(tabbedEntries.values()).get(selectedTabIndex).forEach(entry -> listWidget.children().add(entry));
         int buttonWidths = Math.min(200, (width - 50 - 12) / 3);
-        this.buttons.add(quitButton = new me.shedaniel.clothconfig2.ButtonWidget(width / 2 - buttonWidths / 2 - buttonWidths - 6, height - 26, buttonWidths, 20, edited ? I18n.translate("text.cloth-config.cancel_discard") : I18n.translate("gui.cancel"), widget -> {
+        this.buttons.add(quitButton = new ButtonWidget(width / 2 - buttonWidths / 2 - buttonWidths - 6, height - 26, buttonWidths, 20, edited ? I18n.translate("text.cloth-config.cancel_discard") : I18n.translate("gui.cancel"), widget -> {
             if (confirmSave && edited)
                 minecraft.openScreen(new ConfirmScreen((t, i) -> {
                     if (t)
@@ -308,7 +307,7 @@ public abstract class ClothConfigScreen extends Screen {
                 }
             });
             int j = 0;
-            for (Pair<String, Integer> tab : tabs) {
+            for (ConfigPair<String, Integer> tab : tabs) {
                 tabButtons.add(new ClothConfigTabButton(this, j, -100, 43, tab.getRight(), 20, I18n.translate(tab.getLeft())));
                 j++;
             }
@@ -479,15 +478,15 @@ public abstract class ClothConfigScreen extends Screen {
         GlStateManager.disableAlphaTest();
         GlStateManager.shadeModel(7425);
         // GlStateManager.disableBoundTexture(); // Not available in 1.13
-        net.minecraft.client.render.vertex.Tesselator tesselator = net.minecraft.client.render.vertex.Tesselator.getInstance();
-        BufferBuilder buffer = tesselator.getBuffer();
-        buffer.begin(7, DefaultVertexFormat.POSITION_COLOR);
+        Tesselator tesselator = Tesselator.INSTANCE;
+        Builder buffer = Builder.of(tesselator);
+        buffer.begin(7, GuiVertexCompat.POSITION_COLOR);
         buffer.vertex(tabsBounds.getMinX() + 20, tabsBounds.getMinY() + 4, 0.0D).texture(0, 1f).color(0, 0, 0, lightColor).nextVertex();
         buffer.vertex(tabsBounds.getMaxX() - 20, tabsBounds.getMinY() + 4, 0.0D).texture(1f, 1f).color(0, 0, 0, lightColor).nextVertex();
         buffer.vertex(tabsBounds.getMaxX() - 20, tabsBounds.getMinY(), 0.0D).texture(1f, 0).color(0, 0, 0, darkColor).nextVertex();
         buffer.vertex(tabsBounds.getMinX() + 20, tabsBounds.getMinY(), 0.0D).texture(0, 0).color(0, 0, 0, darkColor).nextVertex();
         tesselator.end();
-        buffer.begin(7, DefaultVertexFormat.POSITION_COLOR);
+        buffer.begin(7, GuiVertexCompat.POSITION_COLOR);
         buffer.vertex(tabsBounds.getMinX() + 20, tabsBounds.getMaxY(), 0.0D).texture(0, 1f).color(0, 0, 0, darkColor).nextVertex();
         buffer.vertex(tabsBounds.getMaxX() - 20, tabsBounds.getMaxY(), 0.0D).texture(1f, 1f).color(0, 0, 0, darkColor).nextVertex();
         buffer.vertex(tabsBounds.getMaxX() - 20, tabsBounds.getMaxY() - 4, 0.0D).texture(1f, 0).color(0, 0, 0, lightColor).nextVertex();
@@ -503,12 +502,12 @@ public abstract class ClothConfigScreen extends Screen {
     protected void overlayBackground(Rectangle rect, int red, int green, int blue, int startAlpha, int endAlpha) {
         if (isTransparentBackground())
             return;
-        net.minecraft.client.render.vertex.Tesselator tesselator2 = net.minecraft.client.render.vertex.Tesselator.getInstance();
-        BufferBuilder buffer = tesselator2.getBuffer();
+        Tesselator tesselator2 = Tesselator.INSTANCE;
+        Builder buffer = Builder.of(tesselator2);
         minecraft.getTextureManager().bind(getBackgroundLocation());
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         float f = 32.0F;
-        buffer.begin(7, DefaultVertexFormat.POSITION_COLOR);
+        buffer.begin(7, GuiVertexCompat.POSITION_COLOR);
         buffer.vertex(rect.getMinX(), rect.getMaxY(), 0.0D).texture(rect.getMinX() / 32.0F, rect.getMaxY() / 32.0F).color(red, green, blue, endAlpha).nextVertex();
         buffer.vertex(rect.getMaxX(), rect.getMaxY(), 0.0D).texture(rect.getMaxX() / 32.0F, rect.getMaxY() / 32.0F).color(red, green, blue, endAlpha).nextVertex();
         buffer.vertex(rect.getMaxX(), rect.getMinY(), 0.0D).texture(rect.getMaxX() / 32.0F, rect.getMinY() / 32.0F).color(red, green, blue, startAlpha).nextVertex();
@@ -740,7 +739,7 @@ public abstract class ClothConfigScreen extends Screen {
             }
         }
         
-        protected void renderBackBackground(BufferBuilder buffer, Tesselator tesselator) {
+        protected void renderBackBackground(Builder buffer, Tesselator tesselator) {
             if (!isTransparentBackground())
                 super.renderBackBackground(buffer, tesselator);
             else {

@@ -1,6 +1,6 @@
 package me.shedaniel.clothconfig2;
 
-public abstract class AbstractPressableButtonWidget extends me.shedaniel.clothconfig2.ButtonWidget {
+public abstract class AbstractPressableButtonWidget extends ButtonWidget {
     public AbstractPressableButtonWidget(int i, int j, int k, int l, String string) {
         super(i, j, k, l, string, w -> {});
     }

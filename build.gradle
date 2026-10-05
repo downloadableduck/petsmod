@@ -16,6 +16,13 @@ ploceus {
 
 loom {
     accessWidenerPath = file('src/main/resources/pets.accessWidener')
+
+    runs {
+        client {
+            client()
+            programArgs "--userProperties", "{}"
+        }
+    }
 }
 
 repositories {
@@ -43,7 +50,7 @@ dependencies {
 
     implementation("blue.endless:jankson:${rootProject.jankson_version}")
     implementation("com.moandjiezana.toml:toml4j:${rootProject.toml4j_version}")
-    modImplementation("maven.modrinth:LIGlLgiL:71EHHNXc")
+    modCompileOnly("maven.modrinth:LIGlLgiL:71EHHNXc")
 }
 processResources {
     inputs.property 'version', project.mod_version + project.build

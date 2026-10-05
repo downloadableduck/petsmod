@@ -3,7 +3,7 @@ package com.jeff.pets.mob.custom.aquatic;
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.FlyingPet;
 import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.living.LivingEntity;
 import net.minecraft.entity.living.attribute.EntityAttributes;
@@ -14,13 +14,13 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class Koi extends FlyingPet {
-   public static final int IS_SERVER_ENTITY = 10;
+   public static final int IS_SERVER_ENTITY = 20;
 
    public Koi(World level) {
       super(level);
@@ -35,7 +35,7 @@ public class Koi extends FlyingPet {
 
    protected void registerSyncedData() {
       super.registerSyncedData();
-      this.syncedData.register(10, (byte)0);
+      this.syncedData.register(20, (byte)0);
    }
 
    public boolean isServerEntity() {
@@ -63,7 +63,7 @@ public class Koi extends FlyingPet {
       return "";
    }
 
-   protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState blockState) {
+   protected void playStepSound(@NotNull BlockPos pos, @NotNull Block Block) {
       this.playSound("", 0.15F, 1.0F);
    }
 
@@ -74,9 +74,9 @@ public class Koi extends FlyingPet {
       return koi;
    }
 
-   public EntityData initialize(LocalDifficulty difficulty, @Nullable EntityData groupData) {
+   public Koi initialize(Difficulty difficulty, @Nullable EntityData groupData) {
       this.setServerEntity(true);
-      return super.initialize(difficulty, groupData);
+      return this;
    }
 
    @Override
@@ -126,8 +126,8 @@ public class Koi extends FlyingPet {
 
          double dx = owner.x - this.x;
          double dz = owner.z - this.z;
-         Vec3d ownerPos = new Vec3d(owner.x, owner.y, owner.z).add(0.0, owner.getEyeHeight() * 0.8, 0.0);
-         Vec3d vecToOwner = ownerPos.subtract(this.getPosVec());
+         Vec3d ownerPos = Vec3d.of(owner.x, owner.y, owner.z).add(0.0, owner.getEyeHeight() * 0.8, 0.0);
+         Vec3d vecToOwner = ownerPos.subtractFrom(this.getPosVec());
          double targetYaw = Math.atan2(dz, dx) * (180.0 / Math.PI) - 90.0;
          double distance = this.distanceTo(owner);
          float rotation = -this.pitch;
@@ -142,9 +142,9 @@ public class Koi extends FlyingPet {
             Vec3d dir = vecToOwner.normalize();
             double speed = 0.2;
             this.bodyYaw = this.bodyYaw + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw, -50.0F, 50.0F);
-            this.lerpVelocity(new Vec3d(dir.x * speed, dir.y * speed, dir.z * speed));
+            this.lerpVelocity(Vec3d.of(-dir.x * speed, dir.y * speed, -dir.z * speed));
          } else {
-            this.lerpVelocity(new Vec3d(this.getVelocity().x * 0.8, this.getVelocity().y * 0.8, this.getVelocity().z * 0.8));
+            this.lerpVelocity(Vec3d.of(this.getVelocity().x * 0.8, this.getVelocity().y * 0.8, this.getVelocity().z * 0.8));
          }
 
          int yHeightToOwner = (int)(owner.y - this.y);
@@ -159,7 +159,7 @@ public class Koi extends FlyingPet {
          if (!this.onGround) {
          }
 
-         if (Utils.squaredDistanceToOrigin(new Vec3d(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
+         if (Utils.squaredDistanceToOrigin(Vec3d.of(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
             this.waitingTime++;
             if (this.waitingTime > 30) {
                this.wander();
@@ -175,7 +175,9 @@ public class Koi extends FlyingPet {
             this.bodyYaw = this.bodyYaw + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw, -10.0F, 10.0F);
          }
 
-         this.move(this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
+          // No manual move() here: LivingEntity.mobTick() already calls moveRelative() ->
+          // move(this.velocityX, ...) on the client, so calling move() again moved the pet
+          // twice per tick and doubled its apparent speed.
       }
 
       if (owner != null && this.distanceTo(owner) >= 10.0F) {

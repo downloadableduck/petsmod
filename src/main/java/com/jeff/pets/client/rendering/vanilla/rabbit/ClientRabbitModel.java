@@ -95,22 +95,22 @@ public class ClientRabbitModel extends Model {
     public void render(net.minecraft.entity.Entity entity, float i, float j, float f, float g, float h, float k) {
         if (CONFIG.isBaby) {
             float l = 1.5F;
-            net.minecraft.client.render.platform.GlStateManager.pushMatrix();
-            net.minecraft.client.render.platform.GlStateManager.scalef(0.56666666F, 0.56666666F, 0.56666666F);
-            net.minecraft.client.render.platform.GlStateManager.translatef(0.0F, 1.375F, 0.125F);
+            com.jeff.pets.compat.GlStateManager.pushMatrix();
+            com.jeff.pets.compat.GlStateManager.scalef(0.56666666F, 0.56666666F, 0.56666666F);
+            com.jeff.pets.compat.GlStateManager.translatef(0.0F, 1.375F, 0.125F);
             ImmutableList.of(this.head, this.earLeft, this.earRight, this.nose).forEach((ModelPart) -> ModelPart.render(k));
-            net.minecraft.client.render.platform.GlStateManager.popMatrix();
-            net.minecraft.client.render.platform.GlStateManager.pushMatrix();
-            net.minecraft.client.render.platform.GlStateManager.scalef(0.4F, 0.4F, 0.4F);
-            net.minecraft.client.render.platform.GlStateManager.translatef(0.0F, 2.25F, 0.0F);
+            com.jeff.pets.compat.GlStateManager.popMatrix();
+            com.jeff.pets.compat.GlStateManager.pushMatrix();
+            com.jeff.pets.compat.GlStateManager.scalef(0.4F, 0.4F, 0.4F);
+            com.jeff.pets.compat.GlStateManager.translatef(0.0F, 2.25F, 0.0F);
             ImmutableList.of(this.rearFootLeft, this.rearFootRight, this.haunchLeft, this.haunchRight, this.body, this.frontLegLeft, this.frontLegRight, this.tail).forEach((ModelPart) -> ModelPart.render(k));
-            net.minecraft.client.render.platform.GlStateManager.popMatrix();
+            com.jeff.pets.compat.GlStateManager.popMatrix();
         } else {
-            net.minecraft.client.render.platform.GlStateManager.pushMatrix();
-            net.minecraft.client.render.platform.GlStateManager.scalef(0.6F, 0.6F, 0.6F);
-            net.minecraft.client.render.platform.GlStateManager.translatef(0.0F, 1.0F, 0.0F);
+            com.jeff.pets.compat.GlStateManager.pushMatrix();
+            com.jeff.pets.compat.GlStateManager.scalef(0.6F, 0.6F, 0.6F);
+            com.jeff.pets.compat.GlStateManager.translatef(0.0F, 1.0F, 0.0F);
             ImmutableList.of(this.rearFootLeft, this.rearFootRight, this.haunchLeft, this.haunchRight, this.body, this.frontLegLeft, this.frontLegRight, this.head, this.earRight, this.earLeft, this.tail, this.nose, new ModelPart[0]).forEach((ModelPart) -> ModelPart.render(k));
-            net.minecraft.client.render.platform.GlStateManager.popMatrix();
+            com.jeff.pets.compat.GlStateManager.popMatrix();
         }
 
     }

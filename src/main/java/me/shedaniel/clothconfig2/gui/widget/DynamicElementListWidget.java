@@ -1,13 +1,12 @@
 package me.shedaniel.clothconfig2.gui.widget;
 
 import me.shedaniel.clothconfig2.ParentElement;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import net.minecraft.client.Minecraft;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 
-@Environment(EnvType.CLIENT)
+
 public abstract class DynamicElementListWidget<E extends DynamicElementListWidget.ElementEntry<E>> extends DynamicNewSmoothScrollingEntryListWidget<E> {
     
     public DynamicElementListWidget(Minecraft client, int width, int height, int top, int bottom, Identifier backgroundLocation) {
@@ -25,7 +24,7 @@ public abstract class DynamicElementListWidget<E extends DynamicElementListWidge
         return false;
     }
     
-    @Environment(EnvType.CLIENT)
+    
     public abstract static class ElementEntry<E extends ElementEntry<E>> extends Entry<E> implements ParentElement {
         private GuiEventListener focused;
         private boolean dragging;

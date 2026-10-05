@@ -1,19 +1,20 @@
 package com.jeff.pets.client.rendering.vanilla.villager;
 
 import com.jeff.pets.mob.vanilla.passive.ClientVillager;
-import net.minecraft.client.render.entity.layer.EntityRenderLayer;
+import com.jeff.pets.client.rendering.PetRenderLayer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.model.entity.VillagerModel;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
 //villager layer is blue lmao
-public class ClientVillagerProfessionLayer implements EntityRenderLayer<ClientVillager> {
+public class ClientVillagerProfessionLayer implements PetRenderLayer {
 
-    private final net.minecraft.client.render.entity.MobRenderer renderer;
+    private final PetRenderer renderer;
 
     public static final Identifier ARMORER_LOCATION = new Identifier("minecraft", "textures/entity/villager/profession/armorer.png");
     public static final Identifier BUTCHER_LOCATION = new Identifier("minecraft", "textures/entity/villager/profession/butcher.png");
@@ -30,14 +31,15 @@ public class ClientVillagerProfessionLayer implements EntityRenderLayer<ClientVi
     public static final Identifier TOOLSMITH_LOCATION = new Identifier("minecraft", "textures/entity/villager/profession/toolsmith.png");
     public static final Identifier WEAPONSMITH_LOCATION = new Identifier("minecraft", "textures/entity/villager/profession/weaponsmith.png");
 
-    public ClientVillagerProfessionLayer(net.minecraft.client.render.entity.MobRenderer renderer) {
+    public ClientVillagerProfessionLayer(PetRenderer renderer) {
         this.renderer = renderer;
     }
 
     @Override
-    public void render(ClientVillager villager, float f, float g, float h, float i, float j, float k, float l) {
-        net.minecraft.client.render.platform.GlStateManager.pushMatrix();
-        net.minecraft.client.render.platform.GlStateManager.scalef(1.001f, 1.001f, 1.001f);
+    public void render(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h, float i, float j, float k) {
+        ClientVillager villager = (ClientVillager) entity;
+        com.jeff.pets.compat.GlStateManager.pushMatrix();
+        com.jeff.pets.compat.GlStateManager.scalef(1.001f, 1.001f, 1.001f);
         if (Objects.equals(CONFIG.villagerSkin, "armorer")) {
             this.renderer.bindTexture(ARMORER_LOCATION);
         } else if (Objects.equals(CONFIG.villagerSkin, "butcher")) {
@@ -67,8 +69,8 @@ public class ClientVillagerProfessionLayer implements EntityRenderLayer<ClientVi
         } else if (Objects.equals(CONFIG.villagerSkin, "weaponsmith")) {
             this.renderer.bindTexture(WEAPONSMITH_LOCATION);
         }
-        this.renderer.getModel().render(villager, f, g, i, j, k, l);
-        net.minecraft.client.render.platform.GlStateManager.popMatrix();
+        this.renderer.getModel().render(villager, f, g, h, i, j, k);
+        com.jeff.pets.compat.GlStateManager.popMatrix();
     }
 
     @Override

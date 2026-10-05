@@ -1,8 +1,8 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
 import com.google.common.collect.Lists;
-import net.minecraft.client.render.platform.GlStateManager;
-import net.minecraft.client.render.platform.GlStateManager;
+import com.jeff.pets.compat.GlStateManager;
+import com.jeff.pets.compat.GlStateManager;
 import me.shedaniel.clothconfig2.api.AbstractConfigEntry;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.clothconfig2.gui.ClothConfigScreen;
@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.sound.instance.SimpleSoundInstance;
-import net.minecraft.resource.Identifier;
+import net.minecraft.client.resource.Identifier;
 import com.jeff.pets.sound.SoundEvents;
 
 import java.awt.*;

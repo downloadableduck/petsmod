@@ -17,8 +17,8 @@ public class HeadModel extends Model {
 
         Head = new ModelPart(this);
         Head.setPos(5.0F, 0.0F, -5.0F);
-        Head.boxes.add(new Box(Head, 0, 0, -8.0F, 16.0F, 0.0F, 8, 8, 8, 0.0F, false));
-        Head.boxes.add(new Box(Head, 32, 0, -8.0F, 16.0F, 0.0F, 8, 8, 8, 0.5F, false));
+        Head.boxes.add(new Box(Head, 0, 0, -8.0F, 16.0F, 0.0F, 8, 8, 8, 0.0F));
+        Head.boxes.add(new Box(Head, 32, 0, -8.0F, 16.0F, 0.0F, 8, 8, 8, 0.5F));
     }
 
     @Override
