@@ -1127,6 +1127,17 @@ public class PetsInitializer implements ModInitializer {
                     .build(SULFUR_CUBE_KEY)
     );
 
+    private static final ResourceKey<@NotNull EntityType<?>> FROSTBITE_KEY =
+            ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(MOD_ID, "sulphur_cube"));
+    public static final EntityType<@NotNull ClientFrostbite> FROSTBITE = Registry.register(
+            BuiltInRegistries.ENTITY_TYPE,
+            Identifier.fromNamespaceAndPath(MOD_ID, "clientfrostbite"),
+            EntityType.Builder.of(ClientFrostbite::new, MobCategory.AMBIENT)
+                    .sized(0.6f, 1.95f)
+                    .eyeHeight(1.95f)
+                    .build(FROSTBITE_KEY)
+    );
+
     /**
      * Registers the entities' attributes. Warns about the call to register not working, but it
      * ends up working fine in-game - likely a mixup in either the Fabric API or IntelliJ.
@@ -1234,6 +1245,7 @@ public class PetsInitializer implements ModInitializer {
         FabricDefaultAttributeRegistry.register(KOI, Koi.createAttributes().build());
         FabricDefaultAttributeRegistry.register(STINGRAY, Stingray.createAttributes().build());
         FabricDefaultAttributeRegistry.register(SULFUR_CUBE, ClientSulfurCube.createAttributes().build());
+        FabricDefaultAttributeRegistry.register(FROSTBITE, ClientFrostbite.createAttributes().build());
 
         PetsSounds.initialize();
 

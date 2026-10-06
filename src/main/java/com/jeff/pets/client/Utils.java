@@ -274,6 +274,7 @@ public class Utils {
             case "koi" -> new Koi(PetsInitializer.KOI, world);
             case "stingray" -> new Stingray(PetsInitializer.STINGRAY, world);
             case "sulfur_cube" -> new ClientSulfurCube(PetsInitializer.SULFUR_CUBE, world);
+            case "frostbite" -> new ClientFrostbite(PetsInitializer.FROSTBITE, world);
             default -> null;
         };
     }
@@ -372,6 +373,7 @@ public class Utils {
             case "stingray" -> CONFIG.stingrayName;
             case "traitor" -> CONFIG.traitorName;
             case "sulfur_cube" -> CONFIG.sulfurCubeName;
+            case "frostbite" -> CONFIG.frostbiteName;
             default -> "";
         };
     }
@@ -479,6 +481,7 @@ public class Utils {
             case "koi" -> CONFIG.koiName = name;
             case "stingray" -> CONFIG.stingrayName = name;
             case "sulfur_cube" -> CONFIG.sulfurCubeName = name;
+            case "frostbite" -> CONFIG.frostbiteName = name;
         }
         if (Minecraft.getInstance().player != null) {
             NetworkManager.get().broadcastChangePetName(Minecraft.getInstance().player.getStringUUID(), Utils.getActivePetName());
@@ -1220,5 +1223,9 @@ public class Utils {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public static float clamp(float a, float b, float c) {
+        return a < b ? b : Math.min(a, c);
     }
 }

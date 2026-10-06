@@ -68,6 +68,7 @@ import com.jeff.pets.client.rendering.vanilla.evoker.ClientEvokerRenderer;
 import com.jeff.pets.client.rendering.vanilla.fox.ClientFoxModel;
 import com.jeff.pets.client.rendering.vanilla.fox.ClientFoxRenderer;
 import com.jeff.pets.client.rendering.vanilla.frog.ClientFrogRenderer;
+import com.jeff.pets.client.rendering.vanilla.frostbite.ClientFrostbiteRenderer;
 import com.jeff.pets.client.rendering.vanilla.ghast.ClientGhastRenderer;
 import com.jeff.pets.client.rendering.vanilla.goat.ClientGoatModel;
 import com.jeff.pets.client.rendering.vanilla.goat.ClientGoatRenderer;
@@ -151,6 +152,7 @@ import net.minecraft.client.model.animal.parrot.ParrotModel;
 import net.minecraft.client.model.animal.sniffer.SnifferModel;
 import net.minecraft.client.model.animal.squid.SquidModel;
 import net.minecraft.client.model.animal.turtle.AdultTurtleModel;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.monster.blaze.BlazeModel;
 import net.minecraft.client.model.monster.breeze.BreezeModel;
 import net.minecraft.client.model.monster.creaking.CreakingModel;
@@ -173,6 +175,7 @@ import net.minecraft.client.model.monster.strider.AdultStriderModel;
 import net.minecraft.client.model.monster.vex.VexModel;
 import net.minecraft.client.model.monster.warden.WardenModel;
 import net.minecraft.client.model.monster.witch.WitchModel;
+import net.minecraft.client.model.monster.zombie.FrostbiteModel;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.Identifier;
 
@@ -305,6 +308,7 @@ public class PetsClientInitializer implements ClientModInitializer {
         EntityRenderers.register(PetsInitializer.KOI, KoiRenderer::new);
         EntityRenderers.register(PetsInitializer.STINGRAY, StingrayRenderer::new);
         EntityRenderers.register(PetsInitializer.SULFUR_CUBE, ClientSulfurCubeRenderer::new);
+        EntityRenderers.register(PetsInitializer.FROSTBITE, ClientFrostbiteRenderer::new);
 
         ModelLayerRegistry.registerModelLayer(HeadModel.LAYER_LOCATION, HeadModel::getTexturedModelData);
         ModelLayerRegistry.registerModelLayer(RacoonRenderer.RACOON_LOCATION, RacoonModel::getTexturedModelData);
@@ -407,6 +411,7 @@ public class PetsClientInitializer implements ClientModInitializer {
         ModelLayerRegistry.registerModelLayer(KoiRenderer.KOI_LOCATION, KoiModel::createBodyLayer);
         ModelLayerRegistry.registerModelLayer(StingrayRenderer.STINGRAY_LOCATION, StingrayModel::createBodyLayer);
         ModelLayerRegistry.registerModelLayer(ClientSulfurCubeRenderer.SULFUR_CUBE_LOCATION, SulfurCubeModel::createOuterBodyLayer);
+        ModelLayerRegistry.registerModelLayer(ClientFrostbiteRenderer.FROSTBITE_LOCATION, () -> FrostbiteModel.createBodyLayerWithCustomLeftArmsAndLegs(CubeDeformation.NONE));
 
         ClientLifecycleEvents.CLIENT_STARTED.register((_) -> LOGGER.info("PetsMod addons loaded:{}", ADDONS));
     }

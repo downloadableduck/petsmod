@@ -13,9 +13,16 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.gui.screens.social.EntityPortraitWidget;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 import java.util.Objects;
 
@@ -81,9 +88,11 @@ public class PetsConfigScreen extends Screen {
         graphics.text(this.font, Component.nullToEmpty(StringUtil.capitalize(CONFIG.activePet).replaceAll("_", " ")), 0, 0, color);
         graphics.pose().popMatrix();
         if (entity != null) {
+            System.out.println("X: " + mouseX);
+            System.out.println("y: " + mouseY);
             try {
                 if (CONFIG.petOn)
-                    InventoryScreen.extractEntityInInventoryFollowsMouse(graphics, xo - boxSize, yo - boxSize, xo + boxSize, yo + boxSize, size, 0.0625F, 30, 120, entity);
+                    extractEntityInInventoryFollowsMouse(graphics, xo - boxSize, yo - boxSize, xo + boxSize, yo + boxSize, size, 0.0625F, 30, 120, entity);
             } catch (Exception ignored) {
             }
         } else {
@@ -202,5 +211,36 @@ public class PetsConfigScreen extends Screen {
         this.getPetsMenu().onScroll(scrollY < 0);
         this.getDropDownMenu().onScroll(scrollY < 0);
         return bl;
+    }
+
+    public static void extractEntityInInventoryFollowsMouse(GuiGraphicsExtractor graphics, int x0, int y0, int x1, int y1, int size, float offsetY, float mouseX, float mouseY, LivingEntity entity) {
+        float centerX = (float)(x0 + x1) / 2.0F;
+        float centerY = (float)(y0 + y1) / 2.0F;
+        float xAngle = (float)Math.atan((double)((centerX - mouseX) / 40.0F));
+        float yAngle = (float)Math.atan((double)((centerY - mouseY) / 40.0F));
+        renderEntityInInventoryFollowsAngle(graphics, x0, y0, x1, y1, size, offsetY, xAngle, yAngle, entity);
+    }
+
+    public static void renderEntityInInventoryFollowsAngle(GuiGraphicsExtractor graphics, int x0, int y0, int x1, int y1, int size, float offsetY, float xAngle, float yAngle, LivingEntity entity) {
+        Quaternionf rotation = (new Quaternionf()).rotateZ((float)Math.PI);
+        Quaternionf xRotation = (new Quaternionf()).rotateX(yAngle * 20.0F * ((float)Math.PI / 180F));
+        rotation.mul(xRotation);
+        EntityRenderState renderState = EntityPortraitWidget.extractRenderState(entity);
+        if (renderState instanceof LivingEntityRenderState livingRenderState) {
+            livingRenderState.bodyRot = 180.0F + xAngle * 20.0F;
+            livingRenderState.yRot = xAngle * 20.0F;
+            if (livingRenderState.pose != Pose.FALL_FLYING) {
+                livingRenderState.xRot = -yAngle * 20.0F;
+            } else {
+                livingRenderState.xRot = 0.0F;
+            }
+
+            livingRenderState.boundingBoxWidth /= livingRenderState.scale;
+            livingRenderState.boundingBoxHeight /= livingRenderState.scale;
+            livingRenderState.scale = 1.0F;
+        }
+
+        Vector3f translation = new Vector3f(0.0F, renderState.boundingBoxHeight / 2.0F + offsetY, 0.0F);
+        graphics.entity(renderState, (float)size, translation, rotation, xRotation, x0, y0, x1, y1);
     }
 }

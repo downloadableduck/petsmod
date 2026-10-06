@@ -146,7 +146,7 @@ mavenPublishing {
 tasks.named('jar') {
     archiveBaseName = project.archives_base_name
     archiveVersion = "SNAPSHOT"
-    archiveClassifier = project.minecraft_version.replace("-snapshot-", ".") + "-fabric"
+    archiveClassifier = project.minecraft_version.replace("-snapshot-", "b") + "-fabric"
     exclude 'ably.mod.json'
     exclude 'msgpack.mod.json'
     exclude 'vcdiff.mod.json'

@@ -207,6 +207,7 @@ public class Central implements ClientModInitializer {
     public static Koi koi;
     public static Stingray stingray;
     public static ClientSulfurCube sulfurCube;
+    public static ClientFrostbite frostbite;
 
     private final SuggestionProvider<FabricClientCommandSource> SKINS = (_, builder) -> {
         String remaining = builder.getRemainingLowerCase();
@@ -324,6 +325,7 @@ public class Central implements ClientModInitializer {
         Utils.despawnEntity(koi);
         Utils.despawnEntity(stingray);
         Utils.despawnEntity(sulfurCube);
+        Utils.despawnEntity(frostbite);
     }
 
     /**
@@ -432,6 +434,7 @@ public class Central implements ClientModInitializer {
         koi = new Koi(PetsInitializer.KOI, world);
         stingray = new Stingray(PetsInitializer.STINGRAY, world);
         sulfurCube = new ClientSulfurCube(PetsInitializer.SULFUR_CUBE, world);
+        frostbite = new ClientFrostbite(PetsInitializer.FROSTBITE, world);
 
         if (world != null) {
             if (Objects.equals(CONFIG.activePet, "duck")) {
@@ -632,6 +635,8 @@ public class Central implements ClientModInitializer {
                 Utils.summonPet(stingray, CONFIG.stingrayName);
             } else if (Objects.equals(CONFIG.activePet, "sulfur_cube")) {
                 Utils.summonPet(sulfurCube, CONFIG.sulfurCubeName);
+            } else if (Objects.equals(CONFIG.activePet, "frostbite")) {
+                Utils.summonPet(frostbite, CONFIG.frostbiteName);
             }
         }
         NetworkManager.get().broadcastGeneral(Objects.requireNonNull(minecraft.player).getStringUUID(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby);
@@ -738,6 +743,7 @@ public class Central implements ClientModInitializer {
         Utils.checkName("koi", koi, CONFIG.koiName);
         Utils.checkName("stingray", stingray, CONFIG.stingrayName);
         Utils.checkName("sulfur_cube", sulfurCube, CONFIG.sulfurCubeName);
+        Utils.checkName("frostbite", frostbite, CONFIG.frostbiteName);
     }
 
     /**
@@ -1004,6 +1010,7 @@ public class Central implements ClientModInitializer {
         CONFIG.headSkin = Utils.checkNullString(CONFIG.headSkin, "downloadableduck");
         CONFIG.sulfurCubeName = Utils.checkNullString(CONFIG.sulfurCubeName);
         CONFIG.sulfurCubeSkin = Utils.checkNullString(CONFIG.sulfurCubeSkin, "air");
+        CONFIG.frostbiteName = Utils.checkNullString(CONFIG.frostbiteName);
     }
 
     @SuppressWarnings("deprecation")
@@ -1210,6 +1217,7 @@ public class Central implements ClientModInitializer {
                 case "koi" -> Utils.setActivePet(koi, "koi");
                 case "stingray" -> Utils.setActivePet(stingray, "stingray");
                 case "sulfur_cube" -> Utils.setActivePet(sulfurCube, "sulfur_cube");
+                case "frostbite" -> Utils.setActivePet(frostbite, "frostbite");
                 case null, default -> isValid = false;
             }
 
@@ -1338,7 +1346,7 @@ public class Central implements ClientModInitializer {
                 "spider", "squid", "stingray", "stray", "strider", "tadpole", "toxifin slab",
                 "traitor", "turtle",
                 "vex", "villager", "vindicator", "wandering trader", "warden", "witch", "wither",
-                "wither skeleton", "wolf", "zombie", "zombie villager", "sulfur cube"};
+                "wither skeleton", "wolf", "zombie", "zombie villager", "sulfur cube", "frostbite"};
         PETS_LIST.addAll(List.of(stuffs));
     }
 

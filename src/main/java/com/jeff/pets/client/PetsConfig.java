@@ -172,4 +172,6 @@ public class PetsConfig {
     public Action pickUp = Action.Right_click_and_Sneak;
     public Action interaction = Action.Right_Click;
     public Action sit = Action.Right_Click_and_Jump;
+
+    public String frostbiteName;
 }

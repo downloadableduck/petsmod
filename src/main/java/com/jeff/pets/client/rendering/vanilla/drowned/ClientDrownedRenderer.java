@@ -25,7 +25,7 @@ public class ClientDrownedRenderer extends PetRenderer<@NotNull ClientDrowned, @
     }
 
     public static LayerDefinition createBaseDrownedLayer() {
-        ClientDrownedModel.createBodyLayer(CubeDeformation.NONE);
+        ClientDrownedModel.createBodyLayerWithCustomLeftArmsAndLegs(CubeDeformation.NONE);
         return LayerDefinition.create(new MeshDefinition(), 64, 64);
     }
 
