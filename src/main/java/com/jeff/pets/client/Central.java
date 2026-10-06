@@ -554,7 +554,7 @@ public class Central implements ClientModInitializer {
     public static void createTickWatcher() {
         Minecraft minecraft = Minecraft.getInstance();
         ClientWorld world = minecraft.world;
-        minecraft.executeTask(() -> {
+        minecraft.execute(() -> {
             petSkin = (int) (Math.random() * (double) 3.0F);
             if (minecraft.player != null && CONFIG.petOn && summonedEntity.isEmpty()) {
                 summonPet();
@@ -577,7 +577,7 @@ public class Central implements ClientModInitializer {
     public static void createJoinHandler() {
         List var10001 = summonedEntity;
         Objects.requireNonNull(var10001);
-        Minecraft.getInstance().executeTask(var10001::clear);
+        Minecraft.getInstance().execute(var10001::clear);
     }
 
     /**
@@ -605,7 +605,7 @@ public class Central implements ClientModInitializer {
      * re-created from an bytecode after a change messed it up around version {@code 0.6.0}
      */
     public void executePetSkinCommand(String skin) {
-                Minecraft.getInstance().executeTask(() -> {
+                Minecraft.getInstance().execute(() -> {
                     boolean isValid = true;
 
                     if (Objects.equals(skin, "baby")) {
@@ -1361,7 +1361,7 @@ public class Central implements ClientModInitializer {
      * Creates the command that allows the user to use {@code /teleportpet}.
      */
     public void executePetTeleportCommand() {
-                 Minecraft.getInstance().executeTask(() -> {
+                 Minecraft.getInstance().execute(() -> {
                      despawnPet();
                      summonPet();
                  });
@@ -1475,7 +1475,7 @@ public class Central implements ClientModInitializer {
      * Creates a help command to let the user easily view the commands at their disposal.
      */
     public void executePetHelpCommand() {
-                Minecraft.getInstance().executeTask(() -> {
+                Minecraft.getInstance().execute(() -> {
                     Minecraft.getInstance().player.addMessage(new LiteralText(
                             "\u00A7b[PetsMod] \u00A7aPossible commands: \u00A7a/pethelp: \u00A7rdisplays a list of commands \u00A7a/pet <on/off> \u00A7rtoggles whether your pet will appear or not\u00A7a/petspecies <species>: \u00A7rchanges the species of your pet\u00A7a/petskin <skin>: \u00A7rchanges the skin of your selected pet\u00A7a/teleportpet: \u00A7rteleports your pet to you. will not work if you are not on the ground.\u00A7a/petname: \u00A7rchanges the name of your currently selected pet"
                     ));
@@ -1486,7 +1486,7 @@ public class Central implements ClientModInitializer {
      * Creates the command that allows the user to change their pet's name.
      */
     public void executePetNameCommand(String name) {
-        Minecraft.getInstance().executeTask(() -> {
+        Minecraft.getInstance().execute(() -> {
             if (!summonedEntity.isEmpty()) {
                 switch (CONFIG.activePet) {
                     case "penguin":
@@ -1840,7 +1840,7 @@ public class Central implements ClientModInitializer {
     }
 
     public void checkValidPet(boolean isValid, String species) {
-        Minecraft.getInstance().executeTask(() -> {
+        Minecraft.getInstance().execute(() -> {
             if (!isValid) {
                 Minecraft.getInstance().player.addMessage(new LiteralText("\u00A7b[PetsMod] \u00A7cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")"));
             } else if (isValid && CONFIG.petOn) {

@@ -66,14 +66,12 @@ public abstract class FlyingPet extends AbstractPet {
 
                 Vec3d dir = vecToOwner.normalize();
                 double speed = owner.getSpeed() * 1.5;
-
-                
                 
                 this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/, -50, 50); //m_82141949
 
                 this.lerpVelocity(Vec3d.of(-dir.x * speed, dir.y * speed, -dir.z * speed));
             } else {
-                                this.lerpVelocity(Vec3d.of(this.getVelocity().x * 0.8, this.getVelocity().y * 0.8, this.getVelocity().z * 0.8));
+                this.lerpVelocity(Vec3d.of(this.getVelocity().x * 0.8, this.getVelocity().y * 0.8, this.getVelocity().z * 0.8));
             }
 
             int yHeightToOwner = (int) (owner.y - this.y);

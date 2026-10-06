@@ -47,8 +47,17 @@ public abstract class AbstractPet extends TameableEntity {
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    protected boolean aiEnabled() {
+        // LivingEntity.getSpeed() is `aiEnabled() ? speed : 0.1F`, and the base aiEnabled() is
+        // false. That made wander() compute `0.1 - 0.35 == -0.25`, so idle wandering pushed pets
+        // backwards, and it silently discarded every setSpeed() call (0.5 here, 0.3 in
+        // DumboOctopus). Returning true restores the intended speeds.
+        //
+        // Safe because pets are client-only entities injected with ClientWorld.forceEntity():
+        // the only aiEnabled() consumer that runs elsewhere, serverTickAi(), is gated behind
+        // isLocallyControlled(), and the remaining uses are initAttributes() (whose MOVEMENT_SPEED
+        // base this class immediately overwrites with 0.23) and a friction constant.
+        return true;
     }
 
     /**
@@ -281,5 +290,14 @@ public abstract class AbstractPet extends TameableEntity {
     @Override
     public boolean isTamed() {
         return true;
+    }
+
+    @Override
+    public void aiTick() {
+
+    }
+
+    @Override
+    public void mobAiTick() {
     }
 }
