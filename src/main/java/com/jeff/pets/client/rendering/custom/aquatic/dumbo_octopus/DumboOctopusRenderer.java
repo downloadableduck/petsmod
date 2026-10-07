@@ -1,27 +1,26 @@
 package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
+import net.minecraft.entity.Entity; import net.minecraft.client.renderer.entity.RenderManager; import com.jeff.pets.client.PetsClientInitializer;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
 import static com.jeff.pets.client.Central.MOD_ID;
 
-public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopusModel> {
+public class DumboOctopusRenderer extends PetRenderer {
 
     double i = 45;
     float direction = 1;
     float speed = 0.5f;
 
-    public DumboOctopusRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new DumboOctopusModel(), 0.5f);
+    public DumboOctopusRenderer(RenderManager renderManager, PetsClientInitializer.Context context) {
+        super(new DumboOctopusModel(), 0.5f);
     }
 
     @Override
-    public ResourceLocation getEntityTexture(Entity __e) {
-        DumboOctopus state = (DumboOctopus) __e;
+    public ResourceLocation getEntityTexture( final Entity state) {
         String path;
         String yellow = "textures/entity/dumbo_octopus/yellow.png";
         String red = "textures/entity/dumbo_octopus/red.png";
@@ -48,8 +47,7 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
     }
 
     @Override
-    public void renderModel(EntityLivingBase __e, float f, float g, float h, float i, float j, float k) {
-        DumboOctopus octopus = (DumboOctopus) __e;
+    public void renderModel( final EntityLivingBase octopus, float f, float g, float h, float i, float j, float k) {
         super.renderModel(octopus, f, g, h, i, j, k);
         float currentSpeed;
         if (i > 67.5f) {
@@ -61,6 +59,7 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus, DumboOctopus
         if (i >= 90 || i <= 45) {
             direction *= -1;
         }
-        octopus.tentacleAngle = i % 360;
+        ((DumboOctopus) octopus).tentacleAngle = i % 360;
     }
 }
+

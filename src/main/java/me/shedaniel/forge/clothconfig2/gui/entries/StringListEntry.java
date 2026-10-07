@@ -1,12 +1,13 @@
 package me.shedaniel.forge.clothconfig2.gui.entries;
 
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-
+@SideOnly(Side.CLIENT)
 public class StringListEntry extends TextFieldListEntry<String> {
     private final Consumer<String> saveConsumer;
 

@@ -1,6 +1,6 @@
 /*
  * This file is part of Cloth Config.
- * Copyright (C) 2020 - 2021 shedaniel
+ * Copyright (C) 2020 - 2021 me.shedaniel
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,6 @@
 package me.shedaniel.autoconfig;
 
 import me.shedaniel.autoconfig.annotation.Config;
-import me.shedaniel.autoconfig.event.ActionResult;
 import me.shedaniel.autoconfig.event.ConfigSerializeEvent;
 import me.shedaniel.autoconfig.serializer.ConfigSerializer;
 import org.apache.logging.log4j.LogManager;
@@ -68,10 +67,10 @@ public class ConfigManager<T extends ConfigData> implements ConfigHolder<T> {
     @Override
     public void save() {
         for (ConfigSerializeEvent.Save<T> save : saveEvent) {
-            ActionResult result = save.onSave(this, config);
-            if (result == ActionResult.FAIL) {
+            EnumActionResult result = save.onSave(this, config);
+            if (result == EnumActionResult.FAIL) {
                 return;
-            } else if (result != ActionResult.PASS) {
+            } else if (result != EnumActionResult.PASS) {
                 break;
             }
         }
@@ -88,12 +87,12 @@ public class ConfigManager<T extends ConfigData> implements ConfigHolder<T> {
             T deserialized = serializer.deserialize();
 
             for (ConfigSerializeEvent.Load<T> load : loadEvent) {
-                ActionResult result = load.onLoad(this, deserialized);
-                if (result == ActionResult.FAIL) {
+                EnumActionResult result = load.onLoad(this, deserialized);
+                if (result == EnumActionResult.FAIL) {
                     config = serializer.createDefault();
                     config.validatePostLoad();
                     return false;
-                } else if (result != ActionResult.PASS) {
+                } else if (result != EnumActionResult.PASS) {
                     break;
                 }
             }

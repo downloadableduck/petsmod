@@ -1,10 +1,11 @@
 package me.shedaniel.forge.clothconfig2.gui.widget;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
-
-
+@SideOnly(Side.CLIENT)
 public abstract class DynamicElementListWidget<E extends DynamicElementListWidget.ElementEntry<E>> extends DynamicNewSmoothScrollingEntryListWidget<E> {
 
     public DynamicElementListWidget(Minecraft client, int width, int height, int top, int bottom, ResourceLocation backgroundLocation) {
@@ -15,7 +16,7 @@ public abstract class DynamicElementListWidget<E extends DynamicElementListWidge
         return false;
     }
 
-    
+    @SideOnly(Side.CLIENT)
     public abstract static class ElementEntry<E extends ElementEntry<E>> extends Entry<E> {
         private E focused;
         private boolean dragging;

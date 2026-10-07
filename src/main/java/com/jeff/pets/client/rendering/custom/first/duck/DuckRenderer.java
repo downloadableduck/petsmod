@@ -1,47 +1,43 @@
 package com.jeff.pets.client.rendering.custom.first.duck;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.Entity;
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.Math2;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.MathHelper;
+import net.minecraft.entity.Entity; import net.minecraft.client.renderer.entity.RenderManager; import com.jeff.pets.client.PetsClientInitializer;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class DuckRenderer extends PetRenderer<Duck, DuckModel> {
+public class DuckRenderer extends PetRenderer {
     public String duckTexturePath;
 
-    public DuckRenderer(final net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new DuckModel(), 0.3F);
+    public DuckRenderer(RenderManager renderManager, PetsClientInitializer.Context context) {
+        super(new DuckModel(), 0.3F);
     }
 
     @Override
-    public void preRenderCallback(EntityLivingBase __e, float f) {
-        Duck livingEntityRenderState = (Duck) __e;
+    public void preRenderCallback( final EntityLivingBase livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            net.minecraft.client.renderer.GlStateManager.scalef(0.6f, 0.6f, 0.6f);
+            GL11.glScalef(0.6f, 0.6f, 0.6f);
         }
 
     }
 
     @Override
-    public void renderModel(EntityLivingBase __e, float f, final float k, float u, float g, float h, float i) {
-        Duck duck = (Duck) __e;
-        float partialTick = u - MathHelper.floor(u);
-        duck.flap = Math2.lerp(partialTick, duck.oFlap, duck.flap);
-        duck.flapSpeed = Math2.lerp(partialTick, duck.oFlapSpeed, duck.flapSpeed);
+    public void renderModel( final EntityLivingBase duck, float f, final float k, float u, float g, float h, float i) {
+        float partialTick = 1.0F;
+        ((Duck) duck).flap = Math2.lerp(partialTick, ((Duck) duck).oFlap, ((Duck) duck).flap);
+        ((Duck) duck).flapSpeed = Math2.lerp(partialTick, ((Duck) duck).oFlapSpeed, ((Duck) duck).flapSpeed);
         super.renderModel(duck, f, k, u, g, h, i);
     }
 
     @Override
-    public ResourceLocation getEntityTexture(Entity __e) {
-        Duck state = (Duck) __e;
+    public ResourceLocation getEntityTexture( final Entity state) {
         if (Objects.equals(CONFIG.duckSkin, "pekin")) {
             duckTexturePath = "textures/entity/duck/pekin.png";
         } else if (Objects.equals(CONFIG.duckSkin, "mallard")) {

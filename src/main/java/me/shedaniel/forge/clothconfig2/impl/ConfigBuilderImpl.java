@@ -2,6 +2,8 @@ package me.shedaniel.forge.clothconfig2.impl;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.shedaniel.forge.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.forge.clothconfig2.api.ConfigCategory;
 import me.shedaniel.forge.clothconfig2.api.Pair;
@@ -11,14 +13,13 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 
-
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
 
 @Deprecated
-
+@SideOnly(Side.CLIENT)
 public class ConfigBuilderImpl implements ConfigBuilder {
 
     private final Map<String, ResourceLocation> categoryBackground = Maps.newHashMap();
@@ -32,7 +33,7 @@ public class ConfigBuilderImpl implements ConfigBuilder {
     private boolean doesProcessErrors = true;
     private boolean doesConfirmSave = true;
     private boolean transparentBackground = false;
-    private ResourceLocation defaultBackground = Gui.OPTIONS_BACKGROUND;
+    private ResourceLocation defaultBackground = Gui.optionsBackground;
     private Consumer<GuiScreen> afterInitConsumer = screen -> {
     };
     private String fallbackCategory = null;

@@ -1,6 +1,6 @@
 /*
  * This file is part of Cloth Config.
- * Copyright (C) 2020 - 2021 shedaniel
+ * Copyright (C) 2020 - 2021 me.shedaniel
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public

@@ -1,17 +1,17 @@
 package me.shedaniel.forge.clothconfig2.api;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.shedaniel.forge.clothconfig2.gui.entries.DropdownBoxEntry;
 import me.shedaniel.forge.clothconfig2.impl.ConfigEntryBuilderImpl;
 import me.shedaniel.forge.clothconfig2.impl.KeyInput;
 import me.shedaniel.forge.clothconfig2.impl.builders.*;
 import me.shedaniel.forge.clothconfig2.impl.builders.DropdownMenuBuilder.TopCellElementBuilder;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
 
 import java.util.List;
 import java.util.function.Function;
 
-
+@SideOnly(Side.CLIENT)
 public interface ConfigEntryBuilder {
 
     static ConfigEntryBuilder create() {

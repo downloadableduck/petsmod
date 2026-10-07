@@ -3,7 +3,6 @@ package com.jeff.pets.mob.vanilla.boss;
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
 
-
 @CanFly
 public class ClientWither extends FlyingPet {
     public ClientWither(net.minecraft.world.World level) {
@@ -22,7 +21,7 @@ public class ClientWither extends FlyingPet {
     }
 
     @Override
-    protected String getAmbientSound() {
+    protected String getLivingSound() {
         return "mob.chicken.step";
     }
 }

@@ -2,17 +2,19 @@ package com.jeff.pets;
 
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.PetsClientInitializer;
-import com.mojang.realmsclient.dto.RealmsServer;
 import com.mumfrey.liteloader.*;
 import com.mumfrey.liteloader.core.LiteLoader;
+import com.mumfrey.liteloader.launch.LiteLoaderTweaker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ServerData;
+import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.network.INetHandler;
 import net.minecraft.network.play.server.S01PacketJoinGame;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import scala.tools.nsc.ast.parser.Scanners;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -41,7 +43,7 @@ public class LiteModPetsMod implements LiteMod, Tickable, JoinGameListener, Init
         PetsSounds.initialize();
         new Central();
         new PetsClientInitializer();
-        Minecraft.getInstance().gameSettings.keyBindings = ArrayUtils.add(Minecraft.getInstance().gameSettings.keyBindings, PetsClientInitializer.openConfigScreen);
+        Minecraft.getMinecraft().gameSettings.keyBindings = ArrayUtils.add(Minecraft.getMinecraft().gameSettings.keyBindings, PetsClientInitializer.openConfigScreen);
         LiteLoader.getInterfaceManager().registerListener(this);
     }
 
@@ -61,7 +63,7 @@ public class LiteModPetsMod implements LiteMod, Tickable, JoinGameListener, Init
     }
 
     @Override
-    public void onJoinGame(INetHandler netHandler, S01PacketJoinGame joinGamePacket, ServerData serverData, RealmsServer realmsServer) {
+    public void onJoinGame(INetHandler netHandler, S01PacketJoinGame joinGamePacket) {
         Central.createJoinHandler();
     }
 
@@ -69,14 +71,16 @@ public class LiteModPetsMod implements LiteMod, Tickable, JoinGameListener, Init
     public void onInitCompleted(Minecraft minecraft, LiteLoader loader) {
         try {
             PetsClientInitializer.register();
-            RenderManager manager = minecraft.getRenderManager();
-            Field field = manager.getClass().getDeclaredField("k");
+            RenderManager manager = RenderManager.instance;
+            Field field = manager.getClass().getDeclaredField("q");
             field.setAccessible(true);
             Map map = (Map) field.get(manager);
             synchronized (PetsClientInitializer.renderManagerMap.keySet()) {
                 PetsClientInitializer.renderManagerMap.put(manager, new PetsClientInitializer.Context(map));
                 for (Map.Entry<Class, PetsClientInitializer.Factory> entry : PetsClientInitializer.renderSupplierMap.entrySet()) {
-                    map.put(entry.getKey(), entry.getValue().create(manager, new PetsClientInitializer.Context((Map) map)));
+                    RenderLiving renderer = entry.getValue().create(manager, new PetsClientInitializer.Context((Map) map));
+                    renderer.setRenderManager(manager);
+                    map.put(entry.getKey(), renderer);
                 }
             }
         } catch (Exception e) {

@@ -1,8 +1,8 @@
 package me.shedaniel.forge.clothconfig2.gui.entries;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.shedaniel.forge.clothconfig2.api.AbstractConfigListEntry;
-import me.shedaniel.forge.clothconfig2.gui.entries.AbstractListListEntry.AbstractListCell;
-import me.shedaniel.forge.clothconfig2.gui.entries.AbstractTextFieldListListEntry.AbstractTextFieldListCell;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.function.Supplier;
  * @param <T>     the configuration object type
  * @param <INNER> the type of the inner config entry
  */
-
+@SideOnly(Side.CLIENT)
 public final class NestedListListEntry<T, INNER extends AbstractConfigListEntry<T>> extends AbstractListListEntry<T, NestedListListEntry.NestedListCell<T, INNER>, NestedListListEntry<T, INNER>> {
 
 
@@ -42,7 +42,7 @@ public final class NestedListListEntry<T, INNER extends AbstractConfigListEntry<
      * @param <T> the configuration object type
      * @see NestedListListEntry
      */
-    public static class NestedListCell<T, INNER extends AbstractConfigListEntry<T>> extends AbstractListCell<T, NestedListCell<T, INNER>, NestedListListEntry<T, INNER>> {
+    public static class NestedListCell<T, INNER extends AbstractConfigListEntry<T>> extends AbstractListListEntry.AbstractListCell<T, NestedListCell<T, INNER>, NestedListListEntry<T, INNER>> {
 
         private final INNER nestedEntry;
 

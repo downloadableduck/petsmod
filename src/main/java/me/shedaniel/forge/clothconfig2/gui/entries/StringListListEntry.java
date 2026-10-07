@@ -1,15 +1,15 @@
 package me.shedaniel.forge.clothconfig2.gui.entries;
 
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import me.shedaniel.forge.clothconfig2.gui.entries.AbstractTextFieldListListEntry.AbstractTextFieldListCell;
 
-
+@SideOnly(Side.CLIENT)
 public class StringListListEntry extends AbstractTextFieldListListEntry<String, StringListListEntry.StringListCell, StringListListEntry> {
 
 
@@ -35,7 +35,7 @@ public class StringListListEntry extends AbstractTextFieldListListEntry<String, 
         return this;
     }
 
-    public static class StringListCell extends AbstractTextFieldListCell<String, StringListCell, StringListListEntry> {
+    public static class StringListCell extends AbstractTextFieldListListEntry.AbstractTextFieldListCell<String, StringListCell, StringListListEntry> {
 
         public StringListCell(String value, StringListListEntry listListEntry) {
             super(value, listListEntry);

@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.Entity; import net.minecraft.client.renderer.entity.RenderManager; import com.jeff.pets.client.PetsClientInitializer;
 
 public class DumboOctopusModel extends PetModel {
     private final ModelRenderer body;
@@ -93,7 +93,7 @@ public class DumboOctopusModel extends PetModel {
     }
 
     @Override
-    public void render(Entity entity, float f, float g, float red, float green, float blue, float alpha) {
+    public void render(net.minecraft.entity.Entity entity, float f, float g, float red, float green, float blue, float alpha) {
         body.render(alpha);
     }
 

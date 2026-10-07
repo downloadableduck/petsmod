@@ -1,80 +1,83 @@
 package com.jeff.pets.client.rendering.vanilla.sheep;
 
+import com.jeff.pets.client.rendering.PetLayer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.entity.EntityLivingBase;
-import com.jeff.pets.mob.vanilla.passive.ClientSheep;
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
+/**
+ * Wool pass over the sheep model. 1.7.10 has no {@code LayerRenderer}, so the overlay is
+ * drawn from {@link PetRenderer#renderModel}; the 1.8 {@code setModelAttributes} call is
+ * gone because 1.7.10 {@code ModelBase} has no such method and no separate fur geometry --
+ * the same main model is re-rendered with the fur texture instead.
+ */
+public class ClientSheepWoolLayer implements PetLayer {
+    private static final ResourceLocation SHEEP_FUR =
+            new ResourceLocation("minecraft", "textures/entity/sheep/sheep_fur.png");
 
-public class ClientSheepWoolLayer implements LayerRenderer {
-    private final ModelBase model;
-    private final RenderLiving renderer;
-    int woolColor;
+    private final PetRenderer parent;
+    private int woolColor;
 
-    public ClientSheepWoolLayer(RenderLiving renderLayerParent) {
-        this.renderer = renderLayerParent;
-        this.model = new ClientSheepFurModel();
+    public ClientSheepWoolLayer(PetRenderer parent) {
+        this.parent = parent;
     }
 
-    @Override
-    public void render(EntityLivingBase __e, float p_212842_2_, float p_212842_3_, float p_212842_4_, float p_212842_5_, float p_212842_6_, float p_212842_7_, float p_212842_8_) {
-        ClientSheep sheep = (ClientSheep) __e;
-        this.renderer.bindTexture(new ResourceLocation("minecraft", "textures/entity/sheep/sheep_fur.png"));
-        if (Objects.equals(CONFIG.sheepSkin, "white")) {
+    private void resolveWoolColor() {
+        String skin = CONFIG.sheepSkin;
+        if (Objects.equals(skin, "white")) {
             woolColor = 15132390;
-        } else if (Objects.equals(CONFIG.sheepSkin, "orange")) {
+        } else if (Objects.equals(skin, "orange")) {
             woolColor = 12214293;
-        } else if (Objects.equals(CONFIG.sheepSkin, "magenta")) {
+        } else if (Objects.equals(skin, "magenta")) {
             woolColor = 9779853;
-        } else if (Objects.equals(CONFIG.sheepSkin, "light_blue")) {
+        } else if (Objects.equals(skin, "light_blue")) {
             woolColor = 2852515;
-        } else if (Objects.equals(CONFIG.sheepSkin, "yellow")) {
+        } else if (Objects.equals(skin, "yellow")) {
             woolColor = 12493357;
-        } else if (Objects.equals(CONFIG.sheepSkin, "lime")) {
+        } else if (Objects.equals(skin, "lime")) {
             woolColor = 6329623;
-        } else if (Objects.equals(CONFIG.sheepSkin, "pink")) {
+        } else if (Objects.equals(skin, "pink")) {
             woolColor = 11954303;
-        } else if (Objects.equals(CONFIG.sheepSkin, "gray")) {
+        } else if (Objects.equals(skin, "gray")) {
             woolColor = 3488573;
-        } else if (Objects.equals(CONFIG.sheepSkin, "light_gray")) {
+        } else if (Objects.equals(skin, "light_gray")) {
             woolColor = 7697777;
-        } else if (Objects.equals(CONFIG.sheepSkin, "cyan")) {
+        } else if (Objects.equals(skin, "cyan")) {
             woolColor = 1078645;
-        } else if (Objects.equals(CONFIG.sheepSkin, "purple")) {
+        } else if (Objects.equals(skin, "purple")) {
             woolColor = 6694282;
-        } else if (Objects.equals(CONFIG.sheepSkin, "blue")) {
+        } else if (Objects.equals(skin, "blue")) {
             woolColor = 2962303;
-        } else if (Objects.equals(CONFIG.sheepSkin, "brown")) {
+        } else if (Objects.equals(skin, "brown")) {
             woolColor = 6438693;
-        } else if (Objects.equals(CONFIG.sheepSkin, "green")) {
+        } else if (Objects.equals(skin, "green")) {
             woolColor = 4611344;
-        } else if (Objects.equals(CONFIG.sheepSkin, "red")) {
+        } else if (Objects.equals(skin, "red")) {
             woolColor = 8659484;
-        } else if (Objects.equals(CONFIG.sheepSkin, "black")) {
-            woolColor = 1381656;
         } else {
             woolColor = 1381656;
         }
-
-        float r = (float) (woolColor >> 16 & 255) / 255.0F;
-        float g = (float) (woolColor >> 8 & 255) / 255.0F;
-        float b = (float) (woolColor & 255) / 255.0F;
-        GlStateManager.color3f(r, g, b);
-
-        this.model.setModelAttributes(this.renderer.getMainModel());
-        this.model.setLivingAnimations(__e, p_212842_2_, p_212842_3_, p_212842_4_);
-        this.model.render(__e, p_212842_2_, p_212842_3_, p_212842_5_, p_212842_6_, p_212842_7_, p_212842_8_);
     }
 
     @Override
-    public boolean shouldCombineTextures() {
-        return false;
+    public void render(EntityLivingBase sheep, float limbSwing, float limbSwingAmount, float ageInTicks,
+                       float netHeadYaw, float headPitch, float scale) {
+        this.resolveWoolColor();
+
+        float r = (woolColor >> 16 & 255) / 255.0F;
+        float g = (woolColor >> 8 & 255) / 255.0F;
+        float b = (woolColor & 255) / 255.0F;
+        GL11.glColor3f(r, g, b);
+
+        this.parent.bindTexturePublic(SHEEP_FUR);
+        this.parent.getMainModel().render(sheep, limbSwing, limbSwingAmount, ageInTicks,
+                netHeadYaw, headPitch, scale);
+
+        GL11.glColor3f(1.0F, 1.0F, 1.0F);
     }
 }

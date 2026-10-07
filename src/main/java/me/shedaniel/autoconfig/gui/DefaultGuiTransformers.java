@@ -1,6 +1,6 @@
 /*
  * This file is part of Cloth Config.
- * Copyright (C) 2020 - 2021 shedaniel
+ * Copyright (C) 2020 - 2021 me.shedaniel
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -25,8 +25,8 @@ import me.shedaniel.forge.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.forge.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.forge.clothconfig2.gui.entries.TextListEntry;
 import me.shedaniel.forge.clothconfig2.gui.entries.TooltipListEntry;
-import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.IChatComponent;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -87,8 +87,8 @@ public class DefaultGuiTransformers {
                 (guis, i18n, field, config, defaults, guiProvider) -> {
                     ArrayList<AbstractConfigListEntry> ret = new ArrayList<>(guis);
                     String text = String.format("%s.%s", i18n, "@PrefixText");
-                    TextListEntry element = ENTRY_BUILDER.startTextDescription(new ChatComponentTranslation(text).getUnformattedComponentText()).build();
-                    String s = new ChatComponentTranslation(i18n).getUnformattedComponentText().toLowerCase(Locale.ROOT);
+                    TextListEntry element = ENTRY_BUILDER.startTextDescription(new ChatComponentTranslation(text).getUnformattedText()).build();
+                    String s = new ChatComponentTranslation(i18n).getUnformattedText().toLowerCase(Locale.ROOT);
                     if (!s.isEmpty()) {
                         //element.appendSearchTags(Lists.newArrayList(s.split(" ")));
                     }

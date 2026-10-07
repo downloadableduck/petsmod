@@ -1,27 +1,26 @@
 package com.jeff.pets.client.rendering.vanilla.cavespider;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
-import com.jeff.pets.mob.vanilla.neutral.ClientCaveSpider;
 import net.minecraft.client.model.ModelSpider;
+import net.minecraft.entity.Entity; import net.minecraft.client.renderer.entity.RenderManager; import com.jeff.pets.client.PetsClientInitializer;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
-public class ClientCaveSpiderRenderer extends PetRenderer<ClientCaveSpider, ModelSpider> {
+public class ClientCaveSpiderRenderer extends PetRenderer {
 
-    public ClientCaveSpiderRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ModelSpider(), 0.75f);
+    public ClientCaveSpiderRenderer(RenderManager renderManager, PetsClientInitializer.Context context) {
+        super(new ModelSpider(), 0.75f);
     }
 
     @Override
-    public void preRenderCallback(EntityLivingBase __e, float f) {
-        ClientCaveSpider caveSpider = (ClientCaveSpider) __e;
-        net.minecraft.client.renderer.GlStateManager.scalef(0.7F, 0.7F, 0.7F);
+    public void preRenderCallback( final EntityLivingBase caveSpider, float f) {
+        GL11.glScalef(0.7F, 0.7F, 0.7F);
     }
 
     @Override
-    public ResourceLocation getEntityTexture(Entity __e) {
-        ClientCaveSpider livingEntityRenderState = (ClientCaveSpider) __e;
+    public ResourceLocation getEntityTexture( final Entity livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/spider/cave_spider.png");
     }
 }
+

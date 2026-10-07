@@ -1,5 +1,7 @@
 package me.shedaniel.forge.clothconfig2.impl.builders;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.shedaniel.forge.clothconfig2.gui.entries.DropdownBoxEntry;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -18,6 +20,7 @@ import java.util.function.Supplier;
 
 import static net.minecraft.client.gui.Gui.drawRect;
 
+@SideOnly(Side.CLIENT)
 public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>> {
     protected DropdownBoxEntry.SelectionTopCellElement<T> topCellElement;
     protected DropdownBoxEntry.SelectionCellCreator<T> cellCreator;
@@ -102,7 +105,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
         public static final Function<String, ResourceLocation> ITEM_IDENTIFIER_FUNCTION = str -> {
             try {
                 ResourceLocation identifier = new ResourceLocation(str);
-                if (Item.REGISTRY.getKeys().contains(identifier))
+                if (Item.itemRegistry.getKeys().contains(identifier))
                     return identifier;
             } catch (Exception ignored) {
             }
@@ -111,7 +114,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
         public static final Function<String, ResourceLocation> BLOCK_IDENTIFIER_FUNCTION = str -> {
             try {
                 ResourceLocation identifier = new ResourceLocation(str);
-                if (Block.REGISTRY.getKeys().contains(identifier))
+                if (Block.blockRegistry.getKeys().contains(identifier))
                     return identifier;
             } catch (Exception ignored) {
             }
@@ -119,19 +122,19 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
         };
         public static final Function<String, Item> ITEM_FUNCTION = str -> {
             try {
-                return (Item) Item.REGISTRY.get(new ResourceLocation(str));
+                return (Item) Item.itemRegistry.getObject(new ResourceLocation(str));
             } catch (Exception ignored) {
             }
             return null;
         };
         public static final Function<String, Block> BLOCK_FUNCTION = str -> {
             try {
-                return (Block) Block.REGISTRY.get(new ResourceLocation(str));
+                return (Block) Block.blockRegistry.getObject(new ResourceLocation(str));
             } catch (Exception ignored) {
             }
             return null;
         };
-        private static final ItemStack BARRIER = new ItemStack(Items.SNOWBALL);
+        private static final ItemStack BARRIER = new ItemStack(Items.snowball);
 
         public static <T> DropdownBoxEntry.SelectionTopCellElement<T> of(T value, Function<String, T> toObjectFunction) {
             return of(value, toObjectFunction, Object::toString);
@@ -141,70 +144,36 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
             return new DropdownBoxEntry.DefaultSelectionTopCellElement<>(value, toObjectFunction, toStringFunction);
         }
 
-        public static DropdownBoxEntry.SelectionTopCellElement<ResourceLocation> ofItemIdentifier(Item item) {
-            return new DropdownBoxEntry.DefaultSelectionTopCellElement<ResourceLocation>((ResourceLocation) Item.REGISTRY.getKey(item), ITEM_IDENTIFIER_FUNCTION, ResourceLocation::toString) {
-                @Override
-                public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
-                    textFieldWidget.x = x + 4;
-                    textFieldWidget.y = y + 6;
-                    textFieldWidget.width = (width - 4 - 20);
-                    textFieldWidget.setEnabled(getParent().isEditable());
-                    textFieldWidget.setTextColor(getPreferredTextColor());
-                    textFieldWidget.func_146194_f();
-                    RenderItem itemRenderer = Minecraft.getInstance().getItemRenderer();
-                    ItemStack stack = hasConfigError() ? BARRIER : new ItemStack((Item) Item.REGISTRY.get(getValue()));
-                    itemRenderer.renderItemIntoGUI(stack, x + width - 18, y + 2);
-                }
-            };
-        }
-
-        public static DropdownBoxEntry.SelectionTopCellElement<ResourceLocation> ofBlockIdentifier(Block block) {
-            return new DropdownBoxEntry.DefaultSelectionTopCellElement<ResourceLocation>((ResourceLocation) Block.REGISTRY.getKey(block), BLOCK_IDENTIFIER_FUNCTION, ResourceLocation::toString) {
-                @Override
-                public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
-                    textFieldWidget.x = x + 4;
-                    textFieldWidget.y = y + 6;
-                    textFieldWidget.width = (width - 4 - 20);
-                    textFieldWidget.setEnabled(getParent().isEditable());
-                    textFieldWidget.setTextColor(getPreferredTextColor());
-                    textFieldWidget.func_146194_f();
-                    RenderItem itemRenderer = Minecraft.getInstance().getItemRenderer();
-                    ItemStack stack = hasConfigError() ? BARRIER : new ItemStack((Block) Block.REGISTRY.get(getValue()));
-                    itemRenderer.renderItemIntoGUI(stack, x + width - 18, y + 2);
-                }
-            };
-        }
-
         public static DropdownBoxEntry.SelectionTopCellElement<Item> ofItemObject(Item item) {
-            return new DropdownBoxEntry.DefaultSelectionTopCellElement<Item>(item, ITEM_FUNCTION, i -> Item.REGISTRY.getKey(i).toString()) {
+            return new DropdownBoxEntry.DefaultSelectionTopCellElement<Item>(item, ITEM_FUNCTION, i -> Item.itemRegistry.getObject(i).toString()) {
                 @Override
                 public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
-                    textFieldWidget.x = x + 4;
-                    textFieldWidget.y = y + 6;
+                    textFieldWidget.xPosition = x + 4;
+                    textFieldWidget.yPosition = y + 6;
                     textFieldWidget.width = (width - 4 - 20);
                     textFieldWidget.setEnabled(getParent().isEditable());
                     textFieldWidget.setTextColor(getPreferredTextColor());
-                    textFieldWidget.func_146194_f();
-                    RenderItem itemRenderer = Minecraft.getInstance().getItemRenderer();
+                    textFieldWidget.drawTextBox();
+                    RenderItem itemRenderer = RenderItem.getInstance();
                     ItemStack stack = hasConfigError() ? BARRIER : new ItemStack(getValue());
-                    itemRenderer.renderItemIntoGUI(stack, x + width - 18, y + 2);
+                    itemRenderer.renderItemIntoGUI(Minecraft.getMinecraft().fontRenderer, Minecraft.getMinecraft().getTextureManager(), stack, x + width - 18, y + 2);
                 }
             };
         }
 
         public static DropdownBoxEntry.SelectionTopCellElement<Block> ofBlockObject(Block block) {
-            return new DropdownBoxEntry.DefaultSelectionTopCellElement<Block>(block, BLOCK_FUNCTION, i -> Block.REGISTRY.getKey(i).toString()) {
+            return new DropdownBoxEntry.DefaultSelectionTopCellElement<Block>(block, BLOCK_FUNCTION, i -> Block.blockRegistry.getObject(i).toString()) {
                 @Override
                 public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
-                    textFieldWidget.x = x + 4;
-                    textFieldWidget.y = y + 6;
+                    textFieldWidget.xPosition = x + 4;
+                    textFieldWidget.yPosition = y + 6;
                     textFieldWidget.width = (width - 4 - 20);
                     textFieldWidget.setEnabled(getParent().isEditable());
                     textFieldWidget.setTextColor(getPreferredTextColor());
-                    textFieldWidget.func_146194_f();
-                    RenderItem itemRenderer = Minecraft.getInstance().getItemRenderer();
+                    textFieldWidget.drawTextBox();
+                    RenderItem itemRenderer = RenderItem.getInstance();
                     ItemStack stack = hasConfigError() ? BARRIER : new ItemStack(getValue());
-                    itemRenderer.renderItemIntoGUI(stack, x + width - 18, y + 2);
+                    itemRenderer.renderItemIntoGUI(Minecraft.getMinecraft().fontRenderer, Minecraft.getMinecraft().getTextureManager(), stack, x + width - 18, y + 2);
                 }
             };
         }
@@ -333,7 +302,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
             return new DropdownBoxEntry.DefaultSelectionCellCreator<ResourceLocation>() {
                 @Override
                 public DropdownBoxEntry.SelectionCellElement<ResourceLocation> create(ResourceLocation selection) {
-                    ItemStack s = new ItemStack((Item) Item.REGISTRY.get(selection));
+                    ItemStack s = new ItemStack((Item) Item.itemRegistry.getObject(selection));
                     return new DropdownBoxEntry.DefaultSelectionCellElement<ResourceLocation>(selection, toStringFunction) {
                         @Override
                         public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
@@ -345,9 +314,9 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                             boolean b = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
                             if (b)
                                 drawRect(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
-                            Minecraft.getInstance().fontRenderer.drawStringWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
-                            RenderItem itemRenderer = Minecraft.getInstance().getItemRenderer();
-                            itemRenderer.renderItemIntoGUI(s, x + 4, y + 2);
+                            Minecraft.getMinecraft().fontRenderer.drawStringWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
+                            RenderItem itemRenderer = RenderItem.getInstance();
+                            itemRenderer.renderItemIntoGUI(Minecraft.getMinecraft().fontRenderer, Minecraft.getMinecraft().getTextureManager(), s, x + 4, y + 2);
                         }
                     };
                 }
@@ -382,7 +351,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
             return new DropdownBoxEntry.DefaultSelectionCellCreator<ResourceLocation>() {
                 @Override
                 public DropdownBoxEntry.SelectionCellElement<ResourceLocation> create(ResourceLocation selection) {
-                    ItemStack s = new ItemStack((Block) Block.REGISTRY.get(selection));
+                    ItemStack s = new ItemStack((Block) Block.blockRegistry.getObject(selection));
                     return new DropdownBoxEntry.DefaultSelectionCellElement<ResourceLocation>(selection, toStringFunction) {
                         @Override
                         public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
@@ -394,9 +363,9 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                             boolean b = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
                             if (b)
                                 drawRect(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
-                            Minecraft.getInstance().fontRenderer.drawStringWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
-                            RenderItem itemRenderer = Minecraft.getInstance().getItemRenderer();
-                            itemRenderer.renderItemIntoGUI(s, x + 4, y + 2);
+                            Minecraft.getMinecraft().fontRenderer.drawStringWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
+                            RenderItem itemRenderer = RenderItem.getInstance();
+                            itemRenderer.renderItemIntoGUI(Minecraft.getMinecraft().fontRenderer, Minecraft.getMinecraft().getTextureManager(), s, x + 4, y + 2);
                         }
                     };
                 }
@@ -427,7 +396,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
         }
 
         public static DropdownBoxEntry.SelectionCellCreator<Item> ofItemObject(int cellHeight, int cellWidth, int maxItems) {
-            return new DropdownBoxEntry.DefaultSelectionCellCreator<Item>(i -> Item.REGISTRY.getKey(i).toString()) {
+            return new DropdownBoxEntry.DefaultSelectionCellCreator<Item>(i -> Item.itemRegistry.getObject(i).toString()) {
                 @Override
                 public DropdownBoxEntry.SelectionCellElement<Item> create(Item selection) {
                     ItemStack s = new ItemStack(selection);
@@ -442,9 +411,9 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                             boolean b = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
                             if (b)
                                 drawRect(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
-                            Minecraft.getInstance().fontRenderer.drawStringWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
-                            RenderItem itemRenderer = Minecraft.getInstance().getItemRenderer();
-                            itemRenderer.renderItemIntoGUI(s, x + 4, y + 2);
+                            Minecraft.getMinecraft().fontRenderer.drawStringWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
+                            RenderItem itemRenderer = RenderItem.getInstance();
+                            itemRenderer.renderItemIntoGUI(Minecraft.getMinecraft().fontRenderer, Minecraft.getMinecraft().getTextureManager(), s, x + 4, y + 2);
                         }
                     };
                 }
@@ -475,7 +444,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
         }
 
         public static DropdownBoxEntry.SelectionCellCreator<Block> ofBlockObject(int cellHeight, int cellWidth, int maxItems) {
-            return new DropdownBoxEntry.DefaultSelectionCellCreator<Block>(i -> Block.REGISTRY.getKey(i).toString()) {
+            return new DropdownBoxEntry.DefaultSelectionCellCreator<Block>(i -> Block.blockRegistry.getObject(i).toString()) {
                 @Override
                 public DropdownBoxEntry.SelectionCellElement<Block> create(Block selection) {
                     ItemStack s = new ItemStack(selection);
@@ -490,9 +459,9 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                             boolean b = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
                             if (b)
                                 drawRect(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
-                            Minecraft.getInstance().fontRenderer.drawStringWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
-                            RenderItem itemRenderer = Minecraft.getInstance().getItemRenderer();
-                            itemRenderer.renderItemIntoGUI(s, x + 4, y + 2);
+                            Minecraft.getMinecraft().fontRenderer.drawStringWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
+                            RenderItem itemRenderer = RenderItem.getInstance();
+                            itemRenderer.renderItemIntoGUI(Minecraft.getMinecraft().fontRenderer, Minecraft.getMinecraft().getTextureManager(), s, x + 4, y + 2);
                         }
                     };
                 }

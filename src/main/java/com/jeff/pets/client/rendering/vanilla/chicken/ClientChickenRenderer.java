@@ -1,38 +1,36 @@
 package com.jeff.pets.client.rendering.vanilla.chicken;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
-import com.jeff.pets.mob.vanilla.passive.ClientChicken;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.entity.Entity; import net.minecraft.client.renderer.entity.RenderManager; import com.jeff.pets.client.PetsClientInitializer;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientChickenRenderer extends PetRenderer<ClientChicken, ClientChickenModel> {
+public class ClientChickenRenderer extends PetRenderer {
 
-    public ClientChickenRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientChickenModel(), 0.3F);
+    public ClientChickenRenderer(RenderManager renderManager, PetsClientInitializer.Context context) {
+        super(new ClientChickenModel(), 0.3F);
     }
 
     @Override
-    public ResourceLocation getEntityTexture(Entity __e) {
-        ClientChicken livingEntityRenderState = (ClientChicken) __e;
+    public ResourceLocation getEntityTexture( final Entity livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/chicken.png");
     }
 
     @Override
-    public void preRenderCallback(EntityLivingBase __e, float f) {
-        ClientChicken state = (ClientChicken) __e;
+    public void preRenderCallback( final EntityLivingBase state, float f) {
         if (CONFIG.isBaby) {
-            net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            GL11.glScalef(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    protected float handleRotationFloat(EntityLivingBase __e, float partialTicks) {
-        ClientChicken livingBase = (ClientChicken) __e;
+    protected float handleRotationFloat(EntityLivingBase livingBase, float partialTicks) {
         float f = (livingBase.ticksExisted + partialTicks) * 0.4F;
         return (MathHelper.sin(f) + 1.0F) * 0.2f;
     }
 }
+

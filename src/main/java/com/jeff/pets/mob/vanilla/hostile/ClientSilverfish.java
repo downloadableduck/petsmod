@@ -19,7 +19,7 @@ public class ClientSilverfish extends GroundPet {
     }
 
     @Override
-    protected String getAmbientSound() {
+    protected String getLivingSound() {
         return "mob.silverfish.say";
     }
 }

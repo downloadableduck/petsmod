@@ -3,7 +3,6 @@ package com.jeff.pets.mob.vanilla.boss;
 import com.jeff.pets.CanFly;
 import com.jeff.pets.client.Math2;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 
 @CanFly
@@ -29,13 +28,13 @@ public class ClientEnderDragon extends FlyingPet {
     }
 
     @Override
-    protected String getAmbientSound() {
+    protected String getLivingSound() {
         return "mob.enderdragon.wings";
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void onUpdate() {
+        super.onUpdate();
         this.oFlapTime = this.flapTime;
         float g = 0.2F / ((float) this.motionY * 10.0F + 1.0F);
         g *= (float) Math.pow(2.0F, this.motionY);
@@ -52,7 +51,7 @@ public class ClientEnderDragon extends FlyingPet {
         int k = this.posPointer - i - 1 & 63;
         double[] ds = new double[3];
         double d = this.positions[j][0];
-        double e = MathHelper.wrapDegrees(this.positions[k][0] - d);
+        double e = net.minecraft.util.MathHelper.wrapAngleTo180_double(this.positions[k][0] - d);
         ds[0] = d + e * (double) f;
         d = this.positions[j][1];
         e = this.positions[k][1] - d;

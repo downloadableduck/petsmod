@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.custom.aquatic.koi;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.aquatic.Koi;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.Entity; import net.minecraft.client.renderer.entity.RenderManager; import com.jeff.pets.client.PetsClientInitializer;
 
 public class KoiModel extends PetModel {
     private final ModelRenderer body;
@@ -82,7 +82,7 @@ public class KoiModel extends PetModel {
     }
 
     @Override
-    public void render(Entity entity, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
+    public void render(net.minecraft.entity.Entity entity, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
         body.render(alpha);
     }
 

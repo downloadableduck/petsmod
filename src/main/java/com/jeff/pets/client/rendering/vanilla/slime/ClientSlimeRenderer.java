@@ -1,24 +1,23 @@
 package com.jeff.pets.client.rendering.vanilla.slime;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
-import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
 import net.minecraft.client.model.ModelSlime;
+import net.minecraft.entity.Entity; import net.minecraft.client.renderer.entity.RenderManager; import com.jeff.pets.client.PetsClientInitializer;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSlimeRenderer extends PetRenderer<ClientSlime, ModelSlime> {
+public class ClientSlimeRenderer extends PetRenderer {
 
-    public ClientSlimeRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ModelSlime(16), 0.75f);
-        this.addLayer(new LayerSlimeGel(this));
+    public ClientSlimeRenderer(RenderManager renderManager, PetsClientInitializer.Context context) {
+        super(new ModelSlime(16), 0.75f);
+        this.setPetLayer(new LayerSlimeGel(this));
     }
 
     @Override
-    public void preRenderCallback(EntityLivingBase __e, float f) {
-        ClientSlime slimeRenderState = (ClientSlime) __e;
+    public void preRenderCallback( final EntityLivingBase slimeRenderState, float f) {
         int slimeScale;
         switch (CONFIG.slimeSkin) {
             case "small":
@@ -34,13 +33,13 @@ public class ClientSlimeRenderer extends PetRenderer<ClientSlime, ModelSlime> {
                 slimeScale = 1;
                 break;
         }
-        net.minecraft.client.renderer.GlStateManager.scalef(slimeScale, slimeScale, slimeScale);
+        GL11.glScalef(slimeScale, slimeScale, slimeScale);
 
     }
 
     @Override
-    public ResourceLocation getEntityTexture(Entity __e) {
-        ClientSlime livingEntityRenderState = (ClientSlime) __e;
+    public ResourceLocation getEntityTexture( final Entity livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/slime/slime.png");
     }
 }
+

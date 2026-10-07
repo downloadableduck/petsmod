@@ -19,7 +19,7 @@ public class ClientIronGolem extends GroundPet {
     }
 
     @Override
-    protected String getAmbientSound() {
+    protected String getLivingSound() {
         return "mob.irongolem.walk";
     }
 }

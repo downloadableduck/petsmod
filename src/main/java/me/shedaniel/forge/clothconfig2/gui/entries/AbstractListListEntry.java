@@ -1,6 +1,7 @@
 package me.shedaniel.forge.clothconfig2.gui.entries;
 
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
  * @param <SELF> the "curiously recurring template pattern" type parameter
  * @see BaseListEntry
  */
-
+@SideOnly(Side.CLIENT)
 public abstract class AbstractListListEntry<T, C extends AbstractListListEntry.AbstractListCell<T, C, SELF>, SELF extends AbstractListListEntry<T, C, SELF>> extends BaseListEntry<T, C, SELF> {
 
     protected final BiFunction<T, SELF, C> createNewCell;

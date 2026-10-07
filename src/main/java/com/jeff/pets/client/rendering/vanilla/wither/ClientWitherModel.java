@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.vanilla.wither;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.Entity; import net.minecraft.client.renderer.entity.RenderManager; import com.jeff.pets.client.PetsClientInitializer;
 import net.minecraft.entity.EntityLivingBase;
 
 import java.util.Arrays;
@@ -66,9 +66,10 @@ public class ClientWitherModel extends ModelBase {
     }
 
     @Override
-    public void render(Entity wither, float f, float g, float h, float i, float j, float k) {
+    public void render( final Entity wither, float f, float g, float h, float i, float j, float k) {
         for (ModelRenderer head : this.parts()) {
             head.render(k);
         }
     }
 }
+

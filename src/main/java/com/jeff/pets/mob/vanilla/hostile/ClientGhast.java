@@ -21,7 +21,7 @@ public class ClientGhast extends FlyingPet {
     }
 
     @Override
-    protected String getAmbientSound() {
+    protected String getLivingSound() {
         return "mob.ghast.moan";
     }
 }

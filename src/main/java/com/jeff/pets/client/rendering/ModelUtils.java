@@ -2,7 +2,6 @@ package com.jeff.pets.client.rendering;
 
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 
 public class ModelUtils {
@@ -13,20 +12,6 @@ public class ModelUtils {
         ModelRenderer5.rotateAngleY = (bl ? 0.6F : -0.6F) + ModelRenderer3.rotateAngleY;
         ModelRenderer4.rotateAngleX = (float) (-Math.PI / 2) + ModelRenderer3.rotateAngleX + 0.1F;
         ModelRenderer5.rotateAngleX = -1.5F + ModelRenderer3.rotateAngleX;
-    }
-
-    public static void animateCrossbowCharge(ModelRenderer ModelRenderer, ModelRenderer ModelRenderer2, EntityLivingBase livingEntity, boolean bl) {
-        ModelRenderer ModelRenderer3 = bl ? ModelRenderer : ModelRenderer2;
-        ModelRenderer ModelRenderer4 = bl ? ModelRenderer2 : ModelRenderer;
-        ModelRenderer3.rotateAngleY = bl ? -0.8F : 0.8F;
-        ModelRenderer3.rotateAngleX = -0.97079635F;
-        ModelRenderer4.rotateAngleX = ModelRenderer3.rotateAngleX;
-        net.minecraft.item.ItemStack activeItem = livingEntity.func_70694_bm();
-        float f = activeItem != null ? (float) activeItem.getMaxStackSize() : 1.0F;
-        float g = MathHelper.clamp(livingEntity.getSwingProgress(0.0F) * f, 0.0F, f);
-        float h = g / f;
-        ModelRenderer4.rotateAngleY = (float) MathHelper.clampedLerp(h, 0.4D, 0.85D) * (bl ? 1 : -1);
-        ModelRenderer4.rotateAngleX = (float) MathHelper.clampedLerp(h, ModelRenderer4.rotateAngleX, -((float) Math.PI / 2));
     }
 
     public static <T extends EntityLiving> void swingWeaponDown(ModelRenderer ModelRenderer, ModelRenderer ModelRenderer2, T mob, float f, float g) {

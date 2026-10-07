@@ -1,17 +1,18 @@
 package me.shedaniel.forge.clothconfig2.impl;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.shedaniel.forge.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.forge.clothconfig2.api.ConfigCategory;
 import me.shedaniel.forge.clothconfig2.api.Pair;
 import net.minecraft.util.ResourceLocation;
-
 
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-
+@SideOnly(Side.CLIENT)
 public class ConfigCategoryImpl implements ConfigCategory {
 
     private final Supplier<List<Pair<String, Object>>> listSupplier;

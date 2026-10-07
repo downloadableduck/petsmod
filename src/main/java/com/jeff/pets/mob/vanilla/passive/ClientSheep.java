@@ -20,7 +20,7 @@ public class ClientSheep extends GroundPet {
     }
 
     @Override
-    protected String getAmbientSound() {
+    protected String getLivingSound() {
         return "mob.sheep.say";
     }
 }

@@ -1,11 +1,12 @@
 package me.shedaniel.forge.clothconfig2.gui.entries;
 
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 import java.util.Optional;
 import java.util.function.Supplier;
 
-
+@SideOnly(Side.CLIENT)
 public abstract class BaseListCell {
 
     private Supplier<Optional<String>> errorSupplier;

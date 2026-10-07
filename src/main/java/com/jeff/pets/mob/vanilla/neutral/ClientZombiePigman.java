@@ -19,7 +19,7 @@ public class ClientZombiePigman extends GroundPet {
     }
 
     @Override
-    protected String getAmbientSound() {
+    protected String getLivingSound() {
         return "mob.zombiepig.zpig";
     }
 }

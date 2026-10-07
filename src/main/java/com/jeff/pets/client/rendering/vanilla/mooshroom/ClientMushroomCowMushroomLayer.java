@@ -1,66 +1,63 @@
 package com.jeff.pets.client.rendering.vanilla.mooshroom;
 
-import net.minecraft.entity.EntityLivingBase;
-import com.jeff.pets.mob.vanilla.passive.ClientMooshroom;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
+import com.jeff.pets.client.rendering.PetLayer;
+import com.jeff.pets.client.rendering.PetRenderer;
+import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelCow;
-import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import org.lwjgl.opengl.GL11;
 
+import java.util.Objects;
+
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientMushroomCowMushroomLayer implements LayerRenderer {
-    private final RenderLiving renderer;
+/**
+ * Draws the mushroom caps on a mooshroom's back and head. 1.7.10 has no
+ * {@code LayerRenderer}, no {@code BlockRendererDispatcher} and no {@code IBlockState};
+ * vanilla 1.7.10's {@code RenderMooshroom#renderEquippedItems} instead calls
+ * {@code RenderBlocks#renderBlockAsItem}, which is what this mirrors.
+ */
+public class ClientMushroomCowMushroomLayer implements PetLayer {
+    private final PetRenderer parent;
 
-    public ClientMushroomCowMushroomLayer(RenderLiving renderLayerParent, BlockRendererDispatcher blockRenderDispatcher) {
-        this.renderer = renderLayerParent;
+    public ClientMushroomCowMushroomLayer(PetRenderer parent) {
+        this.parent = parent;
     }
 
     @Override
-    public void render(EntityLivingBase __e, float p_212842_2_, float p_212842_3_, float p_212842_4_, float p_212842_5_, float p_212842_6_, float p_212842_7_, float p_212842_8_) {
-        ClientMooshroom p_212842_1_ = (ClientMooshroom) __e;
-        if (!__e.isChild() && !__e.isInvisible()) {
-            IBlockState blockstate = CONFIG.mooshroomSkin.equals("brown") ? Blocks.BROWN_MUSHROOM.getDefaultState() : Blocks.RED_MUSHROOM.getDefaultState();
-            this.renderer.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-            GlStateManager.enableCull();
-            GlStateManager.cullFace(GL11.GL_FRONT);
-            GlStateManager.pushMatrix();
-            GlStateManager.scalef(1.0F, -1.0F, 1.0F);
-            GlStateManager.translatef(0.2F, 0.35F, 0.5F);
-            GlStateManager.rotatef(42.0F, 0.0F, 1.0F, 0.0F);
-            BlockRendererDispatcher blockrendererdispatcher = Minecraft.getInstance().getBlockRendererDispatcher();
-            GlStateManager.pushMatrix();
-            GlStateManager.translatef(-0.5F, -0.5F, 0.5F);
-            blockrendererdispatcher.renderBlockBrightness(blockstate, 1.0F);
-            GlStateManager.popMatrix();
-            GlStateManager.pushMatrix();
-            GlStateManager.translatef(0.1F, 0.0F, -0.6F);
-            GlStateManager.rotatef(42.0F, 0.0F, 1.0F, 0.0F);
-            GlStateManager.translatef(-0.5F, -0.5F, 0.5F);
-            blockrendererdispatcher.renderBlockBrightness(blockstate, 1.0F);
-            GlStateManager.popMatrix();
-            GlStateManager.popMatrix();
-            GlStateManager.pushMatrix();
-            ((ModelCow) this.renderer.getMainModel()).head.postRender(0.0625F);
-            GlStateManager.scalef(1.0F, -1.0F, 1.0F);
-            GlStateManager.translatef(0.0F, 0.7F, -0.2F);
-            GlStateManager.rotatef(12.0F, 0.0F, 1.0F, 0.0F);
-            GlStateManager.translatef(-0.5F, -0.5F, 0.5F);
-            blockrendererdispatcher.renderBlockBrightness(blockstate, 1.0F);
-            GlStateManager.popMatrix();
-            GlStateManager.cullFace(GL11.GL_BACK);
-            GlStateManager.disableCull();
+    public void render(EntityLivingBase mooshroom, float limbSwing, float limbSwingAmount, float ageInTicks,
+                       float netHeadYaw, float headPitch, float scale) {
+        if (mooshroom.isChild() || mooshroom.isInvisible()) {
+            return;
         }
-    }
 
-    @Override
-    public boolean shouldCombineTextures() {
-        return false;
+        Block mushroom = Objects.equals(CONFIG.mooshroomSkin, "brown") ? Blocks.brown_mushroom : Blocks.red_mushroom;
+
+        this.parent.bindTexturePublic(TextureMap.locationBlocksTexture);
+        GL11.glEnable(GL11.GL_CULL_FACE);
+        GL11.glCullFace(GL11.GL_FRONT);
+
+        GL11.glPushMatrix();
+        GL11.glScalef(1.0F, -1.0F, 1.0F);
+        GL11.glTranslatef(0.2F, 0.35F, 0.5F);
+        GL11.glRotatef(42.0F, 0.0F, 1.0F, 0.0F);
+        this.parent.getRenderBlocks().renderBlockAsItem(mushroom, 0, 1.0F);
+        GL11.glTranslatef(0.1F, 0.0F, -0.6F);
+        GL11.glRotatef(42.0F, 0.0F, 1.0F, 0.0F);
+        this.parent.getRenderBlocks().renderBlockAsItem(mushroom, 0, 1.0F);
+        GL11.glPopMatrix();
+
+        GL11.glPushMatrix();
+        ((ModelCow) this.parent.getMainModel()).head.postRender(0.0625F);
+        GL11.glScalef(1.0F, -1.0F, 1.0F);
+        GL11.glTranslatef(0.0F, 0.7F, -0.2F);
+        GL11.glRotatef(12.0F, 0.0F, 1.0F, 0.0F);
+        this.parent.getRenderBlocks().renderBlockAsItem(mushroom, 0, 1.0F);
+        GL11.glPopMatrix();
+
+        GL11.glCullFace(GL11.GL_BACK);
+        GL11.glDisable(GL11.GL_CULL_FACE);
     }
 }

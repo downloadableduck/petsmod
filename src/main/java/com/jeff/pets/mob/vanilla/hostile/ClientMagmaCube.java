@@ -20,7 +20,7 @@ public class ClientMagmaCube extends SlimeLikePet {
     }
 
     @Override
-    protected String getAmbientSound() {
+    protected String getLivingSound() {
         return "mob.magmacube.small";
     }
 }

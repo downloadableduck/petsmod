@@ -1,9 +1,10 @@
 package com.jeff.pets.client.rendering.custom.aquatic.stingray;
 
+import com.jeff.pets.client.Math2;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.aquatic.Stingray;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.Entity; import net.minecraft.client.renderer.entity.RenderManager; import com.jeff.pets.client.PetsClientInitializer;
 
 public class StingrayModel extends PetModel {
     private final ModelRenderer root;
@@ -42,7 +43,7 @@ public class StingrayModel extends PetModel {
     }
 
     @Override
-    public void render(Entity entity, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
+    public void render(net.minecraft.entity.Entity entity, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
         root.render(alpha);
     }
 
@@ -56,7 +57,7 @@ public class StingrayModel extends PetModel {
     public void setRotationAngles(float f, float g, float m, float k, float p, float o, Entity entity) {
         Stingray state = (Stingray) entity;
         float partialTick = m;
-        float flapTime = (float) net.minecraft.util.MathHelper.clampedLerp(partialTick, state.oFlap, state.flap);
+        float flapTime = (float) Math2.clampedLerp(partialTick, state.oFlap, state.flap);
         if (state.limbSwingAmount > 0) {
             float anim = flapTime * 7.448451F * ((float) Math.PI / 180F);
             this.left_fin.rotateAngleZ = net.minecraft.util.MathHelper.cos(anim) * 16.0F * ((float) Math.PI / 180F);

@@ -1,23 +1,24 @@
 package me.shedaniel.forge.clothconfig2.gui;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiYesNo;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ChatComponentTranslation;
 
-
 import java.util.Random;
 
-
+@SideOnly(Side.CLIENT)
 public class ClothRequiresRestartScreen extends GuiYesNo {
 
     public ClothRequiresRestartScreen(GuiScreen parent) {
         super((t, u) -> {
             if (t)
-                Minecraft.getInstance().shutdown();
+                Minecraft.getMinecraft().shutdown();
             else
-                Minecraft.getInstance().displayGuiScreen(parent);
+                Minecraft.getMinecraft().displayGuiScreen(parent);
         }, new ChatComponentTranslation("text.cloth-config.restart_required").toString(), new ChatComponentTranslation("text.cloth-config.restart_required_sub").toString(), I18n.format("text.cloth-config.exit_minecraft"), I18n.format("text.cloth-config.ignore_restart"), new Random().nextInt());
     }
 

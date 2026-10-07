@@ -1,13 +1,17 @@
 package com.jeff.pets.client.rendering.vanilla.villager;
 
+import com.jeff.pets.client.rendering.PetLayer;
+import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.entity.EntityLivingBase;
-import com.jeff.pets.mob.vanilla.passive.ClientVillager;
-import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
-public class ClientVillagerProfessionLayer implements LayerRenderer {
-
+/**
+ * Villager profession overlay, drawn very slightly scaled up so it sits over the base
+ * texture without z-fighting. 1.7.10 has no {@code LayerRenderer}, so this is driven from
+ * {@link PetRenderer#renderModel}.
+ */
+public class ClientVillagerProfessionLayer implements PetLayer {
     public static final ResourceLocation ARMORER_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/armorer.png");
     public static final ResourceLocation BUTCHER_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/butcher.png");
     public static final ResourceLocation CARTOGRAPHER_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/cartographer.png");
@@ -23,23 +27,19 @@ public class ClientVillagerProfessionLayer implements LayerRenderer {
     public static final ResourceLocation TOOLSMITH_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/toolsmith.png");
     public static final ResourceLocation WEAPONSMITH_LOCATION = new ResourceLocation("minecraft", "textures/entity/villager/profession/weaponsmith.png");
 
-    private final RenderLiving renderer;
+    private final PetRenderer parent;
 
-    public ClientVillagerProfessionLayer(RenderLiving renderLayerParent) {
-        this.renderer = renderLayerParent;
+    public ClientVillagerProfessionLayer(PetRenderer parent) {
+        this.parent = parent;
     }
 
     @Override
-    public void render(EntityLivingBase __e, float f, float g, float h, float i, float j, float k, float l) {
-        ClientVillager villager = (ClientVillager) __e;
-        net.minecraft.client.renderer.GlStateManager.pushMatrix();
-        net.minecraft.client.renderer.GlStateManager.scalef(1.001f, 1.001f, 1.001f);
-        this.renderer.getMainModel().render(__e, f, g, i, j, k, l);
-        net.minecraft.client.renderer.GlStateManager.popMatrix();
-    }
-
-    @Override
-    public boolean shouldCombineTextures() {
-        return false;
+    public void render(EntityLivingBase villager, float limbSwing, float limbSwingAmount, float ageInTicks,
+                       float netHeadYaw, float headPitch, float scale) {
+        GL11.glPushMatrix();
+        GL11.glScalef(1.001F, 1.001F, 1.001F);
+        this.parent.getMainModel().render(villager, limbSwing, limbSwingAmount, ageInTicks,
+                netHeadYaw, headPitch, scale);
+        GL11.glPopMatrix();
     }
 }

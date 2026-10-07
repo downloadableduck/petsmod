@@ -1,21 +1,22 @@
 package me.shedaniel.forge.clothconfig2.gui.entries;
 
 import com.google.common.collect.Lists;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.shedaniel.forge.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.forge.math.Rectangle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
-
+import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
+@SideOnly(Side.CLIENT)
 public class SubCategoryListEntry extends TooltipListEntry<List<AbstractConfigListEntry>> {
 
     private static final ResourceLocation CONFIG_TEX = new ResourceLocation("cloth-config2", "textures/gui/cloth_config.png");
@@ -70,11 +71,11 @@ public class SubCategoryListEntry extends TooltipListEntry<List<AbstractConfigLi
         widget.rectangle.y = y;
         widget.rectangle.width = entryWidth + 19;
         widget.rectangle.height = 24;
-        Minecraft.getInstance().getTextureManager().bindTexture(CONFIG_TEX);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(CONFIG_TEX);
         RenderHelper.disableStandardItemLighting();
-        GlStateManager.color4f(1, 1, 1, 1);
+        GL11.glColor4f(1, 1, 1, 1);
         drawTexturedModalRect(x - 15, y + 4, 24, (widget.rectangle.contains(mouseX, mouseY) ? 18 : 0) + (expanded ? 9 : 0), 9, 9);
-        Minecraft.getInstance().fontRenderer.drawStringWithShadow(I18n.format(categoryName), x, y + 5, widget.rectangle.contains(mouseX, mouseY) ? 0xffe6fe16 : -1);
+        Minecraft.getMinecraft().fontRenderer.drawStringWithShadow(I18n.format(categoryName), x, y + 5, widget.rectangle.contains(mouseX, mouseY) ? 0xffe6fe16 : -1);
         for (AbstractConfigListEntry<?> entry : entries) {
             entry.setParent(getParent());
             entry.setScreen(getScreen());
@@ -126,7 +127,7 @@ public class SubCategoryListEntry extends TooltipListEntry<List<AbstractConfigLi
         widget.rectangle.y = y;
         widget.rectangle.width = entryWidth + 15;
         widget.rectangle.height = 24;
-        return widget.rectangle.contains(mouseX, mouseY) && getParent().isMouseOver(mouseX, mouseY);
+        return widget.rectangle.contains(mouseX, mouseY) && getParent().func_146115_a(mouseX, mouseY);
     }
 
     @Override
@@ -163,7 +164,7 @@ public class SubCategoryListEntry extends TooltipListEntry<List<AbstractConfigLi
         public boolean mouseClicked(double double_1, double double_2, int int_1) {
             if (rectangle.contains(double_1, double_2)) {
                 expanded = !expanded;
-                Minecraft.getInstance().getSoundHandler().play(PositionedSoundRecord.func_147674_a(new ResourceLocation("random.click"), 1.0F));
+                Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
                 return true;
             }
             return false;

@@ -3,6 +3,8 @@ package me.shedaniel.forge.clothconfig2.gui;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.AtomicDouble;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.shedaniel.forge.clothconfig2.api.*;
 import me.shedaniel.forge.clothconfig2.gui.entries.KeyCodeEntry;
 import me.shedaniel.forge.clothconfig2.gui.entries.TextFieldListEntry;
@@ -11,20 +13,20 @@ import me.shedaniel.forge.clothconfig2.impl.KeyInput;
 import me.shedaniel.forge.math.Rectangle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nullable;
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @SuppressWarnings({"deprecation", "rawtypes", "unchecked", "DuplicatedCode"})
+@SideOnly(Side.CLIENT)
 public abstract class ClothConfigScreen extends GuiScreen {
 
     private static final ResourceLocation CONFIG_TEX = new ResourceLocation("cloth-config2", "textures/gui/cloth_config.png");
@@ -60,7 +62,7 @@ public abstract class ClothConfigScreen extends GuiScreen {
     private String defaultFallbackCategory = null;
     private boolean alwaysShowTabs = false;
     private ModifierKeyCode startedKeyCode = null;
-    private final Minecraft minecraft = Minecraft.getInstance();
+    private final Minecraft minecraft = Minecraft.getMinecraft();
 
     @Deprecated
     public ClothConfigScreen(GuiScreen parent, String title, Map<String, List<Pair<String, Object>>> o, boolean confirmSave, boolean displayErrors, boolean smoothScrollingList, ResourceLocation defaultBackgroundLocation, Map<String, ResourceLocation> categoryBackgroundLocation) {
@@ -82,7 +84,7 @@ public abstract class ClothConfigScreen extends GuiScreen {
             list.forEach(entry -> entry.setScreen(this));
             tabbedEntries.put(tab, list);
         });
-        FontRenderer font = Minecraft.getInstance().fontRenderer;
+        FontRenderer font = Minecraft.getMinecraft().fontRenderer;
         this.tabs = tabbedEntries.keySet().stream().map(s -> new Pair<>(s, font.getStringWidth(I18n.format(s)) + 8)).collect(Collectors.toList());
         this.nextTabIndex = 0;
         this.selectedTabIndex = 0;
@@ -117,7 +119,7 @@ public abstract class ClothConfigScreen extends GuiScreen {
     }
 
     public boolean isTransparentBackground() {
-        return transparentBackground && Minecraft.getInstance().world != null;
+        return transparentBackground && Minecraft.getMinecraft().theWorld != null;
     }
 
     @Deprecated
@@ -137,8 +139,8 @@ public abstract class ClothConfigScreen extends GuiScreen {
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void updateScreen() {
+        super.updateScreen();
         if (listWidget != null) {
             listWidget.tick();
             for (AbstractConfigEntry child : listWidget.children())
@@ -217,9 +219,9 @@ public abstract class ClothConfigScreen extends GuiScreen {
         requiresRestart = false;
         if (openOtherScreens) {
             if (requiresRestart)
-                Minecraft.getInstance().displayGuiScreen(new ClothRequiresRestartScreen(parent));
+                Minecraft.getMinecraft().displayGuiScreen(new ClothRequiresRestartScreen(parent));
             else
-                Minecraft.getInstance().displayGuiScreen(parent);
+                Minecraft.getMinecraft().displayGuiScreen(parent);
         }
     }
 
@@ -235,9 +237,9 @@ public abstract class ClothConfigScreen extends GuiScreen {
         if (tabbedEntries.size() > selectedTabIndex)
             Lists.newArrayList(tabbedEntries.values()).get(selectedTabIndex).forEach(entry -> listWidget.children().add(entry));
         int buttonWidths = (width - 50 - 12) / 3;
-        this.buttons.add(quitButton = new GuiButton(ID_QUIT, 25, height - 26, buttonWidths, 20, edited ? I18n.format("text.cloth-config.cancel_discard") : I18n.format("gui.cancel")));
-        this.buttons.add(saveButton = new GuiButton(ID_SAVE, 25 + 6 + buttonWidths, height - 26, buttonWidths, 20, I18n.format("text.cloth-config.save_and_done")));
-        this.buttons.add(applyButton = new GuiButton(ID_APPLY, 25 + (6 + buttonWidths) * 2, height - 26, buttonWidths, 20, I18n.format("text.cloth-config.apply")));
+        this.buttonList.add(quitButton = new GuiButton(ID_QUIT, 25, height - 26, buttonWidths, 20, edited ? I18n.format("text.cloth-config.cancel_discard") : I18n.format("gui.cancel")));
+        this.buttonList.add(saveButton = new GuiButton(ID_SAVE, 25 + 6 + buttonWidths, height - 26, buttonWidths, 20, I18n.format("text.cloth-config.save_and_done")));
+        this.buttonList.add(applyButton = new GuiButton(ID_APPLY, 25 + (6 + buttonWidths) * 2, height - 26, buttonWidths, 20, I18n.format("text.cloth-config.apply")));
         saveButton.enabled = edited;
         if (isShowingTabs()) {
             tabsBounds = new Rectangle(0, 41, width, 24);
@@ -293,13 +295,13 @@ public abstract class ClothConfigScreen extends GuiScreen {
         for (ClothConfigTabButton tabButton : tabButtons)
             xx += tabButton.width + 2;
         if (xx > width - 40)
-            tabsScrollProgress = MathHelper.clamp(tabsScrollProgress, 0, getTabsMaximumScrolled() - width + 40);
+            tabsScrollProgress = MathHelper.clamp_double(tabsScrollProgress, 0, getTabsMaximumScrolled() - width + 40);
         else
             tabsScrollProgress = 0d;
     }
 
     @Override
-    public void render(int int_1, int int_2, float float_1) {
+    public void drawScreen(int int_1, int int_2, float float_1) {
         if (isShowingTabs()) {
             if (smoothScrollingTabs) {
                 double change = tabsScrollVelocity * 0.2f;
@@ -321,7 +323,7 @@ public abstract class ClothConfigScreen extends GuiScreen {
             }
             int xx = 24 - (int) tabsScrollProgress;
             for (ClothConfigTabButton tabButton : tabButtons) {
-                tabButton.x = xx;
+                tabButton.xPosition = xx;
                 xx += tabButton.width + 2;
             }
             if (buttonLeftTab != null)
@@ -351,8 +353,8 @@ public abstract class ClothConfigScreen extends GuiScreen {
                 widget.render(int_1, int_2, float_1);
             drawTabsShades(0, isTransparentBackground() ? 120 : 255);
             ScissorsHandler.INSTANCE.removeLastScissor();
-            buttonLeftTab.func_146112_a(minecraft, int_1, int_2);
-            buttonRightTab.func_146112_a(minecraft, int_1, int_2);
+            buttonLeftTab.drawButton(minecraft, int_1, int_2);
+            buttonRightTab.drawButton(minecraft, int_1, int_2);
         } else
             drawCenteredString(minecraft.fontRenderer, title, width / 2, 12, -1);
 
@@ -364,7 +366,7 @@ public abstract class ClothConfigScreen extends GuiScreen {
                         errors.add(((Optional<String>) entry.getConfigError()).get());
             if (errors.size() > 0) {
                 minecraft.getTextureManager().bindTexture(CONFIG_TEX);
-                GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                 String text = "Â§c" + (errors.size() == 1 ? errors.get(0) : I18n.format("text.cloth-config.multi_error"));
                 if (isTransparentBackground()) {
                     int stringWidth = minecraft.fontRenderer.getStringWidth(text);
@@ -375,7 +377,7 @@ public abstract class ClothConfigScreen extends GuiScreen {
             }
         } else if (!isEditable()) {
             minecraft.getTextureManager().bindTexture(CONFIG_TEX);
-            GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             String text = "Â§c" + I18n.format("text.cloth-config.not_editable");
             if (isTransparentBackground()) {
                 int stringWidth = minecraft.fontRenderer.getStringWidth(text);
@@ -384,8 +386,8 @@ public abstract class ClothConfigScreen extends GuiScreen {
             drawTexturedModalRect(10, 10, 0, 54, 3, 11);
             drawString(minecraft.fontRenderer, text, 18, 12, -1);
         }
-        super.render(int_1, int_2, float_1);
-        queuedTooltips.forEach(queuedTooltip -> drawHoveringText(queuedTooltip.getText(), queuedTooltip.getX(), queuedTooltip.getY()));
+        super.drawScreen(int_1, int_2, float_1);
+        queuedTooltips.forEach(queuedTooltip -> drawHoveringText(queuedTooltip.getText(), queuedTooltip.getX(), queuedTooltip.getY(), Minecraft.getMinecraft().fontRenderer));
         queuedTooltips.clear();
     }
 
@@ -394,52 +396,50 @@ public abstract class ClothConfigScreen extends GuiScreen {
     }
 
     private void drawTabsShades(int lightColor, int darkColor) {
-        GlStateManager.enableBlend();
-        GlStateManager.blendFuncSeparate(770, 771, 0, 1);
-        GlStateManager.disableAlphaTest();
-        GlStateManager.shadeModel(7425);
-        GlStateManager.disableTexture2D();
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer buffer = tessellator.getBuffer();
-        buffer.func_178970_b();
-        buffer.func_178961_b(0, 0, 0, lightColor);
-        buffer.func_178985_a(tabsBounds.getMinX() + 20, tabsBounds.getMinY() + 4, 0.0D, 0, 1f);
-        buffer.func_178985_a(tabsBounds.getMaxX() - 20, tabsBounds.getMinY() + 4, 0.0D, 1f, 1f);
-        buffer.func_178961_b(0, 0, 0, darkColor);
-        buffer.func_178985_a(tabsBounds.getMaxX() - 20, tabsBounds.getMinY(), 0.0D, 1f, 0);
-        buffer.func_178985_a(tabsBounds.getMinX() + 20, tabsBounds.getMinY(), 0.0D, 0, 0);
-        tessellator.draw();
-        buffer.func_178970_b();
-        buffer.func_178961_b(0, 0, 0, darkColor);
-        buffer.func_178985_a(tabsBounds.getMinX() + 20, tabsBounds.getMaxY(), 0.0D, 0, 1f);
-        buffer.func_178985_a(tabsBounds.getMaxX() - 20, tabsBounds.getMaxY(), 0.0D, 1f, 1f);
-        buffer.func_178961_b(0, 0, 0, lightColor);
-        buffer.func_178985_a(tabsBounds.getMaxX() - 20, tabsBounds.getMaxY() - 4, 0.0D, 1f, 0);
-        buffer.func_178985_a(tabsBounds.getMinX() + 20, tabsBounds.getMaxY() - 4, 0.0D, 0, 0);
-        tessellator.draw();
-        GlStateManager.enableTexture2D();
-        GlStateManager.shadeModel(7424);
-        GlStateManager.enableAlphaTest();
-        GlStateManager.disableBlend();
+        GL11.glEnable(GL11.GL_BLEND);
+        OpenGlHelper.glBlendFunc(770, 771, 0, 1);
+        GL11.glDisable(GL11.GL_ALPHA_TEST);
+        GL11.glShadeModel(7425);
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        Tessellator buffer = Tessellator.instance;
+        buffer.startDrawingQuads();
+        buffer.setColorRGBA(0, 0, 0, lightColor);
+        buffer.addVertexWithUV(tabsBounds.getMinX() + 20, tabsBounds.getMinY() + 4, 0.0D, 0, 1f);
+        buffer.addVertexWithUV(tabsBounds.getMaxX() - 20, tabsBounds.getMinY() + 4, 0.0D, 1f, 1f);
+        buffer.setColorRGBA(0, 0, 0, darkColor);
+        buffer.addVertexWithUV(tabsBounds.getMaxX() - 20, tabsBounds.getMinY(), 0.0D, 1f, 0);
+        buffer.addVertexWithUV(tabsBounds.getMinX() + 20, tabsBounds.getMinY(), 0.0D, 0, 0);
+        buffer.draw();
+        buffer.startDrawingQuads();
+        buffer.setColorRGBA(0, 0, 0, darkColor);
+        buffer.addVertexWithUV(tabsBounds.getMinX() + 20, tabsBounds.getMaxY(), 0.0D, 0, 1f);
+        buffer.addVertexWithUV(tabsBounds.getMaxX() - 20, tabsBounds.getMaxY(), 0.0D, 1f, 1f);
+        buffer.setColorRGBA(0, 0, 0, lightColor);
+        buffer.addVertexWithUV(tabsBounds.getMaxX() - 20, tabsBounds.getMaxY() - 4, 0.0D, 1f, 0);
+        buffer.addVertexWithUV(tabsBounds.getMinX() + 20, tabsBounds.getMaxY() - 4, 0.0D, 0, 0);
+        buffer.draw();
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glShadeModel(7424);
+        GL11.glEnable(GL11.GL_ALPHA_TEST);
+        GL11.glDisable(GL11.GL_BLEND);
     }
 
     @SuppressWarnings("deprecation")
     protected void overlayBackground(Rectangle rect, int red, int green, int blue, int startAlpha, int endAlpha) {
         if (isTransparentBackground())
             return;
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer buffer = tessellator.getBuffer();
+        Tessellator buffer = Tessellator.instance;
         minecraft.getTextureManager().bindTexture(getBackgroundLocation());
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         float f = 32.0F;
-        buffer.func_178970_b();
-        buffer.func_178961_b(red, green, blue, endAlpha);
-        buffer.func_178985_a(rect.getMinX(), rect.getMaxY(), 0.0D, rect.getMinX() / 32.0F, rect.getMaxY() / 32.0F);
-        buffer.func_178985_a(rect.getMaxX(), rect.getMaxY(), 0.0D, rect.getMaxX() / 32.0F, rect.getMaxY() / 32.0F);
-        buffer.func_178961_b(red, green, blue, startAlpha);
-        buffer.func_178985_a(rect.getMaxX(), rect.getMinY(), 0.0D, rect.getMaxX() / 32.0F, rect.getMinY() / 32.0F);
-        buffer.func_178985_a(rect.getMinX(), rect.getMinY(), 0.0D, rect.getMinX() / 32.0F, rect.getMinY() / 32.0F);
-        tessellator.draw();
+        buffer.startDrawingQuads();
+        buffer.setColorRGBA(red, green, blue, endAlpha);
+        buffer.addVertexWithUV(rect.getMinX(), rect.getMaxY(), 0.0D, rect.getMinX() / 32.0F, rect.getMaxY() / 32.0F);
+        buffer.addVertexWithUV(rect.getMaxX(), rect.getMaxY(), 0.0D, rect.getMaxX() / 32.0F, rect.getMaxY() / 32.0F);
+        buffer.setColorRGBA(red, green, blue, startAlpha);
+        buffer.addVertexWithUV(rect.getMaxX(), rect.getMinY(), 0.0D, rect.getMaxX() / 32.0F, rect.getMinY() / 32.0F);
+        buffer.addVertexWithUV(rect.getMinX(), rect.getMinY(), 0.0D, rect.getMinX() / 32.0F, rect.getMinY() / 32.0F);
+        buffer.draw();
     }
 
     public KeyCodeEntry getFocusedBinding() {
@@ -468,14 +468,14 @@ public abstract class ClothConfigScreen extends GuiScreen {
     }*/
 
     @Override
-    public void func_73864_a(int mouseX, int mouseY, int mouseButton) throws IOException {
+    public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
         if (this.focusedBinding != null && this.startedKeyCode != null && focusedBinding.isAllowMouse()) {
             if (startedKeyCode.isUnknown())
                 startedKeyCode.setKeyCode(KeyInput.of(KeyInput.Type.MOUSE, mouseButton));
             else if (focusedBinding.isAllowModifiers()) {
                 if (startedKeyCode.getType() == KeyInput.Type.KEYSYM) {
                     int code = startedKeyCode.getKeyCode().getKeyCode();
-                    if (Minecraft.IS_RUNNING_ON_MAC ? (code == 343 || code == 347) : (code == 341 || code == 345)) {
+                    if (Minecraft.isRunningOnMac ? (code == 343 || code == 347) : (code == 341 || code == 345)) {
                         Modifier modifier = startedKeyCode.getModifier();
                         startedKeyCode.setModifier(Modifier.of(modifier.hasAlt(), true, modifier.hasShift()));
                         startedKeyCode.setKeyCode(KeyInput.of(KeyInput.Type.MOUSE, mouseButton));
@@ -498,21 +498,21 @@ public abstract class ClothConfigScreen extends GuiScreen {
             if (this.focusedBinding != null)
                 return;
         }
-        super.func_73864_a(mouseX, mouseY, mouseButton);
+        super.mouseClicked(mouseX, mouseY, mouseButton);
         if (isShowingTabs()) {
             for (ClothConfigTabButton tabButton : tabButtons) {
-                if (tabButton.isMouseOver(mouseX, mouseY)) {
+                if (tabButton.func_146115_a(mouseX, mouseY)) {
                     tabButton.onClick();
                     return;
                 }
             }
-            if (buttonLeftTab != null && buttonLeftTab.func_146116_c(minecraft, mouseX, mouseY)) {
+            if (buttonLeftTab != null && buttonLeftTab.mousePressed(minecraft, mouseX, mouseY)) {
                 tabsScrollProgress = Integer.MIN_VALUE;
                 tabsScrollVelocity = 0d;
                 clampTabsScrolled();
                 return;
             }
-            if (buttonRightTab != null && buttonRightTab.func_146116_c(minecraft, mouseX, mouseY)) {
+            if (buttonRightTab != null && buttonRightTab.mousePressed(minecraft, mouseX, mouseY)) {
                 tabsScrollProgress = Integer.MAX_VALUE;
                 tabsScrollVelocity = 0d;
                 clampTabsScrolled();
@@ -524,7 +524,7 @@ public abstract class ClothConfigScreen extends GuiScreen {
     }
 
     @Override
-    protected void func_73869_a(char typedChar, int keyCode) {
+    protected void keyTyped(char typedChar, int keyCode) {
         if (listWidget != null) {
             for (AbstractConfigEntry entry : listWidget.children()) {
                 if (entry instanceof TextFieldListEntry) {
@@ -541,7 +541,7 @@ public abstract class ClothConfigScreen extends GuiScreen {
                 else if (focusedBinding.isAllowModifiers()) {
                     if (startedKeyCode.getType() == KeyInput.Type.KEYSYM) {
                         int code = startedKeyCode.getKeyCode().getKeyCode();
-                        if (Minecraft.IS_RUNNING_ON_MAC ? (code == 343 || code == 347) : (code == 341 || code == 345)) {
+                        if (Minecraft.isRunningOnMac ? (code == 343 || code == 347) : (code == 341 || code == 345)) {
                             Modifier modifier = startedKeyCode.getModifier();
                             startedKeyCode.setModifier(Modifier.of(modifier.hasAlt(), true, modifier.hasShift()));
                             startedKeyCode.setKeyCode(KeyInput.of(KeyInput.Type.KEYSYM, keyCode));
@@ -558,7 +558,7 @@ public abstract class ClothConfigScreen extends GuiScreen {
                             return;
                         }
                     }
-                    if (Minecraft.IS_RUNNING_ON_MAC ? (keyCode == 343 || keyCode == 347) : (keyCode == 341 || keyCode == 345)) {
+                    if (Minecraft.isRunningOnMac ? (keyCode == 343 || keyCode == 347) : (keyCode == 341 || keyCode == 345)) {
                         Modifier modifier = startedKeyCode.getModifier();
                         startedKeyCode.setModifier(Modifier.of(modifier.hasAlt(), true, modifier.hasShift()));
                         return;
@@ -588,8 +588,8 @@ public abstract class ClothConfigScreen extends GuiScreen {
             return;
         }
         try {
-            super.func_73869_a(typedChar, keyCode);
-        } catch (IOException e) {}
+            super.keyTyped(typedChar, keyCode);
+        } catch (Exception e) {}
     }
 
     public boolean allowCloseWithEscape() {
@@ -597,12 +597,12 @@ public abstract class ClothConfigScreen extends GuiScreen {
     }
 
     @Override
-    protected void func_146284_a(GuiButton button) {
+    protected void actionPerformed(GuiButton button) {
         if (button == quitButton) {
             if (confirmSave && edited)
                 minecraft.displayGuiScreen(new GuiYesNo(new QuitSaveConsumer(), new ChatComponentTranslation("text.cloth-config.quit_config").toString(), new ChatComponentTranslation("text.cloth-config.quit_config_sure").toString(), I18n.format("text.cloth-config.quit_discard"), I18n.format("gui.cancel"), 1));
             else {
-                button.func_146118_a(0, 0);
+                button.mouseReleased(0, 0);
                 minecraft.displayGuiScreen(parent);
             }
         } else if (button == saveButton || button == applyButton) {
@@ -631,7 +631,7 @@ public abstract class ClothConfigScreen extends GuiScreen {
         }
 
         @Override
-        public void func_73878_a(boolean p_confirmResult_1_, int p_confirmResult_2_) {
+        public void confirmClicked(boolean p_confirmResult_1_, int p_confirmResult_2_) {
             this.handle(p_confirmResult_1_);
         }
     }
@@ -670,7 +670,7 @@ public abstract class ClothConfigScreen extends GuiScreen {
         @Override
         public boolean mouseClicked(double double_1, double double_2, int int_1) {
             this.updateScrollingState(double_1, double_2, int_1);
-            if (!this.isMouseOver(double_1, double_2)) {
+            if (!this.func_146115_a(double_1, double_2)) {
                 return false;
             } else {
                 for (R entry : children()) {
@@ -690,9 +690,9 @@ public abstract class ClothConfigScreen extends GuiScreen {
         }
 
         @Override
-        protected void renderBackBackground(WorldRenderer buffer, Tessellator tessellator) {
+        protected void renderBackBackground(Tessellator tessellator) {
             if (!isTransparentBackground())
-                super.renderBackBackground(buffer, tessellator);
+                super.renderBackBackground(tessellator);
             else {
                 drawGradientRect(left, top, right, bottom, 0x68000000, 0x68000000);
             }

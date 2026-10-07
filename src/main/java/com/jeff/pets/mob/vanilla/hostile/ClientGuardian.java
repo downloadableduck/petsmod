@@ -21,7 +21,7 @@ public class ClientGuardian extends GroundPet {
     }
 
     @Override
-    protected String getAmbientSound() {
+    protected String getLivingSound() {
         return "mob.guardian.ambient";
     }
 }

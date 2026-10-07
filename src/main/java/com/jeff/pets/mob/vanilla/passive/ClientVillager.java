@@ -20,7 +20,7 @@ public class ClientVillager extends GroundPet {
     }
 
     @Override
-    protected String getAmbientSound() {
+    protected String getLivingSound() {
         return "mob.villager.idle";
     }
 }

@@ -1,7 +1,8 @@
 package me.shedaniel.forge.clothconfig2.impl.builders;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.shedaniel.forge.clothconfig2.api.AbstractConfigListEntry;
-
 
 import javax.annotation.Nullable;
 import java.util.Objects;
@@ -9,7 +10,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-
+@SideOnly(Side.CLIENT)
 public abstract class FieldBuilder<T, A extends AbstractConfigListEntry> {
     private final String fieldNameKey;
     private final String resetButtonKey;

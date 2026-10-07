@@ -1,22 +1,16 @@
 package com.jeff.pets.mob;
 
 import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.*;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
 /**
- * Abstract class that extends {@link EntityTameable}, providing multiple utilities
+ * Abstract class that extends {@link net.minecraft.entity.passive.EntityTameable}, providing multiple utilities
  * so that each class doesn't have to define the same logic. <p> When creating a custom entity,
  * always extend either {@link GroundPet}, {@link FlyingPet}, or {@link SlimeLikePet},
  * unless adding custom movement logic,
@@ -36,13 +30,12 @@ public abstract class AbstractPet extends EntityTameable {
 
     protected AbstractPet(World level) {
         super(level);
-        this.initEntityAI();
         this.setAIMoveSpeed(0.5f);
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
+        // 1.7.10 registers entity attributes in the constructor; the overridable
+        // registerAttributes() hook the 1.8 build overrode only arrived in 1.8.
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(8.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.23D);
+        this.initEntityAI();
     }
 
     public void initEntityAI() {
@@ -55,13 +48,6 @@ public abstract class AbstractPet extends EntityTameable {
         while (diff >= 180.0F) diff -= 360.0F;
 
         return start + pct * diff;
-    }
-
-    @Override
-    public void registerAttributes() {
-        super.registerAttributes();
-        this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(8);
-        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.23);
     }
 
     /**
@@ -84,46 +70,16 @@ public abstract class AbstractPet extends EntityTameable {
      * Used to define the entity's default ambient sound. For the uses of these last three
      * methods, please refer to {@link FlyingPet} and {@link GroundPet}.
      */
-    protected abstract String getAmbientSound();
-
-    /**
-     * Custom interactions.
-     * - Right clicking on a pet with an empty hand will let make hearts appear above it:
-     * <pre>
-     *     {@code if (this.isTamed() && player.getHeldItem() == null && !player.isSneaking()) {
-     *         this.world.addParticle(
-     *                 ParticleTypes.HEART,
-     *                 this.x,
-     *                 this.y + this.heartHeight(),
-     *                 this.z,
-     *                 5, 5, 5
-     *         );
-     *         return ActionResultType.SUCCESS;
-     *     }}</pre>
-     * - Shifting and right clicking on a pet with an empty hand will pick it up:
-     * <pre>
-     *     {@code if (this.isTamed() && player.getHeldItem() == null && player.isSneaking()) {
-     *         if (!this.isPassenger()) {
-     *             this.startRiding(player);
-     *             this.lookAt(player, 1f, 1f);
-     *             return ActionResultType.SUCCESS;
-     *         } else {
-     *             this.stopRiding();
-     *         }
-     *         return ActionResultType.SUCCESS;
-     *     }
-     *     }
-     * </pre>
-     *
-     * @return It's super method
-     */
     @Override
-    public boolean func_174825_a(EntityPlayer player, Vec3 pos) {
+    protected String getLivingSound() {
+        return null;
+    }
 
-        if (this.isTamed() && player.func_70694_bm() == null && !player.isSneaking()) {
-            this.world.func_175682_a(
-                    EnumParticleTypes.HEART,
-                    false,
+    @Override
+    public boolean interact(EntityPlayer player) {
+
+        if (this.isTamed() && player.getHeldItem() == null && !player.isSneaking()) {
+            this.worldObj.spawnParticle("heart",
                     this.posX,
                     this.posY + this.heartHeight(),
                     this.posZ,
@@ -132,32 +88,17 @@ public abstract class AbstractPet extends EntityTameable {
             return true;
         }
 
-        if (this.isTamed() && player.func_70694_bm() == null && player.isSneaking()) {
-            if (this.field_70153_n == null) {
-                this.func_70078_a(player);
-
-                //this.lookAt(player, 1f, 1f);
+        if (this.isTamed() && player.getHeldItem() == null && player.isSneaking()) {
+            if (!this.isRiding()) {
+                this.mountEntity(player);
                 return true;
             } else {
-                this.func_70078_a(null);
+                this.dismountEntity(this.getOwner());
             }
             return true;
         }
-        return super.func_174825_a(player, pos);
+        return super.interact(player);
     }
-
-    /**
-     * IMPORTANT: Allows the entity to exist on servers, if only in the {@code ClientLevel}.
-     * Never, under any circumstances, remove this method.
-     */
-    /*@Override
-    public Packet<?> getAddEntityPacket() {
-        if (this.world.isRemote()) {
-            return new SPacketSpawnObject(this);
-        } else {
-            return super.getAddEntityPacket();
-        }
-    }*/
 
     /**
      * Calls the previous abstract method so other classes extending this one don't have to.
@@ -182,23 +123,17 @@ public abstract class AbstractPet extends EntityTameable {
     }
 
     /**
-     * Easier way to call {@link EntityTameable#setCustomName} that takes a String rather than a {@link Component}
+     * Easier way to call {@link net.minecraft.entity.passive.EntityTameable#setCustomNameTag} that takes a String.
      */
     public void setName(String string) {
-        this.func_96094_a((string));
-    }
-
-    @Override
-    public EntityLivingBase getOwner() {
-        Entity owner = this.func_180492_cm();
-        return owner instanceof EntityLivingBase ? (EntityLivingBase) owner : null;
+        this.setCustomNameTag(string);
     }
 
     public void wander() {
         float speed = (float) (this.getAIMoveSpeed() - 0.35);
         float z = speed * this.randomZ;
 
-        float distance = this.getDistance(this.getOwner());
+        float distance = (float) this.getDistance(this.getOwnerEntity());
         float yVelo = (float) this.motionY;
 
         if (distance > 5) {
@@ -215,17 +150,15 @@ public abstract class AbstractPet extends EntityTameable {
             this.setVelocity(-speed, yVelo, -z);
         }
 
-        //this.lookAt(EntityAnchorArgument.Anchor.EYES, lookDir);
-
         double moveX = this.motionX;
         double moveZ = this.motionZ;
 
-        Vec3 lookDir = new Vec3(
+        Vec3 lookDir = Vec3.createVectorHelper(
                 this.posX + (moveX * 2),
                 this.posY + this.getEyeHeight(),
                 this.posZ + (moveZ * 2)
         );
-        this.getLookHelper().setLookPosition(lookDir.x, lookDir.y, lookDir.z, 1.0F, 10.0F);
+        this.getLookHelper().setLookPosition(lookDir.xCoord, lookDir.yCoord, lookDir.zCoord, 1.0F, 10.0F);
 
         if (moveX * moveX + moveZ * moveZ > 0.001) {
             float targetYaw = (float) (Math.atan2(-moveX, moveZ) * (180D / Math.PI));
@@ -236,14 +169,14 @@ public abstract class AbstractPet extends EntityTameable {
             this.renderYawOffset = smoothYaw;
         }
 
-        if (this.collidedHorizontally && this.onGround) {
+        if (this.isCollidedHorizontally && this.onGround) {
             this.jump();
         }
         if (!this.onGround) {
             this.setVelocity(this.motionX, this.motionY - 0.04, this.motionZ);
         }
-        double dx = lookDir.x - this.posX;
-        double dz = lookDir.z - this.posZ;
+        double dx = lookDir.xCoord- this.posX;
+        double dz = lookDir.zCoord - this.posZ;
         float targetYaw = (float) (Math.atan2(-dx, dz) * (180D / Math.PI));
 
         this.setYRot(targetYaw);
@@ -251,13 +184,33 @@ public abstract class AbstractPet extends EntityTameable {
         this.renderYawOffset = targetYaw;
     }
 
+/**
+     * 1.7.10 has no {@code getYRot()}/{@code setYRot()} accessors on {@link Entity};
+     * vanilla reads and writes the public {@code rotationYaw} field directly. These
+     * two helpers used to alias {@code renderYawOffset} instead, which left
+     * {@code rotationYaw} permanently at its spawn value. That field is what
+     * {@code Entity#moveRelative} uses to turn the AI's forward/strafe input into
+     * world-space velocity, and what {@code RenderLiving} uses for the body yaw, so
+     * aliasing it made pets slide along a fixed world axis and never face where they
+     * were heading. They now proxy {@code rotationYaw}, and the callers that also
+     * want the head to follow keep assigning {@code rotationYawHead} themselves.
+     */
     public float getYRot() {
-        return this.renderYawOffset;
+        return this.rotationYaw;
     }
 
     public void setYRot(float targetYaw) {
-        this.setRotationYawHead(targetYaw);
-        this.renderYawOffset = targetYaw;
+        this.rotationYaw = targetYaw;
+    }
+
+    /**
+     * Pets only ever live in the client world (see {@code Utils#summonPet}), so the
+     * distance-based despawn check that {@code updateAITasks()} performs would drop
+     * them permanently - the tick watcher only re-summons when the list is empty.
+     */
+    @Override
+    protected boolean canDespawn() {
+        return false;
     }
 
     private void reCalcPos() {
@@ -265,8 +218,19 @@ public abstract class AbstractPet extends EntityTameable {
         this.randomZ = (float) (Math.random() - 1);
     }
 
+    /**
+     * 1.8 added {@code Entity#getDistance(Entity)}; 1.7.10 only offers
+     * {@code getDistanceSqToEntity(Entity)}, so take the root to keep the original semantics.
+     */
+    public double getDistance(Entity entity) {
+        if (entity == null) {
+            return 0.0D;
+        }
+        return Math.sqrt(this.getDistanceSqToEntity(entity));
+    }
+
     public double horizontalDistance(Vec3 vec3) {
-        return Math.sqrt(vec3.x * vec3.x + vec3.z * vec3.z);
+        return Math.sqrt(vec3.xCoord * vec3.xCoord + vec3.zCoord * vec3.zCoord);
     }
 
     public void lookAt(final Entity entity, final float yMax, final float xMax) {
@@ -277,24 +241,43 @@ public abstract class AbstractPet extends EntityTameable {
             EntityLiving mob = (EntityLiving) entity;
             yd = mob.getEyeHeight() - this.getEyeHeight();
         } else {
-            yd = (entity.getBoundingBox().minY + entity.getBoundingBox().maxY) / 2.0F - this.getEyeHeight();
+            yd = (entity.boundingBox.minY + entity.boundingBox.maxY) / 2.0F - this.getEyeHeight();
         }
 
         double sd = Math.sqrt(xd * xd + zd * zd);
-        float yRotD = (float) (Math.atan2(zd, xd) * (double) (180F / (float) Math.PI)) - 90.0F;
-        float xRotD = (float) (-(Math.atan2(yd, sd) * (double) (180F / (float) Math.PI)));
+        float yRotD = (float) (Math.atan2((double) zd, (double) xd) * (double) (180F / (float) Math.PI)) - 90.0F;
+        float xRotD = (float) (-(Math.atan2((double) yd, (double) sd) * (double) (180F / (float) Math.PI)));
         this.rotationPitch = rotlerp(this.rotationPitch, xRotD, xMax);
         this.setYRot(rotlerp(this.getYRot(), yRotD, yMax));
-    }
-
-    @Override
-    public boolean func_70085_c(EntityPlayer player) {
-        return this.func_174825_a(player, new Vec3(this.posX, this.posY, this.posZ));
     }
 
     @Override
     public boolean isTamed() {
         return true;
     }
-}
 
+    /**
+     * 1.7.10 gates the entire "new" AI block behind this flag: when it is false,
+     * {@link EntityLivingBase#onLivingUpdate()} runs the legacy
+     * {@code updateEntityActionState()} instead, which skips the task system,
+     * the navigator, the move/look helpers and {@link #onUpdate()}.
+     * {@link EntityLiving} itself returns false, so every mob must opt in;
+     * without this the pets would only coast on their spawn velocity and then idle.
+     */
+    @Override
+    public boolean isAIEnabled() {
+        return true;
+    }
+
+    /**
+     * 1.7.10 already exposes the owner through a readable {@code getOwner()}, so this simply
+     * defers to the vanilla implementation instead of the SRG-only {@code func_180492_cm()}.
+     */
+    public EntityLivingBase getOwnerEntity() {
+        return super.getOwner();
+    }
+
+    public static float wrapDegrees(float value) {
+        return MathHelper.wrapAngleTo180_float(value);
+    }
+}

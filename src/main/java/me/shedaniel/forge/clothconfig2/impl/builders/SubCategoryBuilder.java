@@ -1,15 +1,16 @@
 package me.shedaniel.forge.clothconfig2.impl.builders;
 
 import com.google.common.collect.Lists;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.shedaniel.forge.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.forge.clothconfig2.gui.entries.SubCategoryListEntry;
-
 
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-
+@SideOnly(Side.CLIENT)
 public class SubCategoryBuilder extends FieldBuilder<Object, SubCategoryListEntry> implements List<AbstractConfigListEntry> {
 
     private final List<AbstractConfigListEntry> entries;

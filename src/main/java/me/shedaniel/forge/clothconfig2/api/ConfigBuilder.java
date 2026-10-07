@@ -1,14 +1,15 @@
 package me.shedaniel.forge.clothconfig2.api;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.shedaniel.forge.clothconfig2.impl.ConfigBuilderImpl;
 import me.shedaniel.forge.clothconfig2.impl.ConfigEntryBuilderImpl;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
-
 import java.util.function.Consumer;
 
-
+@SideOnly(Side.CLIENT)
 public interface ConfigBuilder {
 
     @SuppressWarnings("deprecation")

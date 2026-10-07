@@ -1,16 +1,16 @@
 package me.shedaniel.forge.clothconfig2.gui.entries;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.resources.I18n;
-
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import me.shedaniel.forge.clothconfig2.gui.entries.AbstractTextFieldListListEntry.AbstractTextFieldListCell;
 
-
+@SideOnly(Side.CLIENT)
 public class FloatListListEntry extends AbstractTextFieldListListEntry<Float, FloatListListEntry.FloatListCell, FloatListListEntry> {
 
     private float minimum, maximum;
@@ -50,7 +50,7 @@ public class FloatListListEntry extends AbstractTextFieldListListEntry<Float, Fl
         return this;
     }
 
-    public static class FloatListCell extends AbstractTextFieldListCell<Float, FloatListCell, FloatListListEntry> {
+    public static class FloatListCell extends AbstractTextFieldListListEntry.AbstractTextFieldListCell<Float, FloatListCell, FloatListListEntry> {
 
         public FloatListCell(Float value, FloatListListEntry listListEntry) {
             super(value, listListEntry);

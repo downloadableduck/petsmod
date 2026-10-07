@@ -3,7 +3,8 @@ package com.jeff.pets.client.rendering.custom.first.duck;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.Entity; import net.minecraft.client.renderer.entity.RenderManager; import com.jeff.pets.client.PetsClientInitializer;
+import net.minecraft.entity.EntityLivingBase;
 
 public class DuckModel extends PetModel {
 
@@ -69,7 +70,7 @@ public class DuckModel extends PetModel {
     }
 
     @Override
-    public void render(Entity entity, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
+    public void render(net.minecraft.entity.Entity entity, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
         root.render(alpha);
     }
 
@@ -86,13 +87,13 @@ public class DuckModel extends PetModel {
         this.head.rotateAngleX = j * ((float) Math.PI / 180F);
         this.head.rotateAngleY = i * ((float) Math.PI / 180F);
         float limbSwingAmount = state.limbSwingAmount;
-        float animationPos = state.field_70722_aY;
+        float animationPos = f;
         this.right_leg.rotateAngleX = net.minecraft.util.MathHelper.cos(animationPos * 0.6662F) * 1.4F * limbSwingAmount;
         this.left_leg.rotateAngleX = net.minecraft.util.MathHelper.cos(animationPos * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
         this.right_wing.rotateAngleZ = flapAngle;
         this.left_wing.rotateAngleZ = -flapAngle;
         //thing is weird af in 1.16.5 and below, base y is 15, base x is 0, base z is -4
-        if (state.field_70153_n != null) {
+        if (state.ridingEntity != null) {
             this.root.setRotationPoint(0.4F, 17.5F, -4.0F);
             this.right_leg.showModel = false;
             this.left_leg.showModel = false;
@@ -101,5 +102,11 @@ public class DuckModel extends PetModel {
             this.right_leg.showModel = true;
             this.left_leg.showModel = true;
         }
+    }
+
+    @Override
+    public void setLivingAnimations(EntityLivingBase entity, float f, float g, float h) {
+        this.right_leg.rotateAngleX = net.minecraft.util.MathHelper.cos(f * 0.6662F) * 1.4F * g;
+        this.left_leg.rotateAngleX = net.minecraft.util.MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g;
     }
 }

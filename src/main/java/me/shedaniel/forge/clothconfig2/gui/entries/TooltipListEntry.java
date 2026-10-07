@@ -1,15 +1,16 @@
 package me.shedaniel.forge.clothconfig2.gui.entries;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.shedaniel.forge.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.forge.clothconfig2.api.QueuedTooltip;
 import me.shedaniel.forge.math.Point;
-
 
 import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-
+@SideOnly(Side.CLIENT)
 public abstract class TooltipListEntry<T> extends AbstractConfigListEntry<T> {
 
     @Nullable
@@ -38,7 +39,7 @@ public abstract class TooltipListEntry<T> extends AbstractConfigListEntry<T> {
     }
 
     public boolean isMouseInside(int mouseX, int mouseY, int x, int y, int entryWidth, int entryHeight) {
-        return mouseX >= x && mouseY >= y && mouseX <= x + entryWidth && mouseY <= y + entryHeight && getParent().isMouseOver(mouseX, mouseY);
+        return mouseX >= x && mouseY >= y && mouseX <= x + entryWidth && mouseY <= y + entryHeight && getParent().func_146115_a(mouseX, mouseY);
     }
 
     public Optional<String[]> getTooltip() {

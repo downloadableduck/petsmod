@@ -1,6 +1,6 @@
 /*
  * This file is part of Cloth Config.
- * Copyright (C) 2020 - 2021 shedaniel
+ * Copyright (C) 2020 - 2021 me.shedaniel
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -37,7 +37,7 @@ public class Utils {
     }
 
     public static Path getConfigFolder() {
-        return new File(Minecraft.getInstance().gameDir.getAbsolutePath() + "/config/").toPath();
+        return new File(Minecraft.getMinecraft().mcDataDir.getAbsolutePath() + "/config/").toPath();
     }
 
     public static <V> V constructUnsafely(Class<V> cls) {

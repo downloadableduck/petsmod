@@ -1,21 +1,21 @@
 package me.shedaniel.forge.math.impl;
 
-import me.shedaniel.forge.compat.ScaledResolutionCompat;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.shedaniel.forge.math.Point;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-
 import org.lwjgl.input.Mouse;
 
-
+@SideOnly(Side.CLIENT)
 public class PointHelper {
     public static Point ofMouse() {
-        Minecraft client = Minecraft.getInstance();
-        ScaledResolution sr = ScaledResolutionCompat.get(client);
-        double scaledWidth = sr.func_78326_a();
-        double scaledHeight = sr.func_78328_b();
-        double mx = Mouse.getX() * scaledWidth / (double) client.field_71443_c;
-        double my = (client.field_71440_d - Mouse.getY()) * scaledHeight / (double) client.field_71443_c;
+        Minecraft client = Minecraft.getMinecraft();
+        ScaledResolution sr = new ScaledResolution(client, client.displayWidth, client.displayHeight);
+        double scaledWidth = sr.getScaledWidth();
+        double scaledHeight = sr.getScaledHeight();
+        double mx = Mouse.getX() * scaledWidth / (double) client.displayWidth;
+        double my = (client.displayHeight - Mouse.getY()) * scaledHeight / (double) client.displayWidth;
         return new Point(mx, my);
     }
 

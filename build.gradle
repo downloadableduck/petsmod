@@ -30,9 +30,23 @@ buildscript {
             name = 'forge'
             url = 'https://maven.minecraftforge.net/'
         }
+        maven {
+            name = "gtnh"
+            url = "https://nexus.gtnewhorizons.com/repository/releases/"
+        }
+        maven {
+            name = "forge-legacy"
+            url = "https://maven.minecraftforge.net/releases/"
+        }
+        maven {
+            name = "cleanroom"
+            url = "https://maven.cleanroommc.com"
+        }
+
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:' + project.forgeGradleVersion
+        classpath 'com.anatawa12.forge:ForgeGradle:1.2-1.0.12'
     }
 }
 
@@ -40,7 +54,8 @@ configurations {
     compile
 }
 
-apply plugin: 'net.minecraftforge.gradle.liteloader'
+apply plugin: 'forge'
+apply plugin: 'liteloader'
 apply plugin: 'idea'
 
 group = "com.jeff.pets" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -57,25 +72,22 @@ idea {
 }
 
 minecraft {
-    accessTransformers.add(file('src/main/resources/META-INF/accesstransformer.cfg'))
+    //accessTransformers.add(file('src/main/resources/META-INF/accesstransformer.cfg'))
     // these values are defined in the gradle.properties file, so that this file does not need to be altered
-    version = project.mcVersion
-    mappings = project.mcMappings
+    version = "1.7.10-10.13.4.1614-1.7.10"
     runDir = "run"
+
+    liteloader {
+        buildDir = "libs"
+    }
 }
 
 tasks.withType(JavaCompile).configureEach {task ->
     options.compilerArgs << "-Xmaxerrs" << "10000"
 }
 
-litemod {
-}
-
 jar {
     // The litemod task above generates the litemod.json dynamically, you can replace it with a resource if you want more control
-    from(sourceSets.main.resources.srcDirs) {
-        include 'litemod.json'
-    }
     archiveName = "pets-mod-" + project.version + "-" + project.mcVersion + "-lite" + project.build + ".litemod"
     archivesBaseName = "pets-mod"
 }
@@ -83,4 +95,8 @@ jar {
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8;
     targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+tasks.withType(Jar) {
+    archiveName = "pets-mod-${project.version}-${project.mcVersion}-lite${project.build}.litemod"
 }

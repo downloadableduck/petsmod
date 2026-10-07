@@ -1,14 +1,15 @@
 package me.shedaniel.forge.clothconfig2.gui.entries;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.resources.I18n;
-
 
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-
+@SideOnly(Side.CLIENT)
 public class EnumListEntry<T extends Enum<?>> extends SelectionListEntry<T> {
 
     public static final Function<Enum, String> DEFAULT_NAME_PROVIDER = t -> I18n.format(t instanceof Translatable ? ((Translatable) t).getKey() : t.toString());

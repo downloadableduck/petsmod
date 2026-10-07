@@ -1,16 +1,17 @@
 package me.shedaniel.forge.clothconfig2.impl;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.shedaniel.forge.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.forge.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.forge.clothconfig2.api.ModifierKeyCode;
 import me.shedaniel.forge.clothconfig2.gui.entries.DropdownBoxEntry;
 import me.shedaniel.forge.clothconfig2.impl.builders.*;
 
-
 import java.util.List;
 import java.util.UUID;
 
-
+@SideOnly(Side.CLIENT)
 public class ConfigEntryBuilderImpl implements ConfigEntryBuilder {
 
     private String resetButtonKey = "text.cloth-config.reset_value";

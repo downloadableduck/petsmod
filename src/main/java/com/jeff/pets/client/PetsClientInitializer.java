@@ -19,7 +19,6 @@ import com.jeff.pets.client.rendering.vanilla.donkey.ClientDonkeyRenderer;
 import com.jeff.pets.client.rendering.vanilla.elderguardian.ClientElderGuardianRenderer;
 import com.jeff.pets.client.rendering.vanilla.enderdragon.ClientEnderDragonRenderer;
 import com.jeff.pets.client.rendering.vanilla.enderman.ClientEndermanRenderer;
-import com.jeff.pets.client.rendering.vanilla.endermite.ClientEndermiteRenderer;
 import com.jeff.pets.client.rendering.vanilla.ghast.ClientGhastRenderer;
 import com.jeff.pets.client.rendering.vanilla.guardian.ClientGuardianRenderer;
 import com.jeff.pets.client.rendering.vanilla.horse.ClientHorseRenderer;
@@ -29,7 +28,6 @@ import com.jeff.pets.client.rendering.vanilla.mooshroom.ClientMooshroomRenderer;
 import com.jeff.pets.client.rendering.vanilla.pig.ClientPigRenderer;
 import com.jeff.pets.client.rendering.vanilla.rabbit.ClientRabbitRenderer;
 import com.jeff.pets.client.rendering.vanilla.sheep.ClientSheepRenderer;
-import com.jeff.pets.client.rendering.vanilla.shulker.ClientShulkerRenderer;
 import com.jeff.pets.client.rendering.vanilla.silverfish.ClientSilverfishRenderer;
 import com.jeff.pets.client.rendering.vanilla.skeleton.ClientSkeletonRenderer;
 import com.jeff.pets.client.rendering.vanilla.slime.ClientSlimeRenderer;
@@ -210,11 +208,9 @@ public class PetsClientInitializer {
         register(ClientElderGuardian.class, ClientElderGuardianRenderer::new);
         register(ClientBlaze.class, ClientBlazeRenderer::new);
         register(ClientCreeper.class, ClientCreeperRenderer::new);
-        register(ClientEndermite.class, ClientEndermiteRenderer::new);
         register(ClientGhast.class, ClientGhastRenderer::new);
         register(ClientGuardian.class, ClientGuardianRenderer::new);
         register(ClientMagmaCube.class, ClientMagmaCubeRenderer::new);
-        register(ClientShulker.class, ClientShulkerRenderer::new);
         register(ClientSilverfish.class, ClientSilverfishRenderer::new);
         register(ClientSkeleton.class, ClientSkeletonRenderer::new);
         register(ClientSlime.class, ClientSlimeRenderer::new);
@@ -243,7 +239,10 @@ public class PetsClientInitializer {
             renderSupplierMap.put(entityClass, factory);
 
             for (RenderManager manager : renderManagerMap.keySet()) {
-                renderManagerMap.get(manager).rendererMap.put(entityClass, factory.create(manager, renderManagerMap.get(manager)));
+                Context context = renderManagerMap.get(manager);
+                RenderLiving renderer = factory.create(manager, context);
+                renderer.setRenderManager(manager);
+                context.rendererMap.put(entityClass, renderer);
             }
         }
     }

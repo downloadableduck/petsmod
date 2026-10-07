@@ -1,29 +1,28 @@
 package com.jeff.pets.client.rendering.vanilla.skeleton;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
-import com.jeff.pets.mob.vanilla.hostile.ClientSkeleton;
+import net.minecraft.entity.Entity; import net.minecraft.client.renderer.entity.RenderManager; import com.jeff.pets.client.PetsClientInitializer;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
-public class ClientSkeletonRenderer extends PetRenderer<ClientSkeleton, ModelSkeleton> {
+public class ClientSkeletonRenderer extends PetRenderer {
 
-    public ClientSkeletonRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ModelSkeleton(), 0.75f);
+    public ClientSkeletonRenderer(RenderManager renderManager, PetsClientInitializer.Context context) {
+        super(new ModelSkeleton(), 0.75f);
     }
 
     @Override
-    public ResourceLocation getEntityTexture(Entity __e) {
-        ClientSkeleton livingEntityRenderState = (ClientSkeleton) __e;
+    public ResourceLocation getEntityTexture( final Entity livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/skeleton/skeleton.png");
     }
 
     @Override
-    protected void applyRotations(EntityLivingBase __e, float f, float g, float h) {
-        ClientSkeleton state = (ClientSkeleton) __e;
-        super.applyRotations(__e, f, g, h);
-        if (__e.field_70153_n != null) {
-            net.minecraft.client.renderer.GlStateManager.translatef(0, -0.5f, 0);
+    public void rotateCorpse(EntityLivingBase state, float f, float g, float h) {
+        super.rotateCorpse(state, f, g, h);
+        if (state.ridingEntity != null) {
+            GL11.glTranslatef(0, -0.5f, 0);
         }
     }
 }
+

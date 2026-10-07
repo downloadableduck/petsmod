@@ -3,7 +3,8 @@ package com.jeff.pets.client.rendering.custom.first.penguin;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.first.Penguin;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.Entity; import net.minecraft.client.renderer.entity.RenderManager; import com.jeff.pets.client.PetsClientInitializer;
+import net.minecraft.entity.EntityLivingBase;
 
 public class PenguinModel extends PetModel {
 
@@ -84,7 +85,7 @@ public class PenguinModel extends PetModel {
     }
 
     @Override
-    public void render(Entity entity, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
+    public void render(net.minecraft.entity.Entity entity, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
         root.render(alpha);
     }
 
@@ -100,12 +101,18 @@ public class PenguinModel extends PetModel {
         float flapAngle = (net.minecraft.util.MathHelper.sin(state.flap) + 1.0F) * state.flapSpeed;
         this.head.rotateAngleX = state.rotationPitch * ((float) Math.PI / 180F);
         float limbSwingAmount = state.limbSwingAmount;
-        float animationPos = state.field_70722_aY;
+        float animationPos = f;
         this.right_foot.rotateAngleZ = net.minecraft.util.MathHelper.cos(animationPos * 0.6662F) * 1.4F * limbSwingAmount;
         this.left_foot.rotateAngleZ = net.minecraft.util.MathHelper.cos(animationPos * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
         this.right_wing.rotateAngleY = -flapAngle * 0.75F;
         this.left_wing.rotateAngleY = flapAngle * 0.75F;
         this.body.rotateAngleZ = net.minecraft.util.MathHelper.cos(animationPos * 0.6662F) * 0.1F * limbSwingAmount;
         this.head.rotateAngleZ = net.minecraft.util.MathHelper.cos(animationPos * 0.6662F) * 0.1F * limbSwingAmount;
+    }
+
+    @Override
+    public void setLivingAnimations(EntityLivingBase entity, float f, float g, float h) {
+        this.right_foot.rotateAngleX = net.minecraft.util.MathHelper.cos(f * 0.6662F) * 1.4F * g;
+        this.left_foot.rotateAngleX = net.minecraft.util.MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g;
     }
 }

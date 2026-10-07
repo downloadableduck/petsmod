@@ -1,10 +1,10 @@
 package me.shedaniel.forge.clothconfig2.gui.entries;
 
-import com.jeff.pets.client.Utils;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiTextField;
-
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.function.Supplier;
  * @param <SELF> the "curiously recurring template pattern" type parameter
  * @see AbstractListListEntry
  */
-
+@SideOnly(Side.CLIENT)
 public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFieldListListEntry.AbstractTextFieldListCell<T, C, SELF>, SELF extends AbstractTextFieldListListEntry<T, C, SELF>> extends AbstractListListEntry<T, C, SELF> {
 
 
@@ -37,7 +37,7 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
      * @see AbstractTextFieldListListEntry
      */
 
-    public static abstract class AbstractTextFieldListCell<T, SELF extends AbstractTextFieldListCell<T, SELF, OUTER_SELF>, OUTER_SELF extends AbstractTextFieldListListEntry<T, SELF, OUTER_SELF>> extends AbstractListCell<T, SELF, OUTER_SELF> {
+    public static abstract class AbstractTextFieldListCell<T, SELF extends AbstractTextFieldListCell<T, SELF, OUTER_SELF>, OUTER_SELF extends AbstractTextFieldListListEntry<T, SELF, OUTER_SELF>> extends AbstractListListEntry.AbstractListCell<T, SELF, OUTER_SELF> {
 
         protected GuiTextField widget;
         private boolean isSelected;
@@ -47,29 +47,24 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
 
             final T finalValue = substituteDefault(value);
 
-            widget = new GuiTextField(0, Minecraft.getInstance().fontRenderer, 0, 100, 18, 0) {
+            widget = new GuiTextField(Minecraft.getMinecraft().fontRenderer, 0, 100, 18, 0) {
                 @Override
-                public void func_146194_f() {
+                public void drawTextBox() {
                     setFocused(isSelected);
-                    super.func_146194_f();
+                    super.drawTextBox();
                 }
             };
-            widget.func_175205_a(new com.google.common.base.Predicate() {
-                @Override
-                public boolean apply(Object input) {
-                    return isValidText((String) input);
-                }
-            });
+            //widget.func_175205_a((com.google.common.base.Predicate<String>) s -> this.isValidText(s));
             widget.setMaxStringLength(Integer.MAX_VALUE);
             widget.setEnableBackgroundDrawing(false);
             widget.setText(Objects.toString(finalValue));
-            widget.func_175205_a((s) -> {
+            /*widget.func_175205_a((s) -> {
                 widget.setTextColor(getPreferredTextColor());
                 if (listListEntry.getScreen() != null && !Objects.equals(s, Objects.toString(finalValue))) {
                     this.listListEntry.getScreen().setEdited(true, this.listListEntry.isRequiresRestart());
                 }
                 return false;
-            });
+            });*/
         }
 
         @Override
@@ -101,11 +96,11 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
 
         @Override
         public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
-            Utils.setWidth(widget, entryWidth - 12);
-            widget.x = x;
-            widget.y = y + 1;
+            widget.width = (entryWidth - 12);
+            widget.xPosition = x;
+            widget.yPosition = y + 1;
             widget.setEnabled(listListEntry.isEditable());
-            widget.func_146194_f();
+            widget.drawTextBox();
             if (isSelected && listListEntry.isEditable())
                 Gui.drawRect(x, y + 12, x + entryWidth - 12, y + 13, getConfigError().isPresent() ? 0xffff5555 : 0xffe0e0e0);
         }

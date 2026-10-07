@@ -19,7 +19,7 @@ public class ClientSlime extends SlimeLikePet {
     }
 
     @Override
-    protected String getAmbientSound() {
+    protected String getLivingSound() {
         return "mob.slime.small";
     }
 }

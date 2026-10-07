@@ -1,8 +1,9 @@
 package me.shedaniel.forge.clothconfig2.api;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-
-
+@SideOnly(Side.CLIENT)
 public abstract class AbstractConfigListEntry<T> extends AbstractConfigEntry<T> {
     private final String fieldName;
     private boolean editable = true;

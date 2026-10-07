@@ -1,49 +1,54 @@
 package com.jeff.pets.client.rendering.vanilla.snowgolem;
 
+import com.jeff.pets.client.rendering.PetLayer;
+import com.jeff.pets.client.rendering.PetRenderer;
+import net.minecraft.block.Block;
+import net.minecraft.client.model.ModelSnowMan;
+import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.entity.EntityLivingBase;
-import com.jeff.pets.mob.vanilla.passive.ClientSnowGolem;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import org.lwjgl.opengl.GL11;
+
+import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSnowGolemHeadLayer implements LayerRenderer {
-    private final BlockRendererDispatcher blockRenderer;
-    private final RenderItem itemRenderer;
-    private final RenderLiving renderer;
+/**
+ * Draws the carved pumpkin on the snow golem's head. 1.7.10 has no {@code LayerRenderer},
+ * no {@code ItemCameraTransforms} and no {@code ItemStack#EMPTY}; vanilla 1.7.10's
+ * {@code RenderSnowMan#renderEquippedItems} renders the pumpkin as an item through
+ * {@code ItemRenderer#renderItem} guarded by {@code RenderBlocks#renderItemIn3d}.
+ */
+public class ClientSnowGolemHeadLayer implements PetLayer {
+    private final PetRenderer parent;
 
-    public ClientSnowGolemHeadLayer(RenderLiving renderLayerParent, BlockRendererDispatcher blockRenderDispatcher, RenderItem itemRenderer) {
-        this.renderer = renderLayerParent;
-        this.blockRenderer = blockRenderDispatcher;
-        this.itemRenderer = itemRenderer;
-    }
-
-    public void render(EntityLivingBase __e, float f, float g, float h, float i, float j, float k, float l) {
-        ClientSnowGolem snowGolem = (ClientSnowGolem) __e;
-        if (CONFIG.snowGolemSkin.equals("pumpkin_on")) {
-            if (!__e.isInvisible()) {
-                GlStateManager.pushMatrix();
-                this.renderer.getMainModel().setRotationAngles(f, g, i, j, k, l, __e);
-                float m = 0.625F;
-                GlStateManager.translatef(0.0F, -0F, 0.0F);
-                GlStateManager.scalef(0.625F, -0.625F, -0.625F);
-                GlStateManager.rotatef(180.0F, 0.0F, 1.0F, 0.0F);
-                ItemStack itemStack = new ItemStack(Blocks.PUMPKIN);
-                this.itemRenderer.func_175049_a(itemStack, snowGolem, ItemCameraTransforms.TransformType.HEAD);
-                GlStateManager.popMatrix();
-            }
-        }
+    public ClientSnowGolemHeadLayer(PetRenderer parent) {
+        this.parent = parent;
     }
 
     @Override
-    public boolean shouldCombineTextures() {
-        return false;
+    public void render(EntityLivingBase snowGolem, float limbSwing, float limbSwingAmount, float ageInTicks,
+                       float netHeadYaw, float headPitch, float scale) {
+        if (!Objects.equals(CONFIG.snowGolemSkin, "pumpkin_on")) {
+            return;
+        }
+        if (!(this.parent.getMainModel() instanceof ModelSnowMan)) {
+            return;
+        }
+
+        GL11.glPushMatrix();
+        ((ModelSnowMan) this.parent.getMainModel()).head.postRender(0.0625F);
+
+        ItemStack pumpkin = new ItemStack(Blocks.pumpkin, 1);
+        if (RenderBlocks.renderItemIn3d(Block.getBlockFromItem(pumpkin.getItem()).getRenderType())) {
+            float pumpkinScale = 0.625F;
+            GL11.glTranslatef(0.0F, -0.34375F, 0.0F);
+            GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
+            GL11.glScalef(pumpkinScale, -pumpkinScale, pumpkinScale);
+        }
+
+        this.parent.getRenderManager().itemRenderer.renderItem(snowGolem, pumpkin, 0);
+        GL11.glPopMatrix();
     }
 }

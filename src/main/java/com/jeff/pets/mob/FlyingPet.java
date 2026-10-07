@@ -1,9 +1,7 @@
 package com.jeff.pets.mob;
 
-import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.entity.EntityLivingBase;
-
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 
@@ -21,14 +19,14 @@ public abstract class FlyingPet extends AbstractPet {
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void onUpdate() {
+        super.onUpdate();
         EntityLivingBase owner = this.getOwner();
         if (owner != null) {
 
-            if (owner.field_70153_n == this || owner.field_70154_o == this) {
+            if (this.ridingEntity == owner) {
                 if (owner.isSneaking() && !owner.onGround) {
-                    this.func_70078_a(null);
+                    this.ridingEntity = null;
                     this.setVelocity(this.motionX, this.motionY + 0.1, this.motionZ);
                 } else {
                     this.setSitting(true);
@@ -37,8 +35,8 @@ public abstract class FlyingPet extends AbstractPet {
 
             double dx = owner.posX - this.posX;
             double dz = owner.posZ - this.posZ;
-            Vec3 ownerPos = owner.getPositionVector().add(0, owner.getEyeHeight() * 0.8, 0);
-            Vec3 vecToOwner = ownerPos.subtract(this.getPositionVector());
+            net.minecraft.util.Vec3 ownerPos = owner.getPosition(1.0F).addVector(0, owner.getEyeHeight() * 0.8, 0);
+            net.minecraft.util.Vec3 vecToOwner = ownerPos.subtract(this.getPosition(1.0F));
             Vec3 dir = vecToOwner.normalize();
 
             float targetYaw = (float) (Math.atan2(dz, dx) * (180.0 / Math.PI)) - 90.0F;
@@ -46,7 +44,7 @@ public abstract class FlyingPet extends AbstractPet {
             double distance = this.getDistance(owner);
             float rotation = -this.rotationPitch;
             float rotationToOwner = rotation + (-this.getOwner().rotationPitch);
-            float bodyYawDiff = MathHelper.wrapDegrees(this.rotationYawHead - this.renderYawOffset);
+            float bodyYawDiff = net.minecraft.util.MathHelper.wrapAngleTo180_float(this.rotationYawHead - this.renderYawOffset);
 
             if (rotationToOwner >= 50) {
                 this.renderYawOffset = this.rotationYawHead - (Math.signum(bodyYawDiff) * 50.0F);
@@ -60,9 +58,9 @@ public abstract class FlyingPet extends AbstractPet {
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setRotationYawHead(this.getYRot());
-                this.renderYawOffset = this.renderYawOffset + MathHelper.clamp(this.rotationYawHead - this.renderYawOffset, -50.0f, 50.0f);
+                this.renderYawOffset = this.renderYawOffset + MathHelper.clamp_float(this.rotationYawHead - this.renderYawOffset, -50.0f, 50.0f);
 
-                this.setVelocity(dir.x * speed, dir.y * speed, dir.z * speed);
+                this.setVelocity(-dir.xCoord * speed, dir.yCoord * speed, -dir.zCoord * speed);
             } else {
 
                 this.setVelocity(this.motionX * 0.8, this.motionY * 0.8, this.motionZ * 0.8);
@@ -70,7 +68,7 @@ public abstract class FlyingPet extends AbstractPet {
 
             int yHeightToOwner = (int) (owner.posY - this.posY);
 
-            if (yHeightToOwner > 1 || this.collidedHorizontally) {
+            if (yHeightToOwner > 1 || this.isCollidedHorizontally) {
                 this.jump();
             }
 
@@ -95,10 +93,9 @@ public abstract class FlyingPet extends AbstractPet {
             if (Math.abs(bodyYawDiff) > 50) {
                 this.renderYawOffset = this.rotationYawHead - (Math.signum(bodyYawDiff) * 50);
             } else {
-                this.renderYawOffset = this.renderYawOffset + MathHelper.clamp(this.rotationYawHead - this.renderYawOffset, -10, 10);
+                this.renderYawOffset = this.renderYawOffset + MathHelper.clamp_float(this.rotationYawHead - this.renderYawOffset, -10, 10);
             }
 
-            this.move(this.motionX, this.motionY, this.motionZ);
         }
         if (owner != null) {
             if (getDistance(owner) >= 10) {
@@ -108,7 +105,7 @@ public abstract class FlyingPet extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            this.world.func_72956_a(this, "mob.squid.ambient", 1.0f, 1.0f);
+            this.playSound("mob.squid.ambient", 1.0f, 1.0f);
         }
     }
 }

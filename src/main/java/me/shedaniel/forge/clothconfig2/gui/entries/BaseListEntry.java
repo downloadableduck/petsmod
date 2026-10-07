@@ -2,17 +2,18 @@ package me.shedaniel.forge.clothconfig2.gui.entries;
 
 import com.google.common.collect.Lists;
 import com.jeff.pets.LiteModPetsMod;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.shedaniel.forge.clothconfig2.api.QueuedTooltip;
 import me.shedaniel.forge.math.Point;
 import me.shedaniel.forge.math.Rectangle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
-
+import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -29,7 +30,7 @@ import java.util.stream.Collectors;
  * @param <SELF> the "curiously recurring template pattern" type parameter
  * @implNote See <a href="https://stackoverflow.com/questions/7354740/is-there-a-way-to-refer-to-the-current-type-with-a-type-variable">Is there a way to refer to the current type with a type variable?</href> on Stack Overflow.
  */
-
+@SideOnly(Side.CLIENT)
 public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends BaseListEntry<T, C, SELF>> extends TooltipListEntry<List<T>> {
 
     protected static final ResourceLocation CONFIG_TEX = new ResourceLocation("cloth-config2", "textures/gui/cloth_config.png");
@@ -74,11 +75,11 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         this.cells = Lists.newArrayList();
         this.labelWidget = new ListLabelWidget();
         this.widgets = Lists.newArrayList(labelWidget);
-        this.resetWidget = new GuiButton(new Random().nextInt(), 0, 0, Minecraft.getInstance().fontRenderer.getStringWidth(I18n.format(resetButtonKey)) + 6, 20, I18n.format(resetButtonKey)) {
+        this.resetWidget = new GuiButton(new Random().nextInt(), 0, 0, Minecraft.getMinecraft().fontRenderer.getStringWidth(I18n.format(resetButtonKey)) + 6, 20, I18n.format(resetButtonKey)) {
             @Override
-            public boolean func_146116_c(Minecraft mc, int mouseX, int mouseY) {
+            public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
                 
-                 boolean bl = super.func_146116_c(mc, mouseX, mouseY); if (bl) { LiteModPetsMod.LOGGER.info("mouse pressed");
+                 boolean bl = super.mousePressed(mc, mouseX, mouseY); if (bl) { LiteModPetsMod.LOGGER.info("mouse pressed");
                     widgets.removeAll(cells);
                     cells.clear();
                     defaultValue.get().stream().map((val) -> createNewInstance.apply((SELF) val)).forEach(cells::add);
@@ -166,7 +167,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         labelWidget.rectangle.y = y;
         labelWidget.rectangle.width = entryWidth + 15;
         labelWidget.rectangle.height = 24;
-        return labelWidget.rectangle.contains(mouseX, mouseY) && getParent().isMouseOver(mouseX, mouseY) && !resetWidget.isMouseOver();
+        return labelWidget.rectangle.contains(mouseX, mouseY) && getParent().func_146115_a(mouseX, mouseY) && !resetWidget.func_146115_a();
     }
 
     protected boolean isInsideCreateNew(double mouseX, double mouseY) {
@@ -198,20 +199,20 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
             if (tooltip.isPresent() && tooltip.get().length > 0)
                 getScreen().queueTooltip(QueuedTooltip.create(new Point(mouseX, mouseY), tooltip.get()));
         }
-        Minecraft.getInstance().getTextureManager().bindTexture(CONFIG_TEX);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(CONFIG_TEX);
         RenderHelper.disableStandardItemLighting();
-        GlStateManager.color4f(1, 1, 1, 1);
+        GL11.glColor4f(1, 1, 1, 1);
         boolean insideCreateNew = isInsideCreateNew(mouseX, mouseY);
         boolean insideDelete = isInsideDelete(mouseX, mouseY);
         drawTexturedModalRect(x - 15, y + 4, 24 + 9, (labelWidget.rectangle.contains(mouseX, mouseY) && !insideCreateNew && !insideDelete ? 18 : 0) + (expanded ? 9 : 0), 9, 9);
         drawTexturedModalRect(x - 15 + 13, y + 4, 24 + 18, insideCreateNew ? 9 : 0, 9, 9);
         if (isDeleteButtonEnabled())
             drawTexturedModalRect(x - 15 + 26, y + 4, 24 + 27, insideDelete ? 18 : 9, 9, 9);
-        resetWidget.x = x + entryWidth - resetWidget.getWidth();
-        resetWidget.y = y;
+        resetWidget.xPosition = x + entryWidth - resetWidget.getButtonWidth();
+        resetWidget.yPosition = y;
         resetWidget.enabled = isEditable() && getDefaultValue().isPresent();
-        resetWidget.func_146112_a(Minecraft.getInstance(), mouseX, mouseY);
-        Minecraft.getInstance().fontRenderer.drawStringWithShadow(I18n.format(getFieldName()), isDeleteButtonEnabled() ? x + 24 : x + 24 - 9, y + 5, labelWidget.rectangle.contains(mouseX, mouseY) && !resetWidget.isMouseOver() && !insideDelete && !insideCreateNew ? 0xffe6fe16 : getPreferredTextColor());
+        resetWidget.drawButton(Minecraft.getMinecraft(), mouseX, mouseY);
+        Minecraft.getMinecraft().fontRenderer.drawStringWithShadow(I18n.format(getFieldName()), isDeleteButtonEnabled() ? x + 24 : x + 24 - 9, y + 5, labelWidget.rectangle.contains(mouseX, mouseY) && !resetWidget.func_146115_a() && !insideDelete && !insideCreateNew ? 0xffe6fe16 : getPreferredTextColor());
         if (expanded) {
             int yy = y + 24;
             for (BaseListCell cell : cells) {
@@ -236,7 +237,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         protected Rectangle rectangle = new Rectangle();
 
         public boolean mouseClicked(double double_1, double double_2, int int_1) {
-            if (resetWidget.isMouseOver()) {
+            if (resetWidget.func_146115_a()) {
                 return false;
             } else if (isInsideCreateNew(double_1, double_2)) {
                 expanded = true;
@@ -249,7 +250,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
                     widgets.add(cell);
                 }
                 getScreen().setEdited(true, isRequiresRestart());
-                Minecraft.getInstance().getSoundHandler().play(PositionedSoundRecord.func_147674_a(new ResourceLocation("random.click"), 1.0F));
+                Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
                 return true;
             } else if (isDeleteButtonEnabled() && isInsideDelete(double_1, double_2)) {
                 if (expanded && !cells.isEmpty()) {
@@ -257,12 +258,12 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
                     cells.remove(cell);
                     widgets.remove(cell);
                     getScreen().setEdited(true, isRequiresRestart());
-                    Minecraft.getInstance().getSoundHandler().play(PositionedSoundRecord.func_147674_a(new ResourceLocation("random.click"), 1.0F));
+                    Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
                 }
                 return true;
             } else if (rectangle.contains(double_1, double_2)) {
                 expanded = !expanded;
-                Minecraft.getInstance().getSoundHandler().play(PositionedSoundRecord.func_147674_a(new ResourceLocation("random.click"), 1.0F));
+                Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
                 return true;
             }
             return false;
@@ -271,10 +272,10 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
     @Override
     public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
         if (mouseButton == 0) {
-            if (this.resetWidget.func_146116_c(Minecraft.getInstance(), mouseX, mouseY)) {
+            if (this.resetWidget.mousePressed(Minecraft.getMinecraft(), mouseX, mouseY)) {
                 return true;
             }
-            if (this.resetWidget.func_146116_c(Minecraft.getInstance(), mouseX, mouseY)) {
+            if (this.resetWidget.mousePressed(Minecraft.getMinecraft(), mouseX, mouseY)) {
                 return true;
             }
         }

@@ -1,7 +1,8 @@
 package me.shedaniel.forge.clothconfig2.gui.entries;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.resources.I18n;
-import me.shedaniel.forge.clothconfig2.gui.entries.AbstractTextFieldListListEntry.AbstractTextFieldListCell;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-
+@SideOnly(Side.CLIENT)
 public class LongListListEntry extends AbstractTextFieldListListEntry<Long, LongListListEntry.LongListCell, LongListListEntry> {
 
     private long minimum, maximum;
@@ -49,7 +50,7 @@ public class LongListListEntry extends AbstractTextFieldListListEntry<Long, Long
         return this;
     }
 
-    public static class LongListCell extends AbstractTextFieldListCell<Long, LongListCell, LongListListEntry> {
+    public static class LongListCell extends AbstractTextFieldListListEntry.AbstractTextFieldListCell<Long, LongListCell, LongListListEntry> {
 
         public LongListCell(Long value, LongListListEntry listListEntry) {
             super(value, listListEntry);

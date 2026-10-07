@@ -27,13 +27,8 @@ import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.settings.GameSettings;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandHandler;
-import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -123,11 +118,9 @@ public class Central {
     public static ClientBlaze blaze;
     public static ClientCreeper creeper;
     public static ClientElderGuardian elderGuardian;
-    public static ClientEndermite endermite;
     public static ClientGhast ghast;
     public static ClientGuardian guardian;
     public static ClientMagmaCube magmaCube;
-    public static ClientShulker shulker;
     public static ClientSilverfish silverfish;
     public static ClientSkeleton skeleton;
     public static ClientSlime slime;
@@ -153,8 +146,8 @@ public class Central {
         CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
         checkForNullObjects();
         createPetsList();
-        if (Minecraft.getInstance() != null) {
-            updateSuggestions(Minecraft.getInstance());
+        if (Minecraft.getMinecraft() != null) {
+            updateSuggestions(Minecraft.getMinecraft());
         }
         new PetsConfigScreen<>();
     }
@@ -197,11 +190,9 @@ public class Central {
         Utils.despawnEntity(blaze);
         Utils.despawnEntity(creeper);
         Utils.despawnEntity(elderGuardian);
-        Utils.despawnEntity(endermite);
         Utils.despawnEntity(ghast);
         Utils.despawnEntity(guardian);
         Utils.despawnEntity(magmaCube);
-        Utils.despawnEntity(shulker);
         Utils.despawnEntity(silverfish);
         Utils.despawnEntity(skeleton);
         Utils.despawnEntity(slime);
@@ -223,8 +214,8 @@ public class Central {
      * see {@link Utils#summonPet}
      */
     public static void summonPet() {
-        Minecraft minecraft = Minecraft.getInstance();
-        WorldClient world = minecraft.world;
+        Minecraft minecraft = Minecraft.getMinecraft();
+        WorldClient world = minecraft.theWorld;
         duck = new Duck(world);
         racoon = new Racoon(world);
         penguin = new Penguin(world);
@@ -249,11 +240,9 @@ public class Central {
         blaze = new ClientBlaze(world);
         creeper = new ClientCreeper(world);
         elderGuardian = new ClientElderGuardian(world);
-        endermite = new ClientEndermite(world);
         ghast = new ClientGhast(world);
         guardian = new ClientGuardian(world);
         magmaCube = new ClientMagmaCube(world);
-        shulker = new ClientShulker(world);
         silverfish = new ClientSilverfish(world);
         skeleton = new ClientSkeleton(world);
         slime = new ClientSlime(world);
@@ -318,16 +307,12 @@ public class Central {
                 Utils.summonPet(creeper, CONFIG.creeperName);
             } else if (Objects.equals(CONFIG.activePet, "elder_guardian")) {
                 Utils.summonPet(elderGuardian, CONFIG.elderGuardianName);
-            } else if (Objects.equals(CONFIG.activePet, "endermite")) {
-                Utils.summonPet(endermite, CONFIG.endermiteName);
             } else if (Objects.equals(CONFIG.activePet, "ghast")) {
                 Utils.summonPet(ghast, CONFIG.ghastName);
             } else if (Objects.equals(CONFIG.activePet, "guardian")) {
                 Utils.summonPet(guardian, CONFIG.guardianName);
             } else if (Objects.equals(CONFIG.activePet, "magma_cube")) {
                 Utils.summonPet(magmaCube, CONFIG.magmaCubeName);
-            } else if (Objects.equals(CONFIG.activePet, "shulker")) {
-                Utils.summonPet(shulker, CONFIG.shulkerName);
             } else if (Objects.equals(CONFIG.activePet, "silverfish")) {
                 Utils.summonPet(silverfish, CONFIG.silverfishName);
             } else if (Objects.equals(CONFIG.activePet, "skeleton")) {
@@ -391,11 +376,9 @@ public class Central {
         Utils.checkName("blaze", blaze, CONFIG.blazeName);
         Utils.checkName("creeper", creeper, CONFIG.creeperName);
         Utils.checkName("elder_guardian", elderGuardian, CONFIG.elderGuardianName);
-        Utils.checkName("endermite", endermite, CONFIG.endermiteName);
         Utils.checkName("ghast", ghast, CONFIG.ghastName);
         Utils.checkName("guardian", guardian, CONFIG.guardianName);
         Utils.checkName("magma_cube", magmaCube, CONFIG.magmaCubeName);
-        Utils.checkName("shulker", shulker, CONFIG.shulkerName);
         Utils.checkName("silverfish", silverfish, CONFIG.silverfishName);
         Utils.checkName("skeleton", skeleton, CONFIG.skeletonName);
         Utils.checkName("slime", slime, CONFIG.slimeName);
@@ -547,7 +530,7 @@ public class Central {
      * More about this custom pack can be seen in {@link HeadSkin}.
      */
     public static void checkForHeadResourcePack() {
-        Minecraft client = Minecraft.getInstance();
+        Minecraft client = Minecraft.getMinecraft();
         GameSettings options = client.gameSettings;
         List<String> resourcePacks = new ArrayList<>(options.resourcePacks);
 
@@ -585,7 +568,7 @@ public class Central {
      * re-created from an bytecode after a change messed it up around version {@code 0.6.0}
      */
     public static void executePetSkinCommand(String skin) {
-                Minecraft.getInstance().addScheduledTask(() -> {
+                Minecraft.getMinecraft().func_152344_a(() -> {
                     boolean isValid = true;
 
                     if (Objects.equals(skin, "baby")) {
@@ -1126,9 +1109,9 @@ public class Central {
                     }
 
                     if (isValid) {
-                        Minecraft.getInstance().player.sendMessage(new ChatComponentText("\u00A7b[PetsMod] \u00A7aYour pet's skin has been updated."));
+                        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("\u00A7b[PetsMod] \u00A7aYour pet's skin has been updated."));
                     } else {
-                        Minecraft.getInstance().player.sendMessage(new ChatComponentText("\u00A7b[PetsMod] \u00A7cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else."));
+                        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("\u00A7b[PetsMod] \u00A7cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else."));
                     }
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
                 });
@@ -1138,7 +1121,7 @@ public class Central {
      * Creates the command that allows the user to use {@code /teleportpet}.
      */
     public static void executePetTeleportCommand() {
-        Minecraft.getInstance().addScheduledTask(() -> {
+        Minecraft.getMinecraft().func_152344_a(() -> {
             despawnPet();
             summonPet();
         });
@@ -1198,16 +1181,12 @@ public class Central {
                     Utils.setActivePet(creeper, "creeper");
                 } else if (Objects.equals(species, "elder_guardian") || Objects.equals(species, "elder guardian")) {
                     Utils.setActivePet(elderGuardian, "elder_guardian");
-                } else if (Objects.equals(species, "endermite")) {
-                    Utils.setActivePet(endermite, "endermite");
                 } else if (Objects.equals(species, "ghast")) {
                     Utils.setActivePet(ghast, "ghast");
                 } else if (Objects.equals(species, "guardian")) {
                     Utils.setActivePet(guardian, "guardian");
                 } else if (Objects.equals(species, "magma_cube") || Objects.equals(species, "magma cube")) {
                     Utils.setActivePet(magmaCube, "magma_cube");
-                } else if (Objects.equals(species, "shulker")) {
-                    Utils.setActivePet(shulker, "shulker");
                 } else if (Objects.equals(species, "silverfish")) {
                     Utils.setActivePet(silverfish, "silverfish");
                 } else if (Objects.equals(species, "skeleton")) {
@@ -1243,15 +1222,15 @@ public class Central {
                 checkValidPet(isValid, species);
 
                 AutoConfig.getConfigHolder(PetsConfig.class).save();
-                updateSuggestions(Minecraft.getInstance());
+                updateSuggestions(Minecraft.getMinecraft());
     }
 
     /**
      * Creates a help command to let the user easily view the commands at their disposal.
      */
     public static void executePetHelpCommand() {
-                Minecraft.getInstance().addScheduledTask(() -> {
-                    Minecraft.getInstance().player.sendMessage(new ChatComponentText(
+                Minecraft.getMinecraft().func_152344_a(() -> {
+                    Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
                             "\u00A7b[PetsMod] \u00A7aPossible commands: \u00A7a/pethelp: \u00A7rdisplays a list of commands \u00A7a/pet <on/off> \u00A7rtoggles whether your pet will appear or not\u00A7a/petspecies <species>: \u00A7rchanges the species of your pet\u00A7a/petskin <skin>: \u00A7rchanges the skin of your selected pet\u00A7a/teleportpet: \u00A7rteleports your pet to you. will not work if you are not on the ground.\u00A7a/petname: \u00A7rchanges the name of your currently selected pet"
                     ));
                 });
@@ -1264,15 +1243,15 @@ public class Central {
      * - Generates a random number for {@link #petSkin}, which used to be used for <a href="https://modrinth.com/mod/pets-natural">Pets Natural</a> and <a href="https://modrinth.com/mod/duck--mod">DuckMod</a>.
      */
     public static void createTickWatcher() {
-        Minecraft client = Minecraft.getInstance();
-        client.addScheduledTask(() -> {
+        Minecraft client = Minecraft.getMinecraft();
+        client.func_152344_a(() -> {
             checkForNullObjects();
             ++i;
-            Minecraft minecraft = Minecraft.getInstance();
-            WorldClient world = minecraft.world;
+            Minecraft minecraft = Minecraft.getMinecraft();
+            WorldClient world = minecraft.theWorld;
             petSkin = (int) (Math.random() * (double) 3.0F);
             if (CONFIG == null || minecraft == null || world == null) return;
-            if (client.player != null && CONFIG.petOn && summonedEntity.isEmpty()) {
+            if (client.thePlayer != null && CONFIG.petOn && summonedEntity.isEmpty()) {
                 summonPet();
             }
 
@@ -1288,7 +1267,7 @@ public class Central {
         });
         if (PetsClientInitializer.openConfigScreen == null) return;
         if (PetsClientInitializer.openConfigScreen.isPressed()) {
-            Minecraft.getInstance().displayGuiScreen(new PetsConfigScreen<>().build());
+            Minecraft.getMinecraft().displayGuiScreen(new PetsConfigScreen<>().build());
         }
     }
 
@@ -1296,7 +1275,7 @@ public class Central {
      * Creates the command that allows the user to change their pet's name.
      */
     public static void executePetNameCommand(String name) {
-        Minecraft.getInstance().addScheduledTask(() -> {
+        Minecraft.getMinecraft().func_152344_a(() -> {
             if (!summonedEntity.isEmpty()) {
                 if (CONFIG.activePet.equals("penguin")) {
                     CONFIG.penguinName = name;
@@ -1511,14 +1490,14 @@ public class Central {
 
                 if (Objects.equals(preference, "off")) {
                     CONFIG.petOn = false;
-                    Minecraft.getInstance().player.sendMessage(new ChatComponentText("\u00A7b[PetsMod] \u00A77Pet \u00A7coff."));
+                    Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("\u00A7b[PetsMod] \u00A77Pet \u00A7coff."));
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
                 } else if (Objects.equals(preference, "on")) {
                     CONFIG.petOn = true;
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
-                    Minecraft.getInstance().player.sendMessage(new ChatComponentText("\u00A7b[PetsMod] \u00A77Pet \u00A7aon."));
+                    Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("\u00A7b[PetsMod] \u00A77Pet \u00A7aon."));
                 } else {
-                    Minecraft.getInstance().player.sendMessage(new ChatComponentText("\u00A7b[PetsMod] \u00A7c\u00A7lUnknown value " + preference + "! Possible values: \u00A7r\u00A7aon, \u00A76off"));
+                    Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("\u00A7b[PetsMod] \u00A7c\u00A7lUnknown value " + preference + "! Possible values: \u00A7r\u00A7aon, \u00A76off"));
                 }
     }
 
@@ -1526,21 +1505,21 @@ public class Central {
      * Clears the summon entities when the player joins a world so they are re-summoned
      */
     public static void createJoinHandler() {
-        Minecraft client = Minecraft.getInstance();
+        Minecraft client = Minecraft.getMinecraft();
         List var10001 = summonedEntity;
         Objects.requireNonNull(var10001);
-        client.addScheduledTask(var10001::clear);
+        client.func_152344_a(var10001::clear);
     }
 
     public static void checkValidPet(boolean isValid, String species) {
         if (!isValid) {
-            Minecraft.getInstance().player.sendMessage(new ChatComponentText("§b[PetsMod] §cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")"));
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§b[PetsMod] §cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")"));
         } else if (isValid && CONFIG.petOn) {
             despawnPet();
-            Minecraft.getInstance().player.sendMessage(new net.minecraft.util.ChatComponentText("§b[PetsMod] §aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + "."));
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new net.minecraft.util.ChatComponentText("§b[PetsMod] §aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + "."));
             summonPet();
         } else if (isValid && !CONFIG.petOn) {
-            Minecraft.getInstance().player.sendMessage(new net.minecraft.util.ChatComponentText("§b[PetsMod] §cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet enabled. Run §l/pet on§r§c to change this."));
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new net.minecraft.util.ChatComponentText("§b[PetsMod] §cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet enabled. Run §l/pet on§r§c to change this."));
         }
     }
 
@@ -1557,7 +1536,7 @@ public class Central {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Blocks.AIR;
+        return Blocks.air;
     }
 
     /**
@@ -1747,8 +1726,8 @@ public class Central {
         CONFIG.toxfinSlabName = Utils.checkNullString(CONFIG.toxfinSlabName);
         CONFIG.potatoHuskName = Utils.checkNullString(CONFIG.potatoHuskName);
 
-        if (CONFIG.headSkin == null && Minecraft.getInstance() != null && Minecraft.getInstance().player != null) {
-            CONFIG.headSkin = Minecraft.getInstance().player.getDisplayName().getUnformattedComponentText();
+        if (CONFIG.headSkin == null && Minecraft.getMinecraft() != null && Minecraft.getMinecraft().thePlayer != null) {
+            CONFIG.headSkin = Minecraft.getMinecraft().thePlayer.getDisplayName();
         }
         CONFIG.headName = Utils.checkNullString(CONFIG.headName);
 
@@ -1774,7 +1753,7 @@ public class Central {
                 "cow",
                 "creeper",
                 "dolphin", "donkey", "duck", "dumbo octopus",
-                "elder guardian", "ender dragon", "enderman", "endermite",
+                "elder guardian", "ender dragon", "enderman",
                 "ghast", "guardian",
                 "head", "horse",
                 "husk", "iron golem",
@@ -1787,7 +1766,6 @@ public class Central {
                 "rabbit",
                 "racoon",
                 "sheep",
-                "shulker",
                 "silverfish", "skeleton", "slime", "snow golem",
                 "spider", "squid", "stingray", "stray",
                 "villager", "witch", "wither",

@@ -1,13 +1,14 @@
 package me.shedaniel.forge.clothconfig2.api;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.shedaniel.forge.clothconfig2.gui.ClothConfigScreen;
 import me.shedaniel.forge.clothconfig2.gui.widget.DynamicElementListWidget;
-
 
 import java.util.Optional;
 import java.util.function.Supplier;
 
-
+@SideOnly(Side.CLIENT)
 public abstract class AbstractConfigEntry<T> extends DynamicElementListWidget.ElementEntry<AbstractConfigEntry<T>> {
     private ClothConfigScreen screen;
     private Supplier<Optional<String>> errorSupplier;

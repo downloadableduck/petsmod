@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.jeff.pets.client.Utils;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.Entity; import net.minecraft.client.renderer.entity.RenderManager; import com.jeff.pets.client.PetsClientInitializer;
 import net.minecraft.entity.EntityLivingBase;
 
 public class ClientIronGolemModel extends ModelBase {
@@ -74,7 +74,7 @@ public class ClientIronGolemModel extends ModelBase {
     }
 
     @Override
-    public void render(Entity ironGOlem, float f, float g, float h, float i, float j, float k) {
+    public void render( final Entity ironGOlem, float f, float g, float h, float i, float j, float k) {
         super.render(ironGOlem, f, g, h, i, j, k);
         this.body.render(k);
         this.head.render(k);
@@ -84,3 +84,4 @@ public class ClientIronGolemModel extends ModelBase {
         this.leg1.render(k);
     }
 }
+

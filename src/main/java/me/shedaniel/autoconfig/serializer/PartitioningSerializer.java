@@ -1,6 +1,6 @@
 /*
  * This file is part of Cloth Config.
- * Copyright (C) 2020 - 2021 shedaniel
+ * Copyright (C) 2020 - 2021 me.shedaniel
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -42,7 +42,7 @@ public final class PartitioningSerializer<T extends PartitioningSerializer.Globa
     private final Class<T> configClass;
     private final Map<Field, ConfigSerializer<M>> serializers;
 
-    private PartitioningSerializer(Config definition, Class<T> configClass, Factory<M> factory) {
+    private PartitioningSerializer(Config definition, Class<T> configClass, ConfigSerializer.Factory<M> factory) {
         this.configClass = configClass;
 
         //noinspection unchecked
@@ -65,7 +65,7 @@ public final class PartitioningSerializer<T extends PartitioningSerializer.Globa
     }
 
     public static <T extends GlobalData, M extends ConfigData>
-    Factory<T> wrap(Factory<M> inner) {
+    ConfigSerializer.Factory<T> wrap(ConfigSerializer.Factory<M> inner) {
         return (definition, configClass) -> new PartitioningSerializer<>(definition, configClass, inner);
     }
 

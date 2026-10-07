@@ -1,32 +1,30 @@
 package com.jeff.pets.client.rendering.vanilla.horse;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
-import com.jeff.pets.mob.vanilla.passive.ClientHorse;
+import net.minecraft.entity.Entity; import net.minecraft.client.renderer.entity.RenderManager; import com.jeff.pets.client.PetsClientInitializer;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientHorseRenderer extends PetRenderer<ClientHorse, ClientHorseModel> {
+public class ClientHorseRenderer extends PetRenderer {
     public String horseTextureLocation;
 
-    public ClientHorseRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientHorseModel(0), 0.5f);
+    public ClientHorseRenderer(RenderManager renderManager, PetsClientInitializer.Context context) {
+        super(new ClientHorseModel(0), 0.5f);
     }
 
     @Override
-    public void preRenderCallback(EntityLivingBase __e, float f) {
-        ClientHorse state = (ClientHorse) __e;
+    public void preRenderCallback( final EntityLivingBase state, float f) {
         if (CONFIG.isBaby) {
-            net.minecraft.client.renderer.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+            GL11.glScalef(0.5f, 0.5f, 0.5f);
         }
 
     }
 
     @Override
-    public ResourceLocation getEntityTexture(Entity __e) {
-        ClientHorse horseRenderState = (ClientHorse) __e;
+    public ResourceLocation getEntityTexture( final Entity horseRenderState) {
         if (CONFIG.horseSkin.equals("black")) {
             horseTextureLocation = "textures/entity/horse/horse_black.png";
         } else if (CONFIG.horseSkin.equals("brown")) {
@@ -51,3 +49,4 @@ public class ClientHorseRenderer extends PetRenderer<ClientHorse, ClientHorseMod
         return new ResourceLocation("minecraft", horseTextureLocation);
     }
 }
+

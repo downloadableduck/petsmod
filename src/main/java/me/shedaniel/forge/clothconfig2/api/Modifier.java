@@ -1,6 +1,7 @@
 package me.shedaniel.forge.clothconfig2.api;
 
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
 import java.util.Objects;
@@ -11,7 +12,7 @@ import java.util.Objects;
  *
  * @author Siphalor
  */
-
+@SideOnly(Side.CLIENT)
 public class Modifier {
     private final short value;
 

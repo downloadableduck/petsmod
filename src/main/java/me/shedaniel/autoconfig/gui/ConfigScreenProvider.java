@@ -1,6 +1,6 @@
 /*
  * This file is part of Cloth Config.
- * Copyright (C) 2020 - 2021 shedaniel
+ * Copyright (C) 2020 - 2021 me.shedaniel
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -27,9 +27,9 @@ import me.shedaniel.autoconfig.gui.registry.api.GuiRegistryAccess;
 import me.shedaniel.forge.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.forge.clothconfig2.api.ConfigCategory;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.IChatComponent;
+import net.minecraft.util.ResourceLocation;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -146,14 +146,14 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<GuiS
 
         IChatComponent categoryKey = new ChatComponentTranslation(categoryFunction.apply(baseI13n, categoryName));
 
-        if (!screenBuilder.hasCategory(categoryKey.getUnformattedComponentText())) {
-            ConfigCategory category = screenBuilder.getOrCreateCategory(categoryKey.getUnformattedComponentText());
+        if (!screenBuilder.hasCategory(categoryKey.getUnformattedText())) {
+            ConfigCategory category = screenBuilder.getOrCreateCategory(categoryKey.getUnformattedText());
             if (backgroundMap.containsKey(categoryName)) {
                 category.setCategoryBackground(backgroundMap.get(categoryName));
             }
             return category;
         }
 
-        return screenBuilder.getOrCreateCategory(categoryKey.getUnformattedComponentText());
+        return screenBuilder.getOrCreateCategory(categoryKey.getUnformattedText());
     }
 }

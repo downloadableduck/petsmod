@@ -1,24 +1,26 @@
 package me.shedaniel.forge.clothconfig2.gui.widget;
 
 import com.google.common.collect.Lists;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.shedaniel.forge.clothconfig2.api.ScissorsHandler;
 import me.shedaniel.forge.math.Rectangle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
 
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@SideOnly(Side.CLIENT)
 public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.Entry<E>> {
     protected static final int DRAG_OUTSIDE = -2;
     protected final Minecraft client;
@@ -120,7 +122,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
         int listMiddleX = this.left + this.width / 2;
         int minX = listMiddleX - this.getItemWidth() / 2;
         int maxX = listMiddleX + this.getItemWidth() / 2;
-        int currentY = MathHelper.floor(mouseY - (double) this.top) - this.headerHeight + (int) this.getScroll() - 4;
+        int currentY = MathHelper.floor_double(mouseY - (double) this.top) - this.headerHeight + (int) this.getScroll() - 4;
         int itemY = 0;
         int itemIndex = -1;
         for (int i = 0; i < entries.size(); i++) {
@@ -174,16 +176,16 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
     }
 
     @Deprecated
-    protected void renderBackBackground(WorldRenderer buffer, Tessellator tessellator) {
+    protected void renderBackBackground(Tessellator tessellator) {
         this.client.getTextureManager().bindTexture(backgroundLocation);
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         float float_2 = 32.0F;
-        buffer.func_178970_b();
-        buffer.func_178961_b(32, 32, 32, 255);
-        buffer.func_178985_a(this.left, this.bottom, 0.0D, this.left / 32.0F, ((this.bottom + (int) this.getScroll()) / 32.0F));
-        buffer.func_178985_a(this.right, this.bottom, 0.0D, this.right / 32.0F, ((this.bottom + (int) this.getScroll()) / 32.0F));
-        buffer.func_178985_a(this.right, this.top, 0.0D, this.right / 32.0F, ((this.top + (int) this.getScroll()) / 32.0F));
-        buffer.func_178985_a(this.left, this.top, 0.0D, this.left / 32.0F, ((this.top + (int) this.getScroll()) / 32.0F));
+        tessellator.startDrawingQuads();
+        tessellator.setColorRGBA(32, 32, 32, 255);
+        tessellator.addVertexWithUV(this.left, this.bottom, 0.0D, this.left / 32.0F, ((this.bottom + (int) this.getScroll()) / 32.0F));
+        tessellator.addVertexWithUV(this.right, this.bottom, 0.0D, this.right / 32.0F, ((this.bottom + (int) this.getScroll()) / 32.0F));
+        tessellator.addVertexWithUV(this.right, this.top, 0.0D, this.right / 32.0F, ((this.top + (int) this.getScroll()) / 32.0F));
+        tessellator.addVertexWithUV(this.left, this.top, 0.0D, this.left / 32.0F, ((this.top + (int) this.getScroll()) / 32.0F));
         tessellator.draw();
     }
 
@@ -192,11 +194,10 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
         this.endBackground();
         int scrollbarPosition = this.getScrollbarPosition();
         int int_4 = scrollbarPosition + 6;
-        GlStateManager.disableLighting();
-        GlStateManager.disableFog();
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer buffer = tessellator.getBuffer();
-        renderBackBackground(buffer, tessellator);
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glDisable(GL11.GL_FOG);
+        Tessellator tessellator = Tessellator.instance;
+        renderBackBackground(tessellator);
         int rowLeft = this.getRowLeft();
         int startY = this.top + 4 - (int) this.getScroll();
         if (this.renderSelection)
@@ -204,70 +205,70 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
         ScissorsHandler.INSTANCE.scissor(new Rectangle(left, top, width, bottom - top));
         this.renderList(rowLeft, startY, mouseX, mouseY, delta);
         ScissorsHandler.INSTANCE.removeLastScissor();
-        GlStateManager.disableDepthTest();
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
         this.renderHoleBackground(0, this.top, 255, 255);
         this.renderHoleBackground(this.bottom, this.height, 255, 255);
-        GlStateManager.enableBlend();
-        GlStateManager.blendFuncSeparate(770, 771, 0, 1);
-        GlStateManager.disableAlphaTest();
-        GlStateManager.shadeModel(7425);
-        GlStateManager.disableTexture2D();
-        buffer.func_178970_b();
-        buffer.func_178961_b(0, 0, 0, 0);
-        buffer.func_178985_a(this.left, this.top + 4, 0.0D, 0, 1);
-        buffer.func_178985_a(this.right, this.top + 4, 0.0D, 1, 1);
-        buffer.func_178961_b(0, 0, 0, 255);
-        buffer.func_178985_a(this.right, this.top, 0.0D, 1, 0);
-        buffer.func_178985_a(this.left, this.top, 0.0D, 0, 0);
+        GL11.glEnable(GL11.GL_BLEND);
+        OpenGlHelper.glBlendFunc(770, 771, 0, 1);
+        GL11.glDisable(GL11.GL_ALPHA_TEST);
+        GL11.glShadeModel(7425);
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        tessellator.startDrawingQuads();
+        tessellator.setColorRGBA(0, 0, 0, 0);
+        tessellator.addVertexWithUV(this.left, this.top + 4, 0.0D, 0, 1);
+        tessellator.addVertexWithUV(this.right, this.top + 4, 0.0D, 1, 1);
+        tessellator.setColorRGBA(0, 0, 0, 255);
+        tessellator.addVertexWithUV(this.right, this.top, 0.0D, 1, 0);
+        tessellator.addVertexWithUV(this.left, this.top, 0.0D, 0, 0);
         tessellator.draw();
-        buffer.func_178970_b();
-        buffer.func_178961_b(0, 0, 0, 255);
-        buffer.func_178985_a(this.left, this.bottom, 0.0D, 0, 1);
-        buffer.func_178985_a(this.right, this.bottom, 0.0D, 1, 1);
-        buffer.func_178961_b(0, 0, 0, 0);
-        buffer.func_178985_a(this.right, this.bottom - 4, 0.0D, 1, 0);
-        buffer.func_178985_a(this.left, this.bottom - 4, 0.0D, 0, 0);
+        tessellator.startDrawingQuads();
+        tessellator.setColorRGBA(0, 0, 0, 255);
+        tessellator.addVertexWithUV(this.left, this.bottom, 0.0D, 0, 1);
+        tessellator.addVertexWithUV(this.right, this.bottom, 0.0D, 1, 1);
+        tessellator.setColorRGBA(0, 0, 0, 0);
+        tessellator.addVertexWithUV(this.right, this.bottom - 4, 0.0D, 1, 0);
+        tessellator.addVertexWithUV(this.left, this.bottom - 4, 0.0D, 0, 0);
         tessellator.draw();
         int maxScroll = this.getMaxScroll();
-        renderScrollBar(tessellator, buffer, maxScroll, scrollbarPosition, int_4);
+        renderScrollBar(tessellator, maxScroll, scrollbarPosition, int_4);
 
         this.renderDecorations(mouseX, mouseY);
-        GlStateManager.enableTexture2D();
-        GlStateManager.shadeModel(7424);
-        GlStateManager.enableAlphaTest();
-        GlStateManager.disableBlend();
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glShadeModel(7424);
+        GL11.glEnable(GL11.GL_ALPHA_TEST);
+        GL11.glDisable(GL11.GL_BLEND);
     }
 
     @SuppressWarnings("deprecation")
-    protected void renderScrollBar(Tessellator tessellator, WorldRenderer buffer, int maxScroll, int scrollbarPositionMinX, int scrollbarPositionMaxX) {
+    protected void renderScrollBar(Tessellator tessellator,int maxScroll, int scrollbarPositionMinX, int scrollbarPositionMaxX) {
         if (maxScroll > 0) {
             int int_9 = ((this.bottom - this.top) * (this.bottom - this.top)) / this.getMaxScrollPosition();
-            int_9 = MathHelper.clamp(int_9, 32, this.bottom - this.top - 8);
+            int_9 = MathHelper.clamp_int(int_9, 32, this.bottom - this.top - 8);
             int int_10 = (int) this.getScroll() * (this.bottom - this.top - int_9) / maxScroll + this.top;
             if (int_10 < this.top) {
                 int_10 = this.top;
             }
 
-            buffer.func_178970_b();
-            buffer.func_178961_b(0, 0, 0, 255);
-            buffer.func_178985_a(scrollbarPositionMinX, this.bottom, 0.0D, 0, 1);
-            buffer.func_178985_a(scrollbarPositionMaxX, this.bottom, 0.0D, 1, 1);
-            buffer.func_178985_a(scrollbarPositionMaxX, this.top, 0.0D, 1, 0);
-            buffer.func_178985_a(scrollbarPositionMinX, this.top, 0.0D, 0, 0);
+            tessellator.startDrawingQuads();
+            tessellator.setColorRGBA(0, 0, 0, 255);
+            tessellator.addVertexWithUV(scrollbarPositionMinX, this.bottom, 0.0D, 0, 1);
+            tessellator.addVertexWithUV(scrollbarPositionMaxX, this.bottom, 0.0D, 1, 1);
+            tessellator.addVertexWithUV(scrollbarPositionMaxX, this.top, 0.0D, 1, 0);
+            tessellator.addVertexWithUV(scrollbarPositionMinX, this.top, 0.0D, 0, 0);
             tessellator.draw();
-            buffer.func_178970_b();
-            buffer.func_178961_b(128, 128, 128, 255);
-            buffer.func_178985_a(scrollbarPositionMinX, int_10 + int_9, 0.0D, 0, 1);
-            buffer.func_178985_a(scrollbarPositionMaxX, int_10 + int_9, 0.0D, 1, 1);
-            buffer.func_178985_a(scrollbarPositionMaxX, int_10, 0.0D, 1, 0);
-            buffer.func_178985_a(scrollbarPositionMinX, int_10, 0.0D, 0, 0);
+            tessellator.startDrawingQuads();
+            tessellator.setColorRGBA(128, 128, 128, 255);
+            tessellator.addVertexWithUV(scrollbarPositionMinX, int_10 + int_9, 0.0D, 0, 1);
+            tessellator.addVertexWithUV(scrollbarPositionMaxX, int_10 + int_9, 0.0D, 1, 1);
+            tessellator.addVertexWithUV(scrollbarPositionMaxX, int_10, 0.0D, 1, 0);
+            tessellator.addVertexWithUV(scrollbarPositionMinX, int_10, 0.0D, 0, 0);
             tessellator.draw();
-            buffer.func_178970_b();
-            buffer.func_178961_b(192, 192, 192, 255);
-            buffer.func_178985_a(scrollbarPositionMinX, (int_10 + int_9 - 1), 0.0D, 0, 1);
-            buffer.func_178985_a((scrollbarPositionMaxX - 1), (int_10 + int_9 - 1), 0.0D, 1, 1);
-            buffer.func_178985_a((scrollbarPositionMaxX - 1), int_10, 0.0D, 1, 0);
-            buffer.func_178985_a(scrollbarPositionMinX, int_10, 0.0D, 0, 0);
+            tessellator.startDrawingQuads();
+            tessellator.setColorRGBA(192, 192, 192, 255);
+            tessellator.addVertexWithUV(scrollbarPositionMinX, (int_10 + int_9 - 1), 0.0D, 0, 1);
+            tessellator.addVertexWithUV((scrollbarPositionMaxX - 1), (int_10 + int_9 - 1), 0.0D, 1, 1);
+            tessellator.addVertexWithUV((scrollbarPositionMaxX - 1), int_10, 0.0D, 1, 0);
+            tessellator.addVertexWithUV(scrollbarPositionMinX, int_10, 0.0D, 0, 0);
             tessellator.draw();
         }
     }
@@ -299,7 +300,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
     }
 
     public void capYPosition(double double_1) {
-        this.scroll = MathHelper.clamp(double_1, 0.0D, this.getMaxScroll());
+        this.scroll = MathHelper.clamp_double(double_1, 0.0D, this.getMaxScroll());
     }
 
     protected int getMaxScroll() {
@@ -320,7 +321,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
 
     public boolean mouseClicked(double double_1, double double_2, int int_1) {
         this.updateScrollingState(double_1, double_2, int_1);
-        if (!this.isMouseOver(double_1, double_2)) {
+        if (!this.func_146115_a(double_1, double_2)) {
             return false;
         } else {
             E item = this.getItemAtPosition(double_1, double_2);
@@ -356,7 +357,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
             } else {
                 double double_5 = Math.max(1, this.getMaxScroll());
                 int int_2 = this.bottom - this.top;
-                int int_3 = MathHelper.clamp((int) ((float) (int_2 * int_2) / (float) this.getMaxScrollPosition()), 32, int_2 - 8);
+                int int_3 = MathHelper.clamp_int((int) ((float) (int_2 * int_2) / (float) this.getMaxScrollPosition()), 32, int_2 - 8);
                 double double_6 = Math.max(1.0D, double_5 / (double) (int_2 - int_3));
                 this.capYPosition(this.getScroll() + double_4 * double_6);
             }
@@ -378,7 +379,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
     protected void moveSelection(int int_1) {
         if (!this.children().isEmpty()) {
             int int_2 = this.children().indexOf(this.getSelectedItem());
-            int int_3 = MathHelper.clamp(int_2 + int_1, 0, this.getItemCount() - 1);
+            int int_3 = MathHelper.clamp_int(int_2 + int_1, 0, this.getItemCount() - 1);
             E itemListWidget$Item_1 = this.children().get(int_3);
             this.selectItem(itemListWidget$Item_1);
             this.ensureVisible(itemListWidget$Item_1);
@@ -386,14 +387,13 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
 
     }
 
-    public boolean isMouseOver(double double_1, double double_2) {
+    public boolean func_146115_a(double double_1, double double_2) {
         return double_2 >= (double) this.top && double_2 <= (double) this.bottom && double_1 >= (double) this.left && double_1 <= (double) this.right;
     }
 
     protected void renderList(int startX, int startY, int int_3, int int_4, float float_1) {
         int itemCount = this.getItemCount();
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer buffer = tessellator.getBuffer();
+        Tessellator tessellator = Tessellator.instance;
 
         for (int renderIndex = 0; renderIndex < itemCount; ++renderIndex) {
             E item = this.getItem(renderIndex);
@@ -406,29 +406,29 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
             if (this.visible && this.isSelected(renderIndex)) {
                 itemMinX = this.left + this.width / 2 - itemWidth / 2;
                 itemMaxX = itemMinX + itemWidth;
-                GlStateManager.disableTexture2D();
+                GL11.glDisable(GL11.GL_TEXTURE_2D);
                 float float_2 = this.isFocused() ? 1.0F : 0.5F;
-                GlStateManager.color4f(float_2, float_2, float_2, 1.0F);
-                buffer.func_178970_b();
-                buffer.func_178984_b(itemMinX, itemY + itemHeight + 2, 0.0D);
-                buffer.func_178984_b(itemMaxX, itemY + itemHeight + 2, 0.0D);
-                buffer.func_178984_b(itemMaxX, itemY - 2, 0.0D);
-                buffer.func_178984_b(itemMinX, itemY - 2, 0.0D);
+                GL11.glColor4f(float_2, float_2, float_2, 1.0F);
+                tessellator.startDrawingQuads();
+                tessellator.addVertex(itemMinX, itemY + itemHeight + 2, 0.0D);
+                tessellator.addVertex(itemMaxX, itemY + itemHeight + 2, 0.0D);
+                tessellator.addVertex(itemMaxX, itemY - 2, 0.0D);
+                tessellator.addVertex(itemMinX, itemY - 2, 0.0D);
                 tessellator.draw();
-                GlStateManager.color4f(0.0F, 0.0F, 0.0F, 1.0F);
-                buffer.func_178970_b();
-                buffer.func_178984_b(itemMinX + 1, itemY + itemHeight + 1, 0.0D);
-                buffer.func_178984_b(itemMaxX - 1, itemY + itemHeight + 1, 0.0D);
-                buffer.func_178984_b(itemMaxX - 1, itemY - 1, 0.0D);
-                buffer.func_178984_b(itemMinX + 1, itemY - 1, 0.0D);
+                GL11.glColor4f(0.0F, 0.0F, 0.0F, 1.0F);
+                tessellator.startDrawingQuads();
+                tessellator.addVertex(itemMinX + 1, itemY + itemHeight + 1, 0.0D);
+                tessellator.addVertex(itemMaxX - 1, itemY + itemHeight + 1, 0.0D);
+                tessellator.addVertex(itemMaxX - 1, itemY - 1, 0.0D);
+                tessellator.addVertex(itemMinX + 1, itemY - 1, 0.0D);
                 tessellator.draw();
-                GlStateManager.enableTexture2D();
+                GL11.glEnable(GL11.GL_TEXTURE_2D);
             }
 
             int y = this.getRowTop(renderIndex);
             int x = this.getRowLeft();
             RenderHelper.disableStandardItemLighting();
-            renderItem(item, renderIndex, y, x, itemWidth, itemHeight, int_3, int_4, this.isMouseOver(int_3, int_4) && Objects.equals(this.getItemAtPosition(int_3, int_4), item), float_1);
+            renderItem(item, renderIndex, y, x, itemWidth, itemHeight, int_3, int_4, this.func_146115_a(int_3, int_4) && Objects.equals(this.getItemAtPosition(int_3, int_4), item), float_1);
         }
 
     }
@@ -454,18 +454,17 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
 
     @SuppressWarnings("deprecation")
     protected void renderHoleBackground(int int_1, int int_2, int int_3, int int_4) {
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer buffer = tessellator.getBuffer();
+        Tessellator tessellator = Tessellator.instance;
         this.client.getTextureManager().bindTexture(backgroundLocation);
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         float float_1 = 32.0F;
-        buffer.func_178970_b();
-        buffer.func_178961_b(64, 64, 64, int_4);
-        buffer.func_178985_a(this.left, int_2, 0.0D, 0, ((float) int_2 / 32.0F));
-        buffer.func_178985_a(this.left + this.width, int_2, 0.0D, ((float) this.width / 32.0F), ((float) int_2 / 32.0F));
-        buffer.func_178961_b(64, 64, 64, int_3);
-        buffer.func_178985_a(this.left + this.width, int_1, 0.0D, ((float) this.width / 32.0F), ((float) int_1 / 32.0F));
-        buffer.func_178985_a(this.left, int_1, 0.0D, 0, ((float) int_1 / 32.0F));
+        tessellator.startDrawingQuads();
+        tessellator.setColorRGBA(64, 64, 64, int_4);
+        tessellator.addVertexWithUV(this.left, int_2, 0.0D, 0, ((float) int_2 / 32.0F));
+        tessellator.addVertexWithUV(this.left + this.width, int_2, 0.0D, ((float) this.width / 32.0F), ((float) int_2 / 32.0F));
+        tessellator.setColorRGBA(64, 64, 64, int_3);
+        tessellator.addVertexWithUV(this.left + this.width, int_1, 0.0D, ((float) this.width / 32.0F), ((float) int_1 / 32.0F));
+        tessellator.addVertexWithUV(this.left, int_1, 0.0D, 0, ((float) int_1 / 32.0F));
         tessellator.draw();
     }
 
@@ -495,6 +494,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
         }
     }
 
+    @SideOnly(Side.CLIENT)
     public abstract static class Entry<E extends Entry<E>> extends Gui {
         @Deprecated
         DynamicEntryListWidget<E> parent;
@@ -504,7 +504,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
 
         public abstract void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isHovered, float delta);
 
-        public boolean isMouseOver(double double_1, double double_2) {
+        public boolean func_146115_a(double double_1, double double_2) {
             return Objects.equals(this.parent.getItemAtPosition(double_1, double_2), this);
         }
 
@@ -541,6 +541,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
         }
     }
 
+    @SideOnly(Side.CLIENT)
     class Entries extends AbstractList<E> {
         private final ArrayList<E> items;
 

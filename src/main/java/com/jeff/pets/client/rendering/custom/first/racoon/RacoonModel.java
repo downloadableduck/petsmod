@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.custom.first.racoon;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.first.Racoon;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.Entity; import net.minecraft.client.renderer.entity.RenderManager; import com.jeff.pets.client.PetsClientInitializer;
 import net.minecraft.entity.EntityLivingBase;
 
 public class RacoonModel extends PetModel {
@@ -68,7 +68,7 @@ public class RacoonModel extends PetModel {
     }
 
     @Override
-    public void render(Entity entity, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
+    public void render(net.minecraft.entity.Entity entity, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
         root.render(alpha);
     }
 
@@ -100,7 +100,7 @@ public class RacoonModel extends PetModel {
         //this.left_hind_leg.setRotationPoint(-1.0F, 17.5F, 7.0F);
         this.tail.rotateAngleX = 2f;
 
-        if (fox.field_70153_n != null) {
+        if (fox.ridingEntity != null) {
             //this.body.rotateAngleX = 1.35f;
             //this.tail.z = 7;
         }

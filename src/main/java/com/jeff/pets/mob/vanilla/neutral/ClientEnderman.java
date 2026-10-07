@@ -19,7 +19,7 @@ public class ClientEnderman extends GroundPet {
     }
 
     @Override
-    protected String getAmbientSound() {
+    protected String getLivingSound() {
         return "mob.endermen.idle";
     }
 }

@@ -20,7 +20,7 @@ public class ClientSnowGolem extends GroundPet {
     }
 
     @Override
-    protected String getAmbientSound() {
+    protected String getLivingSound() {
         return "mob.snowman.say";
     }
 }

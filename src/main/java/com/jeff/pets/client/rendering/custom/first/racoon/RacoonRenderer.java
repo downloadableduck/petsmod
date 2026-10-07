@@ -1,36 +1,37 @@
 package com.jeff.pets.client.rendering.custom.first.racoon;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.Entity;
+import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Racoon;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.entity.Entity; import net.minecraft.client.renderer.entity.RenderManager; import com.jeff.pets.client.PetsClientInitializer;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 import static com.jeff.pets.client.Central.MOD_ID;
 
-public class RacoonRenderer extends PetRenderer<Racoon, RacoonModel> {
+public class RacoonRenderer extends PetRenderer {
 
-    public RacoonRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new RacoonModel(), 0.75f);
+    public RacoonRenderer(RenderManager renderManager, PetsClientInitializer.Context context) {
+        super(new RacoonModel(), 0.75f);
     }
 
     @Override
-    public void preRenderCallback(EntityLivingBase __e, float f) {
-        Racoon livingEntityRenderState = (Racoon) __e;
-        if ((CONFIG.isBaby && !livingEntityRenderState.isServerEntity()) || (livingEntityRenderState.isChild() && livingEntityRenderState.isServerEntity())) {
-            GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+    public void preRenderCallback( final EntityLivingBase livingEntityRenderState, float f) {
+        if ((CONFIG.isBaby && !((Racoon) livingEntityRenderState).isServerEntity()) || (livingEntityRenderState.isChild() && ((Racoon) livingEntityRenderState).isServerEntity())) {
+            GL11.glScalef(0.5f, 0.5f, 0.5f);
         }
     }
 
     @Override
-    public ResourceLocation getEntityTexture(Entity __e) {
-        Racoon state = (Racoon) __e;
+    public ResourceLocation getEntityTexture( final Entity state) {
         String racoonTexturePath;
-        if (!state.isServerEntity()) {
+        Racoon racoon = (Racoon) state;
+        if (!racoon.isServerEntity()) {
             if (Objects.equals(CONFIG.racoonSkin, "normal")) {
                 racoonTexturePath = "textures/entity/racoon/racoon.png";
             } else if (Objects.equals(CONFIG.racoonSkin, "albino")) {
@@ -45,9 +46,9 @@ public class RacoonRenderer extends PetRenderer<Racoon, RacoonModel> {
     }
 
     @Override
-    public void renderModel(EntityLivingBase __e, float g, float f, float k, float h, float i, float j) {
-        Racoon racoon = (Racoon) __e;
+    public void renderModel( final EntityLivingBase racoon, float g, float f, float k, float h, float i, float j) {
         super.renderModel(racoon, g, f, k, h, i, j);
-        racoon.setServerEntity(racoon.func_70096_w().func_75683_a(Racoon.IS_SERVER_ENTITY) != 0);
+        ((Racoon) racoon).setServerEntity(((Racoon) racoon).isServerEntity());
     }
 }
+

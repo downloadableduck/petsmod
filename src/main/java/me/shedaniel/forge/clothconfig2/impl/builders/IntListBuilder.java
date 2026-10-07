@@ -1,8 +1,9 @@
 package me.shedaniel.forge.clothconfig2.impl.builders;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.shedaniel.forge.clothconfig2.gui.entries.IntegerListListEntry;
 import net.minecraft.client.resources.I18n;
-
 
 import java.util.List;
 import java.util.Optional;
@@ -10,7 +11,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-
+@SideOnly(Side.CLIENT)
 public class IntListBuilder extends FieldBuilder<List<Integer>, IntegerListListEntry> {
 
     private final List<Integer> value;

@@ -22,7 +22,7 @@ public class ClientCreeper extends GroundPet {
     }
 
     @Override
-    protected String getAmbientSound() {
-        return "mob.creeper.primed";
+    protected String getLivingSound() {
+        return "creeper.primed";
     }
 }

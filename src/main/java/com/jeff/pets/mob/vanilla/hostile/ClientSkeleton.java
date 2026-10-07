@@ -22,7 +22,7 @@ public class ClientSkeleton extends GroundPet implements IRangedAttackMob {
     }
 
     @Override
-    protected String getAmbientSound() {
+    protected String getLivingSound() {
         return "mob.skeleton.say";
     }
 

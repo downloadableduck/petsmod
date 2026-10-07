@@ -1,12 +1,13 @@
 package me.shedaniel.forge.clothconfig2.impl;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.shedaniel.forge.clothconfig2.api.Modifier;
 import me.shedaniel.forge.clothconfig2.api.ModifierKeyCode;
 import net.minecraft.client.resources.I18n;
-
 import org.lwjgl.input.Keyboard;
 
-
+@SideOnly(Side.CLIENT)
 public class ModifierKeyCodeImpl implements ModifierKeyCode {
     private KeyInput keyCode;
     private Modifier modifier;

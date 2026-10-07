@@ -1,23 +1,22 @@
 package com.jeff.pets.client.rendering.vanilla.magmacube;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.PetRenderer;
-import com.jeff.pets.mob.vanilla.hostile.ClientMagmaCube;
 import net.minecraft.client.model.ModelSlime;
+import net.minecraft.entity.Entity; import net.minecraft.client.renderer.entity.RenderManager; import com.jeff.pets.client.PetsClientInitializer;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientMagmaCubeRenderer extends PetRenderer<ClientMagmaCube, ModelSlime> {
+public class ClientMagmaCubeRenderer extends PetRenderer {
 
-    public ClientMagmaCubeRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ModelSlime(0), 0.75f);
+    public ClientMagmaCubeRenderer(RenderManager renderManager, PetsClientInitializer.Context context) {
+        super(new ModelSlime(0), 0.75f);
     }
 
     @Override
-    public void preRenderCallback(EntityLivingBase __e, float a) {
-        ClientMagmaCube slimeRenderState = (ClientMagmaCube) __e;
+    public void preRenderCallback( final EntityLivingBase slimeRenderState, float a) {
         int magmaCubeScale;
         switch (CONFIG.magmaCubeSkin) {
             case "small":
@@ -33,12 +32,12 @@ public class ClientMagmaCubeRenderer extends PetRenderer<ClientMagmaCube, ModelS
                 magmaCubeScale = 1;
                 break;
         }
-        net.minecraft.client.renderer.GlStateManager.scalef(magmaCubeScale, magmaCubeScale, magmaCubeScale);
+        GL11.glScalef(magmaCubeScale, magmaCubeScale, magmaCubeScale);
     }
 
     @Override
-    public ResourceLocation getEntityTexture(Entity __e) {
-        ClientMagmaCube livingEntityRenderState = (ClientMagmaCube) __e;
+    public ResourceLocation getEntityTexture( final Entity livingEntityRenderState) {
         return new ResourceLocation("minecraft", "textures/entity/slime/magmacube.png");
     }
 }
+

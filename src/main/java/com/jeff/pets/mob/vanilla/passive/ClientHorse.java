@@ -20,7 +20,7 @@ public class ClientHorse extends GroundPet {
     }
 
     @Override
-    protected String getAmbientSound() {
+    protected String getLivingSound() {
         return "mob.horse.idle";
     }
 }

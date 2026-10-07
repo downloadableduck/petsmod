@@ -24,7 +24,7 @@ public class ClientBat extends FlyingPet {
     }
 
     @Override
-    protected String getAmbientSound() {
+    protected String getLivingSound() {
         return "mob.bat.idle";
     }
 }

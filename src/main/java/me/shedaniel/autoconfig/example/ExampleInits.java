@@ -1,6 +1,6 @@
 /*
  * This file is part of Cloth Config.
- * Copyright (C) 2020 - 2021 shedaniel
+ * Copyright (C) 2020 - 2021 me.shedaniel
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -21,7 +21,7 @@ package me.shedaniel.autoconfig.example;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigHolder;
-import me.shedaniel.autoconfig.event.ActionResult;
+import me.shedaniel.autoconfig.EnumActionResult;
 import me.shedaniel.autoconfig.serializer.DummyConfigSerializer;
 import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
 
@@ -40,10 +40,10 @@ public class ExampleInits {
         // this event allows you to change or register specific listeners
         // for when the config has changed
         AutoConfig.getConfigHolder(ExampleConfig.class).registerSaveListener((manager, data) -> {
-            return ActionResult.SUCCESS;
+            return EnumActionResult.SUCCESS;
         });
         AutoConfig.getConfigHolder(ExampleConfig.class).registerLoadListener((manager, newData) -> {
-            return ActionResult.SUCCESS;
+            return EnumActionResult.SUCCESS;
         });
     }
 

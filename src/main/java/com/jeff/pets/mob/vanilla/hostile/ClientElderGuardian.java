@@ -21,7 +21,7 @@ public class ClientElderGuardian extends FlyingPet {
     }
 
     @Override
-    protected String getAmbientSound() {
+    protected String getLivingSound() {
         return "mob.guardian.elder.idle";
     }
 }

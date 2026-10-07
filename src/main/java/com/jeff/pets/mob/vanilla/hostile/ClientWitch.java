@@ -19,7 +19,7 @@ public class ClientWitch extends GroundPet {
     }
 
     @Override
-    protected String getAmbientSound() {
+    protected String getLivingSound() {
         return "mob.witch.idle";
     }
 }

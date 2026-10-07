@@ -20,7 +20,7 @@ public class ClientZombie extends GroundPet {
     }
 
     @Override
-    protected String getAmbientSound() {
+    protected String getLivingSound() {
         return "mob.zombie.say";
     }
 }

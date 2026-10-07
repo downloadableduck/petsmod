@@ -16,9 +16,9 @@ public class ColorDisplayWidget extends GuiButton {
     }
 
     public void render(int mouseX, int mouseY, float delta) {
-        drawGradientRect(this.x, this.y, this.x + size, this.y + size, -0x5F5F60, -0x5F5F60);
-        drawGradientRect(this.x + 1, this.y + 1, this.x + size - 1, this.y + size - 1, 0xffffffff, 0xffffffff);
-        drawGradientRect(this.x + 1, this.y + 1, this.x + size - 1, this.y + size - 1, color, color);
+        drawGradientRect(this.xPosition, this.yPosition, this.xPosition + size, this.yPosition + size, -0x5F5F60, -0x5F5F60);
+        drawGradientRect(this.xPosition + 1, this.yPosition + 1, this.xPosition + size - 1, this.yPosition + size - 1, 0xffffffff, 0xffffffff);
+        drawGradientRect(this.xPosition + 1, this.yPosition + 1, this.xPosition + size - 1, this.yPosition + size - 1, color, color);
     }
 
     public void setColor(int color) {

@@ -22,7 +22,7 @@ public class ClientCat extends GroundPet {
     }
 
     @Override
-    protected String getAmbientSound() {
+    protected String getLivingSound() {
         return "mob.cat.meow";
     }
 }

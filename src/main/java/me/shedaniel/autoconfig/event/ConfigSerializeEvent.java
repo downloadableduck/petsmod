@@ -1,6 +1,6 @@
 /*
  * This file is part of Cloth Config.
- * Copyright (C) 2020 - 2021 shedaniel
+ * Copyright (C) 2020 - 2021 me.shedaniel
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -21,6 +21,7 @@ package me.shedaniel.autoconfig.event;
 
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.ConfigHolder;
+import me.shedaniel.autoconfig.EnumActionResult;
 
 public final class ConfigSerializeEvent {
     private ConfigSerializeEvent() {
@@ -41,7 +42,7 @@ public final class ConfigSerializeEvent {
          * will result in an exception
          * <p>
          */
-        ActionResult onSave(ConfigHolder<T> manager, T data);
+        EnumActionResult onSave(ConfigHolder<T> manager, T data);
     }
 
     @FunctionalInterface
@@ -61,6 +62,6 @@ public final class ConfigSerializeEvent {
          * Also avoid calling {@link ConfigHolder#load()} in this callback, as it
          * will result in an exception
          */
-        ActionResult onLoad(ConfigHolder<T> manager, T newData);
+        EnumActionResult onLoad(ConfigHolder<T> manager, T newData);
     }
 }

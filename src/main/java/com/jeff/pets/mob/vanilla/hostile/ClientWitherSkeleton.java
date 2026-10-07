@@ -23,7 +23,7 @@ public class ClientWitherSkeleton extends GroundPet implements IRangedAttackMob 
     }
 
     @Override
-    protected String getAmbientSound() {
+    protected String getLivingSound() {
         return "mob.skeleton.say";
     }
 
@@ -31,5 +31,4 @@ public class ClientWitherSkeleton extends GroundPet implements IRangedAttackMob 
     public void attackEntityWithRangedAttack(EntityLivingBase livingEntity, float f) {
 
     }
-
 }

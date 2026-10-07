@@ -20,7 +20,7 @@ public class ClientWolf extends GroundPet {
     }
 
     @Override
-    protected String getAmbientSound() {
+    protected String getLivingSound() {
         return "mob.wolf.growl";
     }
 }

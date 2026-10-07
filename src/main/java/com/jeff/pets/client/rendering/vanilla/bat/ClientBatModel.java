@@ -1,10 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.bat;
 
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelBat;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.EntityBat;
+import net.minecraft.entity.Entity; import net.minecraft.client.renderer.entity.RenderManager; import com.jeff.pets.client.PetsClientInitializer;
 import net.minecraft.util.MathHelper;
 
 public class ClientBatModel extends ModelBase {
@@ -49,7 +47,7 @@ public class ClientBatModel extends ModelBase {
     }
 
     @Override
-    public void render(Entity p_78088_1_, float p_78088_2_, float p_78088_3_, float p_78088_4_, float p_78088_5_, float p_78088_6_, float p_78088_7_) {
+    public void render( final Entity p_78088_1_, float p_78088_2_, float p_78088_3_, float p_78088_4_, float p_78088_5_, float p_78088_6_, float p_78088_7_) {
         this.setRotationAngles(p_78088_2_, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_, p_78088_1_);
         this.batHead.render(p_78088_7_);
         this.batBody.render(p_78088_7_);
@@ -71,3 +69,4 @@ public class ClientBatModel extends ModelBase {
             this.batOuterLeftWing.rotateAngleY = -this.batRightWing.rotateAngleY * 0.5F;
     }
 }
+

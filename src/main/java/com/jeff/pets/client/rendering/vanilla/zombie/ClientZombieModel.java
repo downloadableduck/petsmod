@@ -2,8 +2,9 @@ package com.jeff.pets.client.rendering.vanilla.zombie;
 
 import com.jeff.pets.client.rendering.ModelUtils;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.Entity; import net.minecraft.client.renderer.entity.RenderManager; import com.jeff.pets.client.PetsClientInitializer;
 import net.minecraft.entity.EntityLivingBase;
+import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
@@ -23,14 +24,15 @@ public class ClientZombieModel extends ModelBiped {
     }
 
     @Override
-    public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+    public void render( final Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         super.render(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-        net.minecraft.client.renderer.GlStateManager.pushMatrix();
+        GL11.glPushMatrix();
         if (CONFIG.isBaby) {
-            net.minecraft.client.renderer.GlStateManager.scalef(1.5f, 1.5f, 1.5f);
+            GL11.glScalef(1.5f, 1.5f, 1.5f);
         } else {
-            net.minecraft.client.renderer.GlStateManager.scalef(1, 1, 1);
+            GL11.glScalef(1, 1, 1);
         }
-        net.minecraft.client.renderer.GlStateManager.popMatrix();
+        GL11.glPopMatrix();
     }
 }
+

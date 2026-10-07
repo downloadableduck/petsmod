@@ -21,7 +21,7 @@ public class ClientBlaze extends FlyingPet {
     }
 
     @Override
-    protected String getAmbientSound() {
+    protected String getLivingSound() {
         return "mob.blaze.breathe";
     }
 }

@@ -1,12 +1,13 @@
 package me.shedaniel.forge.clothconfig2.gui;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 
-
 import java.util.Random;
 
-
+@SideOnly(Side.CLIENT)
 public class ClothConfigTabButton extends GuiButton {
 
     private final int index;
@@ -20,7 +21,7 @@ public class ClothConfigTabButton extends GuiButton {
 
     public void render(int mouseX, int mouseY, float delta) {
         enabled = index != screen.selectedTabIndex;
-        this.func_146112_a(Minecraft.getInstance(), mouseX, mouseY);
+        this.drawButton(Minecraft.getMinecraft(), mouseX, mouseY);
     }
 
     public void onClick() {
@@ -30,7 +31,7 @@ public class ClothConfigTabButton extends GuiButton {
         screen.initGui();
     }
 
-    public boolean isMouseOver(int mouseX, int mouseY) {
-        return this.enabled && this.visible && mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height && mouseX >= 20 && mouseX < screen.width - 20;
+    public boolean func_146115_a(int mouseX, int mouseY) {
+        return this.enabled && this.visible && mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height && mouseX >= 20 && mouseX < screen.width - 20;
     }
 }

@@ -1,11 +1,12 @@
 package me.shedaniel.forge.clothconfig2.api;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.shedaniel.forge.clothconfig2.impl.InputCompat;
 import me.shedaniel.forge.clothconfig2.impl.KeyInput;
 import me.shedaniel.forge.clothconfig2.impl.ModifierKeyCodeImpl;
 
-
-
+@SideOnly(Side.CLIENT)
 public interface ModifierKeyCode {
     static ModifierKeyCode of(KeyInput keyCode, Modifier modifier) {
         return new ModifierKeyCodeImpl().setKeyCodeAndModifier(keyCode, modifier);

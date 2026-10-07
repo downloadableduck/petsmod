@@ -3,10 +3,10 @@ package com.jeff.pets.client.rendering.vanilla.cat;
 import com.jeff.pets.mob.vanilla.passive.ClientCat;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.Entity; import net.minecraft.client.renderer.entity.RenderManager; import com.jeff.pets.client.PetsClientInitializer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
+import org.lwjgl.opengl.GL11;
 
 public class ClientCatModel extends ModelBase {
     /**
@@ -81,18 +81,18 @@ public class ClientCatModel extends ModelBase {
     /**
      * Sets the models various rotation angles then renders the model.
      */
-    public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+    public void render( final Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         this.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn);
         if (this.isChild) {
             float f = 2.0F;
-            GlStateManager.pushMatrix();
-            GlStateManager.scalef(0.75F, 0.75F, 0.75F);
-            GlStateManager.translatef(0.0F, 10.0F * scale, 4.0F * scale);
+            GL11.glPushMatrix();
+            GL11.glScalef(0.75F, 0.75F, 0.75F);
+            GL11.glTranslatef(0.0F, 10.0F * scale, 4.0F * scale);
             this.ocelotHead.render(scale);
-            GlStateManager.popMatrix();
-            GlStateManager.pushMatrix();
-            GlStateManager.scalef(0.5F, 0.5F, 0.5F);
-            GlStateManager.translatef(0.0F, 24.0F * scale, 0.0F);
+            GL11.glPopMatrix();
+            GL11.glPushMatrix();
+            GL11.glScalef(0.5F, 0.5F, 0.5F);
+            GL11.glTranslatef(0.0F, 24.0F * scale, 0.0F);
             this.ocelotBody.render(scale);
             this.ocelotBackLeftLeg.render(scale);
             this.ocelotBackRightLeg.render(scale);
@@ -100,7 +100,7 @@ public class ClientCatModel extends ModelBase {
             this.ocelotFrontRightLeg.render(scale);
             this.ocelotTail.render(scale);
             this.ocelotTail2.render(scale);
-            GlStateManager.popMatrix();
+            GL11.glPopMatrix();
         } else {
             this.ocelotHead.render(scale);
             this.ocelotBody.render(scale);
@@ -183,7 +183,7 @@ public class ClientCatModel extends ModelBase {
             this.ocelotTail.rotateAngleX = ((float) Math.PI / 2F);
             this.ocelotTail2.rotateAngleX = ((float) Math.PI / 2F);
             this.state = 2;
-        } else if (entitylivingbaseIn.getOwner() != null && entitylivingbaseIn.isSitting()) {
+        } else if (entitylivingbaseIn.getOwner() != null && (entitylivingbaseIn.ridingEntity == entitylivingbaseIn.getOwner() || entitylivingbaseIn.ridingEntity == entitylivingbaseIn.getOwner())) {
             this.ocelotBody.rotateAngleX = ((float) Math.PI / 4F);
             this.ocelotBody.rotationPointY += -4.0F;
             this.ocelotBody.rotationPointZ += 5.0F;
@@ -213,3 +213,4 @@ public class ClientCatModel extends ModelBase {
         }
     }
 }
+

@@ -1,15 +1,16 @@
 package me.shedaniel.forge.clothconfig2.gui.entries;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.resources.I18n;
-
 
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-
+@SideOnly(Side.CLIENT)
 public class FloatListEntry extends TextFieldListEntry<Float> {
 
     private static final Function<String, String> stripCharacters = s -> {

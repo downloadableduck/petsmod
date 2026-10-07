@@ -1,13 +1,14 @@
 package me.shedaniel.forge.clothconfig2.impl.builders;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.shedaniel.forge.clothconfig2.gui.entries.TextListEntry;
-
 
 import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-
+@SideOnly(Side.CLIENT)
 public class TextDescriptionBuilder extends FieldBuilder<String, TextListEntry> {
 
     private final String value;
