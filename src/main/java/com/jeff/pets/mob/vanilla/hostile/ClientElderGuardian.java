@@ -2,9 +2,9 @@ package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.sound.Sounds;
 
-import net.minecraft.entity.passive.TameableEntity;
+
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 public class ClientElderGuardian extends FlyingPet {
     public ClientElderGuardian(World level) {
         super(level);
-        this.setBounds(1.9975F, 1.9975F);
+        this.setSize(1.9975F, 1.9975F);
     }
 
     @Override
@@ -27,6 +27,6 @@ public class ClientElderGuardian extends FlyingPet {
 
     @Override
     protected String getAmbientSound() {
-        return Sounds.ENTITY_ELDER_GUARDIAN_AMBIENT;
+        return "mob.elderguardian.idle";
     }
 }

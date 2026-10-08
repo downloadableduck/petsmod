@@ -2,8 +2,8 @@ package com.jeff.pets.client.mixin.client;
 
 import com.jeff.pets.client.Central;
 import com.jeff.pets.mob.AbstractPet;
-import net.minecraft.entity.player.ClientPlayerEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.entity.player.EntityPlayer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Arrays;
 import java.util.Objects;
 
-@Mixin(ClientPlayerEntity.class)
+@Mixin(EntityClientPlayerMP.class)
 public class PlayerSendMessageMixin {
     @Inject(at = @At("HEAD"), method = "sendChatMessage", cancellable = true)
     private void pets$onPlayerSendChat(String message, CallbackInfo ci) {

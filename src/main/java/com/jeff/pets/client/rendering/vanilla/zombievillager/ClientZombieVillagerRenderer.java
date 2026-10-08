@@ -2,35 +2,34 @@ package com.jeff.pets.client.rendering.vanilla.zombievillager;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientZombieVillagerRenderer extends PetRenderer<@NotNull ClientZombieVillager> {
+public class ClientZombieVillagerRenderer extends PetRenderer {
 
-    public static final Identifier BUTCHER_LOCATION = new Identifier("minecraft", "textures/entity/zombie_villager/zombie_butcher.png");
-    public static final Identifier FARMER_LOCATION = new Identifier("minecraft", "textures/entity/zombie_villager/zombie_farmer.png");
-    public static final Identifier LIBRARIAN_LOCATION = new Identifier("minecraft", "textures/entity/zombie_villager/zombie_librarian.png");
-    public static final Identifier NITWIT_LOCATION = new Identifier("minecraft", "textures/entity/zombie_villager/zombie_villager.png");
-    public static final Identifier TOOLSMITH_LOCATION = new Identifier("minecraft", "textures/entity/zombie_villager/zombie_toolsmith.png");
+    public static final ResourceLocation BUTCHER_LOCATION = new ResourceLocation("minecraft", "textures/entity/zombie_villager/zombie_butcher.png");
+    public static final ResourceLocation FARMER_LOCATION = new ResourceLocation("minecraft", "textures/entity/zombie_villager/zombie_farmer.png");
+    public static final ResourceLocation LIBRARIAN_LOCATION = new ResourceLocation("minecraft", "textures/entity/zombie_villager/zombie_librarian.png");
+    public static final ResourceLocation NITWIT_LOCATION = new ResourceLocation("minecraft", "textures/entity/zombie_villager/zombie_villager.png");
+    public static final ResourceLocation TOOLSMITH_LOCATION = new ResourceLocation("minecraft", "textures/entity/zombie_villager/zombie_toolsmith.png");
 
-    public ClientZombieVillagerRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+    public ClientZombieVillagerRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientZombieVillagerModel(), 0.75f);
     }
 
-    @Override
-    public void method_5777(ClientZombieVillager state, float f, float g, float h) {
-        super.method_5777(state, f, g, h);
-        if (state.vehicle != null) {
-            com.mojang.blaze3d.platform.GlStateManager.translate(0, -0.5f, 0);
+    public void setLivingAnimations(ClientZombieVillager state, float f, float g, float h) {
+        if (state.ridingEntity != null) {
+            GL11.glTranslatef(0, -0.5f, 0);
         }
     }
 
-    @Override
-    public @NotNull Identifier getTexture(ClientZombieVillager livingEntityRenderState) {
+    public @NotNull ResourceLocation getEntityTexture(net.minecraft.entity.Entity __e) {
+        ClientZombieVillager livingEntityRenderState = (ClientZombieVillager) __e;
         if (Objects.equals(CONFIG.zombieVillagerSkin, "butcher")) {
             return (BUTCHER_LOCATION);
         } else if (Objects.equals(CONFIG.zombieVillagerSkin, "farmer")) {

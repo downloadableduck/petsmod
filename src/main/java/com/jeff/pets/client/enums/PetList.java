@@ -1,6 +1,6 @@
 package com.jeff.pets.client.enums;
 
-import net.minecraft.text.LiteralText;
+import net.minecraft.util.ChatComponentText;
 
 public enum PetList implements NameableEnum {
     bat,
@@ -52,7 +52,7 @@ public enum PetList implements NameableEnum {
     zombie_pigman;
 
     @Override
-    public net.minecraft.text.LiteralText getDisplayName() {
-        return new LiteralText(String.valueOf(this).replace("_", " "));
+    public net.minecraft.util.ChatComponentText getDisplayName() {
+        return new ChatComponentText(String.valueOf(this).replace("_", " "));
     }
 }

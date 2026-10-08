@@ -3,17 +3,17 @@ package com.jeff.pets.client.rendering.vanilla.zombie_pigman;
 import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientZombiePigman;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.util.ResourceLocation;
 
-public class ClientZombiePigmanRenderer extends PetRenderer<ClientZombiePigman> {
+public class ClientZombiePigmanRenderer extends PetRenderer {
 
-    public ClientZombiePigmanRenderer(EntityRenderDispatcher context, PetsClientInitializer.Context context2) {
+    public ClientZombiePigmanRenderer(RenderManager context, PetsClientInitializer.Context context2) {
         super(context, new ClientZombiePigmanModel(), 0.5f);
     }
 
-    @Override
-    public Identifier getTexture(ClientZombiePigman entity) {
-        return new Identifier("minecraft", "textures/entity/zombie_pigman.png");
+    public ResourceLocation getEntityTexture(net.minecraft.entity.Entity __e) {
+        ClientZombiePigman entity = (ClientZombiePigman) __e;
+        return new ResourceLocation("minecraft", "textures/entity/zombie_pigman.png");
     }
 }

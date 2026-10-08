@@ -1,29 +1,29 @@
 package com.jeff.pets.client.rendering.vanilla.cow;
 
-import net.minecraft.client.render.entity.model.CowEntityModel;
-import net.minecraft.client.render.model.ModelPart;
+import net.minecraft.client.model.ModelCow;
+import net.minecraft.client.model.ModelRenderer;
+import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientCowModel extends CowEntityModel {
+public class ClientCowModel extends ModelCow {
 
     public ClientCowModel() {
         super();
     }
 
-    @Override
     public void render(net.minecraft.entity.Entity t, float i, float j, float f, float g, float h, float k) {
         super.render(t, i, j, f, g, h, k);
-        com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
+        GL11.glPushMatrix();
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(2, 2, 2);
+            GL11.glScalef(2, 2, 2);
         } else {
-            com.mojang.blaze3d.platform.GlStateManager.scale(1, 1, 1);
+            GL11.glScalef(1, 1, 1);
         }
-        com.mojang.blaze3d.platform.GlStateManager.popMatrix();
+        GL11.glPopMatrix();
     }
 
-    public ModelPart getHead() {
+    public ModelRenderer getHead() {
         return this.head;
     }
 }

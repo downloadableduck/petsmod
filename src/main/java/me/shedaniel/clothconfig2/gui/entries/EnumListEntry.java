@@ -1,6 +1,6 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
-import net.minecraft.client.resource.language.I18n;
+import net.minecraft.client.resources.I18n;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 
 public class EnumListEntry<T extends Enum<?>> extends SelectionListEntry<T> {
 
-    public static final Function<Enum, String> DEFAULT_NAME_PROVIDER = t -> I18n.translate(t instanceof Translatable ? ((Translatable) t).getKey() : t.toString());
+    public static final Function<Enum, String> DEFAULT_NAME_PROVIDER = t -> I18n.format(t instanceof Translatable ? ((Translatable) t).getKey() : t.toString());
 
 
     @Deprecated

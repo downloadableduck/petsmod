@@ -1,22 +1,23 @@
 package com.jeff.pets.mob;
 
 import com.jeff.pets.PetsInitializer;
-import net.minecraft.client.particle.ParticleType;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.Entity;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.passive.EntityTameable;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.Sys;
+import net.minecraft.util.Vec3;
+import net.minecraft.util.MathHelper;
+import net.minecraft.entity.EntityAgeable;
 
 /**
- * Abstract class that extends {@link TameableEntity}, providing multiple utilities
+ * Abstract class that extends {@link EntityTameable}, providing multiple utilities
  * so that each class doesn't have to define the same logic. <p> When creating a custom entity,
  * always extend either {@link GroundPet}, {@link FlyingPet}, or {@link SlimeLikePet},
  * unless adding custom movement logic,
@@ -27,16 +28,27 @@ import org.lwjgl.Sys;
  * @see FlyingPet
  * @see GroundPet
  */
-public abstract class AbstractPet extends TameableEntity {
+public abstract class AbstractPet extends EntityTameable {
 
     protected int waitingTime = 0;
     private boolean isReturningToOwner = false;
     private float randomX = (float) (Math.random() - 1f);
     private float randomZ = (float) (Math.random() - 1);
 
+    /**
+     * Minecraft 1.8.9 tracked the body and head yaw as separate
+     * {@link net.minecraft.entity.EntityLivingBase} fields, but 1.7.10 folds both into the
+     * single {@code rotationYawHead} field. The pet mob code drives the two axes
+     * independently (body follows the movement yaw, head is clamped separately), so both are
+     * kept as fields here and the body yaw is mirrored into {@code rotationYawHead}, which is
+     * what the 1.7.10 living renderer actually interpolates.
+     */
+    public float bodyYaw = this.rotationYaw;
+    public float headYaw = this.rotationYaw;
+
 protected AbstractPet(World level) {
         super(level);
-        this.setMovementSpeed(0.5f);
+        this.setAIMoveSpeed(0.5f);
     }
 
     /**
@@ -66,11 +78,11 @@ protected AbstractPet(World level) {
      * - Right clicking on a pet with an empty hand will let make hearts appear above it:
      * <pre>
      *     {@code if (this.isTamed() && itemStack.isEmpty() && !player.isSneaking()) {
-     *         this.world.method_16343(
+     *         this.worldObj.method_16343(
      *                 this.getParticleEffect("heart"),
-     *                 this.x,
-     *                 this.y + this.heartHeight(),
-     *                 this.z,
+     *                 this.posX,
+     *                 this.posY + this.heartHeight(),
+     *                 this.posZ,
      *                 5, 5, 5
      *         );
      *         return true;
@@ -80,7 +92,7 @@ protected AbstractPet(World level) {
      * <pre>
      *     {@code if (this.isTamed() && itemStack.isEmpty() && player.isSneaking()) {
      *         if (!this.hasMount()) {
-     *             this.startRiding(player);
+     *             this.mountEntity(player);
      *             this.lookAtEntity(player, 1f, 1f);
      *             return true;
      *         } else {
@@ -93,43 +105,38 @@ protected AbstractPet(World level) {
      * @return It's super method
      */
     @Override
-    public boolean interactAt(PlayerEntity player, Vec3d pos) {
-        ItemStack itemStack = player.getStackInHand();
+    public boolean interact(EntityPlayer player) {
+        ItemStack itemStack = player.getCurrentEquippedItem();
 
         if (this.isTamed() && itemStack == null && !player.isSneaking()) {
-            this.world.addParticle(ParticleType.HEART, this.x, this.y + this.heartHeight(), this.z, 0.0, 0.0, 0.0);
+            this.worldObj.spawnParticle("heart", this.posX, this.posY + this.heartHeight(), this.posZ, 0.0, 0.0, 0.0);
             return true;
         }
 
         if (this.isTamed() && itemStack == null && player.isSneaking()) {
             if (!this.hasMount()) {
-                this.startRiding(player);
+                this.mountEntity(player);
                 //this.lookAtEntity(player, 0f, 0f);
             } else {
                 this.stopRiding();
             }
             return true;
         }
-        return super.interactAt(player, pos);
+        return super.interact(player);
     }
 
     @Override
-    public boolean method_2537(PlayerEntity player) {
-        return this.interactAt(player, this.getPos());
-    }
-
-    @Override
-    public void tick() {
-        this.prevX = this.x;
-        this.prevY = this.y;
-        this.prevZ = this.z;
-        this.prevTickX = this.x;
-        this.prevTickY = this.y;
-        this.prevTickZ = this.z;
+    public void onUpdate() {
+        this.prevPosX = this.posX;
+        this.prevPosY = this.posY;
+        this.prevPosZ = this.posZ;
+        this.lastTickPosX = this.posX;
+        this.lastTickPosY = this.posY;
+        this.lastTickPosZ = this.posZ;
         // the walk cycle is driven by the limb distance, so fade it out when nothing
         // sets it again - otherwise the animation keeps running (and speeding up) forever
         this.setLimbDistance(this.getLimbDistance() * 0.7F);
-        super.tick();
+        super.onUpdate();
     }
 
     /**
@@ -150,20 +157,20 @@ protected AbstractPet(World level) {
      * @return {@code null}
      */
     /**
-     * Easier way to call the super's custom name method that takes a String rather than a {@link net.minecraft.text.Text}.
+     * Easier way to call the super's custom name method that takes a String rather than a {@link net.minecraft.util.IChatComponent}.
      */
 public void setName(String string) {
-        this.setCustomName(string);
-        this.setCustomNameVisible(true);
+        this.setCustomNameTag(string);
+        this.setAlwaysRenderNameTag(true);
     }
 
     public void wander() {
-        float speed = (float) (this.getMovementSpeed() - 0.35);
-        Vec3d lookDir;
+        float speed = (float) (this.getAIMoveSpeed() - 0.35);
+        Vec3 lookDir;
         float z = speed * this.randomZ;
 
-        float distance = this.distanceTo(this.getOwner());
-        float yVelo = (float) this.velocityY;
+        float distance = this.getDistanceToEntity(this.getOwner());
+        float yVelo = (float) this.motionY;
 
         if (distance > 5) {
             this.reCalcPos();
@@ -174,34 +181,34 @@ public void setName(String string) {
         }
 
         if (!this.isReturningToOwner) {
-            this.velocityX = speed;
-            this.velocityY = yVelo;
-            this.velocityZ = z;
+            this.motionX = speed;
+            this.motionY = yVelo;
+            this.motionZ = z;
         } else {
-            this.velocityX = -speed;
-            this.velocityY = yVelo;
-            this.velocityZ = -z;
+            this.motionX = -speed;
+            this.motionY = yVelo;
+            this.motionZ = -z;
         }
 
-        double moveX = this.velocityX;
-        double moveZ = this.velocityZ;
+        double moveX = this.motionX;
+        double moveZ = this.motionZ;
 
-        lookDir = new Vec3d(
-                this.x + (moveX * 2),
-                this.y + this.getEyeHeight(),
-                this.z + (moveZ * 2)
+        lookDir = Vec3.createVectorHelper(
+                this.posX + (moveX * 2),
+                this.posY + this.getEyeHeight(),
+                this.posZ + (moveZ * 2)
         );
-        this.getLookControl().lookAt(lookDir.x, lookDir.y, lookDir.z, 1.0F, (float) this.getLookPitchSpeed());
+        this.getLookHelper().setLookPosition(lookDir.xCoord, lookDir.yCoord, lookDir.zCoord, 1.0F, (float) this.getVerticalFaceSpeed());
 
-        if (this.horizontalCollision && this.onGround) {
+        if (this.isCollidedHorizontally && this.onGround) {
             this.jump();
         }
         if (!this.onGround) {
             this.addVelocity(0, -0.04, 0);
         }
 
-        double dx = lookDir.x - this.x;
-        double dz = lookDir.z - this.z;
+        double dx = lookDir.xCoord - this.posX;
+        double dz = lookDir.zCoord - this.posZ;
         float targetYaw = (float) (Math.atan2(-dx, dz) * (180D / Math.PI));
 
         this.setYRot(targetYaw);
@@ -213,15 +220,14 @@ public void setName(String string) {
     }
 
     /**
-     * Turns the pet. {@link net.minecraft.entity.LivingEntity#bodyYaw} and
-     * {@link net.minecraft.entity.LivingEntity#headYaw} are the fields the renderer actually
+     * Turns the pet. {@link net.minecraft.entity.EntityLiving#bodyYaw} and
+     * {@link net.minecraft.entity.EntityLiving#headYaw} are the fields the renderer actually
      * interpolates when it draws the model, so they have to be written alongside the entity yaw,
      * otherwise the model never turns.
      */
     public void setYRot(float targetYaw) {
-        this.yaw = targetYaw;
-        this.setHeadYaw(targetYaw);
-        this.bodyYaw = targetYaw;
+        this.renderYawOffset = targetYaw;
+        this.headYaw = targetYaw;
     }
 
     private void reCalcPos() {
@@ -229,8 +235,8 @@ public void setName(String string) {
         this.randomZ = (float) (Math.random() - 1);
     }
 
-    public double horizontalDistance(Vec3d vec3) {
-        return Math.sqrt(vec3.x * vec3.x + vec3.z * vec3.z);
+    public double horizontalDistance(Vec3 vec3) {
+        return Math.sqrt(vec3.xCoord * vec3.xCoord + vec3.zCoord * vec3.zCoord);
     }
 
     public boolean isPassenger() {
@@ -241,65 +247,63 @@ public void setName(String string) {
         return this.hasMount();
     }
 
-    public Vec3d getPos() {
-        return new Vec3d(this.x, this.y, this.z);
+    public Vec3 getPos() {
+        return Vec3.createVectorHelper(this.posX, this.posY, this.posZ);
     }
 
-    public Vec3d getVelocity() {
-        return new Vec3d(this.velocityX, this.velocityY, this.velocityZ);
+    public Vec3 getVelocity() {
+        return Vec3.createVectorHelper(this.motionX, this.motionY, this.motionZ);
     }
 
-    public void setVelocity(Vec3d velocity) {
-        this.velocityX = velocity.x;
-        this.velocityY = velocity.y;
-        this.velocityZ = velocity.z;
+    public void setVelocity(Vec3 velocity) {
+        this.motionX = velocity.xCoord;
+        this.motionY = velocity.yCoord;
+        this.motionZ = velocity.zCoord;
     }
 
     public void setVelocity(double x, double y, double z) {
-        this.velocityX = x;
-        this.velocityY = y;
-        this.velocityZ = z;
+        this.motionX = x;
+        this.motionY = y;
+        this.motionZ = z;
     }
 
     public void requestTeleport(double x, double y, double z) {
-        this.updatePosition(x, y, z);
+        this.setPosition(x, y, z);
     }
 
     public void stopRiding() {
-        this.startRiding(null);
+        this.mountEntity(null);
     }
 
     public boolean hasMount() {
-        return this.vehicle != null;
+        return this.ridingEntity != null;
     }
 
-    @Override
     public void lookAtEntity(Entity target, float maxYawChange, float maxPitchChange) {
-        super.lookAtEntity(target, maxYawChange, maxPitchChange);
-        double dx = target.x - this.x;
-        double dy = (target.y + (double) target.getEyeHeight()) - (this.y + (double) this.getEyeHeight());
-        double dz = target.z - this.z;
+        double dx = target.posX - this.posX;
+        double dy = (target.posY + (double) target.getEyeHeight()) - (this.posY + (double) this.getEyeHeight());
+        double dz = target.posZ - this.posZ;
         double dist = Math.sqrt(dx * dx + dz * dz);
-        this.pitch = (float) (-(Math.atan2(dy, dist) * (180D / Math.PI)));
+        this.rotationPitch = (float) (-(Math.atan2(dy, dist) * (180D / Math.PI)));
         float targetYaw = (float) (Math.atan2(dz, dx) * (180D / Math.PI)) - 90.0F;
 
         // step the body and the head towards the target instead of snapping them, so the
         // model actually turns towards whatever the pet is looking at
-        this.bodyYaw = this.bodyYaw + MathHelper.clamp(MathHelper.wrapDegrees(targetYaw - this.bodyYaw), -maxYawChange, maxYawChange);
-        this.headYaw = this.headYaw + MathHelper.clamp(MathHelper.wrapDegrees(targetYaw - this.headYaw), -maxYawChange, maxYawChange);
-        this.yaw = this.bodyYaw;
+        this.bodyYaw = this.bodyYaw + MathHelper.clamp_float(MathHelper.wrapAngleTo180_float(targetYaw - this.bodyYaw), -maxYawChange, maxYawChange);
+        //this.headYaw = this.headYaw + MathHelper.clamp_float(MathHelper.wrapAngleTo180_float(targetYaw - this.headYaw), -maxYawChange, maxYawChange);
+        this.rotationYaw = this.bodyYaw;
     }
 
     public float getLimbDistance() {
-        return this.field_6749;
+        return this.limbSwingAmount;
     }
 
     public void setLimbDistance(float limbDistance) {
-        this.field_6749 = limbDistance;
+        this.limbSwingAmount = limbDistance;
     }
 
     @Override
-    public PassiveEntity breed(PassiveEntity entity) {
+    public EntityAgeable createChild(EntityAgeable entity) {
         return null;
     }
 
@@ -309,9 +313,9 @@ public void setName(String string) {
     }
 
     @Override
-    public void initializeAttributes() {
-        super.initializeAttributes();
-        this.initializeAttribute(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(8);
-        this.initializeAttribute(EntityAttributes.GENERIC_MOVEMENT_SPEED).setBaseValue(0.23);
+    public void applyEntityAttributes() {
+        super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(8);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.23);
     }
 }

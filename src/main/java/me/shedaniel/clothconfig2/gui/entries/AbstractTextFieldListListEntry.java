@@ -1,8 +1,8 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiTextField;
 
 import java.util.List;
 import java.util.Objects;
@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
- * This class represents config entry lists that use one {@link TextFieldWidget} per entry.
+ * This class represents config entry lists that use one {@link GuiTextField} per entry.
  *
  * @param <T>    the configuration object type
  * @param <C>    the cell type
@@ -33,9 +33,9 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
      * @see AbstractTextFieldListListEntry
      */
 
-    public static abstract class AbstractTextFieldListCell<T, SELF extends AbstractTextFieldListCell<T, SELF, OUTER_SELF>, OUTER_SELF extends AbstractTextFieldListListEntry<T, SELF, OUTER_SELF>> extends AbstractListListEntry.AbstractListCell<T, SELF, OUTER_SELF> {
+    public static abstract class AbstractTextFieldListCell<T, SELF extends AbstractTextFieldListCell<T, SELF, OUTER_SELF>, OUTER_SELF extends AbstractTextFieldListListEntry<T, SELF, OUTER_SELF>> extends AbstractListCell<T, SELF, OUTER_SELF> {
 
-        protected TextFieldWidget widget;
+        protected GuiTextField widget;
         private boolean isSelected;
 
         public AbstractTextFieldListCell(T value, OUTER_SELF listListEntry) {
@@ -43,24 +43,24 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
 
             final T finalValue = substituteDefault(value);
 
-            widget = new TextFieldWidget(0, MinecraftClient.getInstance().textRenderer, 0, 100, 18, 0) {
+            widget = new GuiTextField(Minecraft.getMinecraft().fontRendererObj, 0, 100, 18, 0) {
                 @Override
-                public void render() {
+                public void drawTextBox() {
                     setFocused(isSelected);
-                    super.render();
+                    super.drawTextBox();
                 }
             };
-            widget.setTextPredicate(this::isValidText);
-            widget.setMaxLength(Integer.MAX_VALUE);
-            widget.setHasBorder(false);
+            //widget.setTextPredicate(this::isValidText);
+            widget.setMaxStringLength(Integer.MAX_VALUE);
+            widget.setEnableBackgroundDrawing(false);
             widget.setText(Objects.toString(finalValue));
-            widget.setTextPredicate((s) -> {
-                widget.setEditableColor(getPreferredTextColor());
+            /*widget.setTextPredicate((s) -> {
+                widget.setTextColor(getPreferredTextColor());
                 if (listListEntry.getScreen() != null && !Objects.equals(s, Objects.toString(finalValue))) {
                     this.listListEntry.getScreen().setEdited(true, this.listListEntry.isRequiresRestart());
                 }
                 return false;
-            });
+            });*/
         }
 
         @Override
@@ -92,12 +92,12 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
         @Override
         public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
             widget.width = (entryWidth - 12);
-            widget.x = x;
-            widget.y = y + 1;
-            widget.setEditable(listListEntry.isEditable());
-            widget.render();
+            widget.xPosition = x;
+            widget.yPosition = y + 1;
+            widget.setEnabled(listListEntry.isEditable());
+            widget.drawTextBox();
             if (isSelected && listListEntry.isEditable())
-                DrawableHelper.fill(x, y + 12, x + entryWidth - 12, y + 13, getConfigError().isPresent() ? 0xffff5555 : 0xffe0e0e0);
+                Gui.drawRect(x, y + 12, x + entryWidth - 12, y + 13, getConfigError().isPresent() ? 0xffff5555 : 0xffe0e0e0);
         }
 
     }

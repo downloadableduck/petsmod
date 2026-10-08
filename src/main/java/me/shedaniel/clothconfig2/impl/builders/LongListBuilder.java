@@ -1,7 +1,7 @@
 package me.shedaniel.clothconfig2.impl.builders;
 
 import me.shedaniel.clothconfig2.gui.entries.LongListListEntry;
-import net.minecraft.client.resource.language.I18n;
+import net.minecraft.client.resources.I18n;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +18,7 @@ public class LongListBuilder extends FieldBuilder<List<Long>, LongListListEntry>
     private boolean expanded = false;
     private Long min = null, max = null;
     private Function<LongListListEntry, LongListListEntry.LongListCell> createNewInstance;
-    private String addTooltip = I18n.translate("text.cloth-config.list.add"), removeTooltip = I18n.translate("text.cloth-config.list.remove");
+    private String addTooltip = I18n.format("text.cloth-config.list.add"), removeTooltip = I18n.format("text.cloth-config.list.remove");
     private boolean deleteButtonEnabled = true, insertInFront = true;
 
     public LongListBuilder(String resetButtonKey, String fieldNameKey, List<Long> value) {

@@ -3,13 +3,12 @@ package me.shedaniel.clothconfig2.gui.entries;
 import com.google.common.collect.Lists;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.math.Rectangle;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.sound.PositionedSoundInstance;
-import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.client.render.DiffuseLighting;
-import net.minecraft.client.resource.language.I18n;
-import net.minecraft.sound.Sounds;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.resources.I18n;
+
+import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +17,11 @@ import java.util.stream.Collectors;
 
 public class MultiElementListEntry<T> extends TooltipListEntry<T> {
 
-    private static final Identifier CONFIG_TEX = new Identifier("cloth-config2", "textures/gui/cloth_config.png");
+    private static final ResourceLocation CONFIG_TEX = new ResourceLocation("cloth-config2", "textures/gui/cloth_config.png");
     private final T object;
     private final String categoryName;
     private final List<AbstractConfigListEntry<?>> entries;
-    private final MultiElementListEntry<T>.CategoryLabelWidget widget;
+    private final CategoryLabelWidget widget;
     private final List<Object> children;
     private boolean expanded;
 
@@ -34,7 +33,7 @@ public class MultiElementListEntry<T> extends TooltipListEntry<T> {
         this.object = object;
         this.entries = entries;
         this.expanded = defaultExpanded;
-        this.widget = new MultiElementListEntry<T>.CategoryLabelWidget();
+        this.widget = new CategoryLabelWidget();
         this.children = Lists.newArrayList(widget);
         this.children.addAll(entries);
     }
@@ -73,11 +72,11 @@ public class MultiElementListEntry<T> extends TooltipListEntry<T> {
         widget.rectangle.y = y;
         widget.rectangle.width = entryWidth + 19;
         widget.rectangle.height = 24;
-        MinecraftClient.getInstance().getTextureManager().bindTexture(CONFIG_TEX);
-        DiffuseLighting.disable();
-        GlStateManager.color(1, 1, 1, 1);
-        drawTexture(x - 15, y + 4, 24, (widget.rectangle.contains(mouseX, mouseY) ? 18 : 0) + (expanded ? 9 : 0), 9, 9);
-        MinecraftClient.getInstance().textRenderer.drawWithShadow(I18n.translate(categoryName), x, y + 5, widget.rectangle.contains(mouseX, mouseY) ? 0xffe6fe16 : -1);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(CONFIG_TEX);
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glColor4f(1, 1, 1, 1);
+        drawTexturedModalRect(x - 15, y + 4, 24, (widget.rectangle.contains(mouseX, mouseY) ? 18 : 0) + (expanded ? 9 : 0), 9, 9);
+        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(I18n.format(categoryName), x, y + 5, widget.rectangle.contains(mouseX, mouseY) ? 0xffe6fe16 : -1);
         for (AbstractConfigListEntry<?> entry : entries) {
             entry.setParent(getParent());
             entry.setScreen(getScreen());
@@ -154,7 +153,7 @@ public class MultiElementListEntry<T> extends TooltipListEntry<T> {
         List<String> errors = entries.stream().map(AbstractConfigListEntry::getConfigError).filter(Optional::isPresent).map(Optional::get).collect(Collectors.toList());
 
         if (errors.size() > 1)
-            return Optional.of(I18n.translate("text.cloth-config.multi_error"));
+            return Optional.of(I18n.format("text.cloth-config.multi_error"));
         else
             return errors.stream().findFirst();
     }
@@ -165,7 +164,7 @@ public class MultiElementListEntry<T> extends TooltipListEntry<T> {
         public boolean mouseClicked(double double_1, double double_2, int int_1) {
             if (rectangle.contains(double_1, double_2)) {
                 expanded = !expanded;
-                MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(new Identifier(Sounds.UI_BUTTON_CLICK), 1.0F));
+                Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.createPositionedSoundRecord(new ResourceLocation("gui.button.press")));
                 return true;
             }
             return false;

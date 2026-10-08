@@ -1,9 +1,9 @@
 package com.jeff.pets.mob.vanilla.neutral;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.sound.Sounds;
 
-import net.minecraft.entity.passive.TameableEntity;
+
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,7 +11,7 @@ public class ClientWolf extends GroundPet {
 
     public ClientWolf(World level) {
         super(level);
-        this.setBounds(0.6F, 0.85F);
+        this.setSize(0.6F, 0.85F);
     }
 
     @Override
@@ -26,6 +26,6 @@ public class ClientWolf extends GroundPet {
 
     @Override
     protected String getAmbientSound() {
-        return Sounds.ENTITY_WOLF_AMBIENT;
+        return "mob.wolf.bark";
     }
 }

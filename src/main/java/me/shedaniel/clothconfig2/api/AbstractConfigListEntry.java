@@ -25,7 +25,7 @@ public abstract class AbstractConfigListEntry<T> extends AbstractConfigEntry<T> 
         return getScreen().isEditable() && editable;
     }
 
-    public void setEditable(boolean editable) {
+    public void setEnabled(boolean editable) {
         this.editable = editable;
     }
 

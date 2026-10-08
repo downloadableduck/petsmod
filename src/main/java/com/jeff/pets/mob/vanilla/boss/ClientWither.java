@@ -2,9 +2,9 @@ package com.jeff.pets.mob.vanilla.boss;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.sound.Sounds;
 
-import net.minecraft.entity.passive.TameableEntity;
+
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 public class ClientWither extends FlyingPet {
     public ClientWither(World level) {
         super(level);
-        this.setBounds(2.0F, 3.0F);
+        this.setSize(2.0F, 3.0F);
     }
 
     @Override
@@ -27,6 +27,6 @@ public class ClientWither extends FlyingPet {
 
     @Override
     protected String getAmbientSound() {
-        return Sounds.ENTITY_CHICKEN_STEP;
+        return "mob.chicken.step";
     }
 }

@@ -1,11 +1,11 @@
 package com.jeff.pets.client.rendering.vanilla.drowned;
 
 import com.jeff.pets.mob.vanilla.hostile.ClientDrowned;
-import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.client.render.entity.feature.FeatureRenderer;
-import net.minecraft.util.Identifier;
+import org.lwjgl.opengl.GL11;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.ResourceLocation;
 
-public class ClientDrownedOuterLayer implements FeatureRenderer<ClientDrowned> {
+public class ClientDrownedOuterLayer {
 
     private final ClientDrownedRenderer renderer;
     private final ClientDrownedModel drownedModel;
@@ -15,18 +15,15 @@ public class ClientDrownedOuterLayer implements FeatureRenderer<ClientDrowned> {
         this.drownedModel = new ClientDrownedModel(0.25F, 0.0F, 64, 64);
     }
 
-    @Override
     public void render(ClientDrowned zombieEntity, float f, float g, float h, float i, float j, float k, float l) {
         if (!zombieEntity.isInvisible()) {
-            this.renderer.getModel().copy(this.drownedModel);
-            this.drownedModel.animateModel(zombieEntity, f, g, h);
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            this.renderer.bindTexture(new Identifier("textures/entity/zombie/drowned_outer_layer.png"));
+            this.drownedModel.setLivingAnimations(zombieEntity, f, g, h);
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("textures/entity/zombie/drowned_outer_layer.png"));
             this.drownedModel.render(zombieEntity, f, g, i, j, k, l);
         }
     }
 
-    @Override
     public boolean combineTextures() {
         return false;
     }

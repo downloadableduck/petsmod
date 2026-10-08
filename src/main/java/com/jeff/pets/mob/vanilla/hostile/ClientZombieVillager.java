@@ -1,9 +1,9 @@
 package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.sound.Sounds;
 
-import net.minecraft.entity.passive.TameableEntity;
+
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,7 +13,7 @@ public class ClientZombieVillager extends GroundPet {
 
     public ClientZombieVillager(World level) {
         super(level);
-        this.setBounds(0.6F, 1.95F);
+        this.setSize(0.6F, 1.95F);
     }
 
     @Override
@@ -28,6 +28,6 @@ public class ClientZombieVillager extends GroundPet {
 
     @Override
     protected String getAmbientSound() {
-        return Sounds.ENTITY_ZOMBIE_VILLAGER_AMBIENT;
+        return "mob.zombie.say";
     }
 }

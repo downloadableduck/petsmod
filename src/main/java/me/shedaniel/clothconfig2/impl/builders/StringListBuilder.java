@@ -1,7 +1,7 @@
 package me.shedaniel.clothconfig2.impl.builders;
 
 import me.shedaniel.clothconfig2.gui.entries.StringListListEntry;
-import net.minecraft.client.resource.language.I18n;
+import net.minecraft.client.resources.I18n;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +17,7 @@ public class StringListBuilder extends FieldBuilder<List<String>, StringListList
     private Function<List<String>, Optional<String[]>> tooltipSupplier = list -> Optional.empty();
     private boolean expanded = false;
     private Function<StringListListEntry, StringListListEntry.StringListCell> createNewInstance;
-    private String addTooltip = I18n.translate("text.cloth-config.list.add"), removeTooltip = I18n.translate("text.cloth-config.list.remove");
+    private String addTooltip = I18n.format("text.cloth-config.list.add"), removeTooltip = I18n.format("text.cloth-config.list.remove");
     private boolean deleteButtonEnabled = true, insertInFront = true;
 
     public StringListBuilder(String resetButtonKey, String fieldNameKey, List<String> value) {

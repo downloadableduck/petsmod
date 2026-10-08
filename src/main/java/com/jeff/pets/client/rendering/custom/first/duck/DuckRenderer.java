@@ -4,31 +4,30 @@ import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Duck;
-import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.MathHelper;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.opengl.GL11;
 
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class DuckRenderer extends PetRenderer<@NotNull Duck> {
+public class DuckRenderer extends PetRenderer {
 
-    public DuckRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+    public DuckRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new DuckModel(), 0.75f);
     }
 
-    @Override
-    protected void scale(@NotNull Duck livingEntityRenderState, float f) {
+    protected void preRenderCallback(@NotNull Duck livingEntityRenderState, float f) {
         if (CONFIG.isBaby) {
-            GlStateManager.scale(0.5f, 0.5f, 0.5f);
+            GL11.glScalef(0.5f, 0.5f, 0.5f);
         }
     }
 
-    @Override
-    public @NotNull Identifier getTexture(Duck livingEntityRenderState) {
+    public @NotNull ResourceLocation getEntityTexture(net.minecraft.entity.Entity __e) {
+        Duck livingEntityRenderState = (Duck) __e;
         String duckTexturePath;
         if (Objects.equals(CONFIG.duckSkin, "pekin")) {
             duckTexturePath = "textures/entity/duck/pekin.png";
@@ -41,10 +40,9 @@ public class DuckRenderer extends PetRenderer<@NotNull Duck> {
         } else {
             duckTexturePath = "textures/entity/duck/mallard_male.png";
         }
-        return new Identifier(PetsInitializer.MOD_ID, duckTexturePath);
+        return new ResourceLocation(PetsInitializer.MOD_ID, duckTexturePath);
     }
 
-    @Override
     public void renderModel(final Duck duck, float f, final float k, float u, float g, float h, float i) {
         float partialTick = 1.0F;
         duck.flap = duck.oFlap + (duck.flap - duck.oFlap) * partialTick;

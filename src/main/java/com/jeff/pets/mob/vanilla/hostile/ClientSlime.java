@@ -1,16 +1,16 @@
 package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.SlimeLikePet;
-import net.minecraft.sound.Sounds;
 
-import net.minecraft.entity.passive.TameableEntity;
+
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientSlime extends SlimeLikePet {
     public ClientSlime(World level) {
         super(level);
-        this.setBounds(2.0F, 2.0F);
+        this.setSize(2.0F, 2.0F);
     }
 
     @Override
@@ -25,6 +25,6 @@ public class ClientSlime extends SlimeLikePet {
 
     @Override
     protected String getAmbientSound() {
-        return Sounds.ENTITY_SLIME_JUMP;
+        return "mob.slime.small";
     }
 }

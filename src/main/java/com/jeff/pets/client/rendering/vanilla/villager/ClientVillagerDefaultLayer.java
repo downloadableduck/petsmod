@@ -1,12 +1,12 @@
 package com.jeff.pets.client.rendering.vanilla.villager;
 
 import com.jeff.pets.mob.vanilla.passive.ClientVillager;
-import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.client.render.entity.feature.FeatureRenderer;
-import net.minecraft.util.Identifier;
+import org.lwjgl.opengl.GL11;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.Minecraft;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientVillagerDefaultLayer implements FeatureRenderer<ClientVillager> {
+public class ClientVillagerDefaultLayer {
 
     private final ClientVillagerRenderer renderer;
 
@@ -14,15 +14,13 @@ public class ClientVillagerDefaultLayer implements FeatureRenderer<ClientVillage
         this.renderer = renderer;
     }
 
-    @Override
     public void render(@NotNull ClientVillager villager, float f, float g, float h, float i, float j, float k, float l) {
-        GlStateManager.pushMatrix();
-        this.renderer.bindTexture(new Identifier("minecraft", "textures/entity/villager/type/plains.png"));
-        this.renderer.getModel().render(villager, f, g, i, j, k, l);
-        GlStateManager.popMatrix();
+        GL11.glPushMatrix();
+        Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("minecraft", "textures/entity/villager/type/plains.png"));
+        this.renderer.getMainModel().render(villager, f, g, i, j, k, l);
+        GL11.glPopMatrix();
     }
 
-    @Override
     public boolean combineTextures() {
         return false;
     }

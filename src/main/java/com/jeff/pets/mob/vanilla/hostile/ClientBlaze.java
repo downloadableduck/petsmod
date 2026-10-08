@@ -2,9 +2,9 @@ package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.sound.Sounds;
 
-import net.minecraft.entity.passive.TameableEntity;
+
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 public class ClientBlaze extends FlyingPet {
     public ClientBlaze(World level) {
         super(level);
-        this.setBounds(0.6F, 1.8F);
+        this.setSize(0.6F, 1.8F);
     }
 
     @Override
@@ -27,6 +27,6 @@ public class ClientBlaze extends FlyingPet {
 
     @Override
     protected String getAmbientSound() {
-        return Sounds.ENTITY_BLAZE_AMBIENT;
+        return "mob.blaze.breathe";
     }
 }

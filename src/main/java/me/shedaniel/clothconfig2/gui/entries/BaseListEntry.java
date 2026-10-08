@@ -5,14 +5,12 @@ import com.jeff.pets.PetsInitializer;
 import me.shedaniel.clothconfig2.api.QueuedTooltip;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.sound.PositionedSoundInstance;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.client.render.DiffuseLighting;
-import net.minecraft.client.resource.language.I18n;
-import net.minecraft.sound.Sounds;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +28,7 @@ import java.util.stream.Collectors;
  */
 public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends BaseListEntry<T, C, SELF>> extends TooltipListEntry<List<T>> {
 
-    protected static final Identifier CONFIG_TEX = new Identifier("cloth-config2", "textures/gui/cloth_config.png");
+    protected static final ResourceLocation CONFIG_TEX = new ResourceLocation("cloth-config2", "textures/gui/cloth_config.png");
     protected final List<C> cells;
     protected final List<Object> widgets;
     protected boolean expanded;
@@ -38,10 +36,10 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
     protected boolean insertInFront;
     protected Consumer<List<T>> saveConsumer;
     protected ListLabelWidget labelWidget;
-    protected ButtonWidget resetWidget;
+    protected GuiButton resetWidget;
     protected Function<SELF, C> createNewInstance;
     protected Supplier<List<T>> defaultValue;
-    protected String addTooltip = I18n.translate("text.cloth-config.list.add"), removeTooltip = I18n.translate("text.cloth-config.list.remove");
+    protected String addTooltip = I18n.format("text.cloth-config.list.add"), removeTooltip = I18n.format("text.cloth-config.list.remove");
 
 
     @Deprecated
@@ -70,11 +68,11 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         this.cells = Lists.newArrayList();
         this.labelWidget = new ListLabelWidget();
         this.widgets = Lists.newArrayList(labelWidget);
-        this.resetWidget = new ButtonWidget(new Random().nextInt(), 0, 0, MinecraftClient.getInstance().textRenderer.getStringWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey)) {
+        this.resetWidget = new GuiButton(new Random().nextInt(), 0, 0, Minecraft.getMinecraft().fontRendererObj.getStringWidth(I18n.format(resetButtonKey)) + 6, 20, I18n.format(resetButtonKey)) {
             @Override
-            public boolean isMouseOver(MinecraftClient mc, int mouseX, int mouseY) {
+            public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
                 
-                 boolean bl = super.isMouseOver(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
+                 boolean bl = super.mousePressed(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
                     widgets.removeAll(cells);
                     cells.clear();
                     defaultValue.get().stream().map((val) -> createNewInstance.apply((SELF) val)).forEach(cells::add);
@@ -143,7 +141,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         List<String> errors = cells.stream().map(C::getConfigError).filter(Optional::isPresent).map(Optional::get).collect(Collectors.toList());
 
         if (errors.size() > 1)
-            return Optional.of(I18n.translate("text.cloth-config.multi_error"));
+            return Optional.of(I18n.format("text.cloth-config.multi_error"));
         else
             return errors.stream().findFirst();
     }
@@ -160,7 +158,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         labelWidget.rectangle.y = y;
         labelWidget.rectangle.width = entryWidth + 15;
         labelWidget.rectangle.height = 24;
-        return labelWidget.rectangle.contains(mouseX, mouseY) && getParent().isMouseOver(mouseX, mouseY) && !resetWidget.isMouseOver(MinecraftClient.getInstance(), mouseX, mouseY);
+        return labelWidget.rectangle.contains(mouseX, mouseY) && getParent().isMouseOver(mouseX, mouseY) && !resetWidget.mousePressed(Minecraft.getMinecraft(), mouseX, mouseY);
     }
 
     protected boolean isInsideCreateNew(double mouseX, double mouseY) {
@@ -192,20 +190,20 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
             if (tooltip.isPresent() && tooltip.get().length > 0)
                 getScreen().queueTooltip(QueuedTooltip.create(new Point(mouseX, mouseY), tooltip.get()));
         }
-        MinecraftClient.getInstance().getTextureManager().bindTexture(CONFIG_TEX);
-        DiffuseLighting.disable();
-        GlStateManager.color(1, 1, 1, 1);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(CONFIG_TEX);
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glColor4f(1, 1, 1, 1);
         boolean insideCreateNew = isInsideCreateNew(mouseX, mouseY);
         boolean insideDelete = isInsideDelete(mouseX, mouseY);
-        drawTexture(x - 15, y + 4, 24 + 9, (labelWidget.rectangle.contains(mouseX, mouseY) && !insideCreateNew && !insideDelete ? 18 : 0) + (expanded ? 9 : 0), 9, 9);
-        drawTexture(x - 15 + 13, y + 4, 24 + 18, insideCreateNew ? 9 : 0, 9, 9);
+        drawTexturedModalRect(x - 15, y + 4, 24 + 9, (labelWidget.rectangle.contains(mouseX, mouseY) && !insideCreateNew && !insideDelete ? 18 : 0) + (expanded ? 9 : 0), 9, 9);
+        drawTexturedModalRect(x - 15 + 13, y + 4, 24 + 18, insideCreateNew ? 9 : 0, 9, 9);
         if (isDeleteButtonEnabled())
-            drawTexture(x - 15 + 26, y + 4, 24 + 27, insideDelete ? 18 : 9, 9, 9);
-        resetWidget.x = x + entryWidth - resetWidget.getWidth();
-        resetWidget.y = y;
-        resetWidget.active = isEditable() && getDefaultValue().isPresent();
-        resetWidget.render(MinecraftClient.getInstance(), mouseX, mouseY);
-        MinecraftClient.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), isDeleteButtonEnabled() ? x + 24 : x + 24 - 9, y + 5, labelWidget.rectangle.contains(mouseX, mouseY) && !resetWidget.isMouseOver(MinecraftClient.getInstance(), mouseX, mouseY) && !insideDelete && !insideCreateNew ? 0xffe6fe16 : getPreferredTextColor());
+            drawTexturedModalRect(x - 15 + 26, y + 4, 24 + 27, insideDelete ? 18 : 9, 9, 9);
+        resetWidget.xPosition = x + entryWidth - resetWidget.getButtonWidth();
+        resetWidget.yPosition = y;
+        resetWidget.enabled = isEditable() && getDefaultValue().isPresent();
+        resetWidget.drawButton(Minecraft.getMinecraft(), mouseX, mouseY);
+        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(I18n.format(getFieldName()), isDeleteButtonEnabled() ? x + 24 : x + 24 - 9, y + 5, labelWidget.rectangle.contains(mouseX, mouseY) && !resetWidget.mousePressed(Minecraft.getMinecraft(), mouseX, mouseY) && !insideDelete && !insideCreateNew ? 0xffe6fe16 : getPreferredTextColor());
         if (expanded) {
             int yy = y + 24;
             for (BaseListCell cell : cells) {
@@ -230,7 +228,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         protected Rectangle rectangle = new Rectangle();
 
         public boolean mouseClicked(double double_1, double double_2, int int_1) {
-            if (resetWidget.isMouseOver(MinecraftClient.getInstance(), (int) double_1, (int) double_2)) {
+            if (resetWidget.isMouseOver()) {
                 return false;
             } else if (isInsideCreateNew(double_1, double_2)) {
                 expanded = true;
@@ -243,7 +241,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
                     widgets.add(cell);
                 }
                 getScreen().setEdited(true, isRequiresRestart());
-                MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(new Identifier(Sounds.UI_BUTTON_CLICK), 1.0F));
+                Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.createPositionedSoundRecord(new ResourceLocation("gui.button.press")));
                 return true;
             } else if (isDeleteButtonEnabled() && isInsideDelete(double_1, double_2)) {
                 if (expanded && !cells.isEmpty()) {
@@ -251,12 +249,12 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
                     cells.remove(cell);
                     widgets.remove(cell);
                     getScreen().setEdited(true, isRequiresRestart());
-                    MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(new Identifier(Sounds.UI_BUTTON_CLICK), 1.0F));
+                    Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.createPositionedSoundRecord(new ResourceLocation("gui.button.press")));
                 }
                 return true;
             } else if (rectangle.contains(double_1, double_2)) {
                 expanded = !expanded;
-                MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(new Identifier(Sounds.UI_BUTTON_CLICK), 1.0F));
+                Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.createPositionedSoundRecord(new ResourceLocation("gui.button.press")));
                 return true;
             }
             return false;
@@ -265,10 +263,10 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
     @Override
     public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
         if (mouseButton == 0) {
-            if (this.resetWidget.isMouseOver(MinecraftClient.getInstance(), mouseX, mouseY)) {
+            if (this.resetWidget.isMouseOver()) {
                 return true;
             }
-            if (this.resetWidget.isMouseOver(MinecraftClient.getInstance(), mouseX, mouseY)) {
+            if (this.resetWidget.isMouseOver()) {
                 return true;
             }
         }

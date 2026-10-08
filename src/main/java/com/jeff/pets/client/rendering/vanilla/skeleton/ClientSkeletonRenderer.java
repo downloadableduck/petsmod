@@ -2,26 +2,25 @@ package com.jeff.pets.client.rendering.vanilla.skeleton;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientSkeleton;
-import net.minecraft.client.render.entity.model.SkeletonEntityModel;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.model.ModelSkeleton;
+import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.opengl.GL11;
 
-public class ClientSkeletonRenderer extends PetRenderer<@NotNull ClientSkeleton> {
+public class ClientSkeletonRenderer extends PetRenderer {
 
-    public ClientSkeletonRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new SkeletonEntityModel(), 0.75f);
+    public ClientSkeletonRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+        super(context, new ModelSkeleton(), 0.75f);
     }
 
-    @Override
-    public void method_5777(ClientSkeleton state, float f, float g, float h) {
-        super.method_5777(state, f, g, h);
-        if (state.vehicle != null) {
-            com.mojang.blaze3d.platform.GlStateManager.translate(0, -0.5f, 0);
+    public void setLivingAnimations(ClientSkeleton state, float f, float g, float h) {
+        if (state.ridingEntity != null) {
+            GL11.glTranslatef(0, -0.5f, 0);
         }
     }
 
-    @Override
-    public @NotNull Identifier getTexture(ClientSkeleton livingEntityRenderState) {
-        return new Identifier("minecraft", "textures/entity/skeleton/skeleton.png");
+    public @NotNull ResourceLocation getEntityTexture(net.minecraft.entity.Entity __e) {
+        ClientSkeleton livingEntityRenderState = (ClientSkeleton) __e;
+        return new ResourceLocation("minecraft", "textures/entity/skeleton/skeleton.png");
     }
 }

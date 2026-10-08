@@ -1,7 +1,7 @@
 package me.shedaniel.clothconfig2.impl.builders;
 
 import me.shedaniel.clothconfig2.gui.entries.IntegerListListEntry;
-import net.minecraft.client.resource.language.I18n;
+import net.minecraft.client.resources.I18n;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +18,7 @@ public class IntListBuilder extends FieldBuilder<List<Integer>, IntegerListListE
     private boolean expanded = false;
     private Integer min = null, max = null;
     private Function<IntegerListListEntry, IntegerListListEntry.IntegerListCell> createNewInstance;
-    private String addTooltip = I18n.translate("text.cloth-config.list.add"), removeTooltip = I18n.translate("text.cloth-config.list.remove");
+    private String addTooltip = I18n.format("text.cloth-config.list.add"), removeTooltip = I18n.format("text.cloth-config.list.remove");
     private boolean deleteButtonEnabled = true, insertInFront = true;
 
     public IntListBuilder(String resetButtonKey, String fieldNameKey, List<Integer> value) {

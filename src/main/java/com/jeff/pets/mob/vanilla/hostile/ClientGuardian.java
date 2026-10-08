@@ -2,9 +2,9 @@ package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.sound.Sounds;
 
-import net.minecraft.entity.passive.TameableEntity;
+
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 public class ClientGuardian extends GroundPet {
     public ClientGuardian(World level) {
         super(level);
-        this.setBounds(0.85F, 0.85F);
+        this.setSize(0.85F, 0.85F);
     }
 
     @Override
@@ -27,6 +27,6 @@ public class ClientGuardian extends GroundPet {
 
     @Override
     protected String getAmbientSound() {
-        return Sounds.ENTITY_GUARDIAN_AMBIENT;
+        return "mob.guardian.idle";
     }
 }

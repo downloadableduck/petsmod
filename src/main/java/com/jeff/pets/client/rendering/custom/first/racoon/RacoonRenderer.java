@@ -1,31 +1,38 @@
 package com.jeff.pets.client.rendering.custom.first.racoon;
 
 import com.jeff.pets.mob.custom.first.Racoon;
-import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.opengl.GL11;
 
 import java.util.Objects;
 
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class RacoonRenderer extends MobEntityRenderer<@NotNull Racoon> {
+public class RacoonRenderer extends RenderLiving {
 
-    public RacoonRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new RacoonModel(), 0.75f);
-    }
 
     @Override
-    protected void scale(@NotNull Racoon livingEntityRenderState, float f) {
-        if ((CONFIG.isBaby && !livingEntityRenderState.isServerEntity()) || (livingEntityRenderState.isBaby() && livingEntityRenderState.isServerEntity())) {
-            GlStateManager.scale(0.5f, 0.5f, 0.5f);
+    public void doRender(Entity entity, double x, double y, double z, float yaw, float pitch) {
+        super.doRender((EntityLivingBase) entity, x, y, z, yaw, pitch);
+    }
+    public RacoonRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+        super(new RacoonModel(), 0.75f);
+        this.setRenderManager(context);
+    }
+
+    protected void preRenderCallback(@NotNull Racoon livingEntityRenderState, float f) {
+        if ((CONFIG.isBaby && !livingEntityRenderState.isServerEntity()) || (livingEntityRenderState.isChild() && livingEntityRenderState.isServerEntity())) {
+            GL11.glScalef(0.5f, 0.5f, 0.5f);
         }
     }
 
-    @Override
-    public @NotNull Identifier getTexture(@NotNull Racoon state) {
+    public @NotNull ResourceLocation getEntityTexture(net.minecraft.entity.Entity __e) {
+        Racoon state = (Racoon) __e;
         String racoonTexturePath;
         if (!state.isServerEntity()) {
             if (Objects.equals(CONFIG.racoonSkin, "normal")) {
@@ -38,6 +45,6 @@ public class RacoonRenderer extends MobEntityRenderer<@NotNull Racoon> {
         } else {
             racoonTexturePath = "textures/entity/racoon/racoon.png";
         }
-        return new Identifier(MOD_ID, racoonTexturePath);
+        return new ResourceLocation(MOD_ID, racoonTexturePath);
     }
 }

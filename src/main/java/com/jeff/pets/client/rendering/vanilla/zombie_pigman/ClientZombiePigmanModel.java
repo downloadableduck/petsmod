@@ -1,25 +1,26 @@
 package com.jeff.pets.client.rendering.vanilla.zombie_pigman;
 
 import com.jeff.pets.client.Math2;
-import net.minecraft.client.render.entity.model.EntityModel;
-import net.minecraft.client.render.model.ModelPart;
+import org.lwjgl.opengl.GL11;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.MathHelper;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientZombiePigmanModel extends EntityModel {
+public class ClientZombiePigmanModel extends ModelBase {
     private static final int ARM_POSE_EMPTY = 0;
     private static final int ARM_POSE_BLOCK = 1;
     private static final int ARM_POSE_ITEM = 2;
     private static final int ARM_POSE_BOW_AND_ARROW = 3;
-    private final ModelPart head;
-    private final ModelPart headwear;
-    private final ModelPart body;
-    private final ModelPart left_arm;
-    private final ModelPart right_arm;
-    private final ModelPart left_leg;
-    private final ModelPart right_leg;
+    private final ModelRenderer head;
+    private final ModelRenderer headwear;
+    private final ModelRenderer body;
+    private final ModelRenderer left_arm;
+    private final ModelRenderer right_arm;
+    private final ModelRenderer left_leg;
+    private final ModelRenderer right_leg;
     public int field_13384 = ARM_POSE_EMPTY;
     public int field_13385 = ARM_POSE_EMPTY;
     public boolean crouching;
@@ -30,60 +31,59 @@ public class ClientZombiePigmanModel extends EntityModel {
         textureWidth = 64;
         textureHeight = 64;
 
-        head = new ModelPart(this);
-        head.setPivot(0.0F, 0.0F, 0.0F);
-        head.setTextureOffset(0, 0).addCuboid(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.0F);
+        head = new ModelRenderer(this);
+        head.setRotationPoint(0.0F, 0.0F, 0.0F);
+        head.setTextureOffset(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.0F);
 
-        headwear = new ModelPart(this);
-        headwear.setPivot(0.0F, 0.0F, 0.0F);
-        headwear.setTextureOffset(32, 0).addCuboid(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.5F);
+        headwear = new ModelRenderer(this);
+        headwear.setRotationPoint(0.0F, 0.0F, 0.0F);
+        headwear.setTextureOffset(32, 0).addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.5F);
 
-        body = new ModelPart(this);
-        body.setPivot(0.0F, 0.0F, 0.0F);
-        body.setTextureOffset(16, 16).addCuboid(-4.0F, 0.0F, -2.0F, 8, 12, 4, 0.0F);
+        body = new ModelRenderer(this);
+        body.setRotationPoint(0.0F, 0.0F, 0.0F);
+        body.setTextureOffset(16, 16).addBox(-4.0F, 0.0F, -2.0F, 8, 12, 4, 0.0F);
 
-        left_arm = new ModelPart(this);
-        left_arm.setPivot(5.0F, 2.0F, 0.0F);
-        left_arm.setTextureOffset(40, 16).addCuboid(-1.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F);
+        left_arm = new ModelRenderer(this);
+        left_arm.setRotationPoint(5.0F, 2.0F, 0.0F);
+        left_arm.setTextureOffset(40, 16).addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F);
 
-        right_arm = new ModelPart(this);
-        right_arm.setPivot(-5.0F, 2.0F, 0.0F);
-        right_arm.setTextureOffset(40, 16).addCuboid(-3.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F);
+        right_arm = new ModelRenderer(this);
+        right_arm.setRotationPoint(-5.0F, 2.0F, 0.0F);
+        right_arm.setTextureOffset(40, 16).addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F);
 
-        left_leg = new ModelPart(this);
-        left_leg.setPivot(1.9F, 12.0F, 0.0F);
-        left_leg.setTextureOffset(0, 16).addCuboid(-1.9F, 0.0F, -2.0F, 4, 12, 4, 0.0F);
+        left_leg = new ModelRenderer(this);
+        left_leg.setRotationPoint(1.9F, 12.0F, 0.0F);
+        left_leg.setTextureOffset(0, 16).addBox(-1.9F, 0.0F, -2.0F, 4, 12, 4, 0.0F);
 
-        right_leg = new ModelPart(this);
-        right_leg.setPivot(-1.9F, 12.0F, 0.0F);
-        right_leg.setTextureOffset(0, 16).addCuboid(-2.1F, 0.0F, -2.0F, 4, 12, 4, 0.0F);
+        right_leg = new ModelRenderer(this);
+        right_leg.setRotationPoint(-1.9F, 12.0F, 0.0F);
+        right_leg.setTextureOffset(0, 16).addBox(-2.1F, 0.0F, -2.0F, 4, 12, 4, 0.0F);
     }
 
-    @Override
-    public void setAngles(float f, float g, float h, float i, float j, float s, Entity state) {
+    public void setRotationAngles(float f, float g, float h, float i, float j, float s, Entity state) {
         boolean bl = false;
-        boolean bl2 = state.isTouchingWater();
-        this.head.posY = i * (float) (Math.PI / 180.0);
+        boolean bl2 = state.isInWater();
+        this.head.rotateAngleY = i * (float) (Math.PI / 180.0);
         if (bl) {
-            this.head.posX = (float) (-Math.PI / 4);
+            this.head.rotateAngleX = (float) (-Math.PI / 4);
         } else if (this.swimAmount > 0.0F) {
             if (bl2) {
-                this.head.posX = this.rotlerpRad(this.head.posX, (float) (-Math.PI / 4), this.swimAmount);
+                this.head.rotateAngleX = this.rotlerpRad(this.head.rotateAngleX, (float) (-Math.PI / 4), this.swimAmount);
             } else {
-                this.head.posX = this.rotlerpRad(this.head.posX, j * (float) (Math.PI / 180.0), this.swimAmount);
+                this.head.rotateAngleX = this.rotlerpRad(this.head.rotateAngleX, j * (float) (Math.PI / 180.0), this.swimAmount);
             }
         } else {
-            this.head.posX = j * (float) (Math.PI / 180.0);
+            this.head.rotateAngleX = j * (float) (Math.PI / 180.0);
         }
 
-        this.body.posY = 0.0F;
-        this.right_arm.pivotZ = 0.0F;
-        this.right_arm.pivotX = -5.0F;
-        this.left_arm.pivotZ = 0.0F;
-        this.left_arm.pivotX = 5.0F;
+        this.body.rotateAngleY = 0.0F;
+        this.right_arm.rotationPointZ = 0.0F;
+        this.right_arm.rotationPointX = -5.0F;
+        this.left_arm.rotationPointZ = 0.0F;
+        this.left_arm.rotationPointX = 5.0F;
         float k = 1.0F;
         if (bl) {
-            k = (float) ((float) state.velocityX * state.velocityX + state.velocityY * state.velocityY + state.velocityZ * state.velocityZ);
+            k = (float) ((float) state.motionX * state.motionX + state.motionY * state.motionY + state.motionZ * state.motionZ);
             k /= 0.2F;
             k *= k * k;
         }
@@ -92,53 +92,53 @@ public class ClientZombiePigmanModel extends EntityModel {
             k = 1.0F;
         }
 
-        this.right_arm.posX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * 2.0F * g * 0.5F / k;
-        this.left_arm.posX = MathHelper.cos(f * 0.6662F) * 2.0F * g * 0.5F / k;
-        this.right_arm.posZ = 0.0F;
-        this.left_arm.posZ = 0.0F;
-        this.right_leg.posX = MathHelper.cos(f * 0.6662F) * 1.4F * g / k;
-        this.left_leg.posX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g / k;
-        this.right_leg.posY = 0.0F;
-        this.left_leg.posY = 0.0F;
-        this.right_leg.posZ = 0.0F;
-        this.left_leg.posZ = 0.0F;
-        if (state.vehicle != null) {
-            this.right_arm.posX += (float) (-Math.PI / 5);
-            this.left_arm.posX += (float) (-Math.PI / 5);
-            this.right_leg.posX = -1.4137167F;
-            this.right_leg.posY = (float) (Math.PI / 10);
-            this.right_leg.posZ = 0.07853982F;
-            this.left_leg.posX = -1.4137167F;
-            this.left_leg.posY = (float) (-Math.PI / 10);
-            this.left_leg.posZ = -0.07853982F;
+        this.right_arm.rotateAngleX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * 2.0F * g * 0.5F / k;
+        this.left_arm.rotateAngleX = MathHelper.cos(f * 0.6662F) * 2.0F * g * 0.5F / k;
+        this.right_arm.rotateAngleZ = 0.0F;
+        this.left_arm.rotateAngleZ = 0.0F;
+        this.right_leg.rotateAngleX = MathHelper.cos(f * 0.6662F) * 1.4F * g / k;
+        this.left_leg.rotateAngleX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g / k;
+        this.right_leg.rotateAngleY = 0.0F;
+        this.left_leg.rotateAngleY = 0.0F;
+        this.right_leg.rotateAngleZ = 0.0F;
+        this.left_leg.rotateAngleZ = 0.0F;
+        if (state.ridingEntity != null) {
+            this.right_arm.rotateAngleX += (float) (-Math.PI / 5);
+            this.left_arm.rotateAngleX += (float) (-Math.PI / 5);
+            this.right_leg.rotateAngleX = -1.4137167F;
+            this.right_leg.rotateAngleY = (float) (Math.PI / 10);
+            this.right_leg.rotateAngleZ = 0.07853982F;
+            this.left_leg.rotateAngleX = -1.4137167F;
+            this.left_leg.rotateAngleY = (float) (-Math.PI / 10);
+            this.left_leg.rotateAngleZ = -0.07853982F;
         }
 
-        this.right_arm.posY = 0.0F;
-        this.right_arm.posZ = 0.0F;
+        this.right_arm.rotateAngleY = 0.0F;
+        this.right_arm.rotateAngleZ = 0.0F;
         switch (this.field_13384) {
             case ARM_POSE_EMPTY:
-                this.left_arm.posY = 0.0F;
+                this.left_arm.rotateAngleY = 0.0F;
                 break;
             case ARM_POSE_BLOCK:
-                this.left_arm.posX = this.left_arm.posX * 0.5F - 0.9424779F;
-                this.left_arm.posY = (float) (Math.PI / 6);
+                this.left_arm.rotateAngleX = this.left_arm.rotateAngleX * 0.5F - 0.9424779F;
+                this.left_arm.rotateAngleY = (float) (Math.PI / 6);
                 break;
             case ARM_POSE_ITEM:
-                this.left_arm.posX = this.left_arm.posX * 0.5F - (float) (Math.PI / 10);
-                this.left_arm.posY = 0.0F;
+                this.left_arm.rotateAngleX = this.left_arm.rotateAngleX * 0.5F - (float) (Math.PI / 10);
+                this.left_arm.rotateAngleY = 0.0F;
         }
 
         switch (this.field_13385) {
             case ARM_POSE_EMPTY:
-                this.right_arm.posY = 0.0F;
+                this.right_arm.rotateAngleY = 0.0F;
                 break;
             case ARM_POSE_BLOCK:
-                this.right_arm.posX = this.right_arm.posX * 0.5F - 0.9424779F;
-                this.right_arm.posY = (float) (-Math.PI / 6);
+                this.right_arm.rotateAngleX = this.right_arm.rotateAngleX * 0.5F - 0.9424779F;
+                this.right_arm.rotateAngleY = (float) (-Math.PI / 6);
                 break;
             case ARM_POSE_ITEM:
-                this.right_arm.posX = this.right_arm.posX * 0.5F - (float) (Math.PI / 10);
-                this.right_arm.posY = 0.0F;
+                this.right_arm.rotateAngleX = this.right_arm.rotateAngleX * 0.5F - (float) (Math.PI / 10);
+                this.right_arm.rotateAngleY = 0.0F;
                 break;
         }
 
@@ -146,113 +146,112 @@ public class ClientZombiePigmanModel extends EntityModel {
                 && this.field_13385 != ARM_POSE_BLOCK
                 && this.field_13385 != ARM_POSE_BOW_AND_ARROW
                 && this.field_13385 != ARM_POSE_BOW_AND_ARROW) {
-            this.left_arm.posX = this.left_arm.posX * 0.5F - (float) Math.PI;
-            this.left_arm.posY = 0.0F;
+            this.left_arm.rotateAngleX = this.left_arm.rotateAngleX * 0.5F - (float) Math.PI;
+            this.left_arm.rotateAngleY = 0.0F;
         }
 
-        if (this.handSwingProgress > 0.0F) {
-            ModelPart ModelPart = right_arm;
-            float l = this.handSwingProgress;
-            this.body.posY = MathHelper.sin(MathHelper.sqrt(l) * (float) (Math.PI * 2)) * 0.2F;
+        if (this.swingProgress > 0.0F) {
+            ModelRenderer ModelRenderer = right_arm;
+            float l = this.swingProgress;
+            this.body.rotateAngleY = MathHelper.sin(MathHelper.sqrt_float(l) * (float) (Math.PI * 2)) * 0.2F;
 
-            this.right_arm.pivotZ = MathHelper.sin(this.body.posY) * 5.0F;
-            this.right_arm.pivotX = -MathHelper.cos(this.body.posY) * 5.0F;
-            this.left_arm.pivotZ = -MathHelper.sin(this.body.posY) * 5.0F;
-            this.left_arm.pivotX = MathHelper.cos(this.body.posY) * 5.0F;
-            this.right_arm.posY = this.right_arm.posY + this.body.posY;
-            this.left_arm.posY = this.left_arm.posY + this.body.posY;
-            this.left_arm.posX = this.left_arm.posX + this.body.posY;
-            l = 1.0F - this.handSwingProgress;
+            this.right_arm.rotationPointZ = MathHelper.sin(this.body.rotateAngleY) * 5.0F;
+            this.right_arm.rotationPointX = -MathHelper.cos(this.body.rotateAngleY) * 5.0F;
+            this.left_arm.rotationPointZ = -MathHelper.sin(this.body.rotateAngleY) * 5.0F;
+            this.left_arm.rotationPointX = MathHelper.cos(this.body.rotateAngleY) * 5.0F;
+            this.right_arm.rotateAngleY = this.right_arm.rotateAngleY + this.body.rotateAngleY;
+            this.left_arm.rotateAngleY = this.left_arm.rotateAngleY + this.body.rotateAngleY;
+            this.left_arm.rotateAngleX = this.left_arm.rotateAngleX + this.body.rotateAngleY;
+            l = 1.0F - this.swingProgress;
             l *= l;
             l *= l;
             l = 1.0F - l;
             float m = MathHelper.sin(l * (float) Math.PI);
-            float n = MathHelper.sin(this.handSwingProgress * (float) Math.PI) * -(this.head.posX - 0.7F) * 0.75F;
-            ModelPart.posX = (float) (ModelPart.posX - (m * 1.2 + n));
-            ModelPart.posY = ModelPart.posY + this.body.posY * 2.0F;
-            ModelPart.posZ = ModelPart.posZ + MathHelper.sin(this.handSwingProgress * (float) Math.PI) * -0.4F;
+            float n = MathHelper.sin(this.swingProgress * (float) Math.PI) * -(this.head.rotateAngleX - 0.7F) * 0.75F;
+            ModelRenderer.rotateAngleX = (float) (ModelRenderer.rotateAngleX - (m * 1.2 + n));
+            ModelRenderer.rotateAngleY = ModelRenderer.rotateAngleY + this.body.rotateAngleY * 2.0F;
+            ModelRenderer.rotateAngleZ = ModelRenderer.rotateAngleZ + MathHelper.sin(this.swingProgress * (float) Math.PI) * -0.4F;
         }
 
         if (this.crouching) {
-            this.body.posX = 0.5F;
-            this.right_arm.posX += 0.4F;
-            this.left_arm.posX += 0.4F;
-            this.right_leg.pivotZ = 4.0F;
-            this.left_leg.pivotZ = 4.0F;
-            this.right_leg.pivotY = 12.2F;
-            this.left_leg.pivotY = 12.2F;
-            this.head.pivotY = 4.2F;
-            this.body.pivotY = 3.2F;
-            this.left_arm.pivotY = 5.2F;
-            this.right_arm.pivotY = 5.2F;
+            this.body.rotateAngleX = 0.5F;
+            this.right_arm.rotateAngleX += 0.4F;
+            this.left_arm.rotateAngleX += 0.4F;
+            this.right_leg.rotationPointZ = 4.0F;
+            this.left_leg.rotationPointZ = 4.0F;
+            this.right_leg.rotationPointY = 12.2F;
+            this.left_leg.rotationPointY = 12.2F;
+            this.head.rotationPointY = 4.2F;
+            this.body.rotationPointY = 3.2F;
+            this.left_arm.rotationPointY = 5.2F;
+            this.right_arm.rotationPointY = 5.2F;
         } else {
-            this.body.posX = 0.0F;
-            this.right_leg.pivotZ = 0.1F;
-            this.left_leg.pivotZ = 0.1F;
-            this.right_leg.pivotY = 12.0F;
-            this.left_leg.pivotY = 12.0F;
-            this.head.pivotY = 0.0F;
-            this.body.pivotY = 0.0F;
-            this.left_arm.pivotY = 2.0F;
-            this.right_arm.pivotY = 2.0F;
+            this.body.rotateAngleX = 0.0F;
+            this.right_leg.rotationPointZ = 0.1F;
+            this.left_leg.rotationPointZ = 0.1F;
+            this.right_leg.rotationPointY = 12.0F;
+            this.left_leg.rotationPointY = 12.0F;
+            this.head.rotationPointY = 0.0F;
+            this.body.rotationPointY = 0.0F;
+            this.left_arm.rotationPointY = 2.0F;
+            this.right_arm.rotationPointY = 2.0F;
         }
 
-        this.right_arm.posZ = this.right_arm.posZ + (MathHelper.cos(h * 0.09F) * 0.05F + 0.05F);
-        this.left_arm.posZ = this.left_arm.posZ - (MathHelper.cos(h * 0.09F) * 0.05F + 0.05F);
-        this.right_arm.posX = this.right_arm.posX + MathHelper.sin(h * 0.067F) * 0.05F;
-        this.left_arm.posX = this.left_arm.posX - MathHelper.sin(h * 0.067F) * 0.05F;
+        this.right_arm.rotateAngleZ = this.right_arm.rotateAngleZ + (MathHelper.cos(h * 0.09F) * 0.05F + 0.05F);
+        this.left_arm.rotateAngleZ = this.left_arm.rotateAngleZ - (MathHelper.cos(h * 0.09F) * 0.05F + 0.05F);
+        this.right_arm.rotateAngleX = this.right_arm.rotateAngleX + MathHelper.sin(h * 0.067F) * 0.05F;
+        this.left_arm.rotateAngleX = this.left_arm.rotateAngleX - MathHelper.sin(h * 0.067F) * 0.05F;
         if (this.field_13385 == ARM_POSE_BOW_AND_ARROW) {
-            this.right_arm.posY = -0.1F + this.head.posY;
-            this.left_arm.posY = 0.1F + this.head.posY + 0.4F;
-            this.right_arm.posX = (float) (-Math.PI / 2) + this.head.posX;
-            this.left_arm.posX = (float) (-Math.PI / 2) + this.head.posX;
+            this.right_arm.rotateAngleY = -0.1F + this.head.rotateAngleY;
+            this.left_arm.rotateAngleY = 0.1F + this.head.rotateAngleY + 0.4F;
+            this.right_arm.rotateAngleX = (float) (-Math.PI / 2) + this.head.rotateAngleX;
+            this.left_arm.rotateAngleX = (float) (-Math.PI / 2) + this.head.rotateAngleX;
         } else if (this.field_13384 == ARM_POSE_BOW_AND_ARROW
                 && this.field_13385 != ARM_POSE_BOW_AND_ARROW
                 && this.field_13385 != ARM_POSE_BLOCK) {
-            this.right_arm.posY = -0.1F + this.head.posY - 0.4F;
-            this.left_arm.posY = 0.1F + this.head.posY;
-            this.right_arm.posX = (float) (-Math.PI / 2) + this.head.posX;
-            this.left_arm.posX = (float) (-Math.PI / 2) + this.head.posX;
+            this.right_arm.rotateAngleY = -0.1F + this.head.rotateAngleY - 0.4F;
+            this.left_arm.rotateAngleY = 0.1F + this.head.rotateAngleY;
+            this.right_arm.rotateAngleX = (float) (-Math.PI / 2) + this.head.rotateAngleX;
+            this.left_arm.rotateAngleX = (float) (-Math.PI / 2) + this.head.rotateAngleX;
         }
 
         if (this.swimAmount > 0.0F) {
             float p = f % 26.0F;
-            float l = this.handSwingProgress > 0.0F ? 0.0F : this.swimAmount;
+            float l = this.swingProgress > 0.0F ? 0.0F : this.swimAmount;
             if (p < 14.0F) {
-                this.left_arm.posX = this.rotlerpRad(this.left_arm.posX, 0.0F, this.swimAmount);
-                this.right_arm.posX = Math2.lerp(l, this.right_arm.posX, 0.0F);
-                this.left_arm.posY = this.rotlerpRad(this.left_arm.posY, (float) Math.PI, this.swimAmount);
-                this.right_arm.posY = Math2.lerp(l, this.right_arm.posY, (float) Math.PI);
-                this.left_arm.posZ = this.rotlerpRad(
-                        this.left_arm.posZ, (float) Math.PI + 1.8707964F * this.quadraticArmUpdate(p) / this.quadraticArmUpdate(14.0F), this.swimAmount
+                this.left_arm.rotateAngleX = this.rotlerpRad(this.left_arm.rotateAngleX, 0.0F, this.swimAmount);
+                this.right_arm.rotateAngleX = Math2.lerp(l, this.right_arm.rotateAngleX, 0.0F);
+                this.left_arm.rotateAngleY = this.rotlerpRad(this.left_arm.rotateAngleY, (float) Math.PI, this.swimAmount);
+                this.right_arm.rotateAngleY = Math2.lerp(l, this.right_arm.rotateAngleY, (float) Math.PI);
+                this.left_arm.rotateAngleZ = this.rotlerpRad(
+                        this.left_arm.rotateAngleZ, (float) Math.PI + 1.8707964F * this.quadraticArmUpdate(p) / this.quadraticArmUpdate(14.0F), this.swimAmount
                 );
-                this.right_arm.posZ = Math2.lerp(l, this.right_arm.posZ, (float) Math.PI - 1.8707964F * this.quadraticArmUpdate(p) / this.quadraticArmUpdate(14.0F));
+                this.right_arm.rotateAngleZ = Math2.lerp(l, this.right_arm.rotateAngleZ, (float) Math.PI - 1.8707964F * this.quadraticArmUpdate(p) / this.quadraticArmUpdate(14.0F));
             } else if (p >= 14.0F && p < 22.0F) {
                 float m = (p - 14.0F) / 8.0F;
-                this.left_arm.posX = this.rotlerpRad(this.left_arm.posX, (float) (Math.PI / 2) * m, this.swimAmount);
-                this.right_arm.posX = Math2.lerp(l, this.right_arm.posX, (float) (Math.PI / 2) * m);
-                this.left_arm.posY = this.rotlerpRad(this.left_arm.posY, (float) Math.PI, this.swimAmount);
-                this.right_arm.posY = Math2.lerp(l, this.right_arm.posY, (float) Math.PI);
-                this.left_arm.posZ = this.rotlerpRad(this.left_arm.posZ, 5.012389F - 1.8707964F * m, this.swimAmount);
-                this.right_arm.posZ = Math2.lerp(l, this.right_arm.posZ, 1.2707963F + 1.8707964F * m);
+                this.left_arm.rotateAngleX = this.rotlerpRad(this.left_arm.rotateAngleX, (float) (Math.PI / 2) * m, this.swimAmount);
+                this.right_arm.rotateAngleX = Math2.lerp(l, this.right_arm.rotateAngleX, (float) (Math.PI / 2) * m);
+                this.left_arm.rotateAngleY = this.rotlerpRad(this.left_arm.rotateAngleY, (float) Math.PI, this.swimAmount);
+                this.right_arm.rotateAngleY = Math2.lerp(l, this.right_arm.rotateAngleY, (float) Math.PI);
+                this.left_arm.rotateAngleZ = this.rotlerpRad(this.left_arm.rotateAngleZ, 5.012389F - 1.8707964F * m, this.swimAmount);
+                this.right_arm.rotateAngleZ = Math2.lerp(l, this.right_arm.rotateAngleZ, 1.2707963F + 1.8707964F * m);
             } else if (p >= 22.0F && p < 26.0F) {
                 float m = (p - 22.0F) / 4.0F;
-                this.left_arm.posX = this.rotlerpRad(this.left_arm.posX, (float) (Math.PI / 2) - (float) (Math.PI / 2) * m, this.swimAmount);
-                this.right_arm.posX = Math2.lerp(l, this.right_arm.posX, (float) (Math.PI / 2) - (float) (Math.PI / 2) * m);
-                this.left_arm.posY = this.rotlerpRad(this.left_arm.posY, (float) Math.PI, this.swimAmount);
-                this.right_arm.posY = Math2.lerp(l, this.right_arm.posY, (float) Math.PI);
-                this.left_arm.posZ = this.rotlerpRad(this.left_arm.posZ, (float) Math.PI, this.swimAmount);
-                this.right_arm.posZ = Math2.lerp(l, this.right_arm.posZ, (float) Math.PI);
+                this.left_arm.rotateAngleX = this.rotlerpRad(this.left_arm.rotateAngleX, (float) (Math.PI / 2) - (float) (Math.PI / 2) * m, this.swimAmount);
+                this.right_arm.rotateAngleX = Math2.lerp(l, this.right_arm.rotateAngleX, (float) (Math.PI / 2) - (float) (Math.PI / 2) * m);
+                this.left_arm.rotateAngleY = this.rotlerpRad(this.left_arm.rotateAngleY, (float) Math.PI, this.swimAmount);
+                this.right_arm.rotateAngleY = Math2.lerp(l, this.right_arm.rotateAngleY, (float) Math.PI);
+                this.left_arm.rotateAngleZ = this.rotlerpRad(this.left_arm.rotateAngleZ, (float) Math.PI, this.swimAmount);
+                this.right_arm.rotateAngleZ = Math2.lerp(l, this.right_arm.rotateAngleZ, (float) Math.PI);
             }
 
             float m = 0.3F;
             float n = 0.33333334F;
-            this.left_leg.posX = Math2.lerp(this.swimAmount, this.left_leg.posX, 0.3F * MathHelper.cos(f * 0.33333334F + (float) Math.PI));
-            this.right_leg.posX = Math2.lerp(this.swimAmount, this.right_leg.posX, 0.3F * MathHelper.cos(f * 0.33333334F));
+            this.left_leg.rotateAngleX = Math2.lerp(this.swimAmount, this.left_leg.rotateAngleX, 0.3F * MathHelper.cos(f * 0.33333334F + (float) Math.PI));
+            this.right_leg.rotateAngleX = Math2.lerp(this.swimAmount, this.right_leg.rotateAngleX, 0.3F * MathHelper.cos(f * 0.33333334F));
         }
     }
 
-    @Override
     public void render(Entity entityIn, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
         this.render(entityIn, packedLight, packedOverlay, red, blue, green, alpha, 0);
         head.render(alpha);
@@ -279,13 +278,13 @@ public class ClientZombiePigmanModel extends EntityModel {
 
     public void render(Entity zombie, float b, float j, float f, float g, float h, float k, int i) {
         super.render(zombie, b, j, f, g, h, k);
-        com.mojang.blaze3d.platform.GlStateManager.pushMatrix();
+        GL11.glPushMatrix();
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(1.5f, 1.5f, 1.5f);
+            GL11.glScalef(1.5f, 1.5f, 1.5f);
         } else {
-            com.mojang.blaze3d.platform.GlStateManager.scale(1, 1, 1);
+            GL11.glScalef(1, 1, 1);
         }
-        com.mojang.blaze3d.platform.GlStateManager.popMatrix();
+        GL11.glPopMatrix();
     }
 
     private float quadraticArmUpdate(float f) {

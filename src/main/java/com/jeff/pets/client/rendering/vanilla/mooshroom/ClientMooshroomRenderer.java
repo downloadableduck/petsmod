@@ -3,27 +3,26 @@ package com.jeff.pets.client.rendering.vanilla.mooshroom;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.cow.ClientCowModel;
 import com.jeff.pets.mob.vanilla.passive.ClientMooshroom;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientMooshroomRenderer extends PetRenderer<@NotNull ClientMooshroom> {
+public class ClientMooshroomRenderer extends PetRenderer {
 
-    public ClientMooshroomRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+    public ClientMooshroomRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientCowModel(), 0.7F);
-        this.addFeature(new ClientMushroomCowMushroomLayer(this));
     }
 
-    @Override
-    public @NotNull Identifier getTexture(ClientMooshroom livingEntityRenderState) {
-        return new Identifier("minecraft", "textures/entity/cow/mooshroom.png");
+    public @NotNull ResourceLocation getEntityTexture(net.minecraft.entity.Entity __e) {
+        ClientMooshroom livingEntityRenderState = (ClientMooshroom) __e;
+        return new ResourceLocation("minecraft", "textures/entity/cow/mooshroom.png");
     }
 
-    @Override
-    protected void scale(ClientMooshroom state, float f) {
+    protected void preRenderCallback(ClientMooshroom state, float f) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
+            GL11.glScalef(0.5f, 0.5f, 0.5f);
         }
     }
 }

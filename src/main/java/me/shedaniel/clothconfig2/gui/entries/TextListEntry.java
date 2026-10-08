@@ -1,6 +1,6 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,10 +37,10 @@ public class TextListEntry extends TooltipListEntry<Object> {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
         this.savedWidth = entryWidth;
         int yy = y + 4;
-        List<String> strings = MinecraftClient.getInstance().textRenderer.wrapLines(text, savedWidth);
+        List<String> strings = Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(text, savedWidth);
         for (String string : strings) {
-            MinecraftClient.getInstance().textRenderer.drawWithShadow(string, x, yy, color);
-            yy += MinecraftClient.getInstance().textRenderer.fontHeight + 3;
+            Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(string, x, yy, color);
+            yy += Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT + 3;
         }
     }
 
@@ -48,7 +48,7 @@ public class TextListEntry extends TooltipListEntry<Object> {
     public int getItemHeight() {
         if (savedWidth == -1)
             return 12;
-        List<String> strings = MinecraftClient.getInstance().textRenderer.wrapLines(text, savedWidth);
+        List<String> strings = Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(text, savedWidth);
         if (strings.isEmpty())
             return 0;
         return 15 + strings.size() * 12;

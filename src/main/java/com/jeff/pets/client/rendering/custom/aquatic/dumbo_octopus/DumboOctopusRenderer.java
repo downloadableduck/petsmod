@@ -3,33 +3,31 @@ package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
-import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class DumboOctopusRenderer extends PetRenderer<@NotNull DumboOctopus> {
+public class DumboOctopusRenderer extends PetRenderer {
 
-    public DumboOctopusRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+    public DumboOctopusRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new DumboOctopusModel(), 0.3F);
     }
 
-    @Override
-    public void render(@NotNull DumboOctopus octopus, double x, double y, double z, float yaw, float pitch) {
-        super.render(octopus, x, y, z, yaw, pitch);
+    public void doRender(@NotNull DumboOctopus octopus, double x, double y, double z, float yaw, float pitch) {
+        super.doRender(octopus, x, y, z, yaw, pitch);
     }
 
-    @Override
-    protected void scale(@NotNull DumboOctopus state, float f) {
-        GlStateManager.scale(0.7f, 0.7f, 0.7f);
+    protected void preRenderCallback(@NotNull DumboOctopus state, float f) {
+        GL11.glScalef(0.7f, 0.7f, 0.7f);
         if (CONFIG.isBaby) {
-            GlStateManager.scale(0.5f, 0.5f, 0.5f);
+            GL11.glScalef(0.5f, 0.5f, 0.5f);
         }
     }
 
-    @Override
-    public @NotNull Identifier getTexture(DumboOctopus livingEntityRenderState) {
+    public @NotNull ResourceLocation getEntityTexture(net.minecraft.entity.Entity __e) {
+        DumboOctopus livingEntityRenderState = (DumboOctopus) __e;
         String path;
         String yellow = "textures/entity/dumbo_octopus/yellow.png";
         String red = "textures/entity/dumbo_octopus/red.png";
@@ -52,6 +50,6 @@ public class DumboOctopusRenderer extends PetRenderer<@NotNull DumboOctopus> {
         } else {
             path = yellow;
         }
-        return new Identifier(PetsInitializer.MOD_ID, path);
+        return new ResourceLocation(PetsInitializer.MOD_ID, path);
     }
 }

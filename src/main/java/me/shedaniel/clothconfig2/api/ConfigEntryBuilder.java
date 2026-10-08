@@ -5,8 +5,7 @@ import me.shedaniel.clothconfig2.impl.ConfigEntryBuilderImpl;
 import me.shedaniel.clothconfig2.impl.KeyInput;
 import me.shedaniel.clothconfig2.impl.builders.*;
 import me.shedaniel.clothconfig2.impl.builders.DropdownMenuBuilder.TopCellElementBuilder;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.Minecraft;
 
 import java.util.List;
 import java.util.function.Function;

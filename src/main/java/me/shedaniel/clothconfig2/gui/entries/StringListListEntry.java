@@ -31,7 +31,7 @@ public class StringListListEntry extends AbstractTextFieldListListEntry<String, 
         return this;
     }
 
-    public static class StringListCell extends AbstractTextFieldListListEntry.AbstractTextFieldListCell<String, StringListCell, StringListListEntry> {
+    public static class StringListCell extends AbstractTextFieldListCell<String, StringListCell, StringListListEntry> {
 
         public StringListCell(String value, StringListListEntry listListEntry) {
             super(value, listListEntry);

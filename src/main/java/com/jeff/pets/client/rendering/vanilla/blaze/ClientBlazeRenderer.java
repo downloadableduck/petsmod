@@ -2,18 +2,18 @@ package com.jeff.pets.client.rendering.vanilla.blaze;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientBlaze;
-import net.minecraft.client.render.entity.model.BlazeEntityModel;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.model.ModelBlaze;
+import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientBlazeRenderer extends PetRenderer<@NotNull ClientBlaze> {
+public class ClientBlazeRenderer extends PetRenderer {
 
-    public ClientBlazeRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new BlazeEntityModel(), 0.75f);
+    public ClientBlazeRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+        super(context, new ModelBlaze(), 0.75f);
     }
 
-    @Override
-    public @NotNull Identifier getTexture(ClientBlaze livingEntityRenderState) {
-        return new Identifier("minecraft", "textures/entity/blaze.png");
+    public @NotNull ResourceLocation getEntityTexture(net.minecraft.entity.Entity __e) {
+        ClientBlaze livingEntityRenderState = (ClientBlaze) __e;
+        return new ResourceLocation("minecraft", "textures/entity/blaze.png");
     }
 }

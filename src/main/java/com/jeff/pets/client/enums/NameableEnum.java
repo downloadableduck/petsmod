@@ -1,7 +1,7 @@
 package com.jeff.pets.client.enums;
 
-import net.minecraft.text.LiteralText;
+import net.minecraft.util.ChatComponentText;
 
 public interface NameableEnum {
-    LiteralText getDisplayName();
+    ChatComponentText getDisplayName();
 }

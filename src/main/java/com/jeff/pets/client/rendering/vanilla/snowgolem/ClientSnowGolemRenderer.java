@@ -2,29 +2,28 @@ package com.jeff.pets.client.rendering.vanilla.snowgolem;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientSnowGolem;
-import net.minecraft.client.render.entity.model.SnowmanEntityModel;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.model.ModelSnowMan;
+import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSnowGolemRenderer extends PetRenderer<@NotNull ClientSnowGolem> {
+public class ClientSnowGolemRenderer extends PetRenderer {
 
-    public ClientSnowGolemRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new SnowmanEntityModel(), 0.5F);
-        this.addFeature(new ClientSnowGolemHeadLayer(this));
+    public ClientSnowGolemRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+        super(context, new ModelSnowMan(), 0.5F);
     }
 
-    @Override
-    protected void scale(ClientSnowGolem snowGolem, float f) {
-        super.scale(snowGolem, f);
+    protected void preRenderCallback(ClientSnowGolem snowGolem, float f) {
+        super.preRenderCallback(snowGolem, f);
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
+            GL11.glScalef(0.5f, 0.5f, 0.5f);
         }
     }
 
-    @Override
-    public @NotNull Identifier getTexture(ClientSnowGolem livingEntityRenderState) {
-        return new Identifier("minecraft", "textures/entity/snow_golem.png");
+    public @NotNull ResourceLocation getEntityTexture(net.minecraft.entity.Entity __e) {
+        ClientSnowGolem livingEntityRenderState = (ClientSnowGolem) __e;
+        return new ResourceLocation("minecraft", "textures/entity/snow_golem.png");
     }
 }

@@ -1,9 +1,9 @@
 package com.jeff.pets.client.mixin.client;
 
 import com.jeff.pets.client.PetsClientInitializer;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.client.render.entity.EntityRenderer;
-import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.entity.Entity;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,19 +14,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Map;
 
-@Mixin(EntityRenderDispatcher.class)
+@Mixin(RenderManager.class)
 public abstract class EntityRendererDispatcherMixin {
 
     @Shadow
-    @Final
-    private Map<Class<? extends Entity>, EntityRenderer<? extends Entity>> renderers;
+    private Map entityRenderMap;
 
     @Inject(at = @At("TAIL"), method = "<init>")
-    public void onFunc(net.minecraft.client.texture.TextureManager textureManager, ItemRenderer itemRenderer, CallbackInfo ci) {
+    public void onFunc(CallbackInfo ci) {
         PetsClientInitializer.register();
         synchronized (PetsClientInitializer.renderManagerMap.keySet()) {
             for (Map.Entry<Class, PetsClientInitializer.Factory> entry : PetsClientInitializer.renderSupplierMap.entrySet()) {
-                this.renderers.put(entry.getKey(), entry.getValue().create((EntityRenderDispatcher) (Object) this, new PetsClientInitializer.Context((Map) renderers)));
+                this.entityRenderMap.put(entry.getKey(), entry.getValue().create((RenderManager) (Object) this, new PetsClientInitializer.Context((Map) entityRenderMap)));
             }
         }
     }

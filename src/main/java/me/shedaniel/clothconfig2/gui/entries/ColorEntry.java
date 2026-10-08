@@ -1,9 +1,9 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
 import me.shedaniel.clothconfig2.gui.widget.ColorDisplayWidget;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.resource.language.I18n;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.resources.I18n;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Locale;
@@ -39,24 +39,24 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
     @Override
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-        this.colorDisplayWidget.y = y;
+        this.colorDisplayWidget.yPosition = y;
         ColorValue value = getColorValue(textFieldWidget.getText());
         if (!value.hasError())
             colorDisplayWidget.setColor(alpha ? value.getColor() : 0xff000000 | value.getColor());
-        if (MinecraftClient.getInstance().textRenderer.isRightToLeft()) {
-            this.colorDisplayWidget.x = x + resetButton.getWidth() + textFieldWidget.width;
+        if (Minecraft.getMinecraft().fontRendererObj.getBidiFlag()) {
+            this.colorDisplayWidget.xPosition = x + resetButton.width + textFieldWidget.width;
         } else {
-            this.colorDisplayWidget.x = textFieldWidget.x - 23;
+            this.colorDisplayWidget.xPosition = textFieldWidget.xPosition - 23;
         }
-        colorDisplayWidget.render(mouseX, mouseY, delta);
+        colorDisplayWidget.drawButton(Minecraft.getMinecraft(), mouseX, mouseY);
     }
 
     @Override
-    protected void textFieldPreRender(TextFieldWidget widget) {
+    protected void textFieldPreRender(GuiTextField widget) {
         if (!getError().isPresent()) {
-            widget.setEditableColor(14737632);
+            widget.setTextColor(14737632);
         } else {
-            widget.setEditableColor(16733525);
+            widget.setTextColor(16733525);
         }
     }
 
@@ -88,7 +88,7 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
     public Optional<String> getError() {
         ColorValue colorValue = getColorValue(this.textFieldWidget.getText());
         if (colorValue.hasError())
-            return Optional.of(I18n.translate("text.cloth-config.error.color." + colorValue.getError().name().toLowerCase(Locale.ROOT)));
+            return Optional.of(I18n.format("text.cloth-config.error.color." + colorValue.getError().name().toLowerCase(Locale.ROOT)));
         return super.getError();
     }
 

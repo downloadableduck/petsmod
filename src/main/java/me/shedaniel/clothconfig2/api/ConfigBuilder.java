@@ -2,8 +2,8 @@ package me.shedaniel.clothconfig2.api;
 
 import me.shedaniel.clothconfig2.impl.ConfigBuilderImpl;
 import me.shedaniel.clothconfig2.impl.ConfigEntryBuilderImpl;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.function.Consumer;
 
@@ -18,15 +18,15 @@ public interface ConfigBuilder {
      * @deprecated Use {@link ConfigBuilder#create()}
      */
     @Deprecated
-    static ConfigBuilder create(Screen parent, String title) {
+    static ConfigBuilder create(GuiScreen parent, String title) {
         return create().setParentScreen(parent).setTitle(title);
     }
 
     ConfigBuilder setFallbackCategory(ConfigCategory fallbackCategory);
 
-    Screen getParentScreen();
+    GuiScreen getParentScreen();
 
-    ConfigBuilder setParentScreen(Screen parent);
+    ConfigBuilder setParentScreen(GuiScreen parent);
 
     String getTitle();
 
@@ -34,7 +34,7 @@ public interface ConfigBuilder {
 
     boolean isEditable();
 
-    ConfigBuilder setEditable(boolean editable);
+    ConfigBuilder setEnabled(boolean editable);
 
     ConfigCategory getOrCreateCategory(String categoryKey);
 
@@ -60,17 +60,17 @@ public interface ConfigBuilder {
 
     boolean doesProcessErrors();
 
-    Identifier getDefaultBackgroundTexture();
+    ResourceLocation getDefaultBackgroundTexture();
 
-    ConfigBuilder setDefaultBackgroundTexture(Identifier texture);
+    ConfigBuilder setDefaultBackgroundTexture(ResourceLocation texture);
 
     Runnable getSavingRunnable();
 
     ConfigBuilder setSavingRunnable(Runnable runnable);
 
-    Consumer<Screen> getAfterInitConsumer();
+    Consumer<GuiScreen> getAfterInitConsumer();
 
-    ConfigBuilder setAfterInitConsumer(Consumer<Screen> afterInitConsumer);
+    ConfigBuilder setAfterInitConsumer(Consumer<GuiScreen> afterInitConsumer);
 
     default ConfigBuilder alwaysShowTabs() {
         return setAlwaysShowTabs(true);
@@ -98,6 +98,6 @@ public interface ConfigBuilder {
         return ConfigEntryBuilderImpl.create();
     }
 
-    Screen build();
+    GuiScreen build();
 
 }

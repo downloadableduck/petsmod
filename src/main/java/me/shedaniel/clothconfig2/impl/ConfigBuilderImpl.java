@@ -6,10 +6,10 @@ import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.Pair;
 import me.shedaniel.clothconfig2.gui.ClothConfigScreen;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.resource.language.I18n;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.resources.I18n;
 
 import java.util.List;
 import java.util.Map;
@@ -19,10 +19,10 @@ import java.util.function.Consumer;
 @Deprecated
 public class ConfigBuilderImpl implements ConfigBuilder {
 
-    private final Map<String, Identifier> categoryBackground = Maps.newHashMap();
+    private final Map<String, ResourceLocation> categoryBackground = Maps.newHashMap();
     private final Map<String, List<Pair<String, Object>>> dataMap = Maps.newLinkedHashMap();
     private Runnable savingRunnable;
-    private Screen parent;
+    private GuiScreen parent;
     private String title = "text.cloth-config.config";
     private boolean editable = true;
     private boolean tabsSmoothScroll = true;
@@ -30,8 +30,8 @@ public class ConfigBuilderImpl implements ConfigBuilder {
     private boolean doesProcessErrors = true;
     private boolean doesConfirmSave = true;
     private boolean transparentBackground = false;
-    private Identifier defaultBackground = DrawableHelper.OPTIONS_BACKGROUND_TEXTURE;
-    private Consumer<Screen> afterInitConsumer = screen -> {
+    private ResourceLocation defaultBackground = Gui.optionsBackground;
+    private Consumer<GuiScreen> afterInitConsumer = screen -> {
     };
     private String fallbackCategory = null;
     private boolean alwaysShowTabs = false;
@@ -59,7 +59,7 @@ public class ConfigBuilderImpl implements ConfigBuilder {
     }
 
     @Override
-    public ConfigBuilder setAfterInitConsumer(Consumer<Screen> afterInitConsumer) {
+    public ConfigBuilder setAfterInitConsumer(Consumer<GuiScreen> afterInitConsumer) {
         this.afterInitConsumer = afterInitConsumer;
         return this;
     }
@@ -71,12 +71,12 @@ public class ConfigBuilderImpl implements ConfigBuilder {
     }
 
     @Override
-    public Screen getParentScreen() {
+    public GuiScreen getParentScreen() {
         return parent;
     }
 
     @Override
-    public ConfigBuilder setParentScreen(Screen parent) {
+    public ConfigBuilder setParentScreen(GuiScreen parent) {
         this.parent = parent;
         return this;
     }
@@ -98,7 +98,7 @@ public class ConfigBuilderImpl implements ConfigBuilder {
     }
 
     @Override
-    public ConfigBuilder setEditable(boolean editable) {
+    public ConfigBuilder setEnabled(boolean editable) {
         this.editable = editable;
         return this;
     }
@@ -106,18 +106,18 @@ public class ConfigBuilderImpl implements ConfigBuilder {
     @Override
     public ConfigCategory getOrCreateCategory(String categoryKey) {
         if (dataMap.containsKey(categoryKey))
-            return new ConfigCategoryImpl(categoryKey, identifier -> {
+            return new ConfigCategoryImpl(categoryKey, ResourceLocation -> {
                 if (transparentBackground)
                     throw new IllegalStateException("Cannot set category background if screen is using transparent background.");
-                categoryBackground.put(categoryKey, identifier);
+                categoryBackground.put(categoryKey, ResourceLocation);
             }, () -> dataMap.get(categoryKey), () -> removeCategory(categoryKey));
         dataMap.put(categoryKey, Lists.newArrayList());
         if (fallbackCategory == null)
             fallbackCategory = categoryKey;
-        return new ConfigCategoryImpl(categoryKey, identifier -> {
+        return new ConfigCategoryImpl(categoryKey, ResourceLocation -> {
             if (transparentBackground)
                 throw new IllegalStateException("Cannot set category background if screen is using transparent background.");
-            categoryBackground.put(categoryKey, identifier);
+            categoryBackground.put(categoryKey, ResourceLocation);
         }, () -> dataMap.get(categoryKey), () -> removeCategory(categoryKey));
     }
 
@@ -189,12 +189,12 @@ public class ConfigBuilderImpl implements ConfigBuilder {
     }
 
     @Override
-    public Identifier getDefaultBackgroundTexture() {
+    public ResourceLocation getDefaultBackgroundTexture() {
         return defaultBackground;
     }
 
     @Override
-    public ConfigBuilder setDefaultBackgroundTexture(Identifier texture) {
+    public ConfigBuilder setDefaultBackgroundTexture(ResourceLocation texture) {
         this.defaultBackground = texture;
         return this;
     }
@@ -206,15 +206,15 @@ public class ConfigBuilderImpl implements ConfigBuilder {
     }
 
     @Override
-    public Consumer<Screen> getAfterInitConsumer() {
+    public Consumer<GuiScreen> getAfterInitConsumer() {
         return afterInitConsumer;
     }
 
     @Override
-    public Screen build() {
+    public GuiScreen build() {
         if (dataMap.isEmpty() || fallbackCategory == null)
             throw new NullPointerException("There cannot be no categories or fallback category!");
-        ClothConfigScreen screen = new ClothConfigScreen(parent, I18n.translate(title), dataMap, doesConfirmSave, doesProcessErrors, listSmoothScroll, defaultBackground, categoryBackground) {
+        ClothConfigScreen screen = new ClothConfigScreen(parent, I18n.format(title), dataMap, doesConfirmSave, doesProcessErrors, listSmoothScroll, defaultBackground, categoryBackground) {
             @Override
             public void save() {
                 if (savingRunnable != null)
@@ -222,12 +222,12 @@ public class ConfigBuilderImpl implements ConfigBuilder {
             }
 
             @Override
-            public void init() {
-                super.init();
+            public void initGui() {
+                super.initGui();
                 afterInitConsumer.accept(this);
             }
         };
-        screen.setEditable(editable);
+        screen.setEnabled(editable);
         screen.setFallbackCategory(fallbackCategory);
         screen.setSmoothScrollingTabs(tabsSmoothScroll);
         screen.setTransparentBackground(transparentBackground);

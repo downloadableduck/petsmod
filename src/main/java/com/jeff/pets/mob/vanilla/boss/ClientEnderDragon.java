@@ -2,13 +2,13 @@ package com.jeff.pets.mob.vanilla.boss;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.entity.boss.dragon.EnderDragonEntity;
-import net.minecraft.sound.Sounds;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.entity.boss.EntityDragon;
 
-import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.util.MathHelper;
+
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.world.World;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 @CanFly
@@ -20,7 +20,7 @@ public class ClientEnderDragon extends FlyingPet {
 
     public ClientEnderDragon(World level) {
         super(level);
-        this.setBounds(16.0F, 8.0F);
+        this.setSize(16.0F, 8.0F);
     }
 
     @Override
@@ -35,17 +35,17 @@ public class ClientEnderDragon extends FlyingPet {
 
     @Override
     protected String getAmbientSound() {
-        return Sounds.ENTITY_ENDERDRAGON_AMBIENT;
+        return "mob.enderdragon.growl";
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void onUpdate() {
+        super.onUpdate();
         this.oFlapTime = this.flapTime;
-        Vec3d vec3 = this.getVelocity();
-        float g = 0.2F / ((float) vec3.y * 10.0F + 1.0F);
-        g *= (float) Math.pow(2.0F, vec3.y);
-        if (this.isInsideWall()) {
+        Vec3 vec3 = this.getVelocity();
+        float g = 0.2F / ((float) vec3.yCoord * 10.0F + 1.0F);
+        g *= (float) Math.pow(2.0F, vec3.yCoord);
+        if (this.isEntityInsideOpaqueBlock()) {
             this.flapTime += g * 0.5F;
         } else {
             this.flapTime += g;
@@ -62,7 +62,7 @@ public class ClientEnderDragon extends FlyingPet {
         int k = this.posPointer - i - 1 & 63;
         double[] ds = new double[3];
         double d = this.positions[j][0];
-        double e = MathHelper.wrapDegrees(this.positions[k][0] - d);
+        double e = MathHelper.wrapAngleTo180_double(this.positions[k][0] - d);
         ds[0] = d + e * (double) f;
         d = this.positions[j][1];
         e = this.positions[k][1] - d;

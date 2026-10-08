@@ -1,18 +1,18 @@
 package me.shedaniel.math.impl;
 
 import me.shedaniel.math.Point;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.Window;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.input.Mouse;
 
 public class PointHelper {
     public static Point ofMouse() {
-        MinecraftClient client = MinecraftClient.getInstance();
-        Window sr = new Window(client);
+        Minecraft client = Minecraft.getMinecraft();
+        ScaledResolution sr = new ScaledResolution(client, client.displayWidth, client.displayHeight);
         double scaledWidth = sr.getScaledWidth();
         double scaledHeight = sr.getScaledHeight();
-        double mx = Mouse.getX() * scaledWidth / (double) (double) sr.getWidth();
-        double my = ((double) sr.getHeight() - Mouse.getY()) * scaledHeight / (double) (double) sr.getWidth();
+        double mx = Mouse.getX() * scaledWidth / (double) (double) client.displayWidth;
+        double my = ((double) client.displayHeight - Mouse.getY()) * scaledHeight / (double) (double) client.displayWidth;
         return new Point(mx, my);
     }
 

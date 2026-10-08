@@ -61,11 +61,10 @@ import com.jeff.pets.mob.vanilla.boss.*;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import net.fabricmc.api.ClientModInitializer;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.client.resource.ResourcePackLoader;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import org.lwjgl.input.Keyboard;
 
@@ -89,7 +88,7 @@ import java.util.*;
 public class PetsClientInitializer implements ClientModInitializer {
 
     public static final Map<Class, Factory> renderSupplierMap = new HashMap();
-    public static final Map<EntityRenderDispatcher, Context> renderManagerMap = new WeakHashMap();
+    public static final Map<RenderManager, Context> renderManagerMap = new WeakHashMap();
     public static List<String> ADDONS = new ArrayList<>();
     public static KeyBinding keyMapping;
     private static volatile File pendingResourcePack;
@@ -117,29 +116,15 @@ public class PetsClientInitializer implements ClientModInitializer {
     }
 
     private static void registerAsResourcePack(File file) {
-        MinecraftClient client = MinecraftClient.getInstance();
-        ResourcePackLoader loader = client.getResourcePackLoader();
+        Minecraft client = Minecraft.getMinecraft();
         String packName = "file/" + file.getName();
-        if (!client.options.resourcePacks.contains(packName)) {
-            client.options.resourcePacks.add(packName);
-            client.options.save();
+        if (!client.gameSettings.resourcePacks.contains(packName)) {
+            client.gameSettings.resourcePacks.add(packName);
+            client.gameSettings.saveOptions();
         }
-        try {
-            Futures.addCallback(loader.loadServerPack(file), new FutureCallback<Object>() {
-                @Override
-                public void onSuccess(Object result) {
-                    client.execute(() -> {
-                        client.reloadResources();
-                        return new Object();
-                    });
-                }
-
-                @Override
-                public void onFailure(Throwable t) {
-                }
-            });
-        } catch (Exception ignored) {
-        }
+        new Thread(() -> {
+            client.refreshResources();
+        }).start();
     }
 
     public static void register() {
@@ -203,7 +188,7 @@ public class PetsClientInitializer implements ClientModInitializer {
         synchronized (renderSupplierMap) {
             renderSupplierMap.put(entityClass, factory);
 
-            for (EntityRenderDispatcher manager : renderManagerMap.keySet()) {
+            for (RenderManager manager : renderManagerMap.keySet()) {
                 renderManagerMap.get(manager).rendererMap.put(entityClass, factory.create(manager, renderManagerMap.get(manager)));
             }
         }
@@ -211,13 +196,13 @@ public class PetsClientInitializer implements ClientModInitializer {
 
     @FunctionalInterface
     public interface Factory {
-        MobEntityRenderer<? extends Entity> create(EntityRenderDispatcher var1, Context var2);
+        RenderLiving create(RenderManager var1, Context var2);
     }
 
     public static final class Context {
-        private final Map<Class, MobEntityRenderer<? extends Entity>> rendererMap;
+        private final Map<Class, RenderLiving> rendererMap;
 
-        public Context(Map<Class, MobEntityRenderer<? extends Entity>> rendererMap) {
+        public Context(Map<Class, RenderLiving> rendererMap) {
             super();
             this.rendererMap = rendererMap;
         }

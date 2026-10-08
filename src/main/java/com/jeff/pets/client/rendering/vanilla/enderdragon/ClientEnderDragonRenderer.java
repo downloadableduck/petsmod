@@ -2,27 +2,27 @@ package com.jeff.pets.client.rendering.vanilla.enderdragon;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.boss.ClientEnderDragon;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientEnderDragonRenderer extends PetRenderer<@NotNull ClientEnderDragon> {
+public class ClientEnderDragonRenderer extends PetRenderer {
 
-    public ClientEnderDragonRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+    public ClientEnderDragonRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientEnderDragonModel(0), 0.75f);
     }
 
-    @Override
-    protected void scale(@NotNull ClientEnderDragon livingEntityRenderState, float f) {
-        super.scale(livingEntityRenderState, f);
+    protected void preRenderCallback(@NotNull ClientEnderDragon livingEntityRenderState, float f) {
+        super.preRenderCallback(livingEntityRenderState, f);
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.25f, 0.25f, 0.25f);
+            GL11.glScalef(0.25f, 0.25f, 0.25f);
         }
     }
 
-    @Override
-    public @NotNull Identifier getTexture(@NotNull ClientEnderDragon livingEntityRenderState) {
-        return new Identifier("minecraft", "textures/entity/enderdragon/dragon.png");
+    public @NotNull ResourceLocation getEntityTexture(net.minecraft.entity.Entity __e) {
+        ClientEnderDragon livingEntityRenderState = (ClientEnderDragon) __e;
+        return new ResourceLocation("minecraft", "textures/entity/enderdragon/dragon.png");
     }
 }

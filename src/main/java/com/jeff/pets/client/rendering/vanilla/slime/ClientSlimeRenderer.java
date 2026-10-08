@@ -2,27 +2,27 @@ package com.jeff.pets.client.rendering.vanilla.slime;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
-import net.minecraft.client.render.entity.model.SlimeEntityModel;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.model.ModelSlime;
+import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientSlimeRenderer extends PetRenderer<@NotNull ClientSlime> {
+public class ClientSlimeRenderer extends PetRenderer {
 
-    public ClientSlimeRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new SlimeEntityModel(16), 0.75f);
+    public ClientSlimeRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+        super(context, new ModelSlime(16), 0.75f);
     }
 
-    @Override
-    public @NotNull Identifier getTexture(ClientSlime slimeEntity) {
-        return new Identifier("minecraft", "textures/entity/slime/slime.png");
+    public @NotNull ResourceLocation getEntityTexture(net.minecraft.entity.Entity __e) {
+        ClientSlime slimeEntity = (ClientSlime) __e;
+        return new ResourceLocation("minecraft", "textures/entity/slime/slime.png");
     }
 
-    @Override
-    protected void scale(ClientSlime slimeRenderState, float a) {
+    protected void preRenderCallback(ClientSlime slimeRenderState, float a) {
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.5f, 0.5f, 0.5f);
+            GL11.glScalef(0.5f, 0.5f, 0.5f);
         }
     }
 }

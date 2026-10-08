@@ -2,9 +2,9 @@ package com.jeff.pets.mob.vanilla.neutral;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.sound.Sounds;
 
-import net.minecraft.entity.passive.TameableEntity;
+
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 public class ClientDolphin extends FlyingPet {
     public ClientDolphin(World level) {
         super(level);
-        this.setBounds(0.9F, 0.6F);
+        this.setSize(0.9F, 0.6F);
     }
 
     @Override
@@ -27,6 +27,6 @@ public class ClientDolphin extends FlyingPet {
 
     @Override
     protected String getAmbientSound() {
-        return Sounds.ENTITY_GENERIC_SWIM;
+        return "game.player.swim";
     }
 }

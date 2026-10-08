@@ -1,16 +1,16 @@
 package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.sound.Sounds;
 
-import net.minecraft.entity.passive.TameableEntity;
+
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientEndermite extends GroundPet {
     public ClientEndermite(World level) {
         super(level);
-        this.setBounds(0.4F, 0.3F);
+        this.setSize(0.4F, 0.3F);
     }
 
     @Override
@@ -25,6 +25,6 @@ public class ClientEndermite extends GroundPet {
 
     @Override
     protected String getAmbientSound() {
-        return Sounds.ENTITY_ENDERMITE_AMBIENT;
+        return "mob.enderminion.idle";
     }
 }

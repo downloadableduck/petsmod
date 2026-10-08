@@ -2,27 +2,27 @@ package com.jeff.pets.client.rendering.vanilla.witch;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientWitch;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientWitchRenderer extends PetRenderer<@NotNull ClientWitch> {
+public class ClientWitchRenderer extends PetRenderer {
 
-    public ClientWitchRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new net.minecraft.client.render.entity.model.WitchEntityModel(0), 0.75f);
+    public ClientWitchRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+        super(context, new net.minecraft.client.model.ModelWitch(0), 0.75f);
     }
 
-    @Override
-    protected void scale(ClientWitch witch, float f) {
-        super.scale(witch, f);
+    protected void preRenderCallback(ClientWitch witch, float f) {
+        super.preRenderCallback(witch, f);
         if (CONFIG.isBaby) {
-            com.mojang.blaze3d.platform.GlStateManager.scale(0.25f, 0.25f, 0.25f);
+            GL11.glScalef(0.25f, 0.25f, 0.25f);
         }
     }
 
-    @Override
-    public @NotNull Identifier getTexture(ClientWitch livingEntityRenderState) {
-        return new Identifier("minecraft", "textures/entity/witch.png");
+    public @NotNull ResourceLocation getEntityTexture(net.minecraft.entity.Entity __e) {
+        ClientWitch livingEntityRenderState = (ClientWitch) __e;
+        return new ResourceLocation("minecraft", "textures/entity/witch.png");
     }
 }

@@ -2,12 +2,12 @@ package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-import net.minecraft.sound.Sounds;
-import net.minecraft.util.math.MathHelper;
 
-import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.util.MathHelper;
+
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.world.World;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 @CanFly
@@ -31,7 +31,7 @@ public class ClientSquid extends FlyingPet {
 
     public ClientSquid(World level) {
         super(level);
-        this.setBounds(0.8F, -0.8F);
+        this.setSize(0.8F, -0.8F);
     }
 
     @Override
@@ -46,31 +46,31 @@ public class ClientSquid extends FlyingPet {
 
     @Override
     protected String getAmbientSound() {
-        return Sounds.ENTITY_SQUID_AMBIENT;
+        return "mob.squid.ambient";
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void onUpdate() {
+        super.onUpdate();
         this.xBodyRotO = this.xBodyRot;
         this.zBodyRotO = this.zBodyRot;
         this.oldTentacleMovement = this.tentacleMovement;
         this.oldTentacleAngle = this.tentacleAngle;
         this.tentacleMovement += this.tentacleSpeed;
         if ((double) this.tentacleMovement > (Math.PI * 2D)) {
-            if (this.world.isClient) {
+            if (this.worldObj.isRemote) {
                 this.tentacleMovement = ((float) Math.PI * 2F);
             } else {
                 this.tentacleMovement -= ((float) Math.PI * 2F);
-                if (this.random.nextInt(10) == 0) {
-                    this.tentacleSpeed = 1.0F / (this.random.nextFloat() + 1.0F) * 0.2F;
+                if (this.rand.nextInt(10) == 0) {
+                    this.tentacleSpeed = 1.0F / (this.rand.nextFloat() + 1.0F) * 0.2F;
                 }
 
-                this.world.sendEntityStatus(this, (byte) 19);
+                this.worldObj.setEntityState(this, (byte) 19);
             }
         }
 
-        if (this.isTouchingWater()) {
+        if (this.isInWater()) {
             if (this.tentacleMovement < (float) Math.PI) {
                 float f = this.tentacleMovement / (float) Math.PI;
                 this.tentacleAngle = MathHelper.sin(f * f * (float) Math.PI) * (float) Math.PI * 0.25F;
@@ -86,20 +86,20 @@ public class ClientSquid extends FlyingPet {
                 this.rotateSpeed *= 0.99F;
             }
 
-            if (!this.world.isClient) {
+            if (!this.worldObj.isRemote) {
                 this.setVelocity(this.tx * this.speed, this.ty * this.speed, this.tz * this.speed);
             }
 
-            Vec3d vec3 = this.getVelocity();
+            Vec3 vec3 = this.getVelocity();
             double d = this.horizontalDistance(vec3);
-            this.bodyYaw += (-((float) MathHelper.atan2(vec3.x, vec3.z)) * (180F / (float) Math.PI) - this.bodyYaw) * 0.1F;
+            this.bodyYaw += (-((float) Math.atan2(vec3.xCoord, vec3.zCoord)) * (180F / (float) Math.PI) - this.bodyYaw) * 0.1F;
             this.setYRot(this.bodyYaw);
             this.zBodyRot += (float) Math.PI * this.rotateSpeed * 1.5F;
-            this.xBodyRot += (-((float) MathHelper.atan2(d, vec3.y)) * (180F / (float) Math.PI) - this.xBodyRot) * 0.1F;
+            this.xBodyRot += (-((float) Math.atan2(d, vec3.yCoord)) * (180F / (float) Math.PI) - this.xBodyRot) * 0.1F;
         } else {
             this.tentacleAngle = MathHelper.abs(MathHelper.sin(this.tentacleMovement)) * (float) Math.PI * 0.25F;
-            if (!this.world.isClient) {
-                double e = this.getVelocity().y;
+            if (!this.worldObj.isRemote) {
+                double e = this.getVelocity().yCoord;
                 e -= 1;
 
                 this.setVelocity(0.0F, e * (double) 0.98F, 0.0F);
@@ -111,17 +111,17 @@ public class ClientSquid extends FlyingPet {
 
     @Override
     public void setVelocity(double x, double y, double z) {
-        this.setVelocity(new Vec3d(x, y, z));
+        this.setVelocity(Vec3.createVectorHelper(x, y, z));
         this.tx = (float) x;
         this.ty = (float) y;
         this.tz = (float) z;
     }
 
     @Override
-    public void setVelocity(Vec3d vec3) {
+    public void setVelocity(Vec3 vec3) {
         super.setVelocity(vec3);
-        double x = vec3.x;
-        double y = vec3.y;
-        double z = vec3.z;
+        double x = vec3.xCoord;
+        double y = vec3.yCoord;
+        double z = vec3.zCoord;
     }
 }

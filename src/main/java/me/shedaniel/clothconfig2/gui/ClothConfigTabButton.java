@@ -1,11 +1,11 @@
 package me.shedaniel.clothconfig2.gui;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
 
 import java.util.Random;
 
-public class ClothConfigTabButton extends ButtonWidget {
+public class ClothConfigTabButton extends GuiButton {
 
     private final int index;
     private final ClothConfigScreen screen;
@@ -16,19 +16,19 @@ public class ClothConfigTabButton extends ButtonWidget {
         this.screen = screen;
     }
 
-    public void render(int mouseX, int mouseY, float delta) {
-        active = index != screen.selectedTabIndex;
-        this.render(MinecraftClient.getInstance(), mouseX, mouseY);
+    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+        enabled = index != screen.selectedTabIndex;
+        super.drawButton(Minecraft.getMinecraft(), mouseX, mouseY);
     }
 
     public void onClick() {
         if (index != -1)
             screen.nextTabIndex = index;
         screen.tabsScrollVelocity = 0d;
-        screen.init();
+        screen.initGui();
     }
 
     public boolean isMouseOver(int mouseX, int mouseY) {
-        return this.active && this.visible && mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height && mouseX >= 20 && mouseX < screen.width - 20;
+        return this.enabled && this.visible && mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height && mouseX >= 20 && mouseX < screen.width - 20;
     }
 }

@@ -1,9 +1,9 @@
 package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.sound.Sounds;
 
-import net.minecraft.entity.passive.TameableEntity;
+
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,7 +11,7 @@ public class ClientPig extends GroundPet {
 
     public ClientPig(World level) {
         super(level);
-        this.setBounds(0.9F, 0.9F);
+        this.setSize(0.9F, 0.9F);
     }
 
     @Override
@@ -26,6 +26,6 @@ public class ClientPig extends GroundPet {
 
     @Override
     protected String getAmbientSound() {
-        return Sounds.ENTITY_PIG_AMBIENT;
+        return "mob.pig.say";
     }
 }

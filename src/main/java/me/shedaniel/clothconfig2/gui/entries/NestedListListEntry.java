@@ -39,7 +39,7 @@ public final class NestedListListEntry<T, INNER extends AbstractConfigListEntry<
      * @param <T> the configuration object type
      * @see NestedListListEntry
      */
-    public static class NestedListCell<T, INNER extends AbstractConfigListEntry<T>> extends AbstractListListEntry.AbstractListCell<T, NestedListCell<T, INNER>, NestedListListEntry<T, INNER>> {
+    public static class NestedListCell<T, INNER extends AbstractConfigListEntry<T>> extends AbstractListCell<T, NestedListCell<T, INNER>, NestedListListEntry<T, INNER>> {
 
         private final INNER nestedEntry;
 

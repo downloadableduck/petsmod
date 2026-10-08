@@ -28,11 +28,10 @@ import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.text.TranslationException;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.IChatComponent;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.ResourceLocation;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -45,22 +44,22 @@ import java.util.function.Supplier;
 import static java.util.stream.Collectors.*;
 
 @Environment(EnvType.CLIENT)
-public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Screen> {
+public class ConfigScreenProvider<T extends ConfigData> implements Supplier<GuiScreen> {
 
-    private static final Identifier TRANSPARENT_BACKGROUND = new Identifier(Config.Gui.Background.TRANSPARENT);
+    private static final ResourceLocation TRANSPARENT_BACKGROUND = new ResourceLocation(Config.Gui.Background.TRANSPARENT);
 
     private final ConfigManager<T> manager;
     private final GuiRegistryAccess registry;
-    private final Screen parent;
+    private final GuiScreen parent;
     private Function<ConfigManager<T>, String> i18nFunction = manager -> String.format("text.autoconfig.%s", manager.getDefinition().name());
-    private Function<ConfigBuilder, Screen> buildFunction = ConfigBuilder::build;
+    private Function<ConfigBuilder, GuiScreen> buildFunction = ConfigBuilder::build;
     private BiFunction<String, Field, String> optionFunction = (baseI13n, field) -> String.format("%s.option.%s", baseI13n, field.getName());
     private BiFunction<String, String, String> categoryFunction = (baseI13n, categoryName) -> String.format("%s.category.%s", baseI13n, categoryName);
 
     public ConfigScreenProvider(
             ConfigManager<T> manager,
             GuiRegistryAccess registry,
-            Screen parent
+            GuiScreen parent
     ) {
         this.manager = manager;
         this.registry = registry;
@@ -73,7 +72,7 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
     }
 
     @Deprecated
-    public void setBuildFunction(Function<ConfigBuilder, Screen> buildFunction) {
+    public void setBuildFunction(Function<ConfigBuilder, GuiScreen> buildFunction) {
         this.buildFunction = buildFunction;
     }
 
@@ -88,7 +87,7 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
     }
 
     @Override
-    public Screen get() {
+    public GuiScreen get() {
         T config = manager.getConfig();
         T defaults = manager.getSerializer().createDefault();
 
@@ -100,19 +99,19 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
 
         if (configClass.isAnnotationPresent(Config.Gui.Background.class)) {
             String bg = configClass.getAnnotation(Config.Gui.Background.class).value();
-            Identifier bgId = new Identifier(bg);
+            ResourceLocation bgId = new ResourceLocation(bg);
             if (TRANSPARENT_BACKGROUND.equals(bgId))
                 builder.transparentBackground();
             else
                 builder.setDefaultBackgroundTexture(bgId);
         }
 
-        Map<String, Identifier> categoryBackgrounds =
+        Map<String, ResourceLocation> categoryBackgrounds =
                 Arrays.stream(configClass.getAnnotationsByType(Config.Gui.CategoryBackground.class))
                         .collect(
                                 toMap(
                                         Config.Gui.CategoryBackground::category,
-                                        ann -> new Identifier(ann.background())
+                                        ann -> new ResourceLocation(ann.background())
                                 )
                         );
 
@@ -140,7 +139,7 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
     private ConfigCategory getOrCreateCategoryForField(
             Field field,
             ConfigBuilder screenBuilder,
-            Map<String, Identifier> backgroundMap,
+            Map<String, ResourceLocation> backgroundMap,
             String baseI13n
     ) {
         String categoryName = "default";
@@ -148,16 +147,16 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
         if (field.isAnnotationPresent(ConfigEntry.Category.class))
             categoryName = field.getAnnotation(ConfigEntry.Category.class).value();
 
-        Text categoryKey = new TranslatableText(categoryFunction.apply(baseI13n, categoryName));
+        IChatComponent categoryKey = new ChatComponentTranslation(categoryFunction.apply(baseI13n, categoryName));
 
-        if (!screenBuilder.hasCategory(categoryKey.asUnformattedString())) {
-            ConfigCategory category = screenBuilder.getOrCreateCategory(categoryKey.asUnformattedString());
+        if (!screenBuilder.hasCategory(categoryKey.getUnformattedText())) {
+            ConfigCategory category = screenBuilder.getOrCreateCategory(categoryKey.getUnformattedText());
             if (backgroundMap.containsKey(categoryName)) {
                 category.setCategoryBackground(backgroundMap.get(categoryName));
             }
             return category;
         }
 
-        return screenBuilder.getOrCreateCategory(categoryKey.asUnformattedString());
+        return screenBuilder.getOrCreateCategory(categoryKey.getUnformattedText());
     }
 }

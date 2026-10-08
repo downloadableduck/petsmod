@@ -1,9 +1,9 @@
 package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.sound.Sounds;
 
-import net.minecraft.entity.passive.TameableEntity;
+
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,7 +11,7 @@ public class ClientVillager extends GroundPet {
 
     public ClientVillager(World level) {
         super(level);
-        this.setBounds(0.6F, 1.95F);
+        this.setSize(0.6F, 1.95F);
     }
 
     @Override
@@ -26,6 +26,6 @@ public class ClientVillager extends GroundPet {
 
     @Override
     protected String getAmbientSound() {
-        return Sounds.ENTITY_VILLAGER_AMBIENT;
+        return "mob.villager.idle";
     }
 }
