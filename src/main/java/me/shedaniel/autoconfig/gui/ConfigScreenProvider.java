@@ -30,7 +30,6 @@ import me.shedaniel.clothconfig2.api.ConfigCategory;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resource.Identifier;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -151,16 +150,16 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
         if (field.isAnnotationPresent(ConfigEntry.Category.class))
             categoryName = field.getAnnotation(ConfigEntry.Category.class).value();
 
-        Text categoryKey = new TranslatableText(categoryFunction.apply(baseI13n, categoryName));
+        String categoryKey = categoryFunction.apply(baseI13n, categoryName);
 
-        if (!screenBuilder.hasCategory(categoryKey.getString())) {
-            ConfigCategory category = screenBuilder.getOrCreateCategory(categoryKey.getString());
+        if (!screenBuilder.hasCategory(categoryKey)) {
+            ConfigCategory category = screenBuilder.getOrCreateCategory(categoryKey);
             if (backgroundMap.containsKey(categoryName)) {
                 category.setCategoryBackground(backgroundMap.get(categoryName));
             }
             return category;
         }
 
-        return screenBuilder.getOrCreateCategory(categoryKey.getString());
+        return screenBuilder.getOrCreateCategory(categoryKey);
     }
 }

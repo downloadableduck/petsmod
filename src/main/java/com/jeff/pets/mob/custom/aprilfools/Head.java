@@ -5,12 +5,11 @@ import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.living.LivingEntity;
 import net.minecraft.entity.living.mob.passive.PassiveEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.Difficulty;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
@@ -55,13 +54,13 @@ public class Head extends AbstractPet {
 
    @Override
    public boolean isBreedingItem(@NotNull ItemStack itemStack) {
-      return itemStack.matchesItem(new ItemStack(Items.CARROT));
+      return itemStack.matchesItem(new ItemStack(Item.CARROT));
    }
 
-   public Head initialize(Difficulty difficulty, @Nullable EntityData groupData) {
+   /*(public Head initialize(Difficulty difficulty, @Nullable EntityData groupData) {
       this.setServerEntity(true);
       return this;
-   }
+   }*/
 
    @Override
    protected int stopDistance() {
@@ -166,12 +165,12 @@ public class Head extends AbstractPet {
        }
    }
 
-   @Override
+   /*@Override
    public void onDataValueChanged(int key) {
       if (!(this.world instanceof ClientWorld)) {
          super.onDataValueChanged(key);
       }
-   }
+   }*/
 
    public void writeCustomNbt(@NotNull NbtCompound output) {
       super.writeCustomNbt(output);

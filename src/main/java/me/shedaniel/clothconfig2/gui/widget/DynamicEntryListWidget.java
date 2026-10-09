@@ -12,7 +12,6 @@ import net.minecraft.client.Minecraft;
 import me.shedaniel.clothconfig2.compat.AbstractContainerEventHandler;
 import net.minecraft.client.gui.GuiElement;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
-import net.minecraft.client.gui.widget.EntryListWidget;
 import net.minecraft.client.resource.Identifier;
 import net.minecraft.util.math.MathHelper;
 
@@ -280,7 +279,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
     }
     
     public void capYPosition(double double_1) {
-        this.scroll = MathHelper.clamp(double_1, 0.0D, this.getMaxScroll());
+        this.scroll = MathHelper.clamp((int) double_1, (int) 0.0D, this.getMaxScroll());
     }
     
     protected int getMaxScroll() {

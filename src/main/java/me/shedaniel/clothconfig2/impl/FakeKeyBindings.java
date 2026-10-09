@@ -16,18 +16,11 @@ public class FakeKeyBindings extends KeyBinding {
     private final Consumer<ModifierKeyCode> onChanged;
     
     public FakeKeyBindings(String key, ModifierKeyCode keyCode, ModifierKeyCode defaultKeyCode, String category, Consumer<ModifierKeyCode> onChanged) {
-        super(UUID.randomUUID().toString(), -1, category);
-        uuid = UUID.fromString(getName());
+        super(UUID.randomUUID().toString(), -1);
+        uuid = UUID.fromString(name);
         ((KeyBindingHooks) this).cloth_setId("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ" + key);
         this.keyCode = keyCode;
         this.defaultKeyCode = ModifierKeyCode.copyOf(defaultKeyCode);
         this.onChanged = onChanged;
-    }
-    
-    @Override
-    public String getName() {
-        if (uuid == null)
-            return super.getName();
-        return super.getName().substring(77);
     }
 }

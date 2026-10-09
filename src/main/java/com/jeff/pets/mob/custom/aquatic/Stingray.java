@@ -8,13 +8,12 @@ import net.minecraft.entity.EntityData;
 import net.minecraft.entity.living.LivingEntity;
 import net.minecraft.entity.living.attribute.EntityAttributes;
 import net.minecraft.entity.living.mob.passive.PassiveEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -89,17 +88,17 @@ public class Stingray extends FlyingPet {
       return stringray;
    }
 
-   @NotNull
+  /* @NotNull
    public Stingray initialize(Difficulty difficulty, @Nullable EntityData groupData) {
       this.setServerEntity(true);
       return this;
-   }
+   }*/
 
    @Override
    public boolean isBreedingItem(@NotNull ItemStack itemStack) {
-      return itemStack.matchesItem(new ItemStack(Items.FISH, 1, 0))
-         || itemStack.matchesItem(new ItemStack(Items.FISH, 1, 1))
-         || itemStack.matchesItem(new ItemStack(Items.FISH, 1, 2));
+      return itemStack.matchesItem(new ItemStack(Item.FISH, 1, 0))
+         || itemStack.matchesItem(new ItemStack(Item.FISH, 1, 1))
+         || itemStack.matchesItem(new ItemStack(Item.FISH, 1, 2));
    }
 
    public void writeCustomNbt(@NotNull NbtCompound output) {

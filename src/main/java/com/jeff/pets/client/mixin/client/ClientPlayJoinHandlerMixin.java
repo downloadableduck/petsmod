@@ -1,17 +1,18 @@
 package com.jeff.pets.client.mixin.client;
 
 import com.jeff.pets.client.Central;
-import net.minecraft.client.network.handler.ClientPlayNetworkHandler;
-import net.minecraft.network.packet.s2c.play.LoginS2CPacket;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.network.PacketHandler;
+import net.minecraft.network.packet.LoginPacket;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(ClientPlayNetworkHandler.class)
+@Mixin(PacketHandler.class)
 public class ClientPlayJoinHandlerMixin {
     @Inject(at = @At("HEAD"), method = "handleLogin")
-    private void onGameJoin(LoginS2CPacket packet, CallbackInfo ci) {
+    private void onGameJoin(LoginPacket packet, CallbackInfo ci) {
         Central.createJoinHandler();
     }
 }

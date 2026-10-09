@@ -145,12 +145,12 @@ public abstract class AbstractPet extends TameableEntity {
      * Custom method required for making the mob work on servers.
      * <p> Calls: It's super method, if the level is not client-sided.
      */
-    @Override
+    /*@Override
     public void onDataValueChanged(int key) {
         if (!(this.world instanceof ClientWorld)) {
-            super.onDataValueChanged(key);
+            super.(key);
         }
-    }
+    }*/
 
     /**
      * Calls the previous abstract method so other classes extending this one don't have to.
@@ -270,9 +270,7 @@ public abstract class AbstractPet extends TameableEntity {
     }
 
     public void dismountFromVehicle() {
-        if (this.vehicle != null) {
-            ((LivingEntity) this.vehicle).dismountRider(this);
-        }
+        this.vehicle = null;
     }
 
     public Vec3d getPosVec() {
@@ -290,14 +288,5 @@ public abstract class AbstractPet extends TameableEntity {
     @Override
     public boolean isTamed() {
         return true;
-    }
-
-    @Override
-    public void aiTick() {
-
-    }
-
-    @Override
-    public void mobAiTick() {
     }
 }

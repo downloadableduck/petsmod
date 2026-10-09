@@ -21,7 +21,6 @@ import net.minecraft.client.Minecraft;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.client.resource.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
@@ -70,7 +69,7 @@ public class ClothConfigInitializer implements ClientModInitializer {
     }
     
     public static double clamp(double v, double maxScroll, double clampExtension) {
-        return MathHelper.clamp(v, -clampExtension, maxScroll + clampExtension);
+        return MathHelper.clamp((int) v, (int) -clampExtension, (int) ((int) maxScroll + clampExtension));
     }
     
     public static EasingMethod getEasingMethod() {

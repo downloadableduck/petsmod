@@ -16,7 +16,7 @@ public interface ParentElement extends GuiEventListener {
         for(GuiEventListener child : this.children()) {
             if (child instanceof net.minecraft.client.gui.widget.ButtonWidget) {
                 net.minecraft.client.gui.widget.ButtonWidget btn = (net.minecraft.client.gui.widget.ButtonWidget) child;
-                if (d >= btn.x && d <= btn.x + btn.getWidth() && e >= btn.y && e <= btn.y + 20) {
+                if (d >= btn.x && d <= btn.x + btn.width && e >= btn.y && e <= btn.y + 20) {
                     return Optional.of(child);
                 }
             }

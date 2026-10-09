@@ -67,13 +67,13 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         if (Minecraft.getInstance().textRenderer.isBidirectional()) {
             Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.getInstance().textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, getPreferredTextColor());
             this.resetButton.x = x;
-            this.selectionElement.bounds.x = x + resetButton.getWidth() + 1;
+            this.selectionElement.bounds.x = x + resetButton.width + 1;
         } else {
             Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), x, y + 5, getPreferredTextColor());
-            this.resetButton.x = x + entryWidth - resetButton.getWidth();
+            this.resetButton.x = x + entryWidth - resetButton.width;
             this.selectionElement.bounds.x = x + entryWidth - 150 + 1;
         }
-        this.selectionElement.bounds.width = 150 - resetButton.getWidth() - 4;
+        this.selectionElement.bounds.width = 150 - resetButton.width - 4;
         resetButton.render(mouseX, mouseY, delta);
         selectionElement.render(mouseX, mouseY, delta);
     }
@@ -460,7 +460,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
                     double double_6 = Math.max(1.0D, double_5 / (double) (int_2 - int_3));
                     this.offset(double_4 * double_6, false);
                 }
-                target = MathHelper.clamp(target, 0, getMaxScrollPosition());
+                target = MathHelper.clamp((int) target, 0, (int) getMaxScrollPosition());
                 return true;
             }
             return false;

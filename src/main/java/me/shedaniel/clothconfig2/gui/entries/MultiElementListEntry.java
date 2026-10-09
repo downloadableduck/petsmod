@@ -9,7 +9,6 @@ import me.shedaniel.math.Rectangle;
 import net.minecraft.client.Minecraft;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.sound.instance.SimpleSoundInstance;
 import com.jeff.pets.sound.SoundEvents;
 import net.minecraft.client.resource.Identifier;
 import org.jetbrains.annotations.ApiStatus;
@@ -176,7 +175,7 @@ public class MultiElementListEntry<T> extends TooltipListEntry<T> {
         public boolean mouseClicked(double double_1, double double_2, int int_1) {
             if (rectangle.contains(double_1, double_2)) {
                 expanded = !expanded;
-                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.of(new Identifier(SoundEvents.UI_BUTTON_CLICK), 1.0F));
+                Minecraft.getInstance().soundEngine.play(new Identifier(SoundEvents.UI_BUTTON_CLICK).identifier(), 1.0F, 1);
                 return true;
             }
             return false;

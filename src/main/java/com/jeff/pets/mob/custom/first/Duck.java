@@ -7,14 +7,13 @@ import net.minecraft.entity.EntityData;
 import net.minecraft.entity.living.LivingEntity;
 import net.minecraft.entity.living.attribute.EntityAttributes;
 import net.minecraft.entity.living.mob.passive.PassiveEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.entity.living.player.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.Difficulty;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
@@ -132,19 +131,20 @@ public class Duck extends AbstractPet {
       return duck;
    }
 
-   public Duck initialize(Difficulty difficulty, @Nullable EntityData groupData) {
+   /*public Duck initialize(Difficulty difficulty, @Nullable EntityData groupData) {
       this.setServerEntity(true);
       this.syncedData.update(11, this.random.nextInt(2));
       return this;
-   }
+   }*/
 
    @Override
    public boolean isBreedingItem(@NotNull ItemStack itemStack) {
-      return itemStack.matchesItem(new ItemStack(Items.FISH, 1, 0))
-         || itemStack.matchesItem(new ItemStack(Items.FISH, 1, 1))
-         || itemStack.matchesItem(new ItemStack(Items.FISH, 1, 2));
+      return itemStack.matchesItem(new ItemStack(Item.FISH, 1, 0))
+         || itemStack.matchesItem(new ItemStack(Item.FISH, 1, 1))
+         || itemStack.matchesItem(new ItemStack(Item.FISH, 1, 2));
    }
 
+   @Override
    public void tick() {
       super.tick();
       this.oFlap = this.flap;
@@ -256,10 +256,10 @@ public class Duck extends AbstractPet {
       this.syncedData.update(11, input.getInt("variant"));
    }
 
-   @Override
+   /*@Override
    public void onDataValueChanged(int key) {
       if (!(this.world instanceof ClientWorld)) {
          super.onDataValueChanged(key);
       }
-   }
+   }*/
 }

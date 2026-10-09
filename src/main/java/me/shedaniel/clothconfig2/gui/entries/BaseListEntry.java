@@ -11,7 +11,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiElement;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.sound.instance.SimpleSoundInstance;
 import com.jeff.pets.sound.SoundEvents;
 import net.minecraft.client.resource.Identifier;
 import org.jetbrains.annotations.ApiStatus;
@@ -207,7 +206,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         drawTexture(x - 15 + 13, y + 4, 24 + 18, insideCreateNew ? 9 : 0, 9, 9);
         if (isDeleteButtonEnabled())
             drawTexture(x - 15 + 26, y + 4, 24 + 27, focused == null ? 0 : insideDelete ? 18 : 9, 9, 9);
-        resetWidget.x = x + entryWidth - resetWidget.getWidth();
+        resetWidget.x = x + entryWidth - resetWidget.width;
         resetWidget.y = y;
         resetWidget.active = isEditable() && getDefaultValue().isPresent();
         resetWidget.render(mouseX, mouseY, delta);
@@ -250,7 +249,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
                     widgets.add(cell);
                 }
                 getScreen().setEdited(true, isRequiresRestart());
-                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.of(new Identifier(SoundEvents.UI_BUTTON_CLICK), 1.0F));
+                Minecraft.getInstance().soundEngine.play(new Identifier(SoundEvents.UI_BUTTON_CLICK).identifier(), 1.0F, 1);
                 return true;
             } else if (isDeleteButtonEnabled() && isInsideDelete(double_1, double_2)) {
                 GuiEventListener focused = getFocused();
@@ -259,12 +258,12 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
                     cells.remove(focused);
                     widgets.remove(focused);
                     getScreen().setEdited(true, isRequiresRestart());
-                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.of(new Identifier(SoundEvents.UI_BUTTON_CLICK), 1.0F));
+                    Minecraft.getInstance().soundEngine.play(new Identifier(SoundEvents.UI_BUTTON_CLICK).identifier(), 1.0F, 1);
                 }
                 return true;
             } else if (rectangle.contains(double_1, double_2)) {
                 expanded = !expanded;
-                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.of(new Identifier(SoundEvents.UI_BUTTON_CLICK), 1.0F));
+                Minecraft.getInstance().soundEngine.play(new Identifier(SoundEvents.UI_BUTTON_CLICK).identifier(), 1.0F, 1);
                 return true;
             }
             return false;

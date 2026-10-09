@@ -3,6 +3,7 @@ package me.shedaniel.clothconfig2;
 import java.util.function.Consumer;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.widget.OptionButtonWidget;
 
 public class ButtonWidget extends net.minecraft.client.gui.widget.ButtonWidget implements me.shedaniel.clothconfig2.compat.GuiEventListener {
     private Consumer<ButtonWidget> pressAction;

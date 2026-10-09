@@ -109,10 +109,10 @@ public class KeyCodeEntry extends TooltipListEntry<ModifierKeyCode> {
         if (Minecraft.getInstance().textRenderer.isBidirectional()) {
             Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.getInstance().textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, 16777215);
             this.resetButton.x = x;
-            this.buttonWidget.x = x + resetButton.getWidth() + 2;
+            this.buttonWidget.x = x + resetButton.width + 2;
         } else {
             Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), x, y + 5, getPreferredTextColor());
-            this.resetButton.x = x + entryWidth - resetButton.getWidth();
+            this.resetButton.x = x + entryWidth - resetButton.width;
             this.buttonWidget.x = x + entryWidth - 150;
         }
         // this.buttonWidget.setWidth(150 - resetButton.getWidth() - 2); // Not available in 1.13

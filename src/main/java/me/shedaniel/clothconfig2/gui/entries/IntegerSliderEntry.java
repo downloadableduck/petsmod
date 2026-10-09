@@ -106,11 +106,11 @@ public class IntegerSliderEntry extends TooltipListEntry {
         if (Minecraft.getInstance().textRenderer.isBidirectional()) {
             Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.getInstance().textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, 16777215);
             this.resetButton.x = x;
-            this.sliderWidget.x = x + resetButton.getWidth() + 1;
+            this.sliderWidget.x = x + resetButton.width + 1;
             // this.sliderWidget.setWidth(150 - resetButton.getWidth() - 2); // Not available in 1.13
         } else {
             Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), x, y + 5, 16777215);
-            this.resetButton.x = x + entryWidth - resetButton.getWidth();
+            this.resetButton.x = x + entryWidth - resetButton.width;
             this.sliderWidget.x = x + entryWidth - 150;
             // this.sliderWidget.setWidth(150 - resetButton.getWidth() - 2); // Not available in 1.13
         }
@@ -122,7 +122,7 @@ public class IntegerSliderEntry extends TooltipListEntry {
         private double progress;
         
         protected Slider(int int_1, int int_2, int int_3, int int_4, double double_1) {
-            super(0, int_2, int_3, GameOptions__Option.FOV, minimum, maximum);
+            super(0, int_2, int_3, GameOptions__Option.FOV, "hi", maximum);
             this.progress = double_1;
         }
         

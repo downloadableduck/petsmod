@@ -148,7 +148,7 @@ public class PetsClientInitializer implements ClientModInitializer {
      * is pressed
      */
     void createKeyBinding() {
-        keyMapping = new KeyBinding("Open Pets Menu", Keyboard.KEY_P, "petsmod.keymapping");
+        keyMapping = new KeyBinding("Open Pets Menu", Keyboard.KEY_P);
     }
 
     public static void register(Class<? extends Entity> entityClass, Factory factory) {

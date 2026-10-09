@@ -27,9 +27,7 @@ import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.clothconfig2.gui.entries.TextListEntry;
 import me.shedaniel.clothconfig2.gui.entries.TooltipListEntry;
 
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,14 +57,14 @@ public class DefaultGuiTransformers {
                                     tryApplyTooltip(
                                             gui,
                                             new Text[]{
-                                                    new TranslatableText(String.format("%s.%s", i18n, "@Tooltip"))
+                                                    Text.translatable(String.format("%s.%s", i18n, "@Tooltip"))
                                             }
                                     );
                                 } else {
                                     tryApplyTooltip(
                                             gui, IntStream.range(0, tooltip.count()).boxed()
                                                     .map(i -> String.format("%s.%s[%d]", i18n, "@Tooltip", i))
-                                                    .map(TranslatableText::new)
+                                                    .map(Text::translatable)
                                                     .toArray(Text[]::new)
                                     );
                                 }
@@ -81,7 +79,7 @@ public class DefaultGuiTransformers {
                         .peek(gui -> {
                             if (!(gui instanceof TextListEntry)) {
                                 Comment tooltip = field.getAnnotation(Comment.class);
-                                Text[] text = new Text[]{new TranslatableText(tooltip.value())};
+                                Text[] text = new Text[]{Text.translatable(tooltip.value())};
                                 tryApplyTooltip(gui, text);
                             }
                         })
@@ -106,7 +104,7 @@ public class DefaultGuiTransformers {
                     ArrayList<AbstractConfigListEntry> ret = new ArrayList<>(guis);
                     String text = String.format("%s.%s", i18n, "@PrefixText");
                     TextListEntry element = ENTRY_BUILDER.startTextDescription(text).build();
-                    String s = new TranslatableText(i18n).getString().toLowerCase(Locale.ROOT);
+                    String s = Text.translatable(i18n).buildString(true).toLowerCase(Locale.ROOT);
                     if (!s.isEmpty()) {
                         //element.appendSearchTags(Lists.newArrayList(s.split(" ")));
                     }

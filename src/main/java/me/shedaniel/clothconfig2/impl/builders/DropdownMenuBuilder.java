@@ -7,13 +7,11 @@ import me.shedaniel.clothconfig2.gui.entries.DropdownBoxEntry.SelectionCellCreat
 import me.shedaniel.clothconfig2.gui.entries.DropdownBoxEntry.SelectionTopCellElement;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.entity.ItemRenderer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.client.resource.Identifier;
-import net.minecraft.util.registry.IdRegistry;
 import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.NotNull;
 
@@ -152,7 +150,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
             }
             return null;
         };
-        private static final ItemStack BARRIER = new ItemStack(Blocks.BEDROCK);
+        private static final ItemStack BARRIER = new ItemStack(Block.BEDROCK);
         
         public static <T> SelectionTopCellElement<T> of(T value, Function<String, T> toObjectFunction) {
             return of(value, toObjectFunction, Object::toString);
@@ -163,7 +161,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
         }
         
         public static SelectionTopCellElement<Identifier> ofItemIdentifier(Item item) {
-            return new DefaultSelectionTopCellElement<Identifier>(new Identifier(Item.REGISTRY.getKey(item)), ITEM_IDENTIFIER_FUNCTION, Identifier::toString) {
+            return new DefaultSelectionTopCellElement<Identifier>(new Identifier(Item.REGISTRY.getKey(item).identifier()), ITEM_IDENTIFIER_FUNCTION, Identifier::toString) {
                 @Override
                 public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
                     textFieldWidget.x = x + 4;
@@ -180,7 +178,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
         }
         
         public static SelectionTopCellElement<Identifier> ofBlockIdentifier(Block block) {
-            return new DefaultSelectionTopCellElement<Identifier>(new Identifier(Block.REGISTRY.getKey(block)), BLOCK_IDENTIFIER_FUNCTION, Identifier::toString) {
+            return new DefaultSelectionTopCellElement<Identifier>(new Identifier(Block.REGISTRY.getKey(block).identifier()), BLOCK_IDENTIFIER_FUNCTION, Identifier::toString) {
                 @Override
                 public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
                     textFieldWidget.x = x + 4;

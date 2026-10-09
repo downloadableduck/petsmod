@@ -3,13 +3,6 @@ package com.jeff.pets;
 import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 import net.fabricmc.loader.impl.FormattedException;
 import net.fabricmc.loader.impl.gui.FabricGuiEntry;
-import net.minecraft.text.ClickEvent;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-import org.apache.logging.log4j.message.FormattedMessage;
-
-import java.text.Format;
 
 public class PreLaunchCheck implements PreLaunchEntrypoint {
     @Override

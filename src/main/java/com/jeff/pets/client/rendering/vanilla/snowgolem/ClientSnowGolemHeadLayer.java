@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.snowgolem;
 
 import com.jeff.pets.mob.vanilla.passive.ClientSnowGolem;
 import com.jeff.pets.compat.GlStateManager;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.Block;
 import net.minecraft.client.render.block.BlockRenderer;
 import com.jeff.pets.client.rendering.PetRenderLayer;
 import com.jeff.pets.client.rendering.PetRenderer;
@@ -31,7 +31,7 @@ boolean bl = false;
                 //poseStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180.0F));
                 GlStateManager.scalef(0.625F, -0.625F, -0.625F);
                 GlStateManager.rotatef(180.0F, 0.0F, 1.0F, 0.0F);
-                    this.blockRenderer.renderAsItem(Blocks.PUMPKIN, 0, 1.0F);
+                    this.blockRenderer.renderAsItem(Block.PUMPKIN, 0, 1.0F);
 
                 GlStateManager.popMatrix();
             }

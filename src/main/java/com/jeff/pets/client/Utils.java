@@ -3,7 +3,6 @@ package com.jeff.pets.client;
 import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
@@ -51,8 +50,14 @@ public class Utils {
 
         entity.setPosition(x, y, z);
         entity.setCustomName(entityName);
-        world.forceEntity(entity.getNetworkId(), entity);
-        entity.setOwnerName(player.getUuid().toString());
+        world.forceEntity(entity.networkId, entity);
+        // TameableEntity.getOwner() changed shape in 1.7.6:
+        //   1.7.6+ : UUID.fromString(getOwnerName()) -> world.getEntityByUuid(uuid)
+        //   <=1.7.5: world.getPlayer(getOwnerName()), compared with String.equals(player.getName())
+        // Storing a UUID here makes getOwner() return null on <=1.7.5, which skips every
+        // `if (owner != null)` block in GroundPet/FlyingPet tick() and leaves the pet doing
+        // vanilla idle AI (walk forward, then stop). Store the name the <=1.7.5 lookup expects.
+        entity.setOwnerName(player.getName());
         Central.summonedEntity.add(entity);
     }
 
@@ -159,7 +164,7 @@ public class Utils {
 
     public static Block getBlockFromString(String string) {
         try {
-            Field[] fields = Blocks.class.getDeclaredFields();
+            Field[] fields = Block.class.getDeclaredFields();
 
             for (Field field : fields) {
                 if (!Block.class.isAssignableFrom(field.getType())) continue;
@@ -170,7 +175,7 @@ public class Utils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Blocks.AIR;
+        return Block.ACTIVATOR_RAIL;
     }
 
     public static float triangleWave(float p_78172_1_, float p_78172_2_) {

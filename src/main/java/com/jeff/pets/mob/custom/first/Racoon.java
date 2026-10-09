@@ -8,7 +8,6 @@ import net.minecraft.entity.living.mob.passive.PassiveEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.Difficulty;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
@@ -38,11 +37,11 @@ public class Racoon extends AbstractPet {
       return "mob.chicken.step";
    }
 
-   @Nullable
+   /*@Nullable
    public Racoon initialize(Difficulty difficulty, @Nullable EntityData groupData) {
       this.setServerEntity(true);
       return this;
-   }
+   }*/
 
    protected void registerSyncedData() {
       super.registerSyncedData();
@@ -149,10 +148,10 @@ public class Racoon extends AbstractPet {
       return racoon;
    }
 
-   @Override
+  /*@Override
    public void onDataValueChanged(int key) {
       if (!(this.world instanceof ClientWorld)) {
          super.onDataValueChanged(key);
       }
-   }
+   }*/
 }

@@ -11,7 +11,6 @@ import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiElement;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.gui.screen.ConfirmScreen;
 import net.minecraft.client.gui.screen.Screen;
@@ -19,13 +18,10 @@ import me.shedaniel.clothconfig2.ButtonWidget;
 import me.shedaniel.clothconfig2.compat.InputConstants;
 import net.minecraft.client.render.TextRenderer;
 import com.jeff.pets.compat.GlStateManager;
-import net.minecraft.client.render.texture.TextureAtlasSprite;
 import me.shedaniel.clothconfig2.compat.GuiVertexCompat;
 import me.shedaniel.clothconfig2.compat.GuiVertexCompat.Builder;
 import net.minecraft.client.render.vertex.Tesselator;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.client.resource.Identifier;
 import me.shedaniel.clothconfig2.impl.ConfigPair;
 import net.minecraft.util.Tickable;
@@ -374,9 +370,9 @@ public abstract class ClothConfigScreen extends Screen {
     public void clampTabsScrolled() {
         int xx = 0;
         for (ClothConfigTabButton tabButton : tabButtons)
-            xx += tabButton.getWidth() + 2;
+            xx += tabButton.width + 2;
         if (xx > width - 40)
-            tabsScrollProgress = MathHelper.clamp(tabsScrollProgress, 0, getTabsMaximumScrolled() - width + 40);
+            tabsScrollProgress = MathHelper.clamp((int) tabsScrollProgress, 0, (int) (getTabsMaximumScrolled() - width + 40));
         else
             tabsScrollProgress = 0d;
     }
@@ -405,7 +401,7 @@ public abstract class ClothConfigScreen extends Screen {
             int xx = 24 - (int) tabsScrollProgress;
             for (ClothConfigTabButton tabButton : tabButtons) {
                 tabButton.x = xx;
-                xx += tabButton.getWidth() + 2;
+                xx += tabButton.width + 2;
             }
             buttonLeftTab.active = tabsScrollProgress > 0d;
             buttonRightTab.active = tabsScrollProgress < getTabsMaximumScrolled() - width + 40;
@@ -470,7 +466,7 @@ public abstract class ClothConfigScreen extends Screen {
             drawString(minecraft.textRenderer, text, 18, 12, -1);
         }
         super.render(int_1, int_2, float_1);
-        queuedTooltips.forEach(queuedTooltip -> renderTooltip(queuedTooltip.getText(), queuedTooltip.getX(), queuedTooltip.getY()));
+        //queuedTooltips.forEach(queuedTooltip -> queueTooltip(queuedTooltip.getText(), queuedTooltip.getX(), queuedTooltip.getY()));
         queuedTooltips.clear();
     }
     
