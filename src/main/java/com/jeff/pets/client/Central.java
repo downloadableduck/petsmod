@@ -31,7 +31,6 @@ import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.LiteralText;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -533,7 +532,7 @@ public class Central implements ClientModInitializer {
     public static void checkForHeadResourcePack() {
         MinecraftClient client = MinecraftClient.getInstance();
         GameOptions options = client.options;
-        List<String> resourcePacks = new ArrayList<>(options.resourcePacks);
+        //List<String> resourcePacks = new ArrayList<>(options.resourcePacks);
 
         /*if (!resourcePacks.contains("file/headpack") && Objects.equals(CONFIG.activePet, "head")) {
             resourcePacks.add("file/headpack");
@@ -1167,9 +1166,9 @@ public class Central implements ClientModInitializer {
         }
 
         if (isValid) {
-            MinecraftClient.getInstance().field_3805.sendMessage(new LiteralText("§b[PetsMod] §aYour pet's skin has been updated."));
+            MinecraftClient.getInstance().field_3805.method_1262(("§b[PetsMod] §aYour pet's skin has been updated."));
         } else {
-            MinecraftClient.getInstance().field_3805.sendMessage(new LiteralText("§b[PetsMod] §cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else."));
+            MinecraftClient.getInstance().field_3805.method_1262(("§b[PetsMod] §cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else."));
         }
         AutoConfig.getConfigHolder(PetsConfig.class).save();
     }
@@ -1497,7 +1496,7 @@ public class Central implements ClientModInitializer {
      * Creates a help command to let the user easily view the commands at their disposal.
      */
     public void executePetHelpCommand() {
-            MinecraftClient.getInstance().field_3805.sendMessage(new LiteralText(
+            MinecraftClient.getInstance().field_3805.method_1262((
                     "§b[PetsMod] §aPossible commands: §a/pethelp: §rdisplays a list of commands §a/pet <on/off> §rtoggles whether your pet will appear or not§a/petspecies <species>: §rchanges the species of your pet§a/petskin <skin>: §rchanges the skin of your selected pet§a/teleportpet: §rteleports your pet to you. will not work if you are not on the ground.§a/petname: §rchanges the name of your currently selected pet"
             ));
     }
@@ -1718,14 +1717,14 @@ public class Central implements ClientModInitializer {
     public void executeToggleCommand(String preference) {
             if (Objects.equals(preference, "off")) {
                 CONFIG.petOn = false;
-                MinecraftClient.getInstance().field_3805.sendMessage(new LiteralText("§b[PetsMod] §7Pet §coff."));
+                MinecraftClient.getInstance().field_3805.method_1262(("§b[PetsMod] §7Pet §coff."));
                 AutoConfig.getConfigHolder(PetsConfig.class).save();
             } else if (Objects.equals(preference, "on")) {
                 CONFIG.petOn = true;
                 AutoConfig.getConfigHolder(PetsConfig.class).save();
-                MinecraftClient.getInstance().field_3805.sendMessage(new LiteralText("§b[PetsMod] §7Pet §aon."));
+                MinecraftClient.getInstance().field_3805.method_1262(("§b[PetsMod] §7Pet §aon."));
             } else {
-                MinecraftClient.getInstance().field_3805.sendMessage(new LiteralText("§b[PetsMod] §c§lUnknown value " + preference + "! Possible values: §r§aon, §6off"));
+                MinecraftClient.getInstance().field_3805.method_1262(("§b[PetsMod] §c§lUnknown value " + preference + "! Possible values: §r§aon, §6off"));
             }
     }
 
@@ -1758,13 +1757,13 @@ public class Central implements ClientModInitializer {
 
     public void checkValidPet(boolean isValid, String species) {
         if (!isValid) {
-            MinecraftClient.getInstance().field_3805.sendMessage(new LiteralText("§b[PetsMod] §cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")"));
+            MinecraftClient.getInstance().field_3805.method_1262(("§b[PetsMod] §cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")"));
         } else if (isValid && CONFIG.petOn) {
             despawnPet();
-            MinecraftClient.getInstance().field_3805.sendMessage(new LiteralText("§b[PetsMod] §aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + "."));
+            MinecraftClient.getInstance().field_3805.method_1262(("§b[PetsMod] §aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + "."));
             summonPet();
         } else if (isValid && !CONFIG.petOn) {
-            MinecraftClient.getInstance().field_3805.sendMessage(new LiteralText("§b[PetsMod] §cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet field_22511. Run §l/pet on§r§c to change this."));
+            MinecraftClient.getInstance().field_3805.method_1262(("§b[PetsMod] §cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet active. Run §l/pet on§r§c to change this."));
         }
     }
 }

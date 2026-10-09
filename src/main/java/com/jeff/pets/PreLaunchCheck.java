@@ -3,6 +3,7 @@ package com.jeff.pets;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
+import net.minecraft.client.MinecraftClient;
 
 /**
  * Runs during the loader's {@code preLaunch} phase, before any Minecraft classes are

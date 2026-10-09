@@ -8,7 +8,6 @@ import me.shedaniel.math.Rectangle;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.util.Identifier;
 import org.lwjgl.opengl.GL11;
 
@@ -70,9 +69,9 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         this.widgets = Lists.newArrayList(labelWidget);
         this.resetWidget = new ButtonWidget(new Random().nextInt(), 0, 0, MinecraftClient.getInstance().textRenderer.getStringWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey)) {
             @Override
-            public boolean method_21893(MinecraftClient mc, int mouseX, int mouseY) {
+            public boolean isMouseOver(MinecraftClient mc, int mouseX, int mouseY) {
                 
-                 boolean bl = super.method_21893(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
+                 boolean bl = super.isMouseOver(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
                     widgets.removeAll(cells);
                     cells.clear();
                     defaultValue.get().stream().map((val) -> createNewInstance.apply((SELF) val)).forEach(cells::add);
@@ -158,7 +157,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         labelWidget.rectangle.y = y;
         labelWidget.rectangle.width = entryWidth + 15;
         labelWidget.rectangle.height = 24;
-        return labelWidget.rectangle.contains(mouseX, mouseY) && getParent().method_21885(mouseX, mouseY) && !resetWidget.method_21893(MinecraftClient.getInstance(), mouseX, mouseY);
+        return labelWidget.rectangle.contains(mouseX, mouseY) && getParent().isHovered(mouseX, mouseY) && !resetWidget.isMouseOver(MinecraftClient.getInstance(), mouseX, mouseY);
     }
 
     protected boolean isInsideCreateNew(double mouseX, double mouseY) {
@@ -195,15 +194,15 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         GL11.glColor4f(1, 1, 1, 1);
         boolean insideCreateNew = isInsideCreateNew(mouseX, mouseY);
         boolean insideDelete = isInsideDelete(mouseX, mouseY);
-        method_21883(x - 15, y + 4, 24 + 9, (labelWidget.rectangle.contains(mouseX, mouseY) && !insideCreateNew && !insideDelete ? 18 : 0) + (expanded ? 9 : 0), 9, 9);
-        method_21883(x - 15 + 13, y + 4, 24 + 18, insideCreateNew ? 9 : 0, 9, 9);
+        drawTexture(x - 15, y + 4, 24 + 9, (labelWidget.rectangle.contains(mouseX, mouseY) && !insideCreateNew && !insideDelete ? 18 : 0) + (expanded ? 9 : 0), 9, 9);
+        drawTexture(x - 15 + 13, y + 4, 24 + 18, insideCreateNew ? 9 : 0, 9, 9);
         if (isDeleteButtonEnabled())
-            method_21883(x - 15 + 26, y + 4, 24 + 27, insideDelete ? 18 : 9, 9, 9);
-        resetWidget.x = x + entryWidth - resetWidget.method_21890();
+            drawTexture(x - 15 + 26, y + 4, 24 + 27, insideDelete ? 18 : 9, 9, 9);
+        resetWidget.x = x + entryWidth - resetWidget.width;
         resetWidget.y = y;
-        resetWidget.field_22511 = isEditable() && getDefaultValue().isPresent();
-        resetWidget.method_21887(MinecraftClient.getInstance(), mouseX, mouseY);
-        MinecraftClient.getInstance().textRenderer.method_956(I18n.translate(getFieldName()), isDeleteButtonEnabled() ? x + 24 : x + 24 - 9, y + 5, labelWidget.rectangle.contains(mouseX, mouseY) && !resetWidget.method_21893(MinecraftClient.getInstance(), mouseX, mouseY) && !insideDelete && !insideCreateNew ? 0xffe6fe16 : getPreferredTextColor());
+        resetWidget.active = isEditable() && getDefaultValue().isPresent();
+        resetWidget.render(MinecraftClient.getInstance(), mouseX, mouseY);
+        MinecraftClient.getInstance().textRenderer.method_956(I18n.translate(getFieldName()), isDeleteButtonEnabled() ? x + 24 : x + 24 - 9, y + 5, labelWidget.rectangle.contains(mouseX, mouseY) && !resetWidget.isMouseOver(MinecraftClient.getInstance(), mouseX, mouseY) && !insideDelete && !insideCreateNew ? 0xffe6fe16 : getPreferredTextColor());
         if (expanded) {
             int yy = y + 24;
             for (BaseListCell cell : cells) {
@@ -228,9 +227,9 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         protected Rectangle rectangle = new Rectangle();
 
         public boolean mouseClicked(double double_1, double double_2, int int_1) {
-            if (resetWidget.method_21885()) {
+            /*if (resetWidget.isHovered()) {
                 return false;
-            } else if (isInsideCreateNew(double_1, double_2)) {
+            } else*/ if (isInsideCreateNew(double_1, double_2)) {
                 expanded = true;
                 C cell;
                 if (insertInFront()) {
@@ -241,7 +240,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
                     widgets.add(cell);
                 }
                 getScreen().setEdited(true, isRequiresRestart());
-                MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.method_7051(new Identifier("gui.button.press")));
+                MinecraftClient.getInstance().field_3759.playSound((new Identifier("gui.button.press").getPath()), 1, 1);
                 return true;
             } else if (isDeleteButtonEnabled() && isInsideDelete(double_1, double_2)) {
                 if (expanded && !cells.isEmpty()) {
@@ -249,12 +248,12 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
                     cells.remove(cell);
                     widgets.remove(cell);
                     getScreen().setEdited(true, isRequiresRestart());
-                    MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.method_7051(new Identifier("gui.button.press")));
+                    MinecraftClient.getInstance().field_3759.playSound((new Identifier("gui.button.press")).getPath(), 1, 1);
                 }
                 return true;
             } else if (rectangle.contains(double_1, double_2)) {
                 expanded = !expanded;
-                MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.method_7051(new Identifier("gui.button.press")));
+                MinecraftClient.getInstance().field_3759.playSound((new Identifier("gui.button.press")).getPath(), 1, 1);
                 return true;
             }
             return false;
@@ -263,12 +262,12 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
     @Override
     public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
         if (mouseButton == 0) {
-            if (this.resetWidget.method_21885()) {
+            /*if (this.resetWidget.isHovered()) {
                 return true;
             }
-            if (this.resetWidget.method_21885()) {
+            if (this.resetWidget.isHovered()) {
                 return true;
-            }
+            }*/
         }
         return super.mouseClicked(mouseX, mouseY, mouseButton);
     }

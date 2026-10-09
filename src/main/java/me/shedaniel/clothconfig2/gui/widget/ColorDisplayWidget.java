@@ -15,9 +15,9 @@ public class ColorDisplayWidget extends ButtonWidget {
     }
 
     public void render(int mouseX, int mouseY, float delta) {
-        method_21879(this.x, this.y, this.x + size, this.y + size, -0x5F5F60, -0x5F5F60);
-        method_21879(this.x + 1, this.y + 1, this.x + size - 1, this.y + size - 1, 0xffffffff, 0xffffffff);
-        method_21879(this.x + 1, this.y + 1, this.x + size - 1, this.y + size - 1, color, color);
+        drawTexture(this.x, this.y, this.x + size, this.y + size, -0x5F5F60, -0x5F5F60);
+        drawTexture(this.x + 1, this.y + 1, this.x + size - 1, this.y + size - 1, 0xffffffff, 0xffffffff);
+        drawTexture(this.x + 1, this.y + 1, this.x + size - 1, this.y + size - 1, color, color);
     }
 
     public void setColor(int color) {

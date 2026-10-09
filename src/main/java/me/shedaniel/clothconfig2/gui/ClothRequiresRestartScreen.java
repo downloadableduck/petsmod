@@ -10,7 +10,7 @@ public class ClothRequiresRestartScreen extends ConfirmChatLinkScreen {
     public ClothRequiresRestartScreen(Screen parent) {
         super(new Screen() {
             @Override
-            public void method_22355(boolean t, int i) {
+            public void confirmResult(boolean t, int i) {
                 if (t)
                     MinecraftClient.getInstance().scheduleStop();
                 else

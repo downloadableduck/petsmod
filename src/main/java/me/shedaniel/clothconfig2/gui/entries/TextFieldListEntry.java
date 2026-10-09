@@ -96,21 +96,21 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
         int windowWidth = (new Window(MinecraftClient.getInstance().options, MinecraftClient.getInstance().width, MinecraftClient.getInstance().height)).getWidth();
-        this.resetButton.field_22511 = isEditable() && getDefaultValue().isPresent() && !isMatchDefault(textFieldWidget.getText());
+        this.resetButton.active = isEditable() && getDefaultValue().isPresent() && !isMatchDefault(textFieldWidget.getText());
         this.resetButton.y = y;
         this.textFieldWidget.setEditable(isEditable());
         this.textFieldWidget.y = y + 1;
         if (MinecraftClient.getInstance().textRenderer.isRightToLeft()) {
             MinecraftClient.getInstance().textRenderer.method_956(I18n.translate(getFieldName()), windowWidth - x - MinecraftClient.getInstance().textRenderer.getStringWidth(I18n.translate(getFieldName())), y + 5, getPreferredTextColor());
             this.resetButton.x = x;
-            this.textFieldWidget.x = x + resetButton.method_21890();
+            this.textFieldWidget.x = x + resetButton.width;
         } else {
             MinecraftClient.getInstance().textRenderer.method_956(I18n.translate(getFieldName()), x, y + 5, getPreferredTextColor());
-            this.resetButton.x = x + entryWidth - resetButton.method_21890();
+            this.resetButton.x = x + entryWidth - resetButton.width;
             this.textFieldWidget.x = x + entryWidth - 148;
         }
-        setTextFieldWidth(textFieldWidget, 148 - resetButton.method_21890() - 4);
-        resetButton.method_21887(MinecraftClient.getInstance(), mouseX, mouseY);
+        setTextFieldWidth(textFieldWidget, 148 - resetButton.width - 4);
+        resetButton.render(MinecraftClient.getInstance(), mouseX, mouseY);
         textFieldWidget.render();
     }
 
@@ -130,9 +130,9 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
         }
 
         @Override
-        public boolean method_21893(MinecraftClient mc,  int mouseX, int mouseY) {
+        public boolean isMouseOver(MinecraftClient mc,  int mouseX, int mouseY) {
             
-             boolean bl = super.method_21893(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
+             boolean bl = super.isMouseOver(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
                 onPress.onPress(this);
             }
             return bl;
@@ -149,7 +149,7 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
 
     @Override
     public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
-        boolean clickedReset = this.resetButton.method_21893(MinecraftClient.getInstance(), mouseX, mouseY);
+        boolean clickedReset = this.resetButton.isMouseOver(MinecraftClient.getInstance(), mouseX, mouseY);
         if (clickedReset) {
             return true;
         }

@@ -31,7 +31,7 @@ public abstract class SlimeLikePet extends AbstractPet {
             if (this.vehicle == owner) {
                 if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
-                    this.setVelocity(this.getVelocity().add(0, -0.04, 0));
+                    this.setVelocity(this.getVelocity().offset(0, -0.04, 0));
                 } else {
                     this.setSitting(true);
                     return;
@@ -57,8 +57,8 @@ public abstract class SlimeLikePet extends AbstractPet {
 
                 this.setLimbDistance(0.5F);
 
-                Vec3d targetPos = Vec3d.of(owner.x, owner.y, owner.z);
-                Vec3d dir = targetPos.reverseSubtract(this.getPos()).normalize();
+                Vec3d targetPos = Vec3d.fromXYZ(owner.x, owner.y, owner.z);
+                Vec3d dir = targetPos.copyOther(this.getPos()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setHeadYaw(this.getYRot());
@@ -78,10 +78,10 @@ public abstract class SlimeLikePet extends AbstractPet {
             }
 
             if (yHeightToOwner > -1) {
-                this.setVelocity(this.getVelocity().add(0, -0.02, 0));
+                this.setVelocity(this.getVelocity().offset(0, -0.02, 0));
             }
 
-            if (Utils.squaredDistanceToOrigin(Vec3d.of(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
+            if (Utils.squaredDistanceToOrigin(Vec3d.fromXYZ(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
                 this.waitingTime++;
                 if (this.waitingTime > 30) this.wander();
             } else {
@@ -100,7 +100,7 @@ public abstract class SlimeLikePet extends AbstractPet {
             this.move(this.velocityX, this.velocityY, this.velocityZ);
 
             if (!this.onGround) {
-                this.setVelocity(this.getVelocity().add(0, -0.02, 0));
+                this.setVelocity(this.getVelocity().offset(0, -0.02, 0));
             }
         }
         if (owner != null) {

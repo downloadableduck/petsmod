@@ -34,7 +34,7 @@ public abstract class DynamicNewSmoothScrollingEntryListWidget<E extends Dynamic
     @Override
     public void capYPosition(double double_1) {
         if (!smoothScrolling)
-            this.scroll = MathHelper.clamp(double_1, 0.0D, this.getMaxScroll());
+            this.scroll = MathHelper.clamp((int) double_1, (int) 0.0D, this.getMaxScroll());
         else {
             scroll = clamp(double_1, getMaxScroll());
             target = clamp(double_1, getMaxScroll());
@@ -57,7 +57,7 @@ public abstract class DynamicNewSmoothScrollingEntryListWidget<E extends Dynamic
                 int int_2 = this.bottom - this.top;
                 int int_3 = MathHelper.clamp((int) ((float) (int_2 * int_2) / (float) this.getMaxScrollPosition()), 32, int_2 - 8);
                 double double_6 = Math.max(1.0D, double_5 / (double) (int_2 - int_3));
-                this.capYPosition(MathHelper.clamp(this.getScroll() + double_4 * double_6, 0, getMaxScroll()));
+                this.capYPosition(MathHelper.clamp((int) (this.getScroll() + double_4 * double_6), 0, getMaxScroll()));
             }
             return true;
         }
@@ -70,10 +70,10 @@ public abstract class DynamicNewSmoothScrollingEntryListWidget<E extends Dynamic
         if (dwheel == 0)
             return;
         double amount = dwheel > 0 ? 1d : -1d;
-        if (this.method_21885(PointHelper.getMouseX(), PointHelper.getMouseY())) {
+        if (this.isHovered(PointHelper.getMouseX(), PointHelper.getMouseY())) {
             if (!smoothScrolling) {
                 scroll += 16 * -amount;
-                this.scroll = MathHelper.clamp(scroll, 0.0D, this.getMaxScroll());
+                this.scroll = MathHelper.clamp((int) scroll, (int) 0.0D, this.getMaxScroll());
                 return;
             }
             offset(ClothConfigInitializer.getScrollStep() * -amount, true);

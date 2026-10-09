@@ -116,7 +116,7 @@ public class PetsClientInitializer implements ClientModInitializer {
     }
 
     private static void registerAsResourcePack(File file) {
-        MinecraftClient client = MinecraftClient.getInstance();
+        /*MinecraftClient client = MinecraftClient.getInstance();
         String packName = "file/" + file.getName();
         if (!client.options.resourcePacks.contains(packName)) {
             client.options.resourcePacks.add(packName);
@@ -124,7 +124,7 @@ public class PetsClientInitializer implements ClientModInitializer {
         }
         new Thread(() -> {
             client.reloadResources();
-        }).start();
+        }).start();*/
     }
 
     public static void register() {
@@ -181,7 +181,7 @@ public class PetsClientInitializer implements ClientModInitializer {
      * is pressed
      */
     void createKeyBinding() {
-        keyMapping = new KeyBinding("Open Pets Menu", Keyboard.KEY_P, "petsmod.keymapping");
+        keyMapping = new KeyBinding("Open Pets Menu", Keyboard.KEY_P);
     }
 
     public static void register(Class entityClass, Factory factory) {

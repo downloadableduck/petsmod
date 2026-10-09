@@ -29,8 +29,6 @@ public abstract class GroundPet extends AbstractPet {
     @Override
     public void tick() {
         super.tick();
-        System.out.println(this.getOwner());
-        System.out.println(MinecraftClient.getInstance().field_3805.getName().computeValue());
         LivingEntity owner = this.getOwner();
         if (owner != null) {
             if (this.vehicle == owner) {
@@ -54,8 +52,8 @@ public abstract class GroundPet extends AbstractPet {
             if (distance > this.stopDistance()) {
                 this.setLimbDistance(0.5F);
 
-                Vec3d targetPos = Vec3d.of(owner.x, owner.y, owner.z);
-                Vec3d dir = targetPos.reverseSubtract(this.getPos()).normalize();
+                Vec3d targetPos = Vec3d.fromXYZ(owner.x, owner.y, owner.z);
+                Vec3d dir = targetPos.copyOther(this.getPos()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
                 this.setHeadYaw(this.getYRot());

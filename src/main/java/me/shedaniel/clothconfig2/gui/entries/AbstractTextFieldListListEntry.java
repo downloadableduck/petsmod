@@ -96,7 +96,7 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
             widget.setEditable(listListEntry.isEditable());
             widget.render();
             if (isSelected && listListEntry.isEditable())
-                DrawableHelper.method_21878(x, y + 12, x + entryWidth - 12, y + 13, getConfigError().isPresent() ? 0xffff5555 : 0xffe0e0e0);
+                DrawableHelper.fill(x, y + 12, x + entryWidth - 12, y + 13, getConfigError().isPresent() ? 0xffff5555 : 0xffe0e0e0);
         }
 
     }

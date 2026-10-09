@@ -40,7 +40,7 @@ public abstract class FlyingPet extends AbstractPet {
             if (this.vehicle == owner) {
                 if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
-                    this.setVelocity(this.getVelocity().add(0, 0.1, 0));
+                    this.setVelocity(this.getVelocity().offset(0, 0.1, 0));
                 } else {
                     this.setSitting(true);
                     return;
@@ -49,8 +49,8 @@ public abstract class FlyingPet extends AbstractPet {
 
             double dx = owner.x - this.x;
             double dz = owner.z - this.z;
-            Vec3d ownerPos = Vec3d.of(owner.x, owner.y, owner.z).add(0, owner.getEyeHeight() * 0.8, 0);
-            Vec3d vecToOwner = ownerPos.reverseSubtract(this.getPos());
+            Vec3d ownerPos = Vec3d.fromXYZ(owner.x, owner.y, owner.z).offset(0, owner.getEyeHeight() * 0.8, 0);
+            Vec3d vecToOwner = ownerPos.copyOther(this.getPos());
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             
@@ -88,7 +88,7 @@ public abstract class FlyingPet extends AbstractPet {
                 this.jump();
             }
 
-            if (Utils.squaredDistanceToOrigin(Vec3d.of(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
+            if (Utils.squaredDistanceToOrigin(Vec3d.fromXYZ(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
                 this.waitingTime++;
                 if (this.waitingTime > 30) this.wander();
             } else {

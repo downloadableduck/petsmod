@@ -48,9 +48,9 @@ public class BooleanListEntry extends TooltipListEntry<Boolean> {
         this.bool = new AtomicBoolean(bool);
         this.buttonWidget = new ButtonWidget(new Random().nextInt(), 0, 0, 150, 20, "") {
             @Override
-            public boolean method_21893(MinecraftClient mc, int mouseX, int mouseY) {
+            public boolean isMouseOver(MinecraftClient mc, int mouseX, int mouseY) {
                 
-                 boolean bl = super.method_21893(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
+                 boolean bl = super.isMouseOver(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
                     PetsInitializer.LOGGER.info("mouse pressed");
                     BooleanListEntry.this.bool.set(!BooleanListEntry.this.bool.get());
                     getScreen().setEdited(true, isRequiresRestart());
@@ -59,8 +59,8 @@ public class BooleanListEntry extends TooltipListEntry<Boolean> {
         };
         this.resetButton = new ButtonWidget(new Random().nextInt(), 0, 0, MinecraftClient.getInstance().textRenderer.getStringWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey)) {
             @Override
-            public boolean method_21893(MinecraftClient mc,  int mouseX, int mouseY) {
-                 boolean bl = super.method_21893(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
+            public boolean isMouseOver(MinecraftClient mc,  int mouseX, int mouseY) {
+                 boolean bl = super.isMouseOver(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
                     PetsInitializer.LOGGER.info("mouse pressed");
                     BooleanListEntry.this.bool.set(defaultValue.get());
                     getScreen().setEdited(true, isRequiresRestart());
@@ -91,23 +91,23 @@ public class BooleanListEntry extends TooltipListEntry<Boolean> {
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
         int windowWidth = (new Window(MinecraftClient.getInstance().options, MinecraftClient.getInstance().width, MinecraftClient.getInstance().height)).getWidth();
-        this.resetButton.field_22511 = isEditable() && getDefaultValue().isPresent() && defaultValue.get() != bool.get();
+        this.resetButton.active = isEditable() && getDefaultValue().isPresent() && defaultValue.get() != bool.get();
         this.resetButton.y = y;
-        this.buttonWidget.field_22511 = isEditable();
+        this.buttonWidget.active = isEditable();
         this.buttonWidget.y = y;
-        this.buttonWidget.field_22510 = (getYesNoText(bool.get()));
+        this.buttonWidget.message = (getYesNoText(bool.get()));
         if (MinecraftClient.getInstance().textRenderer.isRightToLeft()) {
             MinecraftClient.getInstance().textRenderer.method_956(I18n.translate(getFieldName()), windowWidth - x - MinecraftClient.getInstance().textRenderer.getStringWidth(I18n.translate(getFieldName())), y + 5, 16777215);
             this.resetButton.x = x;
-            this.buttonWidget.x = x + resetButton.method_21890() + 2;
+            this.buttonWidget.x = x + resetButton.width + 2;
         } else {
             MinecraftClient.getInstance().textRenderer.method_956(I18n.translate(getFieldName()), x, y + 5, getPreferredTextColor());
-            this.resetButton.x = x + entryWidth - resetButton.method_21890();
+            this.resetButton.x = x + entryWidth - resetButton.width;
             this.buttonWidget.x = x + entryWidth - 150;
         }
-        this.buttonWidget.field_22508 = (150 - resetButton.method_21890() - 2);
-        resetButton.method_21887(MinecraftClient.getInstance(), mouseX, mouseY);
-        buttonWidget.method_21887(MinecraftClient.getInstance(), mouseX, mouseY);
+        this.buttonWidget.width = (150 - resetButton.width - 2);
+        resetButton.render(MinecraftClient.getInstance(), mouseX, mouseY);
+        buttonWidget.render(MinecraftClient.getInstance(), mouseX, mouseY);
     }
 
     public String getYesNoText(boolean bool) {
@@ -117,10 +117,10 @@ public class BooleanListEntry extends TooltipListEntry<Boolean> {
     @Override
     public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
         if (mouseButton == 0) {
-            if (this.buttonWidget.method_21893(MinecraftClient.getInstance(), mouseX, mouseY)) {
+            if (this.buttonWidget.isMouseOver(MinecraftClient.getInstance(), mouseX, mouseY)) {
                 return true;
             }
-            if (this.resetButton.method_21893(MinecraftClient.getInstance(), mouseX, mouseY)) {
+            if (this.resetButton.isMouseOver(MinecraftClient.getInstance(), mouseX, mouseY)) {
                 return true;
             }
         }

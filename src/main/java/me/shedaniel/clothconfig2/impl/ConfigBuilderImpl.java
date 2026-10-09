@@ -29,7 +29,7 @@ public class ConfigBuilderImpl implements ConfigBuilder {
     private boolean doesProcessErrors = true;
     private boolean doesConfirmSave = true;
     private boolean transparentBackground = false;
-    private Identifier defaultBackground = DrawableHelper.field_22503;
+    private Identifier defaultBackground = DrawableHelper.OPTIONS_BACKGROUND_TEXTURE;
     private Consumer<Screen> afterInitConsumer = screen -> {
     };
     private String fallbackCategory = null;
@@ -221,8 +221,8 @@ public class ConfigBuilderImpl implements ConfigBuilder {
             }
 
             @Override
-            public void method_21947() {
-                super.method_21947();
+            public void init() {
+                super.init();
                 afterInitConsumer.accept(this);
             }
         };

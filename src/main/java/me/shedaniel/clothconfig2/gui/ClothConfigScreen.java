@@ -139,7 +139,7 @@ public abstract class ClothConfigScreen extends Screen {
     }
 
     @Override
-    public void method_21936() {
+    public void tick() {
         if (listWidget != null) {
             listWidget.tick();
             for (AbstractConfigEntry child : listWidget.children())
@@ -157,13 +157,13 @@ public abstract class ClothConfigScreen extends Screen {
                     if (hasErrors)
                         break;
                 }
-            saveButton.field_22511 = edited && !hasErrors;
-            saveButton.field_22510 = (displayErrors && hasErrors ? I18n.translate("text.cloth-config.error_cannot_save") : I18n.translate("text.cloth-config.save_and_done"));
+            saveButton.active = edited && !hasErrors;
+            saveButton.message = (displayErrors && hasErrors ? I18n.translate("text.cloth-config.error_cannot_save") : I18n.translate("text.cloth-config.save_and_done"));
         }
         if (applyButton != null)
-            applyButton.field_22511 = saveButton.field_22511;
+            applyButton.active = saveButton.active;
         if (quitButton != null)
-            quitButton.field_22510 = (edited ? I18n.translate("text.cloth-config.cancel_discard") : I18n.translate("gui.cancel"));
+            quitButton.message = (edited ? I18n.translate("text.cloth-config.cancel_discard") : I18n.translate("gui.cancel"));
     }
 
     public Identifier getBackgroundLocation() {
@@ -198,9 +198,9 @@ public abstract class ClothConfigScreen extends Screen {
     public void setEdited(boolean edited) {
         this.edited = edited;
         if (quitButton != null)
-            quitButton.field_22510 = (edited ? I18n.translate("text.cloth-config.cancel_discard") : I18n.translate("gui.cancel"));
+            quitButton.message = (edited ? I18n.translate("text.cloth-config.cancel_discard") : I18n.translate("gui.cancel"));
         if (saveButton != null)
-            saveButton.field_22511 = edited;
+            saveButton.active = edited;
     }
 
     public void setEdited(boolean edited, boolean requiresRestart) {
@@ -224,32 +224,33 @@ public abstract class ClothConfigScreen extends Screen {
         }
     }
 
-    public void method_21947() {
-        super.method_21947();
+    @Override
+    public void init() {
+        super.init();
         this.tabButtons.clear();
         if (listWidget != null)
             tabbedEntries.put(tabs.get(selectedTabIndex).getLeft(), (List) listWidget.children());
         selectedTabIndex = nextTabIndex;
-        listWidget = new ListWidget(minecraft, field_22535, field_22536, isShowingTabs() ? 70 : 30, field_22536 - 32, getBackgroundLocation());
+        listWidget = new ListWidget(minecraft, width, height, isShowingTabs() ? 70 : 30, height - 32, getBackgroundLocation());
         listWidget.setSmoothScrolling(this.smoothScrollingList);
         if (tabbedEntries.size() > selectedTabIndex)
             Lists.newArrayList(tabbedEntries.values()).get(selectedTabIndex).forEach(entry -> listWidget.children().add(entry));
-        int buttonWidths = (field_22535 - 50 - 12) / 3;
-        this.field_22537.add(quitButton = new ButtonWidget(ID_QUIT, 25, field_22536 - 26, buttonWidths, 20, edited ? I18n.translate("text.cloth-config.cancel_discard") : I18n.translate("gui.cancel")));
-        this.field_22537.add(saveButton = new ButtonWidget(ID_SAVE, 25 + 6 + buttonWidths, field_22536 - 26, buttonWidths, 20, I18n.translate("text.cloth-config.save_and_done")));
-        this.field_22537.add(applyButton = new ButtonWidget(ID_APPLY, 25 + (6 + buttonWidths) * 2, field_22536 - 26, buttonWidths, 20, I18n.translate("text.cloth-config.apply")));
-        saveButton.field_22511 = edited;
+        int buttonWidths = (width - 50 - 12) / 3;
+        this.buttons.add(quitButton = new ButtonWidget(ID_QUIT, 25, height - 26, buttonWidths, 20, edited ? I18n.translate("text.cloth-config.cancel_discard") : I18n.translate("gui.cancel")));
+        this.buttons.add(saveButton = new ButtonWidget(ID_SAVE, 25 + 6 + buttonWidths, height - 26, buttonWidths, 20, I18n.translate("text.cloth-config.save_and_done")));
+        this.buttons.add(applyButton = new ButtonWidget(ID_APPLY, 25 + (6 + buttonWidths) * 2, height - 26, buttonWidths, 20, I18n.translate("text.cloth-config.apply")));
+        saveButton.active = edited;
         if (isShowingTabs()) {
-            tabsBounds = new Rectangle(0, 41, this.field_22535, 24);
+            tabsBounds = new Rectangle(0, 41, this.width, 24);
             tabsLeftBounds = new Rectangle(0, 41, 18, 24);
-            tabsRightBounds = new Rectangle(field_22535 - 18, 41, 18, 24);
+            tabsRightBounds = new Rectangle(width - 18, 41, 18, 24);
             buttonLeftTab = new ButtonWidget(new Random().nextInt(), 4, 44, 12, 18, "");
             int j = 0;
             for (Pair<String, Integer> tab : tabs) {
                 tabButtons.add(new ClothConfigTabButton(this, j, -100, 43, tab.getRight(), 20, I18n.translate(tab.getLeft())));
                 j++;
             }
-            buttonRightTab = new ButtonWidget(new Random().nextInt(), field_22535 - 16, 44, 12, 18, "");
+            buttonRightTab = new ButtonWidget(new Random().nextInt(), width - 16, 44, 12, 18, "");
         } else {
             tabsBounds = tabsLeftBounds = tabsRightBounds = new Rectangle();
         }
@@ -291,15 +292,15 @@ public abstract class ClothConfigScreen extends Screen {
     public void clampTabsScrolled() {
         int xx = 0;
         for (ClothConfigTabButton tabButton : tabButtons)
-            xx += tabButton.method_21890() + 2;
-        if (xx > field_22535 - 40)
-            tabsScrollProgress = MathHelper.clamp(tabsScrollProgress, 0, getTabsMaximumScrolled() - field_22535 + 40);
+            xx += tabButton.width + 2;
+        if (xx > width - 40)
+            tabsScrollProgress = MathHelper.clamp((int) tabsScrollProgress, 0, (int) (getTabsMaximumScrolled() - width + 40));
         else
             tabsScrollProgress = 0d;
     }
 
     @Override
-    public void method_21925(int int_1, int int_2, float float_1) {
+    public void render(int int_1, int int_2, float float_1) {
         if (isShowingTabs()) {
             if (smoothScrollingTabs) {
                 double change = tabsScrollVelocity * 0.2f;
@@ -322,17 +323,17 @@ public abstract class ClothConfigScreen extends Screen {
             int xx = 24 - (int) tabsScrollProgress;
             for (ClothConfigTabButton tabButton : tabButtons) {
                 tabButton.x = xx;
-                xx += tabButton.method_21890() + 2;
+                xx += tabButton.width + 2;
             }
             if (buttonLeftTab != null)
-                buttonLeftTab.field_22511 = tabsScrollProgress > 0d;
+                buttonLeftTab.active = tabsScrollProgress > 0d;
             if (buttonRightTab != null)
-                buttonRightTab.field_22511 = tabsScrollProgress < getTabsMaximumScrolled() - field_22535 + 40;
+                buttonRightTab.active = tabsScrollProgress < getTabsMaximumScrolled() - width + 40;
         }
         if (isTransparentBackground()) {
-            this.method_21879(0, 0, this.field_22535, this.field_22536, -1072689136, -804253680);
+            this.fillGradient(0, 0, this.width, this.height, -1072689136, -804253680);
         } else {
-            this.method_21934(0);
+            this.renderBackground(0);
         }
         listWidget.render(int_1, int_2, float_1);
         ScissorsHandler.INSTANCE.scissor(new Rectangle(listWidget.left, listWidget.top, listWidget.width, listWidget.bottom - listWidget.top));
@@ -340,21 +341,21 @@ public abstract class ClothConfigScreen extends Screen {
             child.lateRender(int_1, int_2, float_1);
         ScissorsHandler.INSTANCE.removeLastScissor();
         if (isShowingTabs()) {
-            method_21881(minecraft.textRenderer, title, field_22535 / 2, 18, -1);
+            drawCenteredString(minecraft.textRenderer, title, width / 2, 18, -1);
             Rectangle onlyInnerTabBounds = new Rectangle(tabsBounds.x + 20, tabsBounds.y, tabsBounds.width - 40, tabsBounds.height);
             ScissorsHandler.INSTANCE.scissor(onlyInnerTabBounds);
             if (isTransparentBackground())
-                this.method_21879(onlyInnerTabBounds.x, onlyInnerTabBounds.y, onlyInnerTabBounds.getMaxX(), onlyInnerTabBounds.getMaxY(), 0x68000000, 0x68000000);
+                this.fillGradient(onlyInnerTabBounds.x, onlyInnerTabBounds.y, onlyInnerTabBounds.getMaxX(), onlyInnerTabBounds.getMaxY(), 0x68000000, 0x68000000);
             else
                 overlayBackground(onlyInnerTabBounds, 32, 32, 32, 255, 255);
             for (ClothConfigTabButton widget : tabButtons)
-                widget.method_21887(minecraft, int_1, int_2);
+                widget.render(minecraft, int_1, int_2);
             drawTabsShades(0, isTransparentBackground() ? 120 : 255);
             ScissorsHandler.INSTANCE.removeLastScissor();
-            buttonLeftTab.method_21887(minecraft, int_1, int_2);
-            buttonRightTab.method_21887(minecraft, int_1, int_2);
+            buttonLeftTab.render(minecraft, int_1, int_2);
+            buttonRightTab.render(minecraft, int_1, int_2);
         } else
-            method_21881(minecraft.textRenderer, title, field_22535 / 2, 12, -1);
+            drawCenteredString(minecraft.textRenderer, title, width / 2, 12, -1);
 
         if (displayErrors && isEditable()) {
             List<String> errors = Lists.newArrayList();
@@ -368,10 +369,10 @@ public abstract class ClothConfigScreen extends Screen {
                 String text = "Â§c" + (errors.size() == 1 ? errors.get(0) : I18n.translate("text.cloth-config.multi_error"));
                 if (isTransparentBackground()) {
                     int stringWidth = minecraft.textRenderer.getStringWidth(text);
-                    method_21879(8, 9, 20 + stringWidth, 14 + minecraft.textRenderer.fontHeight, 0x68000000, 0x68000000);
+                    fillGradient(8, 9, 20 + stringWidth, 14 + minecraft.textRenderer.fontHeight, 0x68000000, 0x68000000);
                 }
-                this.method_21879(10, 10, 0, 54, 3, 11);
-                this.method_21884(minecraft.textRenderer, text, 18, 12, -1);
+                this.fillGradient(10, 10, 0, 54, 3, 11);
+                //this.method_21884(minecraft.textRenderer, text, 18, 12, -1);
             }
         } else if (!isEditable()) {
             minecraft.getTextureManager().bindTexture(CONFIG_TEX);
@@ -379,13 +380,13 @@ public abstract class ClothConfigScreen extends Screen {
             String text = "Â§c" + I18n.translate("text.cloth-config.not_editable");
             if (isTransparentBackground()) {
                 int stringWidth = minecraft.textRenderer.getStringWidth(text);
-                method_21879(8, 9, 20 + stringWidth, 14 + minecraft.textRenderer.fontHeight, 0x68000000, 0x68000000);
+                fillGradient(8, 9, 20 + stringWidth, 14 + minecraft.textRenderer.fontHeight, 0x68000000, 0x68000000);
             }
-            method_21879(10, 10, 0, 54, 3, 11);
+            fillGradient(10, 10, 0, 54, 3, 11);
             minecraft.textRenderer.draw(text, 18, 12, -1);
         }
-        super.method_21925(int_1, int_2, float_1);
-        queuedTooltips.forEach(queuedTooltip -> method_21932(queuedTooltip.getText(), queuedTooltip.getX(), queuedTooltip.getY()));
+        super.render(int_1, int_2, float_1);
+        //queuedTooltips.forEach(queuedTooltip -> method_21932(queuedTooltip.getText(), queuedTooltip.getX(), queuedTooltip.getY()));
         queuedTooltips.clear();
     }
 
@@ -469,7 +470,7 @@ public abstract class ClothConfigScreen extends Screen {
     }*/
 
     @Override
-    public void method_21926(int mouseX, int mouseY, int mouseButton) {
+    public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
         if (this.focusedBinding != null && this.startedKeyCode != null && focusedBinding.isAllowMouse()) {
             if (startedKeyCode.isUnknown())
                 startedKeyCode.setKeyCode(KeyInput.of(KeyInput.Type.MOUSE, mouseButton));
@@ -499,21 +500,21 @@ public abstract class ClothConfigScreen extends Screen {
             if (this.focusedBinding != null)
                 return;
         }
-        super.method_21926(mouseX, mouseY, mouseButton);
+        super.mouseClicked(mouseX, mouseY, mouseButton);
         if (isShowingTabs()) {
             for (ClothConfigTabButton tabButton : tabButtons) {
-                if (tabButton.method_21885()) {
+                if (tabButton.isHovered()) {
                     tabButton.onClick();
                     return;
                 }
             }
-            if (buttonLeftTab != null && buttonLeftTab.method_21885()) {
+            if (buttonLeftTab != null && buttonLeftTab.isHovered()) {
                 tabsScrollProgress = Integer.MIN_VALUE;
                 tabsScrollVelocity = 0d;
                 clampTabsScrolled();
                 return;
             }
-            if (buttonRightTab != null && buttonRightTab.method_21885()) {
+            if (buttonRightTab != null && buttonRightTab.isHovered()) {
                 tabsScrollProgress = Integer.MAX_VALUE;
                 tabsScrollVelocity = 0d;
                 clampTabsScrolled();
@@ -525,7 +526,7 @@ public abstract class ClothConfigScreen extends Screen {
     }
 
     @Override
-    protected void method_21924(char typedChar, int keyCode) {
+    protected void keyPressed(char typedChar, int keyCode) {
         if (listWidget != null) {
             for (AbstractConfigEntry entry : listWidget.children()) {
                 if (entry instanceof TextFieldListEntry) {
@@ -584,8 +585,8 @@ public abstract class ClothConfigScreen extends Screen {
         if (keyCode == 1 && this.allowCloseWithEscape()) {
             Screen screen = new Screen() {
                 @Override
-                public void method_22355(boolean bl, int i) {
-                    super.method_22355(bl, i);
+                public void confirmResult(boolean bl, int i) {
+                    super.confirmResult(bl, i);
                     if (bl)
                         minecraft.setScreen(parent);
                     else
@@ -598,7 +599,7 @@ public abstract class ClothConfigScreen extends Screen {
                 minecraft.setScreen(parent);
             return;
         }
-        super.method_21924(typedChar, keyCode);
+        super.keyPressed(typedChar, keyCode);
     }
 
     public boolean allowCloseWithEscape() {
@@ -606,12 +607,12 @@ public abstract class ClothConfigScreen extends Screen {
     }
 
     @Override
-    protected void method_21930(ButtonWidget button) {
+    protected void buttonClicked(ButtonWidget button) {
         if (button == quitButton) {
             if (confirmSave && edited)
                 minecraft.setScreen(new ConfirmScreen(new Screen(), I18n.translate("text.cloth-config.quit_config"), I18n.translate("text.cloth-config.quit_config_sure"), I18n.translate("text.cloth-config.quit_discard"), I18n.translate("gui.cancel"), 1));
             else {
-                button.method_21886(0, 0);
+                //button.method_21886(0, 0);
                 minecraft.setScreen(parent);
             }
         } else if (button == saveButton || button == applyButton) {
@@ -665,7 +666,7 @@ public abstract class ClothConfigScreen extends Screen {
         @Override
         public boolean mouseClicked(double double_1, double double_2, int int_1) {
             this.updateScrollingState(double_1, double_2, int_1);
-            if (!this.method_21885(double_1, double_2)) {
+            if (!this.isHovered(double_1, double_2)) {
                 return false;
             } else {
                 for (R entry : children()) {
@@ -689,7 +690,7 @@ public abstract class ClothConfigScreen extends Screen {
             if (!isTransparentBackground())
                 super.renderBackBackground(tessellator);
             else {
-                method_21879(left, top, right, bottom, 0x68000000, 0x68000000);
+                fillGradient(left, top, right, bottom, 0x68000000, 0x68000000);
             }
         }
 

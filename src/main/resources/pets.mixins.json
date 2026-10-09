@@ -13,6 +13,7 @@
     "requireAnnotations": true
   },
   "client": [
+    "BullshitMinecraftMixin",
     "ClientPlayJoinHandlerMixin",
     "EndClientTickMixin",
     "EntityRendererDispatcherMixin",

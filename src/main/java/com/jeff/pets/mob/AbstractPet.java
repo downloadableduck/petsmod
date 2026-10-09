@@ -190,7 +190,7 @@ public void setName(String string) {
         double moveX = this.velocityX;
         double moveZ = this.velocityZ;
 
-        lookDir = Vec3d.of(
+        lookDir = Vec3d.fromXYZ(
                 this.x + (moveX * 2),
                 this.y + this.getEyeHeight(),
                 this.z + (moveZ * 2)
@@ -246,11 +246,11 @@ public void setName(String string) {
     }
 
     public Vec3d getPos() {
-        return Vec3d.of(this.x, this.y, this.z);
+        return Vec3d.fromXYZ(this.x, this.y, this.z);
     }
 
     public Vec3d getVelocity() {
-        return Vec3d.of(this.velocityX, this.velocityY, this.velocityZ);
+        return Vec3d.fromXYZ(this.velocityX, this.velocityY, this.velocityZ);
     }
 
     public void setVelocity(Vec3d velocity) {

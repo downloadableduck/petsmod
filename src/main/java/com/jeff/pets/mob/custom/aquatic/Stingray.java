@@ -14,12 +14,11 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -92,13 +91,13 @@ public class Stingray extends FlyingPet {
         return null;
     }
 
-public @NotNull DataTracker initialize(final @NotNull Difficulty difficulty, final @Nullable DataTracker groupData) {
+/*public @NotNull DataTracker initialize(final @NotNull Difficulty difficulty, final @Nullable DataTracker groupData) {
         this.setServerEntity(true);
         return groupData;
-    }
+    }*/
 
     public boolean isBreedingItem(final @NotNull ItemStack itemStack) {
-        return ItemStack.equalsAll(itemStack, new ItemStack(Items.RAW_FISH, 1, 2)) || ItemStack.equalsAll(itemStack, new ItemStack(Items.RAW_FISH, 1, 0)) || ItemStack.equalsAll(itemStack, new ItemStack(Items.RAW_FISH, 1, 1));
+        return ItemStack.equalsAll(itemStack, new ItemStack(Item.FISH, 1, 2)) || ItemStack.equalsAll(itemStack, new ItemStack(Item.FISH, 1, 0)) || ItemStack.equalsAll(itemStack, new ItemStack(Item.FISH, 1, 1));
     }
 
 public void initGoals() {
@@ -157,7 +156,7 @@ public void initGoals() {
             if (this.vehicle == owner) {
                 if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
-                    this.setVelocity(this.getVelocity().add(0, 0.1, 0));
+                    this.setVelocity(this.getVelocity().offset(0, 0.1, 0));
                 } else {
                     this.setSitting(true);
                     return;
@@ -166,8 +165,8 @@ public void initGoals() {
 
             double dx = owner.x - this.x;
             double dz = owner.z - this.z;
-            Vec3d ownerPos = Vec3d.of(owner.x, owner.y, owner.z).add(0, owner.getEyeHeight() * 0.8, 0);
-            Vec3d vecToOwner = ownerPos.reverseSubtract(this.getPos());
+            Vec3d ownerPos = Vec3d.fromXYZ(owner.x, owner.y, owner.z).offset(0, owner.getEyeHeight() * 0.8, 0);
+            Vec3d vecToOwner = ownerPos.copyOther(this.getPos());
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
 
@@ -204,10 +203,10 @@ public void initGoals() {
             }
 
             if (yHeightToOwner > -1) {
-                this.setVelocity(this.getVelocity().add(0, -0.01, 0));
+                this.setVelocity(this.getVelocity().offset(0, -0.01, 0));
             }
 
-            if (Utils.squaredDistanceToOrigin(Vec3d.of(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
+            if (Utils.squaredDistanceToOrigin(Vec3d.fromXYZ(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
                 this.waitingTime++;
                 if (this.waitingTime > 30) this.wander();
             } else {

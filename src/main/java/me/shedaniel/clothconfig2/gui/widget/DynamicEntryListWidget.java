@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static org.lwjgl.opengl.GL14.glBlendFuncSeparate;
+
 public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.Entry<E>> {
     protected static final int DRAG_OUTSIDE = -2;
     protected final MinecraftClient client;
@@ -208,7 +210,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
         this.renderHoleBackground(0, this.top, 255, 255);
         this.renderHoleBackground(this.bottom, this.height, 255, 255);
         GL11.glEnable(GL11.GL_BLEND);
-        GLX.glBlendFuncSeparate(770, 771, 0, 1);
+        glBlendFuncSeparate(770, 771, 0, 1);
         GL11.glDisable(GL11.GL_ALPHA_TEST);
         GL11.glShadeModel(GL11.GL_SMOOTH);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
@@ -311,7 +313,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
     }
 
 public void capYPosition(double double_1) {
-        this.scroll = MathHelper.clamp(double_1, 0.0D, this.getMaxScroll());
+        this.scroll = MathHelper.clamp((int) double_1, (int) 0.0D, this.getMaxScroll());
     }
 
     protected int getMaxScroll() {
@@ -332,7 +334,7 @@ public void capYPosition(double double_1) {
 
     public boolean mouseClicked(double double_1, double double_2, int int_1) {
         this.updateScrollingState(double_1, double_2, int_1);
-        if (!this.method_21885(double_1, double_2)) {
+        if (!this.isHovered(double_1, double_2)) {
             return false;
         } else {
             E item = this.getItemAtPosition(double_1, double_2);
@@ -398,7 +400,7 @@ public void capYPosition(double double_1) {
 
     }
 
-    public boolean method_21885(double double_1, double double_2) {
+    public boolean isHovered(double double_1, double double_2) {
         return double_2 >= (double) this.top && double_2 <= (double) this.bottom && double_1 >= (double) this.left && double_1 <= (double) this.right;
     }
 
@@ -439,7 +441,7 @@ public void capYPosition(double double_1) {
             int y = this.getRowTop(renderIndex);
             int x = this.getRowLeft();
             GL11.glDisable(GL11.GL_LIGHTING);
-            renderItem(item, renderIndex, y, x, itemWidth, itemHeight, int_3, int_4, this.method_21885(int_3, int_4) && Objects.equals(this.getItemAtPosition(int_3, int_4), item), float_1);
+            renderItem(item, renderIndex, y, x, itemWidth, itemHeight, int_3, int_4, this.isHovered(int_3, int_4) && Objects.equals(this.getItemAtPosition(int_3, int_4), item), float_1);
         }
 
     }
@@ -517,7 +519,7 @@ public void capYPosition(double double_1) {
 
         public abstract void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isHovered, float delta);
 
-        public boolean method_21885(double double_1, double double_2) {
+        public boolean isHovered(double double_1, double double_2) {
             return Objects.equals(this.parent.getItemAtPosition(double_1, double_2), this);
         }
 

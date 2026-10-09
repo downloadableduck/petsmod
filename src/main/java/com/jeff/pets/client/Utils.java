@@ -3,7 +3,6 @@ package com.jeff.pets.client;
 import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
@@ -52,7 +51,7 @@ public class Utils {
         entity.updatePosition(x, y, z);
         entity.setName(entityName);
         world.spawnEntity(entity);
-        entity.method_2713(player.getName().computeValue());
+        entity.method_2713(player.getUsername());
         Central.summonedEntity.add(entity);
     }
 
@@ -147,7 +146,7 @@ public class Utils {
 
     public static Block getBlockFromString(String string) {
         try {
-            Field[] fields = Blocks.class.getDeclaredFields();
+            Field[] fields = Block.class.getDeclaredFields();
 
             for (Field field : fields) {
                 if (!Block.class.isAssignableFrom(field.getType())) continue;
@@ -158,7 +157,7 @@ public class Utils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Blocks.AIR;
+        return Block.ANVIL_BLOCK;
     }
 
     public static float triangleWave(float p_78172_1_, float p_78172_2_) {

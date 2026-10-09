@@ -26,12 +26,12 @@ public class ViaFabricPlusCompat {
                         return true;
                     }
                 } catch (Exception e) {
-                    PetsInitializer.LOGGER.error("aaaaaaaaaa");
+                    PetsInitializer.LOGGER.info("aaaaaaaaaa");
                 }
             }
 
         } catch (Exception e) {
-            PetsInitializer.LOGGER.error("bbbbbb");
+            PetsInitializer.LOGGER.info("bbbbbb");
         }
         return false;
     }

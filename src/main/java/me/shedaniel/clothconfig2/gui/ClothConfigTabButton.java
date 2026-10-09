@@ -15,19 +15,19 @@ public class ClothConfigTabButton extends ButtonWidget {
         this.screen = screen;
     }
 
-    public void method_21887(MinecraftClient mc, int mouseX, int mouseY) {
-        field_22511 = index != screen.selectedTabIndex;
-        super.method_21887(MinecraftClient.getInstance(), mouseX, mouseY);
+    public void render(MinecraftClient mc, int mouseX, int mouseY) {
+        active = index != screen.selectedTabIndex;
+        super.render(MinecraftClient.getInstance(), mouseX, mouseY);
     }
 
     public void onClick() {
         if (index != -1)
             screen.nextTabIndex = index;
         screen.tabsScrollVelocity = 0d;
-        screen.method_21947();
+        screen.init();
     }
 
-    public boolean method_21885(int mouseX, int mouseY) {
-        return this.field_22511 && this.field_22512 && mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.field_22508 && mouseY < this.y + this.field_22509 && mouseX >= 20 && mouseX < screen.field_22535 - 20;
+    public boolean isMouseOver(int mouseX, int mouseY) {
+        return this.active && this.visible && mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height && mouseX >= 20 && mouseX < screen.width - 20;
     }
 }

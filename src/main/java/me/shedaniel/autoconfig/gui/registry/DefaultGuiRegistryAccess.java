@@ -21,11 +21,11 @@ package me.shedaniel.autoconfig.gui.registry;
 
 import me.shedaniel.autoconfig.gui.registry.api.GuiRegistryAccess;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
-import org.apache.logging.log4j.LogManager;
 
 import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.LogManager;
 
 public class DefaultGuiRegistryAccess implements GuiRegistryAccess {
     @Override
@@ -36,7 +36,7 @@ public class DefaultGuiRegistryAccess implements GuiRegistryAccess {
             Object defaults,
             GuiRegistryAccess registry
     ) {
-        LogManager.getLogger().error("No GUI provider registered for field '{}'!", field);
+        LogManager.getLogManager().getLogger("No GUI provider registered for field '{}'!" + field);
         return Collections.emptyList();
     }
 

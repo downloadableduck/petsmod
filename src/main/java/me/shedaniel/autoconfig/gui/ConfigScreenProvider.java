@@ -29,8 +29,6 @@ import me.shedaniel.clothconfig2.api.ConfigCategory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -146,16 +144,16 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
         if (field.isAnnotationPresent(ConfigEntry.Category.class))
             categoryName = field.getAnnotation(ConfigEntry.Category.class).value();
 
-        Text categoryKey = new TranslatableText(categoryFunction.apply(baseI13n, categoryName));
+        String categoryKey = (categoryFunction.apply(baseI13n, categoryName));
 
-        if (!screenBuilder.hasCategory(categoryKey.asUnformattedString())) {
-            ConfigCategory category = screenBuilder.getOrCreateCategory(categoryKey.asUnformattedString());
+        if (!screenBuilder.hasCategory(categoryKey)) {
+            ConfigCategory category = screenBuilder.getOrCreateCategory(categoryKey);
             if (backgroundMap.containsKey(categoryName)) {
                 category.setCategoryBackground(backgroundMap.get(categoryName));
             }
             return category;
         }
 
-        return screenBuilder.getOrCreateCategory(categoryKey.asUnformattedString());
+        return screenBuilder.getOrCreateCategory(categoryKey);
     }
 }

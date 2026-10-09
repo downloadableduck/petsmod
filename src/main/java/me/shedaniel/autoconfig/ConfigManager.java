@@ -23,13 +23,13 @@ import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.event.ConfigSerializeEvent;
 import me.shedaniel.autoconfig.event.ActionResult;
 import me.shedaniel.autoconfig.serializer.ConfigSerializer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 @ApiStatus.Internal
 public class ConfigManager<T extends ConfigData> implements ConfigHolder<T> {
@@ -44,7 +44,7 @@ public class ConfigManager<T extends ConfigData> implements ConfigHolder<T> {
     private T config;
 
     ConfigManager(Config definition, Class<T> configClass, ConfigSerializer<T> serializer) {
-        logger = LogManager.getLogger();
+        logger = LogManager.getLogManager().getLogger("a");
 
         this.definition = definition;
         this.configClass = configClass;
@@ -82,7 +82,7 @@ public class ConfigManager<T extends ConfigData> implements ConfigHolder<T> {
         try {
             serializer.serialize(config);
         } catch (ConfigSerializer.SerializationException e) {
-            logger.error("Failed to save config '{}'", configClass, e);
+            logger.info("Failed to save config '{}'" + configClass + e);
         }
     }
 
@@ -106,7 +106,7 @@ public class ConfigManager<T extends ConfigData> implements ConfigHolder<T> {
             config.validatePostLoad();
             return true;
         } catch (ConfigSerializer.SerializationException | ConfigData.ValidationException e) {
-            logger.error("Failed to load config '{}', using default!", configClass, e);
+            logger.info("Failed to load config '{}', using default!" + configClass + e);
             resetToDefault();
             return false;
         }

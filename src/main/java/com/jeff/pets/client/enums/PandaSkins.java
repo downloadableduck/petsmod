@@ -11,7 +11,7 @@ public enum PandaSkins implements NameableEnum {
     worried;
 
     @Override
-    public net.minecraft.text.LiteralText getDisplayName() {
-        return new net.minecraft.text.LiteralText(String.valueOf(this).replace("_", " "));
+    public String getDisplayName() {
+        return (String.valueOf(this).replace("_", " "));
     }
 }

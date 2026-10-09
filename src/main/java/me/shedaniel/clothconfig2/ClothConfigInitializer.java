@@ -17,23 +17,22 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.nio.file.Files;
 import java.util.*;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class ClothConfigInitializer {
 
-    public static final Logger LOGGER = LogManager.getFormatterLogger("ClothConfig");
+    public static final Logger LOGGER = LogManager.getLogManager().getLogger("ClothConfig");
     private static EasingMethod easingMethod = EasingMethodImpl.LINEAR;
     private static long scrollDuration = 600;
     private static double scrollStep = 19;
@@ -68,7 +67,7 @@ public class ClothConfigInitializer {
     }
 
     public static double clamp(double v, double maxScroll, double clampExtension) {
-        return MathHelper.clamp(v, -clampExtension, maxScroll + clampExtension);
+        return MathHelper.clamp((int) v, (int) -clampExtension, (int) (maxScroll + clampExtension));
     }
 
     public static EasingMethod getEasingMethod() {
@@ -166,7 +165,7 @@ public class ClothConfigInitializer {
                 /*@Override
                 public boolean mouseClicked(double d, double u, int i) {
                     boolean bl = super.mouseReleased(d, u, i);
-                     boolean bl = super.method_21885(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
+                     boolean bl = super.isHovered(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
                         easingMethodEntry.getSelectionElement().getTopRenderer().setValue(EasingMethodImpl.LINEAR);
                         scrollDurationEntry.setValue(600);
                         scrollStepEntry.setValue("19.0");
@@ -195,11 +194,11 @@ public class ClothConfigInitializer {
             @Override
             public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
                 super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-                this.buttonWidget.field_22511 = this.isEditable();
+                this.buttonWidget.active = this.isEditable();
                 this.buttonWidget.y = y;
                 this.buttonWidget.x = x + entryWidth / 2 - width / 2;
-                this.buttonWidget.field_22508 = (width);
-                this.buttonWidget.method_21887(MinecraftClient.getInstance(), mouseX, mouseY);
+                this.buttonWidget.width = (width);
+                this.buttonWidget.render(MinecraftClient.getInstance(), mouseX, mouseY);
             }
         });
 
@@ -209,7 +208,7 @@ public class ClothConfigInitializer {
                 /*@Override
                 public boolean mouseClicked(double d, double u, int i) {
                     boolean bl = super.mouseClicked(d, u, i);
-                     boolean bl = super.method_21885(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
+                     boolean bl = super.isHovered(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
                         easingMethodEntry.getSelectionElement().getTopRenderer().setValue(EasingMethodImpl.NONE);
                         scrollDurationEntry.setValue(0);
                         scrollStepEntry.setValue("16.0");
@@ -238,11 +237,11 @@ public class ClothConfigInitializer {
             @Override
             public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
                 super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-                this.buttonWidget.field_22511 = this.isEditable();
+                this.buttonWidget.active = this.isEditable();
                 this.buttonWidget.y = y;
                 this.buttonWidget.x = x + entryWidth / 2 - width / 2;
-                this.buttonWidget.field_22508 = (width);
-                this.buttonWidget.method_21887(MinecraftClient.getInstance(), mouseX, mouseY);
+                this.buttonWidget.width = (width);
+                this.buttonWidget.render(MinecraftClient.getInstance(), mouseX, mouseY);
             }
         });
         scrolling.addEntry(easingMethodEntry);
@@ -251,28 +250,6 @@ public class ClothConfigInitializer {
         scrolling.addEntry(bounceMultiplierEntry);
         builder.setSavingRunnable(ClothConfigInitializer::saveConfig);
         builder.transparentBackground();
-        return builder;
-    }
-
-    public static ConfigBuilder getConfigBuilderWithDemo() {
-        ConfigBuilder builder = getConfigBuilder();
-        ConfigEntryBuilder entryBuilder = builder.entryBuilder();
-        ConfigCategory testing = builder.getOrCreateCategory("category.cloth-config.testing");
-//        testing.addEntry(entryBuilder.startDropdownMenu("lol apple", DropdownMenuBuilder.TopCellElementBuilder.ofItemObject(Items.apple), DropdownMenuBuilder.CellCreatorBuilder.ofItemObject()).setDefaultValue(Items.apple).setSelections(Registry.ITEM.stream().sorted(Comparator.comparing(Item::toString)).collect(Collectors.toCollection(LinkedHashSet::new))).setSaveConsumer(item -> System.out.println("save this " + item)).build());
-        testing.addEntry(entryBuilder.startKeyCodeField("Cool Key", KeyInput.INVALID).setDefaultValue(KeyInput.INVALID).build());
-        testing.addEntry(entryBuilder.startModifierKeyCodeField("Cool Modifier Key", ModifierKeyCode.of(KeyInput.of(KeyInput.Type.KEYSYM, 79), Modifier.of(false, true, false))).setDefaultValue(ModifierKeyCode.of(KeyInput.of(KeyInput.Type.KEYSYM, 79), Modifier.of(false, true, false))).build());
-        testing.addEntry(entryBuilder.startDoubleList("A list of Doubles", Arrays.asList(1d, 2d, 3d)).setDefaultValue(Arrays.asList(1d, 2d, 3d)).build());
-        testing.addEntry(entryBuilder.startLongList("A list of Longs", Arrays.asList(1L, 2L, 3L)).setDefaultValue(Arrays.asList(1L, 2L, 3L)).build());
-        testing.addEntry(entryBuilder.startStrList("A list of Strings", Arrays.asList("abc", "xyz")).setDefaultValue(Arrays.asList("abc", "xyz")).build());
-        SubCategoryBuilder colors = entryBuilder.startSubCategory("Colors").setExpanded(true);
-        colors.add(entryBuilder.startColorField("A color field", 0x00ffff).setDefaultValue(0x00ffff).build());
-        colors.add(entryBuilder.startColorField("An alpha color field", 0xff00ffff).setDefaultValue(0xff00ffff).setAlphaMode(true).build());
-        colors.add(entryBuilder.startDropdownMenu("lol apple", DropdownMenuBuilder.TopCellElementBuilder.ofItemObject(Items.APPLE), DropdownMenuBuilder.CellCreatorBuilder.ofItemObject()).setDefaultValue(Items.APPLE).setSelections((Iterable<Item>) StreamSupport.stream(Item.REGISTRY.spliterator(), false).sorted(Comparator.comparing(Item::toString)).collect(Collectors.toCollection(LinkedHashSet::new))).setSaveConsumer(item -> System.out.println("save this " + item)).build());
-        colors.add(entryBuilder.startDropdownMenu("lol apple", DropdownMenuBuilder.TopCellElementBuilder.ofItemObject(Items.APPLE), DropdownMenuBuilder.CellCreatorBuilder.ofItemObject()).setDefaultValue(Items.APPLE).setSelections((Iterable<Item>) StreamSupport.stream(Item.REGISTRY.spliterator(), false).sorted(Comparator.comparing(Item::toString)).collect(Collectors.toCollection(LinkedHashSet::new))).setSaveConsumer(item -> System.out.println("save this " + item)).build());
-        colors.add(entryBuilder.startDropdownMenu("lol apple", DropdownMenuBuilder.TopCellElementBuilder.ofItemObject(Items.APPLE), DropdownMenuBuilder.CellCreatorBuilder.ofItemObject()).setDefaultValue(Items.APPLE).setSelections((Iterable<Item>) StreamSupport.stream(Item.REGISTRY.spliterator(), false).sorted(Comparator.comparing(Item::toString)).collect(Collectors.toCollection(LinkedHashSet::new))).setSaveConsumer(item -> System.out.println("save this " + item)).build());
-        colors.add(entryBuilder.startDropdownMenu("lol apple", DropdownMenuBuilder.TopCellElementBuilder.ofItemObject(Items.APPLE), DropdownMenuBuilder.CellCreatorBuilder.ofItemObject()).setDefaultValue(Items.APPLE).setSelections((Iterable<Item>) StreamSupport.stream(Item.REGISTRY.spliterator(), false).sorted(Comparator.comparing(Item::toString)).collect(Collectors.toCollection(LinkedHashSet::new))).setSaveConsumer(item -> System.out.println("save this " + item)).build());
-        colors.add(entryBuilder.startDropdownMenu("lol apple", DropdownMenuBuilder.TopCellElementBuilder.ofItemObject(Items.APPLE), DropdownMenuBuilder.CellCreatorBuilder.ofItemObject()).setDefaultValue(Items.APPLE).setSelections((Iterable<Item>) StreamSupport.stream(Item.REGISTRY.spliterator(), false).sorted(Comparator.comparing(Item::toString)).collect(Collectors.toCollection(LinkedHashSet::new))).setSaveConsumer(item -> System.out.println("save this " + item)).build());
-        testing.addEntry(colors.build());
         return builder;
     }
 

@@ -44,11 +44,11 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
         if (!value.hasError())
             colorDisplayWidget.setColor(alpha ? value.getColor() : 0xff000000 | value.getColor());
         if (MinecraftClient.getInstance().textRenderer.isRightToLeft()) {
-            this.colorDisplayWidget.x = x + resetButton.method_21890() + textFieldWidget.width;
+            this.colorDisplayWidget.x = x + resetButton.width + textFieldWidget.width;
         } else {
             this.colorDisplayWidget.x = textFieldWidget.x - 23;
         }
-        colorDisplayWidget.method_21887(MinecraftClient.getInstance(), mouseX, mouseY);
+        colorDisplayWidget.render(MinecraftClient.getInstance(), mouseX, mouseY);
     }
 
     @Override

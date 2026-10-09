@@ -73,11 +73,11 @@ public class ClientGuardianModel extends EntityModel {
         }
 
         this.field_3381.pivotZ = -8.25F;
-        Entity entity = MinecraftClient.getInstance().targetedEntity;
+        Entity entity = MinecraftClient.getInstance().field_6279;
 
         if (entity != null) {
-            Vec3d vec3d = Vec3d.of(entity.x, entity.y + entity.getEyeHeight(), entity.z);
-            Vec3d vec3d2 = Vec3d.of(entity2.x, entity2.y + entity2.getEyeHeight(), entity2.z);
+            Vec3d vec3d = Vec3d.fromXYZ(entity.x, entity.y + entity.getEyeHeight(), entity.z);
+            Vec3d vec3d2 = Vec3d.fromXYZ(entity2.x, entity2.y + entity2.getEyeHeight(), entity2.z);
             double d = vec3d.y - vec3d2.y;
             if (d > (double) 0.0F) {
                 this.field_3381.pivotY = 0.0F;
@@ -86,8 +86,8 @@ public class ClientGuardianModel extends EntityModel {
             }
 
             Vec3d vec3d3 = entity2.getRotation();
-            vec3d3 = Vec3d.of(vec3d3.x, 0.0F, vec3d3.z);
-            Vec3d vec3d4 = (Vec3d.of(vec3d2.x - vec3d.x, 0.0F, vec3d2.z - vec3d.z)).normalize();
+            vec3d3 = Vec3d.fromXYZ(vec3d3.x, 0.0F, vec3d3.z);
+            Vec3d vec3d4 = (Vec3d.fromXYZ(vec3d2.x - vec3d.x, 0.0F, vec3d2.z - vec3d.z)).normalize();
             double e = vec3d3.dotProduct(vec3d4);
             this.field_3381.pivotX = MathHelper.sqrt((float) Math.abs(e)) * 2.0F * (float) Math.signum(e);
         }

@@ -5,7 +5,6 @@ import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.math.Rectangle;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.util.Identifier;
 import org.lwjgl.opengl.GL11;
 
@@ -70,7 +69,7 @@ public class SubCategoryListEntry extends TooltipListEntry<List<AbstractConfigLi
         MinecraftClient.getInstance().getTextureManager().bindTexture(CONFIG_TEX);
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glColor4f(1, 1, 1, 1);
-        method_21883(x - 15, y + 4, 24, (widget.rectangle.contains(mouseX, mouseY) ? 18 : 0) + (expanded ? 9 : 0), 9, 9);
+        drawTexture(x - 15, y + 4, 24, (widget.rectangle.contains(mouseX, mouseY) ? 18 : 0) + (expanded ? 9 : 0), 9, 9);
         MinecraftClient.getInstance().textRenderer.method_956(I18n.translate(categoryName), x, y + 5, widget.rectangle.contains(mouseX, mouseY) ? 0xffe6fe16 : -1);
         for (AbstractConfigListEntry<?> entry : entries) {
             entry.setParent(getParent());
@@ -123,7 +122,7 @@ public class SubCategoryListEntry extends TooltipListEntry<List<AbstractConfigLi
         widget.rectangle.y = y;
         widget.rectangle.width = entryWidth + 15;
         widget.rectangle.height = 24;
-        return widget.rectangle.contains(mouseX, mouseY) && getParent().method_21885(mouseX, mouseY);
+        return widget.rectangle.contains(mouseX, mouseY) && getParent().isHovered(mouseX, mouseY);
     }
 
     @Override
@@ -160,7 +159,7 @@ public class SubCategoryListEntry extends TooltipListEntry<List<AbstractConfigLi
         public boolean mouseClicked(double double_1, double double_2, int int_1) {
             if (rectangle.contains(double_1, double_2)) {
                 expanded = !expanded;
-                MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.method_7051(new Identifier("gui.button.press")));
+                MinecraftClient.getInstance().field_3759.playSound((new Identifier("gui.button.press")).getPath(), 1, 1);
                 return true;
             }
             return false;

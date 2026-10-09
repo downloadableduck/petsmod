@@ -14,13 +14,12 @@ import net.minecraft.entity.ai.goal.WanderAroundGoal;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -65,19 +64,19 @@ public class Head extends AbstractPet {
 
     @Override
     public boolean isBreedingItem(@NotNull ItemStack itemStack) {
-        return ItemStack.equalsAll(itemStack, new ItemStack(Items.APPLE));
+        return ItemStack.equalsAll(itemStack, new ItemStack(Item.APPLE));
     }
 
-public DataTracker initialize(final @NotNull Difficulty difficulty, final @Nullable DataTracker groupData) {
+/*public DataTracker initialize(final @NotNull Difficulty difficulty, final @Nullable DataTracker groupData) {
         this.setServerEntity(true);
         return groupData;
-    }
+    }*/
 
     public void initGoals() {
 
         this.goals.add(2, new SwimGoal(this));
         this.goals.add(3, new EscapeSunlightGoal(this, 1.4d));
-        this.goals.add(4, new TemptGoal(this, 1.0f, Items.APPLE, false));
+       // this.goals.add(4, new TemptGoal(this, 1.0f, Items.APPLE, false));
 
         this.goals.add(5, new LookAroundGoal(this));
         this.goals.add(6, new WanderAroundGoal(this, 1.0D));
@@ -108,7 +107,7 @@ public DataTracker initialize(final @NotNull Difficulty difficulty, final @Nulla
             if (this.vehicle == owner) {
                 if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
-                    this.setVelocity(this.getVelocity().add(0, -0.04, 0));
+                    this.setVelocity(this.getVelocity().offset(0, -0.04, 0));
                 } else {
                     this.setSitting(true);
                     return;
@@ -133,8 +132,8 @@ public DataTracker initialize(final @NotNull Difficulty difficulty, final @Nulla
 
                 this.setLimbDistance(0.5F);
 
-                Vec3d targetPos = Vec3d.of(owner.x, owner.y, owner.z);
-                Vec3d dir = targetPos.reverseSubtract(this.getPos()).normalize();
+                Vec3d targetPos = Vec3d.fromXYZ(owner.x, owner.y, owner.z);
+                Vec3d dir = targetPos.copyOther(this.getPos()).normalize();
 
                 double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
@@ -156,7 +155,7 @@ public DataTracker initialize(final @NotNull Difficulty difficulty, final @Nulla
             }
 
             if (yHeightToOwner > -1) {
-                this.setVelocity(this.getVelocity().add(0, -0.01, 0));
+                this.setVelocity(this.getVelocity().offset(0, -0.01, 0));
                 //this.processFlappingMovement();
             }
 
@@ -164,7 +163,7 @@ public DataTracker initialize(final @NotNull Difficulty difficulty, final @Nulla
                 // this.processFlappingMovement();
             }
 
-            if (Utils.squaredDistanceToOrigin(Vec3d.of(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
+            if (Utils.squaredDistanceToOrigin(Vec3d.fromXYZ(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
                 this.waitingTime++;
                 if (this.waitingTime > 30) this.wander();
             } else {
@@ -184,7 +183,7 @@ public DataTracker initialize(final @NotNull Difficulty difficulty, final @Nulla
             this.move(this.velocityX, this.velocityY, this.velocityZ);
 
             if (!this.onGround) {
-                this.setVelocity(this.getVelocity().add(0, -0.04, 0));
+                this.setVelocity(this.getVelocity().offset(0, -0.04, 0));
             }
         }
         if (owner != null) {

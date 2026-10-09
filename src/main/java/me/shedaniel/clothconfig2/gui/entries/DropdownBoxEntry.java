@@ -44,9 +44,9 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         this.saveConsumer = saveConsumer;
         this.resetButton = new ButtonWidget(new Random().nextInt(), 0, 0, MinecraftClient.getInstance().textRenderer.getStringWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey)) {
             @Override
-            public boolean method_21893(MinecraftClient mc,  int mouseX, int mouseY) {
+            public boolean isMouseOver(MinecraftClient mc,  int mouseX, int mouseY) {
                 
-                 boolean bl = super.method_21893(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
+                 boolean bl = super.isMouseOver(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
                     selectionElement.topRenderer.setValue(defaultValue.get());
 
                     getScreen().setEdited(true, isRequiresRestart());
@@ -61,21 +61,21 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
         int windowWidth = (new Window(MinecraftClient.getInstance().options, MinecraftClient.getInstance().width, MinecraftClient.getInstance().height)).getWidth();
-        this.resetButton.field_22511 = isEditable() && getDefaultValue().isPresent() && (!defaultValue.get().equals(getValue()) || getConfigError().isPresent());
+        this.resetButton.active = isEditable() && getDefaultValue().isPresent() && (!defaultValue.get().equals(getValue()) || getConfigError().isPresent());
         this.resetButton.y = y;
         this.selectionElement.active = isEditable();
         this.selectionElement.bounds.y = y;
         if (MinecraftClient.getInstance().textRenderer.isRightToLeft()) {
             MinecraftClient.getInstance().textRenderer.method_956(I18n.translate(getFieldName()), windowWidth - x - MinecraftClient.getInstance().textRenderer.getStringWidth(I18n.translate(getFieldName())), y + 5, getPreferredTextColor());
             this.resetButton.x = x;
-            this.selectionElement.bounds.x = x + resetButton.method_21890() + 1;
+            this.selectionElement.bounds.x = x + resetButton.width + 1;
         } else {
             MinecraftClient.getInstance().textRenderer.method_956(I18n.translate(getFieldName()), x, y + 5, getPreferredTextColor());
-            this.resetButton.x = x + entryWidth - resetButton.method_21890();
+            this.resetButton.x = x + entryWidth - resetButton.width;
             this.selectionElement.bounds.x = x + entryWidth - 150 + 1;
         }
-        this.selectionElement.bounds.width = 150 - resetButton.method_21890() - 4;
-        resetButton.method_21887(MinecraftClient.getInstance(), mouseX, mouseY);
+        this.selectionElement.bounds.width = 150 - resetButton.width - 4;
+        resetButton.render(MinecraftClient.getInstance(), mouseX, mouseY);
         selectionElement.render(mouseX, mouseY, delta);
     }
 
@@ -151,8 +151,8 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         }
 
         public void render(int mouseX, int mouseY, float delta) {
-            DrawableHelper.method_21878(bounds.x, bounds.y, bounds.x + bounds.width, bounds.y + bounds.height, -6250336);
-            DrawableHelper.method_21878(bounds.x + 1, bounds.y + 1, bounds.x + bounds.width - 1, bounds.y + bounds.height - 1, -16777216);
+            DrawableHelper.fill(bounds.x, bounds.y, bounds.x + bounds.width, bounds.y + bounds.height, -6250336);
+            DrawableHelper.fill(bounds.x + 1, bounds.y + 1, bounds.x + bounds.width - 1, bounds.y + bounds.height - 1, -16777216);
             topRenderer.render(mouseX, mouseY, bounds.x, bounds.y, bounds.width, bounds.height, delta);
             if (menu.isExpanded())
                 menu.render(mouseX, mouseY, bounds, delta);
@@ -343,8 +343,8 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         public void lateRender(int mouseX, int mouseY, float delta) {
             int last10Height = getHeight();
             int cWidth = getCellCreator().getCellWidth();
-            DrawableHelper.method_21878(lastRectangle.x, lastRectangle.y + lastRectangle.height, lastRectangle.x + cWidth, lastRectangle.y + lastRectangle.height + last10Height + 1, -6250336);
-            DrawableHelper.method_21878(lastRectangle.x + 1, lastRectangle.y + lastRectangle.height + 1, lastRectangle.x + cWidth - 1, lastRectangle.y + lastRectangle.height + last10Height, -16777216);
+            DrawableHelper.fill(lastRectangle.x, lastRectangle.y + lastRectangle.height, lastRectangle.x + cWidth, lastRectangle.y + lastRectangle.height + last10Height + 1, -6250336);
+            DrawableHelper.fill(lastRectangle.x + 1, lastRectangle.y + lastRectangle.height + 1, lastRectangle.x + cWidth - 1, lastRectangle.y + lastRectangle.height + last10Height, -16777216);
             GL11.glPushMatrix();
             GL11.glTranslatef(0, 0, 300f);
 
@@ -416,7 +416,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             return Math.max(Math.min(getCellCreator().getDropBoxMaxHeight(), (int) getMaxScroll()), 14);
         }
 
-        public boolean method_21885(double mouseX, double mouseY) {
+        public boolean isHovered(double mouseX, double mouseY) {
             return isExpanded() && mouseX >= lastRectangle.x && mouseX <= lastRectangle.x + getCellCreator().getCellWidth() && mouseY >= lastRectangle.y + lastRectangle.height && mouseY <= lastRectangle.y + lastRectangle.height + getHeight() + 1;
         }
 
@@ -435,7 +435,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
                     double double_6 = Math.max(1.0D, double_5 / (double) (int_2 - int_3));
                     this.offset(double_4 * double_6, false);
                 }
-                target = MathHelper.clamp(target, 0, getMaxScrollPosition());
+                target = MathHelper.clamp((int) target, 0, (int) getMaxScrollPosition());
                 return true;
             }
             return false;
@@ -544,7 +544,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             this.height = height;
             boolean b = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
             if (b)
-                DrawableHelper.method_21878(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
+                DrawableHelper.fill(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
             MinecraftClient.getInstance().textRenderer.method_956(toStringFunction.apply(r), x + 6, y + 3, b ? 16777215 : 8947848);
         }
 

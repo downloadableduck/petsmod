@@ -108,7 +108,7 @@ public class ClientSquid extends FlyingPet {
 
     @Override
     public void setVelocityClient(double x, double y, double z) {
-        this.setVelocity(Vec3d.of(x, y, z));
+        this.setVelocity(Vec3d.fromXYZ(x, y, z));
         this.tx = (float) x;
         this.ty = (float) y;
         this.tz = (float) z;
