@@ -28,8 +28,7 @@ import me.shedaniel.clothconfig2.gui.entries.TextListEntry;
 import me.shedaniel.clothconfig2.gui.entries.TooltipListEntry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.util.ChatComponentTranslation;
-
+import net.minecraft.text.TranslatableText;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
@@ -58,14 +57,14 @@ public class DefaultGuiTransformers {
                                     tryApplyTooltip(
                                             gui,
                                             new String[]{
-                                                    new ChatComponentTranslation(String.format("%s.%s", i18n, "@Tooltip")).getUnformattedText()
+                                                    new TranslatableText(String.format("%s.%s", i18n, "@Tooltip")).asUnformattedString()
                                             }
                                     );
                                 } else {
                                     tryApplyTooltip(
                                             gui, IntStream.range(0, tooltip.count()).boxed()
                                                     .map(i -> String.format("%s.%s[%d]", i18n, "@Tooltip", i))
-                                                    .map(key -> new ChatComponentTranslation(key).getUnformattedText())
+                                                    .map(key -> new TranslatableText(key).asUnformattedString())
                                                     .toArray(String[]::new)
                                     );
                                 }
@@ -105,7 +104,7 @@ public class DefaultGuiTransformers {
                     ArrayList<AbstractConfigListEntry> ret = new ArrayList<>(guis);
                     String text = String.format("%s.%s", i18n, "@PrefixText");
                     TextListEntry element = ENTRY_BUILDER.startTextDescription(text).build();
-                    String s = new ChatComponentTranslation(i18n).getUnformattedText().toLowerCase(Locale.ROOT);
+                    String s = new TranslatableText(i18n).asUnformattedString().toLowerCase(Locale.ROOT);
                     if (!s.isEmpty()) {
                         //element.appendSearchTags(Lists.newArrayList(s.split(" ")));
                     }

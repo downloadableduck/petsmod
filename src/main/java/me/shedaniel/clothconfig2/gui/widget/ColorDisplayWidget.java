@@ -1,10 +1,9 @@
 package me.shedaniel.clothconfig2.gui.widget;
 
-import net.minecraft.client.gui.GuiButton;
-
 import java.util.Random;
+import net.minecraft.client.gui.widget.ButtonWidget;
 
-public class ColorDisplayWidget extends GuiButton {
+public class ColorDisplayWidget extends ButtonWidget {
 
     protected int color;
     protected int size;
@@ -16,9 +15,9 @@ public class ColorDisplayWidget extends GuiButton {
     }
 
     public void render(int mouseX, int mouseY, float delta) {
-        drawGradientRect(this.xPosition, this.yPosition, this.xPosition + size, this.yPosition + size, -0x5F5F60, -0x5F5F60);
-        drawGradientRect(this.xPosition + 1, this.yPosition + 1, this.xPosition + size - 1, this.yPosition + size - 1, 0xffffffff, 0xffffffff);
-        drawGradientRect(this.xPosition + 1, this.yPosition + 1, this.xPosition + size - 1, this.yPosition + size - 1, color, color);
+        method_21879(this.x, this.y, this.x + size, this.y + size, -0x5F5F60, -0x5F5F60);
+        method_21879(this.x + 1, this.y + 1, this.x + size - 1, this.y + size - 1, 0xffffffff, 0xffffffff);
+        method_21879(this.x + 1, this.y + 1, this.x + size - 1, this.y + size - 1, color, color);
     }
 
     public void setColor(int color) {

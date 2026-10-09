@@ -2,10 +2,9 @@ package com.jeff.pets.client.rendering.vanilla.squid;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientSquid;
+import net.minecraft.client.render.entity.model.SquidEntityModel;
+import net.minecraft.util.Identifier;
 import org.lwjgl.opengl.GL11;
-import net.minecraft.client.model.ModelSquid;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.MathHelper;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -13,14 +12,14 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientSquidRenderer extends PetRenderer {
     String squidTexturePath;
 
-    public ClientSquidRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ModelSquid(), 0.7F);
+    public ClientSquidRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+        super(context, new SquidEntityModel(), 0.7F);
     }
 
-    public @NotNull ResourceLocation getEntityTexture(net.minecraft.entity.Entity __e) {
+    public @NotNull Identifier getTexture(net.minecraft.entity.Entity __e) {
         ClientSquid squidRenderState = (ClientSquid) __e;
         squidTexturePath = "textures/entity/squid.png";
-        return new ResourceLocation("minecraft", squidTexturePath);
+        return new Identifier("minecraft", squidTexturePath);
     }
 
     protected void preRenderCallback(@NotNull ClientSquid livingEntityRenderState, float f) {

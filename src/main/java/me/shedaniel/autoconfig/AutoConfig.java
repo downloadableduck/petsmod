@@ -29,8 +29,7 @@ import me.shedaniel.autoconfig.gui.registry.GuiRegistry;
 import me.shedaniel.autoconfig.serializer.ConfigSerializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.GuiScreen;
-
+import net.minecraft.client.gui.screen.Screen;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -84,7 +83,7 @@ public class AutoConfig {
     }
 
     @Environment(EnvType.CLIENT)
-    public static <T extends ConfigData> Supplier<GuiScreen> getConfigScreen(Class<T> configClass, GuiScreen parent) {
+    public static <T extends ConfigData> Supplier<Screen> getConfigScreen(Class<T> configClass, Screen parent) {
         return new ConfigScreenProvider<>(
                 (ConfigManager<T>) AutoConfig.getConfigHolder(configClass),
                 new ComposedGuiRegistryAccess(

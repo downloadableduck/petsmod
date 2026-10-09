@@ -2,9 +2,6 @@ package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-
-
-import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 public class ClientGhast extends FlyingPet {
     public ClientGhast(World level) {
         super(level);
-        this.setSize(4.0F, 4.0F);
+        this.setBounds(4.0F, 4.0F);
     }
 
     @Override

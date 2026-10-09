@@ -1,8 +1,7 @@
 package me.shedaniel.clothconfig2.impl.builders;
 
 import me.shedaniel.clothconfig2.gui.entries.DoubleListListEntry;
-import net.minecraft.client.resources.I18n;
-
+import net.minecraft.client.resource.language.I18n;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -18,7 +17,7 @@ public class DoubleListBuilder extends FieldBuilder<List<Double>, DoubleListList
     private boolean expanded = false;
     private Double min = null, max = null;
     private Function<DoubleListListEntry, DoubleListListEntry.DoubleListCell> createNewInstance;
-    private String addTooltip = I18n.format("text.cloth-config.list.add"), removeTooltip = I18n.format("text.cloth-config.list.remove");
+    private String addTooltip = I18n.translate("text.cloth-config.list.add"), removeTooltip = I18n.translate("text.cloth-config.list.remove");
     private boolean deleteButtonEnabled = true, insertInFront = true;
 
     public DoubleListBuilder(String resetButtonKey, String fieldNameKey, List<Double> value) {

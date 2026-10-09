@@ -32,7 +32,7 @@ import me.shedaniel.clothconfig2.gui.entries.SelectionListEntry;
 import me.shedaniel.clothconfig2.impl.builders.DropdownMenuBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resource.language.I18n;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.lang.reflect.Array;
@@ -296,7 +296,7 @@ public class DefaultGuiProviders {
                                 .setSaveConsumer(newValue -> setUnsafely(field, config, newValue))
                                 .setYesNoTextSupplier(bool -> {
                                     String key = i18n + ".boolean." + bool;
-                                    String translate = I18n.format(key);
+                                    String translate = I18n.translate(key);
                                     if (translate.equals(key))
                                         return ("text.cloth-config.boolean.value." + bool);
                                     return translate;

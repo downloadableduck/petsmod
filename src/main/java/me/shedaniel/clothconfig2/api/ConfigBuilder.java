@@ -2,9 +2,8 @@ package me.shedaniel.clothconfig2.api;
 
 import me.shedaniel.clothconfig2.impl.ConfigBuilderImpl;
 import me.shedaniel.clothconfig2.impl.ConfigEntryBuilderImpl;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.ResourceLocation;
-
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.util.Identifier;
 import java.util.function.Consumer;
 
 public interface ConfigBuilder {
@@ -18,15 +17,15 @@ public interface ConfigBuilder {
      * @deprecated Use {@link ConfigBuilder#create()}
      */
     @Deprecated
-    static ConfigBuilder create(GuiScreen parent, String title) {
+    static ConfigBuilder create(Screen parent, String title) {
         return create().setParentScreen(parent).setTitle(title);
     }
 
     ConfigBuilder setFallbackCategory(ConfigCategory fallbackCategory);
 
-    GuiScreen getParentScreen();
+    Screen getParentScreen();
 
-    ConfigBuilder setParentScreen(GuiScreen parent);
+    ConfigBuilder setParentScreen(Screen parent);
 
     String getTitle();
 
@@ -60,17 +59,17 @@ public interface ConfigBuilder {
 
     boolean doesProcessErrors();
 
-    ResourceLocation getDefaultBackgroundTexture();
+    Identifier getDefaultBackgroundTexture();
 
-    ConfigBuilder setDefaultBackgroundTexture(ResourceLocation texture);
+    ConfigBuilder setDefaultBackgroundTexture(Identifier texture);
 
     Runnable getSavingRunnable();
 
     ConfigBuilder setSavingRunnable(Runnable runnable);
 
-    Consumer<GuiScreen> getAfterInitConsumer();
+    Consumer<Screen> getAfterInitConsumer();
 
-    ConfigBuilder setAfterInitConsumer(Consumer<GuiScreen> afterInitConsumer);
+    ConfigBuilder setAfterInitConsumer(Consumer<Screen> afterInitConsumer);
 
     default ConfigBuilder alwaysShowTabs() {
         return setAlwaysShowTabs(true);
@@ -98,6 +97,6 @@ public interface ConfigBuilder {
         return ConfigEntryBuilderImpl.create();
     }
 
-    GuiScreen build();
+    Screen build();
 
 }

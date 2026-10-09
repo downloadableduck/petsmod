@@ -2,9 +2,6 @@ package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-
-
-import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 public class ClientElderGuardian extends FlyingPet {
     public ClientElderGuardian(World level) {
         super(level);
-        this.setSize(1.9975F, 1.9975F);
+        this.setBounds(1.9975F, 1.9975F);
     }
 
     @Override

@@ -1,31 +1,31 @@
 package com.jeff.pets.client.rendering.vanilla.creeper;
 
 import com.jeff.pets.mob.vanilla.hostile.ClientCreeper;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.entity.model.CreeperEntityModel;
+import net.minecraft.util.Identifier;
 import org.lwjgl.opengl.GL11;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelCreeper;
-import net.minecraft.util.ResourceLocation;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientCreeperChargeLayer {
-    private static final ResourceLocation SKIN = new ResourceLocation("textures/entity/creeper/creeper_armor.png");
+    private static final Identifier SKIN = new Identifier("textures/entity/creeper/creeper_armor.png");
     private final ClientCreeperRenderer renderer;
-    private final ModelCreeper model;
+    private final CreeperEntityModel model;
 
     public ClientCreeperChargeLayer(ClientCreeperRenderer renderer) {
         this.renderer = renderer;
-        this.model = new ModelCreeper(2.0F);
+        this.model = new CreeperEntityModel(2.0F);
     }
 
     public void render(ClientCreeper creeperEntity, float f, float g, float h, float i, float j, float k, float l) {
         if (CONFIG.creeperSkin.equals("charged")) {
             boolean bl = creeperEntity.isInvisible();
             GL11.glDepthMask(!bl);
-            Minecraft.getMinecraft().getTextureManager().bindTexture(SKIN);
+            MinecraftClient.getInstance().getTextureManager().bindTexture(SKIN);
             GL11.glMatrixMode(5890);
             GL11.glLoadIdentity();
-            float m = (float) creeperEntity.ticksExisted + h;
+            float m = (float) creeperEntity.ticksAlive + h;
             GL11.glTranslatef(m * 0.01F, m * 0.01F, 0.0F);
             GL11.glMatrixMode(5888);
             GL11.glEnable(GL11.GL_BLEND);

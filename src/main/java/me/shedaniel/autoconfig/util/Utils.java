@@ -19,8 +19,6 @@
 
 package me.shedaniel.autoconfig.util;
 
-import net.minecraft.client.Minecraft;
-
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -29,6 +27,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collector;
+import net.minecraft.client.MinecraftClient;
 
 import static java.util.stream.Collectors.toMap;
 
@@ -37,7 +36,7 @@ public class Utils {
     }
 
     public static Path getConfigFolder() {
-        return new File(Minecraft.getMinecraft().mcDataDir.getAbsolutePath() + "/config/").toPath();
+        return new File(MinecraftClient.getInstance().runDirectory.getAbsolutePath() + "/config/").toPath();
     }
 
     public static <V> V constructUnsafely(Class<V> cls) {

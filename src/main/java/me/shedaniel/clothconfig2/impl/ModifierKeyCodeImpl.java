@@ -2,7 +2,7 @@ package me.shedaniel.clothconfig2.impl;
 
 import me.shedaniel.clothconfig2.api.Modifier;
 import me.shedaniel.clothconfig2.api.ModifierKeyCode;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resource.language.I18n;
 import org.lwjgl.input.Keyboard;
 
 public class ModifierKeyCodeImpl implements ModifierKeyCode {
@@ -54,20 +54,20 @@ public class ModifierKeyCodeImpl implements ModifierKeyCode {
         String base;
         switch (this.keyCode.getType()) {
             case MOUSE:
-                base = I18n.format("key.mouse", int_1 + 1);
+                base = I18n.translate("key.mouse", int_1 + 1);
                 break;
             case SCANCODE:
             case KEYSYM:
             default:
-                base = I18n.format(getKeyTranslationKey(this.keyCode));
+                base = I18n.translate(getKeyTranslationKey(this.keyCode));
                 break;
         }
         if (modifier.hasShift())
-            base = I18n.format("modifier.cloth-config.shift", base);
+            base = I18n.translate("modifier.cloth-config.shift", base);
         if (modifier.hasControl())
-            base = I18n.format("modifier.cloth-config.ctrl", base);
+            base = I18n.translate("modifier.cloth-config.ctrl", base);
         if (modifier.hasAlt())
-            base = I18n.format("modifier.cloth-config.alt", base);
+            base = I18n.translate("modifier.cloth-config.alt", base);
         return base;
     }
 

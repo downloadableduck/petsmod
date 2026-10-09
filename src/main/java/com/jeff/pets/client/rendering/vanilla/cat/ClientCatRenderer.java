@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.cat;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientCat;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.opengl.GL11;
 
@@ -10,7 +10,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientCatRenderer extends PetRenderer {
 
-    public ClientCatRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+    public ClientCatRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientCatModel(), 0.7F);
     }
 
@@ -20,40 +20,40 @@ public class ClientCatRenderer extends PetRenderer {
         }
     }
 
-    public @NotNull ResourceLocation getEntityTexture(net.minecraft.entity.Entity __e) {
+    public @NotNull Identifier getTexture(net.minecraft.entity.Entity __e) {
         ClientCat livingEntityRenderState = (ClientCat) __e;
         switch (CONFIG.catSkin) {
             case "black":
-                return new ResourceLocation("minecraft", "textures/entity/cat/all_black.png");
+                return new Identifier("minecraft", "textures/entity/cat/all_black.png");
             case "tuxedo":
-                return new ResourceLocation("minecraft", "textures/entity/cat/black.png");
+                return new Identifier("minecraft", "textures/entity/cat/black.png");
             case "british_shorthair":
-                return new ResourceLocation("minecraft", "textures/entity/cat/british_shorthair.png");
+                return new Identifier("minecraft", "textures/entity/cat/british_shorthair.png");
             case "calico":
-                return new ResourceLocation("minecraft", "textures/entity/cat/calico.png");
+                return new Identifier("minecraft", "textures/entity/cat/calico.png");
             case "jellie":
-                return new ResourceLocation("minecraft", "textures/entity/cat/jellie.png");
+                return new Identifier("minecraft", "textures/entity/cat/jellie.png");
             case "ocelot":
-                return new ResourceLocation("minecraft", "textures/entity/cat/ocelot.png");
+                return new Identifier("minecraft", "textures/entity/cat/ocelot.png");
             case "persian":
-                return new ResourceLocation("minecraft", "textures/entity/cat/persian.png");
+                return new Identifier("minecraft", "textures/entity/cat/persian.png");
             case "ragdoll":
-                return new ResourceLocation("minecraft", "textures/entity/cat/ragdoll.png");
+                return new Identifier("minecraft", "textures/entity/cat/ragdoll.png");
             case "red":
-                return new ResourceLocation("minecraft", "textures/entity/cat/red.png");
+                return new Identifier("minecraft", "textures/entity/cat/red.png");
             case "siamese":
-                return new ResourceLocation("minecraft", "textures/entity/cat/siamese.png");
+                return new Identifier("minecraft", "textures/entity/cat/siamese.png");
             case "tabby":
-                return new ResourceLocation("minecraft", "textures/entity/cat/tabby.png");
+                return new Identifier("minecraft", "textures/entity/cat/tabby.png");
             case "white":
-                return new ResourceLocation("minecraft", "textures/entity/cat/white.png");
+                return new Identifier("minecraft", "textures/entity/cat/white.png");
             default:
-                return new ResourceLocation("minecraft", "textures/entity/cat/black.png");
+                return new Identifier("minecraft", "textures/entity/cat/black.png");
         }
     }
 
     public void renderModel(ClientCat cat, float f, float g, float h, float i, float j, float k) {
         super.renderModel(cat, f, g, h, i, j, k);
-        cat.setSitting(cat.ridingEntity != null);
+        cat.setSitting(cat.vehicle != null);
     }
 }

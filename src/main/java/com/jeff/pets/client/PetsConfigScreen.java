@@ -6,9 +6,8 @@ import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.clothconfig2.impl.builders.*;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
-
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
 import java.util.Objects;
 
 /**
@@ -71,13 +70,13 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
      * @see SplashManagerMixin
      * @see TitleScreenRenderingMixin
      */
-    public GuiScreen getModConfigScreenFactory() {
+    public Screen getModConfigScreenFactory() {
         PetsConfig CONFIG = AutoConfig.getConfigHolder(PetsConfig.class).getConfig();
         ConfigBuilder builder = ConfigBuilder.create()
                 .setTitle("Config")
                 .setSavingRunnable(() -> {
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
-                    Minecraft.getMinecraft().displayGuiScreen(this.getModConfigScreenFactory());
+                    MinecraftClient.getInstance().setScreen(this.getModConfigScreenFactory());
                 })
                 .setTransparentBackground(true);
         ConfigCategory general = builder.getOrCreateCategory("Config");

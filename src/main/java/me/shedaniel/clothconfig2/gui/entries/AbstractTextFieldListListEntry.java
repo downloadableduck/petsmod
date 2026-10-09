@@ -1,18 +1,17 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiTextField;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.widget.TextFieldWidget;
 
 /**
- * This class represents config entry lists that use one {@link GuiTextField} per entry.
+ * This class represents config entry lists that use one {@link TextFieldWidget} per entry.
  *
  * @param <T>    the configuration object type
  * @param <C>    the cell type
@@ -35,7 +34,7 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
 
     public static abstract class AbstractTextFieldListCell<T, SELF extends AbstractTextFieldListCell<T, SELF, OUTER_SELF>, OUTER_SELF extends AbstractTextFieldListListEntry<T, SELF, OUTER_SELF>> extends AbstractListCell<T, SELF, OUTER_SELF> {
 
-        protected GuiTextField widget;
+        protected TextFieldWidget widget;
         private boolean isSelected;
 
         public AbstractTextFieldListCell(T value, OUTER_SELF listListEntry) {
@@ -43,16 +42,16 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
 
             final T finalValue = substituteDefault(value);
 
-            widget = new GuiTextField(Minecraft.getMinecraft().fontRendererObj, 0, 100, 18, 0) {
+            widget = new TextFieldWidget(MinecraftClient.getInstance().textRenderer, 0, 100, 18, 0) {
                 @Override
-                public void drawTextBox() {
+                public void render() {
                     setFocused(isSelected);
-                    super.drawTextBox();
+                    super.render();
                 }
             };
             //widget.setTextPredicate(this::isValidText);
-            widget.setMaxStringLength(Integer.MAX_VALUE);
-            widget.setEnableBackgroundDrawing(false);
+            widget.setMaxLength(Integer.MAX_VALUE);
+            widget.setHasBorder(false);
             widget.setText(Objects.toString(finalValue));
             /*widget.setTextPredicate((s) -> {
                 widget.setTextColor(getPreferredTextColor());
@@ -92,12 +91,12 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
         @Override
         public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
             widget.width = (entryWidth - 12);
-            widget.xPosition = x;
-            widget.yPosition = y + 1;
-            widget.setEnabled(listListEntry.isEditable());
-            widget.drawTextBox();
+            widget.x = x;
+            widget.y = y + 1;
+            widget.setEditable(listListEntry.isEditable());
+            widget.render();
             if (isSelected && listListEntry.isEditable())
-                Gui.drawRect(x, y + 12, x + entryWidth - 12, y + 13, getConfigError().isPresent() ? 0xffff5555 : 0xffe0e0e0);
+                DrawableHelper.method_21878(x, y + 12, x + entryWidth - 12, y + 13, getConfigError().isPresent() ? 0xffff5555 : 0xffe0e0e0);
         }
 
     }

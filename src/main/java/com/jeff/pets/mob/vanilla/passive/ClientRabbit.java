@@ -1,9 +1,6 @@
 package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.mob.SlimeLikePet;
-
-
-import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,7 +9,7 @@ public class ClientRabbit extends SlimeLikePet {
 
     public ClientRabbit(World level) {
         super(level);
-        this.setSize(0.4F, 0.5F);
+        this.setBounds(0.4F, 0.5F);
     }
 
     @Override

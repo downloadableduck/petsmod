@@ -2,14 +2,13 @@ package me.shedaniel.clothconfig2.impl.builders;
 
 import me.shedaniel.clothconfig2.gui.entries.DropdownBoxEntry;
 import net.minecraft.block.Block;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.Minecraft;
-import net.minecraft.init.Items;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-
+import net.minecraft.item.Items;
+import net.minecraft.util.Identifier;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
@@ -18,7 +17,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>> {
-    private static final RenderItem RENDER_ITEM = new RenderItem();
+    private static final ItemRenderer RENDER_ITEM = new ItemRenderer();
     protected DropdownBoxEntry.SelectionTopCellElement<T> topCellElement;
     protected DropdownBoxEntry.SelectionCellCreator<T> cellCreator;
     protected Function<T, Optional<String[]>> tooltipSupplier = str -> Optional.empty();
@@ -92,26 +91,26 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
     }
 
     public static class TopCellElementBuilder {
-        public static final Function<String, ResourceLocation> ResourceLocation_FUNCTION = str -> {
+        public static final Function<String, Identifier> ResourceLocation_FUNCTION = str -> {
             try {
-                return new ResourceLocation(str);
+                return new Identifier(str);
             } catch (NumberFormatException e) {
                 return null;
             }
         };
-        public static final Function<String, ResourceLocation> ITEM_ResourceLocation_FUNCTION = str -> {
+        public static final Function<String, Identifier> ITEM_ResourceLocation_FUNCTION = str -> {
             try {
-                ResourceLocation ResourceLocation = new ResourceLocation(str);
-                if (Item.itemRegistry.containsKey(ResourceLocation))
+                Identifier ResourceLocation = new Identifier(str);
+                if (Item.REGISTRY.containsKey(ResourceLocation))
                     return ResourceLocation;
             } catch (Exception ignored) {
             }
             return null;
         };
-        public static final Function<String, ResourceLocation> BLOCK_ResourceLocation_FUNCTION = str -> {
+        public static final Function<String, Identifier> BLOCK_ResourceLocation_FUNCTION = str -> {
             try {
-                ResourceLocation ResourceLocation = new ResourceLocation(str);
-                if (Block.blockRegistry.containsKey(ResourceLocation))
+                Identifier ResourceLocation = new Identifier(str);
+                if (Block.REGISTRY.containsKey(ResourceLocation))
                     return ResourceLocation;
             } catch (Exception ignored) {
             }
@@ -119,19 +118,19 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
         };
         public static final Function<String, Item> ITEM_FUNCTION = str -> {
             try {
-                return (Item) Item.itemRegistry.getObject(new ResourceLocation(str));
+                return (Item) Item.REGISTRY.get(new Identifier(str));
             } catch (Exception ignored) {
             }
             return null;
         };
         public static final Function<String, Block> BLOCK_FUNCTION = str -> {
             try {
-                return (Block) Block.blockRegistry.getObject(str);
+                return (Block) Block.REGISTRY.get(str);
             } catch (Exception ignored) {
             }
             return null;
         };
-        private static final ItemStack BARRIER = new ItemStack(Items.snowball);
+        private static final ItemStack BARRIER = new ItemStack(Items.SNOWBALL);
 
         public static <T> DropdownBoxEntry.SelectionTopCellElement<T> of(T value, Function<String, T> toObjectFunction) {
             return of(value, toObjectFunction, Object::toString);
@@ -141,66 +140,66 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
             return new DropdownBoxEntry.DefaultSelectionTopCellElement<>(value, toObjectFunction, toStringFunction);
         }
 
-        public static DropdownBoxEntry.SelectionTopCellElement<ResourceLocation> ofItemResourceLocation(Item item) {
-            return new DropdownBoxEntry.DefaultSelectionTopCellElement<ResourceLocation>(new ResourceLocation(Item.itemRegistry.getNameForObject(item)), ITEM_ResourceLocation_FUNCTION, ResourceLocation::toString) {
+        public static DropdownBoxEntry.SelectionTopCellElement<Identifier> ofItemResourceLocation(Item item) {
+            return new DropdownBoxEntry.DefaultSelectionTopCellElement<Identifier>(new Identifier(Item.REGISTRY.getId(item)), ITEM_ResourceLocation_FUNCTION, Identifier::toString) {
                 @Override
                 public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
-                    textFieldWidget.xPosition = x + 4;
-                    textFieldWidget.yPosition = y + 6;
+                    textFieldWidget.x = x + 4;
+                    textFieldWidget.y = y + 6;
                     textFieldWidget.width = (width - 4 - 20);
-                    textFieldWidget.setEnabled(getParent().isEditable());
-                    textFieldWidget.setTextColor(getPreferredTextColor());
-                    textFieldWidget.drawTextBox();
-                                        ItemStack stack = hasConfigError() ? BARRIER : new ItemStack((Item) Item.itemRegistry.getObject(getValue()));
-                    RENDER_ITEM.renderItemAndEffectIntoGUI(Minecraft.getMinecraft().fontRendererObj, Minecraft.getMinecraft().getTextureManager(), stack, x + width - 18, y + 2);
+                    textFieldWidget.setEditable(getParent().isEditable());
+                    textFieldWidget.setEditableColor(getPreferredTextColor());
+                    textFieldWidget.render();
+                                        ItemStack stack = hasConfigError() ? BARRIER : new ItemStack((Item) Item.REGISTRY.get(getValue()));
+                    RENDER_ITEM.method_1549(MinecraftClient.getInstance().textRenderer, MinecraftClient.getInstance().getTextureManager(), stack, x + width - 18, y + 2);
                 }
             };
         }
 
-        public static DropdownBoxEntry.SelectionTopCellElement<ResourceLocation> ofBlockResourceLocation(Block block) {
-            return new DropdownBoxEntry.DefaultSelectionTopCellElement<ResourceLocation>(new ResourceLocation(Block.blockRegistry.getNameForObject(block)), BLOCK_ResourceLocation_FUNCTION, ResourceLocation::toString) {
+        public static DropdownBoxEntry.SelectionTopCellElement<Identifier> ofBlockResourceLocation(Block block) {
+            return new DropdownBoxEntry.DefaultSelectionTopCellElement<Identifier>(new Identifier(Block.REGISTRY.getId(block)), BLOCK_ResourceLocation_FUNCTION, Identifier::toString) {
                 @Override
                 public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
-                    textFieldWidget.xPosition = x + 4;
-                    textFieldWidget.yPosition = y + 6;
+                    textFieldWidget.x = x + 4;
+                    textFieldWidget.y = y + 6;
                     textFieldWidget.width = (width - 4 - 20);
-                    textFieldWidget.setEnabled(getParent().isEditable());
-                    textFieldWidget.setTextColor(getPreferredTextColor());
-                    textFieldWidget.drawTextBox();
-                                        ItemStack stack = hasConfigError() ? BARRIER : new ItemStack((Block) Block.blockRegistry.getObject(getValue()));
-                    RENDER_ITEM.renderItemAndEffectIntoGUI(Minecraft.getMinecraft().fontRendererObj, Minecraft.getMinecraft().getTextureManager(), stack, x + width - 18, y + 2);
+                    textFieldWidget.setEditable(getParent().isEditable());
+                    textFieldWidget.setEditableColor(getPreferredTextColor());
+                    textFieldWidget.render();
+                                        ItemStack stack = hasConfigError() ? BARRIER : new ItemStack((Block) Block.REGISTRY.get(getValue()));
+                    RENDER_ITEM.method_1549(MinecraftClient.getInstance().textRenderer, MinecraftClient.getInstance().getTextureManager(), stack, x + width - 18, y + 2);
                 }
             };
         }
 
         public static DropdownBoxEntry.SelectionTopCellElement<Item> ofItemObject(Item item) {
-            return new DropdownBoxEntry.DefaultSelectionTopCellElement<Item>(item, ITEM_FUNCTION, i -> Item.itemRegistry.getNameForObject(i).toString()) {
+            return new DropdownBoxEntry.DefaultSelectionTopCellElement<Item>(item, ITEM_FUNCTION, i -> Item.REGISTRY.getId(i).toString()) {
                 @Override
                 public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
-                    textFieldWidget.xPosition = x + 4;
-                    textFieldWidget.yPosition = y + 6;
+                    textFieldWidget.x = x + 4;
+                    textFieldWidget.y = y + 6;
                     textFieldWidget.width = (width - 4 - 20);
-                    textFieldWidget.setEnabled(getParent().isEditable());
-                    textFieldWidget.setTextColor(getPreferredTextColor());
-                    textFieldWidget.drawTextBox();
+                    textFieldWidget.setEditable(getParent().isEditable());
+                    textFieldWidget.setEditableColor(getPreferredTextColor());
+                    textFieldWidget.render();
                                         ItemStack stack = hasConfigError() ? BARRIER : new ItemStack(getValue());
-                    RENDER_ITEM.renderItemAndEffectIntoGUI(Minecraft.getMinecraft().fontRendererObj, Minecraft.getMinecraft().getTextureManager(), stack, x + width - 18, y + 2);
+                    RENDER_ITEM.method_1549(MinecraftClient.getInstance().textRenderer, MinecraftClient.getInstance().getTextureManager(), stack, x + width - 18, y + 2);
                 }
             };
         }
 
         public static DropdownBoxEntry.SelectionTopCellElement<Block> ofBlockObject(Block block) {
-            return new DropdownBoxEntry.DefaultSelectionTopCellElement<Block>(block, BLOCK_FUNCTION, i -> Block.blockRegistry.getNameForObject(i).toString()) {
+            return new DropdownBoxEntry.DefaultSelectionTopCellElement<Block>(block, BLOCK_FUNCTION, i -> Block.REGISTRY.getId(i).toString()) {
                 @Override
                 public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
-                    textFieldWidget.xPosition = x + 4;
-                    textFieldWidget.yPosition = y + 6;
+                    textFieldWidget.x = x + 4;
+                    textFieldWidget.y = y + 6;
                     textFieldWidget.width = (width - 4 - 20);
-                    textFieldWidget.setEnabled(getParent().isEditable());
-                    textFieldWidget.setTextColor(getPreferredTextColor());
-                    textFieldWidget.drawTextBox();
+                    textFieldWidget.setEditable(getParent().isEditable());
+                    textFieldWidget.setEditableColor(getPreferredTextColor());
+                    textFieldWidget.render();
                                         ItemStack stack = hasConfigError() ? BARRIER : new ItemStack(getValue());
-                    RENDER_ITEM.renderItemAndEffectIntoGUI(Minecraft.getMinecraft().fontRendererObj, Minecraft.getMinecraft().getTextureManager(), stack, x + width - 18, y + 2);
+                    RENDER_ITEM.method_1549(MinecraftClient.getInstance().textRenderer, MinecraftClient.getInstance().getTextureManager(), stack, x + width - 18, y + 2);
                 }
             };
         }
@@ -317,20 +316,20 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
             };
         }
 
-        public static DropdownBoxEntry.SelectionCellCreator<ResourceLocation> ofItemResourceLocation() {
+        public static DropdownBoxEntry.SelectionCellCreator<Identifier> ofItemResourceLocation() {
             return ofItemResourceLocation(20, 146, 7);
         }
 
-        public static DropdownBoxEntry.SelectionCellCreator<ResourceLocation> ofItemResourceLocation(int maxItems) {
+        public static DropdownBoxEntry.SelectionCellCreator<Identifier> ofItemResourceLocation(int maxItems) {
             return ofItemResourceLocation(20, 146, maxItems);
         }
 
-        public static DropdownBoxEntry.SelectionCellCreator<ResourceLocation> ofItemResourceLocation(int cellHeight, int cellWidth, int maxItems) {
-            return new DropdownBoxEntry.DefaultSelectionCellCreator<ResourceLocation>() {
+        public static DropdownBoxEntry.SelectionCellCreator<Identifier> ofItemResourceLocation(int cellHeight, int cellWidth, int maxItems) {
+            return new DropdownBoxEntry.DefaultSelectionCellCreator<Identifier>() {
                 @Override
-                public DropdownBoxEntry.SelectionCellElement<ResourceLocation> create(ResourceLocation selection) {
-                    ItemStack s = new ItemStack((Item) Item.itemRegistry.getObject(selection));
-                    return new DropdownBoxEntry.DefaultSelectionCellElement<ResourceLocation>(selection, toStringFunction) {
+                public DropdownBoxEntry.SelectionCellElement<Identifier> create(Identifier selection) {
+                    ItemStack s = new ItemStack((Item) Item.REGISTRY.get(selection));
+                    return new DropdownBoxEntry.DefaultSelectionCellElement<Identifier>(selection, toStringFunction) {
                         @Override
                         public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
                             rendering = true;
@@ -340,9 +339,9 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                             this.height = height;
                             boolean b = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
                             if (b)
-                                Gui.drawRect(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
-                            Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
-                                                        RENDER_ITEM.renderItemAndEffectIntoGUI(Minecraft.getMinecraft().fontRendererObj, Minecraft.getMinecraft().getTextureManager(), s, x + 4, y + 2);
+                                DrawableHelper.method_21878(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
+                            MinecraftClient.getInstance().textRenderer.method_956(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
+                                                        RENDER_ITEM.method_1549(MinecraftClient.getInstance().textRenderer, MinecraftClient.getInstance().getTextureManager(), s, x + 4, y + 2);
                         }
                     };
                 }
@@ -365,20 +364,20 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
         }
 
 
-        public static DropdownBoxEntry.SelectionCellCreator<ResourceLocation> ofBlockResourceLocation() {
+        public static DropdownBoxEntry.SelectionCellCreator<Identifier> ofBlockResourceLocation() {
             return ofBlockResourceLocation(20, 146, 7);
         }
 
-        public static DropdownBoxEntry.SelectionCellCreator<ResourceLocation> ofBlockResourceLocation(int maxItems) {
+        public static DropdownBoxEntry.SelectionCellCreator<Identifier> ofBlockResourceLocation(int maxItems) {
             return ofBlockResourceLocation(20, 146, maxItems);
         }
 
-        public static DropdownBoxEntry.SelectionCellCreator<ResourceLocation> ofBlockResourceLocation(int cellHeight, int cellWidth, int maxItems) {
-            return new DropdownBoxEntry.DefaultSelectionCellCreator<ResourceLocation>() {
+        public static DropdownBoxEntry.SelectionCellCreator<Identifier> ofBlockResourceLocation(int cellHeight, int cellWidth, int maxItems) {
+            return new DropdownBoxEntry.DefaultSelectionCellCreator<Identifier>() {
                 @Override
-                public DropdownBoxEntry.SelectionCellElement<ResourceLocation> create(ResourceLocation selection) {
-                    ItemStack s = new ItemStack((Block) Block.blockRegistry.getObject(selection));
-                    return new DropdownBoxEntry.DefaultSelectionCellElement<ResourceLocation>(selection, toStringFunction) {
+                public DropdownBoxEntry.SelectionCellElement<Identifier> create(Identifier selection) {
+                    ItemStack s = new ItemStack((Block) Block.REGISTRY.get(selection));
+                    return new DropdownBoxEntry.DefaultSelectionCellElement<Identifier>(selection, toStringFunction) {
                         @Override
                         public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
                             rendering = true;
@@ -388,9 +387,9 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                             this.height = height;
                             boolean b = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
                             if (b)
-                                Gui.drawRect(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
-                            Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
-                                                        RENDER_ITEM.renderItemAndEffectIntoGUI(Minecraft.getMinecraft().fontRendererObj, Minecraft.getMinecraft().getTextureManager(), s, x + 4, y + 2);
+                                DrawableHelper.method_21878(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
+                            MinecraftClient.getInstance().textRenderer.method_956(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
+                                                        RENDER_ITEM.method_1549(MinecraftClient.getInstance().textRenderer, MinecraftClient.getInstance().getTextureManager(), s, x + 4, y + 2);
                         }
                     };
                 }
@@ -421,7 +420,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
         }
 
         public static DropdownBoxEntry.SelectionCellCreator<Item> ofItemObject(int cellHeight, int cellWidth, int maxItems) {
-            return new DropdownBoxEntry.DefaultSelectionCellCreator<Item>(i -> Item.itemRegistry.getNameForObject(i).toString()) {
+            return new DropdownBoxEntry.DefaultSelectionCellCreator<Item>(i -> Item.REGISTRY.getId(i).toString()) {
                 @Override
                 public DropdownBoxEntry.SelectionCellElement<Item> create(Item selection) {
                     ItemStack s = new ItemStack(selection);
@@ -435,9 +434,9 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                             this.height = height;
                             boolean b = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
                             if (b)
-                                Gui.drawRect(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
-                            Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
-                                                        RENDER_ITEM.renderItemAndEffectIntoGUI(Minecraft.getMinecraft().fontRendererObj, Minecraft.getMinecraft().getTextureManager(), s, x + 4, y + 2);
+                                DrawableHelper.method_21878(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
+                            MinecraftClient.getInstance().textRenderer.method_956(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
+                                                        RENDER_ITEM.method_1549(MinecraftClient.getInstance().textRenderer, MinecraftClient.getInstance().getTextureManager(), s, x + 4, y + 2);
                         }
                     };
                 }
@@ -468,7 +467,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
         }
 
         public static DropdownBoxEntry.SelectionCellCreator<Block> ofBlockObject(int cellHeight, int cellWidth, int maxItems) {
-            return new DropdownBoxEntry.DefaultSelectionCellCreator<Block>(i -> Block.blockRegistry.getNameForObject(i).toString()) {
+            return new DropdownBoxEntry.DefaultSelectionCellCreator<Block>(i -> Block.REGISTRY.getId(i).toString()) {
                 @Override
                 public DropdownBoxEntry.SelectionCellElement<Block> create(Block selection) {
                     ItemStack s = new ItemStack(selection);
@@ -482,9 +481,9 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                             this.height = height;
                             boolean b = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
                             if (b)
-                                Gui.drawRect(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
-                            Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
-                                                        RENDER_ITEM.renderItemAndEffectIntoGUI(Minecraft.getMinecraft().fontRendererObj, Minecraft.getMinecraft().getTextureManager(), s, x + 4, y + 2);
+                                DrawableHelper.method_21878(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
+                            MinecraftClient.getInstance().textRenderer.method_956(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
+                                                        RENDER_ITEM.method_1549(MinecraftClient.getInstance().textRenderer, MinecraftClient.getInstance().getTextureManager(), s, x + 4, y + 2);
                         }
                     };
                 }

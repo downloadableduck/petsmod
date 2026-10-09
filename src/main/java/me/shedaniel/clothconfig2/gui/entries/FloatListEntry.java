@@ -1,12 +1,11 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
-import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.resources.I18n;
-
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.resource.language.I18n;
 
 public class FloatListEntry extends TextFieldListEntry<Float> {
 
@@ -60,15 +59,15 @@ public class FloatListEntry extends TextFieldListEntry<Float> {
     }
 
     @Override
-    protected void textFieldPreRender(GuiTextField widget) {
+    protected void textFieldPreRender(TextFieldWidget widget) {
         try {
             double i = Float.parseFloat(textFieldWidget.getText());
             if (i < minimum || i > maximum)
-                widget.setTextColor(16733525);
+                widget.setEditableColor(16733525);
             else
-                widget.setTextColor(14737632);
+                widget.setEditableColor(14737632);
         } catch (NumberFormatException ex) {
-            widget.setTextColor(16733525);
+            widget.setEditableColor(16733525);
         }
     }
 
@@ -107,11 +106,11 @@ public class FloatListEntry extends TextFieldListEntry<Float> {
         try {
             float i = Float.parseFloat(textFieldWidget.getText());
             if (i > maximum)
-                return Optional.of(I18n.format("text.cloth-config.error.too_large", maximum));
+                return Optional.of(I18n.translate("text.cloth-config.error.too_large", maximum));
             else if (i < minimum)
-                return Optional.of(I18n.format("text.cloth-config.error.too_small", minimum));
+                return Optional.of(I18n.translate("text.cloth-config.error.too_small", minimum));
         } catch (NumberFormatException ex) {
-            return Optional.of(I18n.format("text.cloth-config.error.not_valid_number_float"));
+            return Optional.of(I18n.translate("text.cloth-config.error.not_valid_number_float"));
         }
         return super.getError();
     }

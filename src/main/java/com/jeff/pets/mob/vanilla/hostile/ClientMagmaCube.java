@@ -1,9 +1,6 @@
 package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.SlimeLikePet;
-
-
-import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,7 +8,7 @@ public class ClientMagmaCube extends SlimeLikePet {
 
     public ClientMagmaCube(World level) {
         super(level);
-        this.setSize(2.0F, 2.0F);
+        this.setBounds(2.0F, 2.0F);
     }
 
     @Override

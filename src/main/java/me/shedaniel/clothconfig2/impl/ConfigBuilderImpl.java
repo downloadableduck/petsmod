@@ -6,11 +6,10 @@ import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.Pair;
 import me.shedaniel.clothconfig2.gui.ClothConfigScreen;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.client.resources.I18n;
-
+import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.resource.language.I18n;
+import net.minecraft.util.Identifier;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -19,10 +18,10 @@ import java.util.function.Consumer;
 @Deprecated
 public class ConfigBuilderImpl implements ConfigBuilder {
 
-    private final Map<String, ResourceLocation> categoryBackground = Maps.newHashMap();
+    private final Map<String, Identifier> categoryBackground = Maps.newHashMap();
     private final Map<String, List<Pair<String, Object>>> dataMap = Maps.newLinkedHashMap();
     private Runnable savingRunnable;
-    private GuiScreen parent;
+    private Screen parent;
     private String title = "text.cloth-config.config";
     private boolean editable = true;
     private boolean tabsSmoothScroll = true;
@@ -30,8 +29,8 @@ public class ConfigBuilderImpl implements ConfigBuilder {
     private boolean doesProcessErrors = true;
     private boolean doesConfirmSave = true;
     private boolean transparentBackground = false;
-    private ResourceLocation defaultBackground = Gui.optionsBackground;
-    private Consumer<GuiScreen> afterInitConsumer = screen -> {
+    private Identifier defaultBackground = DrawableHelper.field_22503;
+    private Consumer<Screen> afterInitConsumer = screen -> {
     };
     private String fallbackCategory = null;
     private boolean alwaysShowTabs = false;
@@ -59,7 +58,7 @@ public class ConfigBuilderImpl implements ConfigBuilder {
     }
 
     @Override
-    public ConfigBuilder setAfterInitConsumer(Consumer<GuiScreen> afterInitConsumer) {
+    public ConfigBuilder setAfterInitConsumer(Consumer<Screen> afterInitConsumer) {
         this.afterInitConsumer = afterInitConsumer;
         return this;
     }
@@ -71,12 +70,12 @@ public class ConfigBuilderImpl implements ConfigBuilder {
     }
 
     @Override
-    public GuiScreen getParentScreen() {
+    public Screen getParentScreen() {
         return parent;
     }
 
     @Override
-    public ConfigBuilder setParentScreen(GuiScreen parent) {
+    public ConfigBuilder setParentScreen(Screen parent) {
         this.parent = parent;
         return this;
     }
@@ -189,12 +188,12 @@ public class ConfigBuilderImpl implements ConfigBuilder {
     }
 
     @Override
-    public ResourceLocation getDefaultBackgroundTexture() {
+    public Identifier getDefaultBackgroundTexture() {
         return defaultBackground;
     }
 
     @Override
-    public ConfigBuilder setDefaultBackgroundTexture(ResourceLocation texture) {
+    public ConfigBuilder setDefaultBackgroundTexture(Identifier texture) {
         this.defaultBackground = texture;
         return this;
     }
@@ -206,15 +205,15 @@ public class ConfigBuilderImpl implements ConfigBuilder {
     }
 
     @Override
-    public Consumer<GuiScreen> getAfterInitConsumer() {
+    public Consumer<Screen> getAfterInitConsumer() {
         return afterInitConsumer;
     }
 
     @Override
-    public GuiScreen build() {
+    public Screen build() {
         if (dataMap.isEmpty() || fallbackCategory == null)
             throw new NullPointerException("There cannot be no categories or fallback category!");
-        ClothConfigScreen screen = new ClothConfigScreen(parent, I18n.format(title), dataMap, doesConfirmSave, doesProcessErrors, listSmoothScroll, defaultBackground, categoryBackground) {
+        ClothConfigScreen screen = new ClothConfigScreen(parent, I18n.translate(title), dataMap, doesConfirmSave, doesProcessErrors, listSmoothScroll, defaultBackground, categoryBackground) {
             @Override
             public void save() {
                 if (savingRunnable != null)
@@ -222,8 +221,8 @@ public class ConfigBuilderImpl implements ConfigBuilder {
             }
 
             @Override
-            public void initGui() {
-                super.initGui();
+            public void method_21947() {
+                super.method_21947();
                 afterInitConsumer.accept(this);
             }
         };

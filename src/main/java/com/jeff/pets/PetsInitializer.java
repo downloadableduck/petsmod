@@ -13,8 +13,6 @@ import com.jeff.pets.mob.vanilla.hostile.*;
 import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
 import net.fabricmc.api.ModInitializer;
-
-import net.minecraft.client.resources.DefaultResourcePack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

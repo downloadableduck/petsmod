@@ -3,11 +3,6 @@ package me.shedaniel.clothconfig2.gui.entries;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.jeff.pets.PetsInitializer;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.resources.I18n;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -15,16 +10,20 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.resource.language.I18n;
+import net.minecraft.client.util.Window;
 
 public class SelectionListEntry<T> extends TooltipListEntry<T> {
 
     private final ImmutableList<T> values;
     private final AtomicInteger index;
-    private final GuiButton buttonWidget;
-    private final GuiButton resetButton;
+    private final ButtonWidget buttonWidget;
+    private final ButtonWidget resetButton;
     private final Consumer<T> saveConsumer;
     private final Supplier<T> defaultValue;
-    private final List<GuiButton> widgets;
+    private final List<ButtonWidget> widgets;
     private final Function<T, String> nameProvider;
 
 
@@ -62,11 +61,11 @@ public class SelectionListEntry<T> extends TooltipListEntry<T> {
         this.defaultValue = defaultValue;
         this.index = new AtomicInteger(this.values.indexOf(value));
         this.index.compareAndSet(-1, 0);
-        this.buttonWidget = new GuiButton(new Random().nextInt(), 0, 0, 150, 20, "") {
+        this.buttonWidget = new ButtonWidget(new Random().nextInt(), 0, 0, 150, 20, "") {
             @Override
-            public boolean mousePressed(Minecraft mc,  int mouseX, int mouseY) {
+            public boolean method_21893(MinecraftClient mc,  int mouseX, int mouseY) {
                 
-                 boolean bl = super.mousePressed(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
+                 boolean bl = super.method_21893(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
                     SelectionListEntry.this.index.incrementAndGet();
                     SelectionListEntry.this.index.compareAndSet(SelectionListEntry.this.values.size(), 0);
                     getScreen().setEdited(true, isRequiresRestart());
@@ -74,11 +73,11 @@ public class SelectionListEntry<T> extends TooltipListEntry<T> {
                 return bl;
             }
         };
-        this.resetButton = new GuiButton(new Random().nextInt(), 0, 0, Minecraft.getMinecraft().fontRendererObj.getStringWidth(I18n.format(resetButtonKey)) + 6, 20, I18n.format(resetButtonKey)) {
+        this.resetButton = new ButtonWidget(new Random().nextInt(), 0, 0, MinecraftClient.getInstance().textRenderer.getStringWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey)) {
             @Override
-            public boolean mousePressed(Minecraft mc,  int mouseX, int mouseY) {
+            public boolean method_21893(MinecraftClient mc,  int mouseX, int mouseY) {
                 
-                 boolean bl = super.mousePressed(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
+                 boolean bl = super.method_21893(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
                     SelectionListEntry.this.index.set(getDefaultIndex());
                     getScreen().setEdited(true, isRequiresRestart());
                 }
@@ -87,7 +86,7 @@ public class SelectionListEntry<T> extends TooltipListEntry<T> {
         };
         this.saveConsumer = saveConsumer;
         this.widgets = Lists.newArrayList(buttonWidget, resetButton);
-        this.nameProvider = nameProvider == null ? (t -> I18n.format(t instanceof Translatable ? ((Translatable) t).getKey() : t.toString())) : nameProvider;
+        this.nameProvider = nameProvider == null ? (t -> I18n.translate(t instanceof Translatable ? ((Translatable) t).getKey() : t.toString())) : nameProvider;
     }
 
     @Override
@@ -109,24 +108,24 @@ public class SelectionListEntry<T> extends TooltipListEntry<T> {
     @Override
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-        int windowWidth = (new ScaledResolution(Minecraft.getMinecraft(), Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight)).getScaledWidth();
-        this.resetButton.enabled = isEditable() && getDefaultValue().isPresent() && getDefaultIndex() != this.index.get();
-        this.resetButton.yPosition = y;
-        this.buttonWidget.enabled = isEditable();
-        this.buttonWidget.yPosition = y;
-        this.buttonWidget.displayString = (nameProvider.apply(getValue()));
-        if (Minecraft.getMinecraft().fontRendererObj.getBidiFlag()) {
-            Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(I18n.format(getFieldName()), windowWidth - x - Minecraft.getMinecraft().fontRendererObj.getStringWidth(I18n.format(getFieldName())), y + 5, getPreferredTextColor());
-            this.resetButton.xPosition = x;
-            this.buttonWidget.xPosition = x + resetButton.width + 2;
+        int windowWidth = (new Window(MinecraftClient.getInstance(), MinecraftClient.getInstance().width, MinecraftClient.getInstance().height)).getWidth();
+        this.resetButton.field_22511 = isEditable() && getDefaultValue().isPresent() && getDefaultIndex() != this.index.get();
+        this.resetButton.y = y;
+        this.buttonWidget.field_22511 = isEditable();
+        this.buttonWidget.y = y;
+        this.buttonWidget.field_22510 = (nameProvider.apply(getValue()));
+        if (MinecraftClient.getInstance().textRenderer.isRightToLeft()) {
+            MinecraftClient.getInstance().textRenderer.method_956(I18n.translate(getFieldName()), windowWidth - x - MinecraftClient.getInstance().textRenderer.getStringWidth(I18n.translate(getFieldName())), y + 5, getPreferredTextColor());
+            this.resetButton.x = x;
+            this.buttonWidget.x = x + resetButton.method_21890() + 2;
         } else {
-            Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(I18n.format(getFieldName()), x, y + 5, getPreferredTextColor());
-            this.resetButton.xPosition = x + entryWidth - resetButton.width;
-            this.buttonWidget.xPosition = x + entryWidth - 150;
+            MinecraftClient.getInstance().textRenderer.method_956(I18n.translate(getFieldName()), x, y + 5, getPreferredTextColor());
+            this.resetButton.x = x + entryWidth - resetButton.method_21890();
+            this.buttonWidget.x = x + entryWidth - 150;
         }
-        this.buttonWidget.width = (150 - resetButton.width - 2);
-        resetButton.drawButton(Minecraft.getMinecraft(), mouseX, mouseY);
-        buttonWidget.drawButton(Minecraft.getMinecraft(), mouseX, mouseY);
+        this.buttonWidget.field_22508 = (150 - resetButton.method_21890() - 2);
+        resetButton.method_21887(MinecraftClient.getInstance(), mouseX, mouseY);
+        buttonWidget.method_21887(MinecraftClient.getInstance(), mouseX, mouseY);
     }
 
     private int getDefaultIndex() {
@@ -139,10 +138,10 @@ public class SelectionListEntry<T> extends TooltipListEntry<T> {
     @Override
     public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
         if (mouseButton == 0) {
-            if (this.buttonWidget.mousePressed(Minecraft.getMinecraft(), mouseX, mouseY)) {
+            if (this.buttonWidget.method_21893(MinecraftClient.getInstance(), mouseX, mouseY)) {
                 return true;
             }
-            if (this.resetButton.mousePressed(Minecraft.getMinecraft(), mouseX, mouseY)) {
+            if (this.resetButton.method_21893(MinecraftClient.getInstance(), mouseX, mouseY)) {
                 return true;
             }
         }

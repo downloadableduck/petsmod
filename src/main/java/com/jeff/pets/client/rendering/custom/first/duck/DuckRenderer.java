@@ -4,19 +4,17 @@ import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.MathHelper;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Objects;
+import net.minecraft.util.Identifier;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class DuckRenderer extends PetRenderer {
 
-    public DuckRenderer(net.minecraft.client.renderer.entity.RenderManager context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+    public DuckRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new DuckModel(), 0.75f);
     }
 
@@ -26,7 +24,7 @@ public class DuckRenderer extends PetRenderer {
         }
     }
 
-    public @NotNull ResourceLocation getEntityTexture(net.minecraft.entity.Entity __e) {
+    public @NotNull Identifier getTexture(net.minecraft.entity.Entity __e) {
         Duck livingEntityRenderState = (Duck) __e;
         String duckTexturePath;
         if (Objects.equals(CONFIG.duckSkin, "pekin")) {
@@ -40,7 +38,7 @@ public class DuckRenderer extends PetRenderer {
         } else {
             duckTexturePath = "textures/entity/duck/mallard_male.png";
         }
-        return new ResourceLocation(PetsInitializer.MOD_ID, duckTexturePath);
+        return new Identifier(PetsInitializer.MOD_ID, duckTexturePath);
     }
 
     public void renderModel(final Duck duck, float f, final float k, float u, float g, float h, float i) {

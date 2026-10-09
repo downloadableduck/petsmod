@@ -2,12 +2,12 @@ package me.shedaniel.clothconfig2.gui.entries;
 
 import com.google.common.collect.Lists;
 import com.jeff.pets.PetsInitializer;
-import com.mojang.realmsclient.gui.ChatFormatting;
 import me.shedaniel.clothconfig2.api.ModifierKeyCode;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.resource.language.I18n;
+import net.minecraft.client.util.Window;
+import net.minecraft.util.Formatting;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,15 +15,17 @@ import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import static net.minecraft.util.Formatting.WHITE;
+
 @SuppressWarnings("DuplicatedCode")
 public class KeyCodeEntry extends TooltipListEntry<ModifierKeyCode> {
 
     private ModifierKeyCode value;
-    private final GuiButton buttonWidget;
-    private final GuiButton resetButton;
+    private final ButtonWidget buttonWidget;
+    private final ButtonWidget resetButton;
     private final Consumer<ModifierKeyCode> saveConsumer;
     private final Supplier<ModifierKeyCode> defaultValue;
-    private final List<GuiButton> widgets;
+    private final List<ButtonWidget> widgets;
     private boolean allowMouse = true, allowKey = true, allowModifiers = true;
 
     @Deprecated
@@ -31,22 +33,22 @@ public class KeyCodeEntry extends TooltipListEntry<ModifierKeyCode> {
         super(fieldName, tooltipSupplier, requiresRestart);
         this.defaultValue = defaultValue;
         this.value = value;
-        this.buttonWidget = new GuiButton(new Random().nextInt(), 0, 0, 150, 20, "") {
+        this.buttonWidget = new ButtonWidget(new Random().nextInt(), 0, 0, 150, 20, "") {
             @Override
-            public boolean mousePressed(Minecraft mc,  int mouseX, int mouseY) {
+            public boolean method_21893(MinecraftClient mc,  int mouseX, int mouseY) {
                 
-                 boolean bl = super.mousePressed(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
+                 boolean bl = super.method_21893(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
                     getScreen().setFocusedBinding(KeyCodeEntry.this);
                     getScreen().setEdited(true, isRequiresRestart());
                 }
                 return bl;
             }
         };
-        this.resetButton = new GuiButton(new Random().nextInt(), 0, 0, Minecraft.getMinecraft().fontRendererObj.getStringWidth(I18n.format(resetButtonKey)) + 6, 20, I18n.format(resetButtonKey)) {
+        this.resetButton = new ButtonWidget(new Random().nextInt(), 0, 0, MinecraftClient.getInstance().textRenderer.getStringWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey)) {
             @Override
-            public boolean mousePressed(Minecraft mc,  int mouseX, int mouseY) {
+            public boolean method_21893(MinecraftClient mc,  int mouseX, int mouseY) {
                 
-                 boolean bl = super.mousePressed(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
+                 boolean bl = super.method_21893(mc, mouseX, mouseY); if (bl) { PetsInitializer.LOGGER.info("mouse pressed");
                     KeyCodeEntry.this.value = getDefaultValue().orElse(null);
                     getScreen().setFocusedBinding(null);
                     getScreen().setEdited(true, isRequiresRestart());
@@ -109,34 +111,34 @@ public class KeyCodeEntry extends TooltipListEntry<ModifierKeyCode> {
     @Override
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-        int windowWidth = (new ScaledResolution(Minecraft.getMinecraft(), Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight)).getScaledWidth();
-        this.resetButton.enabled = isEditable() && getDefaultValue().isPresent() && !getDefaultValue().get().equals(value);
-        this.resetButton.yPosition = y;
-        this.buttonWidget.enabled = isEditable();
-        this.buttonWidget.yPosition = y;
-        this.buttonWidget.displayString = (getLocalizedName());
+        int windowWidth = (new Window(MinecraftClient.getInstance(), MinecraftClient.getInstance().width, MinecraftClient.getInstance().height)).getWidth();
+        this.resetButton.field_22511 = isEditable() && getDefaultValue().isPresent() && !getDefaultValue().get().equals(value);
+        this.resetButton.y = y;
+        this.buttonWidget.field_22511 = isEditable();
+        this.buttonWidget.y = y;
+        this.buttonWidget.field_22510 = (getLocalizedName());
         if (getScreen().getFocusedBinding() == this)
-            this.buttonWidget.displayString = (ChatFormatting.WHITE + "> " + ChatFormatting.YELLOW + this.buttonWidget.displayString + ChatFormatting.WHITE + " <");
-        if (Minecraft.getMinecraft().fontRendererObj.getBidiFlag()) {
-            Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(I18n.format(getFieldName()), windowWidth - x - Minecraft.getMinecraft().fontRendererObj.getStringWidth(I18n.format(getFieldName())), y + 5, 16777215);
-            this.resetButton.xPosition = x;
-            this.buttonWidget.xPosition = x + resetButton.width + 2;
+            this.buttonWidget.field_22510 = (WHITE + "> " + Formatting.YELLOW + this.buttonWidget.field_22510 + Formatting.WHITE + " <");
+        if (MinecraftClient.getInstance().textRenderer.isRightToLeft()) {
+            MinecraftClient.getInstance().textRenderer.method_956(I18n.translate(getFieldName()), windowWidth - x - MinecraftClient.getInstance().textRenderer.getStringWidth(I18n.translate(getFieldName())), y + 5, 16777215);
+            this.resetButton.x = x;
+            this.buttonWidget.x = x + resetButton.method_21890() + 2;
         } else {
-            Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(I18n.format(getFieldName()), x, y + 5, getPreferredTextColor());
-            this.resetButton.xPosition = x + entryWidth - resetButton.width;
-            this.buttonWidget.xPosition = x + entryWidth - 150;
+            MinecraftClient.getInstance().textRenderer.method_956(I18n.translate(getFieldName()), x, y + 5, getPreferredTextColor());
+            this.resetButton.x = x + entryWidth - resetButton.method_21890();
+            this.buttonWidget.x = x + entryWidth - 150;
         }
-        this.buttonWidget.width = (150 - resetButton.width - 2);
-        resetButton.drawButton(Minecraft.getMinecraft(), mouseX, mouseY);
-        buttonWidget.drawButton(Minecraft.getMinecraft(), mouseX, mouseY);
+        this.buttonWidget.field_22508 = (150 - resetButton.method_21890() - 2);
+        resetButton.method_21887(MinecraftClient.getInstance(), mouseX, mouseY);
+        buttonWidget.method_21887(MinecraftClient.getInstance(), mouseX, mouseY);
     }
     @Override
     public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
         if (mouseButton == 0) {
-            if (this.buttonWidget.mousePressed(Minecraft.getMinecraft(), mouseX, mouseY)) {
+            if (this.buttonWidget.method_21893(MinecraftClient.getInstance(), mouseX, mouseY)) {
                 return true;
             }
-            if (this.resetButton.mousePressed(Minecraft.getMinecraft(), mouseX, mouseY)) {
+            if (this.resetButton.method_21893(MinecraftClient.getInstance(), mouseX, mouseY)) {
                 return true;
             }
         }

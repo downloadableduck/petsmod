@@ -24,14 +24,14 @@ import com.jeff.pets.mob.vanilla.passive.*;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.settings.GameSettings;
-import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.ChatScreen;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.option.GameOptions;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.ChatComponentText;
-
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.LiteralText;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -200,8 +200,8 @@ public class Central implements ClientModInitializer {
      * see {@link Utils#summonPet}
      */
     public static void summonPet() {
-        Minecraft minecraft = Minecraft.getMinecraft();
-        WorldClient world = minecraft.theWorld;
+        MinecraftClient minecraft = MinecraftClient.getInstance();
+        ClientWorld world = minecraft.world;
         duck = new Duck(world);
         racoon = new Racoon(world);
         penguin = new Penguin(world);
@@ -402,7 +402,7 @@ public class Central implements ClientModInitializer {
      *
      * @see ChatAccessor
      */
-    private static void updateSuggestions(Minecraft client) {
+    private static void updateSuggestions(MinecraftClient client) {
         List<String> skinSuggestions;
         switch (CONFIG.activePet) {
             case "duck":
@@ -518,10 +518,10 @@ public class Central implements ClientModInitializer {
      *
      * @see ChatAccessor
      */
-    public static void refreshChatSuggestor(Minecraft client) {
-        GuiScreen screen = client.currentScreen;
-        if ((screen instanceof GuiChat)) {
-            GuiChat chatScreen = (GuiChat) screen;
+    public static void refreshChatSuggestor(MinecraftClient client) {
+        Screen screen = client.currentScreen;
+        if ((screen instanceof ChatScreen)) {
+            ChatScreen chatScreen = (ChatScreen) screen;
             //((ChatAccessor) chatScreen).getChatInputSuggestor().refresh();
         }
     }
@@ -531,8 +531,8 @@ public class Central implements ClientModInitializer {
      * More about this custom pack can be seen in {@link HeadSkin}.
      */
     public static void checkForHeadResourcePack() {
-        Minecraft client = Minecraft.getMinecraft();
-        GameSettings options = client.gameSettings;
+        MinecraftClient client = MinecraftClient.getInstance();
+        GameOptions options = client.options;
         List<String> resourcePacks = new ArrayList<>(options.resourcePacks);
 
         /*if (!resourcePacks.contains("file/headpack") && Objects.equals(CONFIG.activePet, "head")) {
@@ -570,10 +570,10 @@ public class Central implements ClientModInitializer {
      * - Generates a random number for {@link #petSkin}, which used to be used for <a href="https://modrinth.com/mod/pets-natural">Pets Natural</a> and <a href="https://modrinth.com/mod/duck--mod">DuckMod</a>.
      */
     public static void createTickWatcher() {
-        Minecraft minecraft = Minecraft.getMinecraft();
-        WorldClient world = minecraft.theWorld;
+        MinecraftClient minecraft = MinecraftClient.getInstance();
+        ClientWorld world = minecraft.world;
         petSkin = (int) (Math.random() * (double) 3.0F);
-        if (minecraft.thePlayer != null && CONFIG.petOn && summonedEntity.isEmpty()) {
+        if (minecraft.field_3805 != null && CONFIG.petOn && summonedEntity.isEmpty()) {
             summonPet();
         }
 
@@ -618,7 +618,7 @@ public class Central implements ClientModInitializer {
         createJoinHandler();
         createTickWatcher();
         this.createPetsList();
-        updateSuggestions(Minecraft.getMinecraft());
+        updateSuggestions(MinecraftClient.getInstance());
     }
 
     /**
@@ -1167,9 +1167,9 @@ public class Central implements ClientModInitializer {
         }
 
         if (isValid) {
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§b[PetsMod] §aYour pet's skin has been updated."));
+            MinecraftClient.getInstance().field_3805.sendMessage(new LiteralText("§b[PetsMod] §aYour pet's skin has been updated."));
         } else {
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§b[PetsMod] §cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else."));
+            MinecraftClient.getInstance().field_3805.sendMessage(new LiteralText("§b[PetsMod] §cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else."));
         }
         AutoConfig.getConfigHolder(PetsConfig.class).save();
     }
@@ -1359,8 +1359,8 @@ public class Central implements ClientModInitializer {
         CONFIG.toxfinSlabName = Utils.checkNullString(CONFIG.toxfinSlabName);
         CONFIG.potatoHuskName = Utils.checkNullString(CONFIG.potatoHuskName);
 
-        if (CONFIG.headSkin == null && Minecraft.getMinecraft().thePlayer != null) {
-            CONFIG.headSkin = Minecraft.getMinecraft().thePlayer.getCommandSenderName();
+        if (CONFIG.headSkin == null && MinecraftClient.getInstance().field_3805 != null) {
+            CONFIG.headSkin = MinecraftClient.getInstance().field_3805.getTranslationKey();
         }
         CONFIG.headName = Utils.checkNullString(CONFIG.headName);
 
@@ -1490,14 +1490,14 @@ public class Central implements ClientModInitializer {
             Central.this.checkValidPet(isValid, species);
 
             AutoConfig.getConfigHolder(PetsConfig.class).save();
-            updateSuggestions(Minecraft.getMinecraft());
+            updateSuggestions(MinecraftClient.getInstance());
     }
 
     /**
      * Creates a help command to let the user easily view the commands at their disposal.
      */
     public void executePetHelpCommand() {
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
+            MinecraftClient.getInstance().field_3805.sendMessage(new LiteralText(
                     "§b[PetsMod] §aPossible commands: §a/pethelp: §rdisplays a list of commands §a/pet <on/off> §rtoggles whether your pet will appear or not§a/petspecies <species>: §rchanges the species of your pet§a/petskin <skin>: §rchanges the skin of your selected pet§a/teleportpet: §rteleports your pet to you. will not work if you are not on the ground.§a/petname: §rchanges the name of your currently selected pet"
             ));
     }
@@ -1718,14 +1718,14 @@ public class Central implements ClientModInitializer {
     public void executeToggleCommand(String preference) {
             if (Objects.equals(preference, "off")) {
                 CONFIG.petOn = false;
-                Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§b[PetsMod] §7Pet §coff."));
+                MinecraftClient.getInstance().field_3805.sendMessage(new LiteralText("§b[PetsMod] §7Pet §coff."));
                 AutoConfig.getConfigHolder(PetsConfig.class).save();
             } else if (Objects.equals(preference, "on")) {
                 CONFIG.petOn = true;
                 AutoConfig.getConfigHolder(PetsConfig.class).save();
-                Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§b[PetsMod] §7Pet §aon."));
+                MinecraftClient.getInstance().field_3805.sendMessage(new LiteralText("§b[PetsMod] §7Pet §aon."));
             } else {
-                Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§b[PetsMod] §c§lUnknown value " + preference + "! Possible values: §r§aon, §6off"));
+                MinecraftClient.getInstance().field_3805.sendMessage(new LiteralText("§b[PetsMod] §c§lUnknown value " + preference + "! Possible values: §r§aon, §6off"));
             }
     }
 
@@ -1758,13 +1758,13 @@ public class Central implements ClientModInitializer {
 
     public void checkValidPet(boolean isValid, String species) {
         if (!isValid) {
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§b[PetsMod] §cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")"));
+            MinecraftClient.getInstance().field_3805.sendMessage(new LiteralText("§b[PetsMod] §cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")"));
         } else if (isValid && CONFIG.petOn) {
             despawnPet();
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§b[PetsMod] §aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + "."));
+            MinecraftClient.getInstance().field_3805.sendMessage(new LiteralText("§b[PetsMod] §aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + "."));
             summonPet();
         } else if (isValid && !CONFIG.petOn) {
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§b[PetsMod] §cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet enabled. Run §l/pet on§r§c to change this."));
+            MinecraftClient.getInstance().field_3805.sendMessage(new LiteralText("§b[PetsMod] §cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet field_22511. Run §l/pet on§r§c to change this."));
         }
     }
 }

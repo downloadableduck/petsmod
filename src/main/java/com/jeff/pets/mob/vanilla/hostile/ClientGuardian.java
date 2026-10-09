@@ -2,9 +2,6 @@ package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.GroundPet;
-
-
-import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 public class ClientGuardian extends GroundPet {
     public ClientGuardian(World level) {
         super(level);
-        this.setSize(0.85F, 0.85F);
+        this.setBounds(0.85F, 0.85F);
     }
 
     @Override

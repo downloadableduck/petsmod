@@ -2,9 +2,6 @@ package com.jeff.pets.mob.vanilla.neutral;
 
 import com.jeff.pets.CanFly;
 import com.jeff.pets.mob.FlyingPet;
-
-
-import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 public class ClientDolphin extends FlyingPet {
     public ClientDolphin(World level) {
         super(level);
-        this.setSize(0.9F, 0.6F);
+        this.setBounds(0.9F, 0.6F);
     }
 
     @Override

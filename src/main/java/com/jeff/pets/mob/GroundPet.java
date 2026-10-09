@@ -1,13 +1,10 @@
 package com.jeff.pets.mob;
 
 import com.jeff.pets.mob.custom.first.Duck;
-
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.entity.EntityLivingBase;
 
 /**
  * Abstract representing any pet that cannot fly (ducks, chickens, etc).
@@ -23,18 +20,18 @@ public abstract class GroundPet extends AbstractPet {
     }
 
     @Override
-    public void onLivingUpdate() {
-        this.prevLimbSwingAmount = this.limbSwingAmount;
-        this.limbSwing += this.limbSwingAmount;
+    public void tickMovement() {
+        this.field_6748 = this.field_6749;
+        this.field_6750 += this.field_6749;
     }
 
     @Override
-    public void onUpdate() {
-        super.onUpdate();
-        EntityLivingBase owner = this.getOwner();
+    public void tick() {
+        super.tick();
+        LivingEntity owner = this.getOwner();
         if (owner != null) {
-            if (this.ridingEntity == owner) {
-                if (owner.isSneaking() && owner.isJumping) {
+            if (this.vehicle == owner) {
+                if (owner.isSneaking() && owner.jumping) {
                     this.stopRiding();
                     this.addVelocity(0, -0.04, 0);
                 } else {
@@ -43,33 +40,33 @@ public abstract class GroundPet extends AbstractPet {
                 }
             }
 
-            double dx = owner.posX - this.posX;
-            double dz = owner.posZ - this.posZ;
+            double dx = owner.x - this.x;
+            double dz = owner.z - this.z;
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
 
-            double distance = MathHelper.sqrt_double(this.getDistanceSqToEntity(owner));
-            float bodyYawDiff = net.minecraft.util.MathHelper.wrapAngleTo180_float(this.headYaw - this.bodyYaw);
+            double distance = MathHelper.sqrt(this.squaredDistanceTo(owner));
+            float bodyYawDiff = MathHelper.wrapDegrees(this.headYaw - this.bodyYaw);
 
             if (distance > this.stopDistance()) {
                 this.setLimbDistance(0.5F);
 
-                Vec3 targetPos = Vec3.createVectorHelper(owner.posX, owner.posY, owner.posZ);
-                Vec3 dir = targetPos.subtract(this.getPos()).normalize();
+                Vec3d targetPos = Vec3d.of(owner.x, owner.y, owner.z);
+                Vec3d dir = targetPos.reverseSubtract(this.getPos()).normalize();
 
                 this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
-                this.setRotationYawHead(this.getYRot());
-                this.bodyYaw = this.bodyYaw + MathHelper.clamp_float(this.headYaw - this.bodyYaw, -50, 50);
+                this.setHeadYaw(this.getYRot());
+                this.bodyYaw = this.bodyYaw + MathHelper.clamp(this.headYaw - this.bodyYaw, -50, 50);
 
-                double speed = owner.getAIMoveSpeed() * 2.0;
-                this.setVelocity(-dir.xCoord * speed, this.getVelocity().yCoord, -dir.zCoord * speed);
+                double speed = owner.getMovementSpeed() * 2.0;
+                this.setVelocityClient(-dir.x * speed, this.getVelocity().y, -dir.z * speed);
             } else if (distance >= 1.5) {
                 ////this.lookAtEntity(owner, 5, 0);
-                this.motionX *= 0.8;
-                this.motionZ *= 0.8;
+                this.velocityX *= 0.8;
+                this.velocityZ *= 0.8;
             }
 
-            if (this.isCollidedHorizontally && this.onGround) {
+            if (this.horizontalCollision && this.onGround) {
                 this.jump();
             }
 
@@ -77,25 +74,25 @@ public abstract class GroundPet extends AbstractPet {
                 this.addVelocity(0, -0.04, 0);
             }
 
-            this.moveEntity(this.motionX, this.motionY, this.motionZ);
+            this.move(this.velocityX, this.velocityY, this.velocityZ);
 
             this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
-            this.setRotationYawHead(this.getYRot());
+            this.setHeadYaw(this.getYRot());
 
             if (Math.abs(bodyYawDiff) > 50) {
                 this.bodyYaw = this.headYaw - Math.signum(bodyYawDiff) * 50;
             } else {
-                this.bodyYaw = this.bodyYaw + MathHelper.clamp_float(this.headYaw - this.bodyYaw, -10, 10);
+                this.bodyYaw = this.bodyYaw + MathHelper.clamp(this.headYaw - this.bodyYaw, -10, 10);
             }
 
-            if (getDistanceToEntity(owner) >= 10) {
-                this.setPosition(owner.posX, owner.posY, owner.posZ);
+            if (distanceTo(owner) >= 10) {
+                this.updatePosition(owner.x, owner.y, owner.z);
             }
         }
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            this.worldObj.playSound(this.posX, this.posY, this.posZ, this.getAmbientSound(), 1.0f, 1.0f, true);
+            this.world.playSound(this.x, this.y, this.z, this.getAmbientSound(), 1.0f, 1.0f, true);
         }
     }
 }

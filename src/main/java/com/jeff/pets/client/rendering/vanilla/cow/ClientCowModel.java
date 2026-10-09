@@ -1,12 +1,13 @@
 package com.jeff.pets.client.rendering.vanilla.cow;
 
-import net.minecraft.client.model.ModelCow;
-import net.minecraft.client.model.ModelRenderer;
 import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientCowModel extends ModelCow {
+import net.minecraft.client.render.entity.model.CowEntityModel;
+import net.minecraft.client.render.model.ModelPart;
+
+public class ClientCowModel extends CowEntityModel {
 
     public ClientCowModel() {
         super();
@@ -23,7 +24,7 @@ public class ClientCowModel extends ModelCow {
         GL11.glPopMatrix();
     }
 
-    public ModelRenderer getHead() {
+    public ModelPart getHead() {
         return this.head;
     }
 }

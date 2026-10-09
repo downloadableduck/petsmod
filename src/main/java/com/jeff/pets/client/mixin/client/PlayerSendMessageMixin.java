@@ -2,8 +2,6 @@ package com.jeff.pets.client.mixin.client;
 
 import com.jeff.pets.client.Central;
 import com.jeff.pets.mob.AbstractPet;
-import net.minecraft.client.entity.EntityClientPlayerMP;
-import net.minecraft.entity.player.EntityPlayer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -11,10 +9,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Arrays;
 import java.util.Objects;
+import net.minecraft.entity.player.ControllablePlayerEntity;
 
-@Mixin(EntityClientPlayerMP.class)
+@Mixin(ControllablePlayerEntity.class)
 public class PlayerSendMessageMixin {
-    @Inject(at = @At("HEAD"), method = "sendChatMessage", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "method_1262", cancellable = true)
     private void pets$onPlayerSendChat(String message, CallbackInfo ci) {
         if (message.startsWith("/petspecies")) {
             String species = message.replace("/petspecies ", "");

@@ -3,14 +3,13 @@ package com.jeff.pets.client;
 import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.block.Blocks;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
-
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 import java.lang.reflect.Field;
 import java.util.Objects;
 
@@ -20,7 +19,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 /**
  * A utility class used mainly in {@link Central} and misc rendering classes. Contains various
  * shortcuts and utilities for spawning, despawning, and avoiding {@code NullPointerExceptions},
- * as well as a shortcut to {@link ResourceLocation#fromNamespaceAndPath}.
+ * as well as a shortcut to {@link Identifier#fromNamespaceAndPath}.
  *
  * @author downloadableduck
  * @see Central
@@ -38,22 +37,22 @@ public class Utils {
      */
     public static void summonPet(AbstractPet entity, String entityName) {
 
-        Minecraft minecraft = Minecraft.getMinecraft();
-        EntityPlayer player = minecraft.thePlayer;
-        WorldClient world = minecraft.theWorld;
+        MinecraftClient minecraft = MinecraftClient.getInstance();
+        PlayerEntity player = minecraft.field_3805;
+        ClientWorld world = minecraft.world;
 
         if (entity == null || world == null || player == null) return;
 
-        Vec3 lookAngle = player.getLookVec();
+        Vec3d lookAngle = player.getRotation();
 
-        double x = player.posX - lookAngle.xCoord * (double) 0.5F;
-        double y = player.posY + (double) 0.5F;
-        double z = player.posZ - lookAngle.zCoord * (double) 0.5F;
+        double x = player.x - lookAngle.x * (double) 0.5F;
+        double y = player.y + (double) 0.5F;
+        double z = player.z - lookAngle.z * (double) 0.5F;
 
-        entity.setPosition(x, y, z);
+        entity.updatePosition(x, y, z);
         entity.setName(entityName);
-        world.spawnEntityInWorld(entity);
-        entity.func_152115_b(player.getUniqueID().toString());
+        world.spawnEntity(entity);
+        entity.method_2713(player.getUuid().toString());
         Central.summonedEntity.add(entity);
     }
 
@@ -69,7 +68,7 @@ public class Utils {
      *                  current name is checked off of.
      */
     public static void checkName(String activePet, AbstractPet entity, String petName) {
-        if (Objects.equals(CONFIG.activePet, activePet) && entity != null && !entity.getCommandSenderName().equals(petName)) {
+        if (Objects.equals(CONFIG.activePet, activePet) && entity != null && !entity.getTranslationKey().equals(petName)) {
             entity.setName(petName);
         }
     }
@@ -112,15 +111,15 @@ public class Utils {
     }
 
     /**
-     * Used as a shortcut to {@link ResourceLocation#fromNamespaceAndPath}, and sets the parameter
+     * Used as a shortcut to {@link Identifier#fromNamespaceAndPath}, and sets the parameter
      * {@code namespace} with {@link PetsInitializer#MOD_ID}.
      *
      * @param path The String that goes in the {@code path} parameter.
-     * @return {@link ResourceLocation#fromNamespaceAndPath}, with the parameter {@code namespace} set to
+     * @return {@link Identifier#fromNamespaceAndPath}, with the parameter {@code namespace} set to
      * {@link PetsInitializer#MOD_ID} and the parameter {@code path} set to the user's input
      */
-    public static ResourceLocation withModNamespace(String path) {
-        return new ResourceLocation(MOD_ID, path);
+    public static Identifier withModNamespace(String path) {
+        return new Identifier(MOD_ID, path);
     }
 
     /**
@@ -129,8 +128,8 @@ public class Utils {
      * @param e The entity to despawn
      */
     public static void despawnEntity(Entity e) {
-        if (e != null && e.worldObj != null) {
-            e.worldObj.removeEntity(e);
+        if (e != null && e.world != null) {
+            e.world.removeEntity(e);
         }
     }
 
@@ -159,14 +158,14 @@ public class Utils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Blocks.air;
+        return Blocks.AIR;
     }
 
     public static float triangleWave(float p_78172_1_, float p_78172_2_) {
         return (Math.abs(p_78172_1_ % p_78172_2_ - p_78172_2_ * 0.5F) - p_78172_2_ * 0.25F) / (p_78172_2_ * 0.25F);
     }
 
-    public static double squaredDistanceToOrigin(Vec3 vec3d) {
-        return vec3d.xCoord * vec3d.xCoord + vec3d.yCoord * vec3d.yCoord + vec3d.zCoord * vec3d.zCoord;
+    public static double squaredDistanceToOrigin(Vec3d vec3d) {
+        return vec3d.x * vec3d.x + vec3d.y * vec3d.y + vec3d.z * vec3d.z;
     }
 }

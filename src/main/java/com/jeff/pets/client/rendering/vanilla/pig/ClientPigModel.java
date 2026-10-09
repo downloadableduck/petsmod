@@ -1,19 +1,19 @@
 package com.jeff.pets.client.rendering.vanilla.pig;
 
-import net.minecraft.client.model.ModelPig;
+import net.minecraft.client.render.entity.model.PigEntityModel;
 import net.minecraft.entity.Entity;
 import org.lwjgl.opengl.GL11;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientPigModel extends ModelPig {
+public class ClientPigModel extends PigEntityModel {
 
     public ClientPigModel() {
         super();
     }
 
-    public void setRotationAngles(float f, float g, float h, float i, float k, float s, Entity entity) {
-        super.setRotationAngles(f, g, h, i, k, s, entity);
+    public void setAngles(float f, float g, float h, float i, float k, float s, Entity entity) {
+        super.setAngles(f, g, h, i, k, s, entity);
     }
 
     public void render(Entity pig, float i, float j, float f, float g, float h, float k) {

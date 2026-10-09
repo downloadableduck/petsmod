@@ -1,16 +1,13 @@
 package com.jeff.pets.mob.vanilla.neutral;
 
 import com.jeff.pets.mob.GroundPet;
-
-
-import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientSpider extends GroundPet {
     public ClientSpider(World level) {
         super(level);
-        this.setSize(1.4F, 0.9F);
+        this.setBounds(1.4F, 0.9F);
     }
 
     @Override

@@ -1,10 +1,7 @@
 package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.mob.GroundPet;
-
-import net.minecraft.util.MathHelper;
-
-import net.minecraft.entity.passive.EntityTameable;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,7 +15,7 @@ public class ClientChicken extends GroundPet {
 
     public ClientChicken(World level) {
         super(level);
-        this.setSize(0.4F, 0.7F);
+        this.setBounds(0.4F, 0.7F);
     }
 
     @Override
@@ -37,12 +34,12 @@ public class ClientChicken extends GroundPet {
     }
 
     @Override
-    public void onUpdate() {
-        super.onUpdate();
+    public void tick() {
+        super.tick();
         this.oFlap = this.flap;
         this.oFlapSpeed = this.flapSpeed;
         this.flapSpeed += (this.onGround ? -1.0F : 4.0F) * 0.3F;
-        this.flapSpeed = MathHelper.clamp_float(this.flapSpeed, 0.0F, 1.0F);
+        this.flapSpeed = MathHelper.clamp(this.flapSpeed, 0.0F, 1.0F);
         if (!this.onGround && this.flapping < 1.0F) {
             this.flapping = 1.0F;
         }

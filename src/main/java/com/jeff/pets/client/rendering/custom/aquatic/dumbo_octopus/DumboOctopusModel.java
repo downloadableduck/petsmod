@@ -2,120 +2,120 @@ package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
-import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.entity.Entity;
 
 public class DumboOctopusModel extends PetModel {
-    private final ModelRenderer body;
-    private final ModelRenderer left_ear;
-    private final ModelRenderer left_ear_r1;
-    private final ModelRenderer right_ear;
-    private final ModelRenderer right_ear_r1;
-    private final ModelRenderer leg1;
-    private final ModelRenderer leg2;
-    private final ModelRenderer leg3;
-    private final ModelRenderer leg4;
-    private final ModelRenderer leg5;
-    private final ModelRenderer leg6;
-    private final ModelRenderer leg7;
-    private final ModelRenderer leg8;
+    private final ModelPart body;
+    private final ModelPart left_ear;
+    private final ModelPart left_ear_r1;
+    private final ModelPart right_ear;
+    private final ModelPart right_ear_r1;
+    private final ModelPart leg1;
+    private final ModelPart leg2;
+    private final ModelPart leg3;
+    private final ModelPart leg4;
+    private final ModelPart leg5;
+    private final ModelPart leg6;
+    private final ModelPart leg7;
+    private final ModelPart leg8;
 
     public DumboOctopusModel() {
         textureWidth = 32;
         textureHeight = 32;
 
-        body = new ModelRenderer(this);
-        body.setRotationPoint(0.0F, 22.0F, 0.0F);
+        body = new ModelPart(this);
+        body.setPivot(0.0F, 22.0F, 0.0F);
         setRotationAngle(body, 0.0F, -1.5708F, 0.0F);
-        body.setTextureOffset(0, 0).addBox(-4.0F, -5.0F, -3.0F, (int) 6.0F, (int) 6.0F, (int) 6.0F, 0.0F);
+        body.setTextureOffset(0, 0).addCuboid(-4.0F, -5.0F, -3.0F, (int) 6.0F, (int) 6.0F, (int) 6.0F, 0.0F);
 
-        left_ear = new ModelRenderer(this);
-        left_ear.setRotationPoint(-1.0F, 2.0F, 2.0F);
-        body.addChild(left_ear);
+        left_ear = new ModelPart(this);
+        left_ear.setPivot(-1.0F, 2.0F, 2.0F);
+        body.add(left_ear);
 
 
-        left_ear_r1 = new ModelRenderer(this);
-        left_ear_r1.setRotationPoint(-1.0F, -7.0F, 1.0F);
-        left_ear.addChild(left_ear_r1);
+        left_ear_r1 = new ModelPart(this);
+        left_ear_r1.setPivot(-1.0F, -7.0F, 1.0F);
+        left_ear.add(left_ear_r1);
         setRotationAngle(left_ear_r1, -0.5236F, 0.0F, 0.0F);
-        left_ear_r1.setTextureOffset(8, 12).addBox(-1.0F, -2.0F, -0.5F, (int) 2.0F, (int) 2.0F, (int) 1.0F, 0.0F);
+        left_ear_r1.setTextureOffset(8, 12).addCuboid(-1.0F, -2.0F, -0.5F, (int) 2.0F, (int) 2.0F, (int) 1.0F, 0.0F);
 
-        right_ear = new ModelRenderer(this);
-        right_ear.setRotationPoint(-2.0F, -5.0F, 3.0F);
-        body.addChild(right_ear);
+        right_ear = new ModelPart(this);
+        right_ear.setPivot(-2.0F, -5.0F, 3.0F);
+        body.add(right_ear);
 
 
-        right_ear_r1 = new ModelRenderer(this);
-        right_ear_r1.setRotationPoint(0.0F, 0.0F, -6.0F);
-        right_ear.addChild(right_ear_r1);
+        right_ear_r1 = new ModelPart(this);
+        right_ear_r1.setPivot(0.0F, 0.0F, -6.0F);
+        right_ear.add(right_ear_r1);
         setRotationAngle(right_ear_r1, 0.5236F, 0.0F, 0.0F);
-        right_ear_r1.setTextureOffset(8, 12).addBox(-1.0F, -2.0F, -0.5F, (int) 2.0F, (int) 2.0F, (int) 1.0F, 0.0F);
+        right_ear_r1.setTextureOffset(8, 12).addCuboid(-1.0F, -2.0F, -0.5F, (int) 2.0F, (int) 2.0F, (int) 1.0F, 0.0F);
 
-        leg1 = new ModelRenderer(this);
-        leg1.setRotationPoint(-4.0F, 1.0F, 2.0F);
-        body.addChild(leg1);
-        leg1.setTextureOffset(0, 12).addBox(-2.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
+        leg1 = new ModelPart(this);
+        leg1.setPivot(-4.0F, 1.0F, 2.0F);
+        body.add(leg1);
+        leg1.setTextureOffset(0, 12).addCuboid(-2.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
 
-        leg2 = new ModelRenderer(this);
-        leg2.setRotationPoint(-4.0F, 1.0F, -1.0F);
-        body.addChild(leg2);
-        leg2.setTextureOffset(0, 12).addBox(-2.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
+        leg2 = new ModelPart(this);
+        leg2.setPivot(-4.0F, 1.0F, -1.0F);
+        body.add(leg2);
+        leg2.setTextureOffset(0, 12).addCuboid(-2.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
 
-        leg3 = new ModelRenderer(this);
-        leg3.setRotationPoint(-3.0F, 1.0F, -3.0F);
-        body.addChild(leg3);
-        leg3.setTextureOffset(0, 12).addBox(-1.0F, -1.0F, -2.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
+        leg3 = new ModelPart(this);
+        leg3.setPivot(-3.0F, 1.0F, -3.0F);
+        body.add(leg3);
+        leg3.setTextureOffset(0, 12).addCuboid(-1.0F, -1.0F, -2.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
 
-        leg4 = new ModelRenderer(this);
-        leg4.setRotationPoint(0.0F, 1.0F, -3.0F);
-        body.addChild(leg4);
-        leg4.setTextureOffset(0, 12).addBox(-1.0F, -1.0F, -2.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
+        leg4 = new ModelPart(this);
+        leg4.setPivot(0.0F, 1.0F, -3.0F);
+        body.add(leg4);
+        leg4.setTextureOffset(0, 12).addCuboid(-1.0F, -1.0F, -2.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
 
-        leg5 = new ModelRenderer(this);
-        leg5.setRotationPoint(2.0F, 1.0F, -2.0F);
-        body.addChild(leg5);
-        leg5.setTextureOffset(0, 12).addBox(0.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
+        leg5 = new ModelPart(this);
+        leg5.setPivot(2.0F, 1.0F, -2.0F);
+        body.add(leg5);
+        leg5.setTextureOffset(0, 12).addCuboid(0.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
 
-        leg6 = new ModelRenderer(this);
-        leg6.setRotationPoint(2.0F, 1.0F, 1.0F);
-        body.addChild(leg6);
-        leg6.setTextureOffset(0, 12).addBox(0.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
+        leg6 = new ModelPart(this);
+        leg6.setPivot(2.0F, 1.0F, 1.0F);
+        body.add(leg6);
+        leg6.setTextureOffset(0, 12).addCuboid(0.0F, -1.0F, -1.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
 
-        leg7 = new ModelRenderer(this);
-        leg7.setRotationPoint(1.0F, 1.0F, 3.0F);
-        body.addChild(leg7);
-        leg7.setTextureOffset(0, 12).addBox(-1.0F, -1.0F, 0.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
+        leg7 = new ModelPart(this);
+        leg7.setPivot(1.0F, 1.0F, 3.0F);
+        body.add(leg7);
+        leg7.setTextureOffset(0, 12).addCuboid(-1.0F, -1.0F, 0.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
 
-        leg8 = new ModelRenderer(this);
-        leg8.setRotationPoint(-2.0F, 1.0F, 3.0F);
-        body.addChild(leg8);
-        leg8.setTextureOffset(0, 12).addBox(-1.0F, -1.0F, 0.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
+        leg8 = new ModelPart(this);
+        leg8.setPivot(-2.0F, 1.0F, 3.0F);
+        body.add(leg8);
+        leg8.setTextureOffset(0, 12).addCuboid(-1.0F, -1.0F, 0.0F, (int) 2.0F, (int) 2.0F, (int) 2.0F, 0.0F);
     }
 
-    public void render(net.minecraft.entity.Entity entity, float f, float g, float red, float green, float blue, float alpha) {
+    public void render(Entity entity, float f, float g, float red, float green, float blue, float alpha) {
         body.render(alpha);
     }
 
-    public void setRotationAngle(ModelRenderer ModelRenderer, float x, float y, float z) {
-        ModelRenderer.rotateAngleX = x;
-        ModelRenderer.rotateAngleY = y;
-        ModelRenderer.rotateAngleZ = z;
+    public void setRotationAngle(ModelPart ModelRenderer, float x, float y, float z) {
+        ModelRenderer.posX = x;
+        ModelRenderer.posY = y;
+        ModelRenderer.posZ = z;
     }
 
 
-    public void setRotationAngles(float f, float g, float h, float i, float k, float u, Entity entity) {
-        super.setRotationAngles(f, g, h, i, k, u, entity);
+    public void setAngles(float f, float g, float h, float i, float k, float u, Entity entity) {
+        super.setAngles(f, g, h, i, k, u, entity);
         DumboOctopus state = (DumboOctopus) entity;
-        if (state.limbSwingAmount > 0) {
-            leg1.rotateAngleZ = -state.tentacleAngle / 10;
-            float rot = leg1.rotateAngleZ;
-            leg2.rotateAngleZ = rot;
-            leg3.rotateAngleX = -rot;
-            leg4.rotateAngleX = -rot;
-            leg5.rotateAngleZ = -rot;
-            leg6.rotateAngleZ = -rot;
-            leg7.rotateAngleX = rot;
-            leg8.rotateAngleX = rot;
+        if (state.getViewBobThing() > 0) {
+            leg1.posZ = -state.tentacleAngle / 10;
+            float rot = leg1.posZ;
+            leg2.posZ = rot;
+            leg3.posX = -rot;
+            leg4.posX = -rot;
+            leg5.posZ = -rot;
+            leg6.posZ = -rot;
+            leg7.posX = rot;
+            leg8.posX = rot;
         }
     }
 }

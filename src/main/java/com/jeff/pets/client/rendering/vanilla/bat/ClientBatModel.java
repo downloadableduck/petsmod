@@ -1,61 +1,61 @@
 package com.jeff.pets.client.rendering.vanilla.bat;
 
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.render.entity.model.EntityModel;
+import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 
-public class ClientBatModel extends ModelBase {
-    private final ModelRenderer batHead;
+public class ClientBatModel extends EntityModel {
+    private final ModelPart batHead;
     /** The body box of the bat model. */
-    private final ModelRenderer batBody;
+    private final ModelPart batBody;
     /** The inner right wing box of the bat model. */
-    private final ModelRenderer batRightWing;
+    private final ModelPart batRightWing;
     /** The inner left wing box of the bat model. */
-    private final ModelRenderer batLeftWing;
+    private final ModelPart batLeftWing;
     /** The outer right wing box of the bat model. */
-    private final ModelRenderer batOuterRightWing;
+    private final ModelPart batOuterRightWing;
     /** The outer left wing box of the bat model. */
-    private final ModelRenderer batOuterLeftWing;
+    private final ModelPart batOuterLeftWing;
 
     public ClientBatModel() {
         this.textureWidth = 64;
         this.textureHeight = 64;
-        this.batHead = new ModelRenderer(this, 0, 0);
-        this.batHead.addBox(-3.0F, -3.0F, -3.0F, 6, 6, 6);
-        ModelRenderer ModelRenderer = new ModelRenderer(this, 24, 0);
-        ModelRenderer.addBox(-4.0F, -6.0F, -2.0F, 3, 4, 1);
-        this.batHead.addChild(ModelRenderer);
-        ModelRenderer ModelPart1 = new ModelRenderer(this, 24, 0);
+        this.batHead = new ModelPart(this, 0, 0);
+        this.batHead.addCuboid(-3.0F, -3.0F, -3.0F, 6, 6, 6);
+        ModelPart ModelRenderer = new ModelPart(this, 24, 0);
+        ModelRenderer.addCuboid(-4.0F, -6.0F, -2.0F, 3, 4, 1);
+        this.batHead.add(ModelRenderer);
+        ModelPart ModelPart1 = new ModelPart(this, 24, 0);
         ModelPart1.mirror = true;
-        ModelPart1.addBox(1.0F, -6.0F, -2.0F, 3, 4, 1);
-        this.batHead.addChild(ModelPart1);
-        this.batBody = new ModelRenderer(this, 0, 16);
-        this.batBody.addBox(-3.0F, 4.0F, -3.0F, 6, 12, 6);
-        this.batBody.setTextureOffset(0, 34).addBox(-5.0F, 16.0F, 0.0F, 10, 6, 1);
-        this.batRightWing = new ModelRenderer(this, 42, 0);
-        this.batRightWing.addBox(-12.0F, 1.0F, 1.5F, 10, 16, 1);
-        this.batOuterRightWing = new ModelRenderer(this, 24, 16);
-        this.batOuterRightWing.setRotationPoint(-12.0F, 1.0F, 1.5F);
-        this.batOuterRightWing.addBox(-8.0F, 1.0F, 0.0F, 8, 12, 1);
-        this.batLeftWing = new ModelRenderer(this, 42, 0);
+        ModelPart1.addCuboid(1.0F, -6.0F, -2.0F, 3, 4, 1);
+        this.batHead.add(ModelPart1);
+        this.batBody = new ModelPart(this, 0, 16);
+        this.batBody.addCuboid(-3.0F, 4.0F, -3.0F, 6, 12, 6);
+        this.batBody.setTextureOffset(0, 34).addCuboid(-5.0F, 16.0F, 0.0F, 10, 6, 1);
+        this.batRightWing = new ModelPart(this, 42, 0);
+        this.batRightWing.addCuboid(-12.0F, 1.0F, 1.5F, 10, 16, 1);
+        this.batOuterRightWing = new ModelPart(this, 24, 16);
+        this.batOuterRightWing.setPivot(-12.0F, 1.0F, 1.5F);
+        this.batOuterRightWing.addCuboid(-8.0F, 1.0F, 0.0F, 8, 12, 1);
+        this.batLeftWing = new ModelPart(this, 42, 0);
         this.batLeftWing.mirror = true;
-        this.batLeftWing.addBox(2.0F, 1.0F, 1.5F, 10, 16, 1);
-        this.batOuterLeftWing = new ModelRenderer(this, 24, 16);
+        this.batLeftWing.addCuboid(2.0F, 1.0F, 1.5F, 10, 16, 1);
+        this.batOuterLeftWing = new ModelPart(this, 24, 16);
         this.batOuterLeftWing.mirror = true;
-        this.batOuterLeftWing.setRotationPoint(12.0F, 1.0F, 1.5F);
-        this.batOuterLeftWing.addBox(0.0F, 1.0F, 0.0F, 8, 12, 1);
-        this.batBody.addChild(this.batRightWing);
-        this.batBody.addChild(this.batLeftWing);
-        this.batRightWing.addChild(this.batOuterRightWing);
-        this.batLeftWing.addChild(this.batOuterLeftWing);
+        this.batOuterLeftWing.setPivot(12.0F, 1.0F, 1.5F);
+        this.batOuterLeftWing.addCuboid(0.0F, 1.0F, 0.0F, 8, 12, 1);
+        this.batBody.add(this.batRightWing);
+        this.batBody.add(this.batLeftWing);
+        this.batRightWing.add(this.batOuterRightWing);
+        this.batLeftWing.add(this.batOuterLeftWing);
     }
 
     /**
      * Sets the models various rotation angles then renders the model.
      */
     public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-        this.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn);
+        this.setAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn);
         this.batHead.render(scale);
         this.batBody.render(scale);
     }
@@ -65,18 +65,18 @@ public class ClientBatModel extends ModelBase {
      * and legs, where par1 represents the time(so that arms and legs swing back and forth) and par2 represents how "far"
      * arms and legs can swing at most.
      */
-    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
-        this.batHead.rotateAngleX = headPitch * ((float)Math.PI / 180F);
-        this.batHead.rotateAngleY = netHeadYaw * ((float)Math.PI / 180F);
-        this.batHead.rotateAngleZ = 0.0F;
-        this.batHead.setRotationPoint(0.0F, 0.0F, 0.0F);
-        this.batRightWing.setRotationPoint(0.0F, 0.0F, 0.0F);
-        this.batLeftWing.setRotationPoint(0.0F, 0.0F, 0.0F);
-        this.batBody.rotateAngleX = ((float)Math.PI / 4F) + MathHelper.cos(ageInTicks * 0.1F) * 0.15F;
-        this.batBody.rotateAngleY = 0.0F;
-        this.batRightWing.rotateAngleY = MathHelper.cos(ageInTicks * 1.3F) * (float)Math.PI * 0.25F;
-        this.batLeftWing.rotateAngleY = -this.batRightWing.rotateAngleY;
-        this.batOuterRightWing.rotateAngleY = this.batRightWing.rotateAngleY * 0.5F;
-        this.batOuterLeftWing.rotateAngleY = -this.batRightWing.rotateAngleY * 0.5F;
+    public void setAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
+        this.batHead.posX = headPitch * ((float)Math.PI / 180F);
+        this.batHead.posY = netHeadYaw * ((float)Math.PI / 180F);
+        this.batHead.posZ = 0.0F;
+        this.batHead.setPivot(0.0F, 0.0F, 0.0F);
+        this.batRightWing.setPivot(0.0F, 0.0F, 0.0F);
+        this.batLeftWing.setPivot(0.0F, 0.0F, 0.0F);
+        this.batBody.posX = ((float)Math.PI / 4F) + MathHelper.cos(ageInTicks * 0.1F) * 0.15F;
+        this.batBody.posY = 0.0F;
+        this.batRightWing.posY = MathHelper.cos(ageInTicks * 1.3F) * (float)Math.PI * 0.25F;
+        this.batLeftWing.posY = -this.batRightWing.posY;
+        this.batOuterRightWing.posY = this.batRightWing.posY * 0.5F;
+        this.batOuterLeftWing.posY = -this.batRightWing.posY * 0.5F;
     }
 }

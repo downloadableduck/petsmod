@@ -7,7 +7,7 @@ public enum SlimeLikeSkins implements NameableEnum {
     large;
 
     @Override
-    public net.minecraft.util.ChatComponentText getDisplayName() {
-        return new net.minecraft.util.ChatComponentText(String.valueOf(this).replace("_", " "));
+    public net.minecraft.text.LiteralText getDisplayName() {
+        return new net.minecraft.text.LiteralText(String.valueOf(this).replace("_", " "));
     }
 }

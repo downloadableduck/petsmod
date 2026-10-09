@@ -1,20 +1,21 @@
 package me.shedaniel.clothconfig2.gui;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiConfirmOpenLink;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.resources.I18n;
-
 import java.util.Random;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.ConfirmChatLinkScreen;
+import net.minecraft.client.gui.screen.Screen;
 
-public class ClothRequiresRestartScreen extends GuiConfirmOpenLink {
+public class ClothRequiresRestartScreen extends ConfirmChatLinkScreen {
 
-    public ClothRequiresRestartScreen(GuiScreen parent) {
-        super((t, u) -> {
-            if (t)
-                Minecraft.getMinecraft().shutdown();
-            else
-                Minecraft.getMinecraft().displayGuiScreen(parent);
+    public ClothRequiresRestartScreen(Screen parent) {
+        super(new Screen() {
+            @Override
+            public void method_22355(boolean t, int i) {
+                if (t)
+                    MinecraftClient.getInstance().scheduleStop();
+                else
+                    MinecraftClient.getInstance().setScreen(parent);
+            }
         }, ("text.cloth-config.restart_required").toString(), new Random().nextInt(), false);
     }
 

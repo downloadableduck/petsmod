@@ -2,27 +2,26 @@ package com.jeff.pets.client.rendering.vanilla.sheep;
 
 import com.jeff.pets.mob.vanilla.passive.ClientSheep;
 import org.lwjgl.opengl.GL11;
-import net.minecraft.client.model.ModelSheep1;
-import net.minecraft.util.ResourceLocation;
-
 import java.util.Objects;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.entity.model.SheepWoolEntityModel;
+import net.minecraft.util.Identifier;
 
-import net.minecraft.client.Minecraft;
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientSheepWoolLayer {
-    private static final ResourceLocation TEXTURE = new ResourceLocation("minecraft", "textures/entity/sheep/sheep_fur.png");
+    private static final Identifier TEXTURE = new Identifier("minecraft", "textures/entity/sheep/sheep_fur.png");
     private final ClientSheepRenderer renderer;
-    private final ModelSheep1 model;
+    private final SheepWoolEntityModel model;
     int woolColor;
 
     public ClientSheepWoolLayer(ClientSheepRenderer renderer) {
         this.renderer = renderer;
-        this.model = new ModelSheep1();
+        this.model = new SheepWoolEntityModel();
     }
 
     public void render(ClientSheep sheep, float f, float z, float h, float i, float j, float k, float l) {
-        Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+        MinecraftClient.getInstance().getTextureManager().bindTexture(TEXTURE);
         if (Objects.equals(CONFIG.sheepSkin, "white")) {
             woolColor = 15132390;
         } else if (Objects.equals(CONFIG.sheepSkin, "orange")) {
@@ -63,7 +62,7 @@ public class ClientSheepWoolLayer {
         float g = (float) (woolColor >> 8 & 255) / 255.0F;
         float b = (float) (woolColor & 255) / 255.0F;
         GL11.glColor4f(r, g, b, 1.0F);
-        this.model.setLivingAnimations(sheep, f, z, h);
+        this.model.animateModel(sheep, f, z, h);
         this.model.render(sheep, f, z, i, j, k, l);
     }
 

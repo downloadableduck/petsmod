@@ -3,8 +3,8 @@ package me.shedaniel.clothconfig2.impl;
 import com.google.common.collect.Lists;
 import me.shedaniel.clothconfig2.api.ScissorsHandler;
 import me.shedaniel.math.Rectangle;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.Window;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Collections;
@@ -50,11 +50,11 @@ public final class ScissorsHandlerImpl implements ScissorsHandler {
         if (!scissorsAreas.isEmpty()) {
             Rectangle r = scissorsAreas.get(0).clone();
             scissorsAreas.stream().skip(1L).forEach(rectangle -> r.setBounds(r.intersects(rectangle) ? r.intersection(rectangle) : new Rectangle()));
-            Minecraft mc = Minecraft.getMinecraft();
-            ScaledResolution resolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+            MinecraftClient mc = MinecraftClient.getInstance();
+            Window resolution = new Window(mc, mc.width, mc.height);
             double scaleFactor = resolution.getScaleFactor();
             GL11.glEnable(GL11.GL_SCISSOR_TEST);
-            GL11.glScissor((int) (r.x * scaleFactor), (int) ((resolution.getScaledHeight() - r.height - r.y) * scaleFactor), (int) (r.width * scaleFactor), (int) (r.height * scaleFactor));
+            GL11.glScissor((int) (r.x * scaleFactor), (int) ((resolution.getHeight() - r.height - r.y) * scaleFactor), (int) (r.width * scaleFactor), (int) (r.height * scaleFactor));
         } else
             GL11.glDisable(GL11.GL_SCISSOR_TEST);
     }

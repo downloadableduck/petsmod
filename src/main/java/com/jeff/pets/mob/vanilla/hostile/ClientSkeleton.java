@@ -1,10 +1,7 @@
 package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.GroundPet;
-
-
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.passive.EntityTameable;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,7 +9,7 @@ public class ClientSkeleton extends GroundPet {
 
     public ClientSkeleton(World level) {
         super(level);
-        this.setSize(0.6F, 1.95F);
+        this.setBounds(0.6F, 1.95F);
     }
 
     @Override
@@ -30,7 +27,7 @@ public class ClientSkeleton extends GroundPet {
         return "mob.skeleton.say";
     }
 
-        public void rangedAttack(EntityLiving livingEntity, float f) {
+        public void rangedAttack(MobEntity livingEntity, float f) {
 
     }
 }

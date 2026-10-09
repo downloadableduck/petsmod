@@ -1,16 +1,13 @@
 package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.GroundPet;
-
-
-import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientEndermite extends GroundPet {
     public ClientEndermite(World level) {
         super(level);
-        this.setSize(0.4F, 0.3F);
+        this.setBounds(0.4F, 0.3F);
     }
 
     @Override

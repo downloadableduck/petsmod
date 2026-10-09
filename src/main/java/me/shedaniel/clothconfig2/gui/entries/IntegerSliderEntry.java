@@ -1,12 +1,6 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
 import com.google.common.collect.Lists;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.util.MathHelper;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -14,17 +8,22 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.resource.language.I18n;
+import net.minecraft.client.util.Window;
+import net.minecraft.util.math.MathHelper;
 
 public class IntegerSliderEntry extends TooltipListEntry<Integer> {
 
     protected Slider sliderWidget;
-    protected GuiButton resetButton;
+    protected ButtonWidget resetButton;
     protected AtomicInteger value;
     private int minimum, maximum;
     private final Consumer<Integer> saveConsumer;
     private final Supplier<Integer> defaultValue;
     private Function<Integer, String> textGetter = integer -> String.format("Value: %d", integer);
-    private final List<GuiButton> widgets;
+    private final List<ButtonWidget> widgets;
 
 
     @Deprecated
@@ -54,15 +53,15 @@ public class IntegerSliderEntry extends TooltipListEntry<Integer> {
         this.maximum = maximum;
         this.minimum = minimum;
         this.sliderWidget = new Slider(0, 0, 152, 20, ((double) this.value.get() - minimum) / Math.abs(maximum - minimum));
-        this.resetButton = new GuiButton(new Random().nextInt(), 0, 0, Minecraft.getMinecraft().fontRendererObj.getStringWidth(I18n.format(resetButtonKey)) + 6, 20, I18n.format(resetButtonKey)) {
+        this.resetButton = new ButtonWidget(new Random().nextInt(), 0, 0, MinecraftClient.getInstance().textRenderer.getStringWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey)) {
             @Override
-            public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
-                if (this.enabled && this.visible && this.isMouseOver()) {
-                    sliderWidget.setProgress((MathHelper.clamp_int(IntegerSliderEntry.this.defaultValue.get(), minimum, maximum) - minimum) / (double) Math.abs(maximum - minimum));
-                    IntegerSliderEntry.this.value.set(MathHelper.clamp_int(IntegerSliderEntry.this.defaultValue.get(), minimum, maximum));
+            public boolean method_21893(MinecraftClient mc, int mouseX, int mouseY) {
+                if (this.field_22511 && this.field_22512 && this.method_21885()) {
+                    sliderWidget.setProgress((MathHelper.clamp(IntegerSliderEntry.this.defaultValue.get(), minimum, maximum) - minimum) / (double) Math.abs(maximum - minimum));
+                    IntegerSliderEntry.this.value.set(MathHelper.clamp(IntegerSliderEntry.this.defaultValue.get(), minimum, maximum));
                     sliderWidget.updateMessage();
                     getScreen().setEdited(true, isRequiresRestart());
-                    this.playPressSound(mc.getSoundHandler());
+                    this.method_21888(mc.getSoundManager());
                     return true;
                 }
                 return false;
@@ -111,26 +110,26 @@ public class IntegerSliderEntry extends TooltipListEntry<Integer> {
     @Override
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-        int windowWidth = (new ScaledResolution(Minecraft.getMinecraft(), Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight)).getScaledWidth();
-        this.resetButton.enabled = isEditable() && getDefaultValue().isPresent() && defaultValue.get() != value.get();
-        this.resetButton.yPosition = y;
-        this.sliderWidget.enabled = isEditable();
-        this.sliderWidget.yPosition = y;
-        if (Minecraft.getMinecraft().fontRendererObj.getBidiFlag()) {
-            Minecraft.getMinecraft().fontRendererObj.drawString(I18n.format(getFieldName()), windowWidth - x - Minecraft.getMinecraft().fontRendererObj.getStringWidth(I18n.format(getFieldName())), y + 5, getPreferredTextColor());
-            this.resetButton.xPosition = x;
-            this.sliderWidget.xPosition = x + resetButton.getButtonWidth() + 1;
+        int windowWidth = (new Window(MinecraftClient.getInstance(), MinecraftClient.getInstance().width, MinecraftClient.getInstance().height)).getWidth();
+        this.resetButton.field_22511 = isEditable() && getDefaultValue().isPresent() && defaultValue.get() != value.get();
+        this.resetButton.y = y;
+        this.sliderWidget.field_22511 = isEditable();
+        this.sliderWidget.y = y;
+        if (MinecraftClient.getInstance().textRenderer.isRightToLeft()) {
+            MinecraftClient.getInstance().textRenderer.draw(I18n.translate(getFieldName()), windowWidth - x - MinecraftClient.getInstance().textRenderer.getStringWidth(I18n.translate(getFieldName())), y + 5, getPreferredTextColor());
+            this.resetButton.x = x;
+            this.sliderWidget.x = x + resetButton.method_21890() + 1;
         } else {
-            Minecraft.getMinecraft().fontRendererObj.drawString(I18n.format(getFieldName()), x, y + 5, getPreferredTextColor());
-            this.resetButton.xPosition = x + entryWidth - resetButton.getButtonWidth();
-            this.sliderWidget.xPosition = x + entryWidth - 150;
+            MinecraftClient.getInstance().textRenderer.draw(I18n.translate(getFieldName()), x, y + 5, getPreferredTextColor());
+            this.resetButton.x = x + entryWidth - resetButton.method_21890();
+            this.sliderWidget.x = x + entryWidth - 150;
         }
-        this.sliderWidget.setWidth(150 - resetButton.getButtonWidth() - 2);
-        resetButton.drawButton(Minecraft.getMinecraft(), mouseX, mouseY);
-        sliderWidget.drawButton(Minecraft.getMinecraft(), mouseX, mouseY);
+        this.sliderWidget.setWidth(150 - resetButton.method_21890() - 2);
+        resetButton.method_21887(MinecraftClient.getInstance(), mouseX, mouseY);
+        sliderWidget.method_21887(MinecraftClient.getInstance(), mouseX, mouseY);
     }
 
-    private class Slider extends GuiButton {
+    private class Slider extends ButtonWidget {
         protected double value;
         protected boolean dragging;
 
@@ -140,7 +139,7 @@ public class IntegerSliderEntry extends TooltipListEntry<Integer> {
         }
 
         public void updateMessage() {
-            this.displayString = (textGetter.apply(IntegerSliderEntry.this.value.get()));
+            this.field_22510 = (textGetter.apply(IntegerSliderEntry.this.value.get()));
         }
 
         protected void applyValue() {
@@ -157,11 +156,11 @@ public class IntegerSliderEntry extends TooltipListEntry<Integer> {
         }
 
         public void setWidth(int wid) {
-            this.width = wid;
+            this.field_22508 = wid;
         }
 
         protected void setValueFromMouse(int mouseX) {
-            this.value = (double) (mouseX - (this.xPosition + 4)) / (double) (this.width - 8);
+            this.value = (double) (mouseX - (this.x + 4)) / (double) (this.field_22508 - 8);
             if (this.value < 0.0D) {
                 this.value = 0.0D;
             }
@@ -173,48 +172,48 @@ public class IntegerSliderEntry extends TooltipListEntry<Integer> {
         }
 
         @Override
-        public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
-            if (this.enabled && this.visible && this.isMouseOver()) {
+        public boolean method_21893(MinecraftClient mc, int mouseX, int mouseY) {
+            if (this.field_22511 && this.field_22512 && this.method_21885()) {
                 this.dragging = true;
                 setValueFromMouse(mouseX);
                 return true;
             }
-            return super.mousePressed(mc, mouseX, mouseY);
+            return super.method_21893(mc, mouseX, mouseY);
         }
 
         @Override
-        protected void mouseDragged(Minecraft mc, int mouseX, int mouseY) {
+        protected void method_21892(MinecraftClient mc, int mouseX, int mouseY) {
             if (this.dragging) {
                 setValueFromMouse(mouseX);
             }
         }
 
         @Override
-        public void mouseReleased(int mouseX, int mouseY) {
+        public void method_21886(int mouseX, int mouseY) {
             this.dragging = false;
         }
 
         @Override
-        public void drawButton(Minecraft mc, int mouseX, int mouseY) {
-            if (!this.visible) {
+        public void method_21887(MinecraftClient mc, int mouseX, int mouseY) {
+            if (!this.field_22512) {
                 return;
             }
-            this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
-            drawRect(this.xPosition, this.yPosition, this.xPosition + this.width, this.yPosition + this.height, this.hovered ? 0xFF767676 : 0xFF3A3A3A);
-            int knobX = this.xPosition + 2 + (int) (this.value * (double) (this.width - 8));
-            drawRect(knobX, this.yPosition + 1, knobX + 4, this.yPosition + this.height - 1, 0xFFE0E0E0);
-            mc.fontRendererObj.drawStringWithShadow(this.displayString, this.xPosition + 5, this.yPosition + (this.height - 8) / 2, 0xFFFFFF);
-            this.mouseDragged(mc, mouseX, mouseY);
+            this.field_22513 = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.field_22508 && mouseY < this.y + this.field_22509;
+            method_21878(this.x, this.y, this.x + this.field_22508, this.y + this.field_22509, this.method_21885() ? 0xFF767676 : 0xFF3A3A3A);
+            int knobX = this.x + 2 + (int) (this.value * (double) (this.field_22508 - 8));
+            method_21878(knobX, this.y + 1, knobX + 4, this.y + this.field_22509 - 1, 0xFFE0E0E0);
+            mc.textRenderer.method_956(this.field_22510, this.x + 5, this.y + (this.field_22509 - 8) / 2, 0xFFFFFF);
+            this.method_21892(mc, mouseX, mouseY);
         }
     }
 
     @Override
     public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
         if (mouseButton == 0) {
-            if (this.sliderWidget.mousePressed(Minecraft.getMinecraft(), mouseX, mouseY)) {
+            if (this.sliderWidget.method_21893(MinecraftClient.getInstance(), mouseX, mouseY)) {
                 return true;
             }
-            if (this.resetButton.mousePressed(Minecraft.getMinecraft(), mouseX, mouseY)) {
+            if (this.resetButton.method_21893(MinecraftClient.getInstance(), mouseX, mouseY)) {
                 return true;
             }
         }

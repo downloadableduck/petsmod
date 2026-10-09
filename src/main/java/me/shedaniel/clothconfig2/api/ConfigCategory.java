@@ -1,8 +1,7 @@
 package me.shedaniel.clothconfig2.api;
 
-import net.minecraft.util.ResourceLocation;
-
 import java.util.List;
+import net.minecraft.util.Identifier;
 
 public interface ConfigCategory {
 
@@ -13,7 +12,7 @@ public interface ConfigCategory {
 
     ConfigCategory addEntry(AbstractConfigListEntry entry);
 
-    ConfigCategory setCategoryBackground(ResourceLocation ResourceLocation);
+    ConfigCategory setCategoryBackground(Identifier ResourceLocation);
 
     void removeCategory();
 
