@@ -1,6 +1,7 @@
 package com.jeff.pets.mob;
 
 import com.jeff.pets.mob.custom.first.Duck;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -28,6 +29,8 @@ public abstract class GroundPet extends AbstractPet {
     @Override
     public void tick() {
         super.tick();
+        System.out.println(this.getOwner());
+        System.out.println(MinecraftClient.getInstance().field_3805.getName().computeValue());
         LivingEntity owner = this.getOwner();
         if (owner != null) {
             if (this.vehicle == owner) {

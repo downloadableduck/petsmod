@@ -52,7 +52,7 @@ public class Utils {
         entity.updatePosition(x, y, z);
         entity.setName(entityName);
         world.spawnEntity(entity);
-        entity.method_2713(player.getUuid().toString());
+        entity.method_2713(player.getName().computeValue());
         Central.summonedEntity.add(entity);
     }
 

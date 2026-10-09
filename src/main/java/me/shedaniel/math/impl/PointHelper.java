@@ -8,7 +8,7 @@ import org.lwjgl.input.Mouse;
 public class PointHelper {
     public static Point ofMouse() {
         MinecraftClient client = MinecraftClient.getInstance();
-        Window sr = new Window(client, client.width, client.height);
+        Window sr = new Window(client.options, client.width, client.height);
         double scaledWidth = sr.getWidth();
         double scaledHeight = sr.getHeight();
         double mx = Mouse.getX() * scaledWidth / (double) (double) client.width;
