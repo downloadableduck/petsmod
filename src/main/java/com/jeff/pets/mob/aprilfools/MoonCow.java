@@ -33,6 +33,6 @@ public class MoonCow extends SlimeLikePet {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.COW_SOUNDS.get(CowSoundVariants.SoundSet.CLASSIC).ambientSound().value();
+        return SoundEvents.COW_SOUNDS.get(CowSoundVariants.SoundSet.CLASSIC).ambientSound().get().value();
     }
 }

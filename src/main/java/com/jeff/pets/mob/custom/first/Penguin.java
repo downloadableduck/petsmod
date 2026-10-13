@@ -21,6 +21,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.chicken.ChickenSoundVariants;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -119,7 +120,7 @@ public class Penguin extends AbstractPet {
     }
 
     protected void playStepSound(final @NotNull BlockPos pos, final @NotNull BlockState blockState) {
-        this.playSound(SoundEvents.CHICKEN_STEP.value(), 0.15F, 1.0F);
+        this.playSound(SoundEvents.CHICKEN_SOUNDS.get(ChickenSoundVariants.SoundSet.CLASSIC).adultSounds().stepSound().get().value(), 0.15F, 1.0F);
     }
 
     public @Nullable Penguin getBreedOffspring(final @NotNull ServerLevel level, final @NotNull AgeableMob partner) {
@@ -251,7 +252,7 @@ public class Penguin extends AbstractPet {
 
         if (this.walkAnimation.isMoving()) {
             try (Level level = this.level()) {
-                level.playLocalSound(this, SoundEvents.CHICKEN_STEP.value(), SoundSource.NEUTRAL, 1.0f, 1.0f);
+                level.playLocalSound(this, SoundEvents.CHICKEN_SOUNDS.get(ChickenSoundVariants.SoundSet.CLASSIC).adultSounds().stepSound().get().value(), SoundSource.NEUTRAL, 1.0f, 1.0f);
             } catch (Exception ignored) {
             }
         }
