@@ -4,7 +4,6 @@ import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.first.Racoon;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.util.math.MathHelper;
-import org.jetbrains.annotations.NotNull;
 
 public class RacoonModel extends PetModel {
     private final ModelPart root;
@@ -79,7 +78,7 @@ public class RacoonModel extends PetModel {
     }
 
     @Override
-    public void prepare(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h) {
+    public void prepare(net.minecraft.entity.mob.MobEntity entity, float f, float g, float h) {
         Racoon fox = (Racoon) entity;
         //this.body.xRot = ((float) Math.PI / 2F);
         this.tail.rotationX = -0.05235988F;

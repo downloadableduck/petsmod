@@ -4,9 +4,7 @@ import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.client.Math2;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resource.Identifier;
-import net.minecraft.util.math.MathHelper;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -21,7 +19,7 @@ public class DuckRenderer extends PetRenderer<@NotNull Duck> {
     }
 
     @Override
-    protected void applyScale(net.minecraft.entity.living.LivingEntity entity, float f) {
+    protected void applyScale(net.minecraft.entity.mob.MobEntity entity, float f) {
         Duck livingEntityRenderState = (Duck) entity;
         if (CONFIG.isBaby) {
             com.jeff.pets.compat.GlStateManager.scalef(0.6f, 0.6f, 0.6f);
@@ -29,7 +27,7 @@ public class DuckRenderer extends PetRenderer<@NotNull Duck> {
     }
 
     @Override
-    public void renderModel(net.minecraft.entity.living.LivingEntity entity, float f, final float k, float u, float g, float h, float i) {
+    public void renderModel(net.minecraft.entity.mob.MobEntity entity, float f, final float k, float u, float g, float h, float i) {
         Duck duck = (Duck) entity;
         float partialTick = 1.0F;
         duck.flap = (float) Math2.lerp(partialTick, duck.oFlap, duck.flap);
@@ -38,17 +36,17 @@ public class DuckRenderer extends PetRenderer<@NotNull Duck> {
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
         Duck state = (Duck) entity;
         if (Objects.equals(CONFIG.duckSkin, "pekin")) {
-            duckTexturePath = "textures/entity/duck/pekin.png";
+            duckTexturePath = "textures/mob/duck/pekin.png";
         } else if (Objects.equals(CONFIG.duckSkin, "mallard")) {
-            duckTexturePath = "textures/entity/duck/mallard_male.png";
+            duckTexturePath = "textures/mob/duck/mallard_male.png";
         } else if (Objects.equals(CONFIG.duckSkin, "rubber")) {
-            duckTexturePath = "textures/entity/duck/rubber.png";
+            duckTexturePath = "textures/mob/duck/rubber.png";
         } else if (CONFIG.duckSkin.equals("bronze")) {
-            duckTexturePath = "textures/entity/duck/bronze.png";
+            duckTexturePath = "textures/mob/duck/bronze.png";
         }
-        return new Identifier(PetsInitializer.MOD_ID, duckTexturePath);
+        return (duckTexturePath);
     }
 }

@@ -2,8 +2,11 @@ package com.jeff.pets.client.rendering.vanilla.blaze;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientBlaze;
+import net.minecraft.client.render.entity.BlazeRenderer;
 import net.minecraft.client.render.model.entity.BlazeModel;
-import net.minecraft.client.resource.Identifier;
+
+import net.minecraft.client.render.texture.TextureAtlas;
+import net.minecraft.client.render.texture.TextureAtlasSprite;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientBlazeRenderer extends PetRenderer<ClientBlaze> {
@@ -13,8 +16,8 @@ public class ClientBlazeRenderer extends PetRenderer<ClientBlaze> {
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
         ClientBlaze livingEntityRenderState = (ClientBlaze) entity;
-        return new Identifier("minecraft", "textures/entity/blaze.png");
+        return ("/mob/.png");
     }
 }

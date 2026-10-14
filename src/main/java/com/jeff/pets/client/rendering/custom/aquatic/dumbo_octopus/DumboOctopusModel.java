@@ -3,7 +3,6 @@ package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
 import net.minecraft.client.render.model.ModelPart;
-import org.jetbrains.annotations.NotNull;
 
 public class DumboOctopusModel extends PetModel {
     private final ModelPart body;

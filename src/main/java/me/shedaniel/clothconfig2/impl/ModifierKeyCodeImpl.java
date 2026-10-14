@@ -1,10 +1,9 @@
 package me.shedaniel.clothconfig2.impl;
 
-import me.shedaniel.clothconfig2.compat.InputConstants;
 import me.shedaniel.clothconfig2.api.Modifier;
 import me.shedaniel.clothconfig2.api.ModifierKeyCode;
-
-import net.minecraft.client.resource.language.I18n;
+import me.shedaniel.clothconfig2.compat.InputConstants;
+import net.minecraft.locale.I18n;
 
 import java.util.Objects;
 

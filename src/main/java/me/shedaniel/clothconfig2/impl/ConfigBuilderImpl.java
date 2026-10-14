@@ -5,18 +5,15 @@ import com.google.common.collect.Maps;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.gui.ClothConfigScreen;
-
+import net.minecraft.client.gui.GuiElement;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.resource.Identifier;
-import me.shedaniel.clothconfig2.impl.ConfigPair;
+
+import net.minecraft.locale.I18n;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
-
-import static net.minecraft.client.gui.GuiElement.BACKGROUND_LOCATION;
 
 @Deprecated
 
@@ -31,9 +28,9 @@ public class ConfigBuilderImpl implements ConfigBuilder {
     private boolean doesProcessErrors = true;
     private boolean doesConfirmSave = true;
     private boolean transparentBackground = false;
-    private Identifier defaultBackground = BACKGROUND_LOCATION;
+    private String defaultBackground = "";
     private Consumer<Screen> afterInitConsumer = screen -> {};
-    private final Map<String, Identifier> categoryBackground = Maps.newHashMap();
+    private final Map<String, String> categoryBackground = Maps.newHashMap();
     private final Map<String, List<ConfigPair<String, Object>>> dataMap = Maps.newLinkedHashMap();
     private String fallbackCategory = null;
     private boolean alwaysShowTabs = false;
@@ -191,12 +188,12 @@ public class ConfigBuilderImpl implements ConfigBuilder {
     }
     
     @Override
-    public Identifier getDefaultBackgroundTexture() {
+    public String getDefaultBackgroundTexture() {
         return defaultBackground;
     }
     
     @Override
-    public ConfigBuilder setDefaultBackgroundTexture(Identifier texture) {
+    public ConfigBuilder setDefaultBackgroundTexture(String texture) {
         this.defaultBackground = texture;
         return this;
     }

@@ -2,13 +2,10 @@ package com.jeff.pets.mob;
 
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.custom.first.Duck;
-
-import net.minecraft.entity.living.LivingEntity;
-import net.minecraft.entity.living.mob.passive.animal.tameable.TameableEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -30,7 +27,7 @@ public abstract class SlimeLikePet extends AbstractPet {
     @Override
     public void tick() {
         super.tick();
-        LivingEntity owner = this.getOwner();
+        MobEntity owner = this.getOwner();
         if (owner != null) {
 
             if (this.vehicle == owner) {

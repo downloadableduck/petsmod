@@ -1,9 +1,9 @@
 package com.jeff.pets.client.rendering;
 
-import net.minecraft.entity.living.LivingEntity;
+import net.minecraft.entity.mob.MobEntity;
 
 /**
- * Stand-in for Minecraft 1.8's {@code net.minecraft.client.render.entity.layer.EntityRenderLayer},
+ * Stand-in for Minecraft 1.8's {@code net.minecraft.client.render.mob.layer.EntityRenderLayer},
  * which does not exist in 1.7.10.
  *
  * <p>Render layers were introduced in 1.8. On 1.7.10 each of this mod's renderers keeps its
@@ -26,7 +26,7 @@ public interface PetRenderLayer {
 	 * @param headPitch       interpolated head pitch
 	 * @param scale           model scale
 	 */
-	void render(LivingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks,
+	void render(MobEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks,
 	            float netHeadYaw, float headPitch, float scale);
 
 	/**

@@ -1,6 +1,5 @@
 package com.jeff.pets.compat;
 
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
 /**

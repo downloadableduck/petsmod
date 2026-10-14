@@ -21,18 +21,16 @@ package me.shedaniel.autoconfig.gui;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.jeff.pets.client.Central;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.autoconfig.gui.registry.GuiRegistry;
 import me.shedaniel.autoconfig.gui.registry.api.GuiRegistryAccess;
 import me.shedaniel.autoconfig.util.Utils;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
+import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import me.shedaniel.clothconfig2.gui.entries.SelectionListEntry;
 import me.shedaniel.clothconfig2.impl.builders.DropdownMenuBuilder;
-
-import me.shedaniel.clothconfig2.compat.GuiEventListener;
-import net.minecraft.client.resource.language.I18n;
+import net.minecraft.locale.I18n;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.lang.reflect.Array;

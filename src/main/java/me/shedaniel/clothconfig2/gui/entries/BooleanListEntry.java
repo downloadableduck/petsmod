@@ -1,13 +1,11 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
-import me.shedaniel.clothconfig2.impl.WindowUtil;
-
 import com.google.common.collect.Lists;
-import net.minecraft.client.Minecraft;
 import me.shedaniel.clothconfig2.ButtonWidget;
-import net.minecraft.client.Minecraft;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
-import net.minecraft.client.resource.language.I18n;
+import me.shedaniel.clothconfig2.impl.WindowUtil;
+import net.minecraft.client.Minecraft;
+import net.minecraft.locale.I18n;
 
 import java.util.List;
 import java.util.Optional;

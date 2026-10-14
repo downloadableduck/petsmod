@@ -3,9 +3,9 @@ or a block. But don't worry about getting lost - I'll be here every step of the 
 
 # How to Create Your Own Custom Entity in Minecraft
 
-Hello there! Are you looking to learn how to create your own custom entity in Minecraft, whether it be friendly,
+Hello there! Are you looking to learn how to create your own custom mob in Minecraft, whether it be friendly,
 fearsome, or something else? Then this is the place to be! This guide covers everything you need to know about creating
-your own entity, from the model to the attributes to the rendering! Without further ado, let's dive into it!
+your own mob, from the model to the attributes to the rendering! Without further ado, let's dive into it!
 
 ## Creating a Model and Texture
 
@@ -19,7 +19,7 @@ open, select 'File'. Now click 'Convert Project' -> 'Modded Entity'. The convers
 might have to make a few tweaks.
 
 Now, in the top of the screen, you will see a toolbar, which contains things like moving, rotating, etc. Go to the far
-right and you will see a button called 'paint'. Select that and color in your entity. You can also import someone else's
+right and you will see a button called 'paint'. Select that and color in your mob. You can also import someone else's
 texture (once again, with permission!), click on 'help', click 'search and run action', and look for 'Select All'. Once
 you have everything selected, go to the bottom left, where you will see a panel called 'Textures'. Click 'Import
 Texture' and choose your file.
@@ -29,7 +29,7 @@ and it should look perfect!
 
 **If you are creating your own model:** You are going to want to create a new 'Modded
 Entity'. [this](https://www.youtube.com/watch?v=dsax5p4brN8) is a great guide on how to use Blockbench. Remember, you
-need both a model (the shape of the entity) and the texture (the color of the entity) to work!
+need both a model (the shape of the mob) and the texture (the color of the mob) to work!
 
 > TIP: If you go to 'File -> Plugins' and search for 'CEM' you will see an easy way to easily access and modify
 > Minecraft's models.
@@ -39,7 +39,7 @@ textures panel. Once you have this, hit 'File -> Project', and change the dropdo
 1.17+'. Now to 'File -> Export' and hit 'Export Java Entity.' Make sure to keep track of where these files are - we will
 need them in a little bit.
 
-> TIP: If you want, you can simply use the model and texture I used for my entity. The model file and texture are below:
+> TIP: If you want, you can simply use the model and texture I used for my mob. The model file and texture are below:
 
 <details>
 <summary>My Model File (click me!)</summary>
@@ -64,7 +64,7 @@ public class head_player - Converted<T extends Entity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void setupAnim(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setupAnim(Entity mob, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
 	}
 
@@ -87,7 +87,7 @@ public class head_player - Converted<T extends Entity> extends EntityModel<T> {
 
 The first thing you will need to do is download the example fabric mod that has all of the filepaths and blueprints all
 set up. Make sure that these specific boxes are checked, or you won't be able to follow along properly:
-<img width="1262" height="713" alt="If this image isn't loading, please refresh the page. If this persists, create an [issue](https://github.com/downloadableduck/example-entity/issues) and follow the instructions below." src="https://github.com/user-attachments/assets/927a5835-85fa-45c4-9741-3aa2bb4bc420" />
+<img width="1262" height="713" alt="If this image isn't loading, please refresh the page. If this persists, create an [issue](https://github.com/downloadableduck/example-mob/issues) and follow the instructions below." src="https://github.com/user-attachments/assets/927a5835-85fa-45c4-9741-3aa2bb4bc420" />
 
 If you could not tell, make sure the boxes saying 'Mojang Mappings' and "Split client and common sources' are checked,
 while 'Kotlin Programming Language' and 'Data Generation' are left unchecked. (Having Kotlin Programming Language and
@@ -103,9 +103,9 @@ is time to get started on the actual coding!
 > TIP: Remember to replace the icon.png with your own custom mod icon and change the fabric.mod.json to reflect your
 > actual mod!
 
-For our first step, we will jump right in to creating our entity, and focus on rendering it once the base entity has
+For our first step, we will jump right in to creating our mob, and focus on rendering it once the base mob has
 been created. To start, we will create a new class that extends `Animal`, but you can change the extension to anything
-that you like, such as PathFinderMob, Monster, or FlyingAnimal. Remember, even though we call our entity ExampleEntity,
+that you like, such as PathFinderMob, Monster, or FlyingAnimal. Remember, even though we call our mob ExampleEntity,
 make sure to name the files and variables something that accurately reflects the mob you are making!
 
 `src/main/java/[your package]/ExampleEntity.java`
@@ -118,7 +118,7 @@ public class ExampleEntity extends Animal {
     public ExampleEntity(final EntityType<? extends ExampleEntity> type, final Level level) {
         super(type, level);
     }
-        /**Creates the attributes that the entity will have - health, movement speed, etc. Make sure to tweak these to match your mob - if you are creating a custom cat, you don't want the movement speed to be 0.25!*/
+        /**Creates the attributes that the mob will have - health, movement speed, etc. Make sure to tweak these to match your mob - if you are creating a custom cat, you don't want the movement speed to be 0.25!*/
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createAnimalAttributes().add(Attributes.MAX_HEALTH, 5.0F).add(Attributes.MOVEMENT_SPEED, 0.25F);
     }
@@ -128,7 +128,7 @@ public class ExampleEntity extends Animal {
 > TIP: You will see a red error stating that 'Class 'ExampleEntity' must either be declared abstract or implement
 > abstract method 'isFood(ItemStack)' in 'Animal'. Don't worry about this - we'll cover it in a minute.
 
-After this, we will set up our sounds for the entity. This controls what plays when the entity dies, moves, gets hit,
+After this, we will set up our sounds for the mob. This controls what plays when the mob dies, moves, gets hit,
 etc.
 
 `src/main/java/[your package]/ExampleEntity.java`
@@ -144,20 +144,20 @@ public class ExampleEntity {
         return SoundEvents.CHICKEN_AMBIENT;
     }
 
-    /**The sound that will be played when you - or another force - damages the entity.
+    /**The sound that will be played when you - or another force - damages the mob.
      * Think of yourself punching a chicken.*/
     protected SoundEvent getHurtSound(final DamageSource source) {
         return SoundEvents.CHICKEN_HURT;
     }
 
-    /**The sound that will be played when the entity dies - think of the screaming sound that
+    /**The sound that will be played when the mob dies - think of the screaming sound that
      * endermen play when they die.
      */
     protected SoundEvent getDeathSound() {
         return SoundEvents.ENDERMAN_DEATH;
     }
 
-    /**The sound that will play when the entity is walking/moving - think of a slime making
+    /**The sound that will play when the mob is walking/moving - think of a slime making
      * 'splurch' noises while it hops about.
      */
     protected void playStepSound(final BlockPos pos, final BlockState blockState) {
@@ -217,14 +217,14 @@ Here I used the PLAYER_HEAD item, but you can choose whichever one you like - yo
 like such:
 `return itemStack.is(Items.PLAYER_HEAD) || itemStack.is(ItemTags.ARMADILLO_FOOD)`
 
-> TIP: As shown above, you can add multiple items to your entity in one statement by using ItemTags instead of each
+> TIP: As shown above, you can add multiple items to your mob in one statement by using ItemTags instead of each
 > individual Item.
 
 Right now, this doesn't do anything except allow the player to feed the mob with the item of your choice because we
-haven't added the logic that allows the entity to breed. However, to first add that logic we will need to jump into our
+haven't added the logic that allows the mob to breed. However, to first add that logic we will need to jump into our
 `initializer` class to add a couple lines.
 
-Firstly, let's create an entity that will actually exist ingame, and then add the logic to make it breed. Open your
+Firstly, let's create an mob that will actually exist ingame, and then add the logic to make it breed. Open your
 `initializer` class that came with the example template that we generated earlier.
 
 `src/main/java/[your package]/ExampleEntityInitializer.java`
@@ -245,7 +245,7 @@ public class ExampleEntityInitializer {
 ```
 
 You might have seen in the Javadoc comment that this is a key for our `EntityType DUCK` that we need to create. Let's do
-that now, and register our entity while we are at it:
+that now, and register our mob while we are at it:
 
 `src/main/java/[your package]/ExampleEntityInitializer.java`
 
@@ -253,14 +253,14 @@ that now, and register our entity while we are at it:
 public class ExampleEntityInitializer {
     { . . . your other code here . . . }
 
-        /**This creates the entity so that it will exist in-game.*/
+        /**This creates the mob so that it will exist in-game.*/
     public static final EntityType<ExampleEntity> EXAMPLE_ENTITY = Registry.register(
             BuiltInRegistries.ENTITY_TYPE,
             ResourceLocation.fromNamespaceAndPath(MOD_ID, "exampleentity"),
             EntityType.Builder.of(ExampleEntity::new, MobCategory.CREATURE)
                     .sized(1f, 1f)
                     /*This is how tall the hitbox will be - so where other entities will be able
-                     * to hit the entity.*/
+                     * to hit the mob.*/
                     .eyeHeight(1)
                     .build(EXAMPLE_ENTITY_KEY));
     
@@ -269,7 +269,7 @@ public class ExampleEntityInitializer {
         FabricDefaultAttributeRegistry.register(EXAMPLE_ENTITY, ExampleEntity.createAttributes().build());
         /*Registers the entities attributes - so how much health it has, how much speed it has, etc.
          * You might get a warning saying that the call to 'register' always fails - but you are
-         * free to ignore that. If you check in-game, you will see that your entity works just as
+         * free to ignore that. If you check in-game, you will see that your mob works just as
          * intended!
          */
     }
@@ -278,11 +278,11 @@ public class ExampleEntityInitializer {
 
 > TIP: If you are on version 1.21.10 or **below**, replace `ResourceLocation` with `ResourceLocation`.
 
-This makes the entity actually exist in game, and you can summon it using /summon [Your mod ID:your entity ID (defined
+This makes the mob actually exist in game, and you can summon it using /summon [Your mod ID:your mob ID (defined
 above in our `ResourceLocation.fromNamespaceAndPath()`)
 
-Now that our entity exists in-game, we can switch to our `ExampleEntity.java` and add the method getBreedOffspring,
-which will create a new entity of the same type when it breeds.
+Now that our mob exists in-game, we can switch to our `ExampleEntity.java` and add the method getBreedOffspring,
+which will create a new mob of the same type when it breeds.
 
 `src/main/java/[your package]/ExampleEntity.java`
 
@@ -295,9 +295,9 @@ public class ExampleEntity {
 }
 ```
 
-However, if you try breeding the entity in-game, you will see that it does not try to breed - this is because we haven't
-registered a new `BreedGoal` which makes the entity _want_ to breed.
-> TIP: If you want the player to follow the entity while it is holding the item used to breed it, you should add a new
+However, if you try breeding the mob in-game, you will see that it does not try to breed - this is because we haven't
+registered a new `BreedGoal` which makes the mob _want_ to breed.
+> TIP: If you want the player to follow the mob while it is holding the item used to breed it, you should add a new
 `TemptGoal`.
 
 `src/main/java/[your package]/ExampleEntity.java`
@@ -314,12 +314,12 @@ public class ExampleEntity {
 }
 ```
 
-And that's it for our entity, it should be able to move around and breed now - but what use is an entity if you can't
+And that's it for our mob, it should be able to move around and breed now - but what use is an mob if you can't
 see it?
 
 ## Rendering the Entity
 
-In order for an entity to appear in-game, it needs to be **rendered** for the client to be able to see it. Let's dive in
+In order for an mob to appear in-game, it needs to be **rendered** for the client to be able to see it. Let's dive in
 by creating a dummy `ExampleEntityRenderState` class that extends `LivingEntityRenderState`. However, since we are doing
 **rendering**, we should do this in our `client` package instead of our `main` package.
 
@@ -333,7 +333,7 @@ public class ExampleEntityRenderState extends LivingEntityRenderState {
 Yep, that's it - we don't need anything in this file, it is just a helper class to assist multiple methods that we will
 be creating in just a minute!
 
-Remember that entity that we modeled in our [Creating a Model & Texture section](#creating-a-model-and-texture)? Well,
+Remember that mob that we modeled in our [Creating a Model & Texture section](#creating-a-model-and-texture)? Well,
 now it's time to put that to use!
 
 The first thing we will do is create a new file in our `client` package called `ExampleEntityModel`, which will house a
@@ -357,8 +357,8 @@ public class ExampleEntityModel extends EntityModel<ExampleEntityRenderState> {
 
 Now that we have that, let's open up our Java file that we exported from Blockbench. You will see a method called
 `getTexturedModelData()` - copy the method in your file and paste it directly below our current code. This will house
-all of the different parts that make up the entity - the head, the body, the legs, etc. To keep the example mod simple,
-I have only added one part to my entity - but yours might have dozens.
+all of the different parts that make up the mob - the head, the body, the legs, etc. To keep the example mod simple,
+I have only added one part to my mob - but yours might have dozens.
 
 `src/client/java/[your package]/ExampleEntity.java`
 
@@ -440,10 +440,10 @@ public class ExampleEntityRenderer extends MobRenderer<ExampleEntity, ExampleEnt
 }
 ```
 
-Now, the last thing we will need to do is add a **texture** or the color and design of our entity - how it will look
+Now, the last thing we will need to do is add a **texture** or the color and design of our mob - how it will look
 ingame. Take the texture you exported from Blockbench and copy it. Now, create a new directory in your `main/resources`
 folder:
-`src/main/resources/assets/[your mod]/textures/entity`. Drop your texture in the entity folder, and then hop back to
+`src/main/resources/assets/[your mod]/textures/mob`. Drop your texture in the mob folder, and then hop back to
 your `ExampleEntityRenderer` class. Add this override at the bottom of your code:
 
 `src/client/java/[your package]/ExampleEntityRenderer.java`
@@ -453,17 +453,17 @@ public class ExampleEntityRenderer extends MobRenderer<ExampleEntity, ExampleEnt
 	    /**This method gets the texture and 'slaps' it onto the model in-game.
     @Override
     public @NotNull ResourceLocation getTextureLocation(final ExampleEntityRenderState state) {
-        return ResourceLocation.fromNamespaceAndPath(ExampleEntityInitializer.MOD_ID, "textures/entity/exampleentity.png");
+        return ResourceLocation.fromNamespaceAndPath(ExampleEntityInitializer.MOD_ID, "textures/mob/exampleentity.png");
     }
 }
 ```
 
 > TIP: You might have noticed that we used the filepath from the module root (our **main** folder) rather than what we
 > usually do with ResourceLocation.fromNamespaceAndPath(), which usually automatically appends `textures` and the `.png`
-> extension. This is because of the way Minecraft handles entity registries, so using the path from the module root will
+> extension. This is because of the way Minecraft handles mob registries, so using the path from the module root will
 > work just fine.
 
-Now that we have everything we need for the entity to function visually, let's hop over to our `client` initializer. For
+Now that we have everything we need for the mob to function visually, let's hop over to our `client` initializer. For
 me, it is `ExampleEntityClient.java`.
 
 `src/client/java/[your package]/ExampleEntityClient.java`
@@ -478,12 +478,12 @@ public class ExampleEntityClient implements ClientModInitializer {
 	}
 ```
 
-Now, launch your game, and type /summon [your mod ID:your entity ID]. You should see it appear in-game, and move around
+Now, launch your game, and type /summon [your mod ID:your mob ID]. You should see it appear in-game, and move around
 like a normal mob.
 
 > TIP: Is something not working? Re-visit the section that covers that subject and compare your code with mine.
 
-Congrats, you have created your first entity! Now, let's make it spawn naturally.
+Congrats, you have created your first mob! Now, let's make it spawn naturally.
 
 ## Adding Spawns
 
@@ -496,17 +496,17 @@ your package called `ExampleEntitySpawns.java`.
 public class ExampleEntitySpawns {
     public static void addExampleEntitySpawns() {
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(Biomes.PLAINS, Biomes.CHERRY_GROVE),
-                /*Adds the biomes which the entity can spawn in. You can add as many as you want,
+                /*Adds the biomes which the mob can spawn in. You can add as many as you want,
                  * and separate them with commas as shown above.*/
                 MobCategory.CREATURE, ExampleEntityInitializer.EXAMPLE_ENTITY, /*the weight*/ 100, /*the minimum group size*/ 2, /*the maximum group size*/ 7);
-        /*Adds the biomes which the entity can spawn in. You can add as many as you want,
+        /*Adds the biomes which the mob can spawn in. You can add as many as you want,
          * but separate them with commas as shown above.
-         * Tip: The weight is how often the entity spawns in comparison to other entities. Increasing
-         * it will increase the chance of your entity spawning, but also decrease the chance of other
+         * Tip: The weight is how often the mob spawns in comparison to other entities. Increasing
+         * it will increase the chance of your mob spawning, but also decrease the chance of other
          * entities spawning.*/
         SpawnPlacements.register(ExampleEntityInitializer.EXAMPLE_ENTITY, SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.WORLD_SURFACE, Animal::checkAnimalSpawnRules);
-        /*These are the conditions that our entity needs to spawn - does it spawn
+        /*These are the conditions that our mob needs to spawn - does it spawn
          * underwater, or on land? Does it spawn in the sky?
          */
     }
@@ -531,7 +531,7 @@ public class ExampleEntityInitializer implements ModInitializer {
 ```
 
 There we go! In-game, run `/locate biome` and choose any biome that you included in your `BiomeSelectors.includeByKey`
-method above. Walk around a bit and you should see your entity hanging around!
+method above. Walk around a bit and you should see your mob hanging around!
 
 # Conclusion
 
@@ -540,5 +540,5 @@ please open an [issue](https://github.com/downloadableduck/example-entity/issues
 this is an issue you are having with your mod or if it is an issue with my template mod or my instructions. If you do
 not, I will not be able to properly help you.
 
-Thank you for reading, I hope you had a lot of fun creating your own custom entity in Minecraft and I hope this was
+Thank you for reading, I hope you had a lot of fun creating your own custom mob in Minecraft and I hope this was
 helpful!

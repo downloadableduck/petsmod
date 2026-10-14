@@ -99,14 +99,14 @@ Without further ado, let's get started!
 
 ### Giving Your Entity Custom Logic
 
-In order to give your custom entity the logic it requires, take your entity class and make it extend `FlyingPet` or
+In order to give your custom mob the logic it requires, take your mob class and make it extend `FlyingPet` or
 `GroundPet`, depending on whether it can fly or not. You will need to override the following methods:
 
 `src/main/java/com/jeff/pets/CustomEntity.java`
 
 ```java
     /**This method is used to determine how far
-     * the entity should be when it
+     * the mob should be when it
      * stops moving towards the player. 
      */
     protected int stopDistance() {
@@ -116,13 +116,13 @@ In order to give your custom entity the logic it requires, take your entity clas
     /**Used to define how high the hearts that appear when
      * you right-click on a pet will be.
      * Zero means it would appear right in the middle of 
-     * the entity's hitbox. One would make it appear a block 
-     * above the entity.*/
+     * the mob's hitbox. One would make it appear a block 
+     * above the mob.*/
     protected float heartHeight() {
     
     }
 
-    /**Used to define the entity's default ambient sound..*/
+    /**Used to define the mob's default ambient sound..*/
     protected SoundEvent getAmbientSound() {
     
     }
@@ -145,7 +145,7 @@ public class CustomEntityRenderer extends MobRenderer<CustomEntity, GhastRenderS
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull GhastRenderState state) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/ghast/ghast.png");
+        return ResourceLocation.withDefaultNamespace("textures/mob/ghast/ghast.png");
     }
 
     @Override
@@ -171,7 +171,7 @@ public class CustomEntityRenderer extends PetRenderer<CustomEntity, GhastRenderS
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull GhastRenderState state) {
-        return ResourceLocation.withDefaultNamespace("textures/entity/ghast/ghast.png");
+        return ResourceLocation.withDefaultNamespace("textures/mob/ghast/ghast.png");
     }
 
     @Override
@@ -279,25 +279,25 @@ Finally, we need to add two `static final` fields.
 ```java
 public class ExamplePetsModAddonClient {
     public static final String CUSTOM_ENTITY_VALUE = "custom_entity";
-    public static final String CUSTOM_ENTITY_VALUE_NO_SPACES = "custom entity";
+    public static final String CUSTOM_ENTITY_VALUE_NO_SPACES = "custom mob";
 }
 ```
 
-> Note: The first value is what the CONFIG.activePet value will be set to when your custom entity is active. This should
+> Note: The first value is what the CONFIG.activePet value will be set to when your custom mob is active. This should
 > be consistant with what your pet is labeled as, unique, and most importantly, must be maintaned wherever you are
 > checking something relating to CONFIG.activePet.
 >
 > The second value is the same as the first, but without spaces. This will be here for use in the commands, so when the
-> user types `/petspecies custom entity`, it will still work.
+> user types `/petspecies custom mob`, it will still work.
 
 
-Great! Let's get started with mixing in to the Central class to allow the user to summon our custom entity.
+Great! Let's get started with mixing in to the Central class to allow the user to summon our custom mob.
 
 ## Mixing in to Central.class
 
 As you might remember from our Introduction to PetsMod section, Central contains most of the command logic, which the
-core of the mod is based around. What we will do is inject into each of the commands, check if they match our entity,
-and if so, set the currently active pet to our custom entity.
+core of the mod is based around. What we will do is inject into each of the commands, check if they match our mob,
+and if so, set the currently active pet to our custom mob.
 
 Let's create a new file in our `client/mixin` package.
 
@@ -310,7 +310,7 @@ public class CentralMixin {
 }
 ```
 
-Add a quick field to it as well. This will be an instance of our custom entity that can be summoned and de-spawned at
+Add a quick field to it as well. This will be an instance of our custom mob that can be summoned and de-spawned at
 will.
 
 `src/client/java/com/jeff/pets/exampleaddon/client/mixin/CentralMixin.java`
@@ -321,13 +321,13 @@ private static CustomEntity customEntity;
 ```
 
 Now that we have our class set up, let's mix in to the most important method, `createSummonCommand`. However, we will
-need a custom helper method to help us summon our entity. Add this to your code:
+need a custom helper method to help us summon our mob. Add this to your code:
 `src/client/java/com/jeff/pets/exampleaddon/client/mixin/CentralMixin.java`
 
 ```java
 @Unique
-    private static void spawnCustomEntity(CommandContext<FabricClientCommandSource> context, Entity entity, String activePet) {
-        Utils.setActivePet(entity, activePet);
+    private static void spawnCustomEntity(CommandContext<FabricClientCommandSource> context, Entity mob, String activePet) {
+        Utils.setActivePet(mob, activePet);
         AutoConfig.getConfigHolder(PetsConfig.class).save();
         context.getSource().sendFeedback(Component.literal("§b[PetsMod] §aYour active pet has been switched to " + activePet.replace("_", " ")));
         Central.despawnPet();
@@ -347,7 +347,7 @@ need a custom helper method to help us summon our entity. Add this to your code:
 - Despawns the currently active pet
 - Re-summons the newly active pet
 
-This method is **reusable**. You can use it multiple times for each of your custom pets - just switch up the `entity`
+This method is **reusable**. You can use it multiple times for each of your custom pets - just switch up the `mob`
 and `activePet` parameters.
 
 After this, we can start injecting. Let's start with, as previously stated, the /petspecies command.
@@ -365,7 +365,7 @@ private static void createSummonCommand(CommandContext<FabricClientCommandSource
 }
 ```
 
-This method takes the input of `/petspecies`, checks if it is equal to our custom entity, and uses our previously
+This method takes the input of `/petspecies`, checks if it is equal to our custom mob, and uses our previously
 defined `spawnCustomEntity()` method above if so.
 
 However, we are far from done. We still have to:
@@ -373,9 +373,9 @@ However, we are far from done. We still have to:
 - Let this mob be named through `/petname`
 - **Important**: Add support for our config screen so that it doesn't crash when the user presses **P**.
 - Despawn this pet when the user runs the command again.
-- Add the logic to the `summonPet()` method that will actually spawn the entity in the world
+- Add the logic to the `summonPet()` method that will actually spawn the mob in the world
 
-Let's focus on one thing at a time, and try to get this entity to spawn in the world first. Add a new `@Inject`, this
+Let's focus on one thing at a time, and try to get this mob to spawn in the world first. Add a new `@Inject`, this
 time for `summonPet()`.
 
 `src/client/java/com/jeff/pets/exampleaddon/client/mixin/CentralMixin.java`
@@ -406,17 +406,17 @@ When Minecraft initially launches, Minecraft.getInstance().level is null.
 
 - Checks if `CONFIG.activePet` - the currently selected pet - is equal to "custom_entity", or whatever value you set it
   your key to.
-- If so, summons the entity using `Utils.summonPet()`.
+- If so, summons the mob using `Utils.summonPet()`.
 
 When loading into a game, you should now see that you can use /petspecies to switch your pet. However, the game will not
-**suggest** this entity while the user is typing. Let's add that real quick. Hop over to your client initializer and add
+**suggest** this mob while the user is typing. Let's add that real quick. Hop over to your client initializer and add
 this code in your `onInitializeClient()` method.
 
 `src/client/com/jeff/pets/exampleaddon/client/ExamplePetsModAddonClient.java`
 
 ```java
 public void onInitializeClient() {
-        /* Adds our custom entity to the list of suggestions that appear when the user types
+        /* Adds our custom mob to the list of suggestions that appear when the user types
          * /petspecies. */
         Central.PETS_LIST.add(CUSTOM_ENTITY_VALUE_NO_SPACES);
 }
@@ -426,13 +426,13 @@ public void onInitializeClient() {
 
 Now, you should see your suggestion popping up when you try to run `/petspecies`.
 
-Try running `/petspecies` again. You should see that another pet will spawn, but your custom entity will not _despawn_.
+Try running `/petspecies` again. You should see that another pet will spawn, but your custom mob will not _despawn_.
 So, let's make that happen with a quick injection into `Central.despawnPet()`.
 
 `src/client/java/com/jeff/pets/exampleaddon/client/mixin/CentralMixin.java`
 
 ```java
-    /** Utils.despawnEntity checks if the entity is not null,
+    /** Utils.despawnEntity checks if the mob is not null,
      * and discards it if it is not.*/
     @Inject(at = @At("HEAD"), method = "despawnPet")
     private static void despawnPet(CallbackInfo ci) {
@@ -462,17 +462,17 @@ Great, it will now despawn when the user runs `/petspecies`. Let's add the namin
 
 **What this does:**
 SImply, when the user runs `/petname`, the command logic checks what the active pet is. This addition basically says,
-_if the currently active pet is our custom entity, then assign the inputted name to our custom entity._
+_if the currently active pet is our custom mob, then assign the inputted name to our custom mob._
 
 If you go in-game and try to run `/petname` on your pet, you will see that nothing happens. This is because, while the
-value in CUSTOM_CONFIG is changed, the name isn't actually re-assigned to the entity until it spawns. To solve this,
+value in CUSTOM_CONFIG is changed, the name isn't actually re-assigned to the mob until it spawns. To solve this,
 there is a method in `Central` called `refreshPetNames()` that runs every tick. Let's inject into that.
 
 `src/client/java/com/jeff/pets/exampleaddon/client/mixin/CentralMixin.java`
 
 ```java
 
-     /** This code runs every tick. Utils.checkName checks if the entity's custom name is
+     /** This code runs every tick. Utils.checkName checks if the mob's custom name is
      * equal to the name defined in the config, and if it is not, then re-assign the name.
      */
     @Inject(at = @At("HEAD"), method = "refreshPetNames")
@@ -487,7 +487,7 @@ Central#refreshPetNames(). Checks whether the entities'
 name is equal to the name in the config. Additionally,
 this method provides a layer of safety
 that ensures that Minecraft will not
-throw a NullPointerException if `entity` is `null`.
+throw a NullPointerException if `mob` is `null`.
 
 That's it for `Central.class` - we don't need to add anything more to this class. However, we still have to inject into
 the config screen to make sure it doesn't crash with an `IllegelStateException`.
@@ -502,7 +502,7 @@ Copy all of the enum constants from `PetList.class` and paste it into your enum.
 > Note: Every time PetsMod updates, new values will be added to the original PetList enum. Make sure to refer to the
 > appropriate file in the UPDATING.md file to make sure that your addon doesn't cause mismatches.
 
-Now, add your custom entity value to the **top** of your enum.
+Now, add your custom mob value to the **top** of your enum.
 
 ```java
 public enum CustomEntityValues {
@@ -524,7 +524,7 @@ public enum CustomEntityValues implements NameableEnum {
 }
 ```
 
-> Tip: Using `.replace()` means that, in the config screen, users see "custom entity" rather than "custom_entity". This
+> Tip: Using `.replace()` means that, in the config screen, users see "custom mob" rather than "custom_entity". This
 > is much cleaner and easier for the user.
 
 Now, we can inject into `PetsConfigScreen.class` with our custom logic. Add a couple of `@Injects`.
@@ -535,7 +535,7 @@ public class ConfigScreenMixin {
     /**
      * When the user opens the config screen, it will display their current pet. This ensures
      * that the game will not crash with an {@link IllegalArgumentException} upon using opening
-     * the screen with our custom entity, as it is not part of the {@link PetList} enum.
+     * the screen with our custom mob, as it is not part of the {@link PetList} enum.
      */
     @Inject(at = @At("HEAD"), method = "lambda$getModConfigScreenFactory$4", cancellable = true)
     private static void addCustomEntitySpecies(PetsConfig CONFIG, CallbackInfoReturnable<Enum<?>> cir) {
@@ -567,7 +567,7 @@ Finally, we have two last injections to ensure that the naming works correctly.
 @Mixin(PetsConfigScreen.class)
 public class ConfigScreenMixin {
     /**When the user opens the menu, they should see their currently selected pets name. 
-     * This ensures that if our custom entity is active, they will see our custom entities 
+     * This ensures that if our custom mob is active, they will see our custom entities 
      * name.*/
     @Inject(at = @At("HEAD"), method = "lambda$getModConfigScreenFactory$6", cancellable = true)
     private static void addCustomEntityName(PetsConfig CONFIG, CallbackInfoReturnable<String> cir) {
@@ -586,7 +586,7 @@ public class ConfigScreenMixin {
 }
 ```
 
-There you go! You've made a custom entity. Before we leave, let's add one more thing. Navigate to your initializer
+There you go! You've made a custom mob. Before we leave, let's add one more thing. Navigate to your initializer
 class.
 
 ```java
@@ -632,9 +632,9 @@ public class CustomEntityRenderer extends PetRenderer<CustomEntity, GhastRenderS
     @Override
     public void getTextureLocation(GhastRenderState state) {
         if (CUSTOM_CONFIG.customEntitySkin.equals("normal")) {
-            return ResourceLocation.withDefaultNamespace("textures/entity/ghast/ghast.png");
+            return ResourceLocation.withDefaultNamespace("textures/mob/ghast/ghast.png");
         } else {
-            return ResourceLocation.withDefaultNamespace("textures/entity/ghast/ghast_shooting.png");
+            return ResourceLocation.withDefaultNamespace("textures/mob/ghast/ghast_shooting.png");
         }
     }
 }
@@ -650,7 +650,7 @@ public class CentralMixin {
     private static void createPetSkinCommand(CommandContext<?> context, CallbackInfoReturnable<Integer> cir) {
         String skin = StringArgumentType.getString(context, "skin");
         if (CONFIG.activePet.equals(CUSTOM_ENTITY_VALUE)) {
-            //get what the user inputted and assign it if our custom entity is active
+            //get what the user inputted and assign it if our custom mob is active
             if (skin.equals("normal")) {
                 CUSTOM_CONFIG.customEntitySkin = "normal";
             } else if (skin.equals("angry")) {

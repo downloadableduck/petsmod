@@ -1,26 +1,26 @@
 package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.world.World;
 
 public class ClientHorse extends GroundPet {
-   public ClientHorse(World world) {
-      super(world);
+
+    public ClientHorse(net.minecraft.world.World level) {
+        super(level);
         this.setSize(1.3965f, 1.6f);
-   }
+    }
 
-   @Override
-   protected int stopDistance() {
-      return 2;
-   }
+    @Override
+    protected int stopDistance() {
+        return 2;
+    }
 
-   @Override
-   protected float heartHeight() {
-      return 3.0F;
-   }
+    @Override
+    protected float heartHeight() {
+        return 3;
+    }
 
-   @Override
-   protected String getAmbientSound() {
-      return "mob.horse.idle";
-   }
+    @Override
+    protected String getAmbientSound() {
+        return "mob.horse.idle";
+    }
 }

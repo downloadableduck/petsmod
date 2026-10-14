@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.wither;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.boss.ClientWither;
-import net.minecraft.client.resource.Identifier;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -17,17 +17,17 @@ public class ClientWitherRenderer extends PetRenderer<ClientWither> {
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
         ClientWither livingEntityRenderState = (ClientWither) entity;
         String witherTexturePath;
         if (Objects.equals(CONFIG.witherSkin, "normal")) {
-            witherTexturePath = "textures/entity/wither/wither.png";
+            witherTexturePath = "textures/mob/wither/wither.png";
         } else if (Objects.equals(CONFIG.witherSkin, "invulnerable")) {
-            witherTexturePath = "textures/entity/wither/wither_invulnerable.png";
+            witherTexturePath = "textures/mob/wither/wither_invulnerable.png";
         } else {
-            witherTexturePath = "textures/entity/wither/wither.png";
+            witherTexturePath = "textures/mob/wither/wither.png";
         }
-        return new Identifier("minecraft", witherTexturePath);
+        return (witherTexturePath);
     }
 
     /*@Override

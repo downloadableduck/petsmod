@@ -26,10 +26,8 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.autoconfig.gui.registry.api.GuiRegistryAccess;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
-
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.resource.Identifier;
-import net.minecraft.text.Text;
+
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -44,7 +42,7 @@ import static java.util.stream.Collectors.*;
 
 public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Screen> {
 
-    private static final Identifier TRANSPARENT_BACKGROUND = new Identifier(Config.Gui.Background.TRANSPARENT);
+    private static final String TRANSPARENT_BACKGROUND = (Config.Gui.Background.TRANSPARENT);
 
     private final ConfigManager<T> manager;
     private final GuiRegistryAccess registry;
@@ -97,9 +95,9 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
 
         if (configClass.isAnnotationPresent(Config.Gui.Background.class)) {
             String bg = configClass.getAnnotation(Config.Gui.Background.class).value();
-            Identifier bgId = null;
+            String bgId = null;
             try {
-                bgId = new Identifier(bg);
+                bgId = (bg);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -109,12 +107,12 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
                 builder.setDefaultBackgroundTexture(bgId);
         }
 
-        Map<String, Identifier> categoryBackgrounds =
+        Map<String, String> categoryBackgrounds =
                 Arrays.stream(configClass.getAnnotationsByType(Config.Gui.CategoryBackground.class))
                         .collect(
                                 toMap(
                                         Config.Gui.CategoryBackground::category,
-                                        ann -> new Identifier(ann.background())
+                                        ann -> (ann.background())
                                 )
                         );
 
@@ -142,7 +140,7 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
     private ConfigCategory getOrCreateCategoryForField(
             Field field,
             ConfigBuilder screenBuilder,
-            Map<String, Identifier> backgroundMap,
+            Map<String, String> backgroundMap,
             String baseI13n
     ) {
         String categoryName = "default";

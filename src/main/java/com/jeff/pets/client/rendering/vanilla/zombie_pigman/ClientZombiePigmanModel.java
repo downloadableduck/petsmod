@@ -6,9 +6,7 @@ import com.jeff.pets.client.rendering.ArmPose;
 import com.jeff.pets.mob.vanilla.neutral.ClientZombiePigman;
 import net.minecraft.client.render.model.Model;
 import net.minecraft.client.render.model.ModelPart;
-import net.minecraft.client.render.model.entity.HumanoidModel;
 import net.minecraft.entity.Entity;
-
 import net.minecraft.util.math.MathHelper;
 
 import static com.jeff.pets.client.Central.CONFIG;

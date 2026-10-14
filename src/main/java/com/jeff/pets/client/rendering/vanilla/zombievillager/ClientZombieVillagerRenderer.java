@@ -2,8 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.zombievillager;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
-import net.minecraft.client.resource.Identifier;
-import org.jetbrains.annotations.NotNull;
+
 
 import java.util.Objects;
 
@@ -11,11 +10,11 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientZombieVillagerRenderer extends PetRenderer<ClientZombieVillager> {
 
-    public static final Identifier BUTCHER_LOCATION = new Identifier("minecraft", "textures/entity/zombie_villager/zombie_butcher.png");
-    public static final Identifier FARMER_LOCATION = new Identifier("minecraft", "textures/entity/zombie_villager/zombie_farmer.png");
-    public static final Identifier LIBRARIAN_LOCATION = new Identifier("minecraft", "textures/entity/zombie_villager/zombie_librarian.png");
-    public static final Identifier NITWIT_LOCATION = new Identifier("minecraft", "textures/entity/zombie_villager/zombie_villager.png");
-    public static final Identifier TOOLSMITH_LOCATION = new Identifier("minecraft", "textures/entity/zombie_villager/zombie_toolsmith.png");
+    public static final String BUTCHER_LOCATION = ("textures/mob/zombie_villager/zombie_butcher.png");
+    public static final String FARMER_LOCATION = ("textures/mob/zombie_villager/zombie_farmer.png");
+    public static final String LIBRARIAN_LOCATION = ("textures/mob/zombie_villager/zombie_librarian.png");
+    public static final String NITWIT_LOCATION = ("textures/mob/zombie_villager/zombie_villager.png");
+    public static final String TOOLSMITH_LOCATION = ("textures/mob/zombie_villager/zombie_toolsmith.png");
     
     public ClientZombieVillagerRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
         super(context, new ClientZombieVillagerModel(0, false), 0.75f);
@@ -23,7 +22,7 @@ public class ClientZombieVillagerRenderer extends PetRenderer<ClientZombieVillag
     }
 
     @Override
-    protected void applyScale(net.minecraft.entity.living.LivingEntity entity, float f) {
+    protected void applyScale(net.minecraft.entity.mob.MobEntity entity, float f) {
         ClientZombieVillager livingEntityRenderState = (ClientZombieVillager) entity;
         if (CONFIG.isBaby) {
             com.jeff.pets.compat.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
@@ -31,7 +30,7 @@ public class ClientZombieVillagerRenderer extends PetRenderer<ClientZombieVillag
     }
 
     @Override
-    public Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+    public String getTexture(net.minecraft.entity.Entity entity) {
         ClientZombieVillager villagerRenderState = (ClientZombieVillager) entity;
         if (Objects.equals(CONFIG.zombieVillagerSkin, "butcher")) {
             return (BUTCHER_LOCATION);
@@ -48,7 +47,7 @@ public class ClientZombieVillagerRenderer extends PetRenderer<ClientZombieVillag
     }
 
     @Override
-    public void applyRotation(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h) {
+    public void applyRotation(net.minecraft.entity.mob.MobEntity entity, float f, float g, float h) {
         ClientZombieVillager state = (ClientZombieVillager) entity;
         super.applyRotation(state, f, g, h);
         if (state.isRiding()) {

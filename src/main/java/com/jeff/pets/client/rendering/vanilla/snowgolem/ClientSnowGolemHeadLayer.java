@@ -1,11 +1,11 @@
 package com.jeff.pets.client.rendering.vanilla.snowgolem;
 
-import com.jeff.pets.mob.vanilla.passive.ClientSnowGolem;
-import com.jeff.pets.compat.GlStateManager;
-import net.minecraft.block.Block;
-import net.minecraft.client.render.block.BlockRenderer;
 import com.jeff.pets.client.rendering.PetRenderLayer;
 import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.compat.GlStateManager;
+import com.jeff.pets.mob.vanilla.passive.ClientSnowGolem;
+import net.minecraft.block.Block;
+import net.minecraft.client.render.block.BlockRenderer;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
@@ -19,7 +19,7 @@ public class ClientSnowGolemHeadLayer implements PetRenderLayer {
     }
 
     @Override
-    public void render(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h, float i, float j, float k) {
+    public void render(net.minecraft.entity.mob.MobEntity entity, float f, float g, float h, float i, float j, float k) {
         ClientSnowGolem snowGolem = (ClientSnowGolem) entity;
         if (CONFIG.snowGolemSkin.equals("pumpkin_on")) {
 boolean bl = false;

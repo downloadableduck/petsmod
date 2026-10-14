@@ -1,7 +1,6 @@
 package me.shedaniel.clothconfig2.impl.builders;
 
 import me.shedaniel.clothconfig2.gui.entries.SelectionListEntry;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;

@@ -24,7 +24,6 @@ import me.shedaniel.autoconfig.gui.registry.api.GuiRegistryAccess;
 import me.shedaniel.autoconfig.gui.registry.api.GuiTransformer;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.*;

@@ -2,24 +2,20 @@ package me.shedaniel.clothconfig2.gui.entries;
 
 import com.google.common.collect.Lists;
 import com.jeff.pets.compat.GlStateManager;
-import com.jeff.pets.compat.GlStateManager;
-import me.shedaniel.clothconfig2.api.AbstractConfigEntry;
-import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
-import me.shedaniel.clothconfig2.gui.ClothConfigScreen;
-import net.minecraft.client.Minecraft;
-import me.shedaniel.clothconfig2.compat.GuiEventListener;
-import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.resource.Identifier;
 import com.jeff.pets.sound.SoundEvents;
+import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
+import me.shedaniel.clothconfig2.compat.GuiEventListener;
+import net.minecraft.client.Minecraft;
+
+import net.minecraft.locale.I18n;
 
 import java.awt.*;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class SubCategoryListEntry extends TooltipListEntry {
     
-    private static final Identifier CONFIG_TEX = new Identifier("cloth-config", "textures/gui/cloth_config.png");
+    private static final String CONFIG_TEX = ("textures/gui/cloth_config.png");
     private String categoryName;
     private List<AbstractConfigListEntry> entries;
     private CategoryLabelWidget widget;
@@ -61,7 +57,7 @@ public class SubCategoryListEntry extends TooltipListEntry {
         widget.rectangle.y = y;
         widget.rectangle.width = entryWidth + 19;
         widget.rectangle.height = 24;
-        Minecraft.getInstance().getTextureManager().bind(CONFIG_TEX);
+        Minecraft.getInstance().textureManager.bind(CONFIG_TEX);
         // Lighting.turnOff(); // Not available in 1.13
         GlStateManager.color4f(1, 1, 1, 1);
         drawTexture(x - 15, y + 4, 24, expended ? 9 : 0, 9, 9); //blit?
@@ -128,7 +124,7 @@ public class SubCategoryListEntry extends TooltipListEntry {
         public boolean mouseClicked(double double_1, double double_2, int int_1) {
             if (rectangle.contains(double_1, double_2)) {
                 expended = !expended;
-                Minecraft.getInstance().soundEngine.play(new Identifier(SoundEvents.UI_BUTTON_CLICK).identifier(), 1.0F, 1);
+                Minecraft.getInstance().soundEngine.play((SoundEvents.UI_BUTTON_CLICK), 1.0F, 1);
                 return true;
             }
             return false;

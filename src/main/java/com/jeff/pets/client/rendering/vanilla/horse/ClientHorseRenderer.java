@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.horse;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientHorse;
-import net.minecraft.client.resource.Identifier;
+
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -15,7 +15,7 @@ public class ClientHorseRenderer extends PetRenderer<ClientHorse> {
     }
 
     @Override
-    protected void applyScale(net.minecraft.entity.living.LivingEntity entity, float f) {
+    protected void applyScale(net.minecraft.entity.mob.MobEntity entity, float f) {
         ClientHorse state = (ClientHorse) entity;
         if (CONFIG.isBaby) {
             com.jeff.pets.compat.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
@@ -23,29 +23,29 @@ public class ClientHorseRenderer extends PetRenderer<ClientHorse> {
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
         ClientHorse horseRenderState = (ClientHorse) entity;
         if (CONFIG.horseSkin.equals("black")) {
-            horseTextureLocation = "textures/entity/horse/horse_black.png";
+            horseTextureLocation = "textures/mob/horse/horse_black.png";
         } else if (CONFIG.horseSkin.equals("brown")) {
-            horseTextureLocation = "textures/entity/horse/horse_brown.png";
+            horseTextureLocation = "textures/mob/horse/horse_brown.png";
         } else if (CONFIG.horseSkin.equals("chestnut")) {
-            horseTextureLocation = "textures/entity/horse/horse_chestnut.png";
+            horseTextureLocation = "textures/mob/horse/horse_chestnut.png";
         } else if (CONFIG.horseSkin.equals("creamy")) {
-            horseTextureLocation = "textures/entity/horse/horse_creamy.png";
+            horseTextureLocation = "textures/mob/horse/horse_creamy.png";
         } else if (CONFIG.horseSkin.equals("dark_brown")) {
-            horseTextureLocation = "textures/entity/horse/horse_brown.png";
+            horseTextureLocation = "textures/mob/horse/horse_brown.png";
         } else if (CONFIG.horseSkin.equals("gray")) {
-            horseTextureLocation = "textures/entity/horse/horse_gray.png";
+            horseTextureLocation = "textures/mob/horse/horse_gray.png";
         } else if (CONFIG.horseSkin.equals("white")) {
-            horseTextureLocation = "textures/entity/horse/horse_white.png";
+            horseTextureLocation = "textures/mob/horse/horse_white.png";
         } else if (CONFIG.horseSkin.equals("skeleton")) {
-            horseTextureLocation = "textures/entity/horse/horse_skeleton.png";
+            horseTextureLocation = "textures/mob/horse/horse_skeleton.png";
         } else if (CONFIG.horseSkin.equals("zombie")) {
-            horseTextureLocation = "textures/entity/horse/horse_zombie.png";
+            horseTextureLocation = "textures/mob/horse/horse_zombie.png";
         } else {
-            horseTextureLocation = "textures/entity/horse/horse_black.png";
+            horseTextureLocation = "textures/mob/horse/horse_black.png";
         }
-        return new Identifier("minecraft", horseTextureLocation);
+        return (horseTextureLocation);
     }
 }

@@ -2,11 +2,9 @@ package com.jeff.pets.client.rendering.vanilla.squid;
 
 import com.jeff.pets.client.Math2;
 import com.jeff.pets.client.rendering.PetRenderer;
-import com.jeff.pets.mob.vanilla.passive.ClientSquid;
 import com.jeff.pets.compat.GlStateManager;
+import com.jeff.pets.mob.vanilla.passive.ClientSquid;
 import net.minecraft.client.render.model.entity.SquidModel;
-import net.minecraft.client.resource.Identifier;
-import net.minecraft.util.math.MathHelper;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -20,21 +18,21 @@ public class ClientSquidRenderer extends PetRenderer<ClientSquid> {
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
         ClientSquid squidRenderState = (ClientSquid) entity;
-        squidTexturePath = "textures/entity/squid.png";
-        return new Identifier("minecraft", squidTexturePath);
+        squidTexturePath = "textures/mob/squid.png";
+        return (squidTexturePath);
     }
 
     @Override
-    protected void applyScale(net.minecraft.entity.living.LivingEntity entity, float f) {
+    protected void applyScale(net.minecraft.entity.mob.MobEntity entity, float f) {
         ClientSquid livingEntityRenderState = (ClientSquid) entity;
         if (CONFIG.isBaby) {
             GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
 
-    protected void applyRotation(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h) {
+    protected void applyRotation(net.minecraft.entity.mob.MobEntity entity, float f, float g, float h) {
         ClientSquid squidEntity = (ClientSquid) entity;
         super.applyRotation(squidEntity, f, g, h);
         float i = (float) Math2.lerp(h, squidEntity.xBodyRotO, squidEntity.xBodyRot);

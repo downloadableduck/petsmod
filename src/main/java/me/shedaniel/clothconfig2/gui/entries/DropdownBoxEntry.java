@@ -1,27 +1,24 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
-import me.shedaniel.clothconfig2.compat.MouseInput;
-import me.shedaniel.clothconfig2.impl.WindowUtil;
-
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.jeff.pets.compat.GlStateManager;
-import net.minecraft.client.Minecraft;
-import me.shedaniel.clothconfig2.compat.GuiVertexCompat;
-import me.shedaniel.clothconfig2.compat.GuiVertexCompat.Builder;
-import net.minecraft.client.render.vertex.Tesselator;
 import me.shedaniel.clothconfig2.ButtonWidget;
 import me.shedaniel.clothconfig2.ClothConfigInitializer;
 import me.shedaniel.clothconfig2.api.ScissorsHandler;
-import me.shedaniel.math.Point;
-import me.shedaniel.math.Rectangle;
-
-import net.minecraft.client.Minecraft;
 import me.shedaniel.clothconfig2.compat.AbstractContainerEventHandler;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
+import me.shedaniel.clothconfig2.compat.GuiVertexCompat;
+import me.shedaniel.clothconfig2.compat.GuiVertexCompat.Builder;
+import me.shedaniel.clothconfig2.compat.MouseInput;
+import me.shedaniel.clothconfig2.impl.WindowUtil;
+import me.shedaniel.math.Point;
+import me.shedaniel.math.Rectangle;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.render.TextRenderer;
-import net.minecraft.client.resource.language.I18n;
+import net.minecraft.client.render.vertex.Tesselator;
+import net.minecraft.locale.I18n;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;

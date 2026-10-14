@@ -5,7 +5,6 @@ import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.aquatic.Stingray;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.util.math.MathHelper;
-import org.jetbrains.annotations.NotNull;
 
 public class StingrayModel extends PetModel {
     private final ModelPart root;

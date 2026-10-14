@@ -1,23 +1,19 @@
 package com.jeff.pets.mob;
 
-import net.minecraft.entity.living.attribute.EntityAttributes;
-import net.minecraft.entity.living.LivingEntity;
-import net.minecraft.entity.living.mob.passive.PassiveEntity;
-import net.minecraft.entity.living.mob.passive.animal.tameable.TameableEntity;
-import net.minecraft.entity.living.player.PlayerEntity;
-import net.minecraft.client.world.ClientWorld;
+import com.jeff.pets.mob.custom.first.Duck;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.passive.PassiveEntity;
+import net.minecraft.entity.mob.passive.animal.tameable.TameableEntity;
+import net.minecraft.entity.mob.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-// import net.minecraft.world.InteractionHand;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import com.jeff.pets.mob.custom.first.Duck;
 
 /**
  * Abstract class that extends {@link TameableEntity}, providing multiple utilities
- * so that each class doesn't have to define the same logic. <p> When creating a custom entity,
+ * so that each class doesn't have to define the same logic. <p> When creating a custom mob,
  * always extend either {@link GroundPet}, {@link FlyingPet}, or {@link SlimeLikePet},
  * unless adding custom movement logic,
  * as this file does not contain custom movement logic for the entities.
@@ -40,13 +36,6 @@ public abstract class AbstractPet extends TameableEntity {
     }
 
     @Override
-    public void initAttributes() {
-        super.initAttributes();
-        this.getAttribute(EntityAttributes.MAX_HEALTH).setBase(8);
-        this.getAttribute(EntityAttributes.MOVEMENT_SPEED).setBase(0.23);
-    }
-
-    @Override
     protected boolean aiEnabled() {
         // LivingEntity.getSpeed() is `aiEnabled() ? speed : 0.1F`, and the base aiEnabled() is
         // false. That made wander() compute `0.1 - 0.35 == -0.25`, so idle wandering pushed pets
@@ -61,23 +50,23 @@ public abstract class AbstractPet extends TameableEntity {
     }
 
     /**
-     * This method is used to determine when the entity stops moving, relative to the player.
+     * This method is used to determine when the mob stops moving, relative to the player.
      * For example, if we defined this:
      * <pre>{@code protected abstract int stopDistance() {
      *     return 2;
      * }}</pre>
-     * The entity would stop moving towards the player when it is two blocks away from the player.
+     * The mob would stop moving towards the player when it is two blocks away from the player.
      */
     protected abstract int stopDistance();
 
     /**
      * Used to define how high the hearts that appear when you right-click on a pet will be.
-     * Zero means it would appear right in the middle of the entity's hitbox.
+     * Zero means it would appear right in the middle of the mob's hitbox.
      */
     protected abstract float heartHeight();
 
     /**
-     * Used to define the entity's default ambient sound. For the uses of these last three
+     * Used to define the mob's default ambient sound. For the uses of these last three
      * methods, please refer to {@link FlyingPet} and {@link GroundPet}.
      */
     protected abstract String getAmbientSound();
@@ -114,7 +103,7 @@ public abstract class AbstractPet extends TameableEntity {
      * @return It's super method
      */
     @Override
-    public boolean interactMob(@NotNull PlayerEntity player) {
+    public boolean interact(@NotNull PlayerEntity player) {
         ItemStack itemStack = player.getItemInHand();
 
         if (this.isTamed() && itemStack == null && !player.isSneaking()) {
@@ -138,7 +127,7 @@ public abstract class AbstractPet extends TameableEntity {
             }
             return true;
         }
-        return super.interactMob(player);
+        return super.interact(player);
     }
 
     /**
@@ -165,7 +154,7 @@ public abstract class AbstractPet extends TameableEntity {
 
     /**
      * These entities are not used in server worlds - as such, there is no reason to
-     * return anything. However, this must be overridden when creating a custom entity.
+     * return anything. However, this must be overridden when creating a custom mob.
      *
      * @return {@code null}
      */
@@ -213,7 +202,7 @@ public abstract class AbstractPet extends TameableEntity {
                 this.y + this.getEyeHeight(),
                 this.z + (moveZ * 2)
         );
-        this.getLookControl().lookAt(lookDir.x, lookDir.y, lookDir.z, 1.0F, (float) this.getLookPitchSpeed());
+        this.getLookControl().lookAt(lookDir.x, lookDir.y, lookDir.z, 1.0F, (float) this.verticleLookSpeed());
 
         if (moveX * moveX + moveZ * moveZ > 0.001) {
             float targetYaw = (float) (Math.atan2(-moveX, moveZ) * (180D / Math.PI));
@@ -241,7 +230,7 @@ public abstract class AbstractPet extends TameableEntity {
 
     /**
      * The authoritative facing field. Ornithe recomputes {@code bodyYaw} every tick from
-     * {@link LivingEntity#bodyMovement(float, float)} as
+     * {@link MobEntity#bodyMovement(float, float)} as
      * {@code yaw - clamp(wrapDegrees(yaw - bodyYaw), -75, 75)}, so writing only
      * {@code bodyYaw}/{@code headYaw} leaves {@code yaw} pinned at 0 and vanilla drags the
      * body back toward 0 every tick. Every yaw write must therefore go through {@code yaw}.
@@ -288,5 +277,16 @@ public abstract class AbstractPet extends TameableEntity {
     @Override
     public boolean isTamed() {
         return true;
+    }
+
+    @Override
+    public int getMaxHealth() {
+        return 8;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        this.forwardSpeed *= 1.020408f;
     }
 }

@@ -1,9 +1,9 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
 
-import net.minecraft.client.Minecraft;
 import me.shedaniel.clothconfig2.compat.CompatTextFieldWidget;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
+import net.minecraft.client.Minecraft;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

@@ -2,17 +2,15 @@ package me.shedaniel.clothconfig2.gui.entries;
 
 import com.google.common.collect.Lists;
 import com.jeff.pets.compat.GlStateManager;
+import com.jeff.pets.sound.SoundEvents;
 import me.shedaniel.clothconfig2.ButtonWidget;
 import me.shedaniel.clothconfig2.api.QueuedTooltip;
+import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiElement;
-import me.shedaniel.clothconfig2.compat.GuiEventListener;
-import net.minecraft.client.resource.language.I18n;
-import com.jeff.pets.sound.SoundEvents;
-import net.minecraft.client.resource.Identifier;
+
+import net.minecraft.locale.I18n;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -34,7 +32,7 @@ import java.util.stream.Collectors;
 
 public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends BaseListEntry<T, C, SELF>> extends TooltipListEntry<List<T>> {
     
-    protected static final Identifier CONFIG_TEX = new Identifier("cloth-config2", "textures/gui/cloth_config.png");
+    protected static final String CONFIG_TEX = ("textures/gui/cloth_config.png");
     @NotNull protected final List<C> cells;
     @NotNull protected final List<GuiEventListener> widgets;
     protected boolean expanded;
@@ -196,7 +194,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
             if (tooltip.isPresent() && tooltip.get().length > 0)
                 getScreen().queueTooltip(QueuedTooltip.create(new Point(mouseX, mouseY), tooltip.get()));
         }
-        Minecraft.getInstance().getTextureManager().bind(CONFIG_TEX);
+        Minecraft.getInstance().textureManager.bind(CONFIG_TEX);
         // Lighting.turnOff(); // Not available in 1.13
         GlStateManager.color4f(1, 1, 1, 1);
         BaseListCell focused = !expanded || getFocused() == null || !(getFocused() instanceof BaseListCell) ? null : (BaseListCell) getFocused();
@@ -249,7 +247,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
                     widgets.add(cell);
                 }
                 getScreen().setEdited(true, isRequiresRestart());
-                Minecraft.getInstance().soundEngine.play(new Identifier(SoundEvents.UI_BUTTON_CLICK).identifier(), 1.0F, 1);
+                Minecraft.getInstance().soundEngine.play((SoundEvents.UI_BUTTON_CLICK), 1.0F, 1);
                 return true;
             } else if (isDeleteButtonEnabled() && isInsideDelete(double_1, double_2)) {
                 GuiEventListener focused = getFocused();
@@ -258,12 +256,12 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
                     cells.remove(focused);
                     widgets.remove(focused);
                     getScreen().setEdited(true, isRequiresRestart());
-                    Minecraft.getInstance().soundEngine.play(new Identifier(SoundEvents.UI_BUTTON_CLICK).identifier(), 1.0F, 1);
+                    Minecraft.getInstance().soundEngine.play((SoundEvents.UI_BUTTON_CLICK), 1.0F, 1);
                 }
                 return true;
             } else if (rectangle.contains(double_1, double_2)) {
                 expanded = !expanded;
-                Minecraft.getInstance().soundEngine.play(new Identifier(SoundEvents.UI_BUTTON_CLICK).identifier(), 1.0F, 1);
+                Minecraft.getInstance().soundEngine.play((SoundEvents.UI_BUTTON_CLICK), 1.0F, 1);
                 return true;
             }
             return false;

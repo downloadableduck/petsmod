@@ -3,7 +3,6 @@ package me.shedaniel.clothconfig2.api;
 import me.shedaniel.clothconfig2.impl.ScissorsHandlerImpl;
 import me.shedaniel.math.Rectangle;
 
-
 import java.util.List;
 
 

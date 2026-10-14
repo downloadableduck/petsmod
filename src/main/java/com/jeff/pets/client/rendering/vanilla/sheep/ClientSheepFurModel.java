@@ -1,12 +1,9 @@
 package com.jeff.pets.client.rendering.vanilla.sheep;
 
-import com.jeff.pets.mob.vanilla.passive.ClientSheep;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.client.render.model.entity.QuadrupedModel;
-import net.minecraft.client.render.model.entity.SheepFurModel;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.living.LivingEntity;
-import net.minecraft.entity.living.mob.passive.animal.SheepEntity;
+import net.minecraft.entity.mob.MobEntity;
 
 public class ClientSheepFurModel extends QuadrupedModel {
     private float headAngle;
@@ -34,7 +31,7 @@ public class ClientSheepFurModel extends QuadrupedModel {
         this.frontLeftLeg.setPos(3.0F, 12.0F, -5.0F);
     }
 
-    public void prepare(LivingEntity mob, float walkAnimationProgress, float walkAnimationSpeed, float tickDelta) {
+    public void prepare(MobEntity mob, float walkAnimationProgress, float walkAnimationSpeed, float tickDelta) {
         super.prepare(mob, walkAnimationProgress, walkAnimationSpeed, tickDelta);
     }
 

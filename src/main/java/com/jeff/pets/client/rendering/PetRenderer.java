@@ -1,9 +1,10 @@
 package com.jeff.pets.client.rendering;
 
+import com.jeff.pets.compat.GlStateManager;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.client.render.entity.MobRenderer;
-import com.jeff.pets.compat.GlStateManager;
-import net.minecraft.entity.living.LivingEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.mob.MobEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,8 @@ public abstract class PetRenderer<D extends AbstractPet> extends MobRenderer {
         super(model, shadow);
         this.dispatcher = context;
     }
+
+    public abstract String getTexture(Entity entity);
 
     /**
      * Registers an extra render pass that runs after the mob's model has been drawn.
@@ -58,11 +61,12 @@ public abstract class PetRenderer<D extends AbstractPet> extends MobRenderer {
      */
     @Override
     public void render(net.minecraft.entity.Entity entity, double x, double y, double z, float yaw, float partialTicks) {
-        super.render((LivingEntity) entity, x, y, z, yaw, partialTicks);
+        super.render((MobEntity) entity, x, y, z, yaw, partialTicks);
     }
 
     @Override
-    protected void renderModel(LivingEntity entity, float f, float g, float h, float i, float j, float k) {
+    protected void renderModel(MobEntity entity, float f, float g, float h, float i, float j, float k) {
+        this.bindTexture(this.getTexture(entity));
         GlStateManager.pushMatrix();
         if (entity.isRiding()) {
             GlStateManager.translatef(0, -0.35f, 0);
@@ -73,5 +77,10 @@ public abstract class PetRenderer<D extends AbstractPet> extends MobRenderer {
         for (PetRenderLayer layer : this.petLayers) {
             layer.render(entity, f, g, h, i, j, k);
         }
+    }
+
+    @Override
+    public void bindTexture(String string) {
+        super.bindTexture(string);
     }
 }

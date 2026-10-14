@@ -1,10 +1,9 @@
 package com.jeff.pets.client.rendering.vanilla.cow;
 
 import com.jeff.pets.client.rendering.PetRenderer;
-import com.jeff.pets.mob.vanilla.passive.ClientCow;
+
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.living.LivingEntity;
-import net.minecraft.client.resource.Identifier;
+import net.minecraft.entity.mob.MobEntity;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -15,12 +14,12 @@ public class ClientCowRenderer extends PetRenderer {
         super(context, new ClientCowModel(), 0.7F);
     }
 
-    public @NotNull Identifier getTextureLocation(Entity LivingEntityRenderState) {
-        return new Identifier("minecraft", "textures/entity/cow/cow.png");
+    public @NotNull String getTexture(Entity LivingEntityRenderState) {
+        return ("textures/mob/cow/cow.png");
     }
 
     @Override
-    protected void applyScale(LivingEntity state, float f) {
+    protected void applyScale(MobEntity state, float f) {
         if (CONFIG.isBaby) {
             com.jeff.pets.compat.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }

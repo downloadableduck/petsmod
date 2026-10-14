@@ -2,15 +2,13 @@ package me.shedaniel.clothconfig2.gui.entries;
 
 import com.google.common.collect.Lists;
 import com.jeff.pets.compat.GlStateManager;
-import com.jeff.pets.compat.GlStateManager;
-import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
-import me.shedaniel.math.Rectangle;
-
-import net.minecraft.client.Minecraft;
-import me.shedaniel.clothconfig2.compat.GuiEventListener;
-import net.minecraft.client.resource.language.I18n;
 import com.jeff.pets.sound.SoundEvents;
-import net.minecraft.client.resource.Identifier;
+import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
+import me.shedaniel.clothconfig2.compat.GuiEventListener;
+import me.shedaniel.math.Rectangle;
+import net.minecraft.client.Minecraft;
+
+import net.minecraft.locale.I18n;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
@@ -22,7 +20,7 @@ import java.util.stream.Collectors;
 
 public class MultiElementListEntry<T> extends TooltipListEntry<T> {
     
-    private static final Identifier CONFIG_TEX = new Identifier("cloth-config2", "textures/gui/cloth_config.png");
+    private static final String CONFIG_TEX = ("textures/gui/cloth_config.png");
     private final T object;
     private String categoryName;
     private List<AbstractConfigListEntry<?>> entries;
@@ -77,7 +75,7 @@ public class MultiElementListEntry<T> extends TooltipListEntry<T> {
         widget.rectangle.y = y;
         widget.rectangle.width = entryWidth + 19;
         widget.rectangle.height = 24;
-        Minecraft.getInstance().getTextureManager().bind(CONFIG_TEX);
+        Minecraft.getInstance().textureManager.bind(CONFIG_TEX);
         // Lighting.turnOff(); // Not available in 1.13
         GlStateManager.color4f(1, 1, 1, 1);
         this.drawTexture(x - 15, y + 4, 24, (widget.rectangle.contains(mouseX, mouseY) ? 18 : 0) + (expanded ? 9 : 0), 9, 9);
@@ -175,7 +173,7 @@ public class MultiElementListEntry<T> extends TooltipListEntry<T> {
         public boolean mouseClicked(double double_1, double double_2, int int_1) {
             if (rectangle.contains(double_1, double_2)) {
                 expanded = !expanded;
-                Minecraft.getInstance().soundEngine.play(new Identifier(SoundEvents.UI_BUTTON_CLICK).identifier(), 1.0F, 1);
+                Minecraft.getInstance().soundEngine.play((SoundEvents.UI_BUTTON_CLICK), 1.0F, 1);
                 return true;
             }
             return false;

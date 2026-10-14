@@ -1,11 +1,10 @@
 package com.jeff.pets.client.rendering.vanilla.ghast;
 
 import com.jeff.pets.client.rendering.PetRenderer;
-import com.jeff.pets.mob.vanilla.hostile.ClientGhast;
 import net.minecraft.client.render.model.entity.GhastModel;
+
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.living.LivingEntity;
-import net.minecraft.client.resource.Identifier;
+import net.minecraft.entity.mob.MobEntity;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientGhastRenderer extends PetRenderer {
@@ -15,12 +14,12 @@ public class ClientGhastRenderer extends PetRenderer {
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(Entity livingEntityRenderState) {
-        return new Identifier("minecraft", "textures/entity/ghast/ghast.png");
+    public @NotNull String getTexture(Entity livingEntityRenderState) {
+        return ("textures/mob/ghast/ghast.png");
     }
 
     @Override
-    public void applyScale(LivingEntity ghast, float f) {
+    public void applyScale(MobEntity ghast, float f) {
         com.jeff.pets.compat.GlStateManager.scalef(4.5F, 4.5F, 4.5F);
     }
 }

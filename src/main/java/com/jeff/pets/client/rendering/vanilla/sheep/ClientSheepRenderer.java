@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.sheep;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientSheep;
-import net.minecraft.client.resource.Identifier;
+
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -15,7 +15,7 @@ public class ClientSheepRenderer extends PetRenderer<ClientSheep> {
     }
 
     @Override
-    protected void applyScale(net.minecraft.entity.living.LivingEntity entity, float f) {
+    protected void applyScale(net.minecraft.entity.mob.MobEntity entity, float f) {
         ClientSheep livingEntityRenderState = (ClientSheep) entity;
         if (CONFIG.isBaby) {
             com.jeff.pets.compat.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
@@ -23,9 +23,9 @@ public class ClientSheepRenderer extends PetRenderer<ClientSheep> {
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
         ClientSheep livingEntityRenderState = (ClientSheep) entity;
-        return new Identifier("minecraft", "textures/entity/sheep/sheep.png");
+        return ("textures/mob/sheep/sheep.png");
     }
 
     /*@Override
@@ -33,4 +33,9 @@ public class ClientSheepRenderer extends PetRenderer<ClientSheep> {
         super.extractRenderState(sheep, state, f);
         sheep.sheared = false;
     }*/
+
+    @Override
+    public void bindTexture(String string) {
+        super.bindTexture(string);
+    }
 }

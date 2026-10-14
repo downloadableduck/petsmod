@@ -22,7 +22,6 @@ package me.shedaniel.autoconfig.gui.registry;
 import me.shedaniel.autoconfig.gui.registry.api.GuiRegistryAccess;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 
-
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;

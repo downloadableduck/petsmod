@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.vanilla.magmacube;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientMagmaCube;
 import net.minecraft.client.render.model.entity.SlimeModel;
-import net.minecraft.client.resource.Identifier;
+
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -15,7 +15,7 @@ public class ClientMagmaCubeRenderer extends PetRenderer<ClientMagmaCube> {
     }
 
     @Override
-    protected void applyScale(net.minecraft.entity.living.LivingEntity entity, float a) {
+    protected void applyScale(net.minecraft.entity.mob.MobEntity entity, float a) {
         ClientMagmaCube slimeRenderState = (ClientMagmaCube) entity;
         int magmaCubeapplyScale;
         switch (CONFIG.magmaCubeSkin) {
@@ -36,8 +36,8 @@ public class ClientMagmaCubeRenderer extends PetRenderer<ClientMagmaCube> {
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
         ClientMagmaCube livingEntityRenderState = (ClientMagmaCube) entity;
-        return new Identifier("minecraft", "textures/entity/slime/magmacube.png");
+        return ("textures/mob/slime/magmacube.png");
     }
 }

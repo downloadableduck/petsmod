@@ -3,7 +3,6 @@ package com.jeff.pets.client.rendering.custom.aprilfools.head;
 // Paste this class into your mod and generate all required imports
 
 
-import com.jeff.pets.mob.custom.aprilfools.Head;
 import net.minecraft.client.render.model.Box;
 import net.minecraft.client.render.model.Model;
 import net.minecraft.client.render.model.ModelPart;

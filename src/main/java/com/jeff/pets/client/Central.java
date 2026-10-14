@@ -7,7 +7,6 @@
 package com.jeff.pets.client;
 
 import com.google.common.collect.ImmutableList;
-import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.client.mixin.client.ChatAccessor;
 import com.jeff.pets.mob.custom.aprilfools.Head;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
@@ -30,12 +29,6 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.options.GameOptions;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.command.AbstractCommand;
-import net.minecraft.server.command.Command;
-import net.minecraft.server.command.handler.CommandRegistry;
-import net.minecraft.server.command.source.CommandSource;
-import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -138,7 +131,7 @@ public class Central implements ClientModInitializer {
     int i = 1;
 
     /**
-     * Despawns the entity to ensure that only one is present at a time. For the helper method used,
+     * Despawns the mob to ensure that only one is present at a time. For the helper method used,
      * see {@link Utils#despawnEntity}
      */
     public static void despawnPet() {
@@ -1339,7 +1332,7 @@ public class Central implements ClientModInitializer {
         CONFIG.potatoHuskName = Utils.checkNullString(CONFIG.potatoHuskName);
 
         if (CONFIG.headSkin == null && Minecraft.getInstance().player != null) {
-            CONFIG.headSkin = Minecraft.getInstance().player.getName();
+            CONFIG.headSkin = Minecraft.getInstance().player.getDisplayName();
         }
         CONFIG.headName = Utils.checkNullString(CONFIG.headName);
 

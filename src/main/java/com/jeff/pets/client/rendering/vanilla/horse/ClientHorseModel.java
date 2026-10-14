@@ -1,11 +1,11 @@
 package com.jeff.pets.client.rendering.vanilla.horse;
 
 import com.jeff.pets.client.Math2;
-import com.jeff.pets.mob.AbstractPet;
 import com.jeff.pets.compat.GlStateManager;
+import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.client.render.model.Model;
 import net.minecraft.client.render.model.ModelPart;
-import net.minecraft.entity.living.LivingEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.util.math.MathHelper;
 
 public class ClientHorseModel extends Model {
@@ -95,7 +95,7 @@ public class ClientHorseModel extends Model {
 
     @Override
     public void render(net.minecraft.entity.Entity entity, float f, float g, float h, float i, float j, float k) {
-        boolean bl = ((LivingEntity) entity).isBaby();
+        boolean bl = ((MobEntity) entity).isBaby();
         float l = 1;
         boolean bl2 = false;
         boolean bl3 = entity.rider != null;
@@ -142,7 +142,7 @@ public class ClientHorseModel extends Model {
     }
 
     @Override
-    public void prepare(LivingEntity entity, float f, float g, float h) {
+    public void prepare(MobEntity entity, float f, float g, float h) {
         super.prepare(entity, f, g, h);
         AbstractPet horseBaseEntity = (AbstractPet) entity;
         float i = this.method_2790(horseBaseEntity.lastBodyYaw, horseBaseEntity.bodyYaw, h);

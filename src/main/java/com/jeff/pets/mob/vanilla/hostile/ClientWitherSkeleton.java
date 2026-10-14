@@ -1,31 +1,35 @@
 package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.entity.living.LivingEntity;
-import net.minecraft.entity.living.mob.monster.RangedAttackMob;
-import net.minecraft.world.World;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.monster.RangedAttackMob;
 
 public class ClientWitherSkeleton extends GroundPet implements RangedAttackMob {
-   public ClientWitherSkeleton(World world) {
-      super(world);
+
+
+    public ClientWitherSkeleton(net.minecraft.world.World level) {
+        super(level);
         this.setSize(0.6f, 1.95f);
-   }
+        this.texture = "/mob/skeleton_wither.png";
+    }
 
-   @Override
-   protected int stopDistance() {
-      return 2;
-   }
+    @Override
+    protected int stopDistance() {
+        return 2;
+    }
 
-   @Override
-   protected float heartHeight() {
-      return 2.0F;
-   }
+    @Override
+    protected float heartHeight() {
+        return 2;
+    }
 
-   @Override
-   protected String getAmbientSound() {
-      return "mob.skeleton.say";
-   }
+    @Override
+    protected String getAmbientSound() {
+        return "mob.skeleton.say";
+    }
 
-   public void doRangedAttack(LivingEntity livingEntity, float f) {
-   }
+    @Override
+    public void doRangedAttack(MobEntity livingEntity, float f) {
+
+    }
 }

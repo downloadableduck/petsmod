@@ -2,7 +2,6 @@ package com.jeff.pets.client.rendering.vanilla.chicken;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientChicken;
-import net.minecraft.client.resource.Identifier;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -15,13 +14,13 @@ public class ClientChickenRenderer extends PetRenderer<ClientChicken> {
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
         ClientChicken livingEntityRenderState = (ClientChicken) entity;
-        return new Identifier("minecraft", "textures/entity/chicken.png");
+        return ("textures/mob/chicken.png");
     }
 
     @Override
-    protected void applyScale(net.minecraft.entity.living.LivingEntity entity, float f) {
+    protected void applyScale(net.minecraft.entity.mob.MobEntity entity, float f) {
         ClientChicken state = (ClientChicken) entity;
         if (CONFIG.isBaby) {
             com.jeff.pets.compat.GlStateManager.scalef(0.5f, 0.5f, 0.5f);

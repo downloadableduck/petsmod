@@ -1,15 +1,14 @@
 package me.shedaniel.clothconfig2.gui.widget;
 
 import me.shedaniel.clothconfig2.ParentElement;
-
-import net.minecraft.client.Minecraft;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
-import net.minecraft.client.resource.Identifier;
+import net.minecraft.client.Minecraft;
+
 
 
 public abstract class DynamicElementListWidget<E extends DynamicElementListWidget.ElementEntry<E>> extends DynamicNewSmoothScrollingEntryListWidget<E> {
     
-    public DynamicElementListWidget(Minecraft client, int width, int height, int top, int bottom, Identifier backgroundLocation) {
+    public DynamicElementListWidget(Minecraft client, int width, int height, int top, int bottom, String backgroundLocation) {
         super(client, width, height, top, bottom, backgroundLocation);
     }
 

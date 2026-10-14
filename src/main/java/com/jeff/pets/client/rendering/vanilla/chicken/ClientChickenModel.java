@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.chicken;
 
 import com.jeff.pets.client.Math2;
-import com.jeff.pets.mob.vanilla.passive.ClientChicken;
 import com.jeff.pets.compat.GlStateManager;
+import com.jeff.pets.mob.vanilla.passive.ClientChicken;
 import net.minecraft.client.render.model.entity.ChickenModel;
 import net.minecraft.util.math.MathHelper;
 

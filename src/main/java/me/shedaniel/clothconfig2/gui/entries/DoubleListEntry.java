@@ -1,7 +1,7 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
 import me.shedaniel.clothconfig2.compat.CompatTextFieldWidget;
-import net.minecraft.client.resource.language.I18n;
+import net.minecraft.locale.I18n;
 
 import java.util.Optional;
 import java.util.function.Consumer;

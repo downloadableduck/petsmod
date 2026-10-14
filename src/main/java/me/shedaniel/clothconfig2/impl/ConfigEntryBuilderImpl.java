@@ -7,7 +7,6 @@ import me.shedaniel.clothconfig2.gui.entries.DropdownBoxEntry.SelectionCellCreat
 import me.shedaniel.clothconfig2.gui.entries.DropdownBoxEntry.SelectionTopCellElement;
 import me.shedaniel.clothconfig2.impl.builders.*;
 
-
 import java.util.List;
 import java.util.UUID;
 

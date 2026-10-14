@@ -2,7 +2,6 @@ package me.shedaniel.clothconfig2.impl;
 
 import me.shedaniel.clothconfig2.api.FakeModifierKeyCodeAdder;
 import me.shedaniel.clothconfig2.api.ModifierKeyCode;
-
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.options.KeyBinding;
 

@@ -1,12 +1,11 @@
 package me.shedaniel.clothconfig2.gui.widget;
 
+import me.shedaniel.clothconfig2.api.RunSixtyTimesEverySec;
 import me.shedaniel.clothconfig2.compat.GuiVertexCompat;
 import me.shedaniel.clothconfig2.compat.GuiVertexCompat.Builder;
-import net.minecraft.client.render.vertex.Tesselator;
-import me.shedaniel.clothconfig2.api.RunSixtyTimesEverySec;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resource.Identifier;
+import net.minecraft.client.render.vertex.Tesselator;
+
 import net.minecraft.util.math.MathHelper;
 
 @Deprecated
@@ -41,7 +40,7 @@ public abstract class DynamicSmoothScrollingEntryListWidget<E extends DynamicEnt
         }
     };
     
-    public DynamicSmoothScrollingEntryListWidget(Minecraft client, int width, int height, int top, int bottom, Identifier backgroundLocation) {
+    public DynamicSmoothScrollingEntryListWidget(Minecraft client, int width, int height, int top, int bottom, String backgroundLocation) {
         super(client, width, height, top, bottom, backgroundLocation);
     }
     

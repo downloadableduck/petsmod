@@ -1,12 +1,9 @@
 package com.jeff.pets.client.rendering.vanilla.sheep;
 
-import com.jeff.pets.mob.vanilla.passive.ClientSheep;
-import com.jeff.pets.compat.GlStateManager;
 import com.jeff.pets.client.rendering.PetRenderLayer;
-import com.jeff.pets.client.rendering.PetRenderer;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.client.render.model.Model;
-import net.minecraft.client.resource.Identifier;
+import com.jeff.pets.compat.GlStateManager;
+import com.jeff.pets.mob.vanilla.passive.ClientSheep;
+
 
 import java.util.Objects;
 
@@ -23,9 +20,9 @@ public class ClientSheepWoolLayer implements PetRenderLayer {
     }
 
     @Override
-    public void render(net.minecraft.entity.living.LivingEntity entity, float f, float a, float h, float i, float j, float k) {
+    public void render(net.minecraft.entity.mob.MobEntity entity, float f, float a, float h, float i, float j, float k) {
         ClientSheep sheep = (ClientSheep) entity;
-        this.renderer.bindTexture(new Identifier("minecraft", "textures/entity/sheep/sheep_fur.png"));
+        this.renderer.bindTexture(("textures/mob/sheep/sheep_fur.png"));
         if (Objects.equals(CONFIG.sheepSkin, "white")) {
             woolColor = 15132390;
         } else if (Objects.equals(CONFIG.sheepSkin, "orange")) {

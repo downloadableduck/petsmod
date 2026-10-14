@@ -2,13 +2,10 @@ package com.jeff.pets.mob;
 
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.custom.first.Duck;
-
-import net.minecraft.entity.living.LivingEntity;
-import net.minecraft.entity.living.mob.passive.animal.tameable.TameableEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -39,7 +36,7 @@ public abstract class GroundPet extends AbstractPet {
     @Override
     public void tick() {
         super.tick();
-        LivingEntity owner = this.getOwner();
+        MobEntity owner = this.getOwner();
         if (owner != null) {
 
             if (this.vehicle == owner) {
@@ -72,8 +69,6 @@ public abstract class GroundPet extends AbstractPet {
                 Vec3d targetPos = Vec3d.of(owner.x, owner.y, owner.z);
                 Vec3d dir = targetPos.subtractFrom(this.getPosVec()).normalize();
 
-                
-                
                 this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/, -50, 50);
 
                 double speed = owner.getSpeed() * 2.0;

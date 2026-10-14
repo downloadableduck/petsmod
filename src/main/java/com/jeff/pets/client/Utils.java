@@ -4,10 +4,10 @@ import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.living.player.PlayerEntity;
-import net.minecraft.client.resource.Identifier;
+import net.minecraft.entity.mob.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 
 import java.lang.reflect.Field;
@@ -30,10 +30,10 @@ public class Utils {
     /**
      * Used to summon a pet.
      *
-     * @param entity     the entity to be summoned.
-     * @param entityName the name to set the custom entity to. (Technically not required since
+     * @param entity     the mob to be summoned.
+     * @param entityName the name to set the custom mob to. (Technically not required since
      *                   we use a method to refresh the names in {@link Central}, but still.
-     * @return If the {@code entity}, {@code player}, or {@code world} is {@code null}
+     * @return If the {@code mob}, {@code player}, or {@code world} is {@code null}
      */
     public static void summonPet(AbstractPet entity, String entityName) {
         Minecraft minecraft = Minecraft.getInstance();
@@ -57,7 +57,7 @@ public class Utils {
         // Storing a UUID here makes getOwner() return null on <=1.7.5, which skips every
         // `if (owner != null)` block in GroundPet/FlyingPet tick() and leaves the pet doing
         // vanilla idle AI (walk forward, then stop). Store the name the <=1.7.5 lookup expects.
-        entity.setOwnerName(player.getName());
+        entity.setOwnerName(player.getDisplayName());
         Central.summonedEntity.add(entity);
     }
 
@@ -65,15 +65,15 @@ public class Utils {
      * The method used in
      * {@link Central#refreshPetNames()}. Checks whether the entities' name is equal to the name
      * in the config, and assigns it the correct name if not.. Additionally, this method provides a layer of safety that ensures that Minecraft will not
-     * throw a {@code NullPointerException} if {@code entity} is {@code null}.
+     * throw a {@code NullPointerException} if {@code mob} is {@code null}.
      *
-     * @param activePet The {@code activePet} value that matches {@code entity}
+     * @param activePet The {@code activePet} value that matches {@code mob}
      * @param entity    The pet of which the name is checked.
-     * @param petName   The {@code CONFIG.x} name that matches {@code entity} that the entities'
+     * @param petName   The {@code CONFIG.x} name that matches {@code mob} that the entities'
      *                  current name is checked off of.
      */
     public static void checkName(String activePet, AbstractPet entity, String petName) {
-        if (Objects.equals(CONFIG.activePet, activePet) && entity != null && !entity.getName().equals(petName)) {
+        if (Objects.equals(CONFIG.activePet, activePet) && entity != null && !entity.getDisplayName().equals(petName)) {
             entity.setName(petName);
         }
     }
@@ -82,9 +82,9 @@ public class Utils {
      * Used to teleport a pet if the pet is valid and not {@code null}.
      *
      * @param activePet The {@code String} that represents a possible active {@code pet}.
-     * @param entity    The entity to teleport if {@code activePet} matches the currently active pet.
+     * @param entity    The mob to teleport if {@code activePet} matches the currently active pet.
      * @return True if the {@code activePet} inputted is the current active pet, and the
-     * {@code entity} is not {@code null}.
+     * {@code mob} is not {@code null}.
      */
     public static boolean checkTeleport(String activePet, AbstractPet entity) {
         return Objects.equals(CONFIG.activePet, activePet) && entity != null;
@@ -123,14 +123,14 @@ public class Utils {
      * @return {@link Identifier#fromNamespaceAndPath}, with the parameter {@code namespace} set to
      * {@link PetsInitializer#MOD_ID} and the parameter {@code path} set to the user's input
      */
-    public static Identifier withModNamespace(String path) {
-        return new Identifier(MOD_ID, path);
+    public static String withModNamespace(String path) {
+        return (path);
     }
 
     /**
      * Despawns the inputted pet if {@code e} is not {@code null}.
      *
-     * @param e The entity to despawn
+     * @param e The mob to despawn
      */
     public static void despawnEntity(Entity e) {
         if (e != null) {

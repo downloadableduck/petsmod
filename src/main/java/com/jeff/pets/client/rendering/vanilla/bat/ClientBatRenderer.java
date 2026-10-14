@@ -1,10 +1,9 @@
 package com.jeff.pets.client.rendering.vanilla.bat;
 
 import com.jeff.pets.client.rendering.PetRenderer;
-import com.jeff.pets.mob.vanilla.passive.ClientBat;
+
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.living.LivingEntity;
-import net.minecraft.client.resource.Identifier;
+import net.minecraft.entity.mob.MobEntity;
 import org.jetbrains.annotations.NotNull;
 
 public class ClientBatRenderer extends PetRenderer {
@@ -14,13 +13,13 @@ public class ClientBatRenderer extends PetRenderer {
     }
 
     @Override
-    protected void applyScale(LivingEntity bat, float f) {
+    protected void applyScale(MobEntity bat, float f) {
         super.applyScale(bat, f);
         com.jeff.pets.compat.GlStateManager.scalef(0.35F, 0.35F, 0.35F);
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(Entity batRenderState) {
-        return new Identifier("minecraft", "textures/entity/bat.png");
+    public @NotNull String getTexture(Entity batRenderState) {
+        return ("textures/mob/bat.png");
     }
 }

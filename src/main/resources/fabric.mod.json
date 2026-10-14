@@ -38,7 +38,7 @@
   "depends": {
     "osl-core": "*",
     "minecraft": [
-      "~1.6"
+      "~1.5"
     ],
     "java": "*"
   }

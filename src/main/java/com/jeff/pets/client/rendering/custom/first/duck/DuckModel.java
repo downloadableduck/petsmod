@@ -4,7 +4,6 @@ import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.util.math.MathHelper;
-import org.jetbrains.annotations.NotNull;
 
 public class DuckModel extends PetModel {
 
@@ -109,7 +108,7 @@ public class DuckModel extends PetModel {
     }
 
     @Override
-    public void prepare(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h) {
+    public void prepare(net.minecraft.entity.mob.MobEntity entity, float f, float g, float h) {
         this.right_leg.rotationX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * g;
         this.left_leg.rotationX = MathHelper.cos(f * 0.6662F) * 1.4F * g;
     }

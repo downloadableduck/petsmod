@@ -1,13 +1,13 @@
 package me.shedaniel.clothconfig2;
 
+import me.shedaniel.clothconfig2.compat.GuiEventListener;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Optional;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
-
-import me.shedaniel.clothconfig2.compat.GuiEventListener;
-import org.jetbrains.annotations.Nullable;
 
 public interface ParentElement extends GuiEventListener {
     List<? extends GuiEventListener> children();

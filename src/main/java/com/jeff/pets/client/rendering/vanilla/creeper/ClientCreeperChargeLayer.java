@@ -1,19 +1,16 @@
 package com.jeff.pets.client.rendering.vanilla.creeper;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientCreeper;
-import com.jeff.pets.compat.GlStateManager;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.render.GameRenderer;
 import com.jeff.pets.client.rendering.PetRenderLayer;
 import com.jeff.pets.client.rendering.PetRenderer;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import com.jeff.pets.compat.GlStateManager;
+import com.jeff.pets.mob.vanilla.hostile.ClientCreeper;
 import net.minecraft.client.render.model.entity.CreeperModel;
-import net.minecraft.client.resource.Identifier;
+
 
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientCreeperChargeLayer implements PetRenderLayer {
-    private static final Identifier SKIN = new Identifier("textures/entity/creeper/creeper_armor.png");
+    private static final String SKIN = ("textures/mob/creeper/creeper_armor.png");
     private final PetRenderer renderer;
     private final CreeperModel model = new CreeperModel(2);
 
@@ -22,7 +19,7 @@ public class ClientCreeperChargeLayer implements PetRenderLayer {
     }
 
     @Override
-    public void render(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h, float i, float j, float k) {
+    public void render(net.minecraft.entity.mob.MobEntity entity, float f, float g, float h, float i, float j, float k) {
         ClientCreeper creeperEntity = (ClientCreeper) entity;
         if (CONFIG.creeperSkin.equals("charged")) {
             boolean bl = creeperEntity.isInvisible();

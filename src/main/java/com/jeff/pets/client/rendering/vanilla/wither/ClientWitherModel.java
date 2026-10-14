@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import net.minecraft.client.render.model.Model;
 import net.minecraft.client.render.model.ModelPart;
-import net.minecraft.entity.living.LivingEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.Arrays;
@@ -60,7 +60,7 @@ public class ClientWitherModel extends Model {
     }
 
     @Override
-    public void prepare(LivingEntity entity, float f, float g, float h) {
+    public void prepare(MobEntity entity, float f, float g, float h) {
         ClientWither witherBoss = (ClientWither) entity;
         for (int i = 1; i < 3; ++i) {
             this.heads[i].rotationY = (witherBoss.getHeadYaw() - witherBoss.yaw) * ((float) Math.PI / 180F);

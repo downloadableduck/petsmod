@@ -1,11 +1,10 @@
 package com.jeff.pets.client.rendering.vanilla.enderdragon;
 
 import com.jeff.pets.client.Math2;
-import com.jeff.pets.mob.vanilla.boss.ClientEnderDragon;
 import com.jeff.pets.compat.GlStateManager;
+import com.jeff.pets.mob.vanilla.boss.ClientEnderDragon;
 import net.minecraft.client.render.model.Model;
 import net.minecraft.client.render.model.ModelPart;
-import net.minecraft.util.math.MathHelper;
 
 public class ClientEnderDragonModel extends Model {
     private final ModelPart head;
@@ -87,7 +86,7 @@ public class ClientEnderDragonModel extends Model {
     }
 
     @Override
-    public void prepare(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h) {
+    public void prepare(net.minecraft.entity.mob.MobEntity entity, float f, float g, float h) {
         this.delta = h;
     }
 

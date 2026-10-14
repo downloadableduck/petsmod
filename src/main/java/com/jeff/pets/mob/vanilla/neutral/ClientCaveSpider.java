@@ -1,26 +1,26 @@
 package com.jeff.pets.mob.vanilla.neutral;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.world.World;
 
 public class ClientCaveSpider extends GroundPet {
-   public ClientCaveSpider(World world) {
-      super(world);
+    public ClientCaveSpider(net.minecraft.world.World level) {
+        super(level);
         this.setSize(0.7f, 0.5f);
-   }
+        this.texture = "/mob/cavespider.png";
+    }
 
-   @Override
-   protected int stopDistance() {
-      return 2;
-   }
+    @Override
+    protected int stopDistance() {
+        return 2;
+    }
 
-   @Override
-   protected float heartHeight() {
-      return 1.5F;
-   }
+    @Override
+    protected float heartHeight() {
+        return 1.5f;
+    }
 
-   @Override
-   protected String getAmbientSound() {
-      return "mob.spider.say";
-   }
+    @Override
+    protected String getAmbientSound() {
+        return "mob.spider.say";
+    }
 }

@@ -1,8 +1,7 @@
 package com.jeff.pets.client.mixin.client;
 
 import com.jeff.pets.client.Central;
-import net.minecraft.client.entity.living.player.LocalClientPlayerEntity;
-import net.minecraft.entity.living.player.PlayerEntity;
+import net.minecraft.client.entity.mob.player.LocalClientPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

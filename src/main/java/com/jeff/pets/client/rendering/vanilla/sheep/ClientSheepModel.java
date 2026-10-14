@@ -1,6 +1,5 @@
 package com.jeff.pets.client.rendering.vanilla.sheep;
 
-import com.jeff.pets.mob.vanilla.passive.ClientSheep;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.client.render.model.entity.QuadrupedModel;
 
@@ -17,7 +16,7 @@ public class ClientSheepModel extends QuadrupedModel {
         this.body.setPos(0.0F, 5.0F, 2.0F);
     }
 
-    public void prepare(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h) {
+    public void prepare(net.minecraft.entity.mob.MobEntity entity, float f, float g, float h) {
         super.prepare(entity, f, g, h);
         //this.head.y = 6.0F * 9.0F;
         //this.headXRot = 0;

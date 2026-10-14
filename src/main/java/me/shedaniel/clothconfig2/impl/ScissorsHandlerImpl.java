@@ -1,20 +1,12 @@
 package me.shedaniel.clothconfig2.impl;
 
-import me.shedaniel.clothconfig2.impl.WindowUtil;
-
 import com.google.common.collect.Lists;
-import net.minecraft.client.Minecraft;
-import me.shedaniel.clothconfig2.ClothConfigInitializer;
 import me.shedaniel.clothconfig2.api.ScissorsHandler;
 import me.shedaniel.math.Rectangle;
-
-import net.minecraft.client.Minecraft;
-import org.jetbrains.annotations.NotNull;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Executor;
 
 
 public final class ScissorsHandlerImpl implements ScissorsHandler {

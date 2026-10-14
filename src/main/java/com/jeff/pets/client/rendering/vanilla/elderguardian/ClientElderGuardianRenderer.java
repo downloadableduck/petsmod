@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.vanilla.elderguardian;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.guardian.ClientGuardianModel;
 import com.jeff.pets.mob.vanilla.hostile.ClientElderGuardian;
-import net.minecraft.client.resource.Identifier;
+
 import org.jetbrains.annotations.NotNull;
 
 public class ClientElderGuardianRenderer extends PetRenderer<ClientElderGuardian> {
@@ -13,15 +13,15 @@ public class ClientElderGuardianRenderer extends PetRenderer<ClientElderGuardian
     }
 
     @Override
-    public void applyScale(net.minecraft.entity.living.LivingEntity entity, float f) {
+    public void applyScale(net.minecraft.entity.mob.MobEntity entity, float f) {
         ClientElderGuardian elderGuardian = (ClientElderGuardian) entity;
         com.jeff.pets.compat.GlStateManager.scalef(2.35f, 2.35f, 2.35f);
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
         ClientElderGuardian livingEntityRenderState = (ClientElderGuardian) entity;
         //livingEntityRenderState.spike = 1;
-        return new Identifier("minecraft", "textures/entity/guardian_elder.png");
+        return ("textures/mob/guardian_elder.png");
     }
 }

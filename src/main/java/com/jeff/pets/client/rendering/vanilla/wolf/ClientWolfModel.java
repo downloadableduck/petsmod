@@ -58,7 +58,7 @@ public class ClientWolfModel extends Model {
         return ImmutableList.of(head, body, leg0, backRightLeg, backLeftLeg, frontRightLeg, tail, upperBody);
     }
 
-    public void prepare(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h) {
+    public void prepare(net.minecraft.entity.mob.MobEntity entity, float f, float g, float h) {
         ClientWolf wolf = (ClientWolf) entity;
         //this.tail.rotationY = MathHelper.cos(f * 0.6662F) * 1.4F * g;
 

@@ -2,13 +2,10 @@ package com.jeff.pets.mob;
 
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.custom.first.Duck;
-
-import net.minecraft.entity.living.LivingEntity;
-import net.minecraft.entity.living.mob.passive.animal.tameable.TameableEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -32,8 +29,9 @@ public abstract class FlyingPet extends AbstractPet {
      */
     @Override
     public void tick() {
+        System.out.println(this.velocityX);
         super.tick();
-        LivingEntity owner = this.getOwner();
+        MobEntity owner = this.getOwner();
         if (owner != null) {
 
             if (this.vehicle == owner) {
@@ -48,7 +46,7 @@ public abstract class FlyingPet extends AbstractPet {
             double dx = owner.x - this.x;
             double dz = owner.z - this.z;
             Vec3d ownerPos = Vec3d.of(owner.x, owner.y, owner.z).add(0, owner.getEyeHeight() * 0.8, 0);
-            Vec3d vecToOwner = ownerPos.subtractFrom(this.getPosVec());
+            Vec3d vecToOwner = ownerPos.subtractFrom(this.getPosition(1.0f));
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.distanceTo(owner);
@@ -65,7 +63,8 @@ public abstract class FlyingPet extends AbstractPet {
                 this.walkAnimationSpeed = 0.5F;
 
                 Vec3d dir = vecToOwner.normalize();
-                double speed = owner.getSpeed() * 1.5;
+                double speed = 0.2;
+                System.out.println(speed);
                 
                 this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/, -50, 50); //m_82141949
 

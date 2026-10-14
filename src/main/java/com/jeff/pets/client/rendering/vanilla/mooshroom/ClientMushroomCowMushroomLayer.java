@@ -1,14 +1,11 @@
 package com.jeff.pets.client.rendering.vanilla.mooshroom;
 
-import com.jeff.pets.client.rendering.vanilla.cow.ClientCowModel;
-import com.jeff.pets.mob.vanilla.passive.ClientMooshroom;
-import com.jeff.pets.compat.GlStateManager;
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.render.block.BlockRenderer;
 import com.jeff.pets.client.rendering.PetRenderLayer;
 import com.jeff.pets.client.rendering.PetRenderer;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import com.jeff.pets.compat.GlStateManager;
+import com.jeff.pets.mob.vanilla.passive.ClientMooshroom;
+import net.minecraft.block.Block;
+import net.minecraft.client.render.block.BlockRenderer;
 import net.minecraft.client.render.texture.TextureAtlas;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -22,11 +19,11 @@ public class ClientMushroomCowMushroomLayer implements PetRenderLayer {
         this.blockRenderer = BlockRenderer;
     }
 
-    public void render(net.minecraft.entity.living.LivingEntity entity, float f, float g, float h, float i, float j, float k) {
+    public void render(net.minecraft.entity.mob.MobEntity entity, float f, float g, float h, float i, float j, float k) {
         ClientMooshroom mooshroomEntity = (ClientMooshroom) entity;
         if (!mooshroomEntity.isBaby() && !mooshroomEntity.isInvisible()) {
             net.minecraft.block.Block block = CONFIG.mooshroomSkin.equals("brown") ? Block.BROWN_MUSHROOM : Block.RED_MUSHROOM;
-            this.renderer.bindTexture(TextureAtlas.BLOCKS_LOCATION);
+            //this.renderer.bindTexture(TextureAtlas.BLOCKS_LOCATION);
             GlStateManager.enableCull();
             GlStateManager.cullFace(1029);
             GlStateManager.pushMatrix();

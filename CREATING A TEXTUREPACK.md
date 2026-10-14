@@ -19,36 +19,36 @@ Let's get started!
 All of PetsMod's custom models are available in the GitHub repository. Navigate to the models folder, and all the
 .bbmodel files should be there.
 
-Now, go ahead and re-texture the entity. Save the PNG. Depending on which entity and which skins you are targeting, the
+Now, go ahead and re-texture the mob. Save the PNG. Depending on which mob and which skins you are targeting, the
 filepath will be different, but the general path will be
-`assets/pets-mod/textures/entity/[entity name]/[entity skin.png]`
+`assets/pets-mod/textures/mob/[mob name]/[mob skin.png]`
 
 Below is a list of all of the texture paths as of 0.8.0-dev. If something isn't working, or the file you want to place
 isn't below, you can check
-the [GitHub repositories' entity textures folder](https://github.com/downloadableduck/petsmod/tree/26.1.x/src/main/resources/assets/pets/textures/entity)
+the [GitHub repositories' mob textures folder](https://github.com/downloadableduck/petsmod/tree/26.1.x/src/main/resources/assets/pets/textures/entity)
 for everything you need.
 
 <details>
 <summary>Paths</summary>
 
-**Duck (male mallard):** `assets/pets-mod/textures/entity/duck/mallard_male.png`
+**Duck (male mallard):** `assets/pets-mod/textures/mob/duck/mallard_male.png`
 
-**Duck (pekin):** `assets/pets-mod/textures/entity/duck/pekin.png`
+**Duck (pekin):** `assets/pets-mod/textures/mob/duck/pekin.png`
 
-**Duck (rubber):** `assets/pets-mod/textures/entity/duck/rubber.png`
+**Duck (rubber):** `assets/pets-mod/textures/mob/duck/rubber.png`
 
-**Racoon (normal):** `assets/pets-mod/textures/entity/racoon/racoon.png`
+**Racoon (normal):** `assets/pets-mod/textures/mob/racoon/racoon.png`
 
-**Racoon (albino):** `assets/pets-mod/textures/entity/racoon/albino.png`
+**Racoon (albino):** `assets/pets-mod/textures/mob/racoon/albino.png`
 
-**Penguin:** `assets/pets-mod/textures/entity/penguin/penguin.png`
+**Penguin:** `assets/pets-mod/textures/mob/penguin/penguin.png`
 
-**Dumbo Octopus:** `assets/pets-mod/textures/entity/dumbo_octopus/[color.png]`
+**Dumbo Octopus:** `assets/pets-mod/textures/mob/dumbo_octopus/[color.png]`
 
 (Possible colors: blue, green, orange, pink, red, yellow)
 
-**Koi:** `assets/pets-mod/textures/entity/koi/koi.png`
+**Koi:** `assets/pets-mod/textures/mob/koi/koi.png`
 
-**Stingray:** `assets/pets-mod/textures/entity/stingray/stingray.png`
+**Stingray:** `assets/pets-mod/textures/mob/stingray/stingray.png`
 
 </details>

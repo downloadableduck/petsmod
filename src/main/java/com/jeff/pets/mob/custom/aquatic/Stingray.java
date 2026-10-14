@@ -4,10 +4,8 @@ import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.FlyingPet;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.block.Block;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.living.LivingEntity;
-import net.minecraft.entity.living.attribute.EntityAttributes;
-import net.minecraft.entity.living.mob.passive.PassiveEntity;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.passive.PassiveEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -28,12 +26,7 @@ public class Stingray extends FlyingPet {
    public Stingray(World level) {
       super(level);
         this.setSize(1f, 0.4f);
-   }
-
-   @Override
-   public void initAttributes() {
-      super.initAttributes();
-      this.getAttribute(EntityAttributes.MOVEMENT_SPEED).setBase(0.25);
+       this.texture = "/mob/stingray/stingray.png";
    }
 
    protected void registerSyncedData() {
@@ -135,7 +128,7 @@ public class Stingray extends FlyingPet {
 
       this.flapping *= 0.9F;
       this.flap = this.flap + this.flapping * 2.0F;
-      LivingEntity owner = this.getOwner();
+      MobEntity owner = this.getOwner();
       if (owner != null) {
          if (this.vehicle == owner) {
             if (owner.isSneaking() && owner.jumping) {

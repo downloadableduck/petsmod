@@ -2,7 +2,7 @@ package me.shedaniel.clothconfig2.gui.entries;
 
 
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
-import net.minecraft.client.resource.language.I18n;
+import net.minecraft.locale.I18n;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

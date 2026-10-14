@@ -3,18 +3,15 @@ package com.jeff.pets.mob.custom.first;
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.block.Block;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.living.LivingEntity;
-import net.minecraft.entity.living.attribute.EntityAttributes;
-import net.minecraft.entity.living.mob.passive.PassiveEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.passive.PassiveEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.entity.living.player.ServerPlayerEntity;
+import net.minecraft.server.entity.mob.player.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -34,12 +31,7 @@ public class Penguin extends AbstractPet {
    public Penguin(World level) {
       super(level);
         this.setSize(0.7f, 1f);
-   }
-
-   @Override
-   public void initAttributes() {
-      super.initAttributes();
-      this.getAttribute(EntityAttributes.MOVEMENT_SPEED).setBase(0.25);
+       this.texture = "/mob/penguin/penguin.png";
    }
 
    @Override
@@ -130,7 +122,7 @@ public class Penguin extends AbstractPet {
    @Override
    public void tick() {
       super.tick();
-      LivingEntity owner = this.getOwner();
+      MobEntity owner = this.getOwner();
       if (owner != null) {
          if (this.vehicle == owner) {
             this.isFlapping = false;

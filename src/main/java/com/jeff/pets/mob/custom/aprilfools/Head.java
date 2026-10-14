@@ -2,15 +2,13 @@ package com.jeff.pets.mob.custom.aprilfools;
 
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.AbstractPet;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.living.LivingEntity;
-import net.minecraft.entity.living.mob.passive.PassiveEntity;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.passive.PassiveEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -84,7 +82,7 @@ public class Head extends AbstractPet {
            this.lerpVelocity(movement.x * 1.0, movement.y * 0.6, movement.z * 1.0);
        }
 
-       LivingEntity owner = this.getOwner();
+       MobEntity owner = this.getOwner();
        if (owner != null) {
            if (this.vehicle == owner) {
                if (owner.isSneaking() && owner.jumping) {

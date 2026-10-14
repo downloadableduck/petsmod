@@ -1,26 +1,27 @@
 package com.jeff.pets.mob.vanilla.passive;
 
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.world.World;
 
 public class ClientPig extends GroundPet {
-   public ClientPig(World world) {
-      super(world);
+
+    public ClientPig(net.minecraft.world.World level) {
+        super(level);
         this.setSize(0.9f, 0.9f);
-   }
+        this.texture = "/mob/pig.png";
+    }
 
-   @Override
-   protected int stopDistance() {
-      return 2;
-   }
+    @Override
+    protected int stopDistance() {
+        return 2;
+    }
 
-   @Override
-   protected float heartHeight() {
-      return 2.0F;
-   }
+    @Override
+    protected float heartHeight() {
+        return 2;
+    }
 
-   @Override
-   protected String getAmbientSound() {
-      return "mob.pig.say";
-   }
+    @Override
+    protected String getAmbientSound() {
+        return "mob.pig.say";
+    }
 }

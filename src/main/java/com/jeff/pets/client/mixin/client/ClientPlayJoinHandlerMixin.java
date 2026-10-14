@@ -1,7 +1,6 @@
 package com.jeff.pets.client.mixin.client;
 
 import com.jeff.pets.client.Central;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.network.PacketHandler;
 import net.minecraft.network.packet.LoginPacket;
 import org.spongepowered.asm.mixin.Mixin;

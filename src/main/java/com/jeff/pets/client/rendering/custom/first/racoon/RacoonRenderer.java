@@ -4,7 +4,7 @@ import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Racoon;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.client.resource.Identifier;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -18,7 +18,7 @@ public class RacoonRenderer extends PetRenderer<@NotNull Racoon> {
         super(context, new RacoonModel(), 0.75f);
     }
 
-    protected void applyScale(net.minecraft.entity.living.LivingEntity entity, float f) {
+    protected void applyScale(net.minecraft.entity.mob.MobEntity entity, float f) {
         Racoon livingEntityRenderState = (Racoon) entity;
         if ((CONFIG.isBaby && !livingEntityRenderState.isServerEntity()) || (livingEntityRenderState.isBaby() && livingEntityRenderState.isServerEntity())) {
             com.jeff.pets.compat.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
@@ -26,25 +26,25 @@ public class RacoonRenderer extends PetRenderer<@NotNull Racoon> {
     }
 
 
-    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
         Racoon state = (Racoon) entity;
         String racoonTexturePath;
         if (!state.isServerEntity()) {
             if (Objects.equals(CONFIG.racoonSkin, "normal")) {
-                racoonTexturePath = "textures/entity/racoon/racoon.png";
+                racoonTexturePath = "textures/mob/racoon/racoon.png";
             } else if (Objects.equals(CONFIG.racoonSkin, "albino")) {
-                racoonTexturePath = "textures/entity/racoon/albino.png";
+                racoonTexturePath = "textures/mob/racoon/albino.png";
             } else {
-                racoonTexturePath = "textures/entity/racoon/racoon.png";
+                racoonTexturePath = "textures/mob/racoon/racoon.png";
             }
         } else {
-            racoonTexturePath = "textures/entity/racoon/racoon.png";
+            racoonTexturePath = "textures/mob/racoon/racoon.png";
         }
-        return new Identifier(MOD_ID, racoonTexturePath);
+        return (racoonTexturePath);
     }
 
     @Override
-    public void renderModel(net.minecraft.entity.living.LivingEntity entity, float g, float f, float u, float h, float m, float i) {
+    public void renderModel(net.minecraft.entity.mob.MobEntity entity, float g, float f, float u, float h, float m, float i) {
         Racoon racoon = (Racoon) entity;
         super.renderModel(racoon, g, f, u, h, m, i);
         racoon.setServerEntity(racoon.getSyncedData().getByte(Racoon.IS_SERVER_ENTITY) == 1);

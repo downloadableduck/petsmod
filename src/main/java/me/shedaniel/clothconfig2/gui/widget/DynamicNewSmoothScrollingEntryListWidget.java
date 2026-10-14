@@ -1,15 +1,14 @@
 package me.shedaniel.clothconfig2.gui.widget;
 
+import me.shedaniel.clothconfig2.ClothConfigInitializer;
 import me.shedaniel.clothconfig2.compat.GuiVertexCompat;
 import me.shedaniel.clothconfig2.compat.GuiVertexCompat.Builder;
-import net.minecraft.client.render.vertex.Tesselator;
-import me.shedaniel.clothconfig2.ClothConfigInitializer;
 import me.shedaniel.clothconfig2.compat.MouseInput;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resource.Identifier;
+import net.minecraft.client.render.vertex.Tesselator;
+
 import net.minecraft.util.math.MathHelper;
 
 import static me.shedaniel.clothconfig2.ClothConfigInitializer.clamp;
@@ -23,7 +22,7 @@ public abstract class DynamicNewSmoothScrollingEntryListWidget<E extends Dynamic
     protected long start;
     protected long duration;
     
-    public DynamicNewSmoothScrollingEntryListWidget(Minecraft client, int width, int height, int top, int bottom, Identifier backgroundLocation) {
+    public DynamicNewSmoothScrollingEntryListWidget(Minecraft client, int width, int height, int top, int bottom, String backgroundLocation) {
         super(client, width, height, top, bottom, backgroundLocation);
     }
     

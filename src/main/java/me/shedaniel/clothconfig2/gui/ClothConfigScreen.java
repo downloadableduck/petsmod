@@ -3,27 +3,27 @@ package me.shedaniel.clothconfig2.gui;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.AtomicDouble;
-import me.shedaniel.clothconfig2.AbstractPressableButtonWidget;
-import me.shedaniel.clothconfig2.api.*;
-import me.shedaniel.clothconfig2.gui.entries.KeyCodeEntry;
-import me.shedaniel.clothconfig2.gui.widget.DynamicElementListWidget;
-import me.shedaniel.math.Point;
-import me.shedaniel.math.Rectangle;
-
-import net.minecraft.client.Minecraft;
-import me.shedaniel.clothconfig2.compat.GuiEventListener;
-import net.minecraft.client.gui.screen.ConfirmScreen;
-import net.minecraft.client.gui.screen.Screen;
-import me.shedaniel.clothconfig2.ButtonWidget;
-import me.shedaniel.clothconfig2.compat.InputConstants;
-import net.minecraft.client.render.TextRenderer;
 import com.jeff.pets.compat.GlStateManager;
+import me.shedaniel.clothconfig2.AbstractPressableButtonWidget;
+import me.shedaniel.clothconfig2.ButtonWidget;
+import me.shedaniel.clothconfig2.api.*;
+import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import me.shedaniel.clothconfig2.compat.GuiVertexCompat;
 import me.shedaniel.clothconfig2.compat.GuiVertexCompat.Builder;
-import net.minecraft.client.render.vertex.Tesselator;
-import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.resource.Identifier;
+import me.shedaniel.clothconfig2.compat.InputConstants;
+import me.shedaniel.clothconfig2.gui.entries.KeyCodeEntry;
+import me.shedaniel.clothconfig2.gui.widget.DynamicElementListWidget;
 import me.shedaniel.clothconfig2.impl.ConfigPair;
+import me.shedaniel.math.Point;
+import me.shedaniel.math.Rectangle;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.Minecraft__OS;
+import net.minecraft.client.gui.screen.ConfirmScreen;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.render.TextRenderer;
+import net.minecraft.client.render.vertex.Tesselator;
+
+import net.minecraft.locale.I18n;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 
 public abstract class ClothConfigScreen extends Screen {
     
-    private static final Identifier CONFIG_TEX = new Identifier("cloth-config2", "textures/gui/cloth_config.png");
+    private static final String CONFIG_TEX = ("textures/gui/cloth_config.png");
     private final List<QueuedTooltip> queuedTooltips = Lists.newArrayList();
     public int nextVertexTabIndex;
     public int selectedTabIndex;
@@ -58,8 +58,8 @@ public abstract class ClothConfigScreen extends Screen {
     private final List<ClothConfigTabButton> tabButtons;
     private boolean smoothScrollingTabs = true;
     private boolean smoothScrollingList;
-    private final Identifier defaultBackgroundLocation;
-    private final Map<String, Identifier> categoryBackgroundLocation;
+    private final String defaultBackgroundLocation;
+    private final Map<String, String> categoryBackgroundLocation;
     private boolean transparentBackground = false;
     private boolean editable = true;
     @Nullable private String defaultFallbackCategory = null;
@@ -69,7 +69,7 @@ public abstract class ClothConfigScreen extends Screen {
     private boolean hasLastMouse = false;
     
     @Deprecated
-    public ClothConfigScreen(Screen parent, String title, Map<String, List<ConfigPair<String, Object>>> o, boolean confirmSave, boolean displayErrors, boolean smoothScrollingList, Identifier defaultBackgroundLocation, Map<String, Identifier> categoryBackgroundLocation) {
+    public ClothConfigScreen(Screen parent, String title, Map<String, List<ConfigPair<String, Object>>> o, boolean confirmSave, boolean displayErrors, boolean smoothScrollingList, String defaultBackgroundLocation, Map<String, String> categoryBackgroundLocation) {
         super();
         this.parent = parent;
         this.title = title;
@@ -158,7 +158,7 @@ public abstract class ClothConfigScreen extends Screen {
                 ((Tickable) child).tick();
     }
     
-    public Identifier getBackgroundLocation() {
+    public String getBackgroundLocation() {
         if (categoryBackgroundLocation.containsKey(Lists.newArrayList(tabbedEntries.keySet()).get(selectedTabIndex)))
             return categoryBackgroundLocation.get(Lists.newArrayList(tabbedEntries.keySet()).get(selectedTabIndex));
         return defaultBackgroundLocation;
@@ -299,7 +299,7 @@ public abstract class ClothConfigScreen extends Screen {
                 }
                 
                 public void render(int int_1, int int_2, float float_1) {
-                    minecraft.getTextureManager().bind(CONFIG_TEX);
+                    minecraft.textureManager.bind(CONFIG_TEX);
                     GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
                     int int_3 = this.getYImage(this.isHovered());
                     GlStateManager.enableBlend();
@@ -323,7 +323,7 @@ public abstract class ClothConfigScreen extends Screen {
                 }
                 
                 public void render(int int_1, int int_2, float float_1) {
-                    minecraft.getTextureManager().bind(CONFIG_TEX);
+                    minecraft.textureManager.bind(CONFIG_TEX);
                     GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
                     int int_3 = this.getYImage(this.isHovered());
                     GlStateManager.enableBlend();
@@ -439,7 +439,7 @@ public abstract class ClothConfigScreen extends Screen {
                     if (entry.getConfigError().isPresent())
                         errors.add(((Optional<String>) entry.getConfigError()).get());
             if (errors.size() > 0) {
-                minecraft.getTextureManager().bind(CONFIG_TEX);
+                minecraft.textureManager.bind(CONFIG_TEX);
                 GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
                 String text = "\u00A7c" + (errors.size() == 1 ? errors.get(0) : I18n.translate("text.cloth-config.multi_error"));
                 if (isTransparentBackground()) {
@@ -455,7 +455,7 @@ public abstract class ClothConfigScreen extends Screen {
                 }
             }
         } else if (!isEditable()) {
-            minecraft.getTextureManager().bind(CONFIG_TEX);
+            minecraft.textureManager.bind(CONFIG_TEX);
             GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             String text = "\u00A7c" + I18n.translate("text.cloth-config.not_editable");
             if (isTransparentBackground()) {
@@ -506,7 +506,7 @@ public abstract class ClothConfigScreen extends Screen {
             return;
         Tesselator tesselator2 = Tesselator.INSTANCE;
         Builder buffer = Builder.of(tesselator2);
-        minecraft.getTextureManager().bind(getBackgroundLocation());
+        minecraft.textureManager.bind(getBackgroundLocation());
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         float f = 32.0F;
         buffer.begin(7, GuiVertexCompat.POSITION_COLOR);
@@ -572,7 +572,7 @@ public abstract class ClothConfigScreen extends Screen {
             else if (focusedBinding.isAllowModifiers()) {
                 if (startedKeyCode.getType() == InputConstants.Type.KEYSYM) {
                     int code = startedKeyCode.getKeyCode().getValue();
-                    if (Minecraft.IS_MAC ? (code == 343 || code == 347) : (code == 341 || code == 345)) {
+                    if (Minecraft.getOs().equals(Minecraft__OS.MACOS) ? (code == 343 || code == 347) : (code == 341 || code == 345)) {
                         Modifier modifier = startedKeyCode.getModifier();
                         startedKeyCode.setModifier(Modifier.of(modifier.hasAlt(), true, modifier.hasShift()));
                         startedKeyCode.setKeyCode(InputConstants.Type.MOUSE.getOrCreate(int_1));
@@ -614,7 +614,7 @@ public abstract class ClothConfigScreen extends Screen {
                 else if (focusedBinding.isAllowModifiers()) {
                     if (startedKeyCode.getType() == InputConstants.Type.KEYSYM) {
                         int code = startedKeyCode.getKeyCode().getValue();
-                        if (Minecraft.IS_MAC ? (code == 343 || code == 347) : (code == 341 || code == 345)) {
+                        if (Minecraft.getOs().equals(Minecraft__OS.MACOS) ? (code == 343 || code == 347) : (code == 341 || code == 345)) {
                             Modifier modifier = startedKeyCode.getModifier();
                             startedKeyCode.setModifier(Modifier.of(modifier.hasAlt(), true, modifier.hasShift()));
                             startedKeyCode.setKeyCode(InputConstants.getKey(int_1, int_2));
@@ -631,7 +631,7 @@ public abstract class ClothConfigScreen extends Screen {
                             return;
                         }
                     }
-                    if (Minecraft.IS_MAC ? (int_1 == 343 || int_1 == 347) : (int_1 == 341 || int_1 == 345)) {
+                    if (Minecraft.getOs().equals(Minecraft__OS.MACOS) ? (int_1 == 343 || int_1 == 347) : (int_1 == 341 || int_1 == 345)) {
                         Modifier modifier = startedKeyCode.getModifier();
                         startedKeyCode.setModifier(Modifier.of(modifier.hasAlt(), true, modifier.hasShift()));
                         return;
@@ -690,7 +690,7 @@ public abstract class ClothConfigScreen extends Screen {
     }
     
     public class ListWidget<R extends DynamicElementListWidget.ElementEntry<R>> extends DynamicElementListWidget<R> {
-        public ListWidget(Minecraft client, int width, int height, int top, int bottom, Identifier backgroundLocation) {
+        public ListWidget(Minecraft client, int width, int height, int top, int bottom, String backgroundLocation) {
             super(client, width, height, top, bottom, backgroundLocation);
             visible = false;
         }

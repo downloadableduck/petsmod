@@ -1,11 +1,9 @@
 package me.shedaniel.clothconfig2;
 
 import com.google.common.collect.ImmutableList;
-import me.shedaniel.clothconfig2.compat.InputConstants;
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.Minecraft;
 import me.shedaniel.clothconfig2.api.*;
+import me.shedaniel.clothconfig2.compat.GuiEventListener;
+import me.shedaniel.clothconfig2.compat.InputConstants;
 import me.shedaniel.clothconfig2.gui.entries.DoubleListEntry;
 import me.shedaniel.clothconfig2.gui.entries.DropdownBoxEntry;
 import me.shedaniel.clothconfig2.gui.entries.LongSliderEntry;
@@ -16,14 +14,11 @@ import me.shedaniel.clothconfig2.impl.EasingMethod.EasingMethodImpl;
 import me.shedaniel.clothconfig2.impl.EasingMethods;
 import me.shedaniel.clothconfig2.impl.builders.DropdownMenuBuilder;
 import me.shedaniel.clothconfig2.impl.builders.SubCategoryBuilder;
-
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
-import me.shedaniel.clothconfig2.compat.GuiEventListener;
-import net.minecraft.client.resource.language.I18n;
-import net.minecraft.item.Item;
-import net.minecraft.client.resource.Identifier;
+import net.minecraft.locale.I18n;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,8 +27,10 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.Properties;
 
 
 public class ClothConfigInitializer implements ClientModInitializer {
@@ -168,7 +165,7 @@ public class ClothConfigInitializer implements ClientModInitializer {
     @SuppressWarnings("deprecation")
     public static ConfigBuilder getConfigBuilder() {
         ConfigBuilder builder = ConfigBuilder.create().setParentScreen(Minecraft.getInstance().screen).setTitle("title.cloth-config.config");
-        builder.setDefaultBackgroundTexture(new Identifier("minecraft:textures/block/oak_planks.png"));
+        builder.setDefaultBackgroundTexture(("minecraft:textures/block/oak_planks.png"));
         ConfigCategory scrolling = builder.getOrCreateCategory("category.cloth-config.scrolling");
         ConfigEntryBuilder entryBuilder = ConfigEntryBuilder.create();
         DropdownBoxEntry<EasingMethod> easingMethodEntry = entryBuilder.startDropdownMenu("Easing Method", DropdownMenuBuilder.TopCellElementBuilder.of(easingMethod, str -> {

@@ -1,15 +1,12 @@
 package com.jeff.pets.client.rendering.vanilla.cat;
 
+import com.jeff.pets.compat.GlStateManager;
 import com.jeff.pets.mob.vanilla.passive.ClientCat;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.client.render.model.entity.OcelotModel;
-import com.jeff.pets.compat.GlStateManager;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.living.LivingEntity;
-import net.minecraft.entity.living.mob.passive.animal.tameable.OcelotEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.util.math.MathHelper;
-
-import java.lang.reflect.Field;
 
 //if the tail isn't animating correctly, swap lowerTail and upperTail
 public class ClientCatModel extends OcelotModel {
@@ -117,7 +114,7 @@ public class ClientCatModel extends OcelotModel {
 
     }
 
-    public void prepare(LivingEntity mob, float walkAnimationProgress, float walkAnimationSpeed, float tickDelta) {
+    public void prepare(MobEntity mob, float walkAnimationProgress, float walkAnimationSpeed, float tickDelta) {
         ClientCat ocelotEntity = (ClientCat) mob;
         this.body.y = 12.0F;
         this.body.z = -10.0F;

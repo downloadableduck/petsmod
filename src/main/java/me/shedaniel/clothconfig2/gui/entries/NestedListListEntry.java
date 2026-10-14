@@ -1,10 +1,8 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
-import me.shedaniel.clothconfig2.gui.entries.NestedListListEntry.NestedListCell;
-
-import net.minecraft.client.gui.GuiElement;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
+import me.shedaniel.clothconfig2.gui.entries.NestedListListEntry.NestedListCell;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 

@@ -1,8 +1,7 @@
 package me.shedaniel.clothconfig2.impl.builders;
 
 import me.shedaniel.clothconfig2.gui.entries.DoubleListListEntry;
-
-import net.minecraft.client.resource.language.I18n;
+import net.minecraft.locale.I18n;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 

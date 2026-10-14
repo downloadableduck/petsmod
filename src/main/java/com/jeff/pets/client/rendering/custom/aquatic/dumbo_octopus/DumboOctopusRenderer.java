@@ -2,7 +2,10 @@ package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
-import net.minecraft.client.resource.Identifier;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.render.entity.BatRenderer;
+import net.minecraft.entity.mob.MobEntity;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.PetsInitializer.MOD_ID;
@@ -18,16 +21,15 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus> {
         super(context, new DumboOctopusModel(), 0.5f);
     }
 
-
-    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
         DumboOctopus state = (DumboOctopus) entity;
         String path;
-        String yellow = "textures/entity/dumbo_octopus/yellow.png";
-        String red = "textures/entity/dumbo_octopus/red.png";
-        String blue = "textures/entity/dumbo_octopus/blue.png";
-        String green = "textures/entity/dumbo_octopus/green.png";
-        String orange = "textures/entity/dumbo_octopus/orange.png";
-        String pink = "textures/entity/dumbo_octopus/pink.png";
+        String yellow = "textures/mob/dumbo_octopus/yellow.png";
+        String red = "textures/mob/dumbo_octopus/red.png";
+        String blue = "textures/mob/dumbo_octopus/blue.png";
+        String green = "textures/mob/dumbo_octopus/green.png";
+        String orange = "textures/mob/dumbo_octopus/orange.png";
+        String pink = "textures/mob/dumbo_octopus/pink.png";
         if (CONFIG.dumboOctopusSkin.equals("yellow")) {
             path = yellow;
         } else if (CONFIG.dumboOctopusSkin.equals("red")) {
@@ -43,11 +45,11 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus> {
         } else {
             path = yellow;
         }
-        return new Identifier(MOD_ID, path);
+        return path;
     }
 
     @Override
-    public void render(net.minecraft.entity.living.mob.MobEntity mobEntity, double f, double g, double h, float j, float i) {
+    public void render(MobEntity mobEntity, double f, double g, double h, float j, float i) {
         super.render(mobEntity, f, g, h, j, i);
         DumboOctopus octopus = (DumboOctopus) mobEntity;
         float currentSpeed;

@@ -3,7 +3,6 @@ package com.jeff.pets.client.rendering.vanilla.slime;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
 import net.minecraft.client.render.model.entity.SlimeModel;
-import net.minecraft.client.resource.Identifier;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -17,7 +16,7 @@ public class ClientSlimeRenderer extends PetRenderer<ClientSlime> {
     }
 
     @Override
-    protected void applyScale(net.minecraft.entity.living.LivingEntity entity, float f) {
+    protected void applyScale(net.minecraft.entity.mob.MobEntity entity, float f) {
         ClientSlime slimeRenderState = (ClientSlime) entity;
         int slimeapplyScale;
         switch (CONFIG.slimeSkin) {
@@ -38,8 +37,8 @@ public class ClientSlimeRenderer extends PetRenderer<ClientSlime> {
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
         ClientSlime livingEntityRenderState = (ClientSlime) entity;
-        return new Identifier("minecraft", "textures/entity/slime/slime.png");
+        return ("textures/mob/slime/slime.png");
     }
 }

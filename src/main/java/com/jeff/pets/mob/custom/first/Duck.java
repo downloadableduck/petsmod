@@ -3,21 +3,22 @@ package com.jeff.pets.mob.custom.first;
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.block.Block;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.living.LivingEntity;
-import net.minecraft.entity.living.attribute.EntityAttributes;
-import net.minecraft.entity.living.mob.passive.PassiveEntity;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.passive.PassiveEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.entity.living.player.ServerPlayerEntity;
+import net.minecraft.server.entity.mob.player.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
+
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class Duck extends AbstractPet {
    public static final int IS_SERVER_ENTITY = 20;
@@ -48,12 +49,6 @@ public class Duck extends AbstractPet {
       }
 
       return start + f;
-   }
-
-   @Override
-   public void initAttributes() {
-      super.initAttributes();
-      this.getAttribute(EntityAttributes.MOVEMENT_SPEED).setBase(0.25);
    }
 
    protected void registerSyncedData() {
@@ -162,7 +157,7 @@ public class Duck extends AbstractPet {
       }
 
       this.flap = this.flap + this.flapping * 2.0F;
-      LivingEntity owner = this.getOwner();
+      MobEntity owner = this.getOwner();
       if (owner != null) {
          if (this.vehicle == owner) {
             if (owner.isSneaking() && owner.jumping) {
@@ -204,7 +199,7 @@ public class Duck extends AbstractPet {
          }
 
          if (yHeightToOwner > -1) {
-            this.lerpVelocity(this.getVelocity().add(0.0, -0.01, 0.0));
+            //this.lerpVelocity(this.getVelocity().add(0.0, -0.01, 0.0));
          }
 
          if (!this.onGround) {
@@ -262,4 +257,21 @@ public class Duck extends AbstractPet {
          super.onDataValueChanged(key);
       }
    }*/
+
+    @Override
+    public String getTexture() {
+        String duckTexturePath;
+        if (Objects.equals(CONFIG.duckSkin, "pekin")) {
+            duckTexturePath = "/mob/duck/pekin.png";
+        } else if (Objects.equals(CONFIG.duckSkin, "mallard")) {
+            duckTexturePath = "/mob/duck/mallard_male.png";
+        } else if (Objects.equals(CONFIG.duckSkin, "rubber")) {
+            duckTexturePath = "/mob/duck/rubber.png";
+        } else if (CONFIG.duckSkin.equals("bronze")) {
+            duckTexturePath = "/mob/duck/bronze.png";
+        } else {
+            duckTexturePath = "/mob/duck/mallard_male.png";
+        }
+        return duckTexturePath;
+    }
 }

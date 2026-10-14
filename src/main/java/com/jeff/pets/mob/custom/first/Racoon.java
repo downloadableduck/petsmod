@@ -2,16 +2,18 @@ package com.jeff.pets.mob.custom.first;
 
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.AbstractPet;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.living.LivingEntity;
-import net.minecraft.entity.living.mob.passive.PassiveEntity;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.passive.PassiveEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
+
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class Racoon extends AbstractPet {
    public static final int IS_SERVER_ENTITY = 20;
@@ -63,7 +65,7 @@ public class Racoon extends AbstractPet {
 
    public void tick() {
       super.tick();
-      LivingEntity owner = this.getOwner();
+      MobEntity owner = this.getOwner();
       if (owner != null) {
          if (this.vehicle == owner) {
             if (owner.isSneaking() && owner.jumping) {
@@ -154,4 +156,21 @@ public class Racoon extends AbstractPet {
          super.onDataValueChanged(key);
       }
    }*/
+
+    @Override
+    public String getTexture() {
+        String racoonTexturePath;
+        if (!this.isServerEntity()) {
+            if (Objects.equals(CONFIG.racoonSkin, "normal")) {
+                racoonTexturePath = "/mob/racoon/racoon.png";
+            } else if (Objects.equals(CONFIG.racoonSkin, "albino")) {
+                racoonTexturePath = "/mob/racoon/albino.png";
+            } else {
+                racoonTexturePath = "/mob/racoon/racoon.png";
+            }
+        } else {
+            racoonTexturePath = "/mob/racoon/racoon.png";
+        }
+        return racoonTexturePath;
+    }
 }

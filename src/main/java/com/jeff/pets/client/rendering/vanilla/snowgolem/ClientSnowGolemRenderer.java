@@ -2,9 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.snowgolem;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientSnowGolem;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.model.entity.SnowGolemModel;
-import net.minecraft.client.resource.Identifier;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -16,9 +14,9 @@ public class ClientSnowGolemRenderer extends PetRenderer<ClientSnowGolem> {
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
         ClientSnowGolem snowGolemRenderState = (ClientSnowGolem) entity;
-        return new Identifier("minecraft", "textures/entity/snow_golem.png");
+        return ("textures/mob/snow_golem.png");
     }
 
     /*@Override

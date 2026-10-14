@@ -1,7 +1,6 @@
 package me.shedaniel.clothconfig2.api;
 
 import me.shedaniel.clothconfig2.impl.FakeModifierKeyCodeAdderImpl;
-
 import net.minecraft.client.options.KeyBinding;
 
 import java.util.List;

@@ -3,7 +3,7 @@ package com.jeff.pets.client.rendering.vanilla.enderman;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientEnderman;
 import net.minecraft.client.render.model.entity.EndermanModel;
-import net.minecraft.client.resource.Identifier;
+
 import org.jetbrains.annotations.NotNull;
 
 public class ClientEndermanRenderer extends PetRenderer<ClientEnderman> {
@@ -14,8 +14,8 @@ public class ClientEndermanRenderer extends PetRenderer<ClientEnderman> {
     }
 
     @Override
-    public @NotNull Identifier getTextureLocation(net.minecraft.entity.Entity entity) {
+    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
         ClientEnderman enderman = (ClientEnderman) entity;
-        return new Identifier("minecraft", "textures/entity/enderman/enderman.png");
+        return ("textures/mob/enderman/enderman.png");
     }
 }

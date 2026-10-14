@@ -4,20 +4,20 @@ import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.FlyingPet;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.block.Block;
-import net.minecraft.entity.living.LivingEntity;
-import net.minecraft.entity.living.attribute.EntityAttributes;
-import net.minecraft.entity.living.mob.passive.PassiveEntity;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.passive.PassiveEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.entity.living.player.ServerPlayerEntity;
+import net.minecraft.server.entity.mob.player.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import static com.jeff.pets.client.Central.CONFIG;
 
 public class DumboOctopus extends FlyingPet {
    public static final int IS_SERVER_ENTITY = 20;
@@ -30,12 +30,6 @@ public class DumboOctopus extends FlyingPet {
       super(level);
       this.setSize(0.5f, 0.5f);
        this.setSpeed(0.3f);
-   }
-
-   @Override
-   public void initAttributes() {
-      super.initAttributes();
-      this.getAttribute(EntityAttributes.MOVEMENT_SPEED).setBase(0.25);
    }
 
    protected void registerSyncedData() {
@@ -102,7 +96,7 @@ public class DumboOctopus extends FlyingPet {
    @Override
    public void tick() {
       super.tick();
-      LivingEntity owner = this.getOwner();
+      MobEntity owner = this.getOwner();
       if (owner != null) {
          if (this.vehicle == owner) {
             if (owner.isSneaking() && owner.jumping) {
@@ -202,4 +196,31 @@ public class DumboOctopus extends FlyingPet {
    public boolean canBreatheUnderwater() {
       return true;
    }
+
+    @Override
+    public String getTexture() {
+        String path;
+        String yellow = "/mob/dumbo_octopus/yellow.png";
+        String red = "/mob/dumbo_octopus/red.png";
+        String blue = "/mob/dumbo_octopus/blue.png";
+        String green = "/mob/dumbo_octopus/green.png";
+        String orange = "/mob/dumbo_octopus/orange.png";
+        String pink = "/mob/dumbo_octopus/pink.png";
+        if (CONFIG.dumboOctopusSkin.equals("yellow")) {
+            path = yellow;
+        } else if (CONFIG.dumboOctopusSkin.equals("red")) {
+            path = red;
+        } else if (CONFIG.dumboOctopusSkin.equals("blue")) {
+            path = blue;
+        } else if (CONFIG.dumboOctopusSkin.equals("green")) {
+            path = green;
+        } else if (CONFIG.dumboOctopusSkin.equals("orange")) {
+            path = orange;
+        } else if (CONFIG.dumboOctopusSkin.equals("pink")) {
+            path = pink;
+        } else {
+            path = yellow;
+        }
+        return path;
+    }
 }

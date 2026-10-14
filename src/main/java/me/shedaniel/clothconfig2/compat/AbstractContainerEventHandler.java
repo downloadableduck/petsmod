@@ -2,7 +2,6 @@ package me.shedaniel.clothconfig2.compat;
 
 import me.shedaniel.clothconfig2.ParentElement;
 import net.minecraft.client.gui.GuiElement;
-import me.shedaniel.clothconfig2.compat.GuiEventListener;
 
 public abstract class AbstractContainerEventHandler extends GuiElement implements ParentElement {
     private GuiEventListener focused;

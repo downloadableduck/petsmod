@@ -3,7 +3,6 @@ package me.shedaniel.clothconfig2.api;
 import me.shedaniel.clothconfig2.gui.ClothConfigScreen;
 import me.shedaniel.clothconfig2.gui.widget.DynamicElementListWidget;
 
-
 import java.util.Optional;
 import java.util.function.Supplier;
 

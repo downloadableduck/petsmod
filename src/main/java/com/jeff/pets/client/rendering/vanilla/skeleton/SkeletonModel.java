@@ -9,7 +9,7 @@ package com.jeff.pets.client.rendering.vanilla.skeleton;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.client.render.model.entity.HumanoidModel;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.living.LivingEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
@@ -42,13 +42,13 @@ public class SkeletonModel extends HumanoidModel {
 
     }
 
-    public void prepare(LivingEntity mob, float walkAnimationProgress, float walkAnimationSpeed, float tickDelta) {
+    public void prepare(MobEntity mob, float walkAnimationProgress, float walkAnimationSpeed, float tickDelta) {
         super.prepare(mob, walkAnimationProgress, walkAnimationSpeed, tickDelta);
     }
 
     public void setupAnimation(float walkAnimationProgress, float walkAnimationSpeed, float bob, float yaw, float pitch, float scale, Entity entity) {
         super.setupAnimation(walkAnimationProgress, walkAnimationSpeed, bob, yaw, pitch, scale, entity);
-        ItemStack itemStack = ((LivingEntity)entity).getEquipment(0);
+        ItemStack itemStack = ((MobEntity)entity).getEquipment(0);
         if ((itemStack == null || itemStack.getItem() != Item.BOW)) {
             float f = MathHelper.sin(this.attackAnimationProgress * (float)Math.PI);
             float g = MathHelper.sin((1.0F - (1.0F - this.attackAnimationProgress) * (1.0F - this.attackAnimationProgress)) * (float)Math.PI);

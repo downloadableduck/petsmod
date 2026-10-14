@@ -2,17 +2,16 @@ package me.shedaniel.clothconfig2.gui.widget;
 
 import com.google.common.collect.Lists;
 import com.jeff.pets.compat.GlStateManager;
+import me.shedaniel.clothconfig2.api.ScissorsHandler;
+import me.shedaniel.clothconfig2.compat.AbstractContainerEventHandler;
+import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import me.shedaniel.clothconfig2.compat.GuiVertexCompat;
 import me.shedaniel.clothconfig2.compat.GuiVertexCompat.Builder;
-import net.minecraft.client.render.vertex.Tesselator;
-import me.shedaniel.clothconfig2.api.ScissorsHandler;
 import me.shedaniel.math.Rectangle;
-
 import net.minecraft.client.Minecraft;
-import me.shedaniel.clothconfig2.compat.AbstractContainerEventHandler;
 import net.minecraft.client.gui.GuiElement;
-import me.shedaniel.clothconfig2.compat.GuiEventListener;
-import net.minecraft.client.resource.Identifier;
+import net.minecraft.client.render.vertex.Tesselator;
+
 import net.minecraft.util.math.MathHelper;
 
 import java.util.AbstractList;
@@ -39,9 +38,9 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
     protected double scroll;
     protected boolean scrolling;
     protected E selectedItem;
-    protected Identifier backgroundLocation;
+    protected String backgroundLocation;
     
-    public DynamicEntryListWidget(Minecraft client, int width, int height, int top, int bottom, Identifier backgroundLocation) {
+    public DynamicEntryListWidget(Minecraft client, int width, int height, int top, int bottom, String backgroundLocation) {
         this.client = client;
         this.width = width;
         this.height = height;
@@ -163,7 +162,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
     
     @Deprecated
     protected void renderBackBackground(Builder buffer, Tesselator Tesselator) {
-        this.client.getTextureManager().bind(backgroundLocation);
+        this.client.textureManager.bind(backgroundLocation);
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         float float_2 = 32.0F;
         buffer.begin(7, GuiVertexCompat.POSITION_COLOR);
@@ -454,7 +453,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
     protected void renderHoleBackground(int int_1, int int_2, int int_3, int int_4) {
         Tesselator tesselator = Tesselator.INSTANCE;
         Builder buffer = Builder.of(tesselator);
-        this.client.getTextureManager().bind(backgroundLocation);
+        this.client.textureManager.bind(backgroundLocation);
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         float float_1 = 32.0F;
         buffer.begin(7, GuiVertexCompat.POSITION_COLOR);
