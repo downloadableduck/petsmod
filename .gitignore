@@ -1,0 +1,17 @@
+.idea/
+build/
+conf/
+jars/
+json/
+libraries/
+minecraft_server/
+minecraft/.idea/
+minecraft/bin/
+minecraft/game/
+minecraft/jars/
+minecraft/reobf/
+minecraft/src_original/
+minecraft/src/net/minecraft/
+minecraft/src/net/minecraft/server/
+minecraft/src/net/minecraft/client/
+minecraft/md5/

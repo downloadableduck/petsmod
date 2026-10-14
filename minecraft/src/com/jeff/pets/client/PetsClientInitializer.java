@@ -1,0 +1,206 @@
+package com.jeff.pets.client;
+
+import com.jeff.pets.PetsInitializer;
+import net.minecraft.src.KeyBinding;
+import net.minecraft.src.RenderLiving;
+import net.minecraft.src.RenderManager;
+
+import java.util.*;
+
+/**
+ * Another {@code initializer} class. This class does a couple of things:
+ * <p> - Assigns renderers to the entities defined in {@link PetsInitializer}
+ * <p> - Bakes models into the layers
+ * <p> - Creates the keybind to open the config screen, by default {@code p}
+ * <p> Suppresses: Deprecation warnings, as {@link EntityRenderers} is marked as
+ * {@code deprecated}. I will likely have to find a suitable replacement sometime, but for now,
+ * suppressing the warnings will work.
+ *
+ * @see PetsInitializer
+ * @see Central
+ */
+public class PetsClientInitializer {
+
+    public static final Map<Class, Factory> renderSupplierMap = new HashMap();
+    public static final Map<RenderManager, Context> renderManagerMap = new WeakHashMap();
+    public static List<String> ADDONS = new ArrayList<>();
+    public static KeyBinding openConfigScreen;
+
+    /**
+     * Misc rendering stuff
+     */
+    public PetsClientInitializer() {
+        //openConfigScreen = new KeyBinding("Open Pets Menu", Keyboard.KEY_P);
+
+        //ClientRegistry.registerKeyBinding(openConfigScreen);
+        printAddons();
+    }
+
+    public static void printAddons() {
+        PetsInitializer.LOGGER.info("PetsMod addons loaded: " + ADDONS);
+    }
+
+    /*
+    @SubscribeEvent
+    static void registerModelLayers(RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(HeadModel.LAYER_LOCATION, HeadModel::getTexturedModelData);
+        event.registerLayerDefinition(RacoonRenderer.RACOON_LOCATION, RacoonModel::getTexturedModelData);
+        event.registerLayerDefinition(DuckModel.LAYER_LOCATION, DuckModel::getTexturedModelData);
+        event.registerLayerDefinition(PenguinModel.PENGUIN_LOCATION, PenguinModel::getTexturedModelData);
+        event.registerLayerDefinition(ClientSheepRenderer.SHEEP_LOCATION, ClientSheepModel::createBodyLayer);
+        event.registerLayerDefinition(ClientSheepWoolLayer.SHEEP_WOOL_LOCATION, ClientSheepModel::createBodyLayer);
+        event.registerLayerDefinition(ClientCatRenderer.CAT_LOCATION, ClientCatRenderer::createCatBodyLayer);
+        event.registerLayerDefinition(ClientAxolotlRenderer.AXOLOTL_LOCATION, AxolotlModel::createBodyLayer);
+        event.registerLayerDefinition(ClientBatRenderer.BAT_LOCATION, BatModel::createBodyLayer);
+        event.registerLayerDefinition(ClientChickenRenderer.CHICKEN_LOCATION, ClientChickenModel::createBodyLayer);
+        event.registerLayerDefinition(ClientCodRenderer.COD_LOCATION, CodModel::createBodyLayer);
+        event.registerLayerDefinition(ClientCowRenderer.COW_LOCATION, ClientCowModel::createBodyLayer);
+        event.registerLayerDefinition(ClientDonkeyRenderer.DONKEY_LOCATION, ClientDonkeyRenderer::createBodyLayer);
+        event.registerLayerDefinition(ClientHorseRenderer.HORSE_LOCATION, ClientHorseRenderer::createBaseHorseLayer);
+        event.registerLayerDefinition(ClientMooshroomRenderer.MOOSHROOM_LOCATION, ClientCowModel::createBodyLayer);
+        event.registerLayerDefinition(ClientParrotRenderer.PARROT_LOCATION, ParrotModel::createBodyLayer);
+        event.registerLayerDefinition(ClientPigRenderer.PIG_LOCATION, ClientPigRenderer::createBasePigModel);
+        event.registerLayerDefinition(ClientRabbitRenderer.RABBIT_LOCATION, ClientRabbitRenderer::createBaseRabbitLayer);
+        event.registerLayerDefinition(ClientSalmonRenderer.SALMON_LOCATION, ClientSalmonModel::getTexturedModelData);
+        event.registerLayerDefinition(ClientSnowGolemRenderer.SNOW_GOLEM, SnowGolemModel::createBodyLayer);
+        event.registerLayerDefinition(ClientSquidRenderer.SQUID_LOCATION, SquidModel::createBodyLayer);
+        event.registerLayerDefinition(ClientStriderRenderer.STRIDER_LOCATION, StriderModel::createBodyLayer);
+        event.registerLayerDefinition(ClientTurtleRenderer.TURTLE_LOCATION, TurtleModel::createBodyLayer);
+        event.registerLayerDefinition(ClientVillagerRenderer.VILLAGER_LOCATION, ClientVillagerRenderer::createBaseVillagerLayer);
+        event.registerLayerDefinition(ClientWanderingTraderRenderer.WANDERING_TRADER_LOCATION, ClientVillagerRenderer::createBaseVillagerLayer);
+        event.registerLayerDefinition(ClientBeeRenderer.BEE_LOCATION, BeeModel::createBodyLayer);
+        event.registerLayerDefinition(ClientDolphinRenderer.DOLPHIN_LOCATION, DolphinModel::createBodyLayer);
+        event.registerLayerDefinition(ClientEndermanRenderer.ENDERMAN_LOCATION, EndermanModel::createBodyLayer);
+        event.registerLayerDefinition(ClientFoxRenderer.FOX_LOCATION, ClientFoxModel::createBodyLayer);
+        event.registerLayerDefinition(ClientGoatRenderer.GOAT_LOCATION, ClientGoatModel::createBodyLayer);
+        event.registerLayerDefinition(ClientIronGolemRenderer.IRON_GOLEM_LOCATION, IronGolemModel::createBodyLayer);
+        event.registerLayerDefinition(ClientLlamaRenderer.LLAMA_LOCATION, ClientLlamaRenderer::createLlamaLayer);
+        event.registerLayerDefinition(ClientPandaRenderer.PANDA_LOCAITON, PandaModel::createBodyLayer);
+        event.registerLayerDefinition(ClientPiglinRenderer.PIGLIN_LOCATION, ClientPiglinRenderer::createBodyLayer);
+        event.registerLayerDefinition(ClientPolarBearRenderer.POLAR_BEAR_LOCATION, ClientPolarBearRenderer::createBodyLayer);
+        event.registerLayerDefinition(ClientPufferFishRenderer.PUFFERFISH_LOCATION, PufferfishBigModel::createBodyLayer);
+        event.registerLayerDefinition(ClientSpiderRenderer.SPIDER_LOCATION, SpiderModel::createSpiderBodyLayer);
+        event.registerLayerDefinition(ClientWolfRenderer.WOLF_LOCATION, ClientWolfRenderer::createBodyLayer);
+        event.registerLayerDefinition(ClientElderGuardianRenderer.ELDER_GUARDIAN_LOCATION, GuardianModel::createBodyLayer);
+        event.registerLayerDefinition(ClientBlazeRenderer.BLAZE_LOCATION, BlazeModel::createBodyLayer);
+        event.registerLayerDefinition(ClientCreeperRenderer.CREEPER_LOCATION, ClientCreeperRenderer::createBaseCreeperLayer);
+        event.registerLayerDefinition(ClientDrownedRenderer.DROWNED_LOCATION, ClientDrownedRenderer::createBaseDrownedLayer);
+        event.registerLayerDefinition(ClientEndermiteRenderer.ENDERMITE_LOCATION, EndermiteModel::createBodyLayer);
+        event.registerLayerDefinition(ClientEvokerRenderer.EVOKER_LOCATION, ClientEvokerModel::createBodyLayer);
+        event.registerLayerDefinition(ClientGhastRenderer.GHAST_LOCATION, GhastModel::createBodyLayer);
+        event.registerLayerDefinition(ClientGuardianRenderer.GUARDIAN_LOCATION, GuardianModel::createBodyLayer);
+        event.registerLayerDefinition(ClientHoglinRenderer.HOGLIN_LOCATION, ClientHoglinModel::createBodyLayer);
+        event.registerLayerDefinition(ClientHuskRenderer.HUSK_LOCATION, ClientZombieRenderer::createBaseZombieLayer);
+        event.registerLayerDefinition(ClientPhantomRenderer.PHANTOM_LOCATION, PhantomModel::createBodyLayer);
+        event.registerLayerDefinition(ClientPillagerRenderer.PILLAGER_LOCATION, ClientPillagerModel::createBodyLayer);
+        event.registerLayerDefinition(ClientRavagerRenderer.RAVAGER_LOCATION, RavagerModel::createBodyLayer);
+        event.registerLayerDefinition(ClientShulkerRenderer.SHULKER_LOCATION, ShulkerModel::createBodyLayer);
+        event.registerLayerDefinition(ClientSilverfishRenderer.SILVERFISH_LOCATION, SilverfishModel::createBodyLayer);
+        event.registerLayerDefinition(ClientSkeletonRenderer.SKELETON_LOCATION, SkeletonModel::createBodyLayer);
+        event.registerLayerDefinition(ClientSlimeRenderer.SLIME_LOCATION, SlimeModel::createInnerBodyLayer);
+        event.registerLayerDefinition(ClientStrayRenderer.STRAY_LOCATION, SkeletonModel::createBodyLayer);
+        event.registerLayerDefinition(ClientVexRenderer.VEX_LOCATION, VexModel::createBodyLayer);
+        event.registerLayerDefinition(ClientVindicatorRenderer.VINDICATOR_LOCATION, ClientEvokerModel::createBodyLayer);
+        event.registerLayerDefinition(ClientWitchRenderer.WITCH_LOCATION, WitchModel::createBodyLayer);
+        event.registerLayerDefinition(ClientWitherSkeletonRenderer.WITHER_SKELETON_LOCATION, SkeletonModel::createBodyLayer);
+        event.registerLayerDefinition(ClientZombieRenderer.ZOMBIE_LOCATION, ClientZombieRenderer::createBaseZombieLayer);
+        event.registerLayerDefinition(ClientEnderDragonRenderer.ENDER_DRAGON_LOCATION, EnderDragonRenderer::createBodyLayer);
+        event.registerLayerDefinition(ClientWitherRenderer.WITHER_LOCATION, ClientWitherRenderer::createBaseWitherLayer);
+        event.registerLayerDefinition(AngryGhastRenderer.ANGRY_GHAST_LOCATION, GhastModel::createBodyLayer);
+        event.registerLayerDefinition(BatatoRenderer.BATATO_LOCAITON, BatatoModel::createBodyLayer);
+        event.registerLayerDefinition(DiamondChickenRenderer.DIAMOND_CHICKEN_LOCATION, ClientChickenModel::createBodyLayer);
+        event.registerLayerDefinition(LoveGolemRenderer.LOVE_GOLEM_LOCATION, IronGolemModel::createBodyLayer);
+        event.registerLayerDefinition(MegaSpudRenderer.MEGA_SPUD_LOCATION, MegaSpudModel::createInnerBodyLayer);
+        event.registerLayerDefinition(MegaSpudOuterLayer.MEGA_SPUD_OUTER_LOCATION, MegaSpudModel::createOuterBodyLayer);
+        event.registerLayerDefinition(MoonCowRenderer.MOON_COW_LOCATION, LegacyCowModel::createLegacyCowModel);
+        event.registerLayerDefinition(NerdCreeperRenderer.NERD_CREEPER_LOCATION, ClientCreeperRenderer::createBaseCreeperLayer);
+        event.registerLayerDefinition(PinkWitherRenderer.PINK_WITHER_LOCATION, ClientWitherRenderer::createBaseWitherLayer);
+        event.registerLayerDefinition(PlaguewhaleRenderer.PLAGUEWHALE_LOCATION, ToxifinSlabModel::createBodyLayer);
+        event.registerLayerDefinition(PoisonousPotatoZombieRenderer.POISONOUS_POTATO_ZOMBIE_LOCATION, ClientZombieRenderer::createBaseZombieLayer);
+        event.registerLayerDefinition(PotatoHuskRenderer.POTATO_HUSK_LOCATION, ClientZombieRenderer::createBaseZombieLayer);
+        event.registerLayerDefinition(RayTracingRenderer.RAY_TRACING_LOCATION, RayTracingRenderer::createBasePlayerBodyLayer);
+        event.registerLayerDefinition(RedstoneBugRenderer.REDSTONE_BUG_LOCATION, SilverfishModel::createBodyLayer);
+        event.registerLayerDefinition(SmilingCreeperRenderer.SMILING_CREEPER_LOCATION, ClientCreeperRenderer::createBaseCreeperLayer);
+        event.registerLayerDefinition(ToxifinRenderer.TOXIFIN_LOCATION, ToxifinSlabModel::createBodyLayer);
+        event.registerLayerDefinition(TraitorRenderer.TRAITOR_LOCATION, ClientEvokerModel::createBodyLayer);
+        event.registerLayerDefinition(DumboOctopusRenderer.DUMBO_OCTOPUS_LOCATION, DumboOctopusModel::createBodyLayer);
+        event.registerLayerDefinition(KoiRenderer.KOI_LOCATION, KoiModel::createBodyLayer);
+        event.registerLayerDefinition(StingrayRenderer.STINGRAY_LOCATION, StingrayModel::createBodyLayer);
+    }*/
+
+    public static void register() {
+        /*RenderingRegistry.registerEntityRenderingHandler(Head.class, new HeadRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(Duck.class, new DuckRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(Racoon.class, new RacoonRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(Penguin.class, new PenguinRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientSheep.class, new ClientSheepRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientCat.class, new ClientCatRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientBat.class, new ClientBatRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientChicken.class, new ClientChickenRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientCow.class, new ClientCowRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientDonkey.class, new ClientDonkeyRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientHorse.class, new ClientHorseRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientMooshroom.class, new ClientMooshroomRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientPig.class, new ClientPigRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientRabbit.class, new ClientRabbitRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientSnowGolem.class, new ClientSnowGolemRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientSquid.class, new ClientSquidRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientVillager.class, new ClientVillagerRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientCaveSpider.class, new ClientCaveSpiderRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientEnderman.class, new ClientEndermanRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientIronGolem.class, new ClientIronGolemRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientSpider.class, new ClientSpiderRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientWolf.class, new ClientWolfRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientElderGuardian.class, new ClientElderGuardianRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientBlaze.class, new ClientBlazeRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientCreeper.class, new ClientCreeperRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientGhast.class, new ClientGhastRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientGuardian.class, new ClientGuardianRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientMagmaCube.class, new ClientMagmaCubeRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientSilverfish.class, new ClientSilverfishRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientSkeleton.class, new ClientSkeletonRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientSlime.class, new ClientSlimeRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientWitch.class, new ClientWitchRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientWitherSkeleton.class, new ClientWitherSkeletonRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientZombie.class, new ClientZombieRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientZombieVillager.class, new ClientZombieVillagerRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientEnderDragon.class, new ClientEnderDragonRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientWither.class, new ClientWitherRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(DumboOctopus.class, new DumboOctopusRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(Koi.class, new KoiRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(Stingray.class, new StingrayRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(ClientZombiePigman.class, new ClientZOmbiePigmanRenderer());
+    */}
+
+    /**
+     * Registers the key binding and an {@code END_CLIENT_TICK} event to check if the key
+     * is pressed
+     */
+    public static void createKeyBinding() {
+        //openConfigScreen = new KeyBinding("Open Pets Menu", GLFW);
+    }
+
+    public static void register(Class entityClass, Factory factory) {
+        synchronized (renderSupplierMap) {
+            renderSupplierMap.put(entityClass, factory);
+
+            for (RenderManager manager : renderManagerMap.keySet()) {
+                renderManagerMap.get(manager).rendererMap.put(entityClass, factory.create(manager, renderManagerMap.get(manager)));
+            }
+        }
+    }
+
+    @FunctionalInterface
+    public interface Factory {
+        RenderLiving create(RenderManager var1, Context var2);
+    }
+
+    public static final class Context {
+        private final Map<Class, RenderLiving> rendererMap;
+
+        public Context(Map<Class, RenderLiving> rendererMap) {
+            super();
+            this.rendererMap = rendererMap;
+        }
+    }
+}

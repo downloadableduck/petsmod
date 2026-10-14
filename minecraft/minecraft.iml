@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+	<component name="NewModuleRootManager" inherit-compiler-output="true">
+		<exclude-output />
+		<content url="file://$MODULE_DIR$">
+			<sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+			<excludeFolder url="file://$MODULE_DIR$/src_original" />
+			<excludeFolder url="file://$MODULE_DIR$/bin" />
+			<excludeFolder url="file://$MODULE_DIR$/output" />
+			<excludeFolder url="file://$MODULE_DIR$/game" />
+			<excludeFolder url="file://$MODULE_DIR$/jars" />
+			<excludeFolder url="file://$MODULE_DIR$/md5" />
+			<excludeFolder url="file://$MODULE_DIR$/reobf" />
+		</content>
+		<orderEntry type="inheritedJdk" />
+		<orderEntry type="sourceFolder" forTests="false" />
+		<orderEntry type="library" name="jinput-2.0.5" level="project" />
+		<orderEntry type="library" name="jutils-1.0.0" level="project" />
+		<orderEntry type="library" name="lwjgl-2.9.4-nightly-20150209" level="project" />
+		<orderEntry type="library" name="lwjgl_util-2.9.4-nightly-20150209" level="project" />
+		<orderEntry type="library" name="lwjgl-platform-2.9.4-nightly-20150209" level="project" />
+		<orderEntry type="library" name="codecjorbis-20230120" level="project" />
+		<orderEntry type="library" name="codecwav-20101023" level="project" />
+		<orderEntry type="library" name="libraryjavasound-20101123" level="project" />
+		<orderEntry type="library" name="librarylwjglopenal-20100824" level="project" />
+		<orderEntry type="library" name="soundsystem-20120107" level="project" />
+		<orderEntry type="library" name="launchwrapper-1.3.0" level="project" />
+		<orderEntry type="library" name="json-20230311" level="project" />
+		<orderEntry type="library" name="asm-9.10.1" level="project" />
+		<orderEntry type="library" name="asm-tree-9.10.1" level="project" />
+		<orderEntry type="library" name="asm-commons-9.10.1" level="project" />
+		<orderEntry type="library" name="deobfuscated" level="project" />
+	</component>
+</module>

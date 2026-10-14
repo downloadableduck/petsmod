@@ -1,0 +1,44 @@
+package me.shedaniel.forge.clothconfig2.api;
+
+import me.shedaniel.forge.math.Point;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+public class QueuedTooltip {
+
+    private final Point location;
+    private final List<String> text;
+
+    private QueuedTooltip(Point location, List<String> text) {
+        this.location = location;
+        this.text = Collections.unmodifiableList(text);
+    }
+
+    public static QueuedTooltip create(Point location, List<String> text) {
+        return new QueuedTooltip(location, text);
+    }
+
+    public static QueuedTooltip create(Point location, String... text) {
+        return QueuedTooltip.create(location, new ArrayList<>(Arrays.asList(text)));
+    }
+
+    public Point getLocation() {
+        return location;
+    }
+
+    public int getX() {
+        return getLocation().x;
+    }
+
+    public int getY() {
+        return getLocation().y;
+    }
+
+    public List<String> getText() {
+        return text;
+    }
+
+}

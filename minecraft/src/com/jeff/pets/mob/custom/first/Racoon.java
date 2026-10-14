@@ -1,0 +1,192 @@
+package com.jeff.pets.mob.custom.first;
+
+import net.minecraft.src.*;
+import com.jeff.pets.mob.AbstractPet;
+
+import java.util.Objects;
+
+import static com.jeff.pets.client.Central.CONFIG;
+
+public class Racoon extends AbstractPet {
+
+    private static final int IS_SERVER_ENTITY = 20;
+    public boolean isOnHead;
+
+    public Racoon(World level) {
+        super(level);
+        this.setSize(1.0f, 1.0f);
+    }
+
+    @Override
+    protected int stopDistance() {
+        return 2;
+    }
+
+    @Override
+    protected float heartHeight() {
+        return 0.8f;
+    }
+
+    @Override
+    protected String getLivingSound() {
+        return "mob.chicken.step";
+    }
+
+
+    @Override
+    public void initEntityAI() {
+
+        this.tasks.addTask(1, new EntityAIMate(this, 1));
+        this.tasks.addTask(2, new EntityAISwimming(this));
+        this.tasks.addTask(3, new EntityAIPanic(this, 1.4F));
+        this.tasks.addTask(4, new EntityAITempt(this, 1.0f, Item.beefRaw.itemID, false));
+
+        this.tasks.addTask(5, new EntityAILookIdle(this));
+        this.tasks.addTask(6, new EntityAIWander(this, 1.0F));
+        this.tasks.addTask(8, new EntityAIFollowOwner(this, 1, 2, 10));
+    }
+
+    @Override
+    protected void entityInit() {
+        super.entityInit();
+        this.dataWatcher.addObject(IS_SERVER_ENTITY, Byte.valueOf((byte) 0));
+    }
+
+    public boolean isServerEntity() {
+        return this.dataWatcher.getWatchableObjectByte(IS_SERVER_ENTITY) != 0;
+    }
+
+    public void setServerEntity(Boolean value) {
+        this.dataWatcher.updateObject(IS_SERVER_ENTITY, Byte.valueOf((byte) (value.booleanValue() ? 1 : 0)));
+    }
+
+    @Override
+    public boolean isBreedingItem(ItemStack itemStack) {
+        return itemStack.isItemEqual(new ItemStack(Item.beefRaw));
+    }
+
+    @Override
+    public void onUpdate() {
+        super.onUpdate();
+        EntityLiving owner = this.getOwner();
+        if (owner != null) {
+
+            if (this.ridingEntity == owner) {
+                if (owner.isSneaking() && this.isOwnerJumping(owner)) {
+                    this.ridingEntity = (null);
+                    this.setVelocity(this.motionX, this.motionY - 0.04, this.motionZ);
+                    this.isOnHead = false;
+                } else {
+                    this.setSitting(true);
+                }
+            }
+
+            double dx = owner.posX - this.posX;
+            double dz = owner.posZ - this.posZ;
+
+            double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
+
+            double distance = this.getDistance(owner);
+            float rotation = -this.rotationPitch;
+            float rotationToOwner = rotation + (-this.getOwner().rotationPitch);
+            float bodyYawDiff = net.minecraft.src.MathHelper.wrapAngleTo180_float(this.rotationYawHead - this.renderYawOffset);
+
+            if (rotationToOwner >= 50) {
+                this.renderYawOffset = this.rotationYawHead - (Math.signum(bodyYawDiff) * 50.0F);
+            }
+
+            if (distance > 2.0) {
+
+                this.limbSwingAmount = (0.5F);
+
+                net.minecraft.src.Vec3 targetPos = owner.getPosition(1.0F);
+                net.minecraft.src.Vec3 dir = targetPos.subtract(this.getPosition(1.0F)).normalize();
+
+                this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
+                this.setRotationYawHead(this.getYRot());
+                this.renderYawOffset = this.renderYawOffset + MathHelper.clamp_float(this.rotationYawHead - this.renderYawOffset, -50.0f, 50.0f);
+
+                double speed = owner.getAIMoveSpeed() * 2;
+                this.setVelocity(-dir.xCoord * speed, this.motionY, -dir.zCoord * speed);
+            } else {
+
+                this.setVelocity(this.motionX * 0.8, this.motionY, this.motionZ * 0.8);
+            }
+
+            int yHeightToOwner = (int) (owner.posY - this.posY);
+
+            if (this.isCollidedHorizontally && this.onGround) {
+                this.jump();
+                //this.processFlappingMovement();
+            }
+
+            if (yHeightToOwner > -1) {
+                this.setVelocity(this.motionX, this.motionY - 0.01, this.motionZ);
+                //this.processFlappingMovement();
+            }
+
+            if (!this.onGround) {
+                // this.processFlappingMovement();
+            }
+
+            if (owner.motionX * owner.motionX + owner.motionY * owner.motionY + owner.motionZ * owner.motionZ < 0.01) {
+                this.waitingTime++;
+                if (this.waitingTime > 30) this.wander();
+            } else {
+                this.waitingTime = 0;
+            }
+
+            this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
+            this.setRotationYawHead(this.getYRot());
+
+            if (Math.abs(bodyYawDiff) > 50) {
+                this.renderYawOffset = this.rotationYawHead - (Math.signum(bodyYawDiff) * 50);
+            } else {
+                this.renderYawOffset = this.renderYawOffset + MathHelper.clamp_float(this.rotationYawHead - this.renderYawOffset, -10, 10);
+            }
+
+
+            if (!this.onGround) {
+                this.setVelocity(this.motionX, this.motionY - 0.04, this.motionZ);
+            }
+        }
+        if (owner != null) {
+            if (getDistance(owner) >= 10) {
+                this.setPositionAndUpdate(owner.posX, owner.posY, owner.posZ);
+            }
+        }
+    }
+
+    @Override
+    public EntityAgeable createChild(EntityAgeable AgableMob) {
+        Racoon racoon = new Racoon(this.worldObj);
+        racoon.setServerEntity(false);
+        return racoon;
+    }
+
+    /*@Override
+    public Packet<?> getAddEntityPacket() {
+        if (this.worldObj.isRemote()) {
+            return new SPacketSpawnObject(this);
+        } else {
+            return super.getAddEntityPacket();
+        }
+    }*/
+
+    @Override
+    public String getTexture() {
+        String racoonTexturePath;
+        if (!this.isServerEntity()) {
+            if (Objects.equals(CONFIG.racoonSkin, "normal")) {
+                racoonTexturePath = "/mob/racoon/racoon.png";
+            } else if (Objects.equals(CONFIG.racoonSkin, "albino")) {
+                racoonTexturePath = "/mob/racoon/albino.png";
+            } else {
+                racoonTexturePath = "/mob/racoon/racoon.png";
+            }
+        } else {
+            racoonTexturePath = "/mob/racoon/racoon.png";
+        }
+        return racoonTexturePath;
+    }
+}

@@ -1,0 +1,26 @@
+package com.jeff.pets.mob.vanilla.hostile;
+
+import com.jeff.pets.mob.GroundPet;
+
+public class ClientSilverfish extends GroundPet {
+    public ClientSilverfish(net.minecraft.src.World level) {
+        super(level);
+        this.setSize(0.4f, 0.3f);
+        this.texture = "/mob/silverfish.png";
+    }
+
+    @Override
+    protected int stopDistance() {
+        return 2;
+    }
+
+    @Override
+    protected float heartHeight() {
+        return 1.5f;
+    }
+
+    @Override
+    protected String getLivingSound() {
+        return "mob.silverfish.say";
+    }
+}

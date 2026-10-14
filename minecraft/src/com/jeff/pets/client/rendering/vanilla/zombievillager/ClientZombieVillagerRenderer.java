@@ -1,0 +1,58 @@
+package com.jeff.pets.client.rendering.vanilla.zombievillager;
+
+import net.minecraft.src.Entity;
+import net.minecraft.src.EntityLiving;
+import com.jeff.pets.client.rendering.PetRenderer;
+import org.lwjgl.opengl.GL11;
+
+import java.util.Objects;
+
+import static com.jeff.pets.client.Central.CONFIG;
+
+public class ClientZombieVillagerRenderer extends PetRenderer {
+
+    static final String BUTCHER_LOCATION = "textures/entity/zombie_villager/zombie_butcher.png";
+    static final String FARMER_LOCATION = "textures/entity/zombie_villager/zombie_farmer.png";
+    static final String LIBRARIAN_LOCATION = "textures/entity/zombie_villager/zombie_librarian.png";
+    static final String NITWIT_LOCATION = "textures/entity/zombie_villager/zombie_villager.png";
+    static final String TOOLSMITH_LOCATION = "textures/entity/zombie_villager/zombie_toolsmith.png";
+
+
+    public ClientZombieVillagerRenderer() {
+        super(new ClientZombieVillagerModel(0, 0, false), 0.75f);
+        this.setPetLayer(new ClientZombieVillagerProfessionLayer(this));
+    }
+
+    @Override
+    public void preRenderCallback( final EntityLiving livingEntityRenderState, float f) {
+        if (CONFIG.isBaby) {
+            GL11.glScalef(0.5f, 0.5f, 0.5f);
+        }
+
+    }
+
+    @Override
+    public String getEntityTexture( final Entity villagerRenderState) {
+        if (Objects.equals(CONFIG.zombieVillagerSkin, "butcher")) {
+            return (BUTCHER_LOCATION);
+        } else if (Objects.equals(CONFIG.zombieVillagerSkin, "farmer")) {
+            return (FARMER_LOCATION);
+        } else if (Objects.equals(CONFIG.zombieVillagerSkin, "librarian")) {
+            return (LIBRARIAN_LOCATION);
+        } else if (Objects.equals(CONFIG.zombieVillagerSkin, "nitwit")) {
+            return (NITWIT_LOCATION);
+        } else if (Objects.equals(CONFIG.zombieVillagerSkin, "toolsmith") || Objects.equals(CONFIG.zombieVillagerSkin, "weaponsmith")) {
+            return (TOOLSMITH_LOCATION);
+        }
+        return NITWIT_LOCATION;
+    }
+
+    @Override
+    public void rotateCorpse(EntityLiving state, float f, float g, float h) {
+        super.rotateCorpse(state, f, g, h);
+        if (state.ridingEntity != null) {
+            GL11.glTranslatef(0, -0.5f, 0);
+        }
+    }
+}
+

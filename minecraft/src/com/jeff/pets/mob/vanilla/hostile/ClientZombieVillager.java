@@ -1,0 +1,29 @@
+package com.jeff.pets.mob.vanilla.hostile;
+
+import com.jeff.pets.mob.GroundPet;
+
+public class ClientZombieVillager extends GroundPet {
+
+    public boolean isOnHead;
+
+    public ClientZombieVillager(net.minecraft.src.World level) {
+        super(level);
+        this.setSize(0.6f, 1.95f);
+        this.texture = "/mob/zombie_villager.png";
+    }
+
+    @Override
+    protected int stopDistance() {
+        return 2;
+    }
+
+    @Override
+    protected float heartHeight() {
+        return 2;
+    }
+
+    @Override
+    protected String getLivingSound() {
+        return "mob.zombie.say";
+    }
+}

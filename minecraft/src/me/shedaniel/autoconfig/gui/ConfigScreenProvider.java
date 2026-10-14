@@ -1,0 +1,149 @@
+/*
+ * This file is part of Cloth Config.
+ * Copyright (C) 2020 - 2021 shedaniel
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+package me.shedaniel.autoconfig.gui;
+
+import net.minecraft.src.GuiScreen;
+import net.minecraft.src.I18n;
+import me.shedaniel.autoconfig.ConfigData;
+import me.shedaniel.autoconfig.ConfigManager;
+import me.shedaniel.autoconfig.annotation.Config;
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import me.shedaniel.autoconfig.gui.registry.api.GuiRegistryAccess;
+import me.shedaniel.forge.clothconfig2.api.ConfigBuilder;
+import me.shedaniel.forge.clothconfig2.api.ConfigCategory;
+
+import java.lang.reflect.Field;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
+public class ConfigScreenProvider<T extends ConfigData> implements Supplier<GuiScreen> {
+
+    private static final String TRANSPARENT_BACKGROUND = Config.Gui.Background.TRANSPARENT;
+
+    private final ConfigManager<T> manager;
+    private final GuiRegistryAccess registry;
+    private final GuiScreen parent;
+    private Function<ConfigManager<T>, String> i18nFunction = manager -> String.format("text.autoconfig.%s", manager.getDefinition().name());
+    private Function<ConfigBuilder, GuiScreen> buildFunction = ConfigBuilder::build;
+    private BiFunction<String, Field, String> optionFunction = (baseI13n, field) -> String.format("%s.option.%s", baseI13n, field.getName());
+    private BiFunction<String, String, String> categoryFunction = (baseI13n, categoryName) -> String.format("%s.category.%s", baseI13n, categoryName);
+
+    public ConfigScreenProvider(
+            ConfigManager<T> manager,
+            GuiRegistryAccess registry,
+            GuiScreen parent
+    ) {
+        this.manager = manager;
+        this.registry = registry;
+        this.parent = parent;
+    }
+
+    @Deprecated
+    public void setI13nFunction(Function<ConfigManager<T>, String> i18nFunction) {
+        this.i18nFunction = i18nFunction;
+    }
+
+    @Deprecated
+    public void setBuildFunction(Function<ConfigBuilder, GuiScreen> buildFunction) {
+        this.buildFunction = buildFunction;
+    }
+
+    @Deprecated
+    public void setCategoryFunction(BiFunction<String, String, String> categoryFunction) {
+        this.categoryFunction = categoryFunction;
+    }
+
+    @Deprecated
+    public void setOptionFunction(BiFunction<String, Field, String> optionFunction) {
+        this.optionFunction = optionFunction;
+    }
+
+    @Override
+    public GuiScreen get() {
+        T config = manager.getConfig();
+        T defaults = manager.getSerializer().createDefault();
+
+        String i18n = i18nFunction.apply(manager);
+
+        ConfigBuilder builder = ConfigBuilder.create().setParentScreen(parent).setTitle((String.format("%s.title", i18n))).setSavingRunnable(manager::save);
+
+        Class<T> configClass = manager.getConfigClass();
+
+        if (configClass.isAnnotationPresent(Config.Gui.Background.class)) {
+            String bg = configClass.getAnnotation(Config.Gui.Background.class).value();
+            String bgId = bg;
+            if (TRANSPARENT_BACKGROUND.equals(bgId))
+                builder.transparentBackground();
+            else
+                builder.setDefaultBackgroundTexture(bgId);
+        }
+
+        Map<String, String> categoryBackgrounds = new LinkedHashMap<>();
+        for (Config.Gui.CategoryBackground backgroundAnnotation : configClass.getAnnotationsByType(Config.Gui.CategoryBackground.class)) {
+            categoryBackgrounds.put(backgroundAnnotation.category(), backgroundAnnotation.background());
+        }
+
+        Map<ConfigCategory, java.util.List<Field>> leadingCategoryFields = new LinkedHashMap<>();
+        for (Field field : configClass.getDeclaredFields()) {
+            leadingCategoryFields
+                    .computeIfAbsent(getOrCreateCategoryForField(field, builder, categoryBackgrounds, i18n), key -> new java.util.ArrayList<>())
+                    .add(field);
+        }
+
+        leadingCategoryFields.forEach(
+                (key, value) -> value.forEach(
+                        field -> {
+                            String optionI13n = optionFunction.apply(i18n, field);
+                            registry.getAndTransform(optionI13n, field, config, defaults, registry)
+                                    .forEach(key::addEntry);
+                        }
+                )
+        );
+
+        return buildFunction.apply(builder);
+    }
+
+    private ConfigCategory getOrCreateCategoryForField(
+            Field field,
+            ConfigBuilder screenBuilder,
+            Map<String, String> backgroundMap,
+            String baseI13n
+    ) {
+        String categoryName = "default";
+
+        if (field.isAnnotationPresent(ConfigEntry.Category.class))
+            categoryName = field.getAnnotation(ConfigEntry.Category.class).value();
+
+        String categoryKey = I18n.format(categoryFunction.apply(baseI13n, categoryName));
+
+        if (!screenBuilder.hasCategory(categoryKey)) {
+            ConfigCategory category = screenBuilder.getOrCreateCategory(categoryKey);
+            if (backgroundMap.containsKey(categoryName)) {
+                category.setCategoryBackground(backgroundMap.get(categoryName));
+            }
+            return category;
+        }
+
+        return screenBuilder.getOrCreateCategory(categoryKey);
+    }
+}

@@ -1,0 +1,34 @@
+package com.jeff.pets.client.rendering.custom.aprilfools.head;
+
+import net.minecraft.src.ModelBase;
+import net.minecraft.src.ModelBox;
+import net.minecraft.src.ModelRenderer;
+
+public class HeadModel extends ModelBase {
+    private final ModelRenderer Head;
+
+    public HeadModel() {
+        textureWidth = 64;
+        textureHeight = 64;
+
+        Head = new ModelRenderer(this);
+        Head.setRotationPoint(5.0F, 0.0F, -5.0F);
+        Head.cubeList.add(new ModelBox(Head, 0, 0, -8.0F, 16.0F, 0.0F, 8, 8, 8, 0.0F));
+        Head.cubeList.add(new ModelBox(Head, 32, 0, -8.0F, 16.0F, 0.0F, 8, 8, 8, 0.5F));
+    }
+
+    public void setRotationAngles(net.minecraft.src.Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float f) {
+        //previously the render function, render code was moved to a method below
+    }
+
+    @Override
+    public void render(net.minecraft.src.Entity entity, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
+        Head.render(alpha);
+    }
+
+    public void setRotationAngle(ModelRenderer ModelRenderer, float x, float y, float z) {
+        ModelRenderer.rotateAngleX = x;
+        ModelRenderer.rotateAngleY = y;
+        ModelRenderer.rotateAngleZ = z;
+    }
+}

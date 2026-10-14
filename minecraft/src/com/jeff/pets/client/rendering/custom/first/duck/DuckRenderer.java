@@ -1,0 +1,52 @@
+package com.jeff.pets.client.rendering.custom.first.duck;
+
+import net.minecraft.src.Entity;
+import net.minecraft.src.EntityLiving;
+import com.jeff.pets.client.Math2;
+import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.mob.custom.first.Duck;
+import org.lwjgl.opengl.GL11;
+
+import java.util.Objects;
+
+import static com.jeff.pets.client.Central.CONFIG;
+
+public class DuckRenderer extends PetRenderer {
+    public String duckTexturePath;
+
+    public DuckRenderer() {
+        super(new DuckModel(), 0.3F);
+    }
+
+    @Override
+    public void preRenderCallback( final EntityLiving livingEntityRenderState, float f) {
+        if (CONFIG.isBaby) {
+            GL11.glScalef(0.6f, 0.6f, 0.6f);
+        }
+
+    }
+
+    @Override
+    public void renderModel( final EntityLiving duck, float f, final float k, float u, float g, float h, float i) {
+        float partialTick = 1.0F;
+        ((Duck) duck).flap = Math2.lerp(partialTick, ((Duck) duck).oFlap, ((Duck) duck).flap);
+        ((Duck) duck).flapSpeed = Math2.lerp(partialTick, ((Duck) duck).oFlapSpeed, ((Duck) duck).flapSpeed);
+        super.renderModel(duck, f, k, u, g, h, i);
+    }
+
+    @Override
+    public String getEntityTexture( final Entity state) {
+        if (Objects.equals(CONFIG.duckSkin, "pekin")) {
+            duckTexturePath = "textures/entity/duck/pekin.png";
+        } else if (Objects.equals(CONFIG.duckSkin, "mallard")) {
+            duckTexturePath = "textures/entity/duck/mallard_male.png";
+        } else if (Objects.equals(CONFIG.duckSkin, "rubber")) {
+            duckTexturePath = "textures/entity/duck/rubber.png";
+        } else if (CONFIG.duckSkin.equals("bronze")) {
+            duckTexturePath = "textures/entity/duck/bronze.png";
+        } else {
+            duckTexturePath = "textures/entity/duck/mallard_male.png";
+        }
+        return duckTexturePath;
+    }
+}

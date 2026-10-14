@@ -1,0 +1,20 @@
+//as of 1.5, pets will no longer spawn in worlds without the specific mod that adds them.
+package net.minecraft.src.com.jeff.pets;
+
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.minecraft.src.MobCategory;
+import net.minecraft.src.SpawnPlacementTypes;
+import net.minecraft.src.SpawnPlacements;
+import net.minecraft.src.Animal;
+import net.minecraft.src.Biomes;
+import net.minecraft.src.Heightmap;
+
+public class DuckSpawns {
+    public static void addDuckSpawn() {
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(Biomes.PLAINS, Biomes.CHERRY_GROVE, Biomes.BEACH, Biomes.DARK_FOREST, Biomes.FOREST, Biomes.SPARSE_JUNGLE),
+                MobCategory.CREATURE, PetsInitializer.DUCK, 100, 2, 7);
+        SpawnPlacements.register(PetsInitializer.DUCK, SpawnPlacementTypes.ON_GROUND,
+                Heightmap.Types.WORLD_SURFACE, Animal::checkAnimalSpawnRules);
+    }
+}
