@@ -21,7 +21,11 @@ public final class PetsNetworked implements ClientModInitializer {
 
     @SuppressWarnings("all")
     private void createConnectHandler() {
-        ClientPlayConnectionEvents.JOIN.register((_, _, _) -> NetworkManager.get().connect(Minecraft.getInstance().getCurrentServer().ip));
+        ClientPlayConnectionEvents.JOIN.register((_, _, _) -> {
+            if (Minecraft.getInstance().getCurrentServer() != null) {
+                NetworkManager.get().connect(Minecraft.getInstance().getCurrentServer().ip);
+            }
+        });
     }
 
     private void createDisconnectHandler() {

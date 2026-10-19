@@ -158,8 +158,6 @@ public class Koi extends FlyingPet {
 
             double dx = owner.getX() - this.getX();
             double dz = owner.getZ() - this.getZ();
-            Vec3 ownerPos = owner.position().add(0, owner.getEyeHeight() * 0.8, 0);
-            Vec3 vecToOwner = ownerPos.subtract(this.position());
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.distanceTo(owner);
@@ -186,7 +184,7 @@ public class Koi extends FlyingPet {
                 this.setDeltaMovement(dir.x * speed, this.getDeltaMovement().y, dir.z * speed);
                 if (this.waitingTime < 30 && !this.isReturningToOwner) this.lookAt(owner, 5, 5);
                 else this.lookAt(this.dummy, 5, 5);
-            }else {
+            } else {
                 this.lookAt(owner, 5, 5);
                 this.setDeltaMovement(this.getDeltaMovement().scale(0.8));
             }
@@ -234,10 +232,7 @@ public class Koi extends FlyingPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            try (Level level = this.level()) {
-                level.playLocalSound(this, SoundEvents.SQUID_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f);
-            } catch (Exception ignored) {
-            }
+            level.playLocalSound(this, SoundEvents.SQUID_AMBIENT, SoundSource.PETS, 1.0f, 1.0f);
         }
     }
 }
