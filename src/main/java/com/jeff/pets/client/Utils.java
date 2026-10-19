@@ -1,6 +1,7 @@
 package com.jeff.pets.client;
 
 import com.jeff.pets.PetsInitializer;
+import com.jeff.pets.client.addon.PetsModAddons;
 import com.jeff.pets.client.network.NetworkManager;
 import com.jeff.pets.mob.AbstractPet;
 import com.jeff.pets.mob.aprilfools.*;
@@ -30,6 +31,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 import static com.jeff.pets.client.Central.CONFIG;
@@ -89,7 +91,7 @@ public class Utils {
      *                  current name is checked off of.
      */
     public static void checkName(String activePet, AbstractPet entity, String petName) {
-        if (Objects.equals(CONFIG.activePet, activePet) && entity != null && !entity.getPlainTextName().equals(petName)) {
+        if (Objects.equals(CONFIG.activePet, activePet) && entity != null && petName != null && !entity.getPlainTextName().equals(petName)) {
             entity.setName(petName);
         }
     }
@@ -173,6 +175,17 @@ public class Utils {
     public static AbstractPet getPet(String string) {
         Minecraft minecraft = Minecraft.getInstance();
         ClientLevel world = minecraft.level;
+        AtomicReference<AbstractPet> petForReturn = new AtomicReference<>(null);
+
+        PetsModAddons.forEachAddedPet((pet, petValue, _, _, _, _) -> {
+            if (string.equals(petValue)) {
+                petForReturn.set(pet);
+            }
+        });
+
+        if (petForReturn.get() != null) {
+            return petForReturn.get();
+        }
 
         return switch (string) {
             case "duck" -> new Duck(PetsInitializer.DUCK.get(), world);
@@ -280,6 +293,18 @@ public class Utils {
     }
 
     public static String getActivePetName() {
+        AtomicReference<String> addedPetName = new AtomicReference<>(null);
+
+        PetsModAddons.forEachAddedPet((_, petValue, petName, _, _, _) -> {
+            if (CONFIG.activePet.equals(petValue)) {
+                addedPetName.set((String) petName.get(null));
+            }
+        });
+
+        if (addedPetName.get() != null) {
+            return addedPetName.get();
+        }
+
         return switch (CONFIG.activePet) {
             case "penguin" -> CONFIG.penguinName;
             case "racoon" -> CONFIG.racoonName;
@@ -378,6 +403,13 @@ public class Utils {
     }
 
     public static void setActivePetName(String name) {
+
+        PetsModAddons.forEachAddedPet((_, petValue, petName, _, _, _) -> {
+            if (CONFIG.activePet.equals(petValue)) {
+                petName.set(null, name);
+            }
+        });
+
         switch (CONFIG.activePet) {
             case "penguin" -> CONFIG.penguinName = name;
             case "duck" -> CONFIG.duckName = name;
@@ -489,6 +521,18 @@ public class Utils {
 
     public static String getActivePetSkin() {
 
+        AtomicReference<String> addedPetSkin = new AtomicReference<>(null);
+
+        PetsModAddons.forEachAddedPet((_, petValue, _, _, _, petSkin) -> {
+            if (CONFIG.activePet.equals(petValue) && petSkin.isPresent()) {
+                addedPetSkin.set((String) petSkin.get().skinField().get(null));
+            }
+        });
+
+        if (addedPetSkin.get() != null) {
+            return addedPetSkin.get();
+        }
+
         return switch (CONFIG.activePet) {
             case "duck" -> CONFIG.duckSkin;
             case "cat" -> CONFIG.catSkin;
@@ -539,6 +583,11 @@ public class Utils {
             CONFIG.isBaby = false;
             NetworkManager.get().broadcastToggleBaby(Objects.requireNonNull(Minecraft.getInstance().player).getStringUUID(), CONFIG.isBaby);
         } else {
+            PetsModAddons.forEachAddedPet((_, petValue, _, _, _, petSkin) -> {
+                if (CONFIG.activePet.equals(petValue) && petSkin.isPresent()) {
+                    petSkin.get().skinField().set(null, skin);
+                }
+            });
             if (Objects.equals(CONFIG.activePet, "duck")) {
                 switch (skin) {
                     case "mallard":
@@ -569,7 +618,7 @@ public class Utils {
             } else if (Objects.equals(CONFIG.activePet, "cat")) {
                 switch (skin) {
                     case "black":
-                        CONFIG.catSkin = "all_black";
+                        CONFIG.catSkin = "black";
                         break;
                     case "tuxedo":
                         CONFIG.catSkin = "tuxedo";
@@ -1060,7 +1109,7 @@ public class Utils {
                         CONFIG.wolfSkin = "rusty";
                         break;
                     case "snowy":
-                        CONFIG.wolfSkin = "spotty";
+                        CONFIG.wolfSkin = "snowy";
                         break;
                     case "spotted":
                         CONFIG.wolfSkin = "spotted";
@@ -1245,7 +1294,7 @@ public class Utils {
                 list.add(field.getName().replace("_", " ").toLowerCase());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return list;
     }

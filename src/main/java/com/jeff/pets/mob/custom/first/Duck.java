@@ -1,6 +1,7 @@
 package com.jeff.pets.mob.custom.first;
 
 import com.jeff.pets.PetsSounds;
+import com.jeff.pets.client.mixin.SoundSourceMixin;
 import com.jeff.pets.client.network.NetworkManager;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.client.Minecraft;
@@ -264,10 +265,7 @@ public class Duck extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            try (Level level = this.level()) {
-                level.playLocalSound(this, PetsSounds.DUCK_AMBIENT, SoundSource.NEUTRAL, 1.0f, 1.0f);
-            } catch (Exception ignored) {
-            }
+            level.playLocalSound(this, PetsSounds.DUCK_AMBIENT, SoundSource.valueOf("PETS"), 1.0f, 1.0f);
         }
     }
 

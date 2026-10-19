@@ -1,7 +1,5 @@
 package com.jeff.pets;
 
-import com.jeff.pets.client.Central;
-import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.mob.aprilfools.*;
 import com.jeff.pets.mob.custom.aprilfools.Head;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
@@ -15,21 +13,14 @@ import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import com.jeff.pets.mob.vanilla.hostile.*;
 import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.fml.common.asm.enumextension.RuntimeEnumExtender;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -37,9 +28,6 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.function.Function;
-
-import static com.jeff.pets.PetsInitializer.*;
 import static com.jeff.pets.PetsInitializer.MOD_ID;
 
 /**
@@ -174,7 +162,7 @@ public class PetsInitializer {
 
         LOGGER.info("quack");
     }
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<Racoon>> RACOON =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull Racoon>> RACOON =
             ENTITY_TYPES.register("racoon", () ->
                     EntityType.Builder.of(Racoon::new, MobCategory.CREATURE)
                             .sized(1.0f, 1.0f)
@@ -182,7 +170,7 @@ public class PetsInitializer {
                             .build(createResourceKey("racoon"))
             );
 
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientAllay>> ALLAY =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientAllay>> ALLAY =
             ENTITY_TYPES.register("clientallay", () ->
                     EntityType.Builder.of(ClientAllay::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -191,7 +179,7 @@ public class PetsInitializer {
                             .build(createResourceKey("clientallay"))
             );
 
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientArmadillo>> ARMADILLO =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientArmadillo>> ARMADILLO =
             ENTITY_TYPES.register("clientarmadillo", () ->
                     EntityType.Builder.of(ClientArmadillo::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -200,7 +188,7 @@ public class PetsInitializer {
                             .build(createResourceKey("clientarmadillo"))
             );
 
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientAxolotl>> AXOLOTL =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientAxolotl>> AXOLOTL =
             ENTITY_TYPES.register("clientaxolotl", () ->
                     EntityType.Builder.of(ClientAxolotl::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -209,7 +197,7 @@ public class PetsInitializer {
                             .build(createResourceKey("clientaxolotl"))
             );
 
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientBat>> BAT =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientBat>> BAT =
             ENTITY_TYPES.register("clientbat", () ->
                     EntityType.Builder.of(ClientBat::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -218,7 +206,7 @@ public class PetsInitializer {
                             .build(createResourceKey("clientbat"))
             );
 
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientCamel>> CAMEL =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientCamel>> CAMEL =
             ENTITY_TYPES.register("clientcamel", () ->
                     EntityType.Builder.of(ClientCamel::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -227,7 +215,7 @@ public class PetsInitializer {
                             .build(createResourceKey("clientcamel"))
             );
 
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<Duck>> DUCK =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull Duck>> DUCK =
             ENTITY_TYPES.register("duck", () ->
                     EntityType.Builder.of(Duck::new, MobCategory.CREATURE)
                             .sized(0.4f, 0.7f)
@@ -235,7 +223,7 @@ public class PetsInitializer {
                             .build(createResourceKey("duck"))
             );
 
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<Penguin>> PENGUIN =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull Penguin>> PENGUIN =
             ENTITY_TYPES.register("penguin", () ->
                     EntityType.Builder.of(Penguin::new, MobCategory.AMBIENT)
                             .sized(1.0f, 1.5f)
@@ -243,7 +231,7 @@ public class PetsInitializer {
                             .build(createResourceKey("penguin"))
             );
 
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientSheep>> SHEEP =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientSheep>> SHEEP =
             ENTITY_TYPES.register("clientsheep", () ->
                     EntityType.Builder.of(ClientSheep::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -252,7 +240,7 @@ public class PetsInitializer {
                             .build(createResourceKey("clientsheep"))
             );
 
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientCat>> CAT =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientCat>> CAT =
             ENTITY_TYPES.register("clientcat", () ->
                     EntityType.Builder.of(ClientCat::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -261,7 +249,7 @@ public class PetsInitializer {
                             .build(createResourceKey("clientcat"))
             );
 
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientChicken>> CHICKEN =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientChicken>> CHICKEN =
             ENTITY_TYPES.register("clientchicken", () ->
                     EntityType.Builder.of(ClientChicken::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -270,7 +258,7 @@ public class PetsInitializer {
                             .build(createResourceKey("clientchicken"))
             );
 
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientCod>> COD =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientCod>> COD =
             ENTITY_TYPES.register("clientcod", () ->
                     EntityType.Builder.of(ClientCod::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -279,7 +267,7 @@ public class PetsInitializer {
                             .build(createResourceKey("clientcod"))
             );
 
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientCopperGolem>> COPPER_GOLEM =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientCopperGolem>> COPPER_GOLEM =
             ENTITY_TYPES.register("clientcoppergolem", () ->
                     EntityType.Builder.of(ClientCopperGolem::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -288,7 +276,7 @@ public class PetsInitializer {
                             .build(createResourceKey("clientcoppergolem"))
             );
 
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientCow>> COW =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientCow>> COW =
             ENTITY_TYPES.register("clientcow", () ->
                     EntityType.Builder.of(ClientCow::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -297,7 +285,7 @@ public class PetsInitializer {
                             .build(createResourceKey("clientcow"))
             );
 
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientDonkey>> DONKEY =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientDonkey>> DONKEY =
             ENTITY_TYPES.register("clientdonkey", () ->
                     EntityType.Builder.of(ClientDonkey::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -306,7 +294,7 @@ public class PetsInitializer {
                             .build(createResourceKey("clientdonkey"))
             );
 
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientFrog>> FROG =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientFrog>> FROG =
             ENTITY_TYPES.register("clientfrog", () ->
                     EntityType.Builder.of(ClientFrog::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -315,7 +303,7 @@ public class PetsInitializer {
                             .build(createResourceKey("clientfrog"))
             );
 
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientHorse>> HORSE =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientHorse>> HORSE =
             ENTITY_TYPES.register("clienthorse", () ->
                     EntityType.Builder.of(ClientHorse::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -324,7 +312,7 @@ public class PetsInitializer {
                             .build(createResourceKey("clienthorse"))
             );
 
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientMooshroom>> MOOSHROOM =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientMooshroom>> MOOSHROOM =
             ENTITY_TYPES.register("clientmooshroom", () ->
                     EntityType.Builder.of(ClientMooshroom::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -333,7 +321,7 @@ public class PetsInitializer {
                             .build(createResourceKey("clientmooshroom"))
             );
 
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientParrot>> PARROT =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientParrot>> PARROT =
             ENTITY_TYPES.register("clientparrot", () ->
                     EntityType.Builder.of(ClientParrot::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -342,7 +330,7 @@ public class PetsInitializer {
                             .build(createResourceKey("clientparrot")));
 
     public static final ResourceKey<@NotNull EntityType<?>> PIG_KEY = createResourceKey("clientpig");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientPig>> PIG =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientPig>> PIG =
             ENTITY_TYPES.register("clientpig", () ->
                     EntityType.Builder.of(ClientPig::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -352,7 +340,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> RABBIT_KEY = createResourceKey("clientrabbit");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientRabbit>> RABBIT =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientRabbit>> RABBIT =
             ENTITY_TYPES.register("clientrabbit", () ->
                     EntityType.Builder.of(ClientRabbit::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -362,7 +350,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> SALMON_KEY = createResourceKey("clientsalmon");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientSalmon>> SALMON =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientSalmon>> SALMON =
             ENTITY_TYPES.register("clientsalmon", () ->
                     EntityType.Builder.of(ClientSalmon::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -372,7 +360,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> SNIFFER_KEY = createResourceKey("clientsniffer");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientSniffer>> SNIFFER =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientSniffer>> SNIFFER =
             ENTITY_TYPES.register("clientsniffer", () ->
                     EntityType.Builder.of(ClientSniffer::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -382,7 +370,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> SNOW_GOLEM_KEY = createResourceKey("clientsnowgolem");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientSnowGolem>> SNOW_GOLEM =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientSnowGolem>> SNOW_GOLEM =
             ENTITY_TYPES.register("clientsnowgolem", () ->
                     EntityType.Builder.of(ClientSnowGolem::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -392,7 +380,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> SQUID_KEY = createResourceKey("clientsquid");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientSquid>> SQUID =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientSquid>> SQUID =
             ENTITY_TYPES.register("clientsquid", () ->
                     EntityType.Builder.of(ClientSquid::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -402,7 +390,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> STRIDER_KEY = createResourceKey("clientstrider");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientStrider>> STRIDER =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientStrider>> STRIDER =
             ENTITY_TYPES.register("clientstrider", () ->
                     EntityType.Builder.of(ClientStrider::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -412,7 +400,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> TADPOLE_KEY = createResourceKey("clienttadpole");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientTadpole>> TADPOLE =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientTadpole>> TADPOLE =
             ENTITY_TYPES.register("clienttadpole", () ->
                     EntityType.Builder.of(ClientTadpole::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -422,7 +410,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> TROPICAL_FISH_KEY = createResourceKey("clienttropicalfish");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientTropicalFish>> TROPICAL_FISH =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientTropicalFish>> TROPICAL_FISH =
             ENTITY_TYPES.register("clienttropicalfish", () ->
                     EntityType.Builder.of(ClientTropicalFish::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -432,7 +420,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> TURTLE_KEY = createResourceKey("clientturtle");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientTurtle>> TURTLE =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientTurtle>> TURTLE =
             ENTITY_TYPES.register("clientturtle", () ->
                     EntityType.Builder.of(ClientTurtle::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -442,7 +430,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> VILLAGER_KEY = createResourceKey("clientvillager");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientVillager>> VILLAGER =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientVillager>> VILLAGER =
             ENTITY_TYPES.register("clientvillager", () ->
                     EntityType.Builder.of(ClientVillager::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -452,7 +440,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> WANDERING_TRADER_KEY = createResourceKey("clientwanderingtrader");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientWanderingTrader>> WANDERING_TRADER =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientWanderingTrader>> WANDERING_TRADER =
             ENTITY_TYPES.register("clientwanderingtrader", () ->
                     EntityType.Builder.of(ClientWanderingTrader::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -462,7 +450,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> BEE_KEY = createResourceKey("clientbee");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientBee>> BEE =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientBee>> BEE =
             ENTITY_TYPES.register("clientbee", () ->
                     EntityType.Builder.of(ClientBee::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -472,7 +460,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> CAVE_SPIDER_KEY = createResourceKey("clientcavespider");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientCaveSpider>> CAVE_SPIDER =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientCaveSpider>> CAVE_SPIDER =
             ENTITY_TYPES.register("clientcavespider", () ->
                     EntityType.Builder.of(ClientCaveSpider::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -482,7 +470,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> DOLPHIN_KEY = createResourceKey("clientdolphin");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientDolphin>> DOLPHIN =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientDolphin>> DOLPHIN =
             ENTITY_TYPES.register("clientdolphin", () ->
                     EntityType.Builder.of(ClientDolphin::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -492,7 +480,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> ENDERMAN_KEY = createResourceKey("clientenderman");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientEnderman>> ENDERMAN =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientEnderman>> ENDERMAN =
             ENTITY_TYPES.register("clientenderman", () ->
                     EntityType.Builder.of(ClientEnderman::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -502,7 +490,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> FOX_KEY = createResourceKey("clientfox");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientFox>> FOX =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientFox>> FOX =
             ENTITY_TYPES.register("clientfox", () ->
                     EntityType.Builder.of(ClientFox::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -512,7 +500,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> GOAT_KEY = createResourceKey("clientgoat");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientGoat>> GOAT =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientGoat>> GOAT =
             ENTITY_TYPES.register("clientgoat", () ->
                     EntityType.Builder.of(ClientGoat::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -522,7 +510,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> IRON_GOLEM_KEY = createResourceKey("clientirongolem");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientIronGolem>> IRON_GOLEM =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientIronGolem>> IRON_GOLEM =
             ENTITY_TYPES.register("clientirongolem", () ->
                     EntityType.Builder.of(ClientIronGolem::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -532,7 +520,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> LLAMA_KEY = createResourceKey("clientllama");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientLlama>> LLAMA =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientLlama>> LLAMA =
             ENTITY_TYPES.register("clientllama", () ->
                     EntityType.Builder.of(ClientLlama::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -542,7 +530,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> NAUTILUS_KEY = createResourceKey("clientnautilus");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientNautilus>> NAUTILUS =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientNautilus>> NAUTILUS =
             ENTITY_TYPES.register("clientnautilus", () ->
                     EntityType.Builder.of(ClientNautilus::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -552,7 +540,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> PANDA_KEY = createResourceKey("clientpanda");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientPanda>> PANDA =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientPanda>> PANDA =
             ENTITY_TYPES.register("clientpanda", () ->
                     EntityType.Builder.of(ClientPanda::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -562,7 +550,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> PIGLIN_KEY = createResourceKey("clientpiglin");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientPiglin>> PIGLIN =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientPiglin>> PIGLIN =
             ENTITY_TYPES.register("clientpiglin", () ->
                     EntityType.Builder.of(ClientPiglin::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -572,7 +560,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> POLAR_BEAR_KEY = createResourceKey("clientpolarbear");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientPolarBear>> POLAR_BEAR =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientPolarBear>> POLAR_BEAR =
             ENTITY_TYPES.register("clientpolarbear", () ->
                     EntityType.Builder.of(ClientPolarBear::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -582,7 +570,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> PUFFERFISH_KEY = createResourceKey("clientpufferfish");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientPufferFish>> PUFFERFISH =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientPufferFish>> PUFFERFISH =
             ENTITY_TYPES.register("clientpufferfish", () ->
                     EntityType.Builder.of(ClientPufferFish::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -592,7 +580,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> SPIDER_KEY = createResourceKey("clientspider");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientSpider>> SPIDER =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientSpider>> SPIDER =
             ENTITY_TYPES.register("clientspider", () ->
                     EntityType.Builder.of(ClientSpider::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -602,7 +590,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> WOLF_KEY = createResourceKey("clientwolf");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientWolf>> WOLF =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientWolf>> WOLF =
             ENTITY_TYPES.register("clientwolf", () ->
                     EntityType.Builder.of(ClientWolf::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -612,7 +600,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> BLAZE_KEY = createResourceKey("clientblaze");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientBlaze>> BLAZE =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientBlaze>> BLAZE =
             ENTITY_TYPES.register("clientblaze", () ->
                     EntityType.Builder.of(ClientBlaze::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -622,7 +610,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> BREEZE_KEY = createResourceKey("clientbreeze");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientBreeze>> BREEZE =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientBreeze>> BREEZE =
             ENTITY_TYPES.register("clientbreeze", () ->
                     EntityType.Builder.of(ClientBreeze::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -632,7 +620,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> CREAKING_KEY = createResourceKey("clientcreaking");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientCreaking>> CREAKING =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientCreaking>> CREAKING =
             ENTITY_TYPES.register("clientcreaking", () ->
                     EntityType.Builder.of(ClientCreaking::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -642,7 +630,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> CREEPER_KEY = createResourceKey("clientcreeper");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientCreeper>> CREEPER =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientCreeper>> CREEPER =
             ENTITY_TYPES.register("clientcreeper", () ->
                     EntityType.Builder.of(ClientCreeper::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -652,7 +640,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> ELDER_GUARDIAN_KEY = createResourceKey("clientelderguardian");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientElderGuardian>> ELDER_GUARDIAN_COOKIE =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientElderGuardian>> ELDER_GUARDIAN_COOKIE =
             ENTITY_TYPES.register("clientelderguardian", () ->
                     EntityType.Builder.of(ClientElderGuardian::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -662,7 +650,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> ENDERMITE_KEY = createResourceKey("clientendermite");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientEndermite>> ENDERMITE =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientEndermite>> ENDERMITE =
             ENTITY_TYPES.register("clientendermite", () ->
                     EntityType.Builder.of(ClientEndermite::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -672,7 +660,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> EVOKER_KEY = createResourceKey("clientevoker");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientEvoker>> EVOKER =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientEvoker>> EVOKER =
             ENTITY_TYPES.register("clientevoker", () ->
                     EntityType.Builder.of(ClientEvoker::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -682,7 +670,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> GHAST_KEY = createResourceKey("clientghast");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientGhast>> GHAST =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientGhast>> GHAST =
             ENTITY_TYPES.register("clientghast", () ->
                     EntityType.Builder.of(ClientGhast::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -692,7 +680,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> HAPPY_GHAST_KEY = createResourceKey("clienthappyghast");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientHappyGhast>> HAPPY_GHAST =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientHappyGhast>> HAPPY_GHAST =
             ENTITY_TYPES.register("clienthappyghast", () ->
                     EntityType.Builder.of(ClientHappyGhast::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -702,7 +690,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> GUARDIAN_KEY = createResourceKey("clientguardian");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientGuardian>> GUARDIAN =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientGuardian>> GUARDIAN =
             ENTITY_TYPES.register("clientguardian", () ->
                     EntityType.Builder.of(ClientGuardian::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -712,7 +700,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> HOGLIN_KEY = createResourceKey("clienthoglin");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientHoglin>> HOGLIN =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientHoglin>> HOGLIN =
             ENTITY_TYPES.register("clienthoglin", () ->
                     EntityType.Builder.of(ClientHoglin::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -722,7 +710,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> MAGMA_CUBE_KEY = createResourceKey("clientmagmacube");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientMagmaCube>> MAGMA_CUBE =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientMagmaCube>> MAGMA_CUBE =
             ENTITY_TYPES.register("clientmagmacube", () ->
                     EntityType.Builder.of(ClientMagmaCube::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -732,7 +720,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> PHANTOM_KEY = createResourceKey("clientphantom");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientPhantom>> PHANTOM =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientPhantom>> PHANTOM =
             ENTITY_TYPES.register("clientphantom", () ->
                     EntityType.Builder.of(ClientPhantom::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -742,7 +730,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> PILLAGER_KEY = createResourceKey("clientpillager");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientPillager>> PILLAGER =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientPillager>> PILLAGER =
             ENTITY_TYPES.register("clientpillager", () ->
                     EntityType.Builder.of(ClientPillager::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -752,7 +740,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> RAVAGER_KEY = createResourceKey("clientravager");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientRavager>> RAVAGER =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientRavager>> RAVAGER =
             ENTITY_TYPES.register("clientravager", () ->
                     EntityType.Builder.of(ClientRavager::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -762,7 +750,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> SHULKER_KEY = createResourceKey("clientshulker");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientShulker>> SHULKER =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientShulker>> SHULKER =
             ENTITY_TYPES.register("clientshulker", () ->
                     EntityType.Builder.of(ClientShulker::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -772,7 +760,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> SILVERFISH_KEY = createResourceKey("clientsilverfish");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientSilverfish>> SILVERFISH =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientSilverfish>> SILVERFISH =
             ENTITY_TYPES.register("clientsilverfish", () ->
                     EntityType.Builder.of(ClientSilverfish::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -782,7 +770,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> SKELETON_KEY = createResourceKey("clientskeleton");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientSkeleton>> SKELETON =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientSkeleton>> SKELETON =
             ENTITY_TYPES.register("clientskeleton", () ->
                     EntityType.Builder.of(ClientSkeleton::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -791,7 +779,7 @@ public class PetsInitializer {
                             .build(SKELETON_KEY)
             );
     public static final ResourceKey<@NotNull EntityType<?>> SLIME_KEY = createResourceKey("clientslime");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientSlime>> SLIME =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientSlime>> SLIME =
             ENTITY_TYPES.register("clientslime", () ->
                     EntityType.Builder.of(ClientSlime::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -801,7 +789,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> VEX_KEY = createResourceKey("clientvex");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientVex>> VEX =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientVex>> VEX =
             ENTITY_TYPES.register("clientvex", () ->
                     EntityType.Builder.of(ClientVex::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -811,7 +799,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> VINDICATOR_KEY = createResourceKey("clientvindicator");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientVindicator>> VINDICATOR =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientVindicator>> VINDICATOR =
             ENTITY_TYPES.register("clientvindicator", () ->
                     EntityType.Builder.of(ClientVindicator::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -821,7 +809,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> WARDEN_KEY = createResourceKey("clientwarden");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientWarden>> WARDEN =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientWarden>> WARDEN =
             ENTITY_TYPES.register("clientwarden", () ->
                     EntityType.Builder.of(ClientWarden::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -831,7 +819,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> WITCH_KEY = createResourceKey("clientwitch");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientWitch>> WITCH =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientWitch>> WITCH =
             ENTITY_TYPES.register("clientwitch", () ->
                     EntityType.Builder.of(ClientWitch::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -841,7 +829,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> ZOMBIE_KEY = createResourceKey("clientzombie");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientZombie>> ZOMBIE =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientZombie>> ZOMBIE =
             ENTITY_TYPES.register("clientzombie", () ->
                     EntityType.Builder.of(ClientZombie::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -851,7 +839,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> ZOMBIE_VILLAGER_KEY = createResourceKey("clientzombievillager");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientZombieVillager>> ZOMBIE_VILLAGER =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientZombieVillager>> ZOMBIE_VILLAGER =
             ENTITY_TYPES.register("clientzombievillager", () ->
                     EntityType.Builder.of(ClientZombieVillager::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -861,7 +849,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> HUSK_KEY = createResourceKey("clienthusk");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientHusk>> HUSK =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientHusk>> HUSK =
             ENTITY_TYPES.register("clienthusk", () ->
                     EntityType.Builder.of(ClientHusk::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -871,7 +859,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> DROWNED_KEY = createResourceKey("clientdrowned");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientDrowned>> DROWNED =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientDrowned>> DROWNED =
             ENTITY_TYPES.register("clientdrowned", () ->
                     EntityType.Builder.of(ClientDrowned::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -881,7 +869,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> BOGGED_KEY = createResourceKey("clientbogged");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientBogged>> BOGGED =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientBogged>> BOGGED =
             ENTITY_TYPES.register("clientbogged", () ->
                     EntityType.Builder.of(ClientBogged::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -891,7 +879,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> PARCHED_KEY = createResourceKey("clientparched");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientParched>> PARCHED =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientParched>> PARCHED =
             ENTITY_TYPES.register("clientparched", () ->
                     EntityType.Builder.of(ClientParched::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -901,7 +889,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> STRAY_KEY = createResourceKey("clientstray");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientStray>> STRAY =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientStray>> STRAY =
             ENTITY_TYPES.register("clientstray", () ->
                     EntityType.Builder.of(ClientStray::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -911,7 +899,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> WITHER_SKELETON_KEY = createResourceKey("clientwitherskeleton");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientWitherSkeleton>> WITHER_SKELETON =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientWitherSkeleton>> WITHER_SKELETON =
             ENTITY_TYPES.register("clientwitherskeleton", () ->
                     EntityType.Builder.of(ClientWitherSkeleton::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -921,7 +909,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> ENDER_DRAGON_KEY = createResourceKey("clientenderdragon");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientEnderDragon>> ENDER_DRAGON =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientEnderDragon>> ENDER_DRAGON =
             ENTITY_TYPES.register("clientenderdragon", () ->
                     EntityType.Builder.of(ClientEnderDragon::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -931,7 +919,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> WITHER_KEY = createResourceKey("clientwither");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ClientWither>> WITHER =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientWither>> WITHER =
             ENTITY_TYPES.register("clientwither", () ->
                     EntityType.Builder.of(ClientWither::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -941,7 +929,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> ANGRY_GHAST_KEY = createResourceKey("clientangryghast");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<AngryGhast>> ANGRY_GHAST =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull AngryGhast>> ANGRY_GHAST =
             ENTITY_TYPES.register("clientangryghast", () ->
                     EntityType.Builder.of(AngryGhast::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -951,7 +939,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> BATATO_KEY = createResourceKey("batato");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<Batato>> BATATO =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull Batato>> BATATO =
             ENTITY_TYPES.register("batato", () ->
                     EntityType.Builder.of(Batato::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -961,7 +949,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> DIAMOND_CHICKEN_KEY = createResourceKey("diamond_chicken");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<DiamondChicken>> DIAMOND_CHICKEN =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull DiamondChicken>> DIAMOND_CHICKEN =
             ENTITY_TYPES.register("diamond_chicken", () ->
                     EntityType.Builder.of(DiamondChicken::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -971,7 +959,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> LOVE_GOLEM_KEY = createResourceKey("love_golem");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<LoveGolem>> LOVE_GOLEM =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull LoveGolem>> LOVE_GOLEM =
             ENTITY_TYPES.register("love_golem", () ->
                     EntityType.Builder.of(LoveGolem::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -981,7 +969,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> MEGA_SPUD_KEY = createResourceKey("mega_spud");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<MegaSpud>> MEGA_SPUD =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull MegaSpud>> MEGA_SPUD =
             ENTITY_TYPES.register("mega_spud", () ->
                     EntityType.Builder.of(MegaSpud::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -990,7 +978,7 @@ public class PetsInitializer {
                             .build(MEGA_SPUD_KEY)
             );
     public static final ResourceKey<@NotNull EntityType<?>> MOON_COW_KEY = createResourceKey("moon_cow");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<MoonCow>> MOON_COW =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull MoonCow>> MOON_COW =
             ENTITY_TYPES.register("moon_cow", () ->
                     EntityType.Builder.of(MoonCow::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -1000,7 +988,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> NERD_CREEPER_KEY = createResourceKey("nerd_creeper");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<NerdCreeper>> NERD_CREEPER =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull NerdCreeper>> NERD_CREEPER =
             ENTITY_TYPES.register("nerd_creeper", () ->
                     EntityType.Builder.of(NerdCreeper::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -1010,7 +998,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> PINK_WITHER_KEY = createResourceKey("pink_wither");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<PinkWither>> PINK_WITHER =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull PinkWither>> PINK_WITHER =
             ENTITY_TYPES.register("pink_wither", () ->
                     EntityType.Builder.of(PinkWither::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -1020,7 +1008,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> PLAGUEWHALE_SLAB_KEY = createResourceKey("plaguewhale_slab");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<PlaguewhaleSlab>> PLAGUEWHALE_SLAB =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull PlaguewhaleSlab>> PLAGUEWHALE_SLAB =
             ENTITY_TYPES.register("plaguewhale_slab", () ->
                     EntityType.Builder.of(PlaguewhaleSlab::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -1030,7 +1018,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> POISONOUS_POTATO_ZOMBIE_KEY = createResourceKey("poisonous_potato_zombie");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<PoisonousPotatoZombie>> POISONOUS_POTATO_ZOMBIE =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull PoisonousPotatoZombie>> POISONOUS_POTATO_ZOMBIE =
             ENTITY_TYPES.register("poisonous_potato_zombie", () ->
                     EntityType.Builder.of(PoisonousPotatoZombie::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -1040,7 +1028,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> RAY_TRACING_KEY = createResourceKey("ray_tracing");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<RayTracing>> RAY_TRACING =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull RayTracing>> RAY_TRACING =
             ENTITY_TYPES.register("ray_tracing", () ->
                     EntityType.Builder.of(RayTracing::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -1050,7 +1038,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> REDSTONE_BUG_KEY = createResourceKey("redstone_bug");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<RedstoneBug>> REDSTONE_BUG =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull RedstoneBug>> REDSTONE_BUG =
             ENTITY_TYPES.register("redstone_bug", () ->
                     EntityType.Builder.of(RedstoneBug::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -1060,7 +1048,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> SMILING_CREEPER_KEY = createResourceKey("smiling_creeper");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<SmilingCreeper>> SMILING_CREEPER =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull SmilingCreeper>> SMILING_CREEPER =
             ENTITY_TYPES.register("smiling_creeper", () ->
                     EntityType.Builder.of(SmilingCreeper::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -1070,7 +1058,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> TOXIFIN_SLAB_KEY = createResourceKey("toxifin_slab");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<ToxifinSlab>> TOXIFIN_SLAB =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ToxifinSlab>> TOXIFIN_SLAB =
             ENTITY_TYPES.register("toxifin_slab", () ->
                     EntityType.Builder.of(ToxifinSlab::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -1080,7 +1068,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> POTATO_HUSK_KEY = createResourceKey("potatohusk");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<PotatoHusk>> POTATO_HUSK =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull PotatoHusk>> POTATO_HUSK =
             ENTITY_TYPES.register("potatohusk", () ->
                     EntityType.Builder.of(PotatoHusk::new, MobCategory.AMBIENT)
                             .noSummon()
@@ -1090,7 +1078,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> HEAD_KEY = createResourceKey("head");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<Head>> HEAD =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull Head>> HEAD =
             ENTITY_TYPES.register("head", () ->
                     EntityType.Builder.of(Head::new, MobCategory.CREATURE)
                             .sized(0.5f, 0.5f)
@@ -1099,7 +1087,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> TRAITOR_KEY = createResourceKey("traitor");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<Traitor>> TRAITOR =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull Traitor>> TRAITOR =
             ENTITY_TYPES.register("traitor", () ->
                     EntityType.Builder.of(Traitor::new, MobCategory.CREATURE)
                             .noSummon()
@@ -1109,7 +1097,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> DUMBO_OCTOPUS_KEY = createResourceKey("dumbo_octopus");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<DumboOctopus>> DUMBO_OCTOPUS =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull DumboOctopus>> DUMBO_OCTOPUS =
             ENTITY_TYPES.register("dumbo_octopus", () ->
                     EntityType.Builder.of(DumboOctopus::new, MobCategory.WATER_AMBIENT)
                             .sized(0.5f, 0.5f)
@@ -1118,7 +1106,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> KOI_KEY = createResourceKey("koi");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<Koi>> KOI =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull Koi>> KOI =
             ENTITY_TYPES.register("koi", () ->
                     EntityType.Builder.of(Koi::new, MobCategory.WATER_AMBIENT)
                             .sized(0.6f, 0.6f)
@@ -1127,7 +1115,7 @@ public class PetsInitializer {
             );
 
     public static final ResourceKey<@NotNull EntityType<?>> STINGRAY_KEY = createResourceKey("stingray");
-    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<Stingray>> STINGRAY =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull Stingray>> STINGRAY =
             ENTITY_TYPES.register("stingray", () ->
                     EntityType.Builder.of(Stingray::new, MobCategory.WATER_AMBIENT)
                             .sized(1.0f, 0.4f)
@@ -1137,7 +1125,7 @@ public class PetsInitializer {
 
     private static final ResourceKey<@NotNull EntityType<?>> SULFUR_CUBE_KEY =
             ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(MOD_ID, "sulphur_cube"));
-    public static final DeferredHolder<@NotNull EntityType<?>, EntityType<ClientSulfurCube>> SULFUR_CUBE =
+    public static final DeferredHolder<@NotNull EntityType<?>, @NotNull EntityType<@NotNull ClientSulfurCube>> SULFUR_CUBE =
             ENTITY_TYPES.register("sulfur_cube", () ->
             EntityType.Builder.of(ClientSulfurCube::new, MobCategory.WATER_AMBIENT)
                     .sized(0.98f, 0.98f)

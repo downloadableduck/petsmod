@@ -1,5 +1,6 @@
 package com.jeff.pets.mob;
 
+import com.jeff.pets.client.mixin.SoundSourceMixin;
 import com.jeff.pets.client.network.NetworkManager;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.client.Minecraft;
@@ -138,11 +139,8 @@ public abstract class SlimeLikePet extends AbstractPet {
         }
 
         int ambient = (int) (Math.random() * (60 * 20));
-        try (Level level = this.level()) {
-            if (ambient == 1) {
-                level.playLocalSound(this, Objects.requireNonNull(this.getAmbientSound()), SoundSource.AMBIENT, 1.0f, 1.0f);
-            }
-        } catch (Exception ignored) {
+        if (ambient == 1) {
+            level.playLocalSound(this, Objects.requireNonNull(this.getAmbientSound()), SoundSource.valueOf("PETS"), 1.0f, 1.0f);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.jeff.pets.mob.custom.aquatic;
 
+import com.jeff.pets.client.mixin.SoundSourceMixin;
 import com.jeff.pets.client.network.NetworkManager;
 import com.jeff.pets.mob.FlyingPet;
 import com.jeff.pets.mob.custom.first.Duck;
@@ -232,10 +233,7 @@ public class Koi extends FlyingPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            try (Level level = this.level()) {
-                level.playLocalSound(this, SoundEvents.SQUID_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f);
-            } catch (Exception ignored) {
-            }
+            level.playLocalSound(this, SoundEvents.SQUID_AMBIENT, SoundSource.valueOf("PETS"), 1.0f, 1.0f);
         }
     }
 }

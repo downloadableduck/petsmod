@@ -54,7 +54,7 @@ public class NetworkManager {
             channel.subscribe("requestPetState", (_) -> {
                 try {
                     this.log("Received a request for current pet state");
-                    Minecraft.getInstance().execute(() -> this.broadcastGeneral(Objects.requireNonNull(Minecraft.getInstance().player).getStringUUID(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby));
+                    Minecraft.getInstance().execute(() -> this.broadcastGeneral(Objects.requireNonNull(Minecraft.getInstance().player).getStringUUID(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby, CONFIG.wanderingEnabled));
                 } catch (Throwable t) {
                     this.log(t);
                 }
@@ -78,6 +78,7 @@ public class NetworkManager {
                             if (pet != null) {
                                 pet.petSkin = payload.petSkin;
                                 pet.setBaby(payload.isBaby);
+                                pet.shouldWander = payload.shouldWander;
                                 this.put(player.getUUID(), pet);
                             }
                         }
@@ -214,10 +215,10 @@ public class NetworkManager {
 
     public void broadcastGeneral(String playerUuid,
                                  boolean petOn, String petSpecies, String petName,
-                                 String petSkin, boolean isBaby) {
+                                 String petSkin, boolean isBaby, boolean shouldWander) {
         if (shouldReturn()) return;
         if (channel != null) {
-            GeneralPetsPayload payload = new GeneralPetsPayload(playerUuid, petOn, petSpecies, petName, petSkin, isBaby);
+            GeneralPetsPayload payload = new GeneralPetsPayload(playerUuid, petOn, petSpecies, petName, petSkin, isBaby, shouldWander);
             String jsonPayload = GSON.toJson(payload);
 
             try {
@@ -324,8 +325,10 @@ public class NetworkManager {
     public void broadcastToggleBaby(String uuid, boolean isBaby) {
         if (shouldReturn()) return;
         if (channel != null) {
+            ToggleBabyPayload payload = new ToggleBabyPayload(uuid, isBaby);
+            String jsonPayload = GSON.toJson(payload);
             try {
-                channel.publish("toggle_baby", new ToggleBabyPayload(uuid, isBaby));
+                channel.publish("toggle_baby", jsonPayload);
             } catch (AblyException e) {
                 this.log(e.getMessage());
             }
@@ -335,8 +338,10 @@ public class NetworkManager {
     public void broadcastHeadPayload(String uuid, boolean onHead) {
         if (shouldReturn()) return;
         if (channel != null) {
+            PutPetOnHeadPayload payload = new PutPetOnHeadPayload(uuid, onHead);
+            String jsonPayload = GSON.toJson(payload);
             try {
-                channel.publish("put_on_head", new PutPetOnHeadPayload(uuid, onHead));
+                channel.publish("put_on_head", jsonPayload);
             } catch (AblyException e) {
                 this.log(e.getMessage());
             }
