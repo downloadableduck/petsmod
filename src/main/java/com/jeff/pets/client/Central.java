@@ -8,7 +8,9 @@ package com.jeff.pets.client;
 
 import com.google.gson.Gson;
 import com.jeff.pets.PetsInitializer;
-import com.jeff.pets.client.mixin.client.ChatAccessor;
+import com.jeff.pets.client.addon.PetsModAddons;
+import com.jeff.pets.client.addon.impl.PetsModAddonException;
+import com.jeff.pets.client.mixin.ChatAccessor;
 import com.jeff.pets.client.network.NetworkManager;
 import com.jeff.pets.mob.aprilfools.*;
 import com.jeff.pets.mob.custom.aprilfools.Head;
@@ -23,7 +25,9 @@ import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import com.jeff.pets.mob.vanilla.hostile.*;
 import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
+import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.tree.RootCommandNode;
@@ -55,6 +59,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.literal;
 
 /**
  * This class is the "central" of the logic that despawns, spawns, and swaps out pets, as well as creating all the commands.
@@ -98,12 +105,13 @@ public class Central implements ClientModInitializer {
     private static final List<String> SLIME_LIKE_SKINS = List.of("small", "medium", "large");
     private static final List<String> RACOON_SKINS = List.of("normal", "albino");
     private static final List<String> CREEPER_SKINS = List.of("normal", "charged");
-    private static final List<String> SHULKER_SKINS = List.of("normal", "black", "brown", "cyan", "gray", "green", "light blue", "light gray", "lime", "magenta", "orange", "pink", "purple", "red", "white", "yellow");
+    private static final List<String> SHULKER_SKINS = List.of("normal", "black", "brown", "blue", "cyan", "gray", "green", "light blue", "light gray", "lime", "magenta", "orange", "pink", "purple", "red", "white", "yellow");
     private static final List<String> WITHER_SKINS = List.of("normal", "invulnerable");
     private static final List<String> HEAD_SKINS = List.of("Use any player's name here.");
     private static final List<String> TRAITOR_SKINS = List.of("desert", "jungle", "plains", "savanna", "snowy", "swamp", "taiga");
     private static final List<String> DUMBO_OCTOPUS_SKINS = List.of("yellow", "red", "blue", "green", "orange", "pink");
     private static final List<String> EMPTY_LIST = List.of();
+    private static final Central INSTANCE = new Central();
     public static Gson GSON = new Gson();
     public static PetsConfig CONFIG;
     public static int petSkin;
@@ -206,7 +214,7 @@ public class Central implements ClientModInitializer {
     public static Koi koi;
     public static Stingray stingray;
     public static ClientSulfurCube sulfurCube;
-
+    public static CommandDispatcher<FabricClientCommandSource> dispatcher;
     private final SuggestionProvider<FabricClientCommandSource> SKINS = (_, builder) -> {
         String remaining = builder.getRemainingLowerCase();
 
@@ -218,6 +226,10 @@ public class Central implements ClientModInitializer {
 
         return builder.buildFuture();
     };
+
+    public static Central get() {
+        return INSTANCE;
+    }
 
     /**
      * Despawns the entity to ensure that only one is present at a time. For the helper method used,
@@ -323,6 +335,7 @@ public class Central implements ClientModInitializer {
         Utils.despawnEntity(koi);
         Utils.despawnEntity(stingray);
         Utils.despawnEntity(sulfurCube);
+        PetsModAddons.forEachAddedPet((pet, _, _, _, _, _) -> Utils.despawnEntity(pet));
     }
 
     /**
@@ -431,6 +444,11 @@ public class Central implements ClientModInitializer {
         koi = new Koi(PetsInitializer.KOI, world);
         stingray = new Stingray(PetsInitializer.STINGRAY, world);
         sulfurCube = new ClientSulfurCube(PetsInitializer.SULFUR_CUBE, world);
+        PetsModAddons.forEachAddedPet((pet, _, _, _, _, _) -> {
+            if (pet != null && !pet.isRemoved()) {
+                pet.reinstantiate(world);
+            }
+        });
 
         if (world != null) {
             if (Objects.equals(CONFIG.activePet, "duck")) {
@@ -632,8 +650,13 @@ public class Central implements ClientModInitializer {
             } else if (Objects.equals(CONFIG.activePet, "sulfur_cube")) {
                 Utils.summonPet(sulfurCube, CONFIG.sulfurCubeName);
             }
+            PetsModAddons.forEachAddedPet((pet, petValue, petName, _, _, _) -> {
+                if (Objects.equals(CONFIG.activePet, petValue)) {
+                    Utils.summonPet(pet, (String) petName.get(null));
+                }
+            });
         }
-        NetworkManager.get().broadcastGeneral(Objects.requireNonNull(minecraft.player).getStringUUID(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby);
+        NetworkManager.get().broadcastGeneral(Objects.requireNonNull(minecraft.player).getStringUUID(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby, CONFIG.wanderingEnabled);
     }
 
     /**
@@ -737,6 +760,9 @@ public class Central implements ClientModInitializer {
         Utils.checkName("koi", koi, CONFIG.koiName);
         Utils.checkName("stingray", stingray, CONFIG.stingrayName);
         Utils.checkName("sulfur_cube", sulfurCube, CONFIG.sulfurCubeName);
+        if (Minecraft.getInstance().level != null) {
+            PetsModAddons.forEachAddedPet((pet, petValue, petName, _, _, _) -> Utils.checkName(petValue, pet, (String) petName.get(null)));
+        }
     }
 
     /**
@@ -781,6 +807,9 @@ public class Central implements ClientModInitializer {
         };
 
         currentSuggestions.clear();
+        PetsModAddons.forEachAddedPetSafe((petValue, _, _, petSkin) -> {
+            if (CONFIG.activePet.equals(petValue)) petSkin.ifPresent(skin -> currentSuggestions.addAll(skin.skins()));
+        });
         currentSuggestions.add("baby");
         currentSuggestions.add("adult");
         currentSuggestions.addAll(skinSuggestions);
@@ -1002,11 +1031,16 @@ public class Central implements ClientModInitializer {
         CONFIG.headSkin = Utils.checkNullString(CONFIG.headSkin, "downloadableduck");
         CONFIG.sulfurCubeName = Utils.checkNullString(CONFIG.sulfurCubeName);
         CONFIG.sulfurCubeSkin = Utils.checkNullString(CONFIG.sulfurCubeSkin, "air");
+        CONFIG.dismissedVersion = Utils.checkNullString(CONFIG.dismissedVersion);
     }
 
     @SuppressWarnings("deprecation")
     public static void saveConfig() {
         try (FileWriter writer = new FileWriter(FabricLoader.getInstance().getConfigDirectory().toPath().resolve("petsconfig.json").toFile())) {
+            PetsModAddons.forEachAddedPetSafe((entityValue, entityName, _, entitySkin) -> {
+                String petSkin = entitySkin.isEmpty() ? null : (String) entitySkin.get().skinField().get(null);
+                CONFIG.addonDataMap.put(entityValue, new PetsConfig.AddonData((String) entityName.get(null), petSkin));
+            });
             GSON.toJson(CONFIG, writer);
         } catch (Exception ignored) {
         }
@@ -1037,6 +1071,17 @@ public class Central implements ClientModInitializer {
         try (FileReader reader = new FileReader(config)) {
             CONFIG = GSON.fromJson(reader, PetsConfig.class);
             if (CONFIG == null) CONFIG = new PetsConfig();
+
+            PetsModAddons.forEachAddedPetSafe((petValue, petName, entityType, petSkin) -> {
+                petName.set(null, CONFIG.addonDataMap.get(petValue).petName());
+                petSkin.ifPresent((skin) -> {
+                    try {
+                        skin.skinField().set(null, CONFIG.addonDataMap.get(petValue).petSkin());
+                    } catch (Exception e) {
+                        throw new PetsModAddonException(PetsModAddons.getIdByEntityType(entityType), e);
+                    }
+                });
+            });
             saveConfig();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -1052,7 +1097,224 @@ public class Central implements ClientModInitializer {
         this.createTickWatcher();
         this.createToggleCommand();
         this.createPetsList();
+        this.createPetCommand();
         updateSuggestions(Minecraft.getInstance());
+    }
+
+    /**
+     * @since 0.8.6
+     *
+     */
+    public void createPetCommand() {
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, _) -> {
+            Central.dispatcher = dispatcher;
+            dispatcher.register(LiteralArgumentBuilder.<FabricClientCommandSource>literal("pet")
+                    .then(literal("species")
+                            .then(ClientCommands.argument("species", StringArgumentType.greedyString())
+                                    .suggests(PETS)
+                                    .executes((context) -> {
+                                        AtomicBoolean isValid = new AtomicBoolean(true);
+                                        String species = StringArgumentType.getString(context, "species");
+
+                                        switch (species) {
+                                            case "duck" -> Utils.setActivePet(duck, "duck");
+                                            case "racoon" -> Utils.setActivePet(racoon, "racoon");
+                                            case "penguin" -> Utils.setActivePet(penguin, "penguin");
+                                            case "sheep" -> Utils.setActivePet(sheep, "sheep");
+                                            case "cat" -> Utils.setActivePet(cat, "cat");
+                                            case "allay" -> Utils.setActivePet(allay, "allay");
+                                            case "armadillo" -> Utils.setActivePet(armadillo, "armadillo");
+                                            case "axolotl" -> Utils.setActivePet(axolotl, "axolotl");
+                                            case "bat" -> Utils.setActivePet(bat, "bat");
+                                            case "camel" -> Utils.setActivePet(camel, "camel");
+                                            case "chicken" -> Utils.setActivePet(chicken, "chicken");
+                                            case "cod" -> Utils.setActivePet(cod, "cod");
+                                            case "copper_golem", "copper golem" ->
+                                                    Utils.setActivePet(copperGolem, "copper_golem");
+                                            case "cow" -> Utils.setActivePet(cow, "cow");
+                                            case "donkey" -> Utils.setActivePet(donkey, "donkey");
+                                            case "frog" -> Utils.setActivePet(frog, "frog");
+                                            case "horse" -> Utils.setActivePet(horse, "horse");
+                                            case "mooshroom" -> Utils.setActivePet(mooshroom, "mooshroom");
+                                            case "parrot" -> Utils.setActivePet(parrot, "parrot");
+                                            case "pig" -> Utils.setActivePet(pig, "pig");
+                                            case "rabbit" -> Utils.setActivePet(rabbit, "rabbit");
+                                            case "salmon" -> Utils.setActivePet(salmon, "salmon");
+                                            case "sniffer" -> Utils.setActivePet(sniffer, "sniffer");
+                                            case "snow_golem", "snow golem" ->
+                                                    Utils.setActivePet(snowGolem, "snow_golem");
+                                            case "squid" -> Utils.setActivePet(squid, "squid");
+                                            case "strider" -> Utils.setActivePet(strider, "strider");
+                                            case "tadpole" -> Utils.setActivePet(tadpole, "tadpole");
+                                            case "turtle" -> Utils.setActivePet(turtle, "turtle");
+                                            case "villager" -> Utils.setActivePet(villager, "villager");
+                                            case "wandering_trader", "wandering trader" ->
+                                                    Utils.setActivePet(wanderingTrader, "wandering_trader");
+                                            case "bee" -> Utils.setActivePet(bee, "bee");
+                                            case "cave_spider", "cave spider" ->
+                                                    Utils.setActivePet(caveSpider, "cave_spider");
+                                            case "dolphin" -> Utils.setActivePet(dolphin, "dolphin");
+                                            case "enderman" -> Utils.setActivePet(enderman, "enderman");
+                                            case "fox" -> Utils.setActivePet(fox, "fox");
+                                            case "goat" -> Utils.setActivePet(goat, "goat");
+                                            case "iron_golem", "iron golem" ->
+                                                    Utils.setActivePet(ironGolem, "iron_golem");
+                                            case "llama" -> Utils.setActivePet(llama, "llama");
+                                            case "nautilus" -> Utils.setActivePet(nautilus, "nautilus");
+                                            case "panda" -> Utils.setActivePet(panda, "panda");
+                                            case "piglin" -> Utils.setActivePet(piglin, "piglin");
+                                            case "polar_bear", "polar bear" ->
+                                                    Utils.setActivePet(polarBear, "polar_bear");
+                                            case "pufferfish" -> Utils.setActivePet(pufferFish, "pufferfish");
+                                            case "spider" -> Utils.setActivePet(spider, "spider");
+                                            case "wolf" -> Utils.setActivePet(wolf, "wolf");
+                                            case "blaze" -> Utils.setActivePet(blaze, "blaze");
+                                            case "breeze" -> Utils.setActivePet(breeze, "breeze");
+                                            case "creaking" -> Utils.setActivePet(creaking, "creaking");
+                                            case "creeper" -> Utils.setActivePet(creeper, "creeper");
+                                            case "elder_guardian", "elder guardian" ->
+                                                    Utils.setActivePet(elderGuardian, "elder_guardian");
+                                            case "endermite" -> Utils.setActivePet(endermite, "endermite");
+                                            case "evoker" -> Utils.setActivePet(evoker, "evoker");
+                                            case "ghast" -> Utils.setActivePet(ghast, "ghast");
+                                            case "happy_ghast", "happy ghast" ->
+                                                    Utils.setActivePet(happyGhast, "happy_ghast");
+                                            case "guardian" -> Utils.setActivePet(guardian, "guardian");
+                                            case "hoglin" -> Utils.setActivePet(hoglin, "hoglin");
+                                            case "magma_cube", "magma cube" ->
+                                                    Utils.setActivePet(magmaCube, "magma_cube");
+                                            case "phantom" -> Utils.setActivePet(phantom, "phantom");
+                                            case "pillager" -> Utils.setActivePet(pillager, "pillager");
+                                            case "ravager" -> Utils.setActivePet(ravager, "ravager");
+                                            case "shulker" -> Utils.setActivePet(shulker, "shulker");
+                                            case "silverfish" -> Utils.setActivePet(silverfish, "silverfish");
+                                            case "skeleton" -> Utils.setActivePet(skeleton, "skeleton");
+                                            case "slime" -> Utils.setActivePet(slime, "slime");
+                                            case "vex" -> Utils.setActivePet(vex, "vex");
+                                            case "vindicator" -> Utils.setActivePet(vindicator, "vindicator");
+                                            case "warden" -> Utils.setActivePet(warden, "warden");
+                                            case "witch" -> Utils.setActivePet(witch, "witch");
+                                            case "zombie" -> Utils.setActivePet(zombie, "zombie");
+                                            case "zombie_villager", "zombie villager" ->
+                                                    Utils.setActivePet(zombieVillager, "zombie_villager");
+                                            case "husk" -> Utils.setActivePet(husk, "husk");
+                                            case "drowned" -> Utils.setActivePet(drowned, "drowned");
+                                            case "bogged" -> Utils.setActivePet(bogged, "bogged");
+                                            case "parched" -> Utils.setActivePet(parched, "parched");
+                                            case "stray" -> Utils.setActivePet(stray, "stray");
+                                            case "wither_skeleton", "wither skeleton" ->
+                                                    Utils.setActivePet(witherSkeleton, "wither_skeleton");
+                                            case "wither" -> Utils.setActivePet(wither, "wither");
+                                            case "ender dragon", "ender_dragon" ->
+                                                    Utils.setActivePet(enderDragon, "ender_dragon");
+                                            case "angry_ghast", "angry ghast" ->
+                                                    Utils.setActivePet(angryGhast, "angry_ghast");
+                                            case "batato" -> Utils.setActivePet(batato, "batato");
+                                            case "diamond_chicken", "diamond chicken" ->
+                                                    Utils.setActivePet(diamondChicken, "diamond_chicken");
+                                            case "love_golem", "love golem" ->
+                                                    Utils.setActivePet(loveGolem, "love_golem");
+                                            case "mega_spud", "mega spud" -> Utils.setActivePet(megaSpud, "mega_spud");
+                                            case "moon_cow", "moon cow" -> Utils.setActivePet(moonCow, "moon_cow");
+                                            case "nerd_creeper", "nerd creeper" ->
+                                                    Utils.setActivePet(nerdCreeper, "nerd_creeper");
+                                            case "pink_wither", "pink wither" ->
+                                                    Utils.setActivePet(pinkWither, "pink_wither");
+                                            case "plaguewhale_slab", "plaguewhale slab" ->
+                                                    Utils.setActivePet(plaguewhaleSlab, "plaguewhale_slab");
+                                            case "poisonous_potato_zombie", "poisonous potato zombie" ->
+                                                    Utils.setActivePet(poisonousPotatoZombie, "poisonous_potato_zombie");
+                                            case "ray_tracing", "ray tracing" ->
+                                                    Utils.setActivePet(rayTracing, "ray_tracing");
+                                            case "redstone_bug", "redstone bug" ->
+                                                    Utils.setActivePet(redstoneBug, "redstone_bug");
+                                            case "smiling_creeper", "smiling creeper" ->
+                                                    Utils.setActivePet(smilingCreeper, "smiling_creeper");
+                                            case "toxifin_slab", "toxifin slab" ->
+                                                    Utils.setActivePet(toxifinSlab, "toxifin_slab");
+                                            case "potato_husk", "potato husk" ->
+                                                    Utils.setActivePet(potatoHusk, "potato_husk");
+                                            case "head" -> Utils.setActivePet(head, "head");
+                                            case "traitor" -> Utils.setActivePet(traitor, "traitor");
+                                            case "dumbo_octopus", "dumbo octopus" ->
+                                                    Utils.setActivePet(dumboOctopus, "dumbo_octopus");
+                                            case "koi" -> Utils.setActivePet(koi, "koi");
+                                            case "stingray" -> Utils.setActivePet(stingray, "stingray");
+                                            case "sulfur_cube" -> Utils.setActivePet(sulfurCube, "sulfur_cube");
+                                            case null, default -> isValid.set(false);
+                                        }
+
+                                        PetsModAddons.forEachAddedPet((pet, petValue, _, _, _, _) -> {
+                                            if (species.equals(petValue)) {
+                                                Utils.setActivePet(pet, petValue);
+                                                isValid.set(true);
+                                            }
+                                        });
+
+                                        this.checkValidPet(isValid.get(), context, species);
+
+                                        Central.saveConfig();
+                                        updateSuggestions(Minecraft.getInstance());
+                                        return 1;
+                                    })))
+                    .then(literal("name")
+                            .then(ClientCommands.argument("name", StringArgumentType.greedyString())
+                                    .executes(context -> {
+                                        String name = StringArgumentType.getString(context, "name");
+                                        if (!summonedEntity.isEmpty()) {
+                                            Utils.setActivePetName(name);
+                                        }
+                                        return 1;
+                                    })))
+                    .then(literal("skin")
+                            .then(ClientCommands.argument("skin", StringArgumentType.greedyString())
+                                    .suggests(this.SKINS)
+                                    .executes(context -> {
+                                        String skin = StringArgumentType.getString(context, "skin");
+                                        boolean isValid = Utils.setActivePetSkin(skin);
+                                        if (isValid) {
+                                            context.getSource().sendFeedback(Component.translatable("message.pets-mod.pet-skin-change-success"));
+                                            if (Minecraft.getInstance().player != null) {
+                                                NetworkManager.get().broadcastChangePetSkin(Minecraft.getInstance().player.getUUID().toString(), skin);
+                                            }
+                                        } else {
+                                            context.getSource().sendFeedback(Component.translatable("message.pets-mod.pet-skin-change-fail"));
+                                        }
+                                        Central.saveConfig();
+                                        return 1;
+                                    })))
+                    .then(literal("toggle")
+                            .then(ClientCommands.argument("choice", StringArgumentType.greedyString())
+                                    .suggests(SuggestionProviders.cast(ON_OFF))
+                                    .executes(context -> {
+                                        String preference = StringArgumentType.getString(context, "choice");
+                                        String uuid = Minecraft.getInstance().player != null ? Minecraft.getInstance().player.getStringUUID() : null;
+                                        if (Objects.equals(preference, "off")) {
+                                            CONFIG.petOn = false;
+                                            context.getSource().sendFeedback(Component.translatable("message.pets-mod.pet-off"));
+                                            Central.saveConfig();
+                                            NetworkManager.get().broadcastTogglePet(uuid, Utils.getActivePetName(), CONFIG.petOn);
+                                        } else if (Objects.equals(preference, "on")) {
+                                            CONFIG.petOn = true;
+                                            context.getSource().sendFeedback(Component.translatable("message.pets-mod.pet-on"));
+                                            Central.saveConfig();
+                                            NetworkManager.get().broadcastTogglePet(uuid, Utils.getActivePetName(), CONFIG.petOn);
+                                        } else {
+                                            context.getSource().sendFeedback(Component.translatable("message.pets-mod.unknown-value", Component.literal(preference).withStyle(ChatFormatting.RED, ChatFormatting.BOLD)));
+                                        }
+                                        return 1;
+                                    })))
+                    .then(literal("help")
+                            .executes(context -> {
+                                context.getSource().getPlayer().sendSystemMessage(Component.translatable("message.pets-mod.pet-help"));
+                                return 1;
+                            }))
+                    .then(literal("teleport")
+                            .executes(_ -> {
+                                Objects.requireNonNull(Minecraft.getInstance().getConnection()).sendCommand("teleportpet");
+                                return 1;
+                            })));
+        });
     }
 
     /**
@@ -1071,17 +1333,8 @@ public class Central implements ClientModInitializer {
                 .suggests(this.SKINS)
                 .executes((context) -> {
                     String skin = StringArgumentType.getString(context, "skin");
-                    boolean isValid = Utils.setActivePetSkin(skin);
-                    if (isValid) {
-                        context.getSource().sendFeedback(Component.translatable("message.pets-mod.pet-skin-change-success"));
-                        if (Minecraft.getInstance().player != null) {
-                            NetworkManager.get().broadcastChangePetSkin(Minecraft.getInstance().player.getUUID().toString(), skin);
-                        }
-                    } else {
-                        context.getSource().sendFeedback(Component.translatable("message.pets-mod.pet-skin-change-fail"));
-                    }
-                    Central.saveConfig();
-
+                    Objects.requireNonNull(Minecraft.getInstance().getConnection()).sendCommand("pet skin " + skin);
+                    this.showDeprecationWarning("pet skin <skin>");
                     return 1;
                 }))));
     }
@@ -1104,117 +1357,9 @@ public class Central implements ClientModInitializer {
      */
     void createPetSpeciesCommand() {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, _) -> dispatcher.register(ClientCommands.literal("petspecies").then(ClientCommands.argument("species", StringArgumentType.greedyString()).suggests(PETS).executes((context) -> {
-            boolean isValid = true;
             String species = StringArgumentType.getString(context, "species");
-
-            switch (species) {
-                case "duck" -> Utils.setActivePet(duck, "duck");
-                case "racoon" -> Utils.setActivePet(racoon, "racoon");
-                case "penguin" -> Utils.setActivePet(penguin, "penguin");
-                case "sheep" -> Utils.setActivePet(sheep, "sheep");
-                case "cat" -> Utils.setActivePet(cat, "cat");
-                case "allay" -> Utils.setActivePet(allay, "allay");
-                case "armadillo" -> Utils.setActivePet(armadillo, "armadillo");
-                case "axolotl" -> Utils.setActivePet(axolotl, "axolotl");
-                case "bat" -> Utils.setActivePet(bat, "bat");
-                case "camel" -> Utils.setActivePet(camel, "camel");
-                case "chicken" -> Utils.setActivePet(chicken, "chicken");
-                case "cod" -> Utils.setActivePet(cod, "cod");
-                case "copper_golem", "copper golem" -> Utils.setActivePet(copperGolem, "copper_golem");
-                case "cow" -> Utils.setActivePet(cow, "cow");
-                case "donkey" -> Utils.setActivePet(donkey, "donkey");
-                case "frog" -> Utils.setActivePet(frog, "frog");
-                case "horse" -> Utils.setActivePet(horse, "horse");
-                case "mooshroom" -> Utils.setActivePet(mooshroom, "mooshroom");
-                case "parrot" -> Utils.setActivePet(parrot, "parrot");
-                case "pig" -> Utils.setActivePet(pig, "pig");
-                case "rabbit" -> Utils.setActivePet(rabbit, "rabbit");
-                case "salmon" -> Utils.setActivePet(salmon, "salmon");
-                case "sniffer" -> Utils.setActivePet(sniffer, "sniffer");
-                case "snow_golem", "snow golem" -> Utils.setActivePet(snowGolem, "snow_golem");
-                case "squid" -> Utils.setActivePet(squid, "squid");
-                case "strider" -> Utils.setActivePet(strider, "strider");
-                case "tadpole" -> Utils.setActivePet(tadpole, "tadpole");
-                case "turtle" -> Utils.setActivePet(turtle, "turtle");
-                case "villager" -> Utils.setActivePet(villager, "villager");
-                case "wandering_trader", "wandering trader" -> Utils.setActivePet(wanderingTrader, "wandering_trader");
-                case "bee" -> Utils.setActivePet(bee, "bee");
-                case "cave_spider", "cave spider" -> Utils.setActivePet(caveSpider, "cave_spider");
-                case "dolphin" -> Utils.setActivePet(dolphin, "dolphin");
-                case "enderman" -> Utils.setActivePet(enderman, "enderman");
-                case "fox" -> Utils.setActivePet(fox, "fox");
-                case "goat" -> Utils.setActivePet(goat, "goat");
-                case "iron_golem", "iron golem" -> Utils.setActivePet(ironGolem, "iron_golem");
-                case "llama" -> Utils.setActivePet(llama, "llama");
-                case "nautilus" -> Utils.setActivePet(nautilus, "nautilus");
-                case "panda" -> Utils.setActivePet(panda, "panda");
-                case "piglin" -> Utils.setActivePet(piglin, "piglin");
-                case "polar_bear", "polar bear" -> Utils.setActivePet(polarBear, "polar_bear");
-                case "pufferfish" -> Utils.setActivePet(pufferFish, "pufferfish");
-                case "spider" -> Utils.setActivePet(spider, "spider");
-                case "wolf" -> Utils.setActivePet(wolf, "wolf");
-                case "blaze" -> Utils.setActivePet(blaze, "blaze");
-                case "breeze" -> Utils.setActivePet(breeze, "breeze");
-                case "creaking" -> Utils.setActivePet(creaking, "creaking");
-                case "creeper" -> Utils.setActivePet(creeper, "creeper");
-                case "elder_guardian", "elder guardian" -> Utils.setActivePet(elderGuardian, "elder_guardian");
-                case "endermite" -> Utils.setActivePet(endermite, "endermite");
-                case "evoker" -> Utils.setActivePet(evoker, "evoker");
-                case "ghast" -> Utils.setActivePet(ghast, "ghast");
-                case "happy_ghast", "happy ghast" -> Utils.setActivePet(happyGhast, "happy_ghast");
-                case "guardian" -> Utils.setActivePet(guardian, "guardian");
-                case "hoglin" -> Utils.setActivePet(hoglin, "hoglin");
-                case "magma_cube", "magma cube" -> Utils.setActivePet(magmaCube, "magma_cube");
-                case "phantom" -> Utils.setActivePet(phantom, "phantom");
-                case "pillager" -> Utils.setActivePet(pillager, "pillager");
-                case "ravager" -> Utils.setActivePet(ravager, "ravager");
-                case "shulker" -> Utils.setActivePet(shulker, "shulker");
-                case "silverfish" -> Utils.setActivePet(silverfish, "silverfish");
-                case "skeleton" -> Utils.setActivePet(skeleton, "skeleton");
-                case "slime" -> Utils.setActivePet(slime, "slime");
-                case "vex" -> Utils.setActivePet(vex, "vex");
-                case "vindicator" -> Utils.setActivePet(vindicator, "vindicator");
-                case "warden" -> Utils.setActivePet(warden, "warden");
-                case "witch" -> Utils.setActivePet(witch, "witch");
-                case "zombie" -> Utils.setActivePet(zombie, "zombie");
-                case "zombie_villager", "zombie villager" -> Utils.setActivePet(zombieVillager, "zombie_villager");
-                case "husk" -> Utils.setActivePet(husk, "husk");
-                case "drowned" -> Utils.setActivePet(drowned, "drowned");
-                case "bogged" -> Utils.setActivePet(bogged, "bogged");
-                case "parched" -> Utils.setActivePet(parched, "parched");
-                case "stray" -> Utils.setActivePet(stray, "stray");
-                case "wither_skeleton", "wither skeleton" -> Utils.setActivePet(witherSkeleton, "wither_skeleton");
-                case "wither" -> Utils.setActivePet(wither, "wither");
-                case "ender dragon", "ender_dragon" -> Utils.setActivePet(enderDragon, "ender_dragon");
-                case "angry_ghast", "angry ghast" -> Utils.setActivePet(angryGhast, "angry_ghast");
-                case "batato" -> Utils.setActivePet(batato, "batato");
-                case "diamond_chicken", "diamond chicken" -> Utils.setActivePet(diamondChicken, "diamond_chicken");
-                case "love_golem", "love golem" -> Utils.setActivePet(loveGolem, "love_golem");
-                case "mega_spud", "mega spud" -> Utils.setActivePet(megaSpud, "mega_spud");
-                case "moon_cow", "moon cow" -> Utils.setActivePet(moonCow, "moon_cow");
-                case "nerd_creeper", "nerd creeper" -> Utils.setActivePet(nerdCreeper, "nerd_creeper");
-                case "pink_wither", "pink wither" -> Utils.setActivePet(pinkWither, "pink_wither");
-                case "plaguewhale_slab", "plaguewhale slab" -> Utils.setActivePet(plaguewhaleSlab, "plaguewhale_slab");
-                case "poisonous_potato_zombie", "poisonous potato zombie" ->
-                        Utils.setActivePet(poisonousPotatoZombie, "poisonous_potato_zombie");
-                case "ray_tracing", "ray tracing" -> Utils.setActivePet(rayTracing, "ray_tracing");
-                case "redstone_bug", "redstone bug" -> Utils.setActivePet(redstoneBug, "redstone_bug");
-                case "smiling_creeper", "smiling creeper" -> Utils.setActivePet(smilingCreeper, "smiling_creeper");
-                case "toxifin_slab", "toxifin slab" -> Utils.setActivePet(toxifinSlab, "toxifin_slab");
-                case "potato_husk", "potato husk" -> Utils.setActivePet(potatoHusk, "potato_husk");
-                case "head" -> Utils.setActivePet(head, "head");
-                case "traitor" -> Utils.setActivePet(traitor, "traitor");
-                case "dumbo_octopus", "dumbo octopus" -> Utils.setActivePet(dumboOctopus, "dumbo_octopus");
-                case "koi" -> Utils.setActivePet(koi, "koi");
-                case "stingray" -> Utils.setActivePet(stingray, "stingray");
-                case "sulfur_cube" -> Utils.setActivePet(sulfurCube, "sulfur_cube");
-                case null, default -> isValid = false;
-            }
-
-            this.checkValidPet(isValid, context, species);
-
-            Central.saveConfig();
-            updateSuggestions(Minecraft.getInstance());
+            Objects.requireNonNull(Minecraft.getInstance().getConnection()).sendCommand("pet species " + species);
+            this.showDeprecationWarning("pet skin <skin>");
             return 1;
         }))));
     }
@@ -1249,8 +1394,9 @@ public class Central implements ClientModInitializer {
      * Creates a help command to let the user easily view the commands at their disposal.
      */
     void createPetHelpCommand() {
-        ClientCommandRegistrationCallback.EVENT.register(((dispatcher, _) -> dispatcher.register(ClientCommands.literal("pethelp").executes(context -> {
-            context.getSource().getPlayer().sendSystemMessage(Component.translatable("message.pets-mod.pet-help"));
+        ClientCommandRegistrationCallback.EVENT.register(((dispatcher, _) -> dispatcher.register(ClientCommands.literal("pethelp").executes(_ -> {
+            Objects.requireNonNull(Minecraft.getInstance().getConnection()).sendCommand("pet help");
+            this.showDeprecationWarning("pet help");
             return 1;
         }))));
     }
@@ -1261,10 +1407,7 @@ public class Central implements ClientModInitializer {
     void createPetNameCommand() {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, _) -> dispatcher.register(ClientCommands.literal("petname").then(ClientCommands.argument("name", StringArgumentType.greedyString()).executes((context) -> {
             String name = StringArgumentType.getString(context, "name");
-            if (!summonedEntity.isEmpty()) {
-                Utils.setActivePetName(name);
-            }
-
+            Objects.requireNonNull(Minecraft.getInstance().getConnection()).sendCommand("pet name " + name);
             return 1;
         }))));
     }
@@ -1275,21 +1418,7 @@ public class Central implements ClientModInitializer {
     void createToggleCommand() {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, _) -> dispatcher.register(ClientCommands.literal("pet").then(ClientCommands.argument("preference", StringArgumentType.string()).suggests(SuggestionProviders.cast(ON_OFF)).executes((context) -> {
             String preference = StringArgumentType.getString(context, "preference");
-            String uuid = Minecraft.getInstance().player != null ? Minecraft.getInstance().player.getStringUUID() : null;
-            if (Objects.equals(preference, "off")) {
-                CONFIG.petOn = false;
-                context.getSource().sendFeedback(Component.translatable("message.pets-mod.pet-off"));
-                Central.saveConfig();
-                NetworkManager.get().broadcastTogglePet(uuid, Utils.getActivePetName(), CONFIG.petOn);
-            } else if (Objects.equals(preference, "on")) {
-                CONFIG.petOn = true;
-                context.getSource().sendFeedback(Component.translatable("message.pets-mod.pet-on"));
-                Central.saveConfig();
-                NetworkManager.get().broadcastTogglePet(uuid, Utils.getActivePetName(), CONFIG.petOn);
-            } else {
-                context.getSource().sendFeedback(Component.translatable("message.pets-mod.unknown-value", Component.literal(preference).withStyle(ChatFormatting.RED, ChatFormatting.BOLD)));
-            }
-
+            Objects.requireNonNull(Minecraft.getInstance().getConnection()).sendCommand("pet toggle " + preference);
             return 1;
         }))));
     }
@@ -1305,7 +1434,7 @@ public class Central implements ClientModInitializer {
         });
     }
 
-    void createPetsList() {
+    public void createPetsList() {
         String[] stuffs = new String[]{"allay", "angry ghast", "armadillo",
                 "axolotl", "bat", "batato", "bee", "blaze", "bogged",
                 "breeze", "camel", "cat", "cave spider", "chicken",
@@ -1338,6 +1467,7 @@ public class Central implements ClientModInitializer {
                 "vex", "villager", "vindicator", "wandering trader", "warden", "witch", "wither",
                 "wither skeleton", "wolf", "zombie", "zombie villager", "sulfur cube"};
         PETS_LIST.addAll(List.of(stuffs));
+        PetsModAddons.forEachAddedPetSafe((petValue, _, _, _) -> PETS_LIST.add(petValue));
     }
 
     public void checkValidPet(boolean isValid, CommandContext<FabricClientCommandSource> context, String species) {
@@ -1347,11 +1477,15 @@ public class Central implements ClientModInitializer {
             despawnPet();
             context.getSource().sendFeedback(Component.translatable("message.pets-mod.pet-switched-to", Component.literal(CONFIG.activePet.replace("_", " ") + ".")).withStyle(ChatFormatting.GREEN));
             if (Minecraft.getInstance().player != null) {
-                NetworkManager.get().broadcastGeneral(Objects.requireNonNull(Minecraft.getInstance().player.getStringUUID()), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby);
+                NetworkManager.get().broadcastGeneral(Objects.requireNonNull(Minecraft.getInstance().player.getStringUUID()), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby, CONFIG.wanderingEnabled);
             }
             summonPet();
         } else {
             context.getSource().sendFeedback(Component.translatable("message.pets-mod.pet-switched-to-not-on", Component.literal(CONFIG.activePet.replace("_", " ")).withStyle(ChatFormatting.RED)));
         }
+    }
+
+    private void showDeprecationWarning(String s) {
+        Objects.requireNonNull(Minecraft.getInstance().player).sendSystemMessage(Component.translatable("message.pets-mod.deprecation-warning", Component.literal(s).withStyle(ChatFormatting.GOLD)));
     }
 }

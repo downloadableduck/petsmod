@@ -17,7 +17,10 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.Optional;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
@@ -46,14 +49,15 @@ public class PetsConfigScreen extends Screen {
     @Override
     public void extractBackground(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
         float duration = (float) 4 / 20;
+        float delta = Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaTicks();
         if (!this.closing) {
-            ticks = Math.min(1.0f, ticks + (a * duration));
+            ticks = Math.min(1.0f, ticks + (delta * duration));
         } else {
-            ticks = Math.min(1.0f, ticks + (a - duration));
+            ticks = Math.min(1.0f, ticks + (delta - duration));
         }
 
         if (this.closing && this.ticks <= 0) {
-            super.onClose();
+            this.onActualClose();
         }
         int alpha = (int) (ticks * 255);
 
@@ -90,6 +94,7 @@ public class PetsConfigScreen extends Screen {
             Component component = Component.translatable("message.pets-mod.screen.could-not-load-pet").withStyle(ChatFormatting.RED);
             graphics.text(Minecraft.getInstance().font, component, this.width - this.font.width(component) - (Minecraft.getInstance().options.fullscreen().get() ? 10 : 30), this.height / 2, color);
         }
+        DropdownMenu.search.ifPresent(this::addRenderableWidget);
     }
 
     @Override
@@ -103,11 +108,11 @@ public class PetsConfigScreen extends Screen {
         this.addRenderableWidget(new ToggleButton(this.width - 42, this.height / 2 - 40, Component.translatable("message.pets-mod.screen.pet-on"), (_) -> {
             CONFIG.petOn = !CONFIG.petOn;
             NetworkManager.get().broadcastTogglePet(Objects.requireNonNull(Minecraft.getInstance().player).getStringUUID(), Utils.getActivePetName(), CONFIG.petOn);
-        }, () -> CONFIG.petOn, this));
+        }, () -> CONFIG.petOn, this, Component.translatable("message.pets-mod.screen.pet-on-tooltip")));
         this.addRenderableWidget(new ToggleButton(this.width - 42, this.height / 2 + 40, Component.translatable("message.pets-mod.screen.baby"), (_) -> {
             CONFIG.isBaby = !CONFIG.isBaby;
             NetworkManager.get().broadcastToggleBaby(Objects.requireNonNull(Minecraft.getInstance().player).getStringUUID(), CONFIG.isBaby);
-        }, () -> CONFIG.isBaby, this));
+        }, () -> CONFIG.isBaby, this, Component.translatable("message.pets-mod.screen.is-baby-tooltip")));
         this.addRenderableWidget(new PanelButton(this.width / 2 - 35, 0, 70, 20, Component.translatable("message.pets-mod.screen.general"), (_) -> {
 
         }, this, () -> Minecraft.getInstance().gui.screen() instanceof PetsConfigScreen));
@@ -123,7 +128,7 @@ public class PetsConfigScreen extends Screen {
             return;
         }
         Central.saveConfig();
-        super.onClose();
+        this.onActualClose();
     }
 
     public DropdownMenu getDropDownMenu() {
@@ -166,17 +171,17 @@ public class PetsConfigScreen extends Screen {
             case "shulker" -> ShulkerSkins.valueOf(CONFIG.shulkerSkin.replaceAll(" ", "_"));
             case null, default -> BlankEnum.no_skins_are_available;
         };
-        DropdownMenu menu = new DropdownMenu(this, enu, Type.SKIN);
+        DropdownMenu menu = new DropdownMenu(this, this.convertToList(enu), Type.SKIN);
         this.dropdownMenu = menu;
         return menu;
     }
 
     public DropdownMenu getPetsMenu() {
-        return new DropdownMenu(this, com.jeff.pets.client.enums.PetList.valueOf(CONFIG.activePet), Type.PET);
+        return new DropdownMenu(this, this.convertToList(PetList.duck), Type.PET);
     }
 
     public DropdownMenu getKeyBindingMenu() {
-        return new DropdownMenu(this, Action.Right_Click, Type.KEYBIND);
+        return new DropdownMenu(this, this.convertToList(Action.Right_Click), Type.KEYBIND);
     }
 
     public DropdownMenu getCorrectMenuForCase(Type type) {
@@ -194,5 +199,24 @@ public class PetsConfigScreen extends Screen {
         this.entity.tick();
         this.entity.walkAnimation.setSpeed(0.3f);
         super.tick();
+    }
+
+    public ArrayList<String> convertToList(EnumImpl enumImpl) {
+        ArrayList<String> values = new ArrayList<>();
+        Arrays.stream(((Enum<?>) enumImpl).getClass().getEnumConstants()).forEach((string) -> values.add(string.name()));
+        return values;
+    }
+
+    public void onActualClose() {
+        super.onClose();
+        DropdownMenu.search = Optional.empty();
+    }
+
+    @Override
+    public boolean mouseScrolled(double x, double y, double scrollX, double scrollY) {
+        boolean bl = super.mouseScrolled(x, y, scrollX, scrollY);
+        this.getPetsMenu().onScroll(scrollY < 0);
+        this.getDropDownMenu().onScroll(scrollY < 0);
+        return bl;
     }
 }

@@ -16,7 +16,6 @@ public class PlaguewhaleRenderer extends PetRenderer<@NotNull PlaguewhaleSlab, @
 
     public PlaguewhaleRenderer(EntityRendererProvider.Context context) {
         super(context, new ToxifinSlabModel(context.bakeLayer(PLAGUEWHALE_LOCATION)), 0.75f);
-        this.scale(new GuardianRenderState(), new PoseStack());
     }
 
     @Override

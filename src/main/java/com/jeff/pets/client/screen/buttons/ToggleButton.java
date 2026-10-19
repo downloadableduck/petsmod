@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.input.InputWithModifiers;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
@@ -23,11 +24,12 @@ public class ToggleButton extends Button {
     private final PetsConfigScreen screen;
     private final Supplier<Boolean> toggle;
 
-    public ToggleButton(int x, int y, Component message, OnPress onPress, Supplier<Boolean> bool, PetsConfigScreen screen) {
+    public ToggleButton(int x, int y, Component message, OnPress onPress, Supplier<Boolean> bool, PetsConfigScreen screen, Component tooltip) {
         super(x, y, 32, 16, message, onPress, Supplier::get);
         this.toggle = bool;
         this.screen = screen;
         this.font = screen.getFont();
+        this.setTooltip(Tooltip.create(tooltip));
     }
 
     @Override
@@ -59,7 +61,7 @@ public class ToggleButton extends Button {
         super.onPress(input);
         //this.toggle = !this.toggle;
         if (Minecraft.getInstance().player != null) {
-            NetworkManager.get().broadcastGeneral(Minecraft.getInstance().player.getStringUUID(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby);
+            NetworkManager.get().broadcastGeneral(Minecraft.getInstance().player.getStringUUID(), CONFIG.petOn, CONFIG.activePet, Utils.getActivePetName(), Utils.getActivePetSkin(), CONFIG.isBaby, CONFIG.wanderingEnabled);
         }
     }
 

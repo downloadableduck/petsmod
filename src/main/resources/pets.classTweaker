@@ -1,0 +1,22 @@
+classTweaker v2 official
+transitive-accessible field net/minecraft/client/gui/screens/ChatScreen commandSuggestions Lnet/minecraft/client/gui/components/CommandSuggestions;
+transitive-mutable field net/minecraft/client/renderer/entity/state/WitherRenderState yHeadRots [F
+transitive-accessible field net/minecraft/client/model/animal/rabbit/RabbitModel head Lnet/minecraft/client/model/geom/ModelPart;
+transitive-mutable field net/minecraft/client/gui/components/LogoRenderer MINECRAFT_LOGO Lnet/minecraft/resources/Identifier;
+transitive-mutable field net/minecraft/client/gui/components/LogoRenderer MINECRAFT_EDITION Lnet/minecraft/resources/Identifier;
+transitive-mutable field net/minecraft/client/gui/components/LogoRenderer EASTER_EGG_LOGO Lnet/minecraft/resources/Identifier;
+transitive-accessible field net/minecraft/client/resources/SplashManager SPLASHES_LOCATION Lnet/minecraft/resources/Identifier;
+transitive-mutable field net/minecraft/client/resources/SplashManager SPLASHES_LOCATION Lnet/minecraft/resources/Identifier;
+transitive-accessible method net/minecraft/client/gui/components/EditBox onValueChange (Ljava/lang/String;)V
+transitive-extendable method net/minecraft/client/gui/components/EditBox onValueChange (Ljava/lang/String;)V
+transitive-accessible method net/minecraft/client/gui/screens/inventory/InventoryScreen extractRenderState (Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/client/renderer/entity/state/EntityRenderState;
+transitive-extend-enum net/minecraft/sounds/SoundSource PETS
+transitive-accessible field net/minecraft/client/gui/components/toasts/SystemToast messageLines Ljava/util/List;
+transitive-accessible method net/minecraft/client/gui/components/toasts/SystemToast extractTextLines (Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/gui/Font;Ljava/util/List;II)V
+transitive-accessible field net/minecraft/client/gui/components/toasts/SystemToast titleLines Ljava/util/List;
+transitive-accessible field net/minecraft/client/gui/components/toasts/SystemToast$SystemToastId displayTime J
+transitive-mutable field net/minecraft/client/gui/components/toasts/SystemToast$SystemToastId displayTime J
+transitive-accessible field net/minecraft/client/gui/components/toasts/SystemToast wantedVisibility Lnet/minecraft/client/gui/components/toasts/Toast$Visibility;
+transitive-accessible field net/minecraft/world/entity/Entity level Lnet/minecraft/world/level/Level;
+transitive-accessible field net/minecraft/client/gui/components/EditBox textX I
+transitive-accessible field net/minecraft/client/gui/components/EditBox textY I

@@ -1,4 +1,4 @@
-package com.jeff.pets.client.mixin.client;
+package com.jeff.pets.client.mixin;
 
 import com.jeff.pets.client.Central;
 import net.minecraft.client.gui.components.CommandSuggestions;
