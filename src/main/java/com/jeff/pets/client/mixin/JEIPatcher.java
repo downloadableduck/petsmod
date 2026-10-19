@@ -1,4 +1,4 @@
-package com.jeff.pets.client.mixin.client;
+package com.jeff.pets.client.mixin;
 
 import net.minecraft.core.Holder;
 import net.minecraft.data.loot.EntityLootSubProvider;

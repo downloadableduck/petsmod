@@ -16,10 +16,10 @@ public class ClientElderGuardianRenderer extends PetRenderer<@NotNull ClientElde
 
     public ClientElderGuardianRenderer(EntityRendererProvider.Context context) {
         super(context, new GuardianModel(context.bakeLayer(ModelLayers.ELDER_GUARDIAN)), 0.75f);
-        this.scale(new PoseStack());
     }
 
-    private void scale(PoseStack poseStack) {
+    @Override
+    protected void scale(GuardianRenderState state, PoseStack poseStack) {
         poseStack.scale(2.35f, 2.35f, 2.35f);
     }
 
