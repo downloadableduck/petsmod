@@ -16,7 +16,6 @@ public class MegaSpudRenderer extends PetRenderer<@NotNull MegaSpud, @NotNull Sl
     public MegaSpudRenderer(EntityRendererProvider.Context context) {
         super(context, new MegaSpudModel(context.bakeLayer(MEGA_SPUD_LOCATION)), 0.75f);
         this.addLayer(new MegaSpudOuterLayer(this, context));
-        this.scale(new SlimeRenderState(), new PoseStack());
     }
 
     @Override

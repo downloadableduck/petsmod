@@ -3,8 +3,8 @@ package com.jeff.pets.client.screen.buttons;
 import com.jeff.pets.client.Utils;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiPipeline;
 import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
@@ -37,15 +37,15 @@ public class NametagButton extends EditBox {
     }
 
     @Override
-    public void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mousex, int mousey, float a) {
+    public void extractWidgetRenderState(GuiGraphicsExtractor graphics) {
         graphics.pose().pushMatrix();
         graphics.pose().translate(this.getX(), this.getY());
         graphics.pose().scale(2, 2);
         this.setCursorPosition(this.getCursorPosition() * 2);
-        graphics.blit(RenderPipelines.GUI_TEXTURED, Identifier.withDefaultNamespace("blocks/air.png"), this.getX(), this.getY(), 0, 0, this.getWidth(), this.getHeight(), 200, 20, 0);
+        graphics.blit(GuiPipeline.TEXTURED, Identifier.withDefaultNamespace("blocks/air.png"), this.getX(), this.getY(), 0, 0, this.getWidth(), this.getHeight(), 200, 20, 0);
         graphics.pose().translate(-this.getX(), -this.getY());
         this.setTextColor(color);
-        super.extractWidgetRenderState(graphics, mousex, mousey, a);
+        super.extractWidgetRenderState(graphics);
         graphics.pose().popMatrix();
     }
 

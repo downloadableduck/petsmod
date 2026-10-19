@@ -7,8 +7,8 @@ import com.jeff.pets.client.screen.buttons.ExitButton;
 import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiPipeline;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Util;
 import org.jetbrains.annotations.NotNull;
@@ -27,11 +27,11 @@ public class TipsScreen extends Screen {
     }
 
     @Override
-    public void extractBackground(@NotNull GuiGraphicsExtractor extractor, int mouseX, int mouseY, float a) {
+    public void extractBackground(@NotNull GuiGraphicsExtractor extractor) {
         extractor.pose().pushMatrix();
-        super.extractBackground(extractor, mouseX, mouseY, a);
+        super.extractBackground(extractor);
         Window window = Minecraft.getInstance().getWindow();
-        extractor.blit(RenderPipelines.GUI_TEXTURED, Utils.withModNamespace("textures/gui/background.png"), 0, 0, 0, 0, window.getGuiScaledWidth(), window.getGuiScaledHeight(), 128, 128, 128, 128);
+        extractor.blit(GuiPipeline.TEXTURED, Utils.withModNamespace("textures/gui/background.png"), 0, 0, 0, 0, window.getGuiScaledWidth(), window.getGuiScaledHeight(), 128, 128, 128, 128);
         extractor.pose().popMatrix();
     }
 

@@ -2,9 +2,9 @@ package com.jeff.pets.client.screen.buttons;
 
 import com.jeff.pets.client.PetsConfigScreen;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiPipeline;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.input.InputWithModifiers;
-import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
@@ -29,14 +29,15 @@ public class DropDownButton extends Button {
     }
 
     @Override
-    protected void extractContents(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+    protected void extractContents(@NotNull GuiGraphicsExtractor graphics) {
         if (this.opened) {
             DropdownMenu menu = this.screen.getCorrectMenuForCase(this.type);
             menu.name = this.name;
-            menu.extractRenderState(graphics, mouseX, mouseY, this.getX(), this.getY() - 15);
+            menu.extractRenderState(graphics, graphics.mouseX(), graphics.mouseY(), this.getX(), this.getY() - 15);
         }
+        DropdownMenu.search.ifPresent(search -> search.setVisible(this.opened));
         Identifier id = this.isHovered() ? Identifier.fromNamespaceAndPath(MOD_ID, "dark_button_highlighted") : Identifier.fromNamespaceAndPath(MOD_ID, "dark_button");
-        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, id, this.getX(), this.getY(), this.width, this.height, screen.button.color);
+        graphics.blitSprite(GuiPipeline.TEXTURED, id, this.getX(), this.getY(), this.width, this.height, screen.button.color);
         graphics.text(screen.getFont(), this.message, this.getX() + this.width / 2 - this.screen.getFont().width(this.message) / 2, this.getY() + 6, this.screen.button.color);
     }
 

@@ -266,10 +266,7 @@ public class Duck extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            try (Level level = this.level()) {
-                level.playLocalSound(this, PetsSounds.DUCK_AMBIENT, SoundSource.NEUTRAL, 1.0f, 1.0f);
-            } catch (Exception ignored) {
-            }
+            level.playLocalSound(this, PetsSounds.DUCK_AMBIENT, SoundSource.PETS, 1.0f, 1.0f);
         }
     }
 

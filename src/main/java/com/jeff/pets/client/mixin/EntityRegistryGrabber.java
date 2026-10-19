@@ -1,4 +1,4 @@
-package com.jeff.pets.client.mixin.client;
+package com.jeff.pets.client.mixin;
 
 import com.jeff.pets.client.PetsClientInitializer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

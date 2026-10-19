@@ -362,7 +362,7 @@ public class PetsInitializer implements ModInitializer {
             ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(MOD_ID, "clientwanderingtrader"));
     public static final EntityType<@NotNull ClientWanderingTrader> WANDERING_TRADER = Registry.register(
             BuiltInRegistries.ENTITY_TYPE,
-            Identifier.fromNamespaceAndPath(MOD_ID, "clientwandeinrgtrader"),
+            Identifier.fromNamespaceAndPath(MOD_ID, "clientwanderingtrader"),
             EntityType.Builder.of(ClientWanderingTrader::new, MobCategory.AMBIENT)
                     .noSummon()
                     .sized(0.6f, 1.95f)
@@ -601,7 +601,7 @@ public class PetsInitializer implements ModInitializer {
                     .build(ENDERMITE_KEY)
     );
     private static final ResourceKey<@NotNull EntityType<?>> EVOKER_KEY =
-            ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(MOD_ID, "clientwolf"));
+            ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(MOD_ID, "clientevoker"));
     public static final EntityType<@NotNull ClientEvoker> EVOKER = Registry.register(
             BuiltInRegistries.ENTITY_TYPE,
             Identifier.fromNamespaceAndPath(MOD_ID, "clientevoker"),
@@ -663,7 +663,6 @@ public class PetsInitializer implements ModInitializer {
             EntityType.Builder.of(ClientMagmaCube::new, MobCategory.AMBIENT)
                     .noSummon()
                     .sized(2f, 2f)
-                    .eyeHeight(2f)
                     .eyeHeight(2f)
                     .build(MAGMA_CUBE_KEY)
     );
@@ -1186,7 +1185,7 @@ public class PetsInitializer implements ModInitializer {
         FabricDefaultAttributeRegistry.register(LLAMA, ClientLlama.createAttributes().build());
         FabricDefaultAttributeRegistry.register(NAUTILUS, ClientNautilus.createAttributes().build());
         FabricDefaultAttributeRegistry.register(PANDA, ClientPanda.createAttributes().build());
-        FabricDefaultAttributeRegistry.register(PIGLIN, ClientWanderingTrader.createAttributes().build());
+        FabricDefaultAttributeRegistry.register(PIGLIN, ClientPiglin.createAttributes().build());
         FabricDefaultAttributeRegistry.register(POLAR_BEAR, ClientPolarBear.createAttributes().build());
         FabricDefaultAttributeRegistry.register(PUFFERFISH, ClientPufferFish.createAttributes().build());
         FabricDefaultAttributeRegistry.register(SPIDER, ClientSpider.createAttributes().build());

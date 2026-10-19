@@ -9,8 +9,9 @@ public class GeneralPetsPayload extends Payload {
     public final String petSkin;
     public final boolean petOn;
     public final boolean isBaby;
+    public final boolean shouldWander;
 
-    public GeneralPetsPayload(String uuid, boolean petOn, String petSpecies, String petName, String petSkin, boolean isBaby) {
+    public GeneralPetsPayload(String uuid, boolean petOn, String petSpecies, String petName, String petSkin, boolean isBaby, boolean shouldWander) {
         super(uuid);
         this.playerUUID = UUID.fromString(uuid);
         this.petOn = petOn;
@@ -18,5 +19,6 @@ public class GeneralPetsPayload extends Payload {
         this.petName = petName;
         this.petSkin = petSkin;
         this.isBaby = isBaby;
+        this.shouldWander = shouldWander;
     }
 }

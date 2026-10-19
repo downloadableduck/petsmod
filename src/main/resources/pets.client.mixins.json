@@ -1,17 +1,21 @@
 {
   "required": true,
-  "package": "com.jeff.pets.client.mixin.client",
+  "package": "com.jeff.pets.client.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
     "ChatAccessor",
-    "EntityRegistryGrabber",
+    "ClientPacketListenerMixin",
+    "EditBoxMixin",
     "EntityRenderStateMixin",
-    "NoHitboxMixin"
+    "NoHitboxMixin",
+    "ScreenMixin",
+    "EntityRegistryGrabber"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "mixins": [
+    "SoundSourceMixin",
     "JEIPatcher"
   ]
 }

@@ -1,9 +1,8 @@
 package com.jeff.pets.mob;
 
-import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.client.network.NetworkManager;
-import com.jeff.pets.mob.custom.first.Penguin;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -50,9 +49,10 @@ public abstract class AbstractPet extends TamableAnimal {
     protected final Entity dummy;
     public String petSkin = "";
     public boolean sitting = false;
+    public boolean shouldWander;
     protected int waitingTime = 0;
     protected boolean isReturningToOwner = false;
-    private float randomZ = (float) (Math.random() - 1);
+    private float randomZ = (float) (Math.random() * 2 - 1);
 
     protected AbstractPet(EntityType<? extends @NotNull TamableAnimal> type, Level level) {
         super(type, level);
@@ -61,14 +61,14 @@ public abstract class AbstractPet extends TamableAnimal {
         this.dummy = new Chicken(EntityTypes.CHICKEN, level);
     }
 
+    public static AttributeSupplier.Builder createAttributes() {
+        return Animal.createAnimalAttributes().add(Attributes.MAX_HEALTH, 8.0F).add(Attributes.MOVEMENT_SPEED, 0.23F);
+    }
+
     @Override
     public void tick() {
         super.tick();
         this.dummy.setPos(this.position().multiply(10, 1, 10));
-    }
-
-    public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createAnimalAttributes().add(Attributes.MAX_HEALTH, 8.0F).add(Attributes.MOVEMENT_SPEED, 0.23F);
     }
 
     /**
@@ -130,16 +130,13 @@ public abstract class AbstractPet extends TamableAnimal {
         ItemStack itemStack = player.getItemInHand(hand);
 
         if (this.isTame() && itemStack.isEmpty() && CONFIG.interaction.isDown() && !CONFIG.pickUp.isDown() && !CONFIG.sit.isDown()) {
-            try (Level level = this.level()) {
-                level.addParticle(
-                        ParticleTypes.HEART,
-                        this.getX(),
-                        this.getY() + this.heartHeight(),
-                        this.getZ(),
-                        5, 5, 5
-                );
-            } catch (Exception ignored) {
-            }
+            level.addParticle(
+                    ParticleTypes.HEART,
+                    this.getX(),
+                    this.getY() + this.heartHeight(),
+                    this.getZ(),
+                    5, 5, 5
+            );
             return InteractionResult.SUCCESS;
         }
 
@@ -168,11 +165,8 @@ public abstract class AbstractPet extends TamableAnimal {
      */
     @Override
     public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
-        try (Level level = this.level()) {
-            if (!level.isClientSide()) {
-                super.onSyncedDataUpdated(key);
-            }
-        } catch (Exception ignored) {
+        if (!level.isClientSide()) {
+            super.onSyncedDataUpdated(key);
         }
     }
 
@@ -182,14 +176,10 @@ public abstract class AbstractPet extends TamableAnimal {
      */
     @Override
     public @NotNull Packet<@NotNull ClientGamePacketListener> getAddEntityPacket(@NotNull ServerEntity serverEntity) {
-        try (Level level = this.level()) {
-            if (level.isClientSide()) {
-                return new ClientboundAddEntityPacket(this, serverEntity);
-            } else {
-                return super.getAddEntityPacket(serverEntity);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        if (level.isClientSide()) {
+            return new ClientboundAddEntityPacket(this, serverEntity);
+        } else {
+            return super.getAddEntityPacket(serverEntity);
         }
     }
 
@@ -223,7 +213,7 @@ public abstract class AbstractPet extends TamableAnimal {
     }
 
     public void wander() {
-        if (!CONFIG.wanderingEnabled) return;
+        if (!this.shouldWander()) return;
         float speed = (float) (this.getSpeed() - 0.35);
         Vec3 lookDir;
         float z = speed * this.randomZ;
@@ -286,7 +276,7 @@ public abstract class AbstractPet extends TamableAnimal {
     }
 
     private void reCalcPos() {
-        this.randomZ = (float) (Math.random() - 1);
+        this.randomZ = (float) (Math.random() * 2 - 1);
     }
 
     @Override
@@ -320,5 +310,16 @@ public abstract class AbstractPet extends TamableAnimal {
             return false;
         }
         return super.isPickable();
+    }
+
+    public void reinstantiate(ClientLevel world) {
+        this.level = world;
+    }
+
+    public boolean shouldWander() {
+        if (this.isTame()) {
+            return CONFIG.wanderingEnabled;
+        }
+        return this.shouldWander;
     }
 }

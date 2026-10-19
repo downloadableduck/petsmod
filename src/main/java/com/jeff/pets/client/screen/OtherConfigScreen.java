@@ -3,11 +3,12 @@ package com.jeff.pets.client.screen;
 import com.jeff.pets.client.PetsConfigScreen;
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.client.screen.buttons.*;
+import com.mojang.blaze3d.Blaze3D;
 import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiPipeline;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Util;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 import java.net.URI;
 
 import static com.jeff.pets.client.Central.CONFIG;
-import static com.mojang.blaze3d.Blaze3D.openUri;
 
 public class OtherConfigScreen extends Screen {
 
@@ -27,12 +27,12 @@ public class OtherConfigScreen extends Screen {
     }
 
     @Override
-    public void extractBackground(@NotNull GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a) {
+    public void extractBackground(@NotNull GuiGraphicsExtractor graphics) {
         Window window = Minecraft.getInstance().getWindow();
         graphics.pose().pushMatrix();
         graphics.fill(0, 0, this.width, this.height, 0xFF000000);
-        super.extractBackground(graphics, mouseX, mouseY, a);
-        graphics.blit(RenderPipelines.GUI_TEXTURED, Utils.withModNamespace("textures/gui/background.png"), 0, 0, 0, 0, window.getGuiScaledWidth(), window.getGuiScaledHeight(), 128, 128, 128, 128);
+        super.extractBackground(graphics);
+        graphics.blit(GuiPipeline.TEXTURED, Utils.withModNamespace("textures/gui/background.png"), 0, 0, 0, 0, window.getGuiScaledWidth(), window.getGuiScaledHeight(), 128, 128, 128, 128);
         graphics.pose().popMatrix();
     }
 
@@ -44,13 +44,13 @@ public class OtherConfigScreen extends Screen {
         this.addRenderableWidget(new PanelButton(this.width / 2 + 45, 0, 70, 20, Component.translatable("message.pets-mod.screen.other"), (_) -> {
         }, this.screen, () -> Minecraft.getInstance().gui.screen() instanceof OtherConfigScreen));
         this.addRenderableWidget(new PanelButton(this.width / 2 - 115, 0, 70, 20, Component.translatable("message.pets-mod.screen.keybinding"), (_) -> Minecraft.getInstance().gui.setScreen(new KeyBindingsConfigScreen(this.screen)), this.screen, () -> false));
-        this.addRenderableWidget(new ExitButton(this.screen, 10, 10, 80, 20));
-        this.addRenderableWidget(new ToggleButton(this.getRectangle().left() + 42, this.height / 2 + 40, Component.translatable("option.pets-mod.always-show-nametag"), (_) -> CONFIG.alwaysRenderNametag = !CONFIG.alwaysRenderNametag, () -> CONFIG.alwaysRenderNametag, this.screen));
-        this.addRenderableWidget(new ToggleButton(this.getRectangle().left() + 42, this.height / 2 - 40, Component.translatable("option.pets-mod.show-pet-hitboxes"), (_) -> CONFIG.renderPetHitbox = !CONFIG.renderPetHitbox, () -> CONFIG.renderPetHitbox, this.screen));
-        this.addRenderableWidget(new ToggleButton(this.getRectangle().left() + 130, this.height / 2 + 40, Component.translatable("option.pets-mod.pet-wandering"), (_) -> CONFIG.wanderingEnabled = !CONFIG.wanderingEnabled, () -> CONFIG.wanderingEnabled, this.screen));
-        this.addRenderableWidget(new ToggleButton(this.getRectangle().left() + 130, this.height / 2 - 40, Component.translatable("option.pets-mod.ghost-hand-pets"), (_) -> CONFIG.hitThroughPets = !CONFIG.hitThroughPets, () -> CONFIG.hitThroughPets, this.screen));
-        this.addRenderableWidget(new BasicButton(this.screen, this.getRectangle().right() - 90, this.getRectangle().bottom() - 55, 80, 20, Component.translatable("link.pets-mod.report-issues"), (_) -> openUri(URI.create("https://github.com/downloadableduck/petsmod/issues"))));
-        this.addRenderableWidget(new BasicButton(this.screen, this.getRectangle().right() - 90, this.getRectangle().bottom() - 85, 80, 20, Component.translatable("link.pets-mod.browse-addons"), (_) -> openUri(URI.create("https://modrinth.com/organization/pets"))));
+        this.addRenderableWidget(new ToggleButton(this.getRectangle().left() + 42, this.height / 2 + 40, Component.translatable("option.pets-mod.always-show-nametag"), (_) -> CONFIG.alwaysRenderNametag = !CONFIG.alwaysRenderNametag, () -> CONFIG.alwaysRenderNametag, this.screen, Component.translatable("message.pets-mod.screen.always-show-nametag")));
+        this.addRenderableWidget(new ToggleButton(this.getRectangle().left() + 42, this.height / 2 - 40, Component.translatable("option.pets-mod.show-pet-hitboxes"), (_) -> CONFIG.renderPetHitbox = !CONFIG.renderPetHitbox, () -> CONFIG.renderPetHitbox, this.screen, Component.translatable("message.pets-mod.screen.render-pet-hitboxes")));
+        this.addRenderableWidget(new ToggleButton(this.getRectangle().left() + 130, this.height / 2 + 40, Component.translatable("option.pets-mod.pet-wandering"), (_) -> CONFIG.wanderingEnabled = !CONFIG.wanderingEnabled, () -> CONFIG.wanderingEnabled, this.screen, Component.translatable("message.pets-mod.screen.wandering-enabled")));
+        this.addRenderableWidget(new ToggleButton(this.getRectangle().left() + 130, this.height / 2 - 40, Component.translatable("option.pets-mod.ghost-hand-pets"), (_) -> CONFIG.hitThroughPets = !CONFIG.hitThroughPets, () -> CONFIG.hitThroughPets, this.screen, Component.translatable("message.pets-mod.screen.hit-through-pets")));
+        this.addRenderableWidget(new ToggleButton(this.getRectangle().left() + 218, this.height / 2 - 40, Component.translatable("message.pets-mod.update-notifications"), (_) -> CONFIG.notifyForUpdates = !CONFIG.notifyForUpdates, () -> CONFIG.notifyForUpdates, this.screen, Component.translatable("message.pets-mod.screen.notify-updates")));
+        this.addRenderableWidget(new BasicButton(this.screen, this.getRectangle().right() - 90, this.getRectangle().bottom() - 55, 80, 20, Component.translatable("link.pets-mod.report-issues"), (_) -> Blaze3D.openUri(URI.create("https://github.com/downloadableduck/petsmod/issues"))));
+        this.addRenderableWidget(new BasicButton(this.screen, this.getRectangle().right() - 90, this.getRectangle().bottom() - 85, 80, 20, Component.translatable("link.pets-mod.browse-addons"), (_) -> Blaze3D.openUri(URI.create("https://modrinth.com/organization/pets"))));
         this.addRenderableWidget(new BasicButton(this.screen, this.getRectangle().right() - 90, this.getRectangle().bottom() - 115, 80, 20, Component.translatable("message.pets-mod.screen.tips"), (_) -> Minecraft.getInstance().gui.setScreen(new TipsScreen(this.screen))));
     }
 }

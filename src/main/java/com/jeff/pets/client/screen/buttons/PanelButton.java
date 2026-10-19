@@ -2,8 +2,8 @@ package com.jeff.pets.client.screen.buttons;
 
 import com.jeff.pets.client.PetsConfigScreen;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiPipeline;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 
@@ -27,9 +27,9 @@ public class PanelButton extends Button {
     }
 
     @Override
-    protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+    protected void extractContents(GuiGraphicsExtractor graphics) {
         graphics.pose().pushMatrix();
-        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, this.getTexture(), this.getX(), this.getY(), this.width, this.height, this.screen.button.color);
+        graphics.blitSprite(GuiPipeline.TEXTURED, this.getTexture(), this.getX(), this.getY(), this.width, this.height, this.screen.button.color);
         graphics.text(this.screen.getFont(), this.message, this.getX() + this.width / 2 - this.screen.getFont().width(this.message) / 2, this.getY() + this.screen.getFont().lineHeight / 2, this.screen.button.color);
         if (this.selected.get()) {
             this.height = this.expandedHeight;

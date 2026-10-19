@@ -1,4 +1,4 @@
-package com.jeff.pets.client.mixin.client;
+package com.jeff.pets.client.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.core.Holder;

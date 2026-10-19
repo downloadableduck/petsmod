@@ -1,6 +1,7 @@
 package com.jeff.pets.mob.custom.first;
 
 import com.jeff.pets.PetsSounds;
+import com.jeff.pets.client.Utils;
 import com.jeff.pets.client.network.NetworkManager;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.client.Minecraft;
@@ -85,7 +86,7 @@ public class Penguin extends AbstractPet {
         this.oFlap = this.flap;
         this.oFlapSpeed = this.flapSpeed;
         this.flapSpeed += (this.onGround() ? -1.0F : 4.0F) * 0.3F;
-        this.flapSpeed = Mth.clampedLerp(this.flapSpeed, 0.0F, 1.0F);
+        this.flapSpeed = Utils.clamp(this.flapSpeed, 0.0F, 1.0F);
         if (!this.onGround() && this.flapping < 1.0F) {
             this.flapping = 1.0F;
         }
@@ -250,19 +251,9 @@ public class Penguin extends AbstractPet {
             }
         }
 
-        if (this.walkAnimation.isMoving()) {
-            try (Level level = this.level()) {
-                level.playLocalSound(this, SoundEvents.CHICKEN_SOUNDS.get(ChickenSoundVariants.SoundSet.CLASSIC).adultSounds().stepSound().get().value(), SoundSource.NEUTRAL, 1.0f, 1.0f);
-            } catch (Exception ignored) {
-            }
-        }
-
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            try (Level level = this.level()) {
-                level.playLocalSound(this, PetsSounds.PENGUIN_AMBIENT, SoundSource.NEUTRAL, 1.0f, 1.0f);
-            } catch (Exception ignored) {
-            }
+            level.playLocalSound(this, PetsSounds.PENGUIN_AMBIENT, SoundSource.PETS, 1.0f, 1.0f);
         }
     }
 
