@@ -140,7 +140,7 @@ public class Stingray extends FlyingPet {
       if (owner != null) {
          if (this.vehicle == owner) {
             if (owner.isSneaking() && owner.jumping) {
-               this.dismountFromVehicle();
+               this.vehicle = null;
                this.lerpVelocity(this.getVelocity().add(0.0, 0.1, 0.0));
             } else {
                this.setSitting(true);

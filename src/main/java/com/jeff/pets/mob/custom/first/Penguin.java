@@ -134,7 +134,7 @@ public class Penguin extends AbstractPet {
          if (this.vehicle == owner) {
             this.isFlapping = false;
             if (owner.isSneaking() && owner.jumping) {
-               this.dismountFromVehicle();
+               this.vehicle = null;
                this.lerpVelocity(this.getVelocity().add(0.0, -0.04, 0.0));
                this.isOnHead = false;
             } else {

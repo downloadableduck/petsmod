@@ -35,7 +35,7 @@ public abstract class SlimeLikePet extends AbstractPet {
 
             if (this.vehicle == owner) {
                 if (owner.isSneaking() && owner.jumping) {
-                    this.dismountFromVehicle();
+                    this.vehicle = null;
                     this.lerpVelocity(this.getVelocity().add(0, -0.04, 0));
                 } else {
                     this.setSitting(true);

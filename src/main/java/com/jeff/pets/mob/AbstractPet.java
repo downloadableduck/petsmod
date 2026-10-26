@@ -89,7 +89,7 @@ public abstract class AbstractPet extends TameableEntity {
      *             this.lookAt(player, 1f, 1f);
      *             return InteractionResult.SUCCESS;
      *         } else {
-     *             this.dismountFromVehicle();
+     *             this.vehicle = null;
      *         }
      *         return InteractionResult.SUCCESS;
      *     }
@@ -114,12 +114,12 @@ public abstract class AbstractPet extends TameableEntity {
         }
 
         if (this.isTamed() && itemStack == null && player.isSneaking()) {
-            if (!this.isRiding()) {
+            if (this.vehicle == null) {
                 this.startRiding(player);
-                this.lookAt(player, 1f, 1f);
+                //this.lookAt(player, 1f, 1f);
                 return true;
             } else {
-                this.dismountFromVehicle();
+                this.startRiding(null);
             }
             return true;
         }
