@@ -1,7 +1,7 @@
 package com.jeff.pets.client;
 
 import com.jeff.pets.PetsInitializer;
-import com.jeff.pets.client.mixin.client.ModelLayersAccessor;
+import com.jeff.pets.client.mixin.ModelLayersAccessor;
 import com.jeff.pets.client.rendering.aprilfools.angryghast.AngryGhastRenderer;
 import com.jeff.pets.client.rendering.aprilfools.batato.BatatoModel;
 import com.jeff.pets.client.rendering.aprilfools.batato.BatatoRenderer;

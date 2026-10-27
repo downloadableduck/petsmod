@@ -1,6 +1,6 @@
 package com.jeff.pets.client.rendering.vanilla.wither;
 
-import com.jeff.pets.client.mixin.client.WitherRenderStateAccessor;
+import com.jeff.pets.client.mixin.WitherRenderStateAccessor;
 import com.jeff.pets.client.rendering.IPetRenderState;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.boss.ClientWither;

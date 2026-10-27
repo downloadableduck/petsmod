@@ -35,6 +35,7 @@ public class DropDownButton extends Button {
             menu.name = this.name;
             menu.extractRenderState(graphics, mouseX, mouseY, this.getX(), this.getY() - 15);
         }
+        DropdownMenu.search.ifPresent(search -> search.setVisible(this.opened));
         Identifier id = this.isHovered() ? Identifier.fromNamespaceAndPath(MOD_ID, "dark_button_highlighted") : Identifier.fromNamespaceAndPath(MOD_ID, "dark_button");
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, id, this.getX(), this.getY(), this.width, this.height, screen.button.color);
         graphics.text(screen.getFont(), this.message, this.getX() + this.width / 2 - this.screen.getFont().width(this.message) / 2, this.getY() + 6, this.screen.button.color);

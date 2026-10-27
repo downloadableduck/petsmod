@@ -34,7 +34,7 @@ public class ClientChickenRenderer extends PetRenderer<@NotNull ClientChicken, @
             chickenTexturePath = "textures/entity/chicken/chicken_temperate.png";
         } else if (Objects.equals(skin, "cold")) {
             chickenTexturePath = "textures/entity/chicken/chicken_cold.png";
-        } else if (Objects.equals(skin, "warm")) {
+        } else {
             chickenTexturePath = "textures/entity/chicken/chicken_warm.png";
         }
         return Identifier.withDefaultNamespace(chickenTexturePath);

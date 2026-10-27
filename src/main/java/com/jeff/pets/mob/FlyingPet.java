@@ -54,8 +54,6 @@ public abstract class FlyingPet extends AbstractPet {
 
             double dx = owner.getX() - this.getX();
             double dz = owner.getZ() - this.getZ();
-            Vec3 ownerPos = owner.position().add(0, owner.getEyeHeight() * 0.8, 0);
-            Vec3 vecToOwner = ownerPos.subtract(this.position());
             double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
 
             double distance = this.distanceTo(owner);
@@ -126,11 +124,8 @@ public abstract class FlyingPet extends AbstractPet {
         }
 
         int ambient = (int) (Math.random() * (60 * 20));
-        try (Level level = this.level()) {
-            if (ambient == 1) {
-                level.playLocalSound(this, Objects.requireNonNull(this.getAmbientSound()), SoundSource.AMBIENT, 1.0f, 1.0f);
-            }
-        } catch (Exception ignored) {
+        if (ambient == 1) {
+            level().playLocalSound(this, Objects.requireNonNull(this.getAmbientSound()), SoundSource.valueOf("PETS"), 1.0f, 1.0f);
         }
     }
 }
