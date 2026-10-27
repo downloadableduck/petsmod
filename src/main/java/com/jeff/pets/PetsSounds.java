@@ -10,8 +10,8 @@ import net.minecraft.sounds.SoundEvent;
  * Mob Packs get introduced.
  */
 public class PetsSounds {
-    // public static final SoundEvent DUCK_AMBIENT = registerSound();
-    //public static final SoundEvent PENGUIN_AMBIENT = registerPenguinSound();
+    public static final SoundEvent DUCK_AMBIENT = registerSound();
+    public static final SoundEvent PENGUIN_AMBIENT = registerPenguinSound();
 
     private static SoundEvent registerSound() {
         Identifier identifier = Identifier.fromNamespaceAndPath(PetsInitializer.MOD_ID, "duck_ambient");
@@ -27,5 +27,6 @@ public class PetsSounds {
      * Static initializer
      */
     public static void initialize() {
+        System.out.println("initializing");
     }
 }

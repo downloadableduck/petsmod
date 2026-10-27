@@ -1,6 +1,10 @@
 package com.jeff.pets.client;
 
 import com.jeff.pets.client.enums.Action;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Stores all the values that are serialized into a JSON config located at {@code ./minecraft/config/petsconfig.json}
@@ -171,5 +175,14 @@ public class PetsConfig {
 
     public Action pickUp = Action.Right_click_and_Sneak;
     public Action interaction = Action.Right_Click;
-    public Action sit = Action.Right_Click_and_Jump;
+    public Action sit = Action.Off;
+
+    public boolean notifyForUpdates = true;
+    public boolean hasNotifiedOfMostRecentUpdate = false;
+    public String dismissedVersion;
+
+    public Map<String, AddonData> addonDataMap = new ConcurrentHashMap<>();
+
+    public record AddonData(String petName, @Nullable String petSkin) {
+    }
 }

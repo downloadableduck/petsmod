@@ -1,5 +1,6 @@
 package com.jeff.pets.mob.custom.first;
 
+import com.jeff.pets.PetsSounds;
 import com.jeff.pets.client.network.NetworkManager;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.client.Minecraft;
@@ -10,6 +11,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
@@ -116,15 +118,15 @@ public class Duck extends AbstractPet {
     }
 
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.CHICKEN_STEP.value();
+        return PetsSounds.DUCK_AMBIENT;
     }
 
     protected SoundEvent getHurtSound(final @NotNull DamageSource source) {
-        return SoundEvents.CHICKEN_STEP.value();
+        return PetsSounds.DUCK_AMBIENT;
     }
 
     protected SoundEvent getDeathSound() {
-        return SoundEvents.CHICKEN_STEP.value();
+        return PetsSounds.DUCK_AMBIENT;
     }
 
     protected void playStepSound(final @NotNull BlockPos pos, final @NotNull BlockState blockState) {
@@ -258,6 +260,11 @@ public class Duck extends AbstractPet {
             if (distanceTo(owner) >= 10 && !this.sitting) {
                 this.tryToTeleportToOwner();
             }
+        }
+
+        int ambient = (int) (Math.random() * (60 * 20));
+        if (ambient == 1) {
+            this.level().playLocalSound(this, PetsSounds.DUCK_AMBIENT, SoundSource.valueOf("PETS"), 1.0f, 1.0f);
         }
     }
 

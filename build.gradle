@@ -35,11 +35,10 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.unascribed:nilloader:1.4.0'
+    compileOnly 'com.unascribed:nilloader:1.4.0'
     implementation 'org.ow2.asm:asm:9.10'
     implementation 'org.ow2.asm:asm-commons:9.10'
     implementation 'org.ow2.asm:asm-tree:9.10'
-    implementation 'me.shedaniel.cloth:basic-math:0.6.1'
     implementation("blue.endless:jankson:${rootProject.jankson_version}")
     implementation("com.moandjiezana.toml:toml4j:${rootProject.toml4j_version}")
     implementation "io.ably:ably-java:${project.ably_version}"
@@ -56,6 +55,9 @@ processResources {
     inputs.property "version", project.version
 
     filesMatching("pets-mod.nilmod.css") {
+        expand "version": inputs.properties.version + "+" + project.build
+    }
+    filesMatching("com.jeff.pets.client.autoupdate.AutoUpdater") {
         expand "version": inputs.properties.version + "+" + project.build
     }
 }
@@ -118,15 +120,19 @@ shadowJar {
     relocate 'org.objectweb.asm.tree', 'com.jeff.pets.libs.asm.tree'
     relocate 'blue.endless.jankson', 'com.jeff.pets.libs.jankson'
     relocate 'com.moandjiezana.toml', 'com.jeff.pets.libs.toml'
-    relocate 'me.shedaniel.cloth.basic-math', 'com.jeff.pets.libs.cloth-basic-math'
     relocate 'com.google.errorprone.annotations', 'com.jeff.pets.libs.errorprone.annotations'
+    relocate 'com.davidehrmann.vcdiff', 'com.jeff.pets.libs.vcdiff'
+    relocate 'io.ably', 'com.jeff.pets.libs.ably'
+    relocate 'org.java_websocket', 'com.jeff.pets.libs.java_websocket'
+    relocate 'org.msgpack', 'com.jeff.pets.libs.msgpack'
 
     manifest {
         attributes(
                 'Premain-Class': 'com.jeff.pets.Agent',
                 'Agent-Class': 'com.jeff.pets.PetsInitializer',
                 'Can-Redefine-Classes': 'true',
-                'Can-Retransform-Classes': 'true'
+                'Can-Retransform-Classes': 'true',
+                'Implementation-Version': project.version + project.build
         )
     }
 }

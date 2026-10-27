@@ -141,11 +141,8 @@ public abstract class GroundPet extends AbstractPet {
         }
 
         int ambient = (int) (Math.random() * (60 * 20));
-        try (Level level = this.level()) {
-            if (ambient == 1) {
-                level.playLocalSound(this, Objects.requireNonNull(this.getAmbientSound()), SoundSource.NEUTRAL, 1.0f, 1.0f);
-            }
-        } catch (Exception ignored) {
+        if (ambient == 1) {
+            level().playLocalSound(this, Objects.requireNonNull(this.getAmbientSound()), SoundSource.valueOf("PETS"), 1.0f, 1.0f);
         }
     }
 }

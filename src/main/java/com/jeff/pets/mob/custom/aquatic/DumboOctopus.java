@@ -83,11 +83,11 @@ public class DumboOctopus extends FlyingPet {
     }
 
     protected SoundEvent getHurtSound(final @NotNull DamageSource source) {
-        return SoundEvents.CHICKEN_STEP.value();
+        return SoundEvents.SQUID_HURT;
     }
 
     protected SoundEvent getDeathSound() {
-        return SoundEvents.CHICKEN_STEP.value();
+        return SoundEvents.SQUID_DEATH;
     }
 
     protected void playStepSound(final @NotNull BlockPos pos, final @NotNull BlockState blockState) {
@@ -114,7 +114,7 @@ public class DumboOctopus extends FlyingPet {
     public void registerGoals() {
 
         /*Using false in this statement causes the mob to sink to the bottom and reptitively spin.*/
-        this.moveControl = new SmoothSwimmingMoveControl(this, 10, 10, 1, 1, true);
+        this.moveControl = new SmoothSwimmingMoveControl<>(this, 10, 10, 1, 1, true);
         this.getNavigation().setCanFloat(true);
         this.goalSelector.addGoal(1, new RandomSwimmingGoal(this, 1, 1));
         this.goalSelector.addGoal(2, new TryFindWaterGoal(this));
@@ -220,10 +220,7 @@ public class DumboOctopus extends FlyingPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            try (Level level = this.level()) {
-                level.playLocalSound(this, SoundEvents.SQUID_AMBIENT, SoundSource.AMBIENT, 1.0f, 1.0f);
-            } catch (Exception ignored) {
-            }
+            this.level().playLocalSound(this, SoundEvents.SQUID_AMBIENT, SoundSource.valueOf("PETS"), 1.0f, 1.0f);
         }
     }
 

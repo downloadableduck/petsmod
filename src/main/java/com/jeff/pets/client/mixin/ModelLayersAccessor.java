@@ -1,0 +1,43 @@
+package com.jeff.pets.client.mixin;
+
+import com.jeff.pets.client.PetsClientInitializer;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.ModelLayers;
+
+import java.lang.reflect.Field;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class ModelLayersAccessor {
+
+    public static final Map<ModelLayerLocation, PetsClientInitializer.TexturedLayerDefinitionProvider> CUSTOM_PROVIDERS = new ConcurrentHashMap<>();
+
+    @SuppressWarnings("unchecked")
+    public static void registerModelLayer(ModelLayerLocation layer, PetsClientInitializer.TexturedLayerDefinitionProvider provider) {
+        if (layer == null || provider == null) return;
+
+        try {
+            Field field = ModelLayers.class.getDeclaredField("ALL_MODELS");
+            field.setAccessible(true);
+
+            Set<ModelLayerLocation> currentSet = (Set<ModelLayerLocation>) field.get(null);
+
+            if (currentSet != null) {
+                synchronized (currentSet) {
+                    Set<ModelLayerLocation> newSet = new HashSet<>(currentSet);
+                    newSet.add(layer);
+
+                    field.set(null, Collections.synchronizedSet(newSet));
+                }
+            }
+
+            CUSTOM_PROVIDERS.put(layer, provider);
+
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+    }
+}

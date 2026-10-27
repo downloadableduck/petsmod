@@ -20,8 +20,8 @@ import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientSulfurCubeRenderer extends PetRenderer<ClientSulfurCube, SulfurCubeRenderState, SulfurCubeModel> {
 
-    private final BlockModelResolver blockModelResolver;
     public static final ModelLayerLocation SULFUR_CUBE_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(MOD_ID, "sulfur_cube"), "main");
+    private final BlockModelResolver blockModelResolver;
 
     public ClientSulfurCubeRenderer(EntityRendererProvider.Context context) {
         super(context, new SulfurCubeModel(context.bakeLayer(SULFUR_CUBE_LOCATION)), 0.5f);

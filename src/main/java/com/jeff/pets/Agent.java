@@ -1,7 +1,9 @@
 package com.jeff.pets;
 
 import com.jeff.pets.client.Central;
-import com.jeff.pets.client.mixin.client.*;
+import com.jeff.pets.client.mixin.*;
+import net.fabricmc.fabric.mixin.command.client.ClientPacketListenerMixin;
+import net.fabricmc.fabric.mixin.command.client.ClientSuggestionProviderMixin;
 import nilloader.NilAgent;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
@@ -26,20 +28,17 @@ public class Agent implements Runnable {
                     return AttributeSupplierMixin.transform(classfileBuffer);
                 }
                 if ("net/minecraft/client/multiplayer/ClientPacketListener".equals(className)) {
-                    return ClientPlayJoinHandlerMixin.transform(classfileBuffer);
+                    return ClientPacketListenerMixin.transform(com.jeff.pets.client.mixin.ClientPacketListenerMixin.transform(classfileBuffer));
                 }
                 if ("net/minecraft/client/renderer/entity/state/WitherRenderState".equals(className)) {
                     return WitherRenderStateAccessor.transform(classfileBuffer);
                 }
                 if ("net/minecraft/client/Minecraft".equals(className)) {
-                    byte[] byt = ClientTickMixin.transform(classfileBuffer);
+                    byte[] byt = MinecraftMixin.transform(classfileBuffer);
                     checkforNullObjects();
                     return byt;
                 }
-                if ("net/minecraft/commands/Commands".equals(className)) {
-                    return CommandManagerMixin.transform(classfileBuffer);
-                }
-                if ("net/minecraft/world/entity/EntityType".equals(className)) {
+                if ("net/minecraft/world/entity/EntityTypes".equals(className)) {
                     return ASMBootstrap.transform(classfileBuffer);
                 }
                 if ("net/minecraft/client/renderer/entity/EntityRenderers".equals(className)) {
@@ -55,11 +54,7 @@ public class Agent implements Runnable {
                     return EntityRenderDispatcherTransformer.transform(classfileBuffer);
                 }
                 if ("net/minecraft/client/gui/components/EditBox".equals(className)) {
-                    ClassReader reader = new ClassReader(classfileBuffer);
-                    ClassWriter writer = new ClassWriter(reader, ClassWriter.COMPUTE_FRAMES);
-                    ButtonClassVisitor transformer = new ButtonClassVisitor(Opcodes.ASM9, writer);
-                    reader.accept(transformer, 0);
-                    return writer.toByteArray();
+                    return ButtonClassVisitor.transform(EditBoxMixin.transform(classfileBuffer));
                 }
                 if ("net/minecraft/client/renderer/entity/state/EntityRenderState".equals(className)) {
                     ClassReader reader = new ClassReader(classfileBuffer);
@@ -70,6 +65,22 @@ public class Agent implements Runnable {
                 }
                 if ("net/minecraft/client/renderer/debug/EntityHitboxDebugRenderer".equals(className)) {
                     return NoHitboxMixin.transform(classfileBuffer);
+                }
+                if ("net/minecraft/sounds/SoundEvents".equals(className)) {
+                    return SoundEventsMixin.transform(classfileBuffer);
+                }
+                if ("net/minecraft/sounds/SoundSource".equals(className)) {
+                    return SoundSourceMixin.transform(classfileBuffer);
+                }
+                if ("net/minecraft/client/multiplayer/ClientSuggestionProvider".equals(className)) {
+                    ClassReader reader = new ClassReader(classfileBuffer);
+                    ClassWriter writer = new ClassWriter(reader, ClassWriter.COMPUTE_FRAMES);
+                    ClientSuggestionProviderMixin visitor = new ClientSuggestionProviderMixin(writer);
+                    reader.accept(visitor, 0);
+                    return writer.toByteArray();
+                }
+                if ("net/minecraft/client/gui/screens/Screen".equals(className)) {
+                    return ScreenMixin.transform(classfileBuffer);
                 }
                 return ClassFileTransformer.super.transform(loader, className, classBeingRedefined, protectionDomain, classfileBuffer);
             }
