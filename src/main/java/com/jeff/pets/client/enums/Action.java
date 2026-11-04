@@ -7,11 +7,15 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
 
+import static org.lwjgl.sdl.SDLMouse.*;
+
 public enum Action implements EnumImpl {
     Off(() -> false),
     Right_Click(() -> {
         if (shouldReturn()) return false;
-        return Minecraft.getInstance().mouseHandler.isRightPressed() && Objects.requireNonNull(Minecraft.getInstance().player).getItemInHand(InteractionHand.MAIN_HAND).isEmpty();
+        int buttonState = SDL_GetMouseState(null, null);
+        boolean isRightPressed = (buttonState & 1 << (SDL_BUTTON_RIGHT - 1)) != 0;
+                return isRightPressed && Objects.requireNonNull(Minecraft.getInstance().player).getItemInHand(InteractionHand.MAIN_HAND).isEmpty();
     }),
     Right_Click_and_Jump(() -> {
         if (shouldReturn()) return false;
