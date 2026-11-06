@@ -1,0 +1,7 @@
+{
+  "pack": {
+    "min_format": 65,
+    "max_format": 999,
+    "description": "The resources required for PetsMod"
+  }
+}
