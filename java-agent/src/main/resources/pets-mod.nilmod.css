@@ -1,0 +1,10 @@
+@nilmod {
+	name: "Pets Mod";
+	description: "Adds completely client-sided pets to your game. Supports every vanilla mob and will work on any server, including in singleplayer!";
+	authors: "The Pets Team, downloadableduck";
+	version: "${version}";
+}
+
+entrypoints {
+	premain: "com.jeff.pets.Agent";
+}

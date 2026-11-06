@@ -1,0 +1,207 @@
+import java.nio.file.FileSystems
+import java.nio.file.Files
+import java.nio.file.Path
+
+plugins {
+    id 'com.gradleup.shadow'
+    id 'maven-publish'
+    id "com.modrinth.minotaur" version "2.+"
+    id "com.vanniktech.maven.publish" version "0.28.0"
+    id 'signing'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+repositories {
+    maven { url "https://maven.shedaniel.me/" }
+    maven { url "https://maven.terraformersmc.com/" }
+    maven { url "https://maven.isxander.dev/releases" }
+    maven { url "https://api.modrinth.com/maven" }
+    // Add repositories to retrieve artifacts from in here.
+    // You should only use this when depending on other mods because
+    // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+    // See https://docs.gradle.org/current/userguide/declaring_repositories.html
+    // for more information about repositories.
+}
+
+architectury {
+    platformSetupLoomIde()
+    fabric()
+}
+
+configurations {
+    common {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentFabric.extendsFrom common
+
+    // Files in this configuration will be bundled into your mod using the Shadow plugin.
+    // Don't use the `shadow` configuration from the plugin itself as it's meant for excluding files.
+    shadowBundle {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+    apiElements {
+        outgoing.artifacts.clear()
+        outgoing.artifact(shadowJar)
+    }
+    runtimeElements {
+        outgoing.artifacts.clear()
+        outgoing.artifact(shadowJar)
+    }
+}
+
+dependencies {
+    implementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
+    implementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
+    implementation("com.terraformersmc:modmenu:${project.modmenu_version}")
+    include "com.davidehrmann.vcdiff:vcdiff-core:${project.vcdiff_version}"
+    include "org.java-websocket:Java-WebSocket:${project.java_websocket_version}"
+    include "org.msgpack:msgpack-core:${project.msgpack_version}"
+    include "io.ably:ably-java:${project.ably_version}"
+
+    common(project(path: ':common')) { transitive = false }
+    shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
+}
+
+processResources {
+    inputs.property 'version', project.version
+
+    filesMatching('fabric.mod.json') {
+        expand version: inputs.properties.version
+    }
+}
+
+jar {
+    archiveClassifier = 'dev'
+}
+
+shadowJar {
+    configurations = [project.configurations.shadowBundle]
+    archiveClassifier = 'shadow'
+}
+
+//assemble.dependsOn shadowJar
+
+tasks.shadowJar {
+    dependsOn 'jar'
+    setZip64(true)
+}
+
+sourceSets {
+    gametest {
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+    }
+}
+
+loom {
+    //splitEnvironmentSourceSets()
+
+    //ccessWidenerPath = file("src/main/resources/pets.classTweaker")
+
+    mods {
+        "pets-mod" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.gametest
+            //sourceSet sourceSets.client
+        }
+        "pets-mod-test" {
+            sourceSet sourceSets.gametest
+        }
+    }
+
+    runs {
+        testMod {
+            inherit client
+            sourceSet = sourceSets.gametest.name
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 25
+}
+
+java {
+    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+    // if it is present.
+    // If you remove this line, sources will not be generated.
+    withSourcesJar()
+    withJavadocJar()
+
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+}
+
+jar {
+    inputs.property "archivesName", project.base.archivesName
+    //from sourceSets.main.allSource
+
+    from("LICENSE") {
+        rename { "${it}_${inputs.properties.archivesName}" }
+    }
+    tasks.withType(AbstractCopyTask).configureEach {
+        //duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    }
+}
+
+tasks.named('shadowJar') {
+    dependsOn 'processIncludeJars'
+}
+
+tasks.withType(Jar).configureEach {
+    exclude 'ably.mod.json'
+    exclude 'msgpack.mod.json'
+    exclude 'vcdiff.mod.json'
+    exclude 'websocket.mod.json'
+    exclude 'assets/pets-mod/ably.png'
+    exclude 'assets/pets-mod/msgpack.png'
+    exclude 'assets/pets-mod/vcdiff.png'
+    exclude 'assets/pets-mod/websocket.png'
+}
+
+tasks.withType(Jar).configureEach {
+    doLast { ->
+        Path jar = archiveFile.get().asFile.toPath()
+        File srcDir = sourceSets.main.resources.srcDirs.find { (it.name == "resources") }
+        move("ably.mod.json", "ably-java-${project.ably_version}.jar", jar, srcDir, "ably.png")
+        move("msgpack.mod.json", "msgpack-core-${project.msgpack_version}.jar", jar, srcDir, "msgpack.png")
+        move("vcdiff.mod.json", "vcdiff-core-${project.vcdiff_version}.jar", jar, srcDir, "vcdiff.png")
+        move("websocket.mod.json", "Java-WebSocket-${project.java_websocket_version}.jar", jar, srcDir, "websocket.png")
+    }
+}
+
+static def move(String json, String jarName, Path jar, File srcDir, String icon) {
+
+    File ablyJson = srcDir.toPath().resolve(json).toFile()
+    File iconFile = srcDir.toPath().resolve("assets").resolve("pets-mod").resolve(icon).toFile()
+
+    FileSystems.newFileSystem(jar, (ClassLoader) null).withCloseable { outerFs ->
+        Path jarPath = outerFs.getPath("META-INF", "jars", jarName)
+
+        if (Files.exists(jarPath)) {
+            FileSystems.newFileSystem(jarPath, (ClassLoader) null).withCloseable { innerFs ->
+                Path jsonPath = innerFs.getPath("fabric.mod.json")
+                Path iconDest = innerFs.getPath(icon)
+
+                Files.deleteIfExists(jsonPath)
+                Files.copy(ablyJson.toPath(), jsonPath)
+                try {
+                    Files.copy(iconFile.toPath(), iconDest)
+                } catch (Exception ignored) {
+                }
+            }
+        }
+    }
+}
+
+tasks.register('buildGameTest', org.gradle.jvm.tasks.Jar) {
+    dependsOn tasks.build
+    archiveFileName.set("pets-mod-${project.mod_version}-${project.minecraft_version}-fabric-test.jar")
+    from sourceSets.gametest.output
+}
