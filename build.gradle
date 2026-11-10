@@ -19,6 +19,7 @@ subprojects {
     //put stuff here to make it configure for the java agent project as well
 
     if (it.name == "java-agent") return
+    if (snapshot && it.name == "neoforge") return;
     apply plugin: 'dev.architectury.loom-no-remap'
     apply plugin: 'architectury-plugin'
     apply plugin: 'maven-publish'

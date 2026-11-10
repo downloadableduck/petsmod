@@ -24,8 +24,10 @@ sourceSets {
 }
 
 architectury {
-    platformSetupLoomIde()
-    neoForge()
+    if (!snapshot) {
+        platformSetupLoomIde()
+        neoForge()
+    }
 }
 
 configurations {
@@ -72,6 +74,7 @@ version = mod_version
 group = maven_group
 
 dependencies {
+    if (snapshot) return;
     neoForge "net.neoforged:neoforge:$rootProject.neoforge_version"
     include "com.davidehrmann.vcdiff:vcdiff-core:${project.vcdiff_version}"
     include "org.java-websocket:Java-WebSocket:${project.java_websocket_version}"
@@ -95,20 +98,22 @@ java {
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 
-loom {
-    mods {
-        "pets_mod" {
-            sourceSet sourceSets.main
+if (!snapshot) {
+    loom {
+        mods {
+            "pets_mod" {
+                sourceSet sourceSets.main
+            }
+            "pets_mod_test" {
+                sourceSet sourceSets.gametest
+            }
         }
-        "pets_mod_test" {
-            sourceSet sourceSets.gametest
-        }
-    }
 
-    runs {
-        testMod {
-            inherit client
-            sourceSet = sourceSets.main.name
+        runs {
+            testMod {
+                inherit client
+                sourceSet = sourceSets.main.name
+            }
         }
     }
 }
