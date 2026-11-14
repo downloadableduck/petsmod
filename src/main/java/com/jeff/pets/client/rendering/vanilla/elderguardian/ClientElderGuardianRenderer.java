@@ -3,7 +3,6 @@ package com.jeff.pets.client.rendering.vanilla.elderguardian;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.guardian.ClientGuardianModel;
 import com.jeff.pets.mob.vanilla.hostile.ClientElderGuardian;
-
 import org.jetbrains.annotations.NotNull;
 
 public class ClientElderGuardianRenderer extends PetRenderer<ClientElderGuardian> {

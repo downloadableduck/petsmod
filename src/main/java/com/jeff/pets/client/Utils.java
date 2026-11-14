@@ -4,7 +4,6 @@ import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.player.PlayerEntity;
@@ -13,7 +12,6 @@ import net.minecraft.util.math.Vec3d;
 import java.lang.reflect.Field;
 import java.util.Objects;
 
-import static com.jeff.pets.PetsInitializer.MOD_ID;
 import static com.jeff.pets.client.Central.CONFIG;
 
 /**
@@ -49,7 +47,6 @@ public class Utils {
         double z = player.z - lookAngle.z * (double) 0.5F;
 
         entity.setPosition(x, y, z);
-        entity.setCustomName(entityName);
         world.forceEntity(entity.networkId, entity);
         // TameableEntity.getOwner() changed shape in 1.7.6:
         //   1.7.6+ : UUID.fromString(getOwnerName()) -> world.getEntityByUuid(uuid)
@@ -57,7 +54,7 @@ public class Utils {
         // Storing a UUID here makes getOwner() return null on <=1.7.5, which skips every
         // `if (owner != null)` block in GroundPet/FlyingPet tick() and leaves the pet doing
         // vanilla idle AI (walk forward, then stop). Store the name the <=1.7.5 lookup expects.
-        entity.setOwnerName(player.getDisplayName());
+        entity.setOwnerName(player.getName());
         Central.summonedEntity.add(entity);
     }
 
@@ -73,7 +70,7 @@ public class Utils {
      *                  current name is checked off of.
      */
     public static void checkName(String activePet, AbstractPet entity, String petName) {
-        if (Objects.equals(CONFIG.activePet, activePet) && entity != null && !entity.getDisplayName().equals(petName)) {
+        if (Objects.equals(CONFIG.activePet, activePet) && entity != null && !entity.getName().equals(petName)) {
             entity.setName(petName);
         }
     }
@@ -175,7 +172,7 @@ public class Utils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Block.ACTIVATOR_RAIL;
+        return Block.ANVIL;
     }
 
     public static float triangleWave(float p_78172_1_, float p_78172_2_) {

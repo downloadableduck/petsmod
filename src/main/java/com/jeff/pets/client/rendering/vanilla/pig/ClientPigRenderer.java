@@ -1,7 +1,6 @@
 package com.jeff.pets.client.rendering.vanilla.pig;
 
 import com.jeff.pets.client.rendering.PetRenderer;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.MobEntity;
 import org.jetbrains.annotations.NotNull;

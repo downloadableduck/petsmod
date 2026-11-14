@@ -2,13 +2,9 @@ package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.render.entity.BatRenderer;
 import net.minecraft.entity.mob.MobEntity;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jeff.pets.PetsInitializer.MOD_ID;
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class DumboOctopusRenderer extends PetRenderer<DumboOctopus> {

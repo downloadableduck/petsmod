@@ -3,7 +3,6 @@ package com.jeff.pets.client.rendering.vanilla.donkey;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.horse.ClientHorseModel;
 import com.jeff.pets.mob.vanilla.passive.ClientDonkey;
-
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;

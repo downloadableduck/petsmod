@@ -32,7 +32,7 @@ public abstract class AbstractPet extends TameableEntity {
 
     protected AbstractPet(World level) {
         super(level);
-        this.setSpeed(0.5f);
+        this.setSpeed(0.4f);
     }
 
     @Override
@@ -167,7 +167,7 @@ public abstract class AbstractPet extends TameableEntity {
      * Easier way to call {@link TameableEntity#setCustomName} that takes a String rather than a {@link Text}
      */
     public void setName(String string) {
-        this.setCustomName(string);
+        //this.getName(string);
     }
 
     public void wander() {

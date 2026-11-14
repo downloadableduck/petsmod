@@ -3,7 +3,6 @@ package com.jeff.pets.client.rendering.vanilla.witch;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientWitch;
 import net.minecraft.client.render.model.entity.WitchModel;
-
 import org.jetbrains.annotations.NotNull;
 
 public class ClientWitchRenderer extends PetRenderer<ClientWitch> {

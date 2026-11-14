@@ -8,7 +8,6 @@ import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.vertex.Tesselator;
-
 import net.minecraft.util.math.MathHelper;
 
 import static me.shedaniel.clothconfig2.ClothConfigInitializer.clamp;

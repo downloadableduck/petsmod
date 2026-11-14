@@ -22,7 +22,6 @@ import net.minecraft.client.gui.screen.ConfirmScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.TextRenderer;
 import net.minecraft.client.render.vertex.Tesselator;
-
 import net.minecraft.locale.I18n;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.MathHelper;
@@ -299,7 +298,7 @@ public abstract class ClothConfigScreen extends Screen {
                 }
                 
                 public void render(int int_1, int int_2, float float_1) {
-                    minecraft.textureManager.bind(CONFIG_TEX);
+                    minecraft.textureManager.load(CONFIG_TEX);
                     GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
                     int int_3 = this.getYImage(this.isHovered());
                     GlStateManager.enableBlend();
@@ -323,7 +322,7 @@ public abstract class ClothConfigScreen extends Screen {
                 }
                 
                 public void render(int int_1, int int_2, float float_1) {
-                    minecraft.textureManager.bind(CONFIG_TEX);
+                    minecraft.textureManager.load(CONFIG_TEX);
                     GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
                     int int_3 = this.getYImage(this.isHovered());
                     GlStateManager.enableBlend();
@@ -439,7 +438,7 @@ public abstract class ClothConfigScreen extends Screen {
                     if (entry.getConfigError().isPresent())
                         errors.add(((Optional<String>) entry.getConfigError()).get());
             if (errors.size() > 0) {
-                minecraft.textureManager.bind(CONFIG_TEX);
+                minecraft.textureManager.load(CONFIG_TEX);
                 GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
                 String text = "\u00A7c" + (errors.size() == 1 ? errors.get(0) : I18n.translate("text.cloth-config.multi_error"));
                 if (isTransparentBackground()) {
@@ -455,7 +454,7 @@ public abstract class ClothConfigScreen extends Screen {
                 }
             }
         } else if (!isEditable()) {
-            minecraft.textureManager.bind(CONFIG_TEX);
+            minecraft.textureManager.load(CONFIG_TEX);
             GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             String text = "\u00A7c" + I18n.translate("text.cloth-config.not_editable");
             if (isTransparentBackground()) {
@@ -506,7 +505,7 @@ public abstract class ClothConfigScreen extends Screen {
             return;
         Tesselator tesselator2 = Tesselator.INSTANCE;
         Builder buffer = Builder.of(tesselator2);
-        minecraft.textureManager.bind(getBackgroundLocation());
+        minecraft.textureManager.load(getBackgroundLocation());
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         float f = 32.0F;
         buffer.begin(7, GuiVertexCompat.POSITION_COLOR);

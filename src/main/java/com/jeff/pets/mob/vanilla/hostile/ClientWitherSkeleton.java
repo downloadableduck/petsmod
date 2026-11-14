@@ -29,7 +29,7 @@ public class ClientWitherSkeleton extends GroundPet implements RangedAttackMob {
     }
 
     @Override
-    public void doRangedAttack(MobEntity livingEntity, float f) {
+    public void doRangedAttack(MobEntity livingEntity) {
 
     }
 }

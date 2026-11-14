@@ -6,7 +6,6 @@ import com.jeff.pets.compat.GlStateManager;
 import com.jeff.pets.mob.vanilla.hostile.ClientCreeper;
 import net.minecraft.client.render.model.entity.CreeperModel;
 
-
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientCreeperChargeLayer implements PetRenderLayer {

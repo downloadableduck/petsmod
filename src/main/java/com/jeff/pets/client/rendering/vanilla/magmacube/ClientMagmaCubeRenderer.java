@@ -3,7 +3,6 @@ package com.jeff.pets.client.rendering.vanilla.magmacube;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientMagmaCube;
 import net.minecraft.client.render.model.entity.SlimeModel;
-
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;

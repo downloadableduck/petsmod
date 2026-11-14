@@ -2,7 +2,6 @@ package com.jeff.pets.client.rendering.vanilla.irongolem;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientIronGolem;
-
 import org.jetbrains.annotations.NotNull;
 
 public class ClientIronGolemRenderer extends PetRenderer<ClientIronGolem> {

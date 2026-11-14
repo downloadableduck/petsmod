@@ -2,7 +2,6 @@ package com.jeff.pets.client.rendering.vanilla.chicken;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientChicken;
-
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;

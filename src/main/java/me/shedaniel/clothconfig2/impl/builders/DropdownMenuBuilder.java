@@ -8,7 +8,6 @@ import me.shedaniel.clothconfig2.gui.entries.DropdownBoxEntry.SelectionTopCellEl
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.entity.ItemRenderer;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.ornithemc.osl.core.impl.util.NamespacedIdentifierImpl;

@@ -6,7 +6,6 @@ import com.jeff.pets.compat.GlStateManager;
 import com.jeff.pets.mob.vanilla.passive.ClientMooshroom;
 import net.minecraft.block.Block;
 import net.minecraft.client.render.block.BlockRenderer;
-import net.minecraft.client.render.texture.TextureAtlas;
 
 import static com.jeff.pets.client.Central.CONFIG;
 

@@ -5,7 +5,6 @@ import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.compat.GlStateManager;
 import com.jeff.pets.mob.vanilla.passive.ClientSquid;
 import net.minecraft.client.render.model.entity.SquidModel;
-
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;

@@ -2,7 +2,6 @@ package com.jeff.pets.client.rendering.vanilla.zombie;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientZombie;
-
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;

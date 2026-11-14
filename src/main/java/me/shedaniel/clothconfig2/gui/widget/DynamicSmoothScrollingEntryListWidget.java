@@ -5,7 +5,6 @@ import me.shedaniel.clothconfig2.compat.GuiVertexCompat;
 import me.shedaniel.clothconfig2.compat.GuiVertexCompat.Builder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.vertex.Tesselator;
-
 import net.minecraft.util.math.MathHelper;
 
 @Deprecated

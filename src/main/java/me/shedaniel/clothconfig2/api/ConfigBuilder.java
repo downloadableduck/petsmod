@@ -4,7 +4,6 @@ import me.shedaniel.clothconfig2.impl.ConfigBuilderImpl;
 import me.shedaniel.clothconfig2.impl.ConfigEntryBuilderImpl;
 import net.minecraft.client.gui.screen.Screen;
 
-
 import java.util.function.Consumer;
 
 

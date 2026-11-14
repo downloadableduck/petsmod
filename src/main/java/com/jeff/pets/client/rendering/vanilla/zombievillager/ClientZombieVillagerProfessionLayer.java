@@ -4,9 +4,6 @@ import com.jeff.pets.client.rendering.PetRenderLayer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
 
-
-import static com.jeff.pets.client.Central.CONFIG;
-
 public class ClientZombieVillagerProfessionLayer implements PetRenderLayer {
 
     public static final String ARMORER_LOCATION = ("textures/mob/zombie_villager/profession/armorer.png");

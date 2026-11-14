@@ -7,7 +7,7 @@ import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import me.shedaniel.clothconfig2.impl.WindowUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.locale.I18n;
-import net.minecraft.text.Formatting;
+import net.ornithemc.osl.text.api.Formatting;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.List;

@@ -4,12 +4,10 @@ import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Racoon;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static com.jeff.pets.PetsInitializer.MOD_ID;
 import static com.jeff.pets.client.Central.CONFIG;
 
 public class RacoonRenderer extends PetRenderer<@NotNull Racoon> {

@@ -2,7 +2,6 @@ package com.jeff.pets.client.rendering.vanilla.wither;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.boss.ClientWither;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;

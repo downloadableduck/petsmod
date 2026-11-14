@@ -3,7 +3,6 @@ package com.jeff.pets.client.rendering.vanilla.creeper;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientCreeper;
 import net.minecraft.client.render.model.entity.CreeperModel;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;

@@ -6,7 +6,6 @@ import com.jeff.pets.sound.SoundEvents;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.Minecraft;
-
 import net.minecraft.locale.I18n;
 
 import java.awt.*;
@@ -57,7 +56,7 @@ public class SubCategoryListEntry extends TooltipListEntry {
         widget.rectangle.y = y;
         widget.rectangle.width = entryWidth + 19;
         widget.rectangle.height = 24;
-        Minecraft.getInstance().textureManager.bind(CONFIG_TEX);
+        Minecraft.getInstance().textureManager.load(CONFIG_TEX);
         // Lighting.turnOff(); // Not available in 1.13
         GlStateManager.color4f(1, 1, 1, 1);
         drawTexture(x - 15, y + 4, 24, expended ? 9 : 0, 9, 9); //blit?

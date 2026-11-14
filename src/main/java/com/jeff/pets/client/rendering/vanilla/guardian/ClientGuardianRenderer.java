@@ -2,7 +2,6 @@ package com.jeff.pets.client.rendering.vanilla.guardian;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientGuardian;
-
 import org.jetbrains.annotations.NotNull;
 
 

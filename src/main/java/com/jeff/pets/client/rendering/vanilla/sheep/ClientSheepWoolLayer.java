@@ -4,7 +4,6 @@ import com.jeff.pets.client.rendering.PetRenderLayer;
 import com.jeff.pets.compat.GlStateManager;
 import com.jeff.pets.mob.vanilla.passive.ClientSheep;
 
-
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;

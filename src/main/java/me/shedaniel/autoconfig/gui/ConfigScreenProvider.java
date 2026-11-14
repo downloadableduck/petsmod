@@ -28,7 +28,6 @@ import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import net.minecraft.client.gui.screen.Screen;
 
-
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.LinkedHashMap;

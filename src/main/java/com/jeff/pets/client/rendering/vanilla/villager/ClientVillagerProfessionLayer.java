@@ -4,11 +4,6 @@ import com.jeff.pets.client.rendering.PetRenderLayer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.passive.ClientVillager;
 
-
-import java.util.Objects;
-
-import static com.jeff.pets.client.Central.CONFIG;
-
 //villager layer is blue lmao
 public class ClientVillagerProfessionLayer implements PetRenderLayer {
 

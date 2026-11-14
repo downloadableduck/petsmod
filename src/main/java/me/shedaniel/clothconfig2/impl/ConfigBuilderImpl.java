@@ -5,9 +5,7 @@ import com.google.common.collect.Maps;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.gui.ClothConfigScreen;
-import net.minecraft.client.gui.GuiElement;
 import net.minecraft.client.gui.screen.Screen;
-
 import net.minecraft.locale.I18n;
 
 import java.util.List;

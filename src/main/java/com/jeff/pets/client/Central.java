@@ -1332,7 +1332,7 @@ public class Central implements ClientModInitializer {
         CONFIG.potatoHuskName = Utils.checkNullString(CONFIG.potatoHuskName);
 
         if (CONFIG.headSkin == null && Minecraft.getInstance().player != null) {
-            CONFIG.headSkin = Minecraft.getInstance().player.getDisplayName();
+            CONFIG.headSkin = Minecraft.getInstance().player.getName();
         }
         CONFIG.headName = Utils.checkNullString(CONFIG.headName);
 

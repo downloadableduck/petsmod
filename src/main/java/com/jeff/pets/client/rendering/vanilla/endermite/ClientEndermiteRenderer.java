@@ -2,7 +2,6 @@ package com.jeff.pets.client.rendering.vanilla.endermite;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientEndermite;
-
 import org.jetbrains.annotations.NotNull;
 
 public class ClientEndermiteRenderer extends PetRenderer<ClientEndermite> {

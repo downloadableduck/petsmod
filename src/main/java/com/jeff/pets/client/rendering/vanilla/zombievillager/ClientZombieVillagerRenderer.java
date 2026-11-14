@@ -3,7 +3,6 @@ package com.jeff.pets.client.rendering.vanilla.zombievillager;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientZombieVillager;
 
-
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;

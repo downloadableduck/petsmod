@@ -2,7 +2,6 @@ package com.jeff.pets.client.rendering.vanilla.skeleton;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientSkeleton;
-
 import org.jetbrains.annotations.NotNull;
 
 public class ClientSkeletonRenderer extends PetRenderer<ClientSkeleton> {

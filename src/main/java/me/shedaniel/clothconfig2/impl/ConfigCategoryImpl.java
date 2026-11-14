@@ -3,7 +3,6 @@ package me.shedaniel.clothconfig2.impl;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 
-
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;

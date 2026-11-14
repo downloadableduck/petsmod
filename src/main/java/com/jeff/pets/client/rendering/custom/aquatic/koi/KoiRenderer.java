@@ -2,10 +2,7 @@ package com.jeff.pets.client.rendering.custom.aquatic.koi;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.aquatic.Koi;
-
 import org.jetbrains.annotations.NotNull;
-
-import static com.jeff.pets.PetsInitializer.MOD_ID;
 
 public class KoiRenderer extends PetRenderer<Koi> {
 

@@ -9,7 +9,6 @@ import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import net.minecraft.client.Minecraft;
-
 import net.minecraft.locale.I18n;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -194,7 +193,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
             if (tooltip.isPresent() && tooltip.get().length > 0)
                 getScreen().queueTooltip(QueuedTooltip.create(new Point(mouseX, mouseY), tooltip.get()));
         }
-        Minecraft.getInstance().textureManager.bind(CONFIG_TEX);
+        Minecraft.getInstance().textureManager.load(CONFIG_TEX);
         // Lighting.turnOff(); // Not available in 1.13
         GlStateManager.color4f(1, 1, 1, 1);
         BaseListCell focused = !expanded || getFocused() == null || !(getFocused() instanceof BaseListCell) ? null : (BaseListCell) getFocused();

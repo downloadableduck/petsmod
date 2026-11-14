@@ -1,10 +1,8 @@
 package com.jeff.pets.client.rendering.custom.first.duck;
 
-import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.client.Math2;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Duck;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;

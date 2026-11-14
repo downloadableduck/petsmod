@@ -3,7 +3,6 @@ package com.jeff.pets.client.rendering.vanilla.mooshroom;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.cow.ClientCowModel;
 import com.jeff.pets.mob.vanilla.passive.ClientMooshroom;
-
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;

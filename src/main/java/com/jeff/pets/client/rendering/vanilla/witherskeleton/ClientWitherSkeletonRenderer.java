@@ -3,7 +3,6 @@ package com.jeff.pets.client.rendering.vanilla.witherskeleton;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.skeleton.SkeletonModel;
 import com.jeff.pets.mob.vanilla.hostile.ClientWitherSkeleton;
-
 import org.jetbrains.annotations.NotNull;
 
 public class ClientWitherSkeletonRenderer extends PetRenderer<ClientWitherSkeleton> {

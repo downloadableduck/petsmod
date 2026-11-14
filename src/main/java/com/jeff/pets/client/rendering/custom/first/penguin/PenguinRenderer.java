@@ -1,9 +1,7 @@
 package com.jeff.pets.client.rendering.custom.first.penguin;
 
-import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.first.Penguin;
-
 import org.jetbrains.annotations.NotNull;
 
 import static com.jeff.pets.client.Central.CONFIG;

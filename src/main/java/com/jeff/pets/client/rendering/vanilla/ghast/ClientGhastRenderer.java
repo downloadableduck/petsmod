@@ -2,7 +2,6 @@ package com.jeff.pets.client.rendering.vanilla.ghast;
 
 import com.jeff.pets.client.rendering.PetRenderer;
 import net.minecraft.client.render.model.entity.GhastModel;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.MobEntity;
 import org.jetbrains.annotations.NotNull;

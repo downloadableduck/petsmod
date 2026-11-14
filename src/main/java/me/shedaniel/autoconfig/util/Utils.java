@@ -20,9 +20,7 @@
 package me.shedaniel.autoconfig.util;
 
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.Minecraft;
 
-import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.nio.file.Path;

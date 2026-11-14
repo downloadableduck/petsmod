@@ -3,7 +3,6 @@ package com.jeff.pets.client.rendering.vanilla.cavespider;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.neutral.ClientCaveSpider;
 import net.minecraft.client.render.model.entity.SpiderModel;
-
 import org.jetbrains.annotations.NotNull;
 
 public class ClientCaveSpiderRenderer extends PetRenderer<ClientCaveSpider> {
