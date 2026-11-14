@@ -37,7 +37,6 @@ import com.jeff.pets.client.rendering.vanilla.snowgolem.ClientSnowGolemRenderer;
 import com.jeff.pets.client.rendering.vanilla.spider.ClientSpiderRenderer;
 import com.jeff.pets.client.rendering.vanilla.squid.ClientSquidRenderer;
 import com.jeff.pets.client.rendering.vanilla.villager.ClientVillagerRenderer;
-import com.jeff.pets.client.rendering.vanilla.witch.ClientWitchRenderer;
 import com.jeff.pets.client.rendering.vanilla.wither.ClientWitherRenderer;
 import com.jeff.pets.client.rendering.vanilla.witherskeleton.ClientWitherSkeletonRenderer;
 import com.jeff.pets.client.rendering.vanilla.wolf.ClientWolfRenderer;
@@ -132,7 +131,6 @@ public class PetsClientInitializer implements ClientModInitializer {
         register(ClientSilverfish.class, ClientSilverfishRenderer::new);
         register(ClientSkeleton.class, ClientSkeletonRenderer::new);
         register(ClientSlime.class, ClientSlimeRenderer::new);
-        register(ClientWitch.class, ClientWitchRenderer::new);
         register(ClientWitherSkeleton.class, ClientWitherSkeletonRenderer::new);
         register(ClientZombie.class, ClientZombieRenderer::new);
         register(ClientZombieVillager.class, ClientZombieVillagerRenderer::new);

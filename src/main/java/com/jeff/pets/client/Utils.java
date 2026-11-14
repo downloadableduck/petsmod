@@ -172,7 +172,7 @@ public class Utils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Block.ANVIL;
+        return Block.BED;
     }
 
     public static float triangleWave(float p_78172_1_, float p_78172_2_) {

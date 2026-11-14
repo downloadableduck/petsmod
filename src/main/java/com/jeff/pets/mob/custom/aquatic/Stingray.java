@@ -70,10 +70,6 @@ public class Stingray extends FlyingPet {
       return "";
    }
 
-   protected void playStepSound(@NotNull BlockPos pos, @NotNull Block Block) {
-      this.playSound("", 0.15F, 1.0F);
-   }
-
    @Nullable
    public Stingray makeChild(@NotNull PassiveEntity partner) {
       Stingray stringray = new Stingray(this.world);
@@ -201,7 +197,7 @@ public class Stingray extends FlyingPet {
 
       int ambient = (int)(Math.random() * 1200.0);
       if (ambient == 1) {
-         this.world.playSound(this.x, this.y, this.z, "", 1.0F, 1.0F, true);
+         this.world.playSound(this.x, this.y, this.z, "", 1.0F, 1.0F);
       }
    }
 }

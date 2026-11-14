@@ -2,14 +2,13 @@ package com.jeff.pets.mob;
 
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.passive.PassiveEntity;
+import net.minecraft.entity.mob.passive.animal.AnimalEntity;
 import net.minecraft.entity.mob.passive.animal.tameable.TameableEntity;
 import net.minecraft.entity.mob.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Abstract class that extends {@link TameableEntity}, providing multiple utilities
@@ -159,7 +158,7 @@ public abstract class AbstractPet extends TameableEntity {
      * @return {@code null}
      */
     @Override
-    public @Nullable PassiveEntity makeChild(@NotNull PassiveEntity AgableMob) {
+    public AnimalEntity makeChild(@NotNull AnimalEntity AgableMob) {
         return null;
     }
 

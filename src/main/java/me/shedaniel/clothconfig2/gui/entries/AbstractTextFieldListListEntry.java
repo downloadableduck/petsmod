@@ -99,7 +99,7 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
             widget.width = entryWidth - 12;
             widget.x = x;
             widget.y = y + 1;
-            widget.setEditable(listListEntry.isEditable());
+            widget.editable = (listListEntry.isEditable());
             widget.render();
             if (isSelected && listListEntry.isEditable())
                 fill(x, y + 12, x + entryWidth - 12, y + 13, getConfigError().isPresent() ? 0xffff5555 : 0xffe0e0e0);

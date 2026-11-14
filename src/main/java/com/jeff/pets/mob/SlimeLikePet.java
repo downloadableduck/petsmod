@@ -120,7 +120,7 @@ public abstract class SlimeLikePet extends AbstractPet {
 
         int ambient = (int) (Math.random() * (60 * 20));
         if (ambient == 1) {
-            world.playSound(this.x, this.y, this.z, Objects.requireNonNull(this.getAmbientSound()), 1.0f, 1.0f, true);
+            world.playSound(this.x, this.y, this.z, Objects.requireNonNull(this.getAmbientSound()), 1.0f, 1.0f);
         }
     }
 }

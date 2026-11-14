@@ -3,10 +3,10 @@ package com.jeff.pets.client.rendering.vanilla.enderdragon;
 import com.jeff.pets.client.Math2;
 import com.jeff.pets.compat.GlStateManager;
 import com.jeff.pets.mob.vanilla.boss.ClientEnderDragon;
-import net.minecraft.client.render.model.Model;
+import net.minecraft.client.render.model.Model; import com.jeff.pets.client.rendering.PetModel;
 import net.minecraft.client.render.model.ModelPart;
 
-public class ClientEnderDragonModel extends Model {
+public class ClientEnderDragonModel extends PetModel {
     private final ModelPart head;
     private final ModelPart neck;
     private final ModelPart jaw;

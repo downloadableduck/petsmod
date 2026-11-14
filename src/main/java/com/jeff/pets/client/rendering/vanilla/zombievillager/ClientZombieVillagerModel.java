@@ -9,7 +9,7 @@ public class ClientZombieVillagerModel extends HumanoidModel {
     private ModelPart hatRim;
 
     public ClientZombieVillagerModel(float f, boolean bl) {
-        super(f, 0.0F, 64, bl ? 32 : 64);
+        super();
         if (bl) {
             this.head = new ModelPart(this, 0, 0);
             this.head.addBox(-4.0F, -10.0F, -4.0F, 8, 8, 8, f);
@@ -54,8 +54,7 @@ public class ClientZombieVillagerModel extends HumanoidModel {
     }
 
     @Override
-    public void setupAnimation(float f, float g, float h, float i, float j, float s, net.minecraft.entity.Entity entity) {
-        super.setupAnimation(f, g, h, i, j, s, entity);
+    public void setupAnimation(float f, float g, float h, float i, float j, float s) {
         AnimationUtils.animateZombieArms(this.leftArm, this.rightArm, true, this.attackAnimationProgress, h);
     }
 

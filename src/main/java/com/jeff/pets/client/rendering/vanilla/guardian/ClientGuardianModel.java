@@ -1,15 +1,16 @@
 package com.jeff.pets.client.rendering.vanilla.guardian;
 
+import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.compat.EntityCompat;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.render.model.Model;
+import net.minecraft.client.render.model.Model; import com.jeff.pets.client.rendering.PetModel;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
-public class ClientGuardianModel extends Model {
+public class ClientGuardianModel extends PetModel {
     private static final float[] field_17131 = new float[]{1.75F, 0.25F, 0.0F, 0.0F, 0.5F, 0.5F, 0.5F, 0.5F, 1.25F, 0.75F, 0.0F, 0.0F};
     private static final float[] field_17132 = new float[]{0.0F, 0.0F, 0.0F, 0.0F, 0.25F, 1.75F, 1.25F, 0.75F, 0.0F, 0.0F, 0.0F, 0.0F};
     private static final float[] field_17133 = new float[]{0.0F, 0.0F, 0.25F, 1.75F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.75F, 1.25F};

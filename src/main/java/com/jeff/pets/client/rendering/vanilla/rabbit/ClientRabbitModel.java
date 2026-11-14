@@ -2,13 +2,13 @@ package com.jeff.pets.client.rendering.vanilla.rabbit;
 
 import com.google.common.collect.ImmutableList;
 import com.jeff.pets.mob.vanilla.passive.ClientRabbit;
-import net.minecraft.client.render.model.Model;
+import net.minecraft.client.render.model.Model; import com.jeff.pets.client.rendering.PetModel;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.util.math.MathHelper;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientRabbitModel extends Model {
+public class ClientRabbitModel extends PetModel {
     public final ModelPart head;
     private final ModelPart rearFootLeft = new ModelPart(this, 26, 24);
     private final ModelPart rearFootRight;

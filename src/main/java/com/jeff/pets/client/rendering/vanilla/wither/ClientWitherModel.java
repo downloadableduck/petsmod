@@ -2,14 +2,14 @@ package com.jeff.pets.client.rendering.vanilla.wither;
 
 import com.google.common.collect.ImmutableList;
 import com.jeff.pets.mob.vanilla.boss.ClientWither;
-import net.minecraft.client.render.model.Model;
+import net.minecraft.client.render.model.Model; import com.jeff.pets.client.rendering.PetModel;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.Arrays;
 
-public class ClientWitherModel extends Model {
+public class ClientWitherModel extends PetModel {
     private final ModelPart[] upperBodyParts;
     private final ModelPart[] heads;
     private final ImmutableList<ModelPart> parts;

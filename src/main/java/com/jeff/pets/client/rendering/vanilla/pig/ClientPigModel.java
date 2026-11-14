@@ -11,11 +11,6 @@ public class ClientPigModel extends PigModel {
     }
 
     @Override
-    public void setupAnimation(float f, float g, float h, float i, float k, float s, net.minecraft.entity.Entity entity) {
-        super.setupAnimation(f, g, h, i, k, s, entity);
-    }
-
-    @Override
     public void render(net.minecraft.entity.Entity entity, float i, float j, float f, float g, float h, float k) {
         super.render(entity, i, j, f, g, h, k);
         com.jeff.pets.compat.GlStateManager.pushMatrix();

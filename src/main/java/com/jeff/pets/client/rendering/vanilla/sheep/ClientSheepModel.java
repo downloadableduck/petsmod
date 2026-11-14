@@ -23,7 +23,6 @@ public class ClientSheepModel extends QuadrupedModel {
     }
 
     public void setupAnimation(float f, float g, float h, float i, float j, float s, net.minecraft.entity.Entity entity) {
-        super.setupAnimation(f, g, h, i, j, s, entity);
         //this.head.rotationX = this.headXRot;
     }
 }

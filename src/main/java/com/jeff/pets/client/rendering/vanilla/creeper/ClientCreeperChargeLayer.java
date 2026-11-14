@@ -21,7 +21,7 @@ public class ClientCreeperChargeLayer implements PetRenderLayer {
     public void render(net.minecraft.entity.mob.MobEntity entity, float f, float g, float h, float i, float j, float k) {
         ClientCreeper creeperEntity = (ClientCreeper) entity;
         if (CONFIG.creeperSkin.equals("charged")) {
-            boolean bl = creeperEntity.isInvisible();
+            boolean bl = false;
             GlStateManager.depthMask(!bl);
             this.renderer.bindTexture(SKIN);
             GlStateManager.matrixMode(5890);

@@ -4,6 +4,7 @@ import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.passive.PassiveEntity;
+import net.minecraft.entity.mob.passive.animal.AnimalEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -25,7 +26,7 @@ public class Head extends AbstractPet {
 
    @Nullable
    @Override
-   public PassiveEntity makeChild(@NotNull PassiveEntity AgableMob) {
+   public AnimalEntity makeChild(@NotNull AnimalEntity AgableMob) {
       return new Head(this.world);
    }
 
@@ -52,7 +53,7 @@ public class Head extends AbstractPet {
 
    @Override
    public boolean isBreedingItem(@NotNull ItemStack itemStack) {
-      return itemStack.matchesItem(new ItemStack(Item.CARROT));
+      return itemStack.matchesItem(new ItemStack(Item.APPLE));
    }
 
    /*(public Head initialize(Difficulty difficulty, @Nullable EntityData groupData) {
@@ -159,7 +160,7 @@ public class Head extends AbstractPet {
 
        int ambient = (int)(Math.random() * 1200.0);
        if (ambient == 1) {
-           this.world.playSound(this.x, this.y, this.z, "duck_ambient", 1.0F, 1.0F, true);
+           this.world.playSound(this.x, this.y, this.z, "duck_ambient", 1.0F, 1.0F);
        }
    }
 

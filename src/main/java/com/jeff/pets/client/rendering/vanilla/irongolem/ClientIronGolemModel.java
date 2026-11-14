@@ -1,10 +1,10 @@
 package com.jeff.pets.client.rendering.vanilla.irongolem;
 
-import net.minecraft.client.render.model.Model;
+import net.minecraft.client.render.model.Model; import com.jeff.pets.client.rendering.PetModel;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.entity.mob.MobEntity;
 
-public class ClientIronGolemModel extends Model {
+public class ClientIronGolemModel extends PetModel {
     public final ModelPart field_3414;
     private final ModelPart field_3415;
     private final ModelPart field_3413;

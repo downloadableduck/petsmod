@@ -23,7 +23,6 @@ public class ClientSnowGolemHeadLayer implements PetRenderLayer {
         ClientSnowGolem snowGolem = (ClientSnowGolem) entity;
         if (CONFIG.snowGolemSkin.equals("pumpkin_on")) {
 boolean bl = false;
-            if (!snowGolem.isInvisible() || bl) {
                 GlStateManager.pushMatrix();
                 //this.getContextModel().method_2834().rotate(poseStack);
                 float m = 0.625F;
@@ -34,7 +33,6 @@ boolean bl = false;
                     this.blockRenderer.renderAsItem(Block.PUMPKIN, 0, 1.0F);
 
                 GlStateManager.popMatrix();
-            }
         }
     }
 

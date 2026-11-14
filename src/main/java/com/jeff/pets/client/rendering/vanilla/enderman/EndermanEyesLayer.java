@@ -27,7 +27,7 @@ public class EndermanEyesLayer implements PetRenderLayer {
         GlStateManager.disableAlphaTest();
         GlStateManager.blendFunc(1, 1);
         GlStateManager.disableLighting();
-        GlStateManager.depthMask(!endermanEntity.isInvisible());
+        GlStateManager.depthMask(false);
         int m = 61680;
         int n = 61680;
         int o = 0;

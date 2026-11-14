@@ -65,7 +65,7 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
         this.resetButton.active = isEditable() && getDefaultValue().isPresent() && !isMatchDefault(textFieldWidget.getText());
         this.resetButton.y = y;
-        this.textFieldWidget.setEditable(isEditable());
+        this.textFieldWidget.editable = (isEditable());
         this.textFieldWidget.y = y + 1;
         if (Minecraft.getInstance().textRenderer.isBidirectional()) {
             Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.getInstance().textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, 16777215);

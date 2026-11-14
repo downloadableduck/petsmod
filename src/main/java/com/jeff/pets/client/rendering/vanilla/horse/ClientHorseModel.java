@@ -3,12 +3,12 @@ package com.jeff.pets.client.rendering.vanilla.horse;
 import com.jeff.pets.client.Math2;
 import com.jeff.pets.compat.GlStateManager;
 import com.jeff.pets.mob.AbstractPet;
-import net.minecraft.client.render.model.Model;
+import net.minecraft.client.render.model.Model; import com.jeff.pets.client.rendering.PetModel;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.util.math.MathHelper;
 
-public class ClientHorseModel extends Model {
+public class ClientHorseModel extends PetModel {
     protected final ModelPart field_3305;
     protected final ModelPart field_3307;
     private final ModelPart field_3306;

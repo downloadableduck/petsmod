@@ -2,10 +2,8 @@ package com.jeff.pets.mob.vanilla.hostile;
 
 import com.jeff.pets.mob.GroundPet;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.monster.RangedAttackMob;
 
-public class ClientWitherSkeleton extends GroundPet implements RangedAttackMob {
-
+public class ClientWitherSkeleton extends GroundPet {
 
     public ClientWitherSkeleton(net.minecraft.world.World level) {
         super(level);
@@ -26,10 +24,5 @@ public class ClientWitherSkeleton extends GroundPet implements RangedAttackMob {
     @Override
     protected String getAmbientSound() {
         return "mob.skeleton.say";
-    }
-
-    @Override
-    public void doRangedAttack(MobEntity livingEntity) {
-
     }
 }

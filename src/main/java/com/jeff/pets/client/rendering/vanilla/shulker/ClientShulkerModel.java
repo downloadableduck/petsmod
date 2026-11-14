@@ -1,11 +1,11 @@
 package com.jeff.pets.client.rendering.vanilla.shulker;
 
 import com.jeff.pets.mob.vanilla.hostile.ClientShulker;
-import net.minecraft.client.render.model.Model;
+import net.minecraft.client.render.model.Model; import com.jeff.pets.client.rendering.PetModel;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.util.math.MathHelper;
 
-public class ClientShulkerModel extends Model {
+public class ClientShulkerModel extends PetModel {
     private final ModelPart field_3553;
     private final ModelPart field_3555;
     private final ModelPart field_3554;

@@ -3,11 +3,12 @@ package com.jeff.pets.client.rendering.custom.aprilfools.head;
 // Paste this class into your mod and generate all required imports
 
 
+import com.jeff.pets.client.rendering.PetModel;
 import net.minecraft.client.render.model.Box;
-import net.minecraft.client.render.model.Model;
+import net.minecraft.client.render.model.Model; import com.jeff.pets.client.rendering.PetModel;
 import net.minecraft.client.render.model.ModelPart;
 
-public class HeadModel extends Model {
+public class HeadModel extends PetModel {
     private final ModelPart Head;
 
     public HeadModel() {
@@ -18,11 +19,6 @@ public class HeadModel extends Model {
         Head.setPos(5.0F, 0.0F, -5.0F);
         Head.boxes.add(new Box(Head, 0, 0, -8.0F, 16.0F, 0.0F, 8, 8, 8, 0.0F));
         Head.boxes.add(new Box(Head, 32, 0, -8.0F, 16.0F, 0.0F, 8, 8, 8, 0.5F));
-    }
-
-    @Override
-    public void setupAnimation(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadrotationY, float headrotationX, float s, net.minecraft.entity.Entity entity) {
-        //previously the render function, render code was moved to a method below
     }
 
     @Override

@@ -13,6 +13,8 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
+
+import static net.ornithemc.osl.blocks.api.block.Blocks.AIR;
 // import net.minecraft.world.InteractionHand;
 
 
@@ -22,7 +24,7 @@ public class SkeletonModel extends HumanoidModel {
     }
 
     public SkeletonModel(float reduction, boolean stray) {
-        super(reduction, 0.0F, 64, 32);
+        super();
         if (!stray) {
             this.rightArm = new ModelPart(this, 40, 16);
             this.rightArm.addBox(-1.0F, -2.0F, -1.0F, 2, 12, 2, reduction);
@@ -46,9 +48,10 @@ public class SkeletonModel extends HumanoidModel {
         super.prepare(mob, walkAnimationProgress, walkAnimationSpeed, tickDelta);
     }
 
-    public void setupAnimation(float walkAnimationProgress, float walkAnimationSpeed, float bob, float yaw, float pitch, float scale, Entity entity) {
-        super.setupAnimation(walkAnimationProgress, walkAnimationSpeed, bob, yaw, pitch, scale, entity);
-        ItemStack itemStack = ((MobEntity)entity).getEquipment(0);
+    @Override
+    public void setupAnimation(float walkAnimationProgress, float walkAnimationSpeed, float bob, float yaw, float pitch, float scale) {
+        super.setupAnimation(walkAnimationProgress, walkAnimationSpeed, bob, yaw, pitch, scale);
+        ItemStack itemStack = new ItemStack(AIR);
         if ((itemStack == null || itemStack.getItem() != Item.BOW)) {
             float f = MathHelper.sin(this.attackAnimationProgress * (float)Math.PI);
             float g = MathHelper.sin((1.0F - (1.0F - this.attackAnimationProgress) * (1.0F - this.attackAnimationProgress)) * (float)Math.PI);

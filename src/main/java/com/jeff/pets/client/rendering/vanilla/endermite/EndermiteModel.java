@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.vanilla.endermite;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.client.render.model.Model;
+import net.minecraft.client.render.model.Model; import com.jeff.pets.client.rendering.PetModel;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.util.math.MathHelper;
 
@@ -10,7 +10,7 @@ import net.minecraft.util.math.MathHelper;
  * This reproduces it from the 1.9+ shape: a head followed by a chain of eight body
  * segments, with a pair of legs on every other segment.
  */
-public class EndermiteModel extends Model {
+public class EndermiteModel extends PetModel {
     private static final int SEGMENTS = 8;
     private static final float SEGMENT_SPACING = 5.0F;
 

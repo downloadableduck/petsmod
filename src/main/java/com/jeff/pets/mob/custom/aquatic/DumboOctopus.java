@@ -69,10 +69,6 @@ public class DumboOctopus extends FlyingPet {
       return "duck_ambient";
    }
 
-   protected void playStepSound(@NotNull BlockPos pos, @NotNull Block Block) {
-      this.playSound("mob.chicken.step", 0.15F, 1.0F);
-   }
-
    @Nullable
    public DumboOctopus makeChild(@NotNull PassiveEntity partner) {
       DumboOctopus octopus = new DumboOctopus(this.world);
@@ -170,7 +166,7 @@ public class DumboOctopus extends FlyingPet {
 
       int ambient = (int)(Math.random() * 1200.0);
       if (ambient == 1) {
-         this.world.playSound(this.x, this.y, this.z, "", 1.0F, 1.0F, true);
+         this.world.playSound(this.x, this.y, this.z, "", 1.0F, 1.0F);
       }
    }
 

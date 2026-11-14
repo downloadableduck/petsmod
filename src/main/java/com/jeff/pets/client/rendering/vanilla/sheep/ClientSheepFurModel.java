@@ -35,8 +35,8 @@ public class ClientSheepFurModel extends QuadrupedModel {
         super.prepare(mob, walkAnimationProgress, walkAnimationSpeed, tickDelta);
     }
 
-    public void setupAnimation(float walkAnimationProgress, float walkAnimationSpeed, float bob, float yaw, float pitch, float scale, Entity entity) {
-        super.setupAnimation(walkAnimationProgress, walkAnimationSpeed, bob, yaw, pitch, scale, entity);
+    @Override
+    public void setupAnimation(float walkAnimationProgress, float walkAnimationSpeed, float bob, float yaw, float pitch, float scale) {
         this.head.rotationX = this.headAngle;
     }
 }

@@ -2,11 +2,11 @@ package com.jeff.pets.client.rendering.vanilla.wolf;
 
 import com.google.common.collect.ImmutableList;
 import com.jeff.pets.mob.vanilla.neutral.ClientWolf;
-import net.minecraft.client.render.model.Model;
+import net.minecraft.client.render.model.Model; import com.jeff.pets.client.rendering.PetModel;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.util.math.MathHelper;
 
-public class ClientWolfModel extends Model {
+public class ClientWolfModel extends PetModel {
     private final ModelPart head;
     private final ModelPart realHead;
     private final ModelPart body;

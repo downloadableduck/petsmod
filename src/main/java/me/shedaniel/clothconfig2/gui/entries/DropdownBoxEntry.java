@@ -721,7 +721,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             textFieldWidget.x = x + 4;
             textFieldWidget.y = y + 6;
             // textFieldWidget.setWidth(width - 8); // Not available in 1.13
-            textFieldWidget.setEditable(getParent().isEditable());
+            textFieldWidget.editable = (getParent().isEditable());
             textFieldWidget.setEditableColor(getPreferredTextColor());
             textFieldWidget.render();
         }

@@ -5,13 +5,13 @@ import com.jeff.pets.client.Utils;
 import com.jeff.pets.client.rendering.AnimationUtils;
 import com.jeff.pets.client.rendering.ArmPose;
 import com.jeff.pets.mob.AbstractPet;
-import net.minecraft.client.render.model.Model;
+import net.minecraft.client.render.model.Model; import com.jeff.pets.client.rendering.PetModel;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.util.math.MathHelper;
 
 import static com.jeff.pets.client.Central.CONFIG;
 
-public class ClientZombieModel extends Model {
+public class ClientZombieModel extends PetModel {
     private final ModelPart head;
     private final ModelPart headwear;
     private final ModelPart body;

@@ -20,7 +20,7 @@ public class ClientMushroomCowMushroomLayer implements PetRenderLayer {
 
     public void render(net.minecraft.entity.mob.MobEntity entity, float f, float g, float h, float i, float j, float k) {
         ClientMooshroom mooshroomEntity = (ClientMooshroom) entity;
-        if (!mooshroomEntity.isBaby() && !mooshroomEntity.isInvisible()) {
+        if (!mooshroomEntity.isBaby()) {
             net.minecraft.block.Block block = CONFIG.mooshroomSkin.equals("brown") ? Block.BROWN_MUSHROOM : Block.RED_MUSHROOM;
             //this.renderer.bindTexture(TextureAtlas.BLOCKS_LOCATION);
             GlStateManager.enableCull();

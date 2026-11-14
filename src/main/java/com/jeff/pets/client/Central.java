@@ -116,7 +116,6 @@ public class Central implements ClientModInitializer {
     public static ClientSilverfish silverfish;
     public static ClientSkeleton skeleton;
     public static ClientSlime slime;
-    public static ClientWitch witch;
     public static ClientZombie zombie;
     public static ClientZombieVillager zombieVillager;
     public static ClientWitherSkeleton witherSkeleton;
@@ -167,7 +166,6 @@ public class Central implements ClientModInitializer {
         Utils.despawnEntity(silverfish);
         Utils.despawnEntity(skeleton);
         Utils.despawnEntity(slime);
-        Utils.despawnEntity(witch);
         Utils.despawnEntity(zombie);
         Utils.despawnEntity(zombieVillager);
         Utils.despawnEntity(witherSkeleton);
@@ -219,7 +217,6 @@ public class Central implements ClientModInitializer {
         silverfish = new ClientSilverfish(world);
         skeleton = new ClientSkeleton(world);
         slime = new ClientSlime(world);
-        witch = new ClientWitch(world);
         zombie = new ClientZombie(world);
         zombieVillager = new ClientZombieVillager(world);
         witherSkeleton = new ClientWitherSkeleton(world);
@@ -296,8 +293,6 @@ public class Central implements ClientModInitializer {
                 Utils.summonPet(skeleton, CONFIG.skeletonName);
             } else if (Objects.equals(CONFIG.activePet, "slime")) {
                 Utils.summonPet(slime, CONFIG.slimeName);
-            } else if (Objects.equals(CONFIG.activePet, "witch")) {
-                Utils.summonPet(witch, CONFIG.witchName);
             } else if (Objects.equals(CONFIG.activePet, "zombie")) {
                 Utils.summonPet(zombie, CONFIG.zombieName);
             } else if (Objects.equals(CONFIG.activePet, "zombie_villager")) {
@@ -368,7 +363,6 @@ public class Central implements ClientModInitializer {
         Utils.checkName("koi", koi, CONFIG.koiName);
         Utils.checkName("stingray", stingray, CONFIG.stingrayName);
         Utils.checkName("zombie_pigman", zombiePigman, CONFIG.zombiePigmanName);
-        Utils.checkName("witch", witch, CONFIG.witchName);
     }
 
     /**
@@ -1430,8 +1424,6 @@ public class Central implements ClientModInitializer {
                 Utils.setActivePet(skeleton, "skeleton");
             } else if (Objects.equals(species, "slime")) {
                 Utils.setActivePet(slime, "slime");
-            } else if (Objects.equals(species, "witch")) {
-                Utils.setActivePet(witch, "witch");
             } else if (Objects.equals(species, "zombie")) {
                 Utils.setActivePet(zombie, "zombie");
             } else if (Objects.equals(species, "zombie_villager") || Objects.equals(species, "zombie villager")) {

@@ -3,13 +3,12 @@ package com.jeff.pets.mob.custom.first;
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.passive.PassiveEntity;
+import net.minecraft.entity.mob.passive.animal.AnimalEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
@@ -142,9 +141,8 @@ public class Racoon extends AbstractPet {
       }
    }
 
-   @Nullable
    @Override
-   public PassiveEntity makeChild(@NotNull PassiveEntity AgableMob) {
+   public AnimalEntity makeChild(@NotNull AnimalEntity AgableMob) {
       Racoon racoon = new Racoon(this.world);
       racoon.setServerEntity(false);
       return racoon;

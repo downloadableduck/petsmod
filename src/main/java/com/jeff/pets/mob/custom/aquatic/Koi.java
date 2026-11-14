@@ -55,10 +55,6 @@ public class Koi extends FlyingPet {
       return "";
    }
 
-   protected void playStepSound(@NotNull BlockPos pos, @NotNull Block Block) {
-      this.playSound("", 0.15F, 1.0F);
-   }
-
    @Nullable
    public Koi makeChild(@NotNull PassiveEntity partner) {
       Koi koi = new Koi(this.world);
@@ -178,7 +174,7 @@ public class Koi extends FlyingPet {
 
       int ambient = (int)(Math.random() * 1200.0);
       if (ambient == 1) {
-         this.world.playSound(this.x, this.y, this.z, "", 1.0F, 1.0F, true);
+         this.world.playSound(this.x, this.y, this.z, "", 1.0F, 1.0f);
       }
    }
 }

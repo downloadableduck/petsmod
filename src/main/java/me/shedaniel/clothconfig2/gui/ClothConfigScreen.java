@@ -300,7 +300,7 @@ public abstract class ClothConfigScreen extends Screen {
                 public void render(int int_1, int int_2, float float_1) {
                     minecraft.textureManager.load(CONFIG_TEX);
                     GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-                    int int_3 = this.getYImage(this.isHovered());
+                    int int_3 = this.getYImage(false);
                     GlStateManager.enableBlend();
                     GlStateManager.blendFunc(770, 771);
                     GlStateManager.blendFunc(770, 771);
@@ -324,7 +324,7 @@ public abstract class ClothConfigScreen extends Screen {
                 public void render(int int_1, int int_2, float float_1) {
                     minecraft.textureManager.load(CONFIG_TEX);
                     GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-                    int int_3 = this.getYImage(this.isHovered());
+                    int int_3 = this.getYImage(false);
                     GlStateManager.enableBlend();
                     GlStateManager.blendFunc(770, 771);
                     GlStateManager.blendFunc(770, 771);
@@ -542,7 +542,7 @@ public abstract class ClothConfigScreen extends Screen {
         this.hasLastMouse = false;
     }
     
-    @Override
+    /*@Override
     public void mouseDragged(int mouseX, int mouseY, int button, long time) {
         super.mouseDragged(mouseX, mouseY, button, time);
         double deltaX = this.hasLastMouse ? (double) mouseX - this.lastMouseX : 0d;
@@ -552,7 +552,7 @@ public abstract class ClothConfigScreen extends Screen {
         this.lastMouseX = mouseX;
         this.lastMouseY = mouseY;
         this.hasLastMouse = true;
-    }
+    }*/
     
     // 1.12.2 Screen has no keyReleased callback; retained as a helper.
     public void keyReleased(int int_1, int int_2, int int_3) {
