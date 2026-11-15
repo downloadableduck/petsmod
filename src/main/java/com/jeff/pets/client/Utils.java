@@ -10,6 +10,8 @@ import net.minecraft.entity.mob.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 import static com.jeff.pets.client.Central.CONFIG;
@@ -194,5 +196,65 @@ public class Utils {
         }
 
         return degrees;
+    }
+
+    public static List split(String text, int width) {
+        return Arrays.asList(insertLineBreaks(text, width).split("\n"));
+    }
+
+    public static String insertLineBreaks(String text, int width) {
+        int i = indexAtWidth(text, width);
+        if (text.length() <= i) {
+            return text;
+        } else {
+            String string4 = text.substring(0, i);
+            String string5 = (string4) + text.substring(i + (text.charAt(i) == ' ' ? 1 : 0));
+            return string4 + "\n" + insertLineBreaks(string5, width);
+        }
+    }
+
+    private static int indexAtWidth(String text, int width) {
+        int i = text.length();
+        int j = 0;
+        int k = 0;
+        int l = -1;
+
+        for(int m = 0; k < i; ++k) {
+            int n = text.charAt(k);
+            switch (n) {
+                case 32:
+                    l = k;
+                default:
+                    j += Minecraft.INSTANCE.textRenderer.getWidth(String.valueOf(n));
+                    if (m != 0) {
+                        ++j;
+                    }
+                    break;
+                case 167:
+                    if (k != i) {
+                        ++k;
+                        int o = text.charAt(k);
+                        if (o != 108 && o != 76) {
+                            if (o == 114 || o == 82) {
+                                m = 0;
+                            }
+                        } else {
+                            m = 1;
+                        }
+                    }
+            }
+
+            if (n == 10) {
+                ++k;
+                l = k;
+                break;
+            }
+
+            if (j > width) {
+                break;
+            }
+        }
+
+        return k != i && l != -1 && l < k ? l : k;
     }
 }

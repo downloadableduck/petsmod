@@ -51,11 +51,6 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
     
     @Override
     protected void textFieldPreRender(CompatTextFieldWidget widget) {
-        if (!getConfigError().isPresent()) {
-            widget.editableColor = (14737632);
-        } else {
-            widget.editableColor = (16733525);
-        }
     }
     
     @Override

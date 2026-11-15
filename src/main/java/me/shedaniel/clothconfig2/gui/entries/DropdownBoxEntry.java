@@ -16,7 +16,7 @@ import me.shedaniel.clothconfig2.impl.WindowUtil;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.TextRenderer;
 import net.minecraft.client.render.vertex.Tesselator;
 import net.minecraft.locale.I18n;
@@ -52,7 +52,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             selectionElement.topRenderer.setValue(defaultValue.get());
             getScreen().setEdited(true, requiresRestart);
         });
-        this.selectionElement = new SelectionElement<>(this, new Rectangle(0, 0, 150, 20), new DefaultDropdownMenuElement<>(selections == null ? ImmutableList.of() : ImmutableList.copyOf(selections)), topRenderer, cellCreator);
+        this.selectionElement = new SelectionElement<>(this, new Rectangle(0, 0, 150, 20), new DefaultDropdownMenuElement<>(this.getScreen(), selections == null ? ImmutableList.of() : ImmutableList.copyOf(selections)), topRenderer, cellCreator);
     }
     
     @Override
@@ -301,7 +301,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         protected long start;
         protected long duration;
         
-        public DefaultDropdownMenuElement(@NotNull ImmutableList<R> selections) {
+        public DefaultDropdownMenuElement(Screen screen, @NotNull ImmutableList<R> selections) {
             this.selections = selections;
             this.cells = Lists.newArrayList();
             this.currentElements = Lists.newArrayList();
@@ -726,11 +726,11 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         protected R value;
         protected int lastX, lastY, lastWidth, lastHeight;
         
-        public DefaultSelectionTopCellElement(R value, Function<String, R> toObjectFunction, Function<R, String> toStringFunction) {
+        public DefaultSelectionTopCellElement(Screen screen, R value, Function<String, R> toObjectFunction, Function<R, String> toStringFunction) {
             this.value = Objects.requireNonNull(value);
             this.toObjectFunction = Objects.requireNonNull(toObjectFunction);
             this.toStringFunction = Objects.requireNonNull(toStringFunction);
-            textFieldWidget = new CompatTextFieldWidget(0, Minecraft.INSTANCE.textRenderer, 0, 0, 148, 18) {
+            textFieldWidget = new CompatTextFieldWidget(screen, 0, Minecraft.INSTANCE.textRenderer, 0, 0, 148, 18) {
                 @Override
                 public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
                     if (keyCode == 257 || keyCode == 335) {
@@ -741,15 +741,16 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
                 }
 
                 @Override
-                public boolean keyPressed(char chr, int key) {
+                public void keyPressed(char chr, int key) {
                     if (key == 257 || key == 335) {
                         DefaultSelectionTopCellElement.this.selectFirstRecommendation();
-                        return true;
+                        return;
                     }
-                    return isSuggestionMode() && super.keyPressed(chr, key);
+                    isSuggestionMode() ;
+                    super.keyPressed(chr, key);
                 }
             };
-            textFieldWidget.setHasBorder(false);
+           // textFieldWidget.setHasBorder(false);
             textFieldWidget.setMaxLength(999999);
             textFieldWidget.setText(toStringFunction.apply(value));
             // textFieldWidget.setResponder(s -> { // Not compatible in 1.13
@@ -764,11 +765,12 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             lastY = y;
             lastWidth = width;
             lastHeight = height;
-            textFieldWidget.x = x + 4;
-            textFieldWidget.y = y + 6;
-            // textFieldWidget.setWidth(width - 8); // Not available in 1.13
+            // TextFieldWidget always draws its own 1px border; align it exactly over
+            // the SelectionElement box so it doesn't render a second offset box.
+            textFieldWidget.x = x + 1;
+            textFieldWidget.y = y + 1;
+            textFieldWidget.width = Math.max(10, width - 2);
             textFieldWidget.editable = (getParent().isEditable());
-            textFieldWidget.editableColor = (getPreferredTextColor());
             textFieldWidget.render();
         }
         
@@ -782,7 +784,6 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         @Override
         public void setValue(R value) {
             textFieldWidget.setText(toStringFunction.apply(value));
-            textFieldWidget.setCursor(0);
         }
         
         @Override

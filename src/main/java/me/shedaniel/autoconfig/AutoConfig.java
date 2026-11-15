@@ -80,23 +80,4 @@ public class AutoConfig {
     public static <T extends ConfigData> GuiRegistry getGuiRegistry(Class<T> configClass) {
         return guiRegistries.computeIfAbsent(configClass, n -> new GuiRegistry());
     }
-
-    
-    public static <T extends ConfigData> Supplier<Screen> getConfigScreen(Class<T> configClass, Screen parent) {
-        return new ConfigScreenProvider<>(
-                (ConfigManager<T>) AutoConfig.getConfigHolder(configClass),
-                new ComposedGuiRegistryAccess(
-                        getGuiRegistry(configClass),
-                        ClientOnly.defaultGuiRegistry,
-                        new DefaultGuiRegistryAccess()
-                ),
-                parent
-        );
-    }
-
-    
-    private static class ClientOnly {
-        private static final GuiRegistry defaultGuiRegistry =
-                DefaultGuiTransformers.apply(DefaultGuiProviders.apply(new GuiRegistry()));
-    }
 }

@@ -7,6 +7,7 @@ import me.shedaniel.clothconfig2.gui.entries.DropdownBoxEntry.SelectionCellCreat
 import me.shedaniel.clothconfig2.gui.entries.DropdownBoxEntry.SelectionTopCellElement;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.entity.ItemRenderer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,7 +23,9 @@ import java.util.function.Supplier;
 
 
 public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>> {
-    /** 1.7.10 keeps no ItemRenderer on Minecraft, so dropdown cells share one instance. */
+    /**
+     * 1.7.10 keeps no ItemRenderer on Minecraft, so dropdown cells share one instance.
+     */
     static final ItemRenderer ITEM_RENDERER = new ItemRenderer();
 
     protected SelectionTopCellElement<T> topCellElement;
@@ -31,73 +34,73 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
     protected Consumer<T> saveConsumer = null;
     protected Iterable<T> selections = Collections.emptyList();
     protected boolean suggestionMode = true;
-    
+
     public DropdownMenuBuilder(String resetButtonKey, String fieldNameKey, SelectionTopCellElement<T> topCellElement, SelectionCellCreator<T> cellCreator) {
         super(resetButtonKey, fieldNameKey);
         this.topCellElement = Objects.requireNonNull(topCellElement);
         this.cellCreator = Objects.requireNonNull(cellCreator);
     }
-    
+
     public DropdownMenuBuilder<T> setSelections(Iterable<T> selections) {
         this.selections = selections;
         return this;
     }
-    
+
     public DropdownMenuBuilder<T> setDefaultValue(Supplier<T> defaultValue) {
         this.defaultValue = defaultValue;
         return this;
     }
-    
+
     public DropdownMenuBuilder<T> setDefaultValue(T defaultValue) {
         this.defaultValue = () -> Objects.requireNonNull(defaultValue);
         return this;
     }
-    
+
     public DropdownMenuBuilder<T> setSaveConsumer(Consumer<T> saveConsumer) {
         this.saveConsumer = saveConsumer;
         return this;
     }
-    
+
     public DropdownMenuBuilder<T> setTooltipSupplier(Supplier<Optional<String[]>> tooltipSupplier) {
         this.tooltipSupplier = str -> tooltipSupplier.get();
         return this;
     }
-    
+
     public DropdownMenuBuilder<T> setTooltipSupplier(Function<T, Optional<String[]>> tooltipSupplier) {
         this.tooltipSupplier = tooltipSupplier;
         return this;
     }
-    
+
     public DropdownMenuBuilder<T> setTooltip(Optional<String[]> tooltip) {
         this.tooltipSupplier = str -> tooltip;
         return this;
     }
-    
+
     public DropdownMenuBuilder<T> setTooltip(String... tooltip) {
         this.tooltipSupplier = str -> Optional.ofNullable(tooltip);
         return this;
     }
-    
+
     public DropdownMenuBuilder<T> requireRestart() {
         requireRestart(true);
         return this;
     }
-    
+
     public DropdownMenuBuilder<T> setErrorSupplier(Function<T, Optional<String>> errorSupplier) {
         this.errorSupplier = errorSupplier;
         return this;
     }
-    
+
     public DropdownMenuBuilder<T> setSuggestionMode(boolean suggestionMode) {
         this.suggestionMode = suggestionMode;
         return this;
     }
-    
+
     public boolean isSuggestionMode(
     ) {
         return suggestionMode;
     }
-    
+
     @NotNull
     @Override
     public DropdownBoxEntry<T> build() {
@@ -108,7 +111,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
         entry.setSuggestionMode(suggestionMode);
         return entry;
     }
-    
+
     public static class TopCellElementBuilder {
         public static final Function<String, String> String_FUNCTION = str -> {
             try {
@@ -150,93 +153,25 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
             return null;
         };
         private static final ItemStack BARRIER = new ItemStack(Block.BEDROCK);
-        
-        public static <T> SelectionTopCellElement<T> of(T value, Function<String, T> toObjectFunction) {
-            return of(value, toObjectFunction, Object::toString);
+
+        public static <T> SelectionTopCellElement<T> of(Screen screen, T value, Function<String, T> toObjectFunction) {
+            return of(screen, value, toObjectFunction, Object::toString);
         }
-        
-        public static <T> SelectionTopCellElement<T> of(T value, Function<String, T> toObjectFunction, Function<T, String> toStringFunction) {
-            return new DefaultSelectionTopCellElement<>(value, toObjectFunction, toStringFunction);
-        }
-        
-        public static SelectionTopCellElement<String> ofItemString(Item item) {
-            return new DefaultSelectionTopCellElement<String>((Item.REGISTRY.getKey(item).toString()), ITEM_String_FUNCTION, String::toString) {
-                @Override
-                public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
-                    textFieldWidget.x = x + 4;
-                    textFieldWidget.y = y + 6;
-                    // textFieldWidget.setWidth(width - 4 - 20); // Not in 1.13
-                    textFieldWidget.editable = (getParent().isEditable());
-                    textFieldWidget.editableColor = (getPreferredTextColor());
-                    textFieldWidget.render();
-                    ItemRenderer itemRenderer = DropdownMenuBuilder.ITEM_RENDERER;
-                    ItemStack stack = hasConfigError() ? BARRIER : new ItemStack((Item) Item.REGISTRY.get(new NamespacedIdentifierImpl("minecraft", getValue())));
-                    itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
-                }
-            };
-        }
-        
-        public static SelectionTopCellElement<String> ofBlockString(Block block) {
-            return new DefaultSelectionTopCellElement<String>((Block.REGISTRY.getKey(block).toString()), BLOCK_String_FUNCTION, String::toString) {
-                @Override
-                public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
-                    textFieldWidget.x = x + 4;
-                    textFieldWidget.y = y + 6;
-                    // textFieldWidget.setWidth(width - 4 - 20); // Not in 1.13
-                    textFieldWidget.editable = (getParent().isEditable());
-                    textFieldWidget.editableColor = (getPreferredTextColor());
-                    textFieldWidget.render();
-                    ItemRenderer itemRenderer = DropdownMenuBuilder.ITEM_RENDERER;
-                    ItemStack stack = hasConfigError() ? BARRIER : new ItemStack((Block) Block.REGISTRY.get(new NamespacedIdentifierImpl("minecraft", getValue())));
-                    itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
-                }
-            };
-        }
-        
-        public static SelectionTopCellElement<Item> ofItemObject(Item item) {
-            return new DefaultSelectionTopCellElement<Item>(item, ITEM_FUNCTION, i -> Item.REGISTRY.getKey(i).toString()) {
-                @Override
-                public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
-                    textFieldWidget.x = x + 4;
-                    textFieldWidget.y = y + 6;
-                    // textFieldWidget.setWidth(width - 4 - 20); // Not in 1.13
-                    textFieldWidget.editable = (getParent().isEditable());
-                    textFieldWidget.editableColor = (getPreferredTextColor());
-                    textFieldWidget.render();
-                    ItemRenderer itemRenderer = DropdownMenuBuilder.ITEM_RENDERER;
-                    ItemStack stack = hasConfigError() ? BARRIER : new ItemStack(getValue());
-                    itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
-                }
-            };
-        }
-        
-        public static SelectionTopCellElement<Block> ofBlockObject(Block block) {
-            return new DefaultSelectionTopCellElement<Block>(block, BLOCK_FUNCTION, i -> Block.REGISTRY.getKey(i).toString()) {
-                @Override
-                public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
-                    textFieldWidget.x = x + 4;
-                    textFieldWidget.y = y + 6;
-                    // textFieldWidget.setWidth(width - 4 - 20); // Not in 1.13
-                    textFieldWidget.editable = (getParent().isEditable());
-                    textFieldWidget.editableColor = (getPreferredTextColor());
-                    textFieldWidget.render();
-                    ItemRenderer itemRenderer = DropdownMenuBuilder.ITEM_RENDERER;
-                    ItemStack stack = hasConfigError() ? BARRIER : new ItemStack(getValue());
-                    itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
-                }
-            };
+
+        public static <T> SelectionTopCellElement<T> of(Screen screen, T value, Function<String, T> toObjectFunction, Function<T, String> toStringFunction) {
+            return new DefaultSelectionTopCellElement<>(screen, value, toObjectFunction, toStringFunction);
         }
     }
-    
+
     public static class CellCreatorBuilder {
         public static <T> SelectionCellCreator<T> of() {
             return new DefaultSelectionCellCreator<>();
         }
-        
+
         public static <T> SelectionCellCreator<T> of(Function<T, String> toStringFunction) {
             return new DefaultSelectionCellCreator<>(toStringFunction);
         }
-        
+
         public static <T> SelectionCellCreator<T> ofWidth(int cellWidth) {
             return new DefaultSelectionCellCreator<T>() {
                 @Override
@@ -245,7 +180,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                 }
             };
         }
-        
+
         public static <T> SelectionCellCreator<T> ofWidth(int cellWidth, Function<T, String> toStringFunction) {
             return new DefaultSelectionCellCreator<T>(toStringFunction) {
                 @Override
@@ -254,7 +189,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                 }
             };
         }
-        
+
         public static <T> SelectionCellCreator<T> ofCellCount(int maxItems) {
             return new DefaultSelectionCellCreator<T>() {
                 @Override
@@ -263,7 +198,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                 }
             };
         }
-        
+
         public static <T> SelectionCellCreator<T> ofCellCount(int maxItems, Function<T, String> toStringFunction) {
             return new DefaultSelectionCellCreator<T>(toStringFunction) {
                 @Override
@@ -272,81 +207,81 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                 }
             };
         }
-        
+
         public static <T> SelectionCellCreator<T> of(int cellWidth, int maxItems) {
             return new DefaultSelectionCellCreator<T>() {
                 @Override
                 public int getCellWidth() {
                     return cellWidth;
                 }
-                
+
                 @Override
                 public int getDropBoxMaxHeight() {
                     return getCellHeight() * maxItems;
                 }
             };
         }
-        
+
         public static <T> SelectionCellCreator<T> of(int cellWidth, int maxItems, Function<T, String> toStringFunction) {
             return new DefaultSelectionCellCreator<T>(toStringFunction) {
                 @Override
                 public int getCellWidth() {
                     return cellWidth;
                 }
-                
+
                 @Override
                 public int getDropBoxMaxHeight() {
                     return getCellHeight() * maxItems;
                 }
             };
         }
-        
+
         public static <T> SelectionCellCreator<T> of(int cellHeight, int cellWidth, int maxItems) {
             return new DefaultSelectionCellCreator<T>() {
                 @Override
                 public int getCellHeight() {
                     return cellHeight;
                 }
-                
+
                 @Override
                 public int getCellWidth() {
                     return cellWidth;
                 }
-                
+
                 @Override
                 public int getDropBoxMaxHeight() {
                     return getCellHeight() * maxItems;
                 }
             };
         }
-        
+
         public static <T> SelectionCellCreator<T> of(int cellHeight, int cellWidth, int maxItems, Function<T, String> toStringFunction) {
             return new DefaultSelectionCellCreator<T>(toStringFunction) {
                 @Override
                 public int getCellHeight() {
                     return cellHeight;
                 }
-                
+
                 @Override
                 public int getCellWidth() {
                     return cellWidth;
                 }
-                
+
                 @Override
                 public int getDropBoxMaxHeight() {
                     return getCellHeight() * maxItems;
                 }
             };
         }
-        
+
         public static SelectionCellCreator<String> ofItemString() {
             return ofItemString(20, 146, 7);
         }
-        
+
         public static SelectionCellCreator<String> ofItemString(int maxItems) {
             return ofItemString(20, 146, maxItems);
         }
-        
+
         public static SelectionCellCreator<String> ofItemString(int cellHeight, int cellWidth, int maxItems) {
             return new DefaultSelectionCellCreator<String>() {
                 @Override
@@ -369,33 +304,33 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                         }
                     };
                 }
-                
+
                 @Override
                 public int getCellHeight() {
                     return cellHeight;
                 }
-                
+
                 @Override
                 public int getCellWidth() {
                     return cellWidth;
                 }
-                
+
                 @Override
                 public int getDropBoxMaxHeight() {
                     return getCellHeight() * maxItems;
                 }
             };
         }
-        
-        
+
+
         public static SelectionCellCreator<String> ofBlockString() {
             return ofBlockString(20, 146, 7);
         }
-        
+
         public static SelectionCellCreator<String> ofBlockString(int maxItems) {
             return ofBlockString(20, 146, maxItems);
         }
-        
+
         public static SelectionCellCreator<String> ofBlockString(int cellHeight, int cellWidth, int maxItems) {
             return new DefaultSelectionCellCreator<String>() {
                 @Override
@@ -418,33 +353,33 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                         }
                     };
                 }
-                
+
                 @Override
                 public int getCellHeight() {
                     return cellHeight;
                 }
-                
+
                 @Override
                 public int getCellWidth() {
                     return cellWidth;
                 }
-                
+
                 @Override
                 public int getDropBoxMaxHeight() {
                     return getCellHeight() * maxItems;
                 }
             };
         }
-        
+
         public static SelectionCellCreator<Item
                 > ofItemObject() {
             return ofItemObject(20, 146, 7);
         }
-        
+
         public static SelectionCellCreator<Item> ofItemObject(int maxItems) {
             return ofItemObject(20, 146, maxItems);
         }
-        
+
         public static SelectionCellCreator<Item> ofItemObject(int cellHeight, int cellWidth, int maxItems) {
             return new DefaultSelectionCellCreator<Item>(i -> Item.REGISTRY.getKey(i).toString()) {
                 @Override
@@ -467,32 +402,32 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                         }
                     };
                 }
-                
+
                 @Override
                 public int getCellHeight() {
                     return cellHeight;
                 }
-                
+
                 @Override
                 public int getCellWidth() {
                     return cellWidth;
                 }
-                
+
                 @Override
                 public int getDropBoxMaxHeight() {
                     return getCellHeight() * maxItems;
                 }
             };
         }
-        
+
         public static SelectionCellCreator<Block> ofBlockObject() {
             return ofBlockObject(20, 146, 7);
         }
-        
+
         public static SelectionCellCreator<Block> ofBlockObject(int maxItems) {
             return ofBlockObject(20, 146, maxItems);
         }
-        
+
         public static SelectionCellCreator<Block> ofBlockObject(int cellHeight, int cellWidth, int maxItems) {
             return new DefaultSelectionCellCreator<Block>(i -> Block.REGISTRY.getKey(i).toString()) {
                 @Override
@@ -515,17 +450,17 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                         }
                     };
                 }
-                
+
                 @Override
                 public int getCellHeight() {
                     return cellHeight;
                 }
-                
+
                 @Override
                 public int getCellWidth() {
                     return cellWidth;
                 }
-                
+
                 @Override
                 public int getDropBoxMaxHeight() {
                     return getCellHeight() * maxItems;

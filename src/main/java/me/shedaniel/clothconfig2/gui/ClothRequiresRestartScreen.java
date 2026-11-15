@@ -10,7 +10,7 @@ import net.minecraft.locale.I18n;
 public class ClothRequiresRestartScreen extends ConfirmScreen {
 
     public ClothRequiresRestartScreen(Screen parent) {
-        super(createScreen(parent), I18n.translate("text.cloth-config.restart_required"), I18n.translate("text.cloth-config.restart_required_sub"), 0);
+        super(createScreen(parent), I18n.translate("text.cloth-config.restart_required"), I18n.translate("text.cloth-config.restart_required_sub"), "", "", 0);
     }
 
     private static Screen createScreen(Screen parent) {

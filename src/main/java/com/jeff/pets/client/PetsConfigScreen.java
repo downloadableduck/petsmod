@@ -101,9 +101,14 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
         java.util.List<String> species = java.util.Arrays.stream(PetList.values())
                 .map(Enum::name)
                 .collect(java.util.stream.Collectors.toList());
-        return builder.startStringDropdownMenu(("Pet Species"), CONFIG.activePet)
+        return builder.startStringDropdownMenu(Minecraft.INSTANCE.screen, ("Pet Species"), CONFIG.activePet)
                 .setSelections(species)
                 .setSaveConsumer((newVal) -> {
+                    try {
+                        PetList.valueOf(newVal);
+                    } catch (IllegalArgumentException e) {
+                        return;
+                    }
                     CONFIG.activePet = newVal;
                     Central.despawnPet();
                     Central.summonPet();

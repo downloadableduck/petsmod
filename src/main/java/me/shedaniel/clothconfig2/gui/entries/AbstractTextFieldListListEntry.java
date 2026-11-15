@@ -49,7 +49,7 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
             
             final T finalValue = substituteDefault(value);
             
-            widget = new CompatTextFieldWidget(0, Minecraft.INSTANCE.textRenderer, 0, 0, 100, 18) {
+            widget = new CompatTextFieldWidget(this.listListEntry.getScreen(), 0, Minecraft.INSTANCE.textRenderer, 0, 0, 100, 18) {
                 @Override
                 public void render() {
                     super.render();
@@ -57,7 +57,6 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
             };
             // widget.setFilter(this::isValidText); // Not available in 1.13
             widget.setMaxLength(Integer.MAX_VALUE);
-            widget.setHasBorder(false);
             widget.setText(Objects.toString(finalValue));
             // widget.setResponder(s -> { // Not available in 1.13
             //     widget.editableColor = (getPreferredTextColor());

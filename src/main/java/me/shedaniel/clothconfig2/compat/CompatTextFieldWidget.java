@@ -1,5 +1,6 @@
 package me.shedaniel.clothconfig2.compat;
 
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.render.TextRenderer;
 
@@ -11,13 +12,21 @@ import net.minecraft.client.render.TextRenderer;
  */
 public class CompatTextFieldWidget extends TextFieldWidget implements GuiEventListener {
 
-    public CompatTextFieldWidget(int id, TextRenderer textRenderer, int x, int y, int width, int height) {
-        super(textRenderer, x, y, width, height);
+    private final Screen screen;
+
+    public CompatTextFieldWidget(Screen screen, int id, TextRenderer textRenderer, int x, int y, int width, int height) {
+        super(screen, textRenderer, x, y, width, height, "");
+        this.screen = screen;
     }
 
     @Override
-    public boolean keyPressed(char chr, int key) {
-        return super.keyPressed(chr, key);
+    public void keyPressed(char chr, int key) {
+        // TextFieldWidget assumes a screen exists for Tab focus cycling; the config
+        // screen can be opened from in-game where Minecraft.screen is null.
+        if (chr == '\t' && screen == null) {
+            return;
+        }
+        super.keyPressed(chr, key);
     }
 
     @Override
@@ -27,16 +36,16 @@ public class CompatTextFieldWidget extends TextFieldWidget implements GuiEventLi
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (isFocused()) {
-            return super.keyPressed((char) 0, keyCode);
+        if (focused) {
+            super.keyPressed((char) 0, keyCode);
         }
         return false;
     }
 
     @Override
     public boolean charTyped(char chr, int modifiers) {
-        if (isFocused() && chr != 0) {
-            return super.keyPressed(chr, 0);
+        if (focused && chr != 0) {
+             super.keyPressed(chr, 0);
         }
         return false;
     }

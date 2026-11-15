@@ -17,6 +17,7 @@ import me.shedaniel.clothconfig2.impl.builders.SubCategoryBuilder;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.locale.I18n;
 import net.minecraft.util.math.MathHelper;
 import org.apache.logging.log4j.LogManager;
@@ -168,7 +169,7 @@ public class ClothConfigInitializer implements ClientModInitializer {
         builder.setDefaultBackgroundTexture(("minecraft:textures/block/oak_planks.png"));
         ConfigCategory scrolling = builder.getOrCreateCategory("category.cloth-config.scrolling");
         ConfigEntryBuilder entryBuilder = ConfigEntryBuilder.create();
-        DropdownBoxEntry<EasingMethod> easingMethodEntry = entryBuilder.startDropdownMenu("Easing Method", DropdownMenuBuilder.TopCellElementBuilder.of(easingMethod, str -> {
+        DropdownBoxEntry<EasingMethod> easingMethodEntry = entryBuilder.startDropdownMenu("Easing Method", DropdownMenuBuilder.TopCellElementBuilder.of(builder.getParentScreen(), easingMethod, str -> {
             for (EasingMethod m : EasingMethods.getMethods())
                 if (m.toString().equals(str))
                     return m;

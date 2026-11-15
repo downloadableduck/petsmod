@@ -49,15 +49,7 @@ public class IntegerListEntry extends TextFieldListEntry<Integer> {
     
     @Override
     protected void textFieldPreRender(CompatTextFieldWidget widget) {
-        try {
-            double i = Integer.valueOf(textFieldWidget.getText());
-            if (i < minimum || i > maximum)
-                widget.editableColor = (16733525);
-            else
-                widget.editableColor = (14737632);
-        } catch (NumberFormatException ex) {
-            widget.editableColor = (16733525);
-        }
+
     }
     
     @Override

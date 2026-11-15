@@ -1,5 +1,6 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
+import com.jeff.pets.client.Utils;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.Minecraft;
 
@@ -33,7 +34,7 @@ public class TextListEntry extends TooltipListEntry {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
         this.savedWidth = entryWidth;
         int yy = y + 4;
-        List<String> strings = Minecraft.INSTANCE.textRenderer.split(text, savedWidth);
+        List<String> strings = Utils.split(text, savedWidth);
         for(int i = 0; i < strings.size(); i++) {
             Minecraft.INSTANCE.textRenderer.drawWithShadow(strings.get(i), x, yy, color);
             yy += Minecraft.INSTANCE.textRenderer.fontHeight + 3;
@@ -44,7 +45,7 @@ public class TextListEntry extends TooltipListEntry {
     public int getItemHeight() {
         if (savedWidth == -1)
             return 12;
-        List<String> strings = Minecraft.INSTANCE.textRenderer.split(text, savedWidth);
+        List<String> strings = Utils.split(text, savedWidth);
         if (strings.isEmpty())
             return 0;
         return 15 + strings.size() * 12;

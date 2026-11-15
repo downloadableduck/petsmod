@@ -30,6 +30,7 @@ import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import me.shedaniel.clothconfig2.gui.entries.SelectionListEntry;
 import me.shedaniel.clothconfig2.impl.builders.DropdownMenuBuilder;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.locale.I18n;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -57,7 +58,7 @@ public class DefaultGuiProviders {
     private DefaultGuiProviders() {
     }
 
-    public static GuiRegistry apply(GuiRegistry registry) {
+    public static GuiRegistry apply(GuiRegistry registry, Screen parent) {
         registry.registerAnnotationProvider(
                 (i18n, field, config, defaults, guiProvider) -> Collections.emptyList(),
                 ConfigEntry.Gui.Excluded.class
@@ -168,7 +169,7 @@ public class DefaultGuiProviders {
                     return Collections.singletonList(
                             ENTRY_BUILDER.startDropdownMenu(
                                             (i18n),
-                                            DropdownMenuBuilder.TopCellElementBuilder.of(
+                                            DropdownMenuBuilder.TopCellElementBuilder.of(parent,
                                                     getUnsafely(field, config, getUnsafely(field, defaults)),
                                                     str -> {
                                                         String s = (str);

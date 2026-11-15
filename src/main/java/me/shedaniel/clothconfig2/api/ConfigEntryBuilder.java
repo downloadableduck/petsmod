@@ -7,6 +7,7 @@ import me.shedaniel.clothconfig2.gui.entries.DropdownBoxEntry.SelectionTopCellEl
 import me.shedaniel.clothconfig2.impl.ConfigEntryBuilderImpl;
 import me.shedaniel.clothconfig2.impl.builders.*;
 import me.shedaniel.clothconfig2.impl.builders.DropdownMenuBuilder.TopCellElementBuilder;
+import net.minecraft.client.gui.screen.Screen;
 
 import java.util.List;
 import java.util.function.Function;
@@ -78,35 +79,7 @@ public interface ConfigEntryBuilder {
         return startDropdownMenu(fieldNameKey, topCellElement, new DefaultSelectionCellCreator<>());
     }
     
-    default <T> DropdownMenuBuilder<T> startDropdownMenu(String fieldNameKey, T value, Function<String, T> toObjectFunction, SelectionCellCreator<T> cellCreator) {
-        return startDropdownMenu(fieldNameKey, TopCellElementBuilder.of(value, toObjectFunction, Object::toString), cellCreator);
-    }
-    
-    default <T> DropdownMenuBuilder<T> startDropdownMenu(String fieldNameKey, T value, Function<String, T> toObjectFunction, Function<T, String> toStringFunction, SelectionCellCreator<T> cellCreator) {
-        return startDropdownMenu(fieldNameKey, TopCellElementBuilder.of(value, toObjectFunction, toStringFunction), cellCreator);
-    }
-    
-    default <T> DropdownMenuBuilder<T> startDropdownMenu(String fieldNameKey, T value, Function<String, T> toObjectFunction) {
-        return startDropdownMenu(fieldNameKey, TopCellElementBuilder.of(value, toObjectFunction, Object::toString), new DefaultSelectionCellCreator<>());
-    }
-    
-    default <T> DropdownMenuBuilder<T> startDropdownMenu(String fieldNameKey, T value, Function<String, T> toObjectFunction, Function<T, String> toStringFunction) {
-        return startDropdownMenu(fieldNameKey, TopCellElementBuilder.of(value, toObjectFunction, toStringFunction), new DefaultSelectionCellCreator<>());
-    }
-    
-    default DropdownMenuBuilder<String> startStringDropdownMenu(String fieldNameKey, String value, SelectionCellCreator<String> cellCreator) {
-        return startDropdownMenu(fieldNameKey, TopCellElementBuilder.of(value, s -> s, s -> s), cellCreator);
-    }
-    
-    default DropdownMenuBuilder<String> startStringDropdownMenu(String fieldNameKey, String value, Function<String, String> toStringFunction, SelectionCellCreator<String> cellCreator) {
-        return startDropdownMenu(fieldNameKey, TopCellElementBuilder.of(value, s -> s, toStringFunction), cellCreator);
-    }
-    
-    default DropdownMenuBuilder<String> startStringDropdownMenu(String fieldNameKey, String value) {
-        return startDropdownMenu(fieldNameKey, TopCellElementBuilder.of(value, s -> s, s -> s), new DefaultSelectionCellCreator<>());
-    }
-    
-    default DropdownMenuBuilder<String> startStringDropdownMenu(String fieldNameKey, String value, Function<String, String> toStringFunction) {
-        return startDropdownMenu(fieldNameKey, TopCellElementBuilder.of(value, s -> s, toStringFunction), new DefaultSelectionCellCreator<>());
+    default DropdownMenuBuilder<String> startStringDropdownMenu(Screen screen, String fieldNameKey, String value) {
+        return startDropdownMenu(fieldNameKey, TopCellElementBuilder.of(screen, value, s -> s, s -> s), new DefaultSelectionCellCreator<>());
     }
 }

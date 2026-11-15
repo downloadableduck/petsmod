@@ -28,7 +28,7 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
         super(fieldName, tooltipSupplier, false);
         this.defaultValue = defaultValue;
         this.original = original;
-        this.textFieldWidget = new CompatTextFieldWidget(0, Minecraft.INSTANCE.textRenderer, 0, 0, 148, 18) {
+        this.textFieldWidget = new CompatTextFieldWidget(this.getScreen(), 0, Minecraft.INSTANCE.textRenderer, 0, 0, 148, 18) {
             @Override
             public void render() {
                 textFieldPreRender(this);
