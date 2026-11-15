@@ -100,7 +100,7 @@ public class Head extends AbstractPet {
            double distance = this.distanceTo(owner);
            float rotation = -this.pitch;
            float rotationToOwner = rotation + -this.getOwner().pitch;
-           float bodyYawDiff = MathHelper.wrapDegrees(this.getHeadYaw() - this.bodyYaw);
+           float bodyYawDiff = Utils.wrapDegrees(this.headYaw - this.bodyYaw);
            if (rotationToOwner >= 50.0F) {
                this.bodyYaw = this.headYaw - Math.signum(bodyYawDiff) * 50.0F;
            }
@@ -110,7 +110,7 @@ public class Head extends AbstractPet {
                Vec3d targetPos = Vec3d.of(owner.x, owner.y, owner.z);
                Vec3d dir = targetPos.subtractFrom(this.getPosVec()).normalize();
                this.setYRot(rotlerp(this.getYRot(), (float)targetYaw));
-               this.bodyYaw = this.bodyYaw + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw, -50.0F, 50.0F);
+               this.bodyYaw = this.bodyYaw + MathHelper.clamp(this.headYaw - this.bodyYaw, -50.0F, 50.0F);
                double speed = owner.getSpeed() * 2.0F;
                this.lerpVelocity(Vec3d.of(-dir.x * speed, this.getVelocity().y, -dir.z * speed));
            } else {
@@ -141,9 +141,9 @@ public class Head extends AbstractPet {
 
            this.setYRot(rotlerp(this.getYRot(), (float)targetYaw));
            if (Math.abs(bodyYawDiff) > 50.0F) {
-               this.bodyYaw = this.getHeadYaw() - Math.signum(bodyYawDiff) * 50.0F;
+               this.bodyYaw = this.headYaw - Math.signum(bodyYawDiff) * 50.0F;
            } else {
-               this.bodyYaw = this.bodyYaw + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw, -10.0F, 10.0F);
+               this.bodyYaw = this.bodyYaw + MathHelper.clamp(this.headYaw - this.bodyYaw, -10.0F, 10.0F);
            }
 
            // No manual move() here: LivingEntity.mobTick() already calls moveRelative() ->
@@ -166,7 +166,7 @@ public class Head extends AbstractPet {
 
    /*@Override
    public void onDataValueChanged(int key) {
-      if (!(this.world instanceof ClientWorld)) {
+      if (!(this.world instanceof World)) {
          super.onDataValueChanged(key);
       }
    }*/

@@ -77,7 +77,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                 .setTitle("Config")
                 .setSavingRunnable(() -> {
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
-                    Minecraft.getInstance().openScreen(this.getModConfigScreenFactory());
+                    Minecraft.INSTANCE.openScreen(this.getModConfigScreenFactory());
                 })
                 .setTransparentBackground(true);
         ConfigCategory general = builder.getOrCreateCategory("Config");
@@ -98,7 +98,11 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
     }
 
     private DropdownMenuBuilder<String> createPetSpeciesOption(ConfigEntryBuilder builder, PetsConfig CONFIG) {
+        java.util.List<String> species = java.util.Arrays.stream(PetList.values())
+                .map(Enum::name)
+                .collect(java.util.stream.Collectors.toList());
         return builder.startStringDropdownMenu(("Pet Species"), CONFIG.activePet)
+                .setSelections(species)
                 .setSaveConsumer((newVal) -> {
                     CONFIG.activePet = newVal;
                     Central.despawnPet();

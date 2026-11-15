@@ -41,7 +41,7 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
         ColorValue value = getColorValue(textFieldWidget.getText());
         if (!value.hasError())
             colorDisplayWidget.setColor(alpha ? value.getColor() : 0xff000000 | value.getColor());
-        if (Minecraft.getInstance().textRenderer.isBidirectional()) {
+        if (Minecraft.INSTANCE.textRenderer.bidirectional) {
             this.colorDisplayWidget.x = x + resetButton.width + 148;
         } else {
             this.colorDisplayWidget.x = textFieldWidget.x - 23;
@@ -52,9 +52,9 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
     @Override
     protected void textFieldPreRender(CompatTextFieldWidget widget) {
         if (!getConfigError().isPresent()) {
-            widget.setEditableColor(14737632);
+            widget.editableColor = (14737632);
         } else {
-            widget.setEditableColor(16733525);
+            widget.editableColor = (16733525);
         }
     }
     

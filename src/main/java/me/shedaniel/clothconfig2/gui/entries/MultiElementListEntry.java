@@ -74,11 +74,11 @@ public class MultiElementListEntry<T> extends TooltipListEntry<T> {
         widget.rectangle.y = y;
         widget.rectangle.width = entryWidth + 19;
         widget.rectangle.height = 24;
-        Minecraft.getInstance().textureManager.load(CONFIG_TEX);
+        Minecraft.INSTANCE.textureManager.load(CONFIG_TEX);
         // Lighting.turnOff(); // Not available in 1.13
         GlStateManager.color4f(1, 1, 1, 1);
         this.drawTexture(x - 15, y + 4, 24, (widget.rectangle.contains(mouseX, mouseY) ? 18 : 0) + (expanded ? 9 : 0), 9, 9);
-        Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(categoryName), x, y + 5, widget.rectangle.contains(mouseX, mouseY) ? 0xffe6fe16 : -1);
+        Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(categoryName), x, y + 5, widget.rectangle.contains(mouseX, mouseY) ? 0xffe6fe16 : -1);
         for (AbstractConfigListEntry<?> entry : entries) {
             entry.setParent(getParent());
             entry.setScreen(getScreen());
@@ -172,7 +172,7 @@ public class MultiElementListEntry<T> extends TooltipListEntry<T> {
         public boolean mouseClicked(double double_1, double double_2, int int_1) {
             if (rectangle.contains(double_1, double_2)) {
                 expanded = !expanded;
-                Minecraft.getInstance().soundEngine.play((SoundEvents.UI_BUTTON_CLICK), 1.0F, 1);
+                Minecraft.INSTANCE.soundEngine.play((SoundEvents.UI_BUTTON_CLICK), 1.0F, 1);
                 return true;
             }
             return false;

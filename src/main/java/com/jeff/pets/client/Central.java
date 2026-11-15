@@ -27,8 +27,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.options.GameOptions;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -104,7 +104,6 @@ public class Central implements ClientModInitializer {
     public static ClientEnderman enderman;
     public static ClientIronGolem ironGolem;
     public static ClientSpider spider;
-    public static ClientWolf wolf;
     public static ClientBlaze blaze;
     public static ClientCreeper creeper;
     public static ClientElderGuardian elderGuardian;
@@ -154,7 +153,6 @@ public class Central implements ClientModInitializer {
         Utils.despawnEntity(enderman);
         Utils.despawnEntity(ironGolem);
         Utils.despawnEntity(spider);
-        Utils.despawnEntity(wolf);
         Utils.despawnEntity(blaze);
         Utils.despawnEntity(creeper);
         Utils.despawnEntity(elderGuardian);
@@ -183,8 +181,8 @@ public class Central implements ClientModInitializer {
      * see {@link Utils#summonPet}
      */
     public static void summonPet() {
-        Minecraft minecraft = Minecraft.getInstance();
-        ClientWorld world = minecraft.world;
+        Minecraft minecraft = Minecraft.INSTANCE;
+        World world = minecraft.world;
         duck = new Duck(world);
         racoon = new Racoon(world);
         penguin = new Penguin(world);
@@ -205,7 +203,6 @@ public class Central implements ClientModInitializer {
         enderman = new ClientEnderman(world);
         ironGolem = new ClientIronGolem(world);
         spider = new ClientSpider(world);
-        wolf = new ClientWolf(world);
         blaze = new ClientBlaze(world);
         creeper = new ClientCreeper(world);
         elderGuardian = new ClientElderGuardian(world);
@@ -269,8 +266,6 @@ public class Central implements ClientModInitializer {
                 Utils.summonPet(ironGolem, CONFIG.ironGolemName);
             } else if (Objects.equals(CONFIG.activePet, "spider")) {
                 Utils.summonPet(spider, CONFIG.spiderName);
-            } else if (Objects.equals(CONFIG.activePet, "wolf")) {
-                Utils.summonPet(wolf, CONFIG.wolfName);
             } else if (Objects.equals(CONFIG.activePet, "blaze")) {
                 Utils.summonPet(blaze, CONFIG.blazeName);
             } else if (Objects.equals(CONFIG.activePet, "creeper")) {
@@ -343,7 +338,6 @@ public class Central implements ClientModInitializer {
         Utils.checkName("enderman", enderman, CONFIG.endermanName);
         Utils.checkName("iron_golem", ironGolem, CONFIG.ironGolemName);
         Utils.checkName("spider", spider, CONFIG.spiderName);
-        Utils.checkName("wolf", wolf, CONFIG.wolfName);
         Utils.checkName("blaze", blaze, CONFIG.blazeName);
         Utils.checkName("creeper", creeper, CONFIG.creeperName);
         Utils.checkName("elder_guardian", elderGuardian, CONFIG.elderGuardianName);
@@ -499,7 +493,7 @@ public class Central implements ClientModInitializer {
      * More about this custom pack can be seen in {@link HeadSkin}.
      */
     public static void checkForHeadResourcePack() {
-        Minecraft client = Minecraft.getInstance();
+        Minecraft client = Minecraft.INSTANCE;
         GameOptions options = client.options;
         //List<String> resourcePacks = new ArrayList<>(client.getResourcePacks().);
 
@@ -538,8 +532,8 @@ public class Central implements ClientModInitializer {
      * - Generates a random number for {@link #petSkin}, which used to be used for <a href="https://modrinth.com/mod/pets-natural">Pets Natural</a> and <a href="https://modrinth.com/mod/duck--mod">DuckMod</a>.
      */
     public static void createTickWatcher() {
-        Minecraft minecraft = Minecraft.getInstance();
-        ClientWorld world = minecraft.world;
+        Minecraft minecraft = Minecraft.INSTANCE;
+        World world = minecraft.world;
         minecraft.execute(() -> {
             petSkin = (int) (Math.random() * (double) 3.0F);
             if (minecraft.player != null && CONFIG.petOn && summonedEntity.isEmpty()) {
@@ -563,7 +557,7 @@ public class Central implements ClientModInitializer {
     public static void createJoinHandler() {
         List var10001 = summonedEntity;
         Objects.requireNonNull(var10001);
-        Minecraft.getInstance().execute(var10001::clear);
+        Minecraft.INSTANCE.execute(var10001::clear);
     }
 
     /**
@@ -582,7 +576,7 @@ public class Central implements ClientModInitializer {
         createJoinHandler();
         createTickWatcher();
         this.createPetsList();
-        updateSuggestions(Minecraft.getInstance());
+        updateSuggestions(Minecraft.INSTANCE);
     }
 
     /**
@@ -591,7 +585,7 @@ public class Central implements ClientModInitializer {
      * re-created from an bytecode after a change messed it up around version {@code 0.6.0}
      */
     public void executePetSkinCommand(String skin) {
-                Minecraft.getInstance().execute(() -> {
+                Minecraft.INSTANCE.execute(() -> {
                     boolean isValid = true;
 
                     if (Objects.equals(skin, "baby")) {
@@ -1132,9 +1126,9 @@ public class Central implements ClientModInitializer {
                     }
 
                     if (isValid) {
-                        Minecraft.getInstance().player.addMessage(("\u00A7b[PetsMod] \u00A7aYour pet's skin has been updated."));
+                        Minecraft.INSTANCE.player.addMessage(("\u00A7b[PetsMod] \u00A7aYour pet's skin has been updated."));
                     } else {
-                        Minecraft.getInstance().player.addMessage(("\u00A7b[PetsMod] \u00A7cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else."));
+                        Minecraft.INSTANCE.player.addMessage(("\u00A7b[PetsMod] \u00A7cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else."));
                     }
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
                 });
@@ -1325,8 +1319,8 @@ public class Central implements ClientModInitializer {
         CONFIG.toxfinSlabName = Utils.checkNullString(CONFIG.toxfinSlabName);
         CONFIG.potatoHuskName = Utils.checkNullString(CONFIG.potatoHuskName);
 
-        if (CONFIG.headSkin == null && Minecraft.getInstance().player != null) {
-            CONFIG.headSkin = Minecraft.getInstance().player.getName();
+        if (CONFIG.headSkin == null && Minecraft.INSTANCE.player != null) {
+            CONFIG.headSkin = Minecraft.INSTANCE.player.getName();
         }
         CONFIG.headName = Utils.checkNullString(CONFIG.headName);
 
@@ -1341,13 +1335,14 @@ public class Central implements ClientModInitializer {
 
         CONFIG.headSkin = Utils.checkNullString(CONFIG.headSkin, "downloadableduck");
         CONFIG.zombiePigmanName = Utils.checkNullString(CONFIG.zombiePigmanName);
+        CONFIG.wolfSkin = Utils.checkNullString(CONFIG.wolfSkin, "pale");
     }
 
     /**
      * Creates the command that allows the user to use {@code /teleportpet}.
      */
     public void executePetTeleportCommand() {
-                 Minecraft.getInstance().execute(() -> {
+                 Minecraft.INSTANCE.execute(() -> {
                      despawnPet();
                      summonPet();
                  });
@@ -1357,7 +1352,7 @@ public class Central implements ClientModInitializer {
      * Creates the command that allows the user to use {@code /petspecies}.
      */
     public void executePetSpeciesCommand(String species) {
-        Minecraft.getInstance().execute(() -> {
+        Minecraft.INSTANCE.execute(() -> {
             boolean isValid = true;
 
             if (Objects.equals(species, "duck")) {
@@ -1400,8 +1395,6 @@ public class Central implements ClientModInitializer {
                 Utils.setActivePet(ironGolem, "iron_golem");
             } else if (Objects.equals(species, "spider")) {
                 Utils.setActivePet(spider, "spider");
-            } else if (Objects.equals(species, "wolf")) {
-                Utils.setActivePet(wolf, "wolf");
             } else if (Objects.equals(species, "blaze")) {
                 Utils.setActivePet(blaze, "blaze");
             } else if (Objects.equals(species, "creeper")) {
@@ -1451,7 +1444,7 @@ public class Central implements ClientModInitializer {
             checkValidPet(isValid, species);
 
             AutoConfig.getConfigHolder(PetsConfig.class).save();
-            updateSuggestions(Minecraft.getInstance());
+            updateSuggestions(Minecraft.INSTANCE);
         });
     }
 
@@ -1459,8 +1452,8 @@ public class Central implements ClientModInitializer {
      * Creates a help command to let the user easily view the commands at their disposal.
      */
     public void executePetHelpCommand() {
-                Minecraft.getInstance().execute(() -> {
-                    Minecraft.getInstance().player.addMessage((
+                Minecraft.INSTANCE.execute(() -> {
+                    Minecraft.INSTANCE.player.addMessage((
                             "\u00A7b[PetsMod] \u00A7aPossible commands: \u00A7a/pethelp: \u00A7rdisplays a list of commands \u00A7a/pet <on/off> \u00A7rtoggles whether your pet will appear or not\u00A7a/petspecies <species>: \u00A7rchanges the species of your pet\u00A7a/petskin <skin>: \u00A7rchanges the skin of your selected pet\u00A7a/teleportpet: \u00A7rteleports your pet to you. will not work if you are not on the ground.\u00A7a/petname: \u00A7rchanges the name of your currently selected pet"
                     ));
                 });
@@ -1470,7 +1463,7 @@ public class Central implements ClientModInitializer {
      * Creates the command that allows the user to change their pet's name.
      */
     public void executePetNameCommand(String name) {
-        Minecraft.getInstance().execute(() -> {
+        Minecraft.INSTANCE.execute(() -> {
             if (!summonedEntity.isEmpty()) {
                 switch (CONFIG.activePet) {
                     case "penguin":
@@ -1785,14 +1778,14 @@ public class Central implements ClientModInitializer {
     public void executeToggleCommand(String preference) {
                 if (Objects.equals(preference, "off")) {
                     CONFIG.petOn = false;
-                    Minecraft.getInstance().player.addMessage(("\u00A7b[PetsMod] \u00A77Pet \u00A7coff."));
+                    Minecraft.INSTANCE.player.addMessage(("\u00A7b[PetsMod] \u00A77Pet \u00A7coff."));
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
                 } else if (Objects.equals(preference, "on")) {
                     CONFIG.petOn = true;
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
-                    Minecraft.getInstance().player.addMessage(("\u00A7b[PetsMod] \u00A77Pet \u00A7aon."));
+                    Minecraft.INSTANCE.player.addMessage(("\u00A7b[PetsMod] \u00A77Pet \u00A7aon."));
                 } else {
-                    Minecraft.getInstance().player.addMessage(("\u00A7b[PetsMod] \u00A7c\u00A7lUnknown value " + preference + "! Possible values: \u00A7r\u00A7aon, \u00A76off"));
+                    Minecraft.INSTANCE.player.addMessage(("\u00A7b[PetsMod] \u00A7c\u00A7lUnknown value " + preference + "! Possible values: \u00A7r\u00A7aon, \u00A76off"));
                 }
     }
 
@@ -1824,15 +1817,15 @@ public class Central implements ClientModInitializer {
     }
 
     public void checkValidPet(boolean isValid, String species) {
-        Minecraft.getInstance().execute(() -> {
+        Minecraft.INSTANCE.execute(() -> {
             if (!isValid) {
-                Minecraft.getInstance().player.addMessage(("\u00A7b[PetsMod] \u00A7cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")"));
+                Minecraft.INSTANCE.player.addMessage(("\u00A7b[PetsMod] \u00A7cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")"));
             } else if (isValid && CONFIG.petOn) {
                     despawnPet();
-                    Minecraft.getInstance().player.addMessage(("\u00A7b[PetsMod] \u00A7aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + "."));
+                    Minecraft.INSTANCE.player.addMessage(("\u00A7b[PetsMod] \u00A7aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + "."));
                     summonPet();
             } else if (isValid && !CONFIG.petOn) {
-                Minecraft.getInstance().player.addMessage(("\u00A7b[PetsMod] \u00A7cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet enabled. Run \u00A7l/pet on\u00A7r\u00A7c to change this."));
+                Minecraft.INSTANCE.player.addMessage(("\u00A7b[PetsMod] \u00A7cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet enabled. Run \u00A7l/pet on\u00A7r\u00A7c to change this."));
             }
         });
     }

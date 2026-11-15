@@ -120,16 +120,16 @@ public class Koi extends FlyingPet {
          double distance = this.distanceTo(owner);
          float rotation = -this.pitch;
          float rotationToOwner = rotation + -this.getOwner().pitch;
-         float bodyYawDiff = MathHelper.wrapDegrees(this.getHeadYaw() - this.bodyYaw);
+         float bodyYawDiff = Utils.wrapDegrees(this.headYaw - this.bodyYaw);
          if (rotationToOwner >= 50.0F) {
-            this.bodyYaw = this.getHeadYaw() - Math.signum(bodyYawDiff) * 50.0F;
+            this.bodyYaw = this.headYaw - Math.signum(bodyYawDiff) * 50.0F;
          }
 
          if (distance > 2.0) {
             this.walkAnimationSpeed = 0.5F;
             Vec3d dir = vecToOwner.normalize();
             double speed = 0.2;
-            this.bodyYaw = this.bodyYaw + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw, -50.0F, 50.0F);
+            this.bodyYaw = this.bodyYaw + MathHelper.clamp(this.headYaw - this.bodyYaw, -50.0F, 50.0F);
             this.lerpVelocity(Vec3d.of(-dir.x * speed, dir.y * speed, -dir.z * speed));
          } else {
             this.lerpVelocity(Vec3d.of(this.getVelocity().x * 0.8, this.getVelocity().y * 0.8, this.getVelocity().z * 0.8));
@@ -158,9 +158,9 @@ public class Koi extends FlyingPet {
 
          this.setYRot(Duck.rotlerp(this.getYRot(), (float)targetYaw));
          if (Math.abs(bodyYawDiff) > 50.0F) {
-            this.bodyYaw = this.getHeadYaw() - Math.signum(bodyYawDiff) * 50.0F;
+            this.bodyYaw = this.headYaw - Math.signum(bodyYawDiff) * 50.0F;
          } else {
-            this.bodyYaw = this.bodyYaw + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw, -10.0F, 10.0F);
+            this.bodyYaw = this.bodyYaw + MathHelper.clamp(this.headYaw - this.bodyYaw, -10.0F, 10.0F);
          }
 
           // No manual move() here: LivingEntity.mobTick() already calls moveRelative() ->

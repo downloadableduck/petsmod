@@ -7,6 +7,7 @@ import me.shedaniel.clothconfig2.ButtonWidget;
 import me.shedaniel.clothconfig2.ClothConfigInitializer;
 import me.shedaniel.clothconfig2.api.ScissorsHandler;
 import me.shedaniel.clothconfig2.compat.AbstractContainerEventHandler;
+import me.shedaniel.clothconfig2.compat.CompatTextFieldWidget;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import me.shedaniel.clothconfig2.compat.GuiVertexCompat;
 import me.shedaniel.clothconfig2.compat.GuiVertexCompat.Builder;
@@ -47,7 +48,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         super(I18n.translate(fieldName), tooltipSupplier, requiresRestart);
         this.defaultValue = defaultValue;
         this.saveConsumer = saveConsumer;
-        this.resetButton = new ButtonWidget(0, 0, Minecraft.getInstance().textRenderer.getWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey), w -> {
+        this.resetButton = new ButtonWidget(0, 0, Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey), w -> {
             selectionElement.topRenderer.setValue(defaultValue.get());
             getScreen().setEdited(true, requiresRestart);
         });
@@ -61,12 +62,12 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         this.resetButton.y = y;
         this.selectionElement.active = isEditable();
         this.selectionElement.bounds.y = y;
-        if (Minecraft.getInstance().textRenderer.isBidirectional()) {
-            Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.getInstance().textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, getPreferredTextColor());
+        if (Minecraft.INSTANCE.textRenderer.bidirectional) {
+            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, getPreferredTextColor());
             this.resetButton.x = x;
             this.selectionElement.bounds.x = x + resetButton.width + 1;
         } else {
-            Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), x, y + 5, getPreferredTextColor());
+            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(getFieldName()), x, y + 5, getPreferredTextColor());
             this.resetButton.x = x + entryWidth - resetButton.width;
             this.selectionElement.bounds.x = x + entryWidth - 150 + 1;
         }
@@ -118,6 +119,15 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
     @Override
     public List<? extends GuiEventListener> children() {
         return Lists.<GuiEventListener>newArrayList(selectionElement, resetButton);
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (resetButton.mouseClicked(mouseX, mouseY, button)) {
+            this.setFocused(resetButton);
+            return true;
+        }
+        return selectionElement.mouseClicked(mouseX, mouseY, button);
     }
     
     @Override
@@ -206,12 +216,40 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         @Override
         public boolean mouseClicked(double double_1, double double_2, int int_1) {
             dontReFocus = false;
+            boolean inside = bounds.contains(double_1, double_2);
             boolean b = super.mouseClicked(double_1, double_2, int_1);
             if (dontReFocus) {
                 setFocused(null);
+                entry.setFocused(null);
                 dontReFocus = false;
+                return b;
+            }
+            if (inside) {
+                this.setFocused(this);
+                entry.setFocused(this);
+                b = true;
             }
             return b;
+        }
+
+        @Override
+        public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
+            return topRenderer.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
+        }
+
+        @Override
+        public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+            return topRenderer.keyPressed(keyCode, scanCode, modifiers);
+        }
+
+        @Override
+        public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+            return topRenderer.keyReleased(keyCode, scanCode, modifiers);
+        }
+
+        @Override
+        public boolean charTyped(char chr, int modifiers) {
+            return topRenderer.charTyped(chr, modifiers);
         }
     }
     
@@ -391,7 +429,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             ScissorsHandler.INSTANCE.removeLastScissor();
             
             if (currentElements.isEmpty()) {
-                TextRenderer textRenderer = Minecraft.getInstance().textRenderer;
+                TextRenderer textRenderer = Minecraft.INSTANCE.textRenderer;
                 String s = I18n.translate("text.cloth-config.dropdown.value.unknown");
                 textRenderer.drawWithShadow(s, (int)(lastRectangle.x + getCellCreator().getCellWidth() / 2f - textRenderer.getWidth(s) / 2f), lastRectangle.y + lastRectangle.height + 3, -1);
             }
@@ -593,7 +631,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             boolean b = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
             if (b)
                 fill(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
-            Minecraft.getInstance().textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6, y + 3, b ? 16777215 : 8947848);
+            Minecraft.INSTANCE.textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6, y + 3, b ? 16777215 : 8947848);
         }
         
         @Override
@@ -682,22 +720,26 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
     }
     
     public static class DefaultSelectionTopCellElement<R> extends SelectionTopCellElement<R> {
-        protected TextFieldWidget textFieldWidget;
+        protected CompatTextFieldWidget textFieldWidget;
         protected Function<String, R> toObjectFunction;
         protected Function<R, String> toStringFunction;
         protected R value;
+        protected int lastX, lastY, lastWidth, lastHeight;
         
         public DefaultSelectionTopCellElement(R value, Function<String, R> toObjectFunction, Function<R, String> toStringFunction) {
             this.value = Objects.requireNonNull(value);
             this.toObjectFunction = Objects.requireNonNull(toObjectFunction);
             this.toStringFunction = Objects.requireNonNull(toStringFunction);
-            textFieldWidget = new TextFieldWidget(Minecraft.getInstance().textRenderer, 0, 0, 148, 18) {
+            textFieldWidget = new CompatTextFieldWidget(0, Minecraft.INSTANCE.textRenderer, 0, 0, 148, 18) {
                 @Override
-                public void render() {
-                    // setFocused(isSuggestionMode() && isSelected && DefaultSelectionTopCellElement.this.getParent().getFocused() == DefaultSelectionTopCellElement.this.getParent().selectionElement && DefaultSelectionTopCellElement.this.getParent().selectionElement.setCharging() == DefaultSelectionTopCellElement.this && DefaultSelectionTopCellElement.this.setCharging() == this); // Not available in 1.13
-                    super.render();
+                public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+                    if (keyCode == 257 || keyCode == 335) {
+                        DefaultSelectionTopCellElement.this.selectFirstRecommendation();
+                        return true;
+                    }
+                    return isSuggestionMode() && super.keyPressed(keyCode, scanCode, modifiers);
                 }
-                
+
                 @Override
                 public boolean keyPressed(char chr, int key) {
                     if (key == 257 || key == 335) {
@@ -718,11 +760,15 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         
         @Override
         public void render(int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
+            lastX = x;
+            lastY = y;
+            lastWidth = width;
+            lastHeight = height;
             textFieldWidget.x = x + 4;
             textFieldWidget.y = y + 6;
             // textFieldWidget.setWidth(width - 8); // Not available in 1.13
             textFieldWidget.editable = (getParent().isEditable());
-            textFieldWidget.setEditableColor(getPreferredTextColor());
+            textFieldWidget.editableColor = (getPreferredTextColor());
             textFieldWidget.render();
         }
         
@@ -750,10 +796,32 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
                 return Optional.empty();
             return Optional.of("Invalid Value!");
         }
+
+        @Override
+        public boolean mouseClicked(double mouseX, double mouseY, int button) {
+            if (mouseX >= lastX && mouseX <= lastX + lastWidth
+                    && mouseY >= lastY && mouseY <= lastY + lastHeight) {
+                textFieldWidget.mouseClicked((int) mouseX, (int) mouseY, button);
+                textFieldWidget.setFocused(true);
+                this.setFocused(textFieldWidget);
+                return true;
+            }
+            return super.mouseClicked(mouseX, mouseY, button);
+        }
+
+        @Override
+        public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+            return textFieldWidget.keyPressed(keyCode, scanCode, modifiers);
+        }
+
+        @Override
+        public boolean charTyped(char chr, int modifiers) {
+            return textFieldWidget.charTyped(chr, modifiers);
+        }
         
         @Override
         public List<? extends GuiEventListener> children() {
-            return Collections.emptyList();
+            return Collections.singletonList(textFieldWidget);
         }
     }
 }

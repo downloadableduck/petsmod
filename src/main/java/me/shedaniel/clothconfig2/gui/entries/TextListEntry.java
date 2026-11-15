@@ -33,10 +33,10 @@ public class TextListEntry extends TooltipListEntry {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
         this.savedWidth = entryWidth;
         int yy = y + 4;
-        List<String> strings = Minecraft.getInstance().textRenderer.split(text, savedWidth);
+        List<String> strings = Minecraft.INSTANCE.textRenderer.split(text, savedWidth);
         for(int i = 0; i < strings.size(); i++) {
-            Minecraft.getInstance().textRenderer.drawWithShadow(strings.get(i), x, yy, color);
-            yy += Minecraft.getInstance().textRenderer.fontHeight + 3;
+            Minecraft.INSTANCE.textRenderer.drawWithShadow(strings.get(i), x, yy, color);
+            yy += Minecraft.INSTANCE.textRenderer.fontHeight + 3;
         }
     }
     
@@ -44,7 +44,7 @@ public class TextListEntry extends TooltipListEntry {
     public int getItemHeight() {
         if (savedWidth == -1)
             return 12;
-        List<String> strings = Minecraft.getInstance().textRenderer.split(text, savedWidth);
+        List<String> strings = Minecraft.INSTANCE.textRenderer.split(text, savedWidth);
         if (strings.isEmpty())
             return 0;
         return 15 + strings.size() * 12;

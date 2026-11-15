@@ -37,7 +37,7 @@ public class BooleanListEntry extends TooltipListEntry {
             BooleanListEntry.this.bool.set(!BooleanListEntry.this.bool.get());
             getScreen().setEdited(true);
         });
-        this.resetButton = new ButtonWidget(0, 0, Minecraft.getInstance().textRenderer.getWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey), widget -> {
+        this.resetButton = new ButtonWidget(0, 0, Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey), widget -> {
             BooleanListEntry.this.bool.set(defaultValue.get());
             getScreen().setEdited(true);
         });
@@ -69,13 +69,13 @@ public class BooleanListEntry extends TooltipListEntry {
         this.buttonWidget.active = isEditable();
         this.buttonWidget.y = y;
         this.buttonWidget.message = getYesNoText(bool.get());
-        if (Minecraft.getInstance().textRenderer.isBidirectional()) {
-            Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.getInstance().textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, 16777215);
+        if (Minecraft.INSTANCE.textRenderer.bidirectional) {
+            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, 16777215);
             this.resetButton.x = x;
             this.buttonWidget.x = x + resetButton.width + 2;
             // this.buttonWidget.setWidth(150 - resetButton.getWidth() - 2); // Not available in 1.13
         } else {
-            Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), x, y + 5, 16777215);
+            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(getFieldName()), x, y + 5, 16777215);
             this.resetButton.x = x + entryWidth - resetButton.width;
             this.buttonWidget.x = x + entryWidth - 150;
             // this.buttonWidget.setWidth(150 - resetButton.getWidth() - 2); // Not available in 1.13

@@ -151,7 +151,7 @@ public class ClothConfigInitializer implements ClientModInitializer {
                 Method method = clazz.getMethod("addConfigOverride", String.class, Runnable.class);
                 method.invoke(null, "cloth-config2", (Runnable) () -> {
                     try {
-                        Minecraft.getInstance().openScreen(getConfigBuilderWithDemo().build());
+                        Minecraft.INSTANCE.openScreen(getConfigBuilderWithDemo().build());
                     } catch (Throwable throwable) {
                         throwable.printStackTrace();
                     }
@@ -164,7 +164,7 @@ public class ClothConfigInitializer implements ClientModInitializer {
     
     @SuppressWarnings("deprecation")
     public static ConfigBuilder getConfigBuilder() {
-        ConfigBuilder builder = ConfigBuilder.create().setParentScreen(Minecraft.getInstance().screen).setTitle("title.cloth-config.config");
+        ConfigBuilder builder = ConfigBuilder.create().setParentScreen(Minecraft.INSTANCE.screen).setTitle("title.cloth-config.config");
         builder.setDefaultBackgroundTexture(("minecraft:textures/block/oak_planks.png"));
         ConfigCategory scrolling = builder.getOrCreateCategory("category.cloth-config.scrolling");
         ConfigEntryBuilder entryBuilder = ConfigEntryBuilder.create();

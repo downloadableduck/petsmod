@@ -36,7 +36,7 @@ public class KeyCodeEntry extends TooltipListEntry<ModifierKeyCode> {
             getScreen().setFocusedBinding(this);
             getScreen().setEdited(true, isRequiresRestart());
         });
-        this.resetButton = new ButtonWidget(0, 0, Minecraft.getInstance().textRenderer.getWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey), widget -> {
+        this.resetButton = new ButtonWidget(0, 0, Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey), widget -> {
             KeyCodeEntry.this.value = getDefaultValue().orElse(null);
             getScreen().setFocusedBinding(null);
             getScreen().setEdited(true, isRequiresRestart());
@@ -103,12 +103,12 @@ public class KeyCodeEntry extends TooltipListEntry<ModifierKeyCode> {
         this.buttonWidget.message = getLocalizedName();
         if (getScreen().getFocusedBinding() == this)
             this.buttonWidget.message = Formatting.WHITE + "> " + Formatting.YELLOW + this.buttonWidget.message + Formatting.WHITE + " <";
-        if (Minecraft.getInstance().textRenderer.isBidirectional()) {
-            Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.getInstance().textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, 16777215);
+        if (Minecraft.INSTANCE.textRenderer.bidirectional) {
+            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, 16777215);
             this.resetButton.x = x;
             this.buttonWidget.x = x + resetButton.width + 2;
         } else {
-            Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), x, y + 5, getPreferredTextColor());
+            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(getFieldName()), x, y + 5, getPreferredTextColor());
             this.resetButton.x = x + entryWidth - resetButton.width;
             this.buttonWidget.x = x + entryWidth - 150;
         }

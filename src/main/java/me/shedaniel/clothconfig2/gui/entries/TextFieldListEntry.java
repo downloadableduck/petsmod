@@ -28,7 +28,7 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
         super(fieldName, tooltipSupplier, false);
         this.defaultValue = defaultValue;
         this.original = original;
-        this.textFieldWidget = new CompatTextFieldWidget(0, Minecraft.getInstance().textRenderer, 0, 0, 148, 18) {
+        this.textFieldWidget = new CompatTextFieldWidget(0, Minecraft.INSTANCE.textRenderer, 0, 0, 148, 18) {
             @Override
             public void render() {
                 textFieldPreRender(this);
@@ -41,7 +41,7 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
         //     if (!original.equals(s))
         //         getScreen().setEdited(true);
         // });
-        this.resetButton = new ButtonWidget(0, 0, Minecraft.getInstance().textRenderer.getWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey), widget -> {
+        this.resetButton = new ButtonWidget(0, 0, Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey), widget -> {
             TextFieldListEntry.this.textFieldWidget.setText(String.valueOf(defaultValue.get()));
             getScreen().setEdited(true);
         });
@@ -67,13 +67,13 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
         this.resetButton.y = y;
         this.textFieldWidget.editable = (isEditable());
         this.textFieldWidget.y = y + 1;
-        if (Minecraft.getInstance().textRenderer.isBidirectional()) {
-            Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.getInstance().textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, 16777215);
+        if (Minecraft.INSTANCE.textRenderer.bidirectional) {
+            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, 16777215);
             this.resetButton.x = x;
             this.textFieldWidget.x = x + resetButton.width;
             setTextFieldWidth(textFieldWidget, 148 - resetButton.width - 4);
         } else {
-            Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), x, y + 5, 16777215);
+            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(getFieldName()), x, y + 5, 16777215);
             this.resetButton.x = x + entryWidth - resetButton.width;
             this.textFieldWidget.x = x + entryWidth - 148;
             setTextFieldWidth(textFieldWidget, 148 - resetButton.width - 4);

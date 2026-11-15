@@ -63,7 +63,7 @@ public class ClientWitherModel extends PetModel {
     public void prepare(MobEntity entity, float f, float g, float h) {
         ClientWither witherBoss = (ClientWither) entity;
         for (int i = 1; i < 3; ++i) {
-            this.heads[i].rotationY = (witherBoss.getHeadYaw() - witherBoss.yaw) * ((float) Math.PI / 180F);
+            this.heads[i].rotationY = (witherBoss.headYaw - witherBoss.yaw) * ((float) Math.PI / 180F);
             this.heads[i].rotationX = witherBoss.pitch * ((float) Math.PI / 180F);
         }
 

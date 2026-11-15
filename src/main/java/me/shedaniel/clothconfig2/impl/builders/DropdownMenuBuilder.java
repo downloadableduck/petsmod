@@ -167,11 +167,11 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                     textFieldWidget.y = y + 6;
                     // textFieldWidget.setWidth(width - 4 - 20); // Not in 1.13
                     textFieldWidget.editable = (getParent().isEditable());
-                    textFieldWidget.setEditableColor(getPreferredTextColor());
+                    textFieldWidget.editableColor = (getPreferredTextColor());
                     textFieldWidget.render();
                     ItemRenderer itemRenderer = DropdownMenuBuilder.ITEM_RENDERER;
                     ItemStack stack = hasConfigError() ? BARRIER : new ItemStack((Item) Item.REGISTRY.get(new NamespacedIdentifierImpl("minecraft", getValue())));
-                    itemRenderer.renderGuiItem(Minecraft.getInstance().textRenderer, Minecraft.getInstance().textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
+                    itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
                 }
             };
         }
@@ -184,11 +184,11 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                     textFieldWidget.y = y + 6;
                     // textFieldWidget.setWidth(width - 4 - 20); // Not in 1.13
                     textFieldWidget.editable = (getParent().isEditable());
-                    textFieldWidget.setEditableColor(getPreferredTextColor());
+                    textFieldWidget.editableColor = (getPreferredTextColor());
                     textFieldWidget.render();
                     ItemRenderer itemRenderer = DropdownMenuBuilder.ITEM_RENDERER;
                     ItemStack stack = hasConfigError() ? BARRIER : new ItemStack((Block) Block.REGISTRY.get(new NamespacedIdentifierImpl("minecraft", getValue())));
-                    itemRenderer.renderGuiItem(Minecraft.getInstance().textRenderer, Minecraft.getInstance().textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
+                    itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
                 }
             };
         }
@@ -201,11 +201,11 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                     textFieldWidget.y = y + 6;
                     // textFieldWidget.setWidth(width - 4 - 20); // Not in 1.13
                     textFieldWidget.editable = (getParent().isEditable());
-                    textFieldWidget.setEditableColor(getPreferredTextColor());
+                    textFieldWidget.editableColor = (getPreferredTextColor());
                     textFieldWidget.render();
                     ItemRenderer itemRenderer = DropdownMenuBuilder.ITEM_RENDERER;
                     ItemStack stack = hasConfigError() ? BARRIER : new ItemStack(getValue());
-                    itemRenderer.renderGuiItem(Minecraft.getInstance().textRenderer, Minecraft.getInstance().textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
+                    itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
                 }
             };
         }
@@ -218,11 +218,11 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                     textFieldWidget.y = y + 6;
                     // textFieldWidget.setWidth(width - 4 - 20); // Not in 1.13
                     textFieldWidget.editable = (getParent().isEditable());
-                    textFieldWidget.setEditableColor(getPreferredTextColor());
+                    textFieldWidget.editableColor = (getPreferredTextColor());
                     textFieldWidget.render();
                     ItemRenderer itemRenderer = DropdownMenuBuilder.ITEM_RENDERER;
                     ItemStack stack = hasConfigError() ? BARRIER : new ItemStack(getValue());
-                    itemRenderer.renderGuiItem(Minecraft.getInstance().textRenderer, Minecraft.getInstance().textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
+                    itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
                 }
             };
         }
@@ -363,9 +363,9 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                             boolean b = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
                             if (b)
                                 fill(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
-                            Minecraft.getInstance().textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
+                            Minecraft.INSTANCE.textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
                             ItemRenderer itemRenderer = DropdownMenuBuilder.ITEM_RENDERER;
-                            itemRenderer.renderGuiItem(Minecraft.getInstance().textRenderer, Minecraft.getInstance().textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
+                            itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
                         }
                     };
                 }
@@ -412,9 +412,9 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                             boolean b = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
                             if (b)
                                 fill(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
-                            Minecraft.getInstance().textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
+                            Minecraft.INSTANCE.textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
                             ItemRenderer itemRenderer = DropdownMenuBuilder.ITEM_RENDERER;
-                            itemRenderer.renderGuiItem(Minecraft.getInstance().textRenderer, Minecraft.getInstance().textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
+                            itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
                         }
                     };
                 }
@@ -461,9 +461,9 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                             boolean b = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
                             if (b)
                                 fill(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
-                            Minecraft.getInstance().textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
+                            Minecraft.INSTANCE.textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
                             ItemRenderer itemRenderer = DropdownMenuBuilder.ITEM_RENDERER;
-                            itemRenderer.renderGuiItem(Minecraft.getInstance().textRenderer, Minecraft.getInstance().textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
+                            itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
                         }
                     };
                 }
@@ -509,9 +509,9 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                             boolean b = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
                             if (b)
                                 fill(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
-                            Minecraft.getInstance().textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
+                            Minecraft.INSTANCE.textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
                             ItemRenderer itemRenderer = DropdownMenuBuilder.ITEM_RENDERER;
-                            itemRenderer.renderGuiItem(Minecraft.getInstance().textRenderer, Minecraft.getInstance().textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
+                            itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
                         }
                     };
                 }

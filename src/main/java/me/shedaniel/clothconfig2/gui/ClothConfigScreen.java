@@ -87,7 +87,7 @@ public abstract class ClothConfigScreen extends Screen {
             list.forEach(entry -> entry.setScreen(this));
             tabbedEntries.put(tab, list);
         });
-        TextRenderer textRenderer = Minecraft.getInstance().textRenderer;
+        TextRenderer textRenderer = Minecraft.INSTANCE.textRenderer;
         this.tabs = tabbedEntries.keySet().stream().map(s -> new ConfigPair<>(s, textRenderer.getWidth(I18n.translate(s)) + 8)).collect(Collectors.toList());
         this.nextVertexTabIndex = 0;
         this.selectedTabIndex = 0;
@@ -122,7 +122,7 @@ public abstract class ClothConfigScreen extends Screen {
     }
     
     public boolean isTransparentBackground() {
-        return transparentBackground && Minecraft.getInstance().world != null;
+        return transparentBackground && Minecraft.INSTANCE.world != null;
     }
     
     @Deprecated
@@ -152,9 +152,8 @@ public abstract class ClothConfigScreen extends Screen {
     @Override
     public void tick() {
         super.tick();
-        for (GuiEventListener child : children)
-            if (child instanceof Tickable)
-                ((Tickable) child).tick();
+        for (GuiEventListener child : children) {
+        }
     }
     
     public String getBackgroundLocation() {

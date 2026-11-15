@@ -44,7 +44,7 @@ public class IntegerSliderEntry extends TooltipListEntry {
         this.maximum = maximum;
         this.minimum = minimum;
         this.sliderWidget = new Slider(0, 0, 152, 20, ((double) this.value.get() - minimum) / Math.abs(maximum - minimum));
-        this.resetButton = new ButtonWidget(0, 0, Minecraft.getInstance().textRenderer.getWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey), widget -> {
+        this.resetButton = new ButtonWidget(0, 0, Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey), widget -> {
             sliderWidget.setProgress((MathHelper.clamp(this.defaultValue.get(), minimum, maximum) - minimum) / (double) Math.abs(maximum - minimum));
             this.value.set(MathHelper.clamp(this.defaultValue.get(), minimum, maximum));
             sliderWidget.update();
@@ -101,13 +101,13 @@ public class IntegerSliderEntry extends TooltipListEntry {
         this.resetButton.y = y;
         this.sliderWidget.active = isEditable();
         this.sliderWidget.y = y;
-        if (Minecraft.getInstance().textRenderer.isBidirectional()) {
-            Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.getInstance().textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, 16777215);
+        if (Minecraft.INSTANCE.textRenderer.bidirectional) {
+            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, 16777215);
             this.resetButton.x = x;
             this.sliderWidget.x = x + resetButton.width + 1;
             // this.sliderWidget.setWidth(150 - resetButton.getWidth() - 2); // Not available in 1.13
         } else {
-            Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), x, y + 5, 16777215);
+            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(getFieldName()), x, y + 5, 16777215);
             this.resetButton.x = x + entryWidth - resetButton.width;
             this.sliderWidget.x = x + entryWidth - 150;
             // this.sliderWidget.setWidth(150 - resetButton.getWidth() - 2); // Not available in 1.13
@@ -131,7 +131,7 @@ public class IntegerSliderEntry extends TooltipListEntry {
         }
     
         public void render(int mouseX, int mouseY, float delta) {
-            super.render(Minecraft.getInstance(), mouseX, mouseY);
+            super.render(Minecraft.INSTANCE, mouseX, mouseY);
         }
     
         public double getProgress() {

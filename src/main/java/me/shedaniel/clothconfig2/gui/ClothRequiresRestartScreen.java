@@ -18,9 +18,9 @@ public class ClothRequiresRestartScreen extends ConfirmScreen {
             @Override
             public void confirmResult(boolean bl, int i) {
                 if (bl)
-                    Minecraft.getInstance().stop();
+                    Minecraft.INSTANCE.stop();
                 else
-                    Minecraft.getInstance().openScreen(parent);
+                    Minecraft.INSTANCE.openScreen(parent);
 
             }
         };

@@ -52,10 +52,10 @@ public abstract class FlyingPet extends AbstractPet {
             double distance = this.distanceTo(owner);
             float rotation = -this.pitch;
             float rotationToOwner = rotation + (-this.getOwner().pitch);
-            float bodyYawDiff = MathHelper.wrapDegrees(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/);
+            float bodyYawDiff = Utils.wrapDegrees(this.headYaw - this.bodyYaw /*bodyYaw*/);
 
             if (rotationToOwner >= 50) {
-                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (Math.signum(bodyYawDiff) * 50.0F);
+                this.bodyYaw /*bodyYaw*/ = this.headYaw - (Math.signum(bodyYawDiff) * 50.0F);
             }
 
             if (distance > this.stopDistance()) {
@@ -66,7 +66,7 @@ public abstract class FlyingPet extends AbstractPet {
                 double speed = 0.2;
                 System.out.println(speed);
                 
-                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/, -50, 50); //m_82141949
+                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.headYaw - this.bodyYaw /*bodyYaw*/, -50, 50); //m_82141949
 
                 this.lerpVelocity(Vec3d.of(-dir.x * speed, dir.y * speed, -dir.z * speed));
             } else {
@@ -95,9 +95,9 @@ public abstract class FlyingPet extends AbstractPet {
 
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.bodyYaw /*bodyYaw*/ = this.getHeadYaw() - (Math.signum(bodyYawDiff) * 50);
+                this.bodyYaw /*bodyYaw*/ = this.headYaw - (Math.signum(bodyYawDiff) * 50);
             } else {
-                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.getHeadYaw() - this.bodyYaw /*bodyYaw*/, -10, 10);
+                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.headYaw - this.bodyYaw /*bodyYaw*/, -10, 10);
             }
 
             // No manual move() here: LivingEntity.mobTick() already calls moveRelative() ->

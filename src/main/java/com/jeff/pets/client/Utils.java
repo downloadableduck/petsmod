@@ -4,7 +4,7 @@ import com.jeff.pets.PetsInitializer;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.world.World;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
@@ -34,9 +34,9 @@ public class Utils {
      * @return If the {@code mob}, {@code player}, or {@code world} is {@code null}
      */
     public static void summonPet(AbstractPet entity, String entityName) {
-        Minecraft minecraft = Minecraft.getInstance();
+        Minecraft minecraft = Minecraft.INSTANCE;
         PlayerEntity player = minecraft.player;
-        ClientWorld world = minecraft.world;
+        World world = minecraft.world;
 
         if (entity == null || world == null || player == null) return;
 
@@ -47,14 +47,14 @@ public class Utils {
         double z = player.z - lookAngle.z * (double) 0.5F;
 
         entity.setPosition(x, y, z);
-        world.forceEntity(entity.networkId, entity);
+        world.addEntityAlways(entity);
         // TameableEntity.getOwner() changed shape in 1.7.6:
         //   1.7.6+ : UUID.fromString(getOwnerName()) -> world.getEntityByUuid(uuid)
         //   <=1.7.5: world.getPlayer(getOwnerName()), compared with String.equals(player.getName())
         // Storing a UUID here makes getOwner() return null on <=1.7.5, which skips every
         // `if (owner != null)` block in GroundPet/FlyingPet tick() and leaves the pet doing
         // vanilla idle AI (walk forward, then stop). Store the name the <=1.7.5 lookup expects.
-        entity.setOwnerName(player.getName());
+        entity.setOwnerName(player.name);
         Central.summonedEntity.add(entity);
     }
 
@@ -70,9 +70,9 @@ public class Utils {
      *                  current name is checked off of.
      */
     public static void checkName(String activePet, AbstractPet entity, String petName) {
-        if (Objects.equals(CONFIG.activePet, activePet) && entity != null && !entity.getName().equals(petName)) {
-            entity.setName(petName);
-        }
+        //if (Objects.equals(CONFIG.activePet, activePet) && entity != null && !entity.getName().equals(petName)) {
+            //entity.setName(petName);
+       // }
     }
 
     /**
@@ -181,5 +181,18 @@ public class Utils {
 
     public static double squaredDistanceToOrigin(Vec3d vec3d) {
         return vec3d.x * vec3d.x + vec3d.y * vec3d.y + vec3d.z * vec3d.z;
+    }
+
+    public static float wrapDegrees(float degrees) {
+        degrees %= 360.0F;
+        if (degrees >= 180.0F) {
+            degrees -= 360.0F;
+        }
+
+        if (degrees < -180.0F) {
+            degrees += 360.0F;
+        }
+
+        return degrees;
     }
 }

@@ -1,6 +1,7 @@
 package com.jeff.pets.mob.vanilla.boss;
 
 import com.jeff.pets.client.Math2;
+import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.FlyingPet;
 import net.minecraft.util.math.MathHelper;
 
@@ -51,7 +52,7 @@ public class ClientEnderDragon extends FlyingPet {
         int k = this.posPointer - i - 1 & 63;
         double[] ds = new double[3];
         double d = this.positions[j][0];
-        double e = MathHelper.wrapDegrees(this.positions[k][0] - d);
+        double e = Utils.wrapDegrees((float) (this.positions[k][0] - d));
         ds[0] = d + e * (double) f;
         d = this.positions[j][1];
         e = this.positions[k][1] - d;

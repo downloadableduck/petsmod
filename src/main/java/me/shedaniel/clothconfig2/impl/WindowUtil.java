@@ -15,7 +15,7 @@ public final class WindowUtil {
     }
 
     public static int getGuiScale() {
-        Minecraft client = Minecraft.getInstance();
+        Minecraft client = Minecraft.INSTANCE;
         try {
             // Prefer the configured GUI scale, clamping so a valid factor is returned.
             int option = client.options.guiScale;

@@ -52,11 +52,11 @@ public class LongListEntry extends TextFieldListEntry<Long> {
         try {
             double i = Long.valueOf(textFieldWidget.getText());
             if (i < minimum || i > maximum)
-                widget.setEditableColor(16733525);
+                widget.editableColor = (16733525);
             else
-                widget.setEditableColor(14737632);
+                widget.editableColor = (14737632);
         } catch (NumberFormatException ex) {
-            widget.setEditableColor(16733525);
+            widget.editableColor = (16733525);
         }
     }
     

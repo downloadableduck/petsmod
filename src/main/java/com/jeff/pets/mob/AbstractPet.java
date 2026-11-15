@@ -41,7 +41,7 @@ public abstract class AbstractPet extends TameableEntity {
         // backwards, and it silently discarded every setSpeed() call (0.5 here, 0.3 in
         // DumboOctopus). Returning true restores the intended speeds.
         //
-        // Safe because pets are client-only entities injected with ClientWorld.forceEntity():
+        // Safe because pets are client-only entities injected with World.forceEntity():
         // the only aiEnabled() consumer that runs elsewhere, serverTickAi(), is gated behind
         // isLocallyControlled(), and the remaining uses are initAttributes() (whose MOVEMENT_SPEED
         // base this class immediately overwrites with 0.23) and a friction constant.
@@ -135,7 +135,7 @@ public abstract class AbstractPet extends TameableEntity {
      */
     /*@Override
     public void onDataValueChanged(int key) {
-        if (!(this.world instanceof ClientWorld)) {
+        if (!(this.world instanceof World)) {
             super.(key);
         }
     }*/

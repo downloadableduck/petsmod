@@ -65,7 +65,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         this.cells = Lists.newArrayList();
         this.labelWidget = new ListLabelWidget();
         this.widgets = Lists.newArrayList(labelWidget);
-        this.resetWidget = new ButtonWidget(0, 0, Minecraft.getInstance().textRenderer.getWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey), widget -> {
+        this.resetWidget = new ButtonWidget(0, 0, Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey), widget -> {
             widgets.removeAll(cells);
             cells.clear();
             defaultValue.get().stream().map(this::getFromValue).forEach(cells::add);
@@ -193,7 +193,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
             if (tooltip.isPresent() && tooltip.get().length > 0)
                 getScreen().queueTooltip(QueuedTooltip.create(new Point(mouseX, mouseY), tooltip.get()));
         }
-        Minecraft.getInstance().textureManager.load(CONFIG_TEX);
+        Minecraft.INSTANCE.textureManager.load(CONFIG_TEX);
         // Lighting.turnOff(); // Not available in 1.13
         GlStateManager.color4f(1, 1, 1, 1);
         BaseListCell focused = !expanded || getFocused() == null || !(getFocused() instanceof BaseListCell) ? null : (BaseListCell) getFocused();
@@ -207,7 +207,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         resetWidget.y = y;
         resetWidget.active = isEditable() && getDefaultValue().isPresent();
         resetWidget.render(mouseX, mouseY, delta);
-        Minecraft.getInstance().textRenderer.drawWithShadow(I18n.translate(getFieldName()), isDeleteButtonEnabled() ? x + 24 : x + 24 - 9, y + 5, labelWidget.rectangle.contains(mouseX, mouseY) && !resetWidget.wrapDegrees(mouseX, mouseY) && !insideDelete && !insideCreateNew ? 0xffe6fe16 : getPreferredTextColor());
+        Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(getFieldName()), isDeleteButtonEnabled() ? x + 24 : x + 24 - 9, y + 5, labelWidget.rectangle.contains(mouseX, mouseY) && !resetWidget.wrapDegrees(mouseX, mouseY) && !insideDelete && !insideCreateNew ? 0xffe6fe16 : getPreferredTextColor());
         if (expanded) {
             int yy = y + 24;
             for (BaseListCell cell : cells) {
@@ -246,7 +246,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
                     widgets.add(cell);
                 }
                 getScreen().setEdited(true, isRequiresRestart());
-                Minecraft.getInstance().soundEngine.play((SoundEvents.UI_BUTTON_CLICK), 1.0F, 1);
+                Minecraft.INSTANCE.soundEngine.play((SoundEvents.UI_BUTTON_CLICK), 1.0F, 1);
                 return true;
             } else if (isDeleteButtonEnabled() && isInsideDelete(double_1, double_2)) {
                 GuiEventListener focused = getFocused();
@@ -255,12 +255,12 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
                     cells.remove(focused);
                     widgets.remove(focused);
                     getScreen().setEdited(true, isRequiresRestart());
-                    Minecraft.getInstance().soundEngine.play((SoundEvents.UI_BUTTON_CLICK), 1.0F, 1);
+                    Minecraft.INSTANCE.soundEngine.play((SoundEvents.UI_BUTTON_CLICK), 1.0F, 1);
                 }
                 return true;
             } else if (rectangle.contains(double_1, double_2)) {
                 expanded = !expanded;
-                Minecraft.getInstance().soundEngine.play((SoundEvents.UI_BUTTON_CLICK), 1.0F, 1);
+                Minecraft.INSTANCE.soundEngine.play((SoundEvents.UI_BUTTON_CLICK), 1.0F, 1);
                 return true;
             }
             return false;

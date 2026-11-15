@@ -79,7 +79,7 @@ public class ClientGuardianModel extends PetModel {
         }
 
         this.field_3381.z = -8.25F;
-        Entity cameraEntity = Minecraft.getInstance().camera;
+        Entity cameraEntity = Minecraft.INSTANCE.camera;
 
         if (cameraEntity != null) {
             Vec3d vec3d = EntityCompat.eyePosition(cameraEntity, 0.0F);
