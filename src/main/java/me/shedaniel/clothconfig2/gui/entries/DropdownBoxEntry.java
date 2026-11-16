@@ -440,7 +440,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
                 int scrollbarPositionMinX = lastRectangle.x + getCellCreator().getCellWidth() - 6;
                 int scrollbarPositionMaxX = scrollbarPositionMinX + 6;
                 int height = (int) (((last10Height) * (last10Height)) / this.getMaxScrollPosition());
-                height = MathHelper.clamp(height, 32, last10Height - 8);
+                height = Math.max(32, Math.min(last10Height - 8, height));
                 height -= Math.min((scroll < 0 ? (int) -scroll : scroll > getMaxScrollPosition() ? (int) scroll - getMaxScrollPosition() : 0), height * .95);
                 height = Math.max(10, height);
                 int minY = (int) Math.min(Math.max((int) scroll * (last10Height - height) / getMaxScrollPosition() + (lastRectangle.y + lastRectangle.height + 1), (lastRectangle.y + lastRectangle.height + 1)), (lastRectangle.y + lastRectangle.height + 1 + last10Height) - height);
@@ -492,11 +492,11 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
                 } else {
                     double double_5 = Math.max(1, this.getMaxScrollPosition());
                     int int_2 = getHeight();
-                    int int_3 = MathHelper.clamp((int) ((float) (int_2 * int_2) / (float) this.getMaxScrollPosition()), 32, int_2 - 8);
+                    int int_3 = Math.max(32, Math.min(int_2 - 8, (int)((float)(int_2 * int_2) / (float)this.getMaxScrollPosition())));
                     double double_6 = Math.max(1.0D, double_5 / (double) (int_2 - int_3));
                     this.offset(double_4 * double_6, false);
                 }
-                target = MathHelper.clamp((int) target, 0, (int) getMaxScrollPosition());
+                target = Math.max(0, Math.min((int)getMaxScrollPosition(), (int)target));
                 return true;
             }
             return false;

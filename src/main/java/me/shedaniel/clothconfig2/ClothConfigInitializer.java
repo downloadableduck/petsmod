@@ -67,7 +67,7 @@ public class ClothConfigInitializer implements ClientModInitializer {
     }
     
     public static double clamp(double v, double maxScroll, double clampExtension) {
-        return MathHelper.clamp((int) v, (int) -clampExtension, (int) ((int) maxScroll + clampExtension));
+        return Math.max(-clampExtension, Math.min(maxScroll + clampExtension, v));
     }
     
     public static EasingMethod getEasingMethod() {

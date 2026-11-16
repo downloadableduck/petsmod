@@ -1,7 +1,7 @@
 package com.jeff.pets.client.rendering.custom.aquatic.koi;
 
 import com.jeff.pets.client.rendering.PetModel;
-import net.minecraft.client.render.model.ModelPart;
+import com.jeff.pets.compat.render.model.ModelPart;
 import net.minecraft.util.math.MathHelper;
 
 public class KoiModel extends PetModel {

@@ -18,7 +18,7 @@ public class RacoonRenderer extends PetRenderer<@NotNull Racoon> {
 
     protected void applyScale(net.minecraft.entity.mob.MobEntity entity, float f) {
         Racoon livingEntityRenderState = (Racoon) entity;
-        if ((CONFIG.isBaby && !livingEntityRenderState.isServerEntity()) || (livingEntityRenderState.isBaby() && livingEntityRenderState.isServerEntity())) {
+        if ((CONFIG.isBaby && !livingEntityRenderState.isServerEntity()) || (false && livingEntityRenderState.isServerEntity())) {
             com.jeff.pets.compat.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
         }
     }
@@ -41,10 +41,9 @@ public class RacoonRenderer extends PetRenderer<@NotNull Racoon> {
         return (racoonTexturePath);
     }
 
-    @Override
     public void renderModel(net.minecraft.entity.mob.MobEntity entity, float g, float f, float u, float h, float m, float i) {
         Racoon racoon = (Racoon) entity;
-        super.renderModel(racoon, g, f, u, h, m, i);
+        // super.renderModel removed for b1.8 compat (render handled by PetRenderer)
         racoon.setServerEntity(racoon.getSyncedData().getByte(Racoon.IS_SERVER_ENTITY) == 1);
     }
 }

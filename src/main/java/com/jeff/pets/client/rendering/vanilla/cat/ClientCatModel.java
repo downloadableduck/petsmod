@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.vanilla.cat;
 
 import com.jeff.pets.compat.GlStateManager;
 import com.jeff.pets.mob.vanilla.passive.ClientCat;
-import net.minecraft.client.render.model.ModelPart;
+import com.jeff.pets.compat.render.model.ModelPart;
 import com.jeff.pets.client.rendering.PetModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.MobEntity;

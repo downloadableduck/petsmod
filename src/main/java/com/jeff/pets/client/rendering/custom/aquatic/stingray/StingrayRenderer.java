@@ -16,10 +16,9 @@ public class StingrayRenderer extends PetRenderer<Stingray> {
         return ("textures/mob/stingray/stingray.png");
     }
 
-    @Override
     public void renderModel(net.minecraft.entity.mob.MobEntity entity, float f, float partialTick, float g, float h, float i, float j) {
         Stingray stingray = (Stingray) entity;
-        super.renderModel(stingray, f, partialTick, g, h, i, j);
+        // super.renderModel removed for b1.8 compat (render handled by PetRenderer)
         //stingray.flapTime = stingray.flap + state.ageInTicks;
     }
 }

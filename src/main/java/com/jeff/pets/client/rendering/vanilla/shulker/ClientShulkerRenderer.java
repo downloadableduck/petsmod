@@ -51,10 +51,9 @@ public class ClientShulkerRenderer extends PetRenderer<ClientShulker> {
         return (folderPath + shulkerFile);
     }
 
-    @Override
     public void renderModel(net.minecraft.entity.mob.MobEntity entity, float f, float g, float h, float i, float j, float k) {
         ClientShulker shulker = (ClientShulker) entity;
-        super.renderModel(shulker, f, g, h, i, j, k);
+        // super.renderModel removed for b1.8 compat (render handled by PetRenderer)
         //shulker.bodyrotationY = 180;
         // shulker.peekAmount = 1;
     }

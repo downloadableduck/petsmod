@@ -2,7 +2,7 @@ package com.jeff.pets.client.rendering.custom.first.duck;
 
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.client.render.model.ModelPart;
+import com.jeff.pets.compat.render.model.ModelPart;
 import net.minecraft.util.math.MathHelper;
 
 public class DuckModel extends PetModel {

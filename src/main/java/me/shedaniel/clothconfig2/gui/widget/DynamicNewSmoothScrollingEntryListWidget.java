@@ -36,7 +36,7 @@ public abstract class DynamicNewSmoothScrollingEntryListWidget<E extends Dynamic
     @Override
     public void capYPosition(double double_1) {
         if (!smoothScrolling)
-            this.scroll = MathHelper.clamp((int) double_1, (int) 0.0D, this.getMaxScroll());
+            this.scroll = Math.max(0, Math.min(this.getMaxScroll(), (int) double_1));
         else {
             scroll = clamp(double_1, getMaxScroll());
             target = clamp(double_1, getMaxScroll());
@@ -57,9 +57,9 @@ public abstract class DynamicNewSmoothScrollingEntryListWidget<E extends Dynamic
             } else {
                 double double_5 = Math.max(1, this.getMaxScroll());
                 int int_2 = this.bottom - this.top;
-                int int_3 = MathHelper.clamp((int) ((float) (int_2 * int_2) / (float) this.getMaxScrollPosition()), 32, int_2 - 8);
+                int int_3 = Math.max(32, Math.min(int_2 - 8, (int)((float)(int_2 * int_2) / (float)this.getMaxScrollPosition())));
                 double double_6 = Math.max(1.0D, double_5 / (double) (int_2 - int_3));
-                this.capYPosition(MathHelper.clamp((int) (this.getScroll() + double_4 * double_6), 0, getMaxScroll()));
+                this.capYPosition(Math.max(0, Math.min((int)getMaxScroll(), (int)(this.getScroll() + double_4 * double_6))));
             }
             return true;
         }
@@ -75,7 +75,7 @@ public abstract class DynamicNewSmoothScrollingEntryListWidget<E extends Dynamic
         }
         if (!smoothScrolling) {
             scroll += 16 * -double_1;
-            this.scroll = MathHelper.clamp((int) double_1, (int) 0.0D, this.getMaxScroll());
+            this.scroll = Math.max(0, Math.min(this.getMaxScroll(), (int) double_1));
             return true;
         }
         offset(ClothConfigInitializer.getScrollStep() * -double_1, true);
@@ -115,7 +115,7 @@ public abstract class DynamicNewSmoothScrollingEntryListWidget<E extends Dynamic
             super.renderScrollBar(Tesselator, buffer, maxScroll, scrollbarPositionMinX, scrollbarPositionMaxX);
         else if (maxScroll > 0) {
             int height = ((this.bottom - this.top) * (this.bottom - this.top)) / this.getMaxScrollPosition();
-            height = MathHelper.clamp(height, 32, this.bottom - this.top - 8);
+            height = Math.max(32, Math.min(this.bottom - this.top - 8, height));
             height -= Math.min((scroll < 0 ? (int) -scroll : scroll > getMaxScroll() ? (int) scroll - getMaxScroll() : 0), height * .95);
             height = Math.max(10, height);
             int minY = Math.min(Math.max((int) this.getScroll() * (this.bottom - this.top - height) / maxScroll + this.top, this.top), this.bottom - height);

@@ -2,7 +2,6 @@ package com.jeff.pets.client.enums;
 
 public enum PetList implements NameableEnum {
     bat,
-    blaze,
     cat,
     cave_spider,
     chicken,
@@ -33,7 +32,6 @@ public enum PetList implements NameableEnum {
     silverfish,
     skeleton,
     slime,
-    snow_golem,
     spider,
     squid,
     stingray,
@@ -41,9 +39,7 @@ public enum PetList implements NameableEnum {
     villager,
     witch,
     wither,
-    wolf,
     zombie,
-    zombie_villager,
     zombie_pigman;
 
     @Override

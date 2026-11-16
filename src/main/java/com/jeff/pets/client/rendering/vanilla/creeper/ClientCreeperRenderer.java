@@ -22,10 +22,9 @@ public class ClientCreeperRenderer extends PetRenderer<ClientCreeper> {
         return ("textures/mob/creeper/creeper.png");
     }
 
-    @Override
     public void renderModel(net.minecraft.entity.mob.MobEntity entity, float f, float g, float h, float i, float j, float k) {
         ClientCreeper creeper = (ClientCreeper) entity;
-        super.renderModel(creeper, f, g, h, i, j, k);
+        // super.renderModel removed for b1.8 compat (render handled by PetRenderer)
         creeper.isPowered = Objects.equals(CONFIG.creeperSkin, "charged");
     }
 }

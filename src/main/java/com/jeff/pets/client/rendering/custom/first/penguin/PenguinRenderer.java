@@ -26,11 +26,10 @@ public class PenguinRenderer extends PetRenderer<@NotNull Penguin> {
         }
     }
 
-    @Override
     public void renderModel(net.minecraft.entity.mob.MobEntity entity, float f, float partialTicks, float h, float i, float j, float k) {
         Penguin penguin = (Penguin) entity;
         //penguin.flap = (float) Math2.lerp(partialTicks, penguin.oFlap, penguin.flap);
         //penguin.flapSpeed = (float) Math2.lerp(partialTicks, penguin.oFlapSpeed, penguin.flapSpeed);
-        super.renderModel(penguin, f, partialTicks, h, i, j, k);
+        // super.renderModel removed for b1.8 compat (render handled by PetRenderer)
     }
 }

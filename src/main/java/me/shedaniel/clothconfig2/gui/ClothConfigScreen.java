@@ -370,7 +370,7 @@ public abstract class ClothConfigScreen extends Screen {
         for (ClothConfigTabButton tabButton : tabButtons)
             xx += tabButton.width + 2;
         if (xx > width - 40)
-            tabsScrollProgress = MathHelper.clamp((int) tabsScrollProgress, 0, (int) (getTabsMaximumScrolled() - width + 40));
+            tabsScrollProgress = Math.max(0, Math.min((int)(getTabsMaximumScrolled() - width + 40), (int)tabsScrollProgress));
         else
             tabsScrollProgress = 0d;
     }
@@ -442,13 +442,13 @@ public abstract class ClothConfigScreen extends Screen {
                 String text = "\u00A7c" + (errors.size() == 1 ? errors.get(0) : I18n.translate("text.cloth-config.multi_error"));
                 if (isTransparentBackground()) {
                     int stringWidth = minecraft.textRenderer.getWidth(text);
-                    fillGradient(8, 9, 20 + stringWidth, 14 + minecraft.textRenderer.fontHeight, 0x68000000, 0x68000000);
+                    fillGradient(8, 9, 20 + stringWidth, 14 + 9, 0x68000000, 0x68000000);
                 }
                 drawTexture(10, 10, 0, 54, 3, 11);
                 drawString(minecraft.textRenderer, text, 18, 12, -1);
                 if (errors.size() > 1) {
                     int stringWidth = minecraft.textRenderer.getWidth(text);
-                    if (int_1 >= 10 && int_2 >= 10 && int_1 <= 18 + stringWidth && int_2 <= 14 + minecraft.textRenderer.fontHeight)
+                    if (int_1 >= 10 && int_2 >= 10 && int_1 <= 18 + stringWidth && int_2 <= 14 + 9)
                         queuedTooltips.add(QueuedTooltip.create(new Point(int_1, int_2), new ArrayList<>(errors)));
                 }
             }
@@ -458,7 +458,7 @@ public abstract class ClothConfigScreen extends Screen {
             String text = "\u00A7c" + I18n.translate("text.cloth-config.not_editable");
             if (isTransparentBackground()) {
                 int stringWidth = minecraft.textRenderer.getWidth(text);
-                fillGradient(8, 9, 20 + stringWidth, 14 + minecraft.textRenderer.fontHeight, 0x68000000, 0x68000000);
+                fillGradient(8, 9, 20 + stringWidth, 14 + 9, 0x68000000, 0x68000000);
             }
             drawTexture(10, 10, 0, 54, 3, 11);
             drawString(minecraft.textRenderer, text, 18, 12, -1);

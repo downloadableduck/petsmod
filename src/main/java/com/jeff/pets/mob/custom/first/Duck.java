@@ -226,7 +226,7 @@ public class Duck extends AbstractPet {
       }
 
       if (owner != null && this.distanceTo(owner) >= 10.0F) {
-         this.teleport(owner.x, owner.y, owner.z);
+         this.setPosition(owner.x, owner.y, owner.z);
       }
 
       int ambient = (int)(Math.random() * 1200.0);

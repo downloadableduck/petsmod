@@ -1,6 +1,6 @@
 package com.jeff.pets.client.rendering;
 
-import net.minecraft.client.render.model.ModelPart;
+import com.jeff.pets.compat.render.model.ModelPart;
 import net.minecraft.util.math.MathHelper;
 
 public class AnimationUtils {

@@ -223,7 +223,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
     protected void renderScrollBar(Tesselator Tesselator, Builder buffer, int maxScroll, int scrollbarPositionMinX, int scrollbarPositionMaxX) {
         if (maxScroll > 0) {
             int int_9 = ((this.bottom - this.top) * (this.bottom - this.top)) / this.getMaxScrollPosition();
-            int_9 = MathHelper.clamp(int_9, 32, this.bottom - this.top - 8);
+            int_9 = Math.max(32, Math.min(this.bottom - this.top - 8, int_9));
             int int_10 = (int) this.getScroll() * (this.bottom - this.top - int_9) / maxScroll + this.top;
             if (int_10 < this.top) {
                 int_10 = this.top;
@@ -277,7 +277,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
     }
     
     public void capYPosition(double double_1) {
-        this.scroll = MathHelper.clamp((int) double_1, (int) 0.0D, this.getMaxScroll());
+        this.scroll = Math.max(0, Math.min(this.getMaxScroll(), (int) double_1));
     }
     
     protected int getMaxScroll() {
@@ -336,7 +336,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
             } else {
                 double double_5 = Math.max(1, this.getMaxScroll());
                 int int_2 = this.bottom - this.top;
-                int int_3 = MathHelper.clamp((int) ((float) (int_2 * int_2) / (float) this.getMaxScrollPosition()), 32, int_2 - 8);
+                int int_3 = Math.max(32, Math.min(int_2 - 8, (int)((float)(int_2 * int_2) / (float)this.getMaxScrollPosition())));
                 double double_6 = Math.max(1.0D, double_5 / (double) (int_2 - int_3));
                 this.capYPosition(this.getScroll() + double_4 * double_6);
             }
@@ -374,7 +374,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
     protected void moveSelection(int int_1) {
         if (!this.children().isEmpty()) {
             int int_2 = this.children().indexOf(this.getSelectedItem());
-            int int_3 = MathHelper.clamp(int_2 + int_1, 0, this.getItemCount() - 1);
+            int int_3 = Math.max(0, Math.min(this.getItemCount() - 1, int_2 + int_1));
             E itemListWidget$Item_1 = this.children().get(int_3);
             this.selectItem(itemListWidget$Item_1);
             this.ensureVisible(itemListWidget$Item_1);

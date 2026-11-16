@@ -10,73 +10,84 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Used as a shared piece of code across all of the renderers. The main point of this class
- * is to provide a {@code state.isUpsideDown} check for all mobs.
+ * b1.8-compatible pet renderer base.
  */
-
 public abstract class PetRenderer<D extends AbstractPet> extends MobRenderer {
 
+    protected final net.minecraft.client.render.model.Model petModel;
     private final List<PetRenderLayer> petLayers = new ArrayList<>();
 
-    /**
-     * @param context unused: 1.7.10's {@code MobRenderer} is constructed from just the model
-     *                 and shadow size, unlike 1.8's which also takes an {@code EntityRenderDispatcher}.
-     *                 It is kept so the renderer factory interface stays uniform across all pets.
-     */
     public PetRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, net.minecraft.client.render.model.Model model, float shadow) {
         super(model, shadow);
+        this.petModel = model;
         this.dispatcher = context;
     }
 
     public abstract String getTexture(Entity entity);
 
-    /**
-     * Registers an extra render pass that runs after the mob's model has been drawn.
-     *
-     * <p>1.7.10 has no equivalent of 1.8's {@code EntityRenderLayer} system, so layers are
-     * tracked by this renderer and invoked from {@link #renderModel} instead.
-     */
     public void addLayer(PetRenderLayer layer) {
         this.petLayers.add(layer);
     }
 
-    /**
-     * 1.8's {@code LivingEntityRenderer.getModel()}, which 1.7.10 lacks.
-     */
     public net.minecraft.client.render.model.Model getModel() {
-        return this.model;
+        return this.petModel;
     }
 
-    /**
-     * 1.8's {@code Minecraft.getBlockRenderDispatcher()}, which 1.7.10 lacks.
-     */
     public net.minecraft.client.render.block.BlockRenderer getBlockRenderer() {
         return this.blockRenderer;
     }
 
-    /**
-     * 1.7.10's {@code LivingEntityRenderer} only satisfies {@code EntityRenderer}'s abstract
-     * {@code render} through a compiler-generated bridge, so every concrete renderer has to
-     * declare it. Delegating here covers all of the mod's pet renderers at once.
-     */
     @Override
-    public void render(net.minecraft.entity.Entity entity, double x, double y, double z, float yaw, float partialTicks) {
+    public void render(Entity entity, double x, double y, double z, float yaw, float partialTicks) {
         super.render((MobEntity) entity, x, y, z, yaw, partialTicks);
     }
 
+    // b1.8 MobRenderer renders inline; override render(MobEntity,...) to use our model and layers
     @Override
-    protected void renderModel(MobEntity entity, float f, float g, float h, float i, float j, float k) {
-        this.bindTexture(this.getTexture(entity));
+    public void render(MobEntity entity, double x, double y, double z, float yaw, float partialTicks) {
         GlStateManager.pushMatrix();
+        org.lwjgl.opengl.GL11.glDisable(2884); // GL_CULL_FACE
+        this.petModel.attackAnimationProgress = this.getAttackAnimationProgress(entity, partialTicks);
+        this.petModel.riding = entity.isRiding();
+
+        float bodyYaw = entity.lastBodyYaw + (entity.bodyYaw - entity.lastBodyYaw) * partialTicks;
+        float headYaw = entity.lastYaw + (entity.yaw - entity.lastYaw) * partialTicks;
+        float headPitch = entity.lastPitch + (entity.pitch - entity.lastPitch) * partialTicks;
+
+        this.applyTranslation(entity, x, y, z);
+        float bob = this.getBob(entity, partialTicks);
+        this.applyRotation(entity, bob, bodyYaw, partialTicks);
+
+        float scale = 0.0625F;
+        org.lwjgl.opengl.GL11.glEnable(32826); // GL_RESCALE_NORMAL
+        GlStateManager.scalef(-1.0F, -1.0F, 1.0F);
+        this.applyScale(entity, partialTicks);
+        GlStateManager.translatef(0.0F, -24.0F * scale - 0.0078125F, 0.0F);
+
+        float walkAmount = entity.lastWalkAnimationSpeed + (entity.walkAnimationSpeed - entity.lastWalkAnimationSpeed) * partialTicks;
+        float walkPos = entity.walkAnimationProgress - entity.walkAnimationSpeed * (1.0F - partialTicks);
+        if (walkAmount > 1.0F) walkAmount = 1.0F;
+
+        this.bindTexture(this.getTexture(entity));
+        this.petModel.prepare(entity, walkPos, walkAmount, partialTicks);
         if (entity.isRiding()) {
+            GlStateManager.pushMatrix();
             GlStateManager.translatef(0, -0.35f, 0);
+            this.petModel.render(entity, walkPos, walkAmount, bob, headYaw - bodyYaw, headPitch, scale);
+            GlStateManager.popMatrix();
+        } else {
+            this.petModel.render(entity, walkPos, walkAmount, bob, headYaw - bodyYaw, headPitch, scale);
         }
-        super.renderModel(entity, f, g, h, i, j, k);
-        GlStateManager.popMatrix();
 
         for (PetRenderLayer layer : this.petLayers) {
-            layer.render(entity, f, g, h, i, j, k);
+            layer.render(entity, walkPos, walkAmount, bob, headYaw - bodyYaw, headPitch, scale);
         }
+
+        org.lwjgl.opengl.GL11.glDisable(32826); // GL_RESCALE_NORMAL
+        org.lwjgl.opengl.GL11.glEnable(2884); // GL_CULL_FACE
+        GlStateManager.popMatrix();
+
+        this.renderNameTag(entity, x, y, z);
     }
 
     @Override

@@ -97,14 +97,11 @@ public class Central implements ClientModInitializer {
     public static ClientMooshroom mooshroom;
     public static ClientPig pig;
     public static ClientRabbit rabbit;
-    public static ClientSnowGolem snowGolem;
     public static ClientSquid squid;
-    public static ClientVillager villager;
     public static ClientCaveSpider caveSpider;
     public static ClientEnderman enderman;
     public static ClientIronGolem ironGolem;
     public static ClientSpider spider;
-    public static ClientBlaze blaze;
     public static ClientCreeper creeper;
     public static ClientElderGuardian elderGuardian;
     public static ClientEndermite endermite;
@@ -116,7 +113,6 @@ public class Central implements ClientModInitializer {
     public static ClientSkeleton skeleton;
     public static ClientSlime slime;
     public static ClientZombie zombie;
-    public static ClientZombieVillager zombieVillager;
     public static ClientWitherSkeleton witherSkeleton;
     public static ClientEnderDragon enderDragon;
     public static ClientWither wither;
@@ -146,14 +142,11 @@ public class Central implements ClientModInitializer {
         Utils.despawnEntity(mooshroom);
         Utils.despawnEntity(pig);
         Utils.despawnEntity(rabbit);
-        Utils.despawnEntity(snowGolem);
         Utils.despawnEntity(squid);
-        Utils.despawnEntity(villager);
         Utils.despawnEntity(caveSpider);
         Utils.despawnEntity(enderman);
         Utils.despawnEntity(ironGolem);
         Utils.despawnEntity(spider);
-        Utils.despawnEntity(blaze);
         Utils.despawnEntity(creeper);
         Utils.despawnEntity(elderGuardian);
         Utils.despawnEntity(endermite);
@@ -165,7 +158,6 @@ public class Central implements ClientModInitializer {
         Utils.despawnEntity(skeleton);
         Utils.despawnEntity(slime);
         Utils.despawnEntity(zombie);
-        Utils.despawnEntity(zombieVillager);
         Utils.despawnEntity(witherSkeleton);
         Utils.despawnEntity(enderDragon);
         Utils.despawnEntity(wither);
@@ -196,14 +188,11 @@ public class Central implements ClientModInitializer {
         mooshroom = new ClientMooshroom(world);
         pig = new ClientPig(world);
         rabbit = new ClientRabbit(world);
-        snowGolem = new ClientSnowGolem(world);
         squid = new ClientSquid(world);
-        villager = new ClientVillager(world);
         caveSpider = new ClientCaveSpider(world);
         enderman = new ClientEnderman(world);
         ironGolem = new ClientIronGolem(world);
         spider = new ClientSpider(world);
-        blaze = new ClientBlaze(world);
         creeper = new ClientCreeper(world);
         elderGuardian = new ClientElderGuardian(world);
         endermite = new ClientEndermite(world);
@@ -215,7 +204,6 @@ public class Central implements ClientModInitializer {
         skeleton = new ClientSkeleton(world);
         slime = new ClientSlime(world);
         zombie = new ClientZombie(world);
-        zombieVillager = new ClientZombieVillager(world);
         witherSkeleton = new ClientWitherSkeleton(world);
         enderDragon = new ClientEnderDragon(world);
         wither = new ClientWither(world);
@@ -252,12 +240,8 @@ public class Central implements ClientModInitializer {
                 Utils.summonPet(pig, CONFIG.pigName);
             } else if (Objects.equals(CONFIG.activePet, "rabbit")) {
                 Utils.summonPet(rabbit, CONFIG.rabbitName);
-            } else if (Objects.equals(CONFIG.activePet, "snow_golem")) {
-                Utils.summonPet(snowGolem, CONFIG.snowGolemName);
             } else if (Objects.equals(CONFIG.activePet, "squid")) {
                 Utils.summonPet(squid, CONFIG.squidName);
-            } else if (Objects.equals(CONFIG.activePet, "villager")) {
-                Utils.summonPet(villager, CONFIG.villagerName);
             } else if (Objects.equals(CONFIG.activePet, "cave_spider")) {
                 Utils.summonPet(caveSpider, CONFIG.caveSpiderName);
             } else if (Objects.equals(CONFIG.activePet, "enderman")) {
@@ -266,8 +250,6 @@ public class Central implements ClientModInitializer {
                 Utils.summonPet(ironGolem, CONFIG.ironGolemName);
             } else if (Objects.equals(CONFIG.activePet, "spider")) {
                 Utils.summonPet(spider, CONFIG.spiderName);
-            } else if (Objects.equals(CONFIG.activePet, "blaze")) {
-                Utils.summonPet(blaze, CONFIG.blazeName);
             } else if (Objects.equals(CONFIG.activePet, "creeper")) {
                 Utils.summonPet(creeper, CONFIG.creeperName);
             } else if (Objects.equals(CONFIG.activePet, "elder_guardian")) {
@@ -290,8 +272,6 @@ public class Central implements ClientModInitializer {
                 Utils.summonPet(slime, CONFIG.slimeName);
             } else if (Objects.equals(CONFIG.activePet, "zombie")) {
                 Utils.summonPet(zombie, CONFIG.zombieName);
-            } else if (Objects.equals(CONFIG.activePet, "zombie_villager")) {
-                Utils.summonPet(zombieVillager, CONFIG.zombieVillagerName);
             } else if (Objects.equals(CONFIG.activePet, "wither_skeleton")) {
                 Utils.summonPet(witherSkeleton, CONFIG.witherSkeletonName);
             } else if (Objects.equals(CONFIG.activePet, "ender_dragon")) {
@@ -331,14 +311,11 @@ public class Central implements ClientModInitializer {
         Utils.checkName("mooshroom", mooshroom, CONFIG.mooshroomName);
         Utils.checkName("pig", pig, CONFIG.pigName);
         Utils.checkName("rabbit", rabbit, CONFIG.rabbitName);
-        Utils.checkName("snow_golem", snowGolem, CONFIG.snowGolemName);
         Utils.checkName("squid", squid, CONFIG.squidName);
-        Utils.checkName("villager", villager, CONFIG.villagerName);
         Utils.checkName("cave_spider", caveSpider, CONFIG.caveSpiderName);
         Utils.checkName("enderman", enderman, CONFIG.endermanName);
         Utils.checkName("iron_golem", ironGolem, CONFIG.ironGolemName);
         Utils.checkName("spider", spider, CONFIG.spiderName);
-        Utils.checkName("blaze", blaze, CONFIG.blazeName);
         Utils.checkName("creeper", creeper, CONFIG.creeperName);
         Utils.checkName("elder_guardian", elderGuardian, CONFIG.elderGuardianName);
         Utils.checkName("endermite", endermite, CONFIG.endermiteName);
@@ -1381,12 +1358,8 @@ public class Central implements ClientModInitializer {
                 Utils.setActivePet(pig, "pig");
             } else if (Objects.equals(species, "rabbit")) {
                 Utils.setActivePet(rabbit, "rabbit");
-            } else if (Objects.equals(species, "snow_golem") || Objects.equals(species, "snow golem")) {
-                Utils.setActivePet(snowGolem, "snow_golem");
             } else if (Objects.equals(species, "squid")) {
                 Utils.setActivePet(squid, "squid");
-            } else if (Objects.equals(species, "villager")) {
-                Utils.setActivePet(villager, "villager");
             } else if (Objects.equals(species, "cave_spider") || Objects.equals(species, "cave spider")) {
                 Utils.setActivePet(caveSpider, "cave_spider");
             } else if (Objects.equals(species, "enderman")) {
@@ -1395,8 +1368,6 @@ public class Central implements ClientModInitializer {
                 Utils.setActivePet(ironGolem, "iron_golem");
             } else if (Objects.equals(species, "spider")) {
                 Utils.setActivePet(spider, "spider");
-            } else if (Objects.equals(species, "blaze")) {
-                Utils.setActivePet(blaze, "blaze");
             } else if (Objects.equals(species, "creeper")) {
                 Utils.setActivePet(creeper, "creeper");
             } else if (Objects.equals(species, "elder_guardian") || Objects.equals(species, "elder guardian")) {
@@ -1419,8 +1390,6 @@ public class Central implements ClientModInitializer {
                 Utils.setActivePet(slime, "slime");
             } else if (Objects.equals(species, "zombie")) {
                 Utils.setActivePet(zombie, "zombie");
-            } else if (Objects.equals(species, "zombie_villager") || Objects.equals(species, "zombie villager")) {
-                Utils.setActivePet(zombieVillager, "zombie_villager");
             } else if (Objects.equals(species, "wither_skeleton") || Objects.equals(species, "wither skeleton")) {
                 Utils.setActivePet(witherSkeleton, "wither_skeleton");
             } else if (Objects.equals(species, "wither")) {

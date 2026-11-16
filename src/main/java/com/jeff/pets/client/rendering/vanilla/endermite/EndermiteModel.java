@@ -1,8 +1,8 @@
 package com.jeff.pets.client.rendering.vanilla.endermite;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.client.render.model.Model; import com.jeff.pets.client.rendering.PetModel;
-import net.minecraft.client.render.model.ModelPart;
+import com.jeff.pets.client.rendering.PetModel;
+import com.jeff.pets.compat.render.model.ModelPart;
 import net.minecraft.util.math.MathHelper;
 
 /**

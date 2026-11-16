@@ -4,8 +4,8 @@ import com.jeff.pets.client.Math2;
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.client.rendering.ArmPose;
 import com.jeff.pets.mob.vanilla.neutral.ClientZombiePigman;
-import net.minecraft.client.render.model.Model; import com.jeff.pets.client.rendering.PetModel;
-import net.minecraft.client.render.model.ModelPart;
+import com.jeff.pets.client.rendering.PetModel;
+import com.jeff.pets.compat.render.model.ModelPart;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 

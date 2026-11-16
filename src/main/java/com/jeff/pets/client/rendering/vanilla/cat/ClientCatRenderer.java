@@ -53,10 +53,9 @@ public class ClientCatRenderer extends PetRenderer {
         }
     }
 
-    @Override
     public void renderModel(MobEntity entity, float f, float g, float h, float i, float j, float k) {
         ClientCat cat = (ClientCat) entity;
-        super.renderModel(entity, f, g, h, i, j, k);
+        // super.renderModel removed for b1.8 compat (render handled by PetRenderer)
         cat.setSitting(cat.isRiding());
     }
 }

@@ -28,6 +28,7 @@ public abstract class AbstractPet extends AnimalEntity {
     protected AbstractPet(World level) {
         super(level);
         this.setSpeed(0.4f);
+        this.health = 8;
     }
 
     protected boolean aiEnabled() {
@@ -75,12 +76,10 @@ public abstract class AbstractPet extends AnimalEntity {
         return super.interact(player);
     }
 
-    @Override
     protected boolean isBreedingItem(ItemStack itemStack) {
         return false;
     }
 
-    @Override
     protected AnimalEntity makeChild(AnimalEntity mate) {
         return null;
     }
@@ -232,12 +231,6 @@ public abstract class AbstractPet extends AnimalEntity {
         return this.yaw;
     }
 
-    @Override
-    public int getMaxHealth() {
-        return 8;
-    }
-
-    @Override
     public void tick() {
         // Prevent server/client interpolation from snapping this locally-scripted pet.
         this.lerpSteps = 0;

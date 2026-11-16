@@ -37,7 +37,7 @@ public class TextListEntry extends TooltipListEntry {
         List<String> strings = Utils.split(text, savedWidth);
         for(int i = 0; i < strings.size(); i++) {
             Minecraft.INSTANCE.textRenderer.drawWithShadow(strings.get(i), x, yy, color);
-            yy += Minecraft.INSTANCE.textRenderer.fontHeight + 3;
+            yy += 9 + 3;
         }
     }
     

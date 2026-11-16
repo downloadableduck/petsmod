@@ -110,7 +110,7 @@ public abstract class FlyingPet extends AbstractPet {
         }
         if (owner != null) {
             if (distanceTo(owner) >= 10) {
-                this.teleport(owner.x, owner.y, owner.z);
+                this.setPosition(owner.x, owner.y, owner.z);
             }
         }
 

@@ -3,8 +3,8 @@ package com.jeff.pets.client.rendering.vanilla.horse;
 import com.jeff.pets.client.Math2;
 import com.jeff.pets.compat.GlStateManager;
 import com.jeff.pets.mob.AbstractPet;
-import net.minecraft.client.render.model.Model; import com.jeff.pets.client.rendering.PetModel;
-import net.minecraft.client.render.model.ModelPart;
+import com.jeff.pets.client.rendering.PetModel;
+import com.jeff.pets.compat.render.model.ModelPart;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.util.math.MathHelper;
 
@@ -95,7 +95,7 @@ public class ClientHorseModel extends PetModel {
 
     @Override
     public void render(net.minecraft.entity.Entity entity, float f, float g, float h, float i, float j, float k) {
-        boolean bl = ((MobEntity) entity).isBaby();
+        boolean bl = false;
         float l = 1;
         boolean bl2 = false;
         boolean bl3 = entity.rider != null;

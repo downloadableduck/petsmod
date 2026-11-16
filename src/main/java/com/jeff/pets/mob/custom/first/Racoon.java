@@ -137,7 +137,7 @@ public class Racoon extends AbstractPet {
       }
 
       if (owner != null && this.distanceTo(owner) >= 10.0F) {
-         this.teleport(owner.x, owner.y, owner.z);
+         this.setPosition(owner.x, owner.y, owner.z);
       }
    }
 
