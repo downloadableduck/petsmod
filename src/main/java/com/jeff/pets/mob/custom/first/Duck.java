@@ -171,9 +171,9 @@ public class Duck extends AbstractPet {
          double distance = this.distanceTo(owner);
          float rotation = -this.pitch;
          float rotationToOwner = rotation + -this.getOwner().pitch;
-         float bodyYawDiff = Utils.wrapDegrees(this.headYaw - this.bodyYaw);
+         float bodyYawDiff = Utils.wrapDegrees(this.yaw - this.bodyYaw);
          if (rotationToOwner >= 50.0F) {
-            this.bodyYaw = this.headYaw - Math.signum(bodyYawDiff) * 50.0F;
+            this.bodyYaw = this.yaw - Math.signum(bodyYawDiff) * 50.0F;
          }
 
          if (distance > 2.0) {
@@ -181,8 +181,8 @@ public class Duck extends AbstractPet {
             Vec3d targetPos = Vec3d.of(owner.x, owner.y, owner.z);
             Vec3d dir = targetPos.subtractFrom(this.getPosVec()).normalize();
             this.setYRot(rotlerp(this.getYRot(), (float)targetYaw));
-            this.bodyYaw = this.bodyYaw + Math.max(-50.0F, Math.min(50.0F, this.headYaw - this.bodyYaw));
-            double speed = Math.min(0.23D, owner.getTargetSpeed() * 1.2D + 0.08D);
+            this.bodyYaw = this.bodyYaw + Math.max(-50.0F, Math.min(50.0F, this.yaw - this.bodyYaw));
+            double speed = Math.min(0.23D, owner.landSpeed* 1.2D + 0.08D);
             this.lerpVelocity(Vec3d.of(-dir.x * speed, this.getVelocity().y, -dir.z * speed));
          } else {
             this.lookAt(this.getOwner(), 5.0F, 0.0F);
@@ -212,9 +212,9 @@ public class Duck extends AbstractPet {
 
          this.setYRot(rotlerp(this.getYRot(), (float)targetYaw));
          if (Math.abs(bodyYawDiff) > 50.0F) {
-            this.bodyYaw = this.headYaw - Math.signum(bodyYawDiff) * 50.0F;
+            this.bodyYaw = this.yaw - Math.signum(bodyYawDiff) * 50.0F;
          } else {
-            this.bodyYaw = this.bodyYaw + Math.max(-10.0F, Math.min(10.0F, this.headYaw - this.bodyYaw));
+            this.bodyYaw = this.bodyYaw + Math.max(-10.0F, Math.min(10.0F, this.yaw - this.bodyYaw));
          }
 
              // No manual move() here: LivingEntity.mobTick() already calls moveRelative() ->

@@ -2,6 +2,7 @@ package me.shedaniel.clothconfig2.gui.entries;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import com.jeff.pets.client.Utils;
 import me.shedaniel.clothconfig2.ButtonWidget;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import me.shedaniel.clothconfig2.impl.WindowUtil;
@@ -101,7 +102,7 @@ public class SelectionListEntry<T> extends TooltipListEntry<T> {
         this.buttonWidget.active = isEditable();
         this.buttonWidget.y = y;
         this.buttonWidget.message = nameProvider.apply(getValue());
-        if (Minecraft.INSTANCE.textRenderer.bidirectional) {
+        if (Utils.isBidirectional()) {
             Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, getPreferredTextColor());
             this.resetButton.x = x;
             this.buttonWidget.x = x + resetButton.width + 2;

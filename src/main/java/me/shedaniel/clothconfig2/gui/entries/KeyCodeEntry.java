@@ -1,6 +1,7 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
 import com.google.common.collect.Lists;
+import com.jeff.pets.client.Utils;
 import me.shedaniel.clothconfig2.ButtonWidget;
 import me.shedaniel.clothconfig2.api.ModifierKeyCode;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
@@ -103,7 +104,7 @@ public class KeyCodeEntry extends TooltipListEntry<ModifierKeyCode> {
         this.buttonWidget.message = getLocalizedName();
         if (getScreen().getFocusedBinding() == this)
             this.buttonWidget.message = Formatting.WHITE + "> " + Formatting.YELLOW + this.buttonWidget.message + Formatting.WHITE + " <";
-        if (Minecraft.INSTANCE.textRenderer.bidirectional) {
+        if (Utils.isBidirectional()) {
             Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, 16777215);
             this.resetButton.x = x;
             this.buttonWidget.x = x + resetButton.width + 2;

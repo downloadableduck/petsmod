@@ -11,5 +11,4 @@ mutable field net/minecraft/client/gui/widget/ButtonWidget width I
 accessible field net/minecraft/client/render/entity/EntityRenderer blockRenderer Lnet/minecraft/client/render/block/BlockRenderer;
 accessible field net/minecraft/client/gui/widget/TextFieldWidget editable Z
 accessible field net/minecraft/client/Minecraft INSTANCE Lnet/minecraft/client/Minecraft;
-accessible field net/minecraft/client/render/TextRenderer bidirectional Z
 accessible method net/minecraft/client/Minecraft getOs ()Lnet/minecraft/client/Minecraft__OS;

@@ -22,12 +22,12 @@ public interface PetRenderLayer {
 	 * @param limbSwing       walking animation amplitude
 	 * @param limbSwingAmount walking animation speed
 	 * @param ageInTicks      interpolated age of the mob, drives idle animations
-	 * @param netHeadYaw      interpolated head yaw
+	 * @param netyaw      interpolated head yaw
 	 * @param headPitch       interpolated head pitch
 	 * @param scale           model scale
 	 */
 	void render(MobEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks,
-	            float netHeadYaw, float headPitch, float scale);
+	            float netyaw, float headPitch, float scale);
 
 	/**
 	 * @return whether the mob's texture is tinted with the hurt colour underneath this layer

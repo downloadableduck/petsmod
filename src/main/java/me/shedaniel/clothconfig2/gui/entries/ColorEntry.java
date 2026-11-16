@@ -1,5 +1,6 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
+import com.jeff.pets.client.Utils;
 import me.shedaniel.clothconfig2.compat.CompatTextFieldWidget;
 import me.shedaniel.clothconfig2.gui.widget.ColorDisplayWidget;
 import net.minecraft.client.Minecraft;
@@ -41,7 +42,7 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
         ColorValue value = getColorValue(textFieldWidget.getText());
         if (!value.hasError())
             colorDisplayWidget.setColor(alpha ? value.getColor() : 0xff000000 | value.getColor());
-        if (Minecraft.INSTANCE.textRenderer.bidirectional) {
+        if (Utils.isBidirectional()) {
             this.colorDisplayWidget.x = x + resetButton.width + 148;
         } else {
             this.colorDisplayWidget.x = textFieldWidget.x - 23;

@@ -146,7 +146,7 @@ public class ClientHorseModel extends PetModel {
         super.prepare(entity, f, g, h);
         AbstractPet horseBaseEntity = (AbstractPet) entity;
         float i = this.method_2790(horseBaseEntity.lastBodyYaw, horseBaseEntity.bodyYaw, h);
-        float j = this.method_2790(horseBaseEntity.lastHeadYaw, horseBaseEntity.headYaw, h);
+        float j = this.method_2790(horseBaseEntity.lastYaw, horseBaseEntity.yaw, h);
         float k = (float) Math2.lerp(h, horseBaseEntity.lastPitch, horseBaseEntity.pitch);
         float l = j - i;
         float m = k * ((float) Math.PI / 180F);

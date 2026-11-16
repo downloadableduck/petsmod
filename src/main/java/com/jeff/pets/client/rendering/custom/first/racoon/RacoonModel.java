@@ -106,8 +106,8 @@ public class RacoonModel extends PetModel {
     }
 
     @Override
-    public void setupAnimation(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale, net.minecraft.entity.Entity entity) {
+    public void setupAnimation(float limbSwing, float limbSwingAmount, float ageInTicks, float netyaw, float headPitch, float scale, net.minecraft.entity.Entity entity) {
         this.head.rotationX = headPitch * ((float) Math.PI / 180F);
-        this.head.rotationY = netHeadYaw * ((float) Math.PI / 180F);
+        this.head.rotationY = netyaw * ((float) Math.PI / 180F);
     }
 }

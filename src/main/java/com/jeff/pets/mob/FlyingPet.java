@@ -52,10 +52,10 @@ public abstract class FlyingPet extends AbstractPet {
             double distance = this.distanceTo(owner);
             float rotation = -this.pitch;
             float rotationToOwner = rotation + (-this.getOwner().pitch);
-            float bodyYawDiff = Utils.wrapDegrees(this.headYaw - this.bodyYaw /*bodyYaw*/);
+            float bodyYawDiff = Utils.wrapDegrees(this.yaw - this.bodyYaw /*bodyYaw*/);
 
             if (rotationToOwner >= 50) {
-                this.bodyYaw /*bodyYaw*/ = this.headYaw - (Math.signum(bodyYawDiff) * 50.0F);
+                this.bodyYaw /*bodyYaw*/ = this.yaw - (Math.signum(bodyYawDiff) * 50.0F);
             }
 
             if (distance > this.stopDistance()) {
@@ -66,7 +66,7 @@ public abstract class FlyingPet extends AbstractPet {
                 double speed = 0.2;
                 System.out.println(speed);
                 
-                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + Math.max(-50.0F, Math.min(50.0F, this.headYaw - this.bodyYaw /*bodyYaw*/)); //m_82141949
+                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + Math.max(-50.0F, Math.min(50.0F, this.yaw - this.bodyYaw /*bodyYaw*/)); //m_82141949
 
                 this.lerpVelocity(Vec3d.of(-dir.x * speed, dir.y * speed, -dir.z * speed));
             } else {
@@ -95,9 +95,9 @@ public abstract class FlyingPet extends AbstractPet {
 
 
             if (Math.abs(bodyYawDiff) > 50) {
-                this.bodyYaw /*bodyYaw*/ = this.headYaw - (Math.signum(bodyYawDiff) * 50);
+                this.bodyYaw /*bodyYaw*/ = this.yaw - (Math.signum(bodyYawDiff) * 50);
             } else {
-                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + Math.max(-10.0F, Math.min(10.0F, this.headYaw - this.bodyYaw /*bodyYaw*/));
+                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + Math.max(-10.0F, Math.min(10.0F, this.yaw - this.bodyYaw /*bodyYaw*/));
             }
 
             // No manual move() here: LivingEntity.mobTick() already calls moveRelative() ->

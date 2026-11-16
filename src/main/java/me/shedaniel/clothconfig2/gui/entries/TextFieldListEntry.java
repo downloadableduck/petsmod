@@ -1,6 +1,7 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
 import com.google.common.collect.Lists;
+import com.jeff.pets.client.Utils;
 import me.shedaniel.clothconfig2.ButtonWidget;
 import me.shedaniel.clothconfig2.compat.CompatTextFieldWidget;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
@@ -67,7 +68,7 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
         this.resetButton.y = y;
         this.textFieldWidget.editable = (isEditable());
         this.textFieldWidget.y = y + 1;
-        if (Minecraft.INSTANCE.textRenderer.bidirectional) {
+        if (Utils.isBidirectional()) {
             Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, 16777215);
             this.resetButton.x = x;
             this.textFieldWidget.x = x + resetButton.width;

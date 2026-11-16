@@ -257,4 +257,9 @@ public class Utils {
 
         return k != i && l != -1 && l < k ? l : k;
     }
+
+    //control thing so if it is supposed to be true i can just flip it
+    public static boolean isBidirectional() {
+        return false;
+    }
 }

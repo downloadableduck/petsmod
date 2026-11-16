@@ -84,8 +84,8 @@ public class PenguinModel extends PetModel {
     }
 
     @Override
-    public void render(net.minecraft.entity.Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-        this.setupAnimation(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entity);
+    public void render(net.minecraft.entity.Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netyaw, float headPitch, float scale) {
+        this.setupAnimation(limbSwing, limbSwingAmount, ageInTicks, netyaw, headPitch, scale, entity);
         root.render(scale);
     }
 
@@ -96,11 +96,11 @@ public class PenguinModel extends PetModel {
     }
 
     @Override
-    public void setupAnimation(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale, net.minecraft.entity.Entity entity) {
+    public void setupAnimation(float limbSwing, float limbSwingAmount, float ageInTicks, float netyaw, float headPitch, float scale, net.minecraft.entity.Entity entity) {
         Penguin state = (Penguin) entity;
         float flapAngle = (MathHelper.sin(state.flap) + 1.0F) * state.flapSpeed;
         this.head.rotationX = headPitch * ((float) Math.PI / 180F);
-        this.head.rotationY = netHeadYaw * ((float) Math.PI / 180F);
+        this.head.rotationY = netyaw * ((float) Math.PI / 180F);
         this.right_foot.rotationZ = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
         this.left_foot.rotationZ = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
         this.right_wing.rotationY = -flapAngle * 0.75F;

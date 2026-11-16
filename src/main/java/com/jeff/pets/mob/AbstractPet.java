@@ -30,11 +30,15 @@ public abstract class AbstractPet extends AnimalEntity {
         this.setSpeed(0.4f);
     }
 
-    @Override
     protected boolean aiEnabled() {
-        // 1.1: keep vanilla AI disabled so our scripted client-side movement isn't overridden
-        // by serverTickAi/navigation each tick (which caused jerky movement).
         return false;
+    }
+
+    @Override
+    public void aiTick() {
+        if (!aiEnabled()) {
+            super.aiTick();;
+        }
     }
 
     protected abstract int stopDistance();
@@ -118,7 +122,6 @@ public abstract class AbstractPet extends AnimalEntity {
                 this.y + this.getEyeHeight(),
                 this.z + (moveZ * 2)
         );
-        this.getLookControl().lookAt(lookDir.x, lookDir.y, lookDir.z, 1.0F, (float) this.verticleLookSpeed());
 
         if (moveX * moveX + moveZ * moveZ > 0.001) {
             float targetYaw = (float) (Math.atan2(-moveX, moveZ) * (180D / Math.PI));
@@ -143,7 +146,7 @@ public abstract class AbstractPet extends AnimalEntity {
 
     public void setYRot(float targetYaw) {
         this.yaw = targetYaw;
-        this.setHeadYaw(targetYaw);
+        this.setyaw(targetYaw);
         this.bodyYaw = targetYaw;
     }
 
@@ -213,7 +216,7 @@ public abstract class AbstractPet extends AnimalEntity {
 
     public void setSpeed(float speed) {
         this.walkSpeed = speed;
-        this.setForwardSpeed(speed);
+        this.forwardSpeed = (speed);
     }
 
     public float getSpeed() {
@@ -221,12 +224,12 @@ public abstract class AbstractPet extends AnimalEntity {
         return this.walkSpeed;
     }
 
-    public void setHeadYaw(float yaw) {
-        this.headYaw = yaw;
+    public void setyaw(float yaw) {
+        this.yaw = yaw;
     }
 
-    public float getHeadYaw() {
-        return this.headYaw;
+    public float getyaw() {
+        return this.yaw;
     }
 
     @Override
