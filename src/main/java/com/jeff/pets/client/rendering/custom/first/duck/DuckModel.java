@@ -24,7 +24,6 @@ public class DuckModel extends PetModel {
         root = new ModelPart(this);
         root.setPos(0.0F, 15.0F, -4.0F);
 
-
         head = new ModelPart(this);
         head.setPos(0.0F, 0.0F, 0.0F);
         root.addChild(head);
@@ -82,8 +81,11 @@ public class DuckModel extends PetModel {
 
     @Override
     public void setupAnimation(float limbSwing, float limbSwingAmount, float ageInTicks, float netyaw, float headPitch, float scale, net.minecraft.entity.Entity entity) {
-        Duck state = (Duck) entity;
-        float flapAngle = state.onGround ? 0 : (MathHelper.sin(ageInTicks) + 1.0F) * state.flapSpeed;
+        Duck state = entity instanceof Duck ? (Duck) entity : null;
+        float flapSpeed = state != null ? state.flapSpeed : 0.0F;
+        boolean onGround = state != null ? state.onGround : true;
+        boolean riding = state != null && state.isRiding();
+        float flapAngle = onGround ? 0 : (MathHelper.sin(ageInTicks) + 1.0F) * flapSpeed;
         this.head.rotationX = headPitch * ((float) Math.PI / 180F);
         this.head.rotationY = netyaw * ((float) Math.PI / 180F);
         this.right_leg.rotationX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
@@ -91,7 +93,7 @@ public class DuckModel extends PetModel {
         this.right_wing.rotationZ = flapAngle;
         this.left_wing.rotationZ = -flapAngle;
         //thing is weird af in 1.16.5 and below, base y is 15, base x is 0, base z is -4
-        if (state.isRiding()) {
+        if (riding) {
             this.root.x = 0.4F;
             this.root.y = 17.5F;
             this.root.z = -4.0F;

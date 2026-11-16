@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * b1.8-compatible pet renderer base.
+ * b1.7.3-compatible pet renderer base.
  */
 public abstract class PetRenderer<D extends AbstractPet> extends MobRenderer {
 
@@ -42,11 +42,10 @@ public abstract class PetRenderer<D extends AbstractPet> extends MobRenderer {
         super.render((MobEntity) entity, x, y, z, yaw, partialTicks);
     }
 
-    // b1.8 MobRenderer renders inline; override render(MobEntity,...) to use our model and layers
     @Override
     public void render(MobEntity entity, double x, double y, double z, float yaw, float partialTicks) {
         GlStateManager.pushMatrix();
-        org.lwjgl.opengl.GL11.glDisable(2884); // GL_CULL_FACE
+        org.lwjgl.opengl.GL11.glDisable(2884);
         this.petModel.attackAnimationProgress = this.getAttackAnimationProgress(entity, partialTicks);
         this.petModel.riding = entity.isRiding();
 
@@ -59,7 +58,7 @@ public abstract class PetRenderer<D extends AbstractPet> extends MobRenderer {
         this.applyRotation(entity, bob, bodyYaw, partialTicks);
 
         float scale = 0.0625F;
-        org.lwjgl.opengl.GL11.glEnable(32826); // GL_RESCALE_NORMAL
+        org.lwjgl.opengl.GL11.glEnable(32826);
         GlStateManager.scalef(-1.0F, -1.0F, 1.0F);
         this.applyScale(entity, partialTicks);
         GlStateManager.translatef(0.0F, -24.0F * scale - 0.0078125F, 0.0F);
@@ -70,21 +69,14 @@ public abstract class PetRenderer<D extends AbstractPet> extends MobRenderer {
 
         this.bindTexture(this.getTexture(entity));
         this.petModel.prepare(entity, walkPos, walkAmount, partialTicks);
-        if (entity.isRiding()) {
-            GlStateManager.pushMatrix();
-            GlStateManager.translatef(0, -0.35f, 0);
-            this.petModel.render(entity, walkPos, walkAmount, bob, headYaw - bodyYaw, headPitch, scale);
-            GlStateManager.popMatrix();
-        } else {
-            this.petModel.render(entity, walkPos, walkAmount, bob, headYaw - bodyYaw, headPitch, scale);
-        }
+        this.petModel.render(walkPos, walkAmount, bob, headYaw - bodyYaw, headPitch, scale);
 
         for (PetRenderLayer layer : this.petLayers) {
             layer.render(entity, walkPos, walkAmount, bob, headYaw - bodyYaw, headPitch, scale);
         }
 
-        org.lwjgl.opengl.GL11.glDisable(32826); // GL_RESCALE_NORMAL
-        org.lwjgl.opengl.GL11.glEnable(2884); // GL_CULL_FACE
+        org.lwjgl.opengl.GL11.glDisable(32826);
+        org.lwjgl.opengl.GL11.glEnable(2884);
         GlStateManager.popMatrix();
 
         this.renderNameTag(entity, x, y, z);

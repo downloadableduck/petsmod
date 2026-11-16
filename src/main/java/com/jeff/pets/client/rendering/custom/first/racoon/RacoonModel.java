@@ -79,7 +79,7 @@ public class RacoonModel extends PetModel {
 
     @Override
     public void prepare(net.minecraft.entity.mob.MobEntity entity, float f, float g, float h) {
-        Racoon fox = (Racoon) entity;
+        Racoon fox = entity instanceof Racoon ? (Racoon) entity : null;
         //this.body.xRot = ((float) Math.PI / 2F);
         this.tail.rotationX = -0.05235988F;
         this.right_hind_leg.rotationX = MathHelper.cos(f * 0.6662F) * 1.4F * g;

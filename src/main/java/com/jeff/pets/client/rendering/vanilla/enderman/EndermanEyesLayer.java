@@ -34,7 +34,7 @@ public class EndermanEyesLayer implements PetRenderLayer {
         GLX.multiTexCoord2f(GLX.GL_TEXTURE1, 61680.0F, 0.0F);
         GlStateManager.enableLighting();
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.parent.getModel().render(endermanEntity, f, g, h, i, j, k);
+        this.parent.getModel().render(f, g, h, i, j, k);
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.depthMask(true);
         GlStateManager.disableBlend();

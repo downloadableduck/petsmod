@@ -94,6 +94,8 @@ public class DumboOctopus extends FlyingPet {
       super.tick();
       MobEntity owner = this.getOwner();
       if (owner != null) {
+         this.yaw = this.getOwner().yaw + 180;
+
          if (this.vehicle == owner) {
             if (owner.isSneaking() && owner.jumping) {
                this.dismountFromVehicle();

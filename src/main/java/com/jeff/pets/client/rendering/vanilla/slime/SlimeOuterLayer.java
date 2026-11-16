@@ -28,7 +28,7 @@ public class SlimeOuterLayer implements PetRenderLayer {
             GlStateManager.enableBlend();
             GlStateManager.blendFunc(770, 771);
             
-            this.model.render(slimeEntity, f, g, h, i, j, k);
+            this.model.render(f, g, h, i, j, k);
             GlStateManager.disableBlend();
             org.lwjgl.opengl.GL11.glDisable(2977); // GL_NORMALIZE
     }

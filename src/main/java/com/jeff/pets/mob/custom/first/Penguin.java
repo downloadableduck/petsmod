@@ -120,6 +120,7 @@ public class Penguin extends AbstractPet {
       super.tick();
       MobEntity owner = this.getOwner();
       if (owner != null) {
+         this.yaw = this.getOwner().yaw + 180;
          if (this.vehicle == owner) {
             this.isFlapping = false;
             if (owner.isSneaking() && owner.jumping) {
@@ -147,7 +148,7 @@ public class Penguin extends AbstractPet {
             Vec3d targetPos = Vec3d.of(owner.x, owner.y, owner.z);
             Vec3d dir = targetPos.subtractFrom(this.getPosVec()).normalize();
             this.bodyYaw = this.bodyYaw + Math.max(-50.0F, Math.min(50.0F, this.yaw - this.bodyYaw));
-            double speed = Math.min(0.23D, owner.landSpeed * 1.2D + 0.08D);
+            double speed = Math.min(0.23D,  1.2D + 0.08D);
             this.lerpVelocity(Vec3d.of(-dir.x * speed, this.getVelocity().y, -dir.z * speed));
          } else {
              // Z component was reading velocityY - a copy/paste slip that fed vertical velocity

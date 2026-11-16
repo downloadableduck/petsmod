@@ -11,8 +11,8 @@ public class ClientPigModel extends PigModel {
     }
 
     @Override
-    public void render(net.minecraft.entity.Entity entity, float i, float j, float f, float g, float h, float k) {
-        super.render(entity, i, j, f, g, h, k);
+    public void render(float i, float j, float f, float g, float h, float k) {
+        super.render(i, j, f, g, h, k);
         com.jeff.pets.compat.GlStateManager.pushMatrix();
         if (CONFIG.isBaby) {
             com.jeff.pets.compat.GlStateManager.scalef(1.5f, 1.5f, 1.5f);

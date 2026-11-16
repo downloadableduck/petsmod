@@ -231,6 +231,7 @@ public abstract class AbstractPet extends AnimalEntity {
         return this.yaw;
     }
 
+    @Override
     public void tick() {
         // Prevent server/client interpolation from snapping this locally-scripted pet.
         this.lerpSteps = 0;

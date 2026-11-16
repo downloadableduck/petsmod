@@ -12,8 +12,8 @@ public class ClientCowModel extends CowModel {
     }
 
     @Override
-    public void render(Entity entity, float f, float g, float h, float j, float k, float d) {
-        super.render(entity, f, g, h, j, k, d);
+    public void render(float f, float g, float h, float j, float k, float d) {
+        super.render(f, g, h, j, k, d);
         com.jeff.pets.compat.GlStateManager.pushMatrix();
         if (CONFIG.isBaby) {
             com.jeff.pets.compat.GlStateManager.scalef(2, 2, 2);

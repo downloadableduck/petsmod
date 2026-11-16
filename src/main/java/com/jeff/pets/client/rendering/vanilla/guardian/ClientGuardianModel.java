@@ -95,7 +95,7 @@ public class ClientGuardianModel extends PetModel {
             vec3d3 = Vec3d.of(vec3d3.x, 0.0F, vec3d3.z);
             Vec3d vec3d4 = (Vec3d.of(vec3d2.x - vec3d.x, 0.0F, vec3d2.z - vec3d.z)).normalize();
             vec3d4.rotateY((float) Math.PI / 2F);
-            double e = vec3d3.dot(vec3d4);
+            double e = vec3d3.x * vec3d4.x + vec3d3.y * vec3d4.y + vec3d3.z * vec3d4.z;
             this.field_3381.x = MathHelper.sqrt((float) Math.abs(e)) * 2.0F * (float) Math.signum(e);
         }
 

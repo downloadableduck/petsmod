@@ -22,10 +22,9 @@ public class ClientChickenModel extends ChickenModel {
     }
 
     @Override
-    public void render(net.minecraft.entity.Entity entity, float f, float g, float h, float j, float k, float d) {
-        ClientChicken state = (ClientChicken) entity;
-        h = getBob(state, f);
-        super.render(entity, f, g, h, j, k, d);
+    public void render(float f, float g, float h, float j, float k, float d) {
+        // entity not available in b1.7.3 6-arg render
+        super.render(f, g, h, j, k, d);
         GlStateManager.pushMatrix();
         if (CONFIG.isBaby) {
             GlStateManager.scalef(2, 2, 2);

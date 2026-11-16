@@ -35,7 +35,7 @@ public class ClientCreeperChargeLayer implements PetRenderLayer {
             GlStateManager.disableLighting();
             GlStateManager.blendFunc(1, 1);
             
-            this.model.render(creeperEntity, f, g, h, i, j, k);
+            this.model.render(f, g, h, i, j, k);
             GlStateManager.matrixMode(5890);
             GlStateManager.loadIdentity();
             GlStateManager.matrixMode(5888);

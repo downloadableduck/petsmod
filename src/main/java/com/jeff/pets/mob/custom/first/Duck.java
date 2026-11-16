@@ -155,6 +155,7 @@ public class Duck extends AbstractPet {
       this.flap = this.flap + this.flapping * 2.0F;
       MobEntity owner = this.getOwner();
       if (owner != null) {
+         this.yaw = this.getOwner().yaw + 180;
          if (this.vehicle == owner) {
             if (owner.isSneaking() && owner.jumping) {
                this.dismountFromVehicle();
@@ -182,7 +183,7 @@ public class Duck extends AbstractPet {
             Vec3d dir = targetPos.subtractFrom(this.getPosVec()).normalize();
             this.setYRot(rotlerp(this.getYRot(), (float)targetYaw));
             this.bodyYaw = this.bodyYaw + Math.max(-50.0F, Math.min(50.0F, this.yaw - this.bodyYaw));
-            double speed = Math.min(0.23D, owner.landSpeed* 1.2D + 0.08D);
+            double speed = Math.min(0.23D, 0.1D* 1.2D + 0.08D);
             this.lerpVelocity(Vec3d.of(-dir.x * speed, this.getVelocity().y, -dir.z * speed));
          } else {
             this.lookAt(this.getOwner(), 5.0F, 0.0F);

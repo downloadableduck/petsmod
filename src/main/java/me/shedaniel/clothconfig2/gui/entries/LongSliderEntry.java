@@ -127,7 +127,7 @@ public class LongSliderEntry extends TooltipListEntry {
         private double progress;
         
         protected Slider(int int_1, int int_2, int int_3, int int_4, double double_1) {
-            super(0, int_2, int_3, GameOptions__Option.FOV, "hi", maximum);
+            super(0, int_2, int_3, GameOptions__Option.AMBIENT_OCCLUSION, "hi", maximum);
             this.progress = double_1;
         }
         

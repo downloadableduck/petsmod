@@ -145,7 +145,7 @@ public class ClientCatModel extends PetModel {
             this.upperTail.rotationX = ((float)Math.PI / 2F);
             this.lowerTail.rotationX = ((float)Math.PI / 2F);
             this.state = 0;
-        } else if (ocelotEntity.isSprinting()) {
+        } else if (false /* b1.7.3: isSprinting unavailable */) {
             this.lowerTail.y = this.upperTail.y;
             ModelPart var8 = this.lowerTail;
             var8.z += 2.0F;

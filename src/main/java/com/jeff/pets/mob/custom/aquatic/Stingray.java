@@ -126,6 +126,7 @@ public class Stingray extends FlyingPet {
       this.flap = this.flap + this.flapping * 2.0F;
       MobEntity owner = this.getOwner();
       if (owner != null) {
+         this.yaw = this.getOwner().yaw + 180;
          if (this.vehicle == owner) {
             if (owner.isSneaking() && owner.jumping) {
                this.dismountFromVehicle();

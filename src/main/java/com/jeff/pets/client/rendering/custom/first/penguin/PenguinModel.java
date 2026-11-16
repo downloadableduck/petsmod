@@ -97,8 +97,10 @@ public class PenguinModel extends PetModel {
 
     @Override
     public void setupAnimation(float limbSwing, float limbSwingAmount, float ageInTicks, float netyaw, float headPitch, float scale, net.minecraft.entity.Entity entity) {
-        Penguin state = (Penguin) entity;
-        float flapAngle = (MathHelper.sin(state.flap) + 1.0F) * state.flapSpeed;
+        Penguin state = entity instanceof Penguin ? (Penguin) entity : null;
+        float flap = state != null ? state.flap : 0.0F;
+        float flapSpeed = state != null ? state.flapSpeed : 0.0F;
+        float flapAngle = (MathHelper.sin(flap) + 1.0F) * flapSpeed;
         this.head.rotationX = headPitch * ((float) Math.PI / 180F);
         this.head.rotationY = netyaw * ((float) Math.PI / 180F);
         this.right_foot.rotationZ = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;

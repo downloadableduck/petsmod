@@ -29,10 +29,11 @@ public abstract class FlyingPet extends AbstractPet {
      */
     @Override
     public void tick() {
-        System.out.println(this.velocityX);
         super.tick();
         MobEntity owner = this.getOwner();
         if (owner != null) {
+
+            this.yaw = this.getOwner().yaw + 180;
 
             if (this.vehicle == owner) {
                 if (owner.isSneaking() && owner.jumping) {
