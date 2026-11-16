@@ -38,7 +38,7 @@ public class ClientChicken extends GroundPet {
         this.oFlap = this.flap;
         this.oFlapSpeed = this.flapSpeed;
         this.flapSpeed += (this.onGround ? -1.0F : 4.0F) * 0.3F;
-        this.flapSpeed = MathHelper.clamp(this.flapSpeed, 0.0F, 1.0F);
+        this.flapSpeed = Math.max(0.0F, Math.min(1.0F, this.flapSpeed));
         if (!this.onGround && this.flapping < 1.0F) {
             this.flapping = 1.0F;
         }

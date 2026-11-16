@@ -5,7 +5,7 @@ import com.jeff.pets.mob.FlyingPet;
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.block.Block;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.passive.PassiveEntity;
+import net.minecraft.entity.mob.animal.AnimalEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -71,7 +71,7 @@ public class Stingray extends FlyingPet {
    }
 
    @Nullable
-   public Stingray makeChild(@NotNull PassiveEntity partner) {
+   public Stingray makeChild(@NotNull AnimalEntity partner) {
       Stingray stringray = new Stingray(this.world);
       stringray.setServerEntity(true);
       return stringray;
@@ -152,7 +152,7 @@ public class Stingray extends FlyingPet {
             this.walkAnimationSpeed = 0.5F;
             Vec3d dir = vecToOwner.normalize();
             double speed = 0.2;
-            this.bodyYaw = this.bodyYaw + MathHelper.clamp(this.headYaw - this.bodyYaw, -50.0F, 50.0F);
+            this.bodyYaw = this.bodyYaw + Math.max(-50.0F, Math.min(50.0F, this.headYaw - this.bodyYaw));
             this.lerpVelocity(Vec3d.of(-dir.x * speed, dir.y * speed, -dir.z * speed));
          } else {
             this.lerpVelocity(Vec3d.of(this.getVelocity().x * 0.8, this.getVelocity().y * 0.8, this.getVelocity().z * 0.8));
@@ -183,7 +183,7 @@ public class Stingray extends FlyingPet {
          if (Math.abs(bodyYawDiff) > 50.0F) {
             this.bodyYaw = this.headYaw - Math.signum(bodyYawDiff) * 50.0F;
          } else {
-            this.bodyYaw = this.bodyYaw + MathHelper.clamp(this.headYaw - this.bodyYaw, -10.0F, 10.0F);
+            this.bodyYaw = this.bodyYaw + Math.max(-10.0F, Math.min(10.0F, this.headYaw - this.bodyYaw));
          }
 
           // No manual move() here: LivingEntity.mobTick() already calls moveRelative() ->

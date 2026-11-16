@@ -66,7 +66,7 @@ public abstract class FlyingPet extends AbstractPet {
                 double speed = 0.2;
                 System.out.println(speed);
                 
-                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.headYaw - this.bodyYaw /*bodyYaw*/, -50, 50); //m_82141949
+                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + Math.max(-50.0F, Math.min(50.0F, this.headYaw - this.bodyYaw /*bodyYaw*/)); //m_82141949
 
                 this.lerpVelocity(Vec3d.of(-dir.x * speed, dir.y * speed, -dir.z * speed));
             } else {
@@ -97,7 +97,7 @@ public abstract class FlyingPet extends AbstractPet {
             if (Math.abs(bodyYawDiff) > 50) {
                 this.bodyYaw /*bodyYaw*/ = this.headYaw - (Math.signum(bodyYawDiff) * 50);
             } else {
-                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.headYaw - this.bodyYaw /*bodyYaw*/, -10, 10);
+                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + Math.max(-10.0F, Math.min(10.0F, this.headYaw - this.bodyYaw /*bodyYaw*/));
             }
 
             // No manual move() here: LivingEntity.mobTick() already calls moveRelative() ->

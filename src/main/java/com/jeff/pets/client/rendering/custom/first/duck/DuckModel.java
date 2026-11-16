@@ -69,8 +69,9 @@ public class DuckModel extends PetModel {
     }
 
     @Override
-    public void render(net.minecraft.entity.Entity entity, float packedLight, float packedOverlay, float red, float green, float blue, float alpha) {
-        root.render(alpha);
+    public void render(net.minecraft.entity.Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+        this.setupAnimation(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entity);
+        root.render(scale);
     }
 
     public void setRotationAngle(ModelPart ModelPart, float x, float y, float z) {
@@ -80,15 +81,13 @@ public class DuckModel extends PetModel {
     }
 
     @Override
-    public void setupAnimation(float f, float g, float h, float i, float j, float s, net.minecraft.entity.Entity entity) {
+    public void setupAnimation(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale, net.minecraft.entity.Entity entity) {
         Duck state = (Duck) entity;
-        float flapAngle = state.onGround ? 0 : (MathHelper.sin(h) + 1.0F) * state.flapSpeed;
-        this.head.rotationX = j * ((float) Math.PI / 180F);
-        this.head.rotationY = i * ((float) Math.PI / 180F);
-        float animationSpeed = state.walkAnimationSpeed;
-        float animationPos = state.walkAnimationProgress;
-        this.right_leg.rotationX = MathHelper.cos(animationPos * 0.6662F) * 1.4F * animationSpeed;
-        this.left_leg.rotationX = MathHelper.cos(animationPos * 0.6662F + (float) Math.PI) * 1.4F * animationSpeed;
+        float flapAngle = state.onGround ? 0 : (MathHelper.sin(ageInTicks) + 1.0F) * state.flapSpeed;
+        this.head.rotationX = headPitch * ((float) Math.PI / 180F);
+        this.head.rotationY = netHeadYaw * ((float) Math.PI / 180F);
+        this.right_leg.rotationX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        this.left_leg.rotationX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
         this.right_wing.rotationZ = flapAngle;
         this.left_wing.rotationZ = -flapAngle;
         //thing is weird af in 1.16.5 and below, base y is 15, base x is 0, base z is -4

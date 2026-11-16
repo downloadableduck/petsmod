@@ -62,9 +62,9 @@ public abstract class SlimeLikePet extends AbstractPet {
 
                 
                 
-                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.headYaw - this.bodyYaw /*bodyYaw*/, -50, 50);
+                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + Math.max(-50.0F, Math.min(50.0F, this.headYaw - this.bodyYaw /*bodyYaw*/));
 
-                double speed = owner.getSpeed() * 2;
+                double speed = Math.min(0.23D, owner.getTargetSpeed() * 1.2D + 0.08D);
                 this.lerpVelocity(Vec3d.of(-dir.x * speed, this.getVelocity().y, -dir.z * speed));
             } else {
                                  // Z component was reading velocityY - a copy/paste slip that fed
@@ -98,7 +98,7 @@ public abstract class SlimeLikePet extends AbstractPet {
             if (Math.abs(bodyYawDiff) > 50) {
                 this.bodyYaw /*bodyYaw*/ = this.headYaw - (Math.signum(bodyYawDiff) * 50);
             } else {
-                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.headYaw - this.bodyYaw /*bodyYaw*/, -10, 10);
+                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + Math.max(-10.0F, Math.min(10.0F, this.headYaw - this.bodyYaw /*bodyYaw*/));
             }
 
             // No manual move() here: LivingEntity.mobTick() already calls moveRelative() ->

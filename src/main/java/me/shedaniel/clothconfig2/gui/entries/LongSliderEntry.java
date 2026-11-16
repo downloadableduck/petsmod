@@ -45,8 +45,10 @@ public class LongSliderEntry extends TooltipListEntry {
         this.minimum = minimum;
         this.sliderWidget = new Slider(0, 0, 152, 20, ((double) LongSliderEntry.this.value.get() - minimum) / Math.abs(maximum - minimum));
         this.resetButton = new ButtonWidget(0, 0, Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey), widget -> {
-            sliderWidget.setValue((MathHelper.clamp(this.defaultValue.get(), minimum, maximum) - minimum) / (double) Math.abs(maximum - minimum));
-            this.value.set(Math.min(Math.max(this.defaultValue.get(), minimum), maximum));
+            long def = this.defaultValue.get();
+            long clamped = Math.min(Math.max(def, minimum), maximum);
+            sliderWidget.setValue((clamped - minimum) / (double) Math.abs(maximum - minimum));
+            this.value.set(clamped);
             sliderWidget.update();
             getScreen().setEdited(true);
         });

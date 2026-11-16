@@ -69,9 +69,9 @@ public abstract class GroundPet extends AbstractPet {
                 Vec3d targetPos = Vec3d.of(owner.x, owner.y, owner.z);
                 Vec3d dir = targetPos.subtractFrom(this.getPosVec()).normalize();
 
-                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.headYaw - this.bodyYaw /*bodyYaw*/, -50, 50);
+                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + Math.max(-50.0F, Math.min(50.0F, this.headYaw - this.bodyYaw /*bodyYaw*/));
 
-                double speed = owner.getSpeed() * 2.0;
+                double speed = Math.min(0.23D, owner.getTargetSpeed() * 1.2D + 0.08D);
                 this.lerpVelocity(Vec3d.of(-dir.x * speed, this.getVelocity().y, -dir.z * speed));
             } else if (distance < 1.5) {
                 this.walkAnimationSpeed = (0);
@@ -108,7 +108,7 @@ public abstract class GroundPet extends AbstractPet {
             if (Math.abs(bodyYawDiff) > 50) {
                 this.bodyYaw /*bodyYaw*/ = this.headYaw - (Math.signum(bodyYawDiff) * 50);
             } else {
-                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + MathHelper.clamp(this.headYaw - this.bodyYaw /*bodyYaw*/, -10, 10);
+                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + Math.max(-10.0F, Math.min(10.0F, this.headYaw - this.bodyYaw /*bodyYaw*/));
             }
 
             // No manual move() here: LivingEntity.mobTick() already calls moveRelative() ->

@@ -2,8 +2,7 @@ package com.jeff.pets.mob;
 
 import com.jeff.pets.mob.custom.first.Duck;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.passive.animal.AnimalEntity;
-import net.minecraft.entity.mob.passive.animal.tameable.TameableEntity;
+import net.minecraft.entity.mob.animal.AnimalEntity;
 import net.minecraft.entity.mob.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
@@ -11,23 +10,20 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Abstract class that extends {@link TameableEntity}, providing multiple utilities
- * so that each class doesn't have to define the same logic. <p> When creating a custom mob,
- * always extend either {@link GroundPet}, {@link FlyingPet}, or {@link SlimeLikePet},
- * unless adding custom movement logic,
- * as this file does not contain custom movement logic for the entities.
- * <p> When creating a custom mob, always extend this class, as using the built-in
- * {@link GroundPet} or {@link FlyingPet} logic breaks them when acting as normal mobs.
- *
- * @see FlyingPet
- * @see GroundPet
+ * Abstract base for client-side pets, adapted for 1.1's entity hierarchy.
+ * <p> 1.1 has no {@code TameableEntity}; taming/owner/sitting/speed helpers that existed
+ * in 1.2.5 are provided here as a compatibility layer.
  */
-public abstract class AbstractPet extends TameableEntity {
+public abstract class AbstractPet extends AnimalEntity {
 
     protected int waitingTime = 0;
     private boolean isReturningToOwner = false;
     private float randomX = (float) (Math.random() - 1f);
     private float randomZ = (float) (Math.random() - 1);
+
+    // 1.1 compatibility (TameableEntity API surface used by this mod)
+    private String ownerName;
+    private boolean sitting;
 
     protected AbstractPet(World level) {
         super(level);
@@ -36,71 +32,17 @@ public abstract class AbstractPet extends TameableEntity {
 
     @Override
     protected boolean aiEnabled() {
-        // LivingEntity.getSpeed() is `aiEnabled() ? speed : 0.1F`, and the base aiEnabled() is
-        // false. That made wander() compute `0.1 - 0.35 == -0.25`, so idle wandering pushed pets
-        // backwards, and it silently discarded every setSpeed() call (0.5 here, 0.3 in
-        // DumboOctopus). Returning true restores the intended speeds.
-        //
-        // Safe because pets are client-only entities injected with World.forceEntity():
-        // the only aiEnabled() consumer that runs elsewhere, serverTickAi(), is gated behind
-        // isLocallyControlled(), and the remaining uses are initAttributes() (whose MOVEMENT_SPEED
-        // base this class immediately overwrites with 0.23) and a friction constant.
-        return true;
+        // 1.1: keep vanilla AI disabled so our scripted client-side movement isn't overridden
+        // by serverTickAi/navigation each tick (which caused jerky movement).
+        return false;
     }
 
-    /**
-     * This method is used to determine when the mob stops moving, relative to the player.
-     * For example, if we defined this:
-     * <pre>{@code protected abstract int stopDistance() {
-     *     return 2;
-     * }}</pre>
-     * The mob would stop moving towards the player when it is two blocks away from the player.
-     */
     protected abstract int stopDistance();
 
-    /**
-     * Used to define how high the hearts that appear when you right-click on a pet will be.
-     * Zero means it would appear right in the middle of the mob's hitbox.
-     */
     protected abstract float heartHeight();
 
-    /**
-     * Used to define the mob's default ambient sound. For the uses of these last three
-     * methods, please refer to {@link FlyingPet} and {@link GroundPet}.
-     */
     protected abstract String getAmbientSound();
 
-    /**
-     * Custom interactions.
-     * - Right clicking on a pet with an empty hand will let make hearts appear above it:
-     * <pre>
-     *     {@code if (this.isTame() && itemStack == null && !player.isShiftKeyDown()) {
-     *         this.level.addParticle(
-     *                 ParticleTypes.HEART,
-     *                 this.x,
-     *                 this.y + this.heartHeight(),
-     *                 this.z,
-     *                 5, 5, 5
-     *         );
-     *         return InteractionResult.SUCCESS;
-     *     }}</pre>
-     * - Shifting and right clicking on a pet with an empty hand will pick it up:
-     * <pre>
-     *     {@code if (this.isTame() && itemStack == null && player.isShiftKeyDown()) {
-     *         if (!this.isPassenger()) {
-     *             this.startRiding(player);
-     *             this.lookAt(player, 1f, 1f);
-     *             return InteractionResult.SUCCESS;
-     *         } else {
-     *             this.dismountFromVehicle();
-     *         }
-     *         return InteractionResult.SUCCESS;
-     *     }
-     *     }
-     * </pre>
-     *
-     * @return It's super method
-     */
     @Override
     public boolean interact(@NotNull PlayerEntity player) {
         ItemStack itemStack = player.getItemInHand();
@@ -129,53 +71,30 @@ public abstract class AbstractPet extends TameableEntity {
         return super.interact(player);
     }
 
-    /**
-     * Custom method required for making the mob work on servers.
-     * <p> Calls: It's super method, if the level is not client-sided.
-     */
-    /*@Override
-    public void onDataValueChanged(int key) {
-        if (!(this.world instanceof World)) {
-            super.(key);
-        }
-    }*/
-
-    /**
-     * Calls the previous abstract method so other classes extending this one don't have to.
-     *
-     * @return False, as breeding and taming is not needed for any {@code Client-} mobs.
-     * Make sure to override this when using a custom-made mob.
-     */
     @Override
-    public boolean isBreedingItem(@NotNull ItemStack itemStack) {
+    protected boolean isBreedingItem(ItemStack itemStack) {
         return false;
     }
 
-    /**
-     * These entities are not used in server worlds - as such, there is no reason to
-     * return anything. However, this must be overridden when creating a custom mob.
-     *
-     * @return {@code null}
-     */
     @Override
-    public AnimalEntity makeChild(@NotNull AnimalEntity AgableMob) {
+    protected AnimalEntity makeChild(AnimalEntity mate) {
         return null;
     }
 
-    /**
-     * Easier way to call {@link TameableEntity#setCustomName} that takes a String rather than a {@link Text}
-     */
     public void setName(String string) {
         //this.getName(string);
     }
 
     public void wander() {
-        float speed = (float) (this.getSpeed() - 0.35);
+        // Direct-velocity movement in 1.1: use a small but visible wander speed.
+        float speed = 0.08F;
         Vec3d lookDir;
         float z = speed * this.randomZ;
 
-        float distance = this.distanceTo(this.getOwner());
-        float yVelo = (float) this.getVelocity().y;//this.getVelocity().y;
+        MobEntity owner = this.getOwner();
+        if (owner == null) return;
+        float distance = this.distanceTo(owner);
+        float yVelo = (float) this.getVelocity().y;
 
         if (distance > 5) {
             this.reCalcPos();
@@ -186,12 +105,10 @@ public abstract class AbstractPet extends TameableEntity {
         }
 
         if (!this.isReturningToOwner) {
-            this.lerpVelocity(Vec3d.of(speed, yVelo, z)); //this.setVelocity()
+            this.lerpVelocity(Vec3d.of(speed, yVelo, z));
         } else {
             this.lerpVelocity(Vec3d.of(-speed, yVelo, -z));
         }
-
-        //this.lookAt(EntityAnchorArgument.Anchor.EYES, lookDir);
 
         double moveX = this.getVelocity().x;
         double moveZ = this.getVelocity().z;
@@ -205,9 +122,6 @@ public abstract class AbstractPet extends TameableEntity {
 
         if (moveX * moveX + moveZ * moveZ > 0.001) {
             float targetYaw = (float) (Math.atan2(-moveX, moveZ) * (180D / Math.PI));
-            // Was MathHelper.clamp(0.2f, getYRot(), targetYaw), which is not an angle lerp at
-            // all - it just returns 0.2 whenever 0.2 lies between the two values. Use rotlerp
-            // so the body actually eases toward the wander direction.
             this.setYRot(Duck.rotlerp(this.getYRot(), targetYaw));
         }
 
@@ -220,20 +134,9 @@ public abstract class AbstractPet extends TameableEntity {
         double dx = lookDir.x - this.x;
         double dz = lookDir.z - this.z;
         float targetYaw = (float) (Math.atan2(-dx, dz) * (180D / Math.PI));
-
-        // Snap (not lerp) here: this is the terminal assignment for the wander tick, and the
-        // eased version above is intentionally superseded so the body ends up pointing exactly
-        // along the look target rather than trailing behind it.
         this.setYRot(targetYaw);
     }
 
-    /**
-     * The authoritative facing field. Ornithe recomputes {@code bodyYaw} every tick from
-     * {@link MobEntity#bodyMovement(float, float)} as
-     * {@code yaw - clamp(wrapDegrees(yaw - bodyYaw), -75, 75)}, so writing only
-     * {@code bodyYaw}/{@code headYaw} leaves {@code yaw} pinned at 0 and vanilla drags the
-     * body back toward 0 every tick. Every yaw write must therefore go through {@code yaw}.
-     */
     public float getYRot() {
         return this.yaw;
     }
@@ -269,13 +172,61 @@ public abstract class AbstractPet extends TameableEntity {
         this.lerpVelocity(vec3d.x, vec3d.y, vec3d.z);
     }
 
+    // Expose Entity.lerpVelocity(double,double,double) (already inherited, but keep signature clear)
+
     public Vec3d getVelocity() {
         return Vec3d.of(this.velocityX, this.velocityY, this.velocityZ);
     }
 
-    @Override
+    // --- 1.1 TameableEntity compatibility ---
+
     public boolean isTamed() {
         return true;
+    }
+
+    public void setTamed(boolean tamed) {
+        // client-side pets are always tamed
+    }
+
+    public boolean isSitting() {
+        return this.sitting;
+    }
+
+    public void setSitting(boolean sitting) {
+        this.sitting = sitting;
+    }
+
+    public String getOwnerName() {
+        return this.ownerName;
+    }
+
+    public void setOwnerName(String name) {
+        this.ownerName = name;
+    }
+
+    public MobEntity getOwner() {
+        if (this.ownerName == null || this.world == null) {
+            return null;
+        }
+        return this.world.getPlayer(this.ownerName);
+    }
+
+    public void setSpeed(float speed) {
+        this.walkSpeed = speed;
+        this.setForwardSpeed(speed);
+    }
+
+    public float getSpeed() {
+        // 1.2 semantics: stored speed value
+        return this.walkSpeed;
+    }
+
+    public void setHeadYaw(float yaw) {
+        this.headYaw = yaw;
+    }
+
+    public float getHeadYaw() {
+        return this.headYaw;
     }
 
     @Override
@@ -285,7 +236,32 @@ public abstract class AbstractPet extends TameableEntity {
 
     @Override
     public void tick() {
+        // Prevent server/client interpolation from snapping this locally-scripted pet.
+        this.lerpSteps = 0;
+        // Our movement is driven by explicit velocity updates in subclasses; zero AI inputs
+        // so mobTick's moveRelative doesn't apply additional input-based acceleration.
+        this.sidewaysSpeed = 0.0F;
+        this.forwardSpeed = 0.0F;
         super.tick();
-        this.forwardSpeed *= 1.020408f;
+    }
+
+    @Override
+    public void moveRelative(float strafe, float forward) {
+        // 1.1 moveRelative converts strafe/forward into velocity changes and also updates
+        // walk animation state used by the renderer. Scripted pets set velocity directly, but we
+        // must still update walkAnimationSpeed/Progress or leg animations freeze/jitter/teleport.
+        if (this.isInWater() || this.isInLava()) {
+            super.moveRelative(strafe, forward);
+            return;
+        }
+        this.move(this.velocityX, this.velocityY, this.velocityZ);
+
+        this.lastWalkAnimationSpeed = this.walkAnimationSpeed;
+        double dx = this.x - this.lastX;
+        double dz = this.z - this.lastZ;
+        float dist = (float) Math.sqrt(dx * dx + dz * dz) * 4.0F;
+        if (dist > 1.0F) dist = 1.0F;
+        this.walkAnimationSpeed += (dist - this.walkAnimationSpeed) * 0.4F;
+        this.walkAnimationProgress += this.walkAnimationSpeed;
     }
 }

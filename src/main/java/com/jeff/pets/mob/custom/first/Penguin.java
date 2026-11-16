@@ -4,7 +4,7 @@ import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.block.Block;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.passive.PassiveEntity;
+import net.minecraft.entity.mob.animal.AnimalEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -62,7 +62,7 @@ public class Penguin extends AbstractPet {
       this.oFlap = this.flap;
       this.oFlapSpeed = this.flapSpeed;
       this.flapSpeed = this.flapSpeed + (this.onGround ? -1.0F : 4.0F) * 0.3F;
-      this.flapSpeed = MathHelper.clamp(this.flapSpeed, 0.0F, 1.0F);
+      this.flapSpeed = Math.max(0.0F, Math.min(1.0F, this.flapSpeed));
       if (!this.onGround && this.flapping < 1.0F) {
          this.flapping = 1.0F;
       }
@@ -97,7 +97,7 @@ public class Penguin extends AbstractPet {
    }
 
    @Nullable
-   public Penguin makeChild(@NotNull PassiveEntity partner) {
+   public Penguin makeChild(@NotNull AnimalEntity partner) {
       Penguin penguin = new Penguin(this.world);
       penguin.setServerEntity(true);
       return penguin;
@@ -146,8 +146,8 @@ public class Penguin extends AbstractPet {
             this.walkAnimationSpeed = 0.5F;
             Vec3d targetPos = Vec3d.of(owner.x, owner.y, owner.z);
             Vec3d dir = targetPos.subtractFrom(this.getPosVec()).normalize();
-            this.bodyYaw = this.bodyYaw + MathHelper.clamp(this.headYaw - this.bodyYaw, -50.0F, 50.0F);
-            double speed = owner.getSpeed() * 2.0F;
+            this.bodyYaw = this.bodyYaw + Math.max(-50.0F, Math.min(50.0F, this.headYaw - this.bodyYaw));
+            double speed = Math.min(0.23D, owner.getTargetSpeed() * 1.2D + 0.08D);
             this.lerpVelocity(Vec3d.of(-dir.x * speed, this.getVelocity().y, -dir.z * speed));
          } else {
              // Z component was reading velocityY - a copy/paste slip that fed vertical velocity
@@ -180,7 +180,7 @@ public class Penguin extends AbstractPet {
          if (Math.abs(bodyYawDiff) > 50.0F) {
             this.bodyYaw = this.headYaw - Math.signum(bodyYawDiff) * 50.0F;
          } else {
-            this.bodyYaw = this.bodyYaw + MathHelper.clamp(this.headYaw - this.bodyYaw, -10.0F, 10.0F);
+            this.bodyYaw = this.bodyYaw + Math.max(-10.0F, Math.min(10.0F, this.headYaw - this.bodyYaw));
          }
 
              // No manual move() here: LivingEntity.mobTick() already calls moveRelative() ->

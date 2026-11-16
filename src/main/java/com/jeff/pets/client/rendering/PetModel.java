@@ -1,19 +1,31 @@
 package com.jeff.pets.client.rendering;
 
-import net.minecraft.client.render.model.Model; import com.jeff.pets.client.rendering.PetModel;
+import net.minecraft.client.render.model.Model;
 import net.minecraft.entity.Entity;
 
+/**
+ * 1.1 render bridge for pet models.
+ * <p> 1.1's MobRenderer calls prepare(mob, limbSwing, limbSwingAmount, tickDelta) and then
+ * render(entity, limbSwing, limbSwingAmount, age/bob, headYaw, headPitch, scale). It does not
+ * call setupAnimation, so we drive animation from render.
+ */
 public abstract class PetModel extends Model {
 
     public PetModel() {
     }
 
-    public void setupAnimation(float f, float g, float h, float i, float j, float s, net.minecraft.entity.Entity entity) {
+    // 1.1 Model.setupAnimation signature (6 floats)
+    @Override
+    public void setupAnimation(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+    }
 
+    // Convenience overload used by many pet models in this codebase
+    public void setupAnimation(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale, Entity entity) {
+        this.setupAnimation(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
     }
 
     @Override
-    public void render(Entity entity, float walkAnimationProgress, float walkAnimationSpeed, float bob, float yaw, float pitch, float scale) {
-        this.setupAnimation(walkAnimationProgress, walkAnimationProgress, bob, yaw, pitch, scale, entity);
+    public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+        this.setupAnimation(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entity);
     }
 }

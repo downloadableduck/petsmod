@@ -3,13 +3,13 @@ package com.jeff.pets.client.rendering.vanilla.cat;
 import com.jeff.pets.compat.GlStateManager;
 import com.jeff.pets.mob.vanilla.passive.ClientCat;
 import net.minecraft.client.render.model.ModelPart;
-import net.minecraft.client.render.model.entity.OcelotModel;
+import com.jeff.pets.client.rendering.PetModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.util.math.MathHelper;
 
 //if the tail isn't animating correctly, swap lowerTail and upperTail
-public class ClientCatModel extends OcelotModel {
+public class ClientCatModel extends PetModel {
     private final ModelPart backLeftLeg;
     private final ModelPart backRightLeg;
     private final ModelPart frontLeftLeg;
