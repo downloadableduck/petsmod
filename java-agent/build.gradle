@@ -45,7 +45,10 @@ dependencies {
 }
 
 minecraft {
-    version(project.minecraft_version)
+    if (!snapshot)
+        version(project.minecraft_version)
+    else
+        version("26.3")
 }
 processResources {
     inputs.property "version", project.version
