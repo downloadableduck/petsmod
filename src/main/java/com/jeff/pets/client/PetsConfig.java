@@ -1,19 +1,16 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client;
 
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 
-/**
- * Stores all the values that are serialized into a JSON config located at {@code ./minecraft/config/petsconfig.json}
- * These values include whether the pet is on, whether the pet is a baby,
- * whether the custom title is enabled, and the names
- * and skins for each pet. For the actual rendering of the config screen, see {@link PetsConfigScreen}.
- *
- * @see com.jeff.pets.Central
- * @see com.jeff.pets.Central#CONFIG
- * @see ConfigData
- */
-@Config(name = "petsconfig")
+@Config(
+    name = "petsconfig"
+)
 public class PetsConfig implements ConfigData {
     public Boolean petOn;
     public Boolean customTitleEnabled;
@@ -70,7 +67,6 @@ public class PetsConfig implements ConfigData {
     public String villagerName;
     public String villagerSkin;
     public String wanderingTraderName;
-
     public String beeName;
     public String beeSkin;
     public String caveSpiderName;
@@ -93,7 +89,6 @@ public class PetsConfig implements ConfigData {
     public String spiderName;
     public String wolfName;
     public String wolfSkin;
-
     public String blazeName;
     public String breezeName;
     public String creakingName;
@@ -131,11 +126,9 @@ public class PetsConfig implements ConfigData {
     public String drownedName;
     public String zombieVillagerName;
     public String zombieVillagerSkin;
-
     public String enderDragonName;
     public String witherName;
     public String witherSkin;
-
     public String angryGhastName;
     public String batatoName;
     public String diamondChickenName;
@@ -157,10 +150,11 @@ public class PetsConfig implements ConfigData {
     public String dumboOctopusSkin;
     public String koiName;
     public String stingrayName;
-
     public String headSkin;
     public String headName;
-
     public boolean isBaby;
     public String zombiePigmanName;
+
+    public PetsConfig() {
+    }
 }

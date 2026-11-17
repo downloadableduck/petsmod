@@ -1004,7 +1004,7 @@
   "textures": [
     {
       "name": "bronze.png",
-      "relative_path": "../src/main/resources/assets/pets-mod/textures/entity/duck/bronze.png",
+      "relative_path": "../src/main/resources/assets/com.jeff.pets-mod/textures/entity/duck/bronze.png",
       "folder": "",
       "namespace": "",
       "id": "0",
@@ -1100,7 +1100,7 @@
     },
     {
       "name": "mallard_male.png",
-      "relative_path": "../src/main/resources/assets/pets-mod/textures/entity/duck/mallard_male.png",
+      "relative_path": "../src/main/resources/assets/com.jeff.pets-mod/textures/entity/duck/mallard_male.png",
       "folder": "",
       "namespace": "",
       "id": "3",

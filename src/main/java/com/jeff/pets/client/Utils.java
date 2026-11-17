@@ -1,179 +1,99 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client;
 
-import com.jeff.pets.PetsInitializer;
-import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.World;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.mob.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
+import com.jeff.pets.mob.AbstractPet;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import static com.jeff.pets.client.Central.CONFIG;
-
-/**
- * A utility class used mainly in {@link Central} and misc rendering classes. Contains various
- * shortcuts and utilities for spawning, despawning, and avoiding {@code NullPointerExceptions},
- * as well as a shortcut to {@link Identifier#fromNamespaceAndPath}.
- *
- * @author downloadableduck
- * @see Central
- * @since 0.8.0 (Minecraft Earth Mob Pack)
- */
 public class Utils {
+    public Utils() {
+    }
 
-    /**
-     * Used to summon a pet.
-     *
-     * @param entity     the mob to be summoned.
-     * @param entityName the name to set the custom mob to. (Technically not required since
-     *                   we use a method to refresh the names in {@link Central}, but still.
-     * @return If the {@code mob}, {@code player}, or {@code world} is {@code null}
-     */
     public static void summonPet(AbstractPet entity, String entityName) {
         Minecraft minecraft = Minecraft.INSTANCE;
         PlayerEntity player = minecraft.player;
         World world = minecraft.world;
-
-        if (entity == null || world == null || player == null) return;
-
-        Vec3d lookAngle = player.getLookVector(1);
-
-        double x = player.x - lookAngle.x * (double) 0.5F;
-        double y = player.y + (double) 0.5F;
-        double z = player.z - lookAngle.z * (double) 0.5F;
-
-        entity.setPosition(x, y, z);
-        world.addEntityAlways(entity);
-        // TameableEntity.getOwner() changed shape in 1.7.6:
-        //   1.7.6+ : UUID.fromString(getOwnerName()) -> world.getEntityByUuid(uuid)
-        //   <=1.7.5: world.getPlayer(getOwnerName()), compared with String.equals(player.getName())
-        // Storing a UUID here makes getOwner() return null on <=1.7.5, which skips every
-        // `if (owner != null)` block in GroundPet/FlyingPet tick() and leaves the pet doing
-        // vanilla idle AI (walk forward, then stop). Store the name the <=1.7.5 lookup expects.
-        entity.setOwnerName(player.name);
-        Central.summonedEntity.add(entity);
+        if (entity != null && world != null && player != null) {
+            Vec3d lookAngle = player.getLookVector(1.0F);
+            double x = player.x - lookAngle.x * 0.5;
+            double y = player.y + 0.5;
+            double z = player.z - lookAngle.z * 0.5;
+            entity.setPosition(x, y, z);
+            world.loadChunksNearEntity(entity);
+            entity.setOwnerName(player.name);
+            Central.summonedEntity.add(entity);
+        }
     }
 
-    /**
-     * The method used in
-     * {@link Central#refreshPetNames()}. Checks whether the entities' name is equal to the name
-     * in the config, and assigns it the correct name if not.. Additionally, this method provides a layer of safety that ensures that Minecraft will not
-     * throw a {@code NullPointerException} if {@code mob} is {@code null}.
-     *
-     * @param activePet The {@code activePet} value that matches {@code mob}
-     * @param entity    The pet of which the name is checked.
-     * @param petName   The {@code CONFIG.x} name that matches {@code mob} that the entities'
-     *                  current name is checked off of.
-     */
     public static void checkName(String activePet, AbstractPet entity, String petName) {
-        //if (Objects.equals(CONFIG.activePet, activePet) && entity != null && !entity.getName().equals(petName)) {
-            //entity.setName(petName);
-       // }
     }
 
-    /**
-     * Used to teleport a pet if the pet is valid and not {@code null}.
-     *
-     * @param activePet The {@code String} that represents a possible active {@code pet}.
-     * @param entity    The mob to teleport if {@code activePet} matches the currently active pet.
-     * @return True if the {@code activePet} inputted is the current active pet, and the
-     * {@code mob} is not {@code null}.
-     */
     public static boolean checkTeleport(String activePet, AbstractPet entity) {
-        return Objects.equals(CONFIG.activePet, activePet) && entity != null;
+        return Objects.equals(Central.CONFIG.activePet, activePet) && entity != null;
     }
 
-    /**
-     * Checks if the string is {@code null} and sets it to an empty - but not {@code null} String - if it is.
-     *
-     * @param s The String to check if it is {@code null}.
-     * @return If the string is {@code null}, the new empty String is returned. If the string is not {@code null},
-     * simply returns {@code s}.
-     */
     public static String checkNullString(String s) {
         return s == null ? "" : s;
     }
 
-    /**
-     * Similar to the checkNullString method above, but takes a default value instead of
-     * setting the String to an empty String. Used to set the {@code CONFIG.xSkin} values
-     * to a default value and avoid {@code NullPointerExceptions}.
-     *
-     * @param s           The string to check if it {@code null}.
-     * @param defaultSkin The default value to set {@code s} to if {@code s} is {@code null}.
-     * @return If the string is {@code null}, {@code defaultSkin} is returned. If the string is not {@code null},
-     * simply returns {@code s}.
-     */
     public static String checkNullString(String s, String defaultSkin) {
         return s == null ? defaultSkin : s;
     }
 
-    /**
-     * Used as a shortcut to {@link Identifier#fromNamespaceAndPath}, and sets the parameter
-     * {@code namespace} with {@link PetsInitializer#MOD_ID}.
-     *
-     * @param path The String that goes in the {@code path} parameter.
-     * @return {@link Identifier#fromNamespaceAndPath}, with the parameter {@code namespace} set to
-     * {@link PetsInitializer#MOD_ID} and the parameter {@code path} set to the user's input
-     */
     public static String withModNamespace(String path) {
-        return (path);
+        return path;
     }
 
-    /**
-     * Despawns the inputted pet if {@code e} is not {@code null}.
-     *
-     * @param e The mob to despawn
-     */
     public static void despawnEntity(Entity e) {
         if (e != null) {
-            e.remove();
+            e.markDead();
         }
+
     }
 
-    /**
-     * Sets the active pet in {@link PetsConfig#activePet} and tears down whatever is currently in
-     * {@link Central#summonedEntity} so the tick watcher re-summons the new species.
-     *
-     * <p>The pet statics on {@link Central} are only assigned inside {@link Central#summonPet()},
-     * so any argument passed here before the first successful spawn is {@code null}. The list must
-     * stay empty in that case: {@link Central#createTickWatcher()} only summons while
-     * {@code summonedEntity.isEmpty()}, so a {@code null} entry would wedge spawning off forever.
-     *
-     * @param e the previously built instance, retained so the 42 call sites in
-     *           {@link Central#executePetSpeciesCommand} stay unchanged. It is deliberately
-     *           ignored: the instance has to be rebuilt inside {@link Central#summonPet()}
-     *           before it can be added to the world.
-     * @param s the value to set {@link PetsConfig#activePet} to
-     */
     public static void setActivePet(Entity e, String s) {
-        for (Entity existing : Central.summonedEntity) {
+        Iterator var2 = Central.summonedEntity.iterator();
+
+        while(var2.hasNext()) {
+            Entity existing = (Entity)var2.next();
             despawnEntity(existing);
         }
 
         Central.summonedEntity.clear();
-        CONFIG.activePet = s;
+        Central.CONFIG.activePet = s;
     }
 
     public static Block getBlockFromString(String string) {
         try {
             Field[] fields = Block.class.getDeclaredFields();
+            Field[] var2 = fields;
+            int var3 = fields.length;
 
-            for (Field field : fields) {
-                if (!Block.class.isAssignableFrom(field.getType())) continue;
-                if (Objects.equals(string, field.getName())) {
-                    return (Block) field.get(null);
+            for(int var4 = 0; var4 < var3; ++var4) {
+                Field field = var2[var4];
+                if (Block.class.isAssignableFrom(field.getType()) && Objects.equals(string, field.getName())) {
+                    return (Block)field.get((Object)null);
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception var6) {
+            Exception e = var6;
             e.printStackTrace();
         }
+
         return Block.BED;
     }
 
@@ -208,7 +128,7 @@ public class Utils {
             return text;
         } else {
             String string4 = text.substring(0, i);
-            String string5 = (string4) + text.substring(i + (text.charAt(i) == ' ' ? 1 : 0));
+            String string5 = string4 + text.substring(i + (text.charAt(i) == ' ' ? 1 : 0));
             return string4 + "\n" + insertLineBreaks(string5, width);
         }
     }
@@ -219,32 +139,33 @@ public class Utils {
         int k = 0;
         int l = -1;
 
-        for(int m = 0; k < i; ++k) {
+        boolean m = false;
+        for(; k < i; ++k) {
             int n = text.charAt(k);
             switch (n) {
-                case 32:
+                case ' ':
                     l = k;
                 default:
                     j += Minecraft.INSTANCE.textRenderer.getWidth(String.valueOf(n));
-                    if (m != 0) {
+                    if (m) {
                         ++j;
                     }
                     break;
-                case 167:
+                case '§':
                     if (k != i) {
                         ++k;
                         int o = text.charAt(k);
-                        if (o != 108 && o != 76) {
-                            if (o == 114 || o == 82) {
-                                m = 0;
+                        if (o != 'l' && o != 'L') {
+                            if (o == 'r' || o == 'R') {
+                                m = false;
                             }
                         } else {
-                            m = 1;
+                            m = true;
                         }
                     }
             }
 
-            if (n == 10) {
+            if (n == '\n') {
                 ++k;
                 l = k;
                 break;
@@ -258,7 +179,6 @@ public class Utils {
         return k != i && l != -1 && l < k ? l : k;
     }
 
-    //control thing so if it is supposed to be true i can just flip it
     public static boolean isBidirectional() {
         return false;
     }

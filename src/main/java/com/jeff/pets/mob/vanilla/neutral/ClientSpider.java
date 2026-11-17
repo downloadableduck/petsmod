@@ -1,26 +1,29 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.mob.vanilla.neutral;
 
+import net.minecraft.world.World;
 import com.jeff.pets.mob.GroundPet;
 
 public class ClientSpider extends GroundPet {
-    public ClientSpider(net.minecraft.world.World level) {
+    public ClientSpider(World level) {
         super(level);
-        this.setSize(1.4f, 0.9f);
+        this.setBoundingBoxSpacing(1.4F, 0.9F);
         this.texture = "/mob/spider.png";
     }
 
-    @Override
     protected int stopDistance() {
         return 2;
     }
 
-    @Override
     protected float heartHeight() {
-        return 1.5f;
+        return 1.5F;
     }
 
-    @Override
-    protected String getAmbientSound() {
+    protected String getRandomSound() {
         return "mob.spider.say";
     }
 }

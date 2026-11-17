@@ -1,30 +1,31 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.mob.vanilla.passive;
 
+import net.minecraft.world.World;
 import com.jeff.pets.mob.FlyingPet;
 
-
 public class ClientBat extends FlyingPet {
-
     public boolean isOnHead;
 
-    public ClientBat(net.minecraft.world.World level) {
+    public ClientBat(World level) {
         super(level);
-        this.setSize(0.5f, 0.9f);
+        this.setBoundingBoxSpacing(0.5F, 0.9F);
         this.texture = "/mob/bat.png";
     }
 
-    @Override
     protected int stopDistance() {
         return 2;
     }
 
-    @Override
     protected float heartHeight() {
-        return 1.5f;
+        return 1.5F;
     }
 
-    @Override
-    protected String getAmbientSound() {
+    protected String getRandomSound() {
         return "mob.bat.idle";
     }
 }

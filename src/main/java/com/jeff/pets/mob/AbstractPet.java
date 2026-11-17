@@ -1,33 +1,30 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.mob;
 
-import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.animal.AnimalEntity;
-import net.minecraft.entity.mob.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
+import com.jeff.pets.mob.custom.first.Duck;
 
-/**
- * Abstract base for client-side pets, adapted for 1.1's entity hierarchy.
- * <p> 1.1 has no {@code TameableEntity}; taming/owner/sitting/speed helpers that existed
- * in 1.2.5 are provided here as a compatibility layer.
- */
 public abstract class AbstractPet extends AnimalEntity {
-
     protected int waitingTime = 0;
     private boolean isReturningToOwner = false;
-    private float randomX = (float) (Math.random() - 1f);
-    private float randomZ = (float) (Math.random() - 1);
-
-    // 1.1 compatibility (TameableEntity API surface used by this mod)
+    private float randomX = (float)(Math.random() - 1.0);
+    private float randomZ = (float)(Math.random() - 1.0);
     private String ownerName;
     private boolean sitting;
 
     protected AbstractPet(World level) {
         super(level);
-        this.setSpeed(0.4f);
+        this.setSpeed(0.4F);
         this.health = 8;
     }
 
@@ -35,45 +32,36 @@ public abstract class AbstractPet extends AnimalEntity {
         return false;
     }
 
-    @Override
-    public void aiTick() {
-        if (!aiEnabled()) {
-            super.aiTick();;
+    public void tickLiving() {
+        if (!this.aiEnabled()) {
+            super.tickLiving();
         }
+
     }
 
     protected abstract int stopDistance();
 
     protected abstract float heartHeight();
 
-    protected abstract String getAmbientSound();
+    protected abstract String getRandomSound();
 
-    @Override
     public boolean interact(@NotNull PlayerEntity player) {
-        ItemStack itemStack = player.getItemInHand();
-
+        ItemStack itemStack = player.getHand();
         if (this.isTamed() && itemStack == null && !player.isSneaking()) {
-            this.world.addParticle(
-                    "heart",
-                    this.x,
-                    this.y + this.heartHeight(),
-                    this.z,
-                    0, 0, 0
-            );
+            this.world.addParticle("heart", this.x, this.y + (double)this.heartHeight(), this.z, 0.0, 0.0, 0.0);
             return true;
-        }
-
-        if (this.isTamed() && itemStack == null && player.isSneaking()) {
-            if (!this.isRiding()) {
-                this.startRiding(player);
-                this.lookAt(player, 1f, 1f);
+        } else if (this.isTamed() && itemStack == null && player.isSneaking()) {
+            if (!this.hasVehicle()) {
+                this.setVehicle(player);
+                this.lookAt(player, 1.0F, 1.0F);
                 return true;
             } else {
                 this.dismountFromVehicle();
+                return true;
             }
-            return true;
+        } else {
+            return super.interact(player);
         }
-        return super.interact(player);
     }
 
     protected boolean isBreedingItem(ItemStack itemStack) {
@@ -85,58 +73,50 @@ public abstract class AbstractPet extends AnimalEntity {
     }
 
     public void setName(String string) {
-        //this.getName(string);
     }
 
     public void wander() {
-        // Direct-velocity movement in 1.1: use a small but visible wander speed.
         float speed = 0.08F;
-        Vec3d lookDir;
         float z = speed * this.randomZ;
+        LivingEntity owner = this.getOwner();
+        if (owner != null) {
+            float distance = this.getDistance(owner);
+            float yVelo = (float)this.getVelocity().y;
+            if (distance > 5.0F) {
+                this.reCalcPos();
+                this.isReturningToOwner = true;
+            } else if (distance < 2.0F) {
+                this.reCalcPos();
+                this.isReturningToOwner = false;
+            }
 
-        MobEntity owner = this.getOwner();
-        if (owner == null) return;
-        float distance = this.distanceTo(owner);
-        float yVelo = (float) this.getVelocity().y;
+            if (!this.isReturningToOwner) {
+                this.lerpVelocity(Vec3d.create((double)speed, (double)yVelo, (double)z));
+            } else {
+                this.lerpVelocity(Vec3d.create((double)(-speed), (double)yVelo, (double)(-z)));
+            }
 
-        if (distance > 5) {
-            this.reCalcPos();
-            this.isReturningToOwner = true;
-        } else if (distance < 2) {
-            this.reCalcPos();
-            this.isReturningToOwner = false;
+            double moveX = this.getVelocity().x;
+            double moveZ = this.getVelocity().z;
+            Vec3d lookDir = Vec3d.create(this.x + moveX * 2.0, this.y + (double)this.getEyeHeight(), this.z + moveZ * 2.0);
+            if (moveX * moveX + moveZ * moveZ > 0.001) {
+                float targetYaw = (float)(Math.atan2(-moveX, moveZ) * 57.29577951308232);
+                this.setYRot(Duck.rotlerp(this.getYRot(), targetYaw));
+            }
+
+            if (this.horizontalCollision && this.onGround) {
+                this.jump();
+            }
+
+            if (!this.onGround) {
+                this.lerpVelocity(this.getVelocity().add(0.0, -0.04, 0.0));
+            }
+
+            double dx = lookDir.x - this.x;
+            double dz = lookDir.z - this.z;
+            float targetYaw = (float)(Math.atan2(-dx, dz) * 57.29577951308232);
+            this.setYRot(targetYaw);
         }
-
-        if (!this.isReturningToOwner) {
-            this.lerpVelocity(Vec3d.of(speed, yVelo, z));
-        } else {
-            this.lerpVelocity(Vec3d.of(-speed, yVelo, -z));
-        }
-
-        double moveX = this.getVelocity().x;
-        double moveZ = this.getVelocity().z;
-
-        lookDir = Vec3d.of(
-                this.x + (moveX * 2),
-                this.y + this.getEyeHeight(),
-                this.z + (moveZ * 2)
-        );
-
-        if (moveX * moveX + moveZ * moveZ > 0.001) {
-            float targetYaw = (float) (Math.atan2(-moveX, moveZ) * (180D / Math.PI));
-            this.setYRot(Duck.rotlerp(this.getYRot(), targetYaw));
-        }
-
-        if (this.collidingHorizontally && this.onGround) {
-            this.jump();
-        }
-        if (!this.onGround) {
-            this.lerpVelocity(this.getVelocity().add(0, -0.04, 0));
-        }
-        double dx = lookDir.x - this.x;
-        double dz = lookDir.z - this.z;
-        float targetYaw = (float) (Math.atan2(-dx, dz) * (180D / Math.PI));
-        this.setYRot(targetYaw);
     }
 
     public float getYRot() {
@@ -150,8 +130,8 @@ public abstract class AbstractPet extends AnimalEntity {
     }
 
     private void reCalcPos() {
-        this.randomX = (float) (Math.random() - 1);
-        this.randomZ = (float) (Math.random() - 1);
+        this.randomX = (float)(Math.random() - 1.0);
+        this.randomZ = (float)(Math.random() - 1.0);
     }
 
     public double horizontalDistance(Vec3d vec3) {
@@ -159,7 +139,7 @@ public abstract class AbstractPet extends AnimalEntity {
     }
 
     public boolean isPassenger() {
-        return this.isRiding();
+        return this.hasVehicle();
     }
 
     public void dismountFromVehicle() {
@@ -167,27 +147,22 @@ public abstract class AbstractPet extends AnimalEntity {
     }
 
     public Vec3d getPosVec() {
-        return Vec3d.of(this.x, this.y, this.z);
+        return Vec3d.create(this.x, this.y, this.z);
     }
 
     public void lerpVelocity(Vec3d vec3d) {
-        this.lerpVelocity(vec3d.x, vec3d.y, vec3d.z);
+        this.setVelocityClient(vec3d.x, vec3d.y, vec3d.z);
     }
-
-    // Expose Entity.lerpVelocity(double,double,double) (already inherited, but keep signature clear)
 
     public Vec3d getVelocity() {
-        return Vec3d.of(this.velocityX, this.velocityY, this.velocityZ);
+        return Vec3d.create(this.velocityX, this.velocityY, this.velocityZ);
     }
-
-    // --- 1.1 TameableEntity compatibility ---
 
     public boolean isTamed() {
         return true;
     }
 
     public void setTamed(boolean tamed) {
-        // client-side pets are always tamed
     }
 
     public boolean isSitting() {
@@ -206,21 +181,17 @@ public abstract class AbstractPet extends AnimalEntity {
         this.ownerName = name;
     }
 
-    public MobEntity getOwner() {
-        if (this.ownerName == null || this.world == null) {
-            return null;
-        }
-        return this.world.getPlayer(this.ownerName);
+    public LivingEntity getOwner() {
+        return this.ownerName != null && this.world != null ? this.world.getPlayer(this.ownerName) : null;
     }
 
     public void setSpeed(float speed) {
-        this.walkSpeed = speed;
-        this.forwardSpeed = (speed);
+        this.movementSpeed = speed;
+        this.forwardSpeed = speed;
     }
 
     public float getSpeed() {
-        // 1.2 semantics: stored speed value
-        return this.walkSpeed;
+        return this.movementSpeed;
     }
 
     public void setyaw(float yaw) {
@@ -231,34 +202,28 @@ public abstract class AbstractPet extends AnimalEntity {
         return this.yaw;
     }
 
-    @Override
     public void tick() {
-        // Prevent server/client interpolation from snapping this locally-scripted pet.
-        this.lerpSteps = 0;
-        // Our movement is driven by explicit velocity updates in subclasses; zero AI inputs
-        // so mobTick's moveRelative doesn't apply additional input-based acceleration.
+        this.bodyTrackingIncrements = 0;
         this.sidewaysSpeed = 0.0F;
         this.forwardSpeed = 0.0F;
         super.tick();
     }
 
-    @Override
-    public void moveRelative(float strafe, float forward) {
-        // 1.1 moveRelative converts strafe/forward into velocity changes and also updates
-        // walk animation state used by the renderer. Scripted pets set velocity directly, but we
-        // must still update walkAnimationSpeed/Progress or leg animations freeze/jitter/teleport.
-        if (this.isInWater() || this.isInLava()) {
-            super.moveRelative(strafe, forward);
-            return;
-        }
-        this.move(this.velocityX, this.velocityY, this.velocityZ);
+    public void travel(float strafe, float forward) {
+        if (!this.isSubmergedInWater() && !this.isTouchingLava()) {
+            this.move(this.velocityX, this.velocityY, this.velocityZ);
+            this.lastWalkAnimationSpeed = this.walkAnimationSpeed;
+            double dx = this.x - this.prevX;
+            double dz = this.z - this.prevZ;
+            float dist = (float)Math.sqrt(dx * dx + dz * dz) * 4.0F;
+            if (dist > 1.0F) {
+                dist = 1.0F;
+            }
 
-        this.lastWalkAnimationSpeed = this.walkAnimationSpeed;
-        double dx = this.x - this.lastX;
-        double dz = this.z - this.lastZ;
-        float dist = (float) Math.sqrt(dx * dx + dz * dz) * 4.0F;
-        if (dist > 1.0F) dist = 1.0F;
-        this.walkAnimationSpeed += (dist - this.walkAnimationSpeed) * 0.4F;
-        this.walkAnimationProgress += this.walkAnimationSpeed;
+            this.walkAnimationSpeed += (dist - this.walkAnimationSpeed) * 0.4F;
+            this.walkAnimationProgress += this.walkAnimationSpeed;
+        } else {
+            super.travel(strafe, forward);
+        }
     }
 }

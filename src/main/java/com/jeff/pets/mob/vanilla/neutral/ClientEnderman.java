@@ -1,26 +1,29 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.mob.vanilla.neutral;
 
+import net.minecraft.world.World;
 import com.jeff.pets.mob.GroundPet;
 
 public class ClientEnderman extends GroundPet {
-    public ClientEnderman(net.minecraft.world.World level) {
+    public ClientEnderman(World level) {
         super(level);
-        this.setSize(0.6f, 2.9f);
+        this.setBoundingBoxSpacing(0.6F, 2.9F);
         this.texture = "/mob/enderman.png";
     }
 
-    @Override
     protected int stopDistance() {
         return 2;
     }
 
-    @Override
     protected float heartHeight() {
-        return 3;
+        return 3.0F;
     }
 
-    @Override
-    protected String getAmbientSound() {
+    protected String getRandomSound() {
         return "mob.endermen.idle";
     }
 }

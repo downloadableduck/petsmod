@@ -1,21 +1,7 @@
-/*
- * This file is part of Cloth Config.
- * Copyright (C) 2020 - 2021 shedaniel
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
 
 package me.shedaniel.autoconfig;
 
@@ -24,119 +10,122 @@ import me.shedaniel.autoconfig.event.ConfigSerializeEvent;
 import me.shedaniel.autoconfig.serializer.ConfigSerializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-@ApiStatus.Internal
+@Internal
 public class ConfigManager<T extends ConfigData> implements ConfigHolder<T> {
-    private final Logger logger;
+    private final Logger logger = LogManager.getLogger();
     private final Config definition;
     private final Class<T> configClass;
     private final ConfigSerializer<T> serializer;
-
-    private final List<ConfigSerializeEvent.Save<T>> saveEvent = new ArrayList<>();
-    private final List<ConfigSerializeEvent.Load<T>> loadEvent = new ArrayList<>();
-
+    private final List<ConfigSerializeEvent.Save<T>> saveEvent = new ArrayList();
+    private final List<ConfigSerializeEvent.Load<T>> loadEvent = new ArrayList();
     private T config;
 
     ConfigManager(Config definition, Class<T> configClass, ConfigSerializer<T> serializer) {
-        logger = LogManager.getLogger();
-
         this.definition = definition;
         this.configClass = configClass;
         this.serializer = serializer;
-
-        if (load()) {
-            save();
+        if (this.load()) {
+            this.save();
         }
+
     }
 
     public Config getDefinition() {
-        return definition;
+        return this.definition;
     }
 
-    @Override
-    @NotNull
-    public Class<T> getConfigClass() {
-        return configClass;
+    public @NotNull Class<T> getConfigClass() {
+        return this.configClass;
     }
 
     public ConfigSerializer<T> getSerializer() {
-        return serializer;
+        return this.serializer;
     }
 
-    @Override
     public void save() {
-        for (ConfigSerializeEvent.Save<T> save : saveEvent) {
-            int result = save.onSave(this, config);
+        Iterator var1 = this.saveEvent.iterator();
+
+        while(var1.hasNext()) {
+            ConfigSerializeEvent.Save<T> save = (ConfigSerializeEvent.Save)var1.next();
+            int result = save.onSave(this, this.config);
             if (result == 0) {
                 return;
-            } else if (result != 1) {
+            }
+
+            if (result != 1) {
                 break;
             }
         }
+
         try {
-            serializer.serialize(config);
-        } catch (ConfigSerializer.SerializationException e) {
-            logger.error("Failed to save config '{}'", configClass, e);
+            this.serializer.serialize(this.config);
+        } catch (ConfigSerializer.SerializationException var4) {
+            ConfigSerializer.SerializationException e = var4;
+            this.logger.error("Failed to save config '{}'", this.configClass, e);
         }
+
     }
 
-    @Override
     public boolean load() {
         try {
-            T deserialized = serializer.deserialize();
+            T deserialized = this.serializer.deserialize();
+            Iterator var2 = this.loadEvent.iterator();
 
-            for (ConfigSerializeEvent.Load<T> load : loadEvent) {
+            while(var2.hasNext()) {
+                ConfigSerializeEvent.Load<T> load = (ConfigSerializeEvent.Load)var2.next();
                 int result = load.onLoad(this, deserialized);
                 if (result == 0) {
-                    config = serializer.createDefault();
-                    config.validatePostLoad();
+                    this.config = this.serializer.createDefault();
+                    this.config.validatePostLoad();
                     return false;
-                } else if (result != 1) {
+                }
+
+                if (result != 1) {
                     break;
                 }
             }
 
-            config = deserialized;
-            config.validatePostLoad();
+            this.config = deserialized;
+            this.config.validatePostLoad();
             return true;
-        } catch (ConfigSerializer.SerializationException | ConfigData.ValidationException e) {
-            logger.error("Failed to load config '{}', using default!", configClass, e);
-            resetToDefault();
+        } catch (ConfigData.ValidationException | ConfigSerializer.SerializationException var5) {
+            Exception e = var5;
+            this.logger.error("Failed to load config '{}', using default!", this.configClass, e);
+            this.resetToDefault();
             return false;
         }
     }
 
-    @Override
     public T getConfig() {
-        return config;
+        return this.config;
     }
 
-    @Override
     public void setConfig(T config) {
         this.config = config;
     }
 
-    @Override
     public void registerLoadListener(ConfigSerializeEvent.Load<T> load) {
         this.loadEvent.add(load);
     }
 
-    @Override
     public void resetToDefault() {
-        config = serializer.createDefault();
+        this.config = this.serializer.createDefault();
+
         try {
-            config.validatePostLoad();
-        } catch (ConfigData.ValidationException v) {
+            this.config.validatePostLoad();
+        } catch (ConfigData.ValidationException var2) {
+            ConfigData.ValidationException v = var2;
             throw new RuntimeException("result of createDefault() was invalid!", v);
         }
     }
 
-    @Override
     public void registerSaveListener(ConfigSerializeEvent.Save<T> save) {
         this.saveEvent.add(save);
     }

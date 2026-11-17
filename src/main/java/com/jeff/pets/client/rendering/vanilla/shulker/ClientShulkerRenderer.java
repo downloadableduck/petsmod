@@ -1,60 +1,64 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client.rendering.vanilla.shulker;
 
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import org.jetbrains.annotations.NotNull;
+import com.jeff.pets.client.Central;
+import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientShulker;
-import org.jetbrains.annotations.NotNull;
-
-import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientShulkerRenderer extends PetRenderer<ClientShulker> {
-
-    public ClientShulkerRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientShulkerModel(), 0.75f);
+    public ClientShulkerRenderer(EntityRenderDispatcher context, PetsClientInitializer.Context context2) {
+        super(context, new ClientShulkerModel(), 0.75F);
     }
 
-    @Override
-    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
-        ClientShulker state = (ClientShulker) entity;
-        String shulkerFile;
+    public @NotNull String getTexture(Entity entity) {
+        ClientShulker state = (ClientShulker)entity;
         String folderPath = "textures/mob/shulker/";
-        if (CONFIG.shulkerSkin.equals("normal")) {
+        String shulkerFile;
+        if (Central.CONFIG.shulkerSkin.equals("normal")) {
             shulkerFile = "shulker.png";
-        } else if (CONFIG.shulkerSkin.equals("black")) {
+        } else if (Central.CONFIG.shulkerSkin.equals("black")) {
             shulkerFile = "shulker_black.png";
-        } else if (CONFIG.shulkerSkin.equals("brown")) {
+        } else if (Central.CONFIG.shulkerSkin.equals("brown")) {
             shulkerFile = "shulker_brown.png";
-        } else if (CONFIG.shulkerSkin.equals("cyan")) {
+        } else if (Central.CONFIG.shulkerSkin.equals("cyan")) {
             shulkerFile = "shulker_cyan.png";
-        } else if (CONFIG.shulkerSkin.equals("light_blue")) {
+        } else if (Central.CONFIG.shulkerSkin.equals("light_blue")) {
             shulkerFile = "shulker_light_blue.png";
-        } else if (CONFIG.shulkerSkin.equals("light_gray")) {
+        } else if (Central.CONFIG.shulkerSkin.equals("light_gray")) {
             shulkerFile = "shulker_light_gray.png";
-        } else if (CONFIG.shulkerSkin.equals("lime")) {
+        } else if (Central.CONFIG.shulkerSkin.equals("lime")) {
             shulkerFile = "shulker_lime.png";
-        } else if (CONFIG.shulkerSkin.equals("magenta")) {
+        } else if (Central.CONFIG.shulkerSkin.equals("magenta")) {
             shulkerFile = "shulker_magenta.png";
-        } else if (CONFIG.shulkerSkin.equals("orange")) {
+        } else if (Central.CONFIG.shulkerSkin.equals("orange")) {
             shulkerFile = "shulker_orange.png";
-        } else if (CONFIG.shulkerSkin.equals("pink")) {
+        } else if (Central.CONFIG.shulkerSkin.equals("pink")) {
             shulkerFile = "shulker_pink.png";
-        } else if (CONFIG.shulkerSkin.equals("purple")) {
+        } else if (Central.CONFIG.shulkerSkin.equals("purple")) {
             shulkerFile = "shulker_purple.png";
-        } else if (CONFIG.shulkerSkin.equals("red")) {
+        } else if (Central.CONFIG.shulkerSkin.equals("red")) {
             shulkerFile = "shulker_red.png";
-        } else if (CONFIG.shulkerSkin.equals("white")) {
+        } else if (Central.CONFIG.shulkerSkin.equals("white")) {
             shulkerFile = "shulker_white.png";
-        } else if (CONFIG.shulkerSkin.equals("yellow")) {
+        } else if (Central.CONFIG.shulkerSkin.equals("yellow")) {
             shulkerFile = "shulker_yellow.png";
         } else {
             shulkerFile = "shulker.png";
         }
-        return (folderPath + shulkerFile);
+
+        return folderPath + shulkerFile;
     }
 
-    public void renderModel(net.minecraft.entity.mob.MobEntity entity, float f, float g, float h, float i, float j, float k) {
-        ClientShulker shulker = (ClientShulker) entity;
-        // super.renderModel removed for b1.8 compat (render handled by PetRenderer)
-        //shulker.bodyrotationY = 180;
-        // shulker.peekAmount = 1;
+    public void renderModel(LivingEntity entity, float f, float g, float h, float i, float j, float k) {
+        ClientShulker shulker = (ClientShulker)entity;
     }
 }

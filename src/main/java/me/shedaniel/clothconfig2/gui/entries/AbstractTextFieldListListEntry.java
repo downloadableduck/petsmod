@@ -1,10 +1,14 @@
-package me.shedaniel.clothconfig2.gui.entries;
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
 
+package me.shedaniel.clothconfig2.gui.entries;
 
 import me.shedaniel.clothconfig2.compat.CompatTextFieldWidget;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.Minecraft;
-import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,98 +20,55 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-/**
- * This class represents config entry lists that use one {@link TextFieldWidget} per entry.
- *
- * @param <T>    the configuration object type
- * @param <C>    the cell type
- * @param <SELF> the "curiously recurring template pattern" type parameter
- * @see AbstractListListEntry
- */
-
 public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFieldListListEntry.AbstractTextFieldListCell<T, C, SELF>, SELF extends AbstractTextFieldListListEntry<T, C, SELF>> extends AbstractListListEntry<T, C, SELF> {
-    
-    @ApiStatus.Internal
+    @Internal
     public AbstractTextFieldListListEntry(String fieldName, List<T> value, boolean defaultExpanded, Supplier<Optional<String[]>> tooltipSupplier, Consumer<List<T>> saveConsumer, Supplier<List<T>> defaultValue, String resetButtonKey, boolean requiresRestart, boolean deleteButtonEnabled, boolean insertInFront, BiFunction<T, SELF, C> createNewCell) {
         super(fieldName, value, defaultExpanded, tooltipSupplier, saveConsumer, defaultValue, resetButtonKey, requiresRestart, deleteButtonEnabled, insertInFront, createNewCell);
     }
-    
-    /**
-     * @param <T>           the configuration object type
-     * @param <SELF>        the "curiously recurring template pattern" type parameter for this class
-     * @param <OUTER_SELF>> the "curiously recurring template pattern" type parameter for the outer class
-     * @see AbstractTextFieldListListEntry
-     */
-    @ApiStatus.Internal
-    public static abstract class AbstractTextFieldListCell<T, SELF extends AbstractTextFieldListCell<T, SELF, OUTER_SELF>, OUTER_SELF extends AbstractTextFieldListListEntry<T, SELF, OUTER_SELF>> extends AbstractListCell<T, SELF, OUTER_SELF> {
-        
+
+    @Internal
+    public abstract static class AbstractTextFieldListCell<T, SELF extends AbstractTextFieldListCell<T, SELF, OUTER_SELF>, OUTER_SELF extends AbstractTextFieldListListEntry<T, SELF, OUTER_SELF>> extends AbstractListCell<T, SELF, OUTER_SELF> {
         protected CompatTextFieldWidget widget;
         private boolean isSelected;
-        
+
         public AbstractTextFieldListCell(@Nullable T value, OUTER_SELF listListEntry) {
             super(value, listListEntry);
-            
-            final T finalValue = substituteDefault(value);
-            
-            widget = new CompatTextFieldWidget(this.listListEntry.getScreen(), 0, Minecraft.INSTANCE.textRenderer, 0, 0, 100, 18) {
-                @Override
+            T finalValue = this.substituteDefault(value);
+            this.widget = new CompatTextFieldWidget(((AbstractTextFieldListListEntry)this.listListEntry).getScreen(), 0, Minecraft.INSTANCE.textRenderer, 0, 0, 100, 18) {
                 public void render() {
                     super.render();
                 }
             };
-            // widget.setFilter(this::isValidText); // Not available in 1.13
-            widget.setMaxLength(Integer.MAX_VALUE);
-            widget.setText(Objects.toString(finalValue));
-            // widget.setResponder(s -> { // Not available in 1.13
-            //     widget.editableColor = (getPreferredTextColor());
-            //     if (listListEntry.getScreen() != null && !Objects.equals(s, Objects.toString(finalValue))) {
-            //         this.listListEntry.getScreen().setEdited(true, this.listListEntry.isRequiresRestart());
-            //     }
-            // });
+            this.widget.setMaxLength(Integer.MAX_VALUE);
+            this.widget.setText(Objects.toString(finalValue));
         }
-    
-        @Override
+
         public void updateSelected(boolean isSelected) {
             this.isSelected = isSelected;
         }
-    
-        /**
-         * Allows subclasses to substitute default values.
-         *
-         * @param value the (possibly null) value to substitute
-         * @return a substitution
-         */
-        @Nullable
-        protected abstract T substituteDefault(@Nullable T value);
-        
-        /**
-         * Tests if the text entered is valid. If not, the text is not changed.
-         *
-         * @param text the text to test
-         * @return {@code true} if the text may be changed, {@code false} to prevent the change
-         */
-        protected abstract boolean isValidText(@NotNull String text);
-        
-        @Override
+
+        protected abstract @Nullable T substituteDefault(@Nullable T var1);
+
+        protected abstract boolean isValidText(@NotNull String var1);
+
         public int getCellHeight() {
             return 20;
         }
-        
-        @Override
+
         public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
-            widget.width = entryWidth - 12;
-            widget.x = x;
-            widget.y = y + 1;
-            widget.editable = (listListEntry.isEditable());
-            widget.render();
-            if (isSelected && listListEntry.isEditable())
-                fill(x, y + 12, x + entryWidth - 12, y + 13, getConfigError().isPresent() ? 0xffff5555 : 0xffe0e0e0);
+            this.widget.width = entryWidth - 12;
+            this.widget.x = x;
+            this.widget.y = y + 1;
+            this.widget.enabled = ((AbstractTextFieldListListEntry)this.listListEntry).isEditable();
+            this.widget.render();
+            if (isSelected && ((AbstractTextFieldListListEntry)this.listListEntry).isEditable()) {
+                this.fill(x, y + 12, x + entryWidth - 12, y + 13, this.getConfigError().isPresent() ? -43691 : -2039584);
+            }
+
         }
-        
-        @Override
+
         public List<? extends GuiEventListener> children() {
-            return Collections.singletonList(widget);
+            return Collections.singletonList(this.widget);
         }
     }
-    
 }

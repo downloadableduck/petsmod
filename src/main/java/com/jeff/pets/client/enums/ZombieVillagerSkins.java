@@ -1,5 +1,9 @@
-package com.jeff.pets.client.enums;
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
 
+package com.jeff.pets.client.enums;
 
 public enum ZombieVillagerSkins implements NameableEnum {
     armorer,
@@ -18,7 +22,9 @@ public enum ZombieVillagerSkins implements NameableEnum {
     unemployed,
     weaponsmith;
 
-    @Override
+    private ZombieVillagerSkins() {
+    }
+
     public String getDisplayName() {
         return new String(String.valueOf(this).replace("_", " "));
     }

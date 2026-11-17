@@ -1,11 +1,19 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package me.shedaniel.clothconfig2.compat;
 
 import me.shedaniel.clothconfig2.ParentElement;
-import net.minecraft.client.gui.GuiElement;
+import net.minecraft.client.gui.DrawContext;
 
-public abstract class AbstractContainerEventHandler extends GuiElement implements ParentElement {
+public abstract class AbstractContainerEventHandler extends DrawContext implements ParentElement {
     private GuiEventListener focused;
     private boolean dragging;
+
+    public AbstractContainerEventHandler() {
+    }
 
     public boolean isDragging() {
         return this.dragging;
@@ -23,27 +31,22 @@ public abstract class AbstractContainerEventHandler extends GuiElement implement
         this.focused = focused;
     }
 
-    @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
         return this.getFocused() != null && this.isDragging() && button == 0 ? this.getFocused().mouseDragged(mouseX, mouseY, button, deltaX, deltaY) : false;
     }
 
-    @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         return this.getFocused() != null && this.getFocused().keyPressed(keyCode, scanCode, modifiers);
     }
 
-    @Override
     public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
         return this.getFocused() != null && this.getFocused().keyReleased(keyCode, scanCode, modifiers);
     }
 
-    @Override
     public boolean charTyped(char chr, int modifiers) {
         return this.getFocused() != null && this.getFocused().charTyped(chr, modifiers);
     }
 
-    @Override
     public void changeFocus(boolean lookForwards) {
     }
 }

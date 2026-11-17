@@ -1,3 +1,8 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package me.shedaniel.math;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
@@ -7,130 +12,131 @@ public class Rectangle implements Cloneable {
     public int y;
     public int width;
     public int height;
-    
+
     public Rectangle() {
         this(0, 0, 0, 0);
     }
-    
+
     public Rectangle(Rectangle r) {
         this(r.x, r.y, r.width, r.height);
     }
-    
+
     public Rectangle(FloatingRectangle r) {
         this(r.x, r.y, r.width, r.height);
     }
-    
+
     public Rectangle(int width, int height) {
         this(0, 0, width, height);
     }
-    
+
     public Rectangle(Point p, Dimension d) {
         this(p.x, p.y, d.width, d.height);
     }
-    
+
     public Rectangle(Point p, FloatingDimension d) {
-        this(p.x, p.y, d.width, d.height);
+        this((double)p.x, (double)p.y, d.width, d.height);
     }
-    
+
     public Rectangle(FloatingPoint p, Dimension d) {
-        this(p.x, p.y, d.width, d.height);
+        this(p.x, p.y, (double)d.width, (double)d.height);
     }
-    
+
     public Rectangle(FloatingPoint p, FloatingDimension d) {
         this(p.x, p.y, d.width, d.height);
     }
-    
+
     public Rectangle(Point p) {
         this(p.x, p.y, 0, 0);
     }
-    
+
     public Rectangle(FloatingPoint p) {
-        this(p.x, p.y, 0, 0);
+        this(p.x, p.y, 0.0, 0.0);
     }
-    
+
     public Rectangle(Dimension d) {
         this(0, 0, d.width, d.height);
     }
-    
+
     public Rectangle(FloatingDimension d) {
-        this(0, 0, d.width, d.height);
+        this(0.0, 0.0, d.width, d.height);
     }
-    
+
     public Rectangle(double x, double y, double width, double height) {
-        this((int) Math.round(x), (int) Math.round(y), (int) Math.round(width), (int) Math.round(height));
+        this((int)Math.round(x), (int)Math.round(y), (int)Math.round(width), (int)Math.round(height));
     }
-    
+
     public Rectangle(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
     }
-    
+
     public int getX() {
-        return x;
+        return this.x;
     }
-    
+
     public int getMinX() {
-        return x;
+        return this.x;
     }
-    
+
     public int getMaxX() {
-        return x + width;
+        return this.x + this.width;
     }
-    
+
     public int getCenterX() {
-        return x + width / 2;
+        return this.x + this.width / 2;
     }
-    
+
     public int getY() {
-        return y;
+        return this.y;
     }
-    
+
     public int getMinY() {
-        return y;
+        return this.y;
     }
-    
+
     public int getMaxY() {
-        return y + height;
+        return this.y + this.height;
     }
-    
+
     public int getCenterY() {
-        return y + height / 2;
+        return this.y + this.height / 2;
     }
-    
+
     public int getWidth() {
-        return width;
+        return this.width;
     }
-    
+
     public int getHeight() {
-        return height;
+        return this.height;
     }
-    
+
     public FloatingRectangle getFloatingBounds() {
-        return new FloatingRectangle(x, y, width, height);
+        return new FloatingRectangle((double)this.x, (double)this.y, (double)this.width, (double)this.height);
     }
-    
+
     public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
+        return new Rectangle(this.x, this.y, this.width, this.height);
     }
-    
+
     public void setBounds(FloatingRectangle r) {
-        setBounds(r.x, r.y, r.width, r.height);
+        this.setBounds(r.x, r.y, r.width, r.height);
     }
-    
+
     public void setBounds(Rectangle r) {
-        setBounds(r.x, r.y, r.width, r.height);
+        this.setBounds(r.x, r.y, r.width, r.height);
     }
-    
+
     public void setBounds(double x, double y, double width, double height) {
-        setBounds((int) Math.round(x), (int) Math.round(y), (int) Math.round(width), (int) Math.round(height));
+        this.setBounds((int)Math.round(x), (int)Math.round(y), (int)Math.round(width), (int)Math.round(height));
     }
-    
+
     public void setBounds(int x, int y, int width, int height) {
-        reshape(x, y, width, height);
+        this.reshape(x, y, width, height);
     }
-    
+
+    /** @deprecated */
     @Deprecated
     public void reshape(int x, int y, int width, int height) {
         this.x = x;
@@ -138,380 +144,415 @@ public class Rectangle implements Cloneable {
         this.width = width;
         this.height = height;
     }
-    
+
     public FloatingPoint getFloatingLocation() {
-        return new FloatingPoint(x, y);
+        return new FloatingPoint((double)this.x, (double)this.y);
     }
-    
+
     public Point getLocation() {
-        return new Point(x, y);
+        return new Point(this.x, this.y);
     }
-    
+
     public void setLocation(FloatingPoint p) {
-        setLocation(p.x, p.y);
+        this.setLocation(p.x, p.y);
     }
-    
+
     public void setLocation(Point p) {
-        setLocation(p.x, p.y);
+        this.setLocation(p.x, p.y);
     }
-    
+
     public void setLocation(double x, double y) {
-        move((int) Math.round(x), (int) Math.round(y));
+        this.move((int)Math.round(x), (int)Math.round(y));
     }
-    
+
     public void setLocation(int x, int y) {
-        move(x, y);
+        this.move(x, y);
     }
-    
+
+    /** @deprecated */
     @Deprecated
     public void move(int x, int y) {
         this.x = x;
         this.y = y;
     }
-    
+
     public void translate(int dx, int dy) {
         this.x += dx;
         this.y += dy;
     }
-    
-    @Override
+
     public Rectangle clone() {
-        return getBounds();
+        return this.getBounds();
     }
-    
+
     public FloatingDimension getFloatingSize() {
-        return new FloatingDimension(width, height);
+        return new FloatingDimension((double)this.width, (double)this.height);
     }
-    
+
     public void setSize(FloatingDimension d) {
-        setSize(d.width, d.height);
+        this.setSize(d.width, d.height);
     }
-    
+
     public Dimension getSize() {
-        return new Dimension(width, height);
+        return new Dimension(this.width, this.height);
     }
-    
+
     public void setSize(Dimension d) {
-        setSize(d.width, d.height);
+        this.setSize(d.width, d.height);
     }
-    
+
     public void setSize(double width, double height) {
-        resize((int) Math.round(width), (int) Math.round(height));
+        this.resize((int)Math.round(width), (int)Math.round(height));
     }
-    
+
     public void setSize(int width, int height) {
-        resize(width, height);
+        this.resize(width, height);
     }
-    
+
+    /** @deprecated */
     @Deprecated
     public void resize(int width, int height) {
         this.width = width;
         this.height = height;
     }
-    
+
     public boolean contains(Point p) {
-        return contains(p.x, p.y);
+        return this.contains(p.x, p.y);
     }
-    
+
     public boolean contains(FloatingPoint p) {
-        return contains(p.x, p.y);
+        return this.contains(p.x, p.y);
     }
-    
+
     public boolean contains(int x, int y) {
-        return inside(x, y);
+        return this.inside(x, y);
     }
-    
+
     public boolean contains(double x, double y) {
-        return inside((int) x, (int) y);
+        return this.inside((int)x, (int)y);
     }
-    
+
     public boolean contains(FloatingRectangle r) {
-        return contains((int) r.x, (int) r.y, (int) r.width, (int) r.height);
+        return this.contains((int)r.x, (int)r.y, (int)r.width, (int)r.height);
     }
-    
+
     public boolean contains(Rectangle r) {
-        return contains(r.x, r.y, r.width, r.height);
+        return this.contains(r.x, r.y, r.width, r.height);
     }
-    
+
     public boolean contains(int X, int Y, int W, int H) {
-        return contains(X, Y) && contains(W, H);
+        return this.contains(X, Y) && this.contains(W, H);
     }
-    
+
+    /** @deprecated */
     @Deprecated
     public boolean inside(int x, int y) {
         int thisX = this.x;
         int thisY = this.y;
-        return !isEmpty() && x >= thisX && x <= thisX + this.width && y >= thisY && y <= thisY + this.height;
+        return !this.isEmpty() && x >= thisX && x <= thisX + this.width && y >= thisY && y <= thisY + this.height;
     }
-    
+
     public boolean intersects(Rectangle r) {
         int tw = this.width;
         int th = this.height;
         int rw = r.width;
         int rh = r.height;
-        if (rw <= 0 || rh <= 0 || tw <= 0 || th <= 0) {
+        if (rw > 0 && rh > 0 && tw > 0 && th > 0) {
+            int tx = this.x;
+            int ty = this.y;
+            int rx = r.x;
+            int ry = r.y;
+            rw += rx;
+            rh += ry;
+            tw += tx;
+            th += ty;
+            return (rw < rx || rw > tx) && (rh < ry || rh > ty) && (tw < tx || tw > rx) && (th < ty || th > ry);
+        } else {
             return false;
         }
-        int tx = this.x;
-        int ty = this.y;
-        int rx = r.x;
-        int ry = r.y;
-        rw += rx;
-        rh += ry;
-        tw += tx;
-        th += ty;
-        //      overflow || intersect
-        return ((rw < rx || rw > tx) && (rh < ry || rh > ty) && (tw < tx || tw > rx) && (th < ty || th > ry));
     }
-    
+
     public Rectangle intersection(Rectangle r) {
         int tx1 = this.x;
         int ty1 = this.y;
         int rx1 = r.x;
         int ry1 = r.y;
-        long tx2 = tx1;
-        tx2 += this.width;
-        long ty2 = ty1;
-        ty2 += this.height;
-        long rx2 = rx1;
-        rx2 += r.width;
-        long ry2 = ry1;
-        ry2 += r.height;
-        if (tx1 < rx1)
+        long tx2 = (long)tx1;
+        tx2 += (long)this.width;
+        long ty2 = (long)ty1;
+        ty2 += (long)this.height;
+        long rx2 = (long)rx1;
+        rx2 += (long)r.width;
+        long ry2 = (long)ry1;
+        ry2 += (long)r.height;
+        if (tx1 < rx1) {
             tx1 = rx1;
-        if (ty1 < ry1)
+        }
+
+        if (ty1 < ry1) {
             ty1 = ry1;
-        if (tx2 > rx2)
+        }
+
+        if (tx2 > rx2) {
             tx2 = rx2;
-        if (ty2 > ry2)
+        }
+
+        if (ty2 > ry2) {
             ty2 = ry2;
-        tx2 -= tx1;
-        ty2 -= ty1;
-        // tx2,ty2 will never overflow (they will never be
-        // larger than the smallest of the two source w,h)
-        // they might underflow, though...
-        if (tx2 < Integer.MIN_VALUE)
-            tx2 = Integer.MIN_VALUE;
-        if (ty2 < Integer.MIN_VALUE)
-            ty2 = Integer.MIN_VALUE;
-        return new Rectangle(tx1, ty1, (int) tx2, (int) ty2);
+        }
+
+        tx2 -= (long)tx1;
+        ty2 -= (long)ty1;
+        if (tx2 < -2147483648L) {
+            tx2 = -2147483648L;
+        }
+
+        if (ty2 < -2147483648L) {
+            ty2 = -2147483648L;
+        }
+
+        return new Rectangle(tx1, ty1, (int)tx2, (int)ty2);
     }
-    
+
     public Rectangle union(Rectangle r) {
-        long tx2 = this.width;
-        long ty2 = this.height;
-        if ((tx2 | ty2) < 0) {
-            // This rectangle has negative dimensions...
-            // If r has non-negative dimensions then it is the answer.
-            // If r is non-existant (has a negative dimension), then both
-            // are non-existant and we can return any non-existant rectangle
-            // as an answer.  Thus, returning r meets that criterion.
-            // Either way, r is our answer.
+        long tx2 = (long)this.width;
+        long ty2 = (long)this.height;
+        if ((tx2 | ty2) < 0L) {
             return new Rectangle(r);
+        } else {
+            long rx2 = (long)r.width;
+            long ry2 = (long)r.height;
+            if ((rx2 | ry2) < 0L) {
+                return new Rectangle(this);
+            } else {
+                int tx1 = this.x;
+                int ty1 = this.y;
+                tx2 += (long)tx1;
+                ty2 += (long)ty1;
+                int rx1 = r.x;
+                int ry1 = r.y;
+                rx2 += (long)rx1;
+                ry2 += (long)ry1;
+                if (tx1 > rx1) {
+                    tx1 = rx1;
+                }
+
+                if (ty1 > ry1) {
+                    ty1 = ry1;
+                }
+
+                if (tx2 < rx2) {
+                    tx2 = rx2;
+                }
+
+                if (ty2 < ry2) {
+                    ty2 = ry2;
+                }
+
+                tx2 -= (long)tx1;
+                ty2 -= (long)ty1;
+                if (tx2 > 2147483647L) {
+                    tx2 = 2147483647L;
+                }
+
+                if (ty2 > 2147483647L) {
+                    ty2 = 2147483647L;
+                }
+
+                return new Rectangle(tx1, ty1, (int)tx2, (int)ty2);
+            }
         }
-        long rx2 = r.width;
-        long ry2 = r.height;
-        if ((rx2 | ry2) < 0) {
-            return new Rectangle(this);
-        }
-        int tx1 = this.x;
-        int ty1 = this.y;
-        tx2 += tx1;
-        ty2 += ty1;
-        int rx1 = r.x;
-        int ry1 = r.y;
-        rx2 += rx1;
-        ry2 += ry1;
-        if (tx1 > rx1)
-            tx1 = rx1;
-        if (ty1 > ry1)
-            ty1 = ry1;
-        if (tx2 < rx2)
-            tx2 = rx2;
-        if (ty2 < ry2)
-            ty2 = ry2;
-        tx2 -= tx1;
-        ty2 -= ty1;
-        // tx2,ty2 will never underflow since both original rectangles
-        // were already proven to be non-empty
-        // they might overflow, though...
-        if (tx2 > Integer.MAX_VALUE)
-            tx2 = Integer.MAX_VALUE;
-        if (ty2 > Integer.MAX_VALUE)
-            ty2 = Integer.MAX_VALUE;
-        return new Rectangle(tx1, ty1, (int) tx2, (int) ty2);
     }
-    
+
     public void add(int newx, int newy) {
-        if ((width | height) < 0) {
+        if ((this.width | this.height) < 0) {
             this.x = newx;
             this.y = newy;
             this.width = this.height = 0;
-            return;
+        } else {
+            int x1 = this.x;
+            int y1 = this.y;
+            long x2 = (long)this.width;
+            long y2 = (long)this.height;
+            x2 += (long)x1;
+            y2 += (long)y1;
+            if (x1 > newx) {
+                x1 = newx;
+            }
+
+            if (y1 > newy) {
+                y1 = newy;
+            }
+
+            if (x2 < (long)newx) {
+                x2 = (long)newx;
+            }
+
+            if (y2 < (long)newy) {
+                y2 = (long)newy;
+            }
+
+            x2 -= (long)x1;
+            y2 -= (long)y1;
+            if (x2 > 2147483647L) {
+                x2 = 2147483647L;
+            }
+
+            if (y2 > 2147483647L) {
+                y2 = 2147483647L;
+            }
+
+            this.reshape(x1, y1, (int)x2, (int)y2);
         }
-        int x1 = this.x;
-        int y1 = this.y;
-        long x2 = this.width;
-        long y2 = this.height;
-        x2 += x1;
-        y2 += y1;
-        if (x1 > newx)
-            x1 = newx;
-        if (y1 > newy)
-            y1 = newy;
-        if (x2 < newx)
-            x2 = newx;
-        if (y2 < newy)
-            y2 = newy;
-        x2 -= x1;
-        y2 -= y1;
-        if (x2 > Integer.MAX_VALUE)
-            x2 = Integer.MAX_VALUE;
-        if (y2 > Integer.MAX_VALUE)
-            y2 = Integer.MAX_VALUE;
-        reshape(x1, y1, (int) x2, (int) y2);
     }
-    
+
     public void add(FloatingPoint pt) {
-        add((int) pt.x, (int) pt.y);
+        this.add((int)pt.x, (int)pt.y);
     }
-    
+
     public void add(Point pt) {
-        add(pt.x, pt.y);
+        this.add(pt.x, pt.y);
     }
-    
+
     public void add(Rectangle r) {
-        long tx2 = this.width;
-        long ty2 = this.height;
-        if ((tx2 | ty2) < 0) {
-            reshape(r.x, r.y, r.width, r.height);
+        long tx2 = (long)this.width;
+        long ty2 = (long)this.height;
+        if ((tx2 | ty2) < 0L) {
+            this.reshape(r.x, r.y, r.width, r.height);
         }
-        long rx2 = r.width;
-        long ry2 = r.height;
-        if ((rx2 | ry2) < 0) {
-            return;
+
+        long rx2 = (long)r.width;
+        long ry2 = (long)r.height;
+        if ((rx2 | ry2) >= 0L) {
+            int tx1 = this.x;
+            int ty1 = this.y;
+            tx2 += (long)tx1;
+            ty2 += (long)ty1;
+            int rx1 = r.x;
+            int ry1 = r.y;
+            rx2 += (long)rx1;
+            ry2 += (long)ry1;
+            if (tx1 > rx1) {
+                tx1 = rx1;
+            }
+
+            if (ty1 > ry1) {
+                ty1 = ry1;
+            }
+
+            if (tx2 < rx2) {
+                tx2 = rx2;
+            }
+
+            if (ty2 < ry2) {
+                ty2 = ry2;
+            }
+
+            tx2 -= (long)tx1;
+            ty2 -= (long)ty1;
+            if (tx2 > 2147483647L) {
+                tx2 = 2147483647L;
+            }
+
+            if (ty2 > 2147483647L) {
+                ty2 = 2147483647L;
+            }
+
+            this.reshape(tx1, ty1, (int)tx2, (int)ty2);
         }
-        int tx1 = this.x;
-        int ty1 = this.y;
-        tx2 += tx1;
-        ty2 += ty1;
-        int rx1 = r.x;
-        int ry1 = r.y;
-        rx2 += rx1;
-        ry2 += ry1;
-        if (tx1 > rx1)
-            tx1 = rx1;
-        if (ty1 > ry1)
-            ty1 = ry1;
-        if (tx2 < rx2)
-            tx2 = rx2;
-        if (ty2 < ry2)
-            ty2 = ry2;
-        tx2 -= tx1;
-        ty2 -= ty1;
-        // tx2,ty2 will never underflow since both original
-        // rectangles were non-empty
-        // they might overflow, though...
-        if (tx2 > Integer.MAX_VALUE)
-            tx2 = Integer.MAX_VALUE;
-        if (ty2 > Integer.MAX_VALUE)
-            ty2 = Integer.MAX_VALUE;
-        reshape(tx1, ty1, (int) tx2, (int) ty2);
     }
-    
+
     public void grow(int h, int v) {
-        long x0 = this.x;
-        long y0 = this.y;
-        long x1 = this.width;
-        long y1 = this.height;
+        long x0 = (long)this.x;
+        long y0 = (long)this.y;
+        long x1 = (long)this.width;
+        long y1 = (long)this.height;
         x1 += x0;
         y1 += y0;
-        
-        x0 -= h;
-        y0 -= v;
-        x1 += h;
-        y1 += v;
-        
+        x0 -= (long)h;
+        y0 -= (long)v;
+        x1 += (long)h;
+        y1 += (long)v;
         if (x1 < x0) {
-            // Non-existant in X direction
-            // Final width must remain negative so subtract x0 before
-            // it is clipped so that we avoid the risk that the clipping
-            // of x0 will reverse the ordering of x0 and x1.
             x1 -= x0;
-            if (x1 < Integer.MIN_VALUE)
-                x1 = Integer.MIN_VALUE;
-            if (x0 < Integer.MIN_VALUE)
-                x0 = Integer.MIN_VALUE;
-            else if (x0 > Integer.MAX_VALUE)
-                x0 = Integer.MAX_VALUE;
-        } else { // (x1 >= x0)
-            // Clip x0 before we subtract it from x1 in case the clipping
-            // affects the representable area of the rectangle.
-            if (x0 < Integer.MIN_VALUE)
-                x0 = Integer.MIN_VALUE;
-            else if (x0 > Integer.MAX_VALUE)
-                x0 = Integer.MAX_VALUE;
+            if (x1 < -2147483648L) {
+                x1 = -2147483648L;
+            }
+
+            if (x0 < -2147483648L) {
+                x0 = -2147483648L;
+            } else if (x0 > 2147483647L) {
+                x0 = 2147483647L;
+            }
+        } else {
+            if (x0 < -2147483648L) {
+                x0 = -2147483648L;
+            } else if (x0 > 2147483647L) {
+                x0 = 2147483647L;
+            }
+
             x1 -= x0;
-            // The only way x1 can be negative now is if we clipped
-            // x0 against MIN and x1 is less than MIN - in which case
-            // we want to leave the width negative since the result
-            // did not intersect the representable area.
-            if (x1 < Integer.MIN_VALUE)
-                x1 = Integer.MIN_VALUE;
-            else if (x1 > Integer.MAX_VALUE)
-                x1 = Integer.MAX_VALUE;
+            if (x1 < -2147483648L) {
+                x1 = -2147483648L;
+            } else if (x1 > 2147483647L) {
+                x1 = 2147483647L;
+            }
         }
-        
+
         if (y1 < y0) {
-            // Non-existant in Y direction
             y1 -= y0;
-            if (y1 < Integer.MIN_VALUE)
-                y1 = Integer.MIN_VALUE;
-            if (y0 < Integer.MIN_VALUE)
-                y0 = Integer.MIN_VALUE;
-            else if (y0 > Integer.MAX_VALUE)
-                y0 = Integer.MAX_VALUE;
-        } else { // (y1 >= y0)
-            if (y0 < Integer.MIN_VALUE)
-                y0 = Integer.MIN_VALUE;
-            else if (y0 > Integer.MAX_VALUE)
-                y0 = Integer.MAX_VALUE;
+            if (y1 < -2147483648L) {
+                y1 = -2147483648L;
+            }
+
+            if (y0 < -2147483648L) {
+                y0 = -2147483648L;
+            } else if (y0 > 2147483647L) {
+                y0 = 2147483647L;
+            }
+        } else {
+            if (y0 < -2147483648L) {
+                y0 = -2147483648L;
+            } else if (y0 > 2147483647L) {
+                y0 = 2147483647L;
+            }
+
             y1 -= y0;
-            if (y1 < Integer.MIN_VALUE)
-                y1 = Integer.MIN_VALUE;
-            else if (y1 > Integer.MAX_VALUE)
-                y1 = Integer.MAX_VALUE;
+            if (y1 < -2147483648L) {
+                y1 = -2147483648L;
+            } else if (y1 > 2147483647L) {
+                y1 = 2147483647L;
+            }
         }
-        
-        reshape((int) x0, (int) y0, (int) x1, (int) y1);
+
+        this.reshape((int)x0, (int)y0, (int)x1, (int)y1);
     }
-    
+
     public boolean isEmpty() {
-        return (width <= 0) || (height <= 0);
+        return this.width <= 0 || this.height <= 0;
     }
-    
-    @Override
+
     public boolean equals(Object obj) {
-        if (obj == this) return true;
-        if (obj instanceof Rectangle) {
-            Rectangle r = (Rectangle) obj;
-            return ((x == r.x) && (y == r.y) && (width == r.width) && (height == r.height));
+        if (obj == this) {
+            return true;
+        } else if (!(obj instanceof Rectangle)) {
+            return super.equals(obj);
+        } else {
+            Rectangle r = (Rectangle)obj;
+            return this.x == r.x && this.y == r.y && this.width == r.width && this.height == r.height;
         }
-        return super.equals(obj);
     }
-    
-    @Override
+
     public String toString() {
         return ReflectionToStringBuilder.reflectionToString(this);
     }
-    
-    @Override
+
     public int hashCode() {
         int result = 1;
-        result = 31 * result + x;
-        result = 31 * result + y;
-        result = 31 * result + width;
-        result = 31 * result + height;
+        result = 31 * result + this.x;
+        result = 31 * result + this.y;
+        result = 31 * result + this.width;
+        result = 31 * result + this.height;
         return result;
     }
 }

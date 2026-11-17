@@ -77,7 +77,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                 .setTitle("Config")
                 .setSavingRunnable(() -> {
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
-                    Minecraft.INSTANCE.openScreen(this.getModConfigScreenFactory());
+                    Minecraft.INSTANCE.setScreen(this.getModConfigScreenFactory());
                 })
                 .setTransparentBackground(true);
         ConfigCategory general = builder.getOrCreateCategory("Config");
@@ -101,7 +101,8 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
         java.util.List<String> species = java.util.Arrays.stream(PetList.values())
                 .map(Enum::name)
                 .collect(java.util.stream.Collectors.toList());
-        return builder.startStringDropdownMenu(Minecraft.INSTANCE.screen, ("Pet Species"), CONFIG.activePet)
+        String activePetValue = CONFIG.activePet != null ? CONFIG.activePet : PetList.penguin.name();
+        return builder.startStringDropdownMenu(Minecraft.INSTANCE.currentScreen, ("Pet Species"), activePetValue)
                 .setSelections(species)
                 .setSaveConsumer((newVal) -> {
                     try {
@@ -116,7 +117,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
     }
 
     private StringFieldBuilder createPetNameOption(ConfigEntryBuilder builder, PetsConfig CONFIG) {
-        String activePet = CONFIG.activePet;
+        String activePet = CONFIG.activePet != null ? CONFIG.activePet : "";
         String defaultVal;
         switch (CONFIG.activePet) {
             case "penguin":
@@ -393,6 +394,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                 defaultVal = "";
                 break;
         }
+        if (defaultVal == null) defaultVal = "";
         return builder.startStrField(("Pet Name"), defaultVal)
                 .setSaveConsumer((name) -> {
                     if (activePet.equals("penguin")) {
@@ -589,7 +591,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                 initialValue = (T) DuckSkins.valueOf(CONFIG.duckSkin.replaceAll(" ", "_"));
                 break;
             case "cat":
-                initialValue = (T) CatSkins.valueOf(CONFIG.catSkin.replaceAll(" ", "_"));
+                initialValue = (T) CatSkins.valueOf((CONFIG.catSkin == null ? "bob" : CONFIG.catSkin).replaceAll(" ", "_"));
                 break;
             case "racoon":
                 initialValue = (T) RacoonSkins.valueOf(CONFIG.racoonSkin.replaceAll(" ", "_"));
@@ -604,7 +606,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                 initialValue = (T) CamelSkins.valueOf(CONFIG.camelSkin.replaceAll(" ", "_"));
                 break;
             case "chicken":
-                initialValue = (T) ChickenSkins.valueOf(CONFIG.chickenSkin.replaceAll(" ", "_"));
+                initialValue = (T) ChickenSkins.valueOf((CONFIG.chickenSkin == null ? "temperate" : CONFIG.chickenSkin).replaceAll(" ", "_"));
                 break;
             case "creeper":
             case "nerd_creeper":
@@ -615,10 +617,10 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                 initialValue = (T) CopperGolemSkins.valueOf(CONFIG.copperGolemSkin.replaceAll(" ", "_"));
                 break;
             case "cow":
-                initialValue = (T) CowSkins.valueOf(CONFIG.cowSkin.replaceAll(" ", "_"));
+                initialValue = (T) CowSkins.valueOf((CONFIG.cowSkin == null ? "temperate" : CONFIG.cowSkin).replaceAll(" ", "_"));
                 break;
             case "frog":
-                initialValue = (T) FrogSkins.valueOf(CONFIG.frogSkin.replaceAll(" ", "_"));
+                initialValue = (T) FrogSkins.valueOf((CONFIG.frogSkin == null ? "temperate" : CONFIG.frogSkin).replaceAll(" ", "_"));
                 break;
             case "horse":
                 initialValue = (T) HorseSkins.valueOf(CONFIG.horseSkin.replaceAll(" ", "_"));
@@ -627,7 +629,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                 initialValue = (T) ParrotSkins.valueOf(CONFIG.parrotSkin.replaceAll(" ", "_"));
                 break;
             case "pig":
-                initialValue = (T) PigSkins.valueOf(CONFIG.pigSkin.replaceAll(" ", "_"));
+                initialValue = (T) PigSkins.valueOf((CONFIG.pigSkin == null ? "temperate" : CONFIG.pigSkin).replaceAll(" ", "_"));
                 break;
             case "rabbit":
                 initialValue = (T) RabbitSkins.valueOf(CONFIG.rabbitSkin.replaceAll(" ", "_"));
@@ -648,7 +650,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                 initialValue = (T) VillagerSkins.valueOf(CONFIG.villagerSkin.replaceAll(" ", "_"));
                 break;
             case "mooshroom":
-                initialValue = (T) MooshroomSkins.valueOf(CONFIG.mooshroomSkin.replaceAll(" ", "_"));
+                initialValue = (T) MooshroomSkins.valueOf((CONFIG.mooshroomSkin == null ? "red" : CONFIG.mooshroomSkin).replaceAll(" ", "_"));
                 break;
             case "bee":
                 initialValue = (T) BeeSkins.valueOf(CONFIG.beeSkin.replaceAll(" ", "_"));
@@ -669,7 +671,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                 initialValue = (T) PiglinSkins.valueOf(CONFIG.piglinSkin.replaceAll(" ", "_"));
                 break;
             case "wolf":
-                initialValue = (T) WolfSkins.valueOf(CONFIG.wolfSkin.replaceAll(" ", "_"));
+                initialValue = (T) WolfSkins.valueOf((CONFIG.wolfSkin == null ? "pale" : CONFIG.wolfSkin).replaceAll(" ", "_"));
                 break;
             case "hoglin":
                 initialValue = (T) HoglinSkins.valueOf(CONFIG.hoglinSkin.replaceAll(" ", "_"));
@@ -809,7 +811,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                     }
                     /**Do NOT replace this with dynamic checking! It will cause a mismatch
                      * between the enums and crash. Use manual checking instead.*/
-                    if (CONFIG.activePet.equals("duck")) {
+                    if (java.util.Objects.equals(CONFIG.activePet, "duck")) {
                         if (Objects.equals(val, "mallard")) {
                             CONFIG.duckSkin = "mallard";
                         } else if (Objects.equals(val, "pekin")) {
@@ -819,13 +821,13 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         } else if (Objects.equals(val, "bronze")) {
                             CONFIG.duckSkin = "bronze";
                         }
-                    } else if (CONFIG.activePet.equals("racoon")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "racoon")) {
                         if (Objects.equals(val, "normal")) {
                             CONFIG.racoonSkin = "normal";
                         } else if (Objects.equals(val, "albino")) {
                             CONFIG.racoonSkin = "albino";
                         }
-                    } else if (CONFIG.activePet.equals("sheep")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "sheep")) {
                         if (Objects.equals(val, "white")) {
                             CONFIG.sheepSkin = "white";
                         } else if (Objects.equals(val, "orange")) {
@@ -859,7 +861,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         } else if (Objects.equals(val, "black")) {
                             CONFIG.sheepSkin = "black";
                         }
-                    } else if (CONFIG.activePet.equals("cat")) {
+                    } else if ("cat".equals(CONFIG.activePet)) {
                         if (Objects.equals(val, "black")) {
                             CONFIG.catSkin = "all_black";
                         } else if (Objects.equals(val, "tuxedo")) {
@@ -883,7 +885,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         } else if (Objects.equals(val, "jellie")) {
                             CONFIG.catSkin = "jellie";
                         }
-                    } else if (CONFIG.activePet.equals("chicken")) {
+                    } else if ("chicken".equals(CONFIG.activePet)) {
                         if (Objects.equals(val, "temperate")) {
                             CONFIG.chickenSkin = "temperate";
                         } else if (Objects.equals(val, "cold")) {
@@ -891,7 +893,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         } else if (Objects.equals(val, "warm")) {
                             CONFIG.chickenSkin = "warm";
                         }
-                    } else if (CONFIG.activePet.equals("axolotl")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "axolotl")) {
                         if (Objects.equals(val, "pink")) {
                             CONFIG.axolotlSkin = "pink";
                         } else if (Objects.equals(val, "brown")) {
@@ -903,13 +905,13 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         } else if (Objects.equals(val, "blue")) {
                             CONFIG.axolotlSkin = "blue";
                         }
-                    } else if (CONFIG.activePet.equals("camel")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "camel")) {
                         if (Objects.equals(val, "camel")) {
                             CONFIG.camelSkin = "camel";
                         } else if (Objects.equals(val, "husk")) {
                             CONFIG.camelSkin = "husk";
                         }
-                    } else if (CONFIG.activePet.equals("copper_golem")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "copper_golem")) {
                         if (Objects.equals(val, "unoxidized")) {
                             CONFIG.copperGolemSkin = "unoxidized";
                         } else if (Objects.equals(val, "exposed")) {
@@ -919,7 +921,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         } else if (Objects.equals(val, "oxidized")) {
                             CONFIG.copperGolemSkin = "oxidized";
                         }
-                    } else if (CONFIG.activePet.equals("cow")) {
+                    } else if ("cow".equals(CONFIG.activePet)) {
                         if (Objects.equals(val, "temperate")) {
                             CONFIG.cowSkin = "temperate";
                         } else if (Objects.equals(val, "cold")) {
@@ -927,7 +929,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         } else if (Objects.equals(val, "warm")) {
                             CONFIG.cowSkin = "warm";
                         }
-                    } else if (CONFIG.activePet.equals("frog")) {
+                    } else if ("frog".equals(CONFIG.activePet)) {
                         if (Objects.equals(val, "temperate")) {
                             CONFIG.frogSkin = "temperate";
                         } else if (Objects.equals(val, "cold")) {
@@ -935,7 +937,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         } else if (Objects.equals(val, "warm")) {
                             CONFIG.frogSkin = "warm";
                         }
-                    } else if (CONFIG.activePet.equals("horse")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "horse")) {
                         if (Objects.equals(val, "white")) {
                             CONFIG.horseSkin = "white";
                         } else if (Objects.equals(val, "creamy")) {
@@ -951,7 +953,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         } else if (Objects.equals(val, "dark_brown")) {
                             CONFIG.horseSkin = "dark_brown";
                         }
-                    } else if (CONFIG.activePet.equals("parrot")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "parrot")) {
                         if (Objects.equals(val, "red")) {
                             CONFIG.parrotSkin = "red";
                         } else if (Objects.equals(val, "blue")) {
@@ -963,7 +965,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         } else if (Objects.equals(val, "gray")) {
                             CONFIG.parrotSkin = "gray";
                         }
-                    } else if (CONFIG.activePet.equals("pig")) {
+                    } else if ("pig".equals(CONFIG.activePet)) {
                         if (Objects.equals(val, "temperate")) {
                             CONFIG.pigSkin = "temperate";
                         } else if (Objects.equals(val, "warm")) {
@@ -971,7 +973,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         } else if (Objects.equals(val, "cold")) {
                             CONFIG.pigSkin = "cold";
                         }
-                    } else if (CONFIG.activePet.equals("rabbit")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "rabbit")) {
                         if (Objects.equals(val, "brown")) {
                             CONFIG.rabbitSkin = "brown";
                         } else if (Objects.equals(val, "white")) {
@@ -989,19 +991,19 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         } else if (Objects.equals(val, "toast")) {
                             CONFIG.rabbitSkin = "toast";
                         }
-                    } else if (CONFIG.activePet.equals("snow_golem")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "snow_golem")) {
                         if (Objects.equals(val, "pumpkin_on")) {
                             CONFIG.snowGolemSkin = "pumpkin_on";
                         } else if (Objects.equals(val, "pumpkin_off")) {
                             CONFIG.snowGolemSkin = "pumpkin_off";
                         }
-                    } else if (CONFIG.activePet.equals("squid")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "squid")) {
                         if (Objects.equals(val, "squid")) {
                             CONFIG.squidSkin = "squid";
                         } else if (Objects.equals(val, "glow_squid")) {
                             CONFIG.squidSkin = "glow_squid";
                         }
-                    } else if (CONFIG.activePet.equals("tropical_fish")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "tropical_fish")) {
                         if (Objects.equals(val, "cichlid")) {
                             CONFIG.tropicalFishSkin = "cichlid";
                         } else if (Objects.equals(val, "clownfish")) {
@@ -1023,7 +1025,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         } else if (Objects.equals(val, "yellowtail_parrotfish")) {
                             CONFIG.tropicalFishSkin = "yellowtail_parrotfish";
                         }
-                    } else if (CONFIG.activePet.equals("villager")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "villager")) {
                         if (Objects.equals(val, "farmer")) {
                             CONFIG.villagerSkin = "farmer";
                         } else if (Objects.equals(val, "fisherman")) {
@@ -1055,31 +1057,31 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         } else if (Objects.equals(val, "unemployed")) {
                             CONFIG.villagerSkin = "unemployed";
                         }
-                    } else if (CONFIG.activePet.equals("mooshroom")) {
+                    } else if ("mooshroom".equals(CONFIG.activePet)) {
                         if (Objects.equals(val, "red")) {
                             CONFIG.mooshroomSkin = "red";
                         } else if (Objects.equals(val, "brown")) {
                             CONFIG.mooshroomSkin = "brown";
                         }
-                    } else if (CONFIG.activePet.equals("strider")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "strider")) {
                         if (Objects.equals(val, "warm")) {
                             CONFIG.striderSkin = "warm";
                         } else if (Objects.equals(val, "cold")) {
                             CONFIG.striderSkin = "cold";
                         }
-                    } else if (CONFIG.activePet.equals("bee")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "bee")) {
                         if (Objects.equals(val, "happy")) {
                             CONFIG.beeSkin = "happy";
                         } else if (Objects.equals(val, "angry")) {
                             CONFIG.beeSkin = "angry";
                         }
-                    } else if (CONFIG.activePet.equals("fox")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "fox")) {
                         if (Objects.equals(val, "red")) {
                             CONFIG.foxSkin = "red";
                         } else if (Objects.equals(val, "snow")) {
                             CONFIG.foxSkin = "snow";
                         }
-                    } else if (CONFIG.activePet.equals("llama")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "llama")) {
                         if (Objects.equals(val, "brown")) {
                             CONFIG.llamaSkin = "brown";
                         } else if (Objects.equals(val, "creamy")) {
@@ -1089,7 +1091,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         } else if (Objects.equals(val, "white")) {
                             CONFIG.llamaSkin = "white";
                         }
-                    } else if (CONFIG.activePet.equals("nautilus")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "nautilus")) {
                         if (Objects.equals(val, "nautilus")) {
                             CONFIG.nautilusSkin = "nautilus";
                         } else if (Objects.equals(val, "zombie")) {
@@ -1097,7 +1099,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         } else if (Objects.equals(val, "coral_zombie")) {
                             CONFIG.nautilusSkin = "coral_zombie";
                         }
-                    } else if (CONFIG.activePet.equals("panda")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "panda")) {
                         if (Objects.equals(val, "normal")) {
                             CONFIG.pandaSkin = "normal";
                         } else if (Objects.equals(val, "lazy")) {
@@ -1113,7 +1115,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         } else if (Objects.equals(val, "brown")) {
                             CONFIG.pandaSkin = "brown";
                         }
-                    } else if (CONFIG.activePet.equals("piglin")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "piglin")) {
                         if (Objects.equals(val, "piglin")) {
                             CONFIG.piglinSkin = "piglin";
                         } else if (Objects.equals(val, "zombified_piglin")) {
@@ -1121,7 +1123,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         } else if (Objects.equals(val, "piglin_brute")) {
                             CONFIG.piglinSkin = "piglin_brute";
                         }
-                    } else if (CONFIG.activePet.equals("wolf")) {
+                    } else if ("wolf".equals(CONFIG.activePet)) {
                         if (Objects.equals(val, "pale")) {
                             CONFIG.wolfSkin = "pale";
                         } else if (Objects.equals(val, "ashen")) {
@@ -1141,13 +1143,13 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         } else if (Objects.equals(val, "woods")) {
                             CONFIG.wolfSkin = "woody";
                         }
-                    } else if (CONFIG.activePet.equals("hoglin")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "hoglin")) {
                         if (Objects.equals(val, "hoglin")) {
                             CONFIG.hoglinSkin = "hoglin";
                         } else if (Objects.equals(val, "zoglin")) {
                             CONFIG.hoglinSkin = "zoglin";
                         }
-                    } else if (CONFIG.activePet.equals("magma_cube")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "magma_cube")) {
                         if (Objects.equals(val, "small")) {
                             CONFIG.magmaCubeSkin = "small";
                         } else if (Objects.equals(val, "medium")) {
@@ -1155,7 +1157,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         } else if (Objects.equals(val, "large")) {
                             CONFIG.magmaCubeSkin = "large";
                         }
-                    } else if (CONFIG.activePet.equals("slime") || CONFIG.activePet.equals("tropical_slime")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "slime") || java.util.Objects.equals(CONFIG.activePet, "tropical_slime")) {
                         if (Objects.equals(val, "small")) {
                             CONFIG.slimeSkin = "small";
                         } else if (Objects.equals(val, "medium")) {
@@ -1163,7 +1165,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         } else if (Objects.equals(val, "large")) {
                             CONFIG.slimeSkin = "large";
                         }
-                    } else if (CONFIG.activePet.equals("zombie_villager")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "zombie_villager")) {
                         if (Objects.equals(val, "farmer")) {
                             CONFIG.zombieVillagerSkin = "farmer";
                         } else if (Objects.equals(val, "fisherman")) {
@@ -1195,7 +1197,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         } else if (Objects.equals(val, "unemployed")) {
                             CONFIG.zombieVillagerSkin = "unemployed";
                         }
-                    } else if (CONFIG.activePet.equals("shulker")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "shulker")) {
                         if (Objects.equals(val, "normal")) {
                             CONFIG.shulkerSkin = "normal";
                         } else if (Objects.equals(val, "black")) {
@@ -1231,19 +1233,19 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                         } else if (Objects.equals(val, "yellow")) {
                             CONFIG.shulkerSkin = "yellow";
                         }
-                    } else if (CONFIG.activePet.equals("creeper") || CONFIG.activePet.equals("nerd_creeper") || CONFIG.activePet.equals("smiling_creeper")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "creeper") || java.util.Objects.equals(CONFIG.activePet, "nerd_creeper") || java.util.Objects.equals(CONFIG.activePet, "smiling_creeper")) {
                         if (Objects.equals(val, "normal")) {
                             CONFIG.creeperSkin = "normal";
                         } else if (Objects.equals(val, "charged")) {
                             CONFIG.creeperSkin = "charged";
                         }
-                    } else if (CONFIG.activePet.equals("wither")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "wither")) {
                         if (Objects.equals(val, "normal")) {
                             CONFIG.witherSkin = "normal";
                         } else if (Objects.equals(val, "invulnerable")) {
                             CONFIG.witherSkin = "invulnerable";
                         }
-                    } else if (CONFIG.activePet.equals("dumbo_octopus")) {
+                    } else if (java.util.Objects.equals(CONFIG.activePet, "dumbo_octopus")) {
                         if (Objects.equals(val, "yellow")) {
                             CONFIG.dumboOctopusSkin = "yellow";
                         } else if (Objects.equals(val, "red")) {

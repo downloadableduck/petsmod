@@ -1,27 +1,29 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.mob.vanilla.passive;
 
+import net.minecraft.world.World;
 import com.jeff.pets.mob.GroundPet;
 
 public class ClientDonkey extends GroundPet {
-
-    public ClientDonkey(net.minecraft.world.World level) {
+    public ClientDonkey(World level) {
         super(level);
-        this.setSize(1.3965f, 1.5f);
+        this.setBoundingBoxSpacing(1.3965F, 1.5F);
         this.texture = "/mob/donkey.png";
     }
 
-    @Override
     protected int stopDistance() {
         return 2;
     }
 
-    @Override
     protected float heartHeight() {
-        return 3;
+        return 3.0F;
     }
 
-    @Override
-    protected String getAmbientSound() {
+    protected String getRandomSound() {
         return "mob.horse.donkey.idle";
     }
 }

@@ -1,12 +1,16 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package me.shedaniel.clothconfig2.gui.entries;
 
 import com.jeff.pets.client.Utils;
 import me.shedaniel.clothconfig2.compat.CompatTextFieldWidget;
 import me.shedaniel.clothconfig2.gui.widget.ColorDisplayWidget;
-import net.minecraft.client.Minecraft;
-import net.minecraft.locale.I18n;
+import net.minecraft.client.resource.language.I18n;
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
@@ -15,183 +19,194 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class ColorEntry extends TextFieldListEntry<Integer> {
-    
     private ColorDisplayWidget colorDisplayWidget;
     private Consumer<Integer> saveConsumer;
-    private boolean alpha;
-    
-    @ApiStatus.Internal
+    private boolean alpha = true;
+
+    /** @deprecated */
     @Deprecated
+    @Internal
     public ColorEntry(String fieldName, int value, String resetButtonKey, Supplier<Integer> defaultValue, Consumer<Integer> saveConsumer, Supplier<Optional<String[]>> tooltipSupplier, boolean requiresRestart) {
         super(fieldName, 0, resetButtonKey, defaultValue, tooltipSupplier);
-        this.alpha = true;
-        ColorValue colorValue = getColorValue(String.valueOf(value));
-        if (colorValue.hasError())
+        ColorValue colorValue = this.getColorValue(String.valueOf(value));
+        if (colorValue.hasError()) {
             throw new IllegalArgumentException("Invalid Color: " + colorValue.getError().name());
-        this.alpha = false;
-        this.saveConsumer = saveConsumer;
-        this.textFieldWidget.setText(getHexColorString(value));
-        this.colorDisplayWidget = new ColorDisplayWidget(0, 0, 20, getColorValueColor(textFieldWidget.getText()));
-        this.original = value;
+        } else {
+            this.alpha = false;
+            this.saveConsumer = saveConsumer;
+            this.textFieldWidget.setText(this.getHexColorString(value));
+            this.colorDisplayWidget = new ColorDisplayWidget(0, 0, 20, this.getColorValueColor(this.textFieldWidget.getText()));
+            this.original = value;
+        }
     }
-    
-    @Override
+
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
         this.colorDisplayWidget.y = y;
-        ColorValue value = getColorValue(textFieldWidget.getText());
-        if (!value.hasError())
-            colorDisplayWidget.setColor(alpha ? value.getColor() : 0xff000000 | value.getColor());
-        if (Utils.isBidirectional()) {
-            this.colorDisplayWidget.x = x + resetButton.width + 148;
-        } else {
-            this.colorDisplayWidget.x = textFieldWidget.x - 23;
+        ColorValue value = this.getColorValue(this.textFieldWidget.getText());
+        if (!value.hasError()) {
+            this.colorDisplayWidget.setColor(this.alpha ? value.getColor() : -16777216 | value.getColor());
         }
-        colorDisplayWidget.render(mouseX, mouseY, delta);
+
+        if (Utils.isBidirectional()) {
+            this.colorDisplayWidget.x = x + this.resetButton.width + 148;
+        } else {
+            this.colorDisplayWidget.x = this.textFieldWidget.x - 23;
+        }
+
+        this.colorDisplayWidget.render(mouseX, mouseY, delta);
     }
-    
-    @Override
+
     protected void textFieldPreRender(CompatTextFieldWidget widget) {
     }
-    
-    @Override
+
     public void save() {
-        if (saveConsumer != null)
-            saveConsumer.accept(getValue());
+        if (this.saveConsumer != null) {
+            this.saveConsumer.accept(this.getValue());
+        }
+
     }
-    
-    @Override
+
     protected boolean isMatchDefault(String text) {
-        if (!getDefaultValue().isPresent())
+        if (!this.getDefaultValue().isPresent()) {
             return false;
-        ColorValue colorValue = getColorValue(text);
-        return colorValue.hasError() && colorValue.color == getDefaultValue().get();
+        } else {
+            ColorValue colorValue = this.getColorValue(text);
+            return colorValue.hasError() && colorValue.color == (Integer)this.getDefaultValue().get();
+        }
     }
-    
-    @Override
+
     public Integer getValue() {
-        return getColorValueColor(textFieldWidget.getText());
+        return this.getColorValueColor(this.textFieldWidget.getText());
     }
-    
+
+    /** @deprecated */
     @Deprecated
     public void setValue(int color) {
-        textFieldWidget.setText(getHexColorString(color));
+        this.textFieldWidget.setText(this.getHexColorString(color));
     }
-    
-    @Override
+
     public Optional<String> getError() {
-        ColorValue colorValue = getColorValue(this.textFieldWidget.getText());
-        if (colorValue.hasError())
-            return Optional.of(I18n.translate("text.cloth-config.error.color." + colorValue.getError().name().toLowerCase(Locale.ROOT)));
-        return super.getError();
+        ColorValue colorValue = this.getColorValue(this.textFieldWidget.getText());
+        return colorValue.hasError() ? Optional.of(I18n.getTranslation("text.cloth-config.error.color." + colorValue.getError().name().toLowerCase(Locale.ROOT))) : super.getError();
     }
-    
+
     public void withAlpha() {
-        if (!alpha) {
+        if (!this.alpha) {
             this.alpha = true;
-            textFieldWidget.setText(getHexColorString(original));
+            this.textFieldWidget.setText(this.getHexColorString((Integer)this.original));
         }
+
     }
-    
+
     public void withoutAlpha() {
-        if (alpha) {
-            alpha = false;
-            textFieldWidget.setText(getHexColorString(original));
+        if (this.alpha) {
+            this.alpha = false;
+            this.textFieldWidget.setText(this.getHexColorString((Integer)this.original));
         }
+
     }
-    
+
     protected String stripHexStarter(String hex) {
-        if (hex.startsWith("#")) {
-            return hex.substring(1);
-        } else return hex;
+        return hex.startsWith("#") ? hex.substring(1) : hex;
     }
-    
+
     protected boolean isValidColorString(String str) {
-        return !getColorValue(str).hasError();
+        return !this.getColorValue(str).hasError();
     }
-    
+
     protected int getColorValueColor(String str) {
-        return getColorValue(str).getColor();
+        return this.getColorValue(str).getColor();
     }
-    
+
     protected ColorValue getColorValue(String str) {
         try {
             int color;
             if (str.startsWith("#")) {
-                String stripHexStarter = stripHexStarter(str);
-                if (stripHexStarter.length() > 8) return ColorError.INVALID_COLOR.toValue();
-                if (!alpha && stripHexStarter.length() > 6) return ColorError.NO_ALPHA_ALLOWED.toValue();
-                color = (int) Long.parseLong(stripHexStarter, 16);
+                String stripHexStarter = this.stripHexStarter(str);
+                if (stripHexStarter.length() > 8) {
+                    return me.shedaniel.clothconfig2.gui.entries.ColorEntry.ColorError.INVALID_COLOR.toValue();
+                }
+
+                if (!this.alpha && stripHexStarter.length() > 6) {
+                    return me.shedaniel.clothconfig2.gui.entries.ColorEntry.ColorError.NO_ALPHA_ALLOWED.toValue();
+                }
+
+                color = (int)Long.parseLong(stripHexStarter, 16);
             } else {
-                color = (int) Long.parseLong(str);
+                color = (int)Long.parseLong(str);
             }
-            int a = color >> 24 & 0xFF;
-            if (!alpha && a > 0)
-                return ColorError.NO_ALPHA_ALLOWED.toValue();
-            if (a < 0 || a > 255)
-                return ColorError.INVALID_ALPHA.toValue();
-            int r = color >> 16 & 0xFF;
-            if (r < 0 || r > 255)
-                return ColorError.INVALID_RED.toValue();
-            int g = color >> 8 & 0xFF;
-            if (g < 0 || g > 255)
-                return ColorError.INVALID_GREEN.toValue();
-            int b = color & 0xFF;
-            if (b < 0 || b > 255)
-                return ColorError.INVALID_BLUE.toValue();
-            return new ColorValue(color);
-        } catch (NumberFormatException e) {
-            return ColorError.INVALID_COLOR.toValue();
+
+            int a = color >> 24 & 255;
+            if (!this.alpha && a > 0) {
+                return me.shedaniel.clothconfig2.gui.entries.ColorEntry.ColorError.NO_ALPHA_ALLOWED.toValue();
+            } else if (a >= 0 && a <= 255) {
+                int r = color >> 16 & 255;
+                if (r >= 0 && r <= 255) {
+                    int g = color >> 8 & 255;
+                    if (g >= 0 && g <= 255) {
+                        int b = color & 255;
+                        return b >= 0 && b <= 255 ? new ColorValue(color) : me.shedaniel.clothconfig2.gui.entries.ColorEntry.ColorError.INVALID_BLUE.toValue();
+                    } else {
+                        return me.shedaniel.clothconfig2.gui.entries.ColorEntry.ColorError.INVALID_GREEN.toValue();
+                    }
+                } else {
+                    return me.shedaniel.clothconfig2.gui.entries.ColorEntry.ColorError.INVALID_RED.toValue();
+                }
+            } else {
+                return me.shedaniel.clothconfig2.gui.entries.ColorEntry.ColorError.INVALID_ALPHA.toValue();
+            }
+        } catch (NumberFormatException var7) {
+            return me.shedaniel.clothconfig2.gui.entries.ColorEntry.ColorError.INVALID_COLOR.toValue();
         }
     }
-    
+
     protected String getHexColorString(int color) {
-        return "#" + StringUtils.leftPad(Integer.toHexString(color), alpha ? 8 : 6, '0');
+        return "#" + StringUtils.leftPad(Integer.toHexString(color), this.alpha ? 8 : 6, '0');
     }
-    
-    protected enum ColorError {
+
+    protected static class ColorValue {
+        private int color = -1;
+        @Nullable
+        private ColorError error = null;
+
+        public ColorValue(int color) {
+            this.color = color;
+        }
+
+        public ColorValue(ColorError error) {
+            this.error = error;
+        }
+
+        public int getColor() {
+            return this.color;
+        }
+
+        @Nullable
+        public ColorError getError() {
+            return this.error;
+        }
+
+        public boolean hasError() {
+            return this.getError() != null;
+        }
+    }
+
+    protected static enum ColorError {
         NO_ALPHA_ALLOWED,
         INVALID_ALPHA,
         INVALID_RED,
         INVALID_GREEN,
         INVALID_BLUE,
         INVALID_COLOR;
-        
-        private ColorValue value;
-        
-        ColorError() {
-            this.value = new ColorValue(this);
+
+        private ColorValue value = new ColorValue(this);
+
+        private ColorError() {
         }
-        
+
         public ColorValue toValue() {
-            return value;
-        }
-    }
-    
-    protected static class ColorValue {
-        private int color = -1;
-        @Nullable
-        private ColorError error = null;
-        
-        public ColorValue(int color) {
-            this.color = color;
-        }
-        
-        public ColorValue(ColorError error) {
-            this.error = error;
-        }
-        
-        public int getColor() {
-            return color;
-        }
-        
-        @Nullable
-        public ColorError getError() {
-            return error;
-        }
-        
-        public boolean hasError() {
-            return getError() != null;
+            return this.value;
         }
     }
 }

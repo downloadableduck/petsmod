@@ -1,133 +1,153 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package me.shedaniel.clothconfig2.gui.entries;
 
 import com.google.common.collect.Lists;
 import com.jeff.pets.compat.GlStateManager;
-import com.jeff.pets.sound.SoundEvents;
+import me.shedaniel.clothconfig2.api.AbstractConfigEntry;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.Minecraft;
-import net.minecraft.locale.I18n;
+import net.minecraft.client.resource.language.I18n;
 
 import java.awt.*;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public class SubCategoryListEntry extends TooltipListEntry {
-    
-    private static final String CONFIG_TEX = ("textures/gui/cloth_config.png");
+    private static final String CONFIG_TEX = "textures/gui/cloth_config.png";
     private String categoryName;
     private List<AbstractConfigListEntry> entries;
     private CategoryLabelWidget widget;
     private List<GuiEventListener> children;
     private boolean expended;
-    
+
     public SubCategoryListEntry(String categoryName, List<AbstractConfigListEntry> entries, boolean defaultExpended, boolean requiresRestart) {
-        super(categoryName, null, requiresRestart);
+        super(categoryName, (Supplier)null, requiresRestart);
         this.categoryName = categoryName;
         this.entries = entries;
         this.expended = defaultExpended;
         this.widget = new CategoryLabelWidget();
-        this.children = Lists.newArrayList(widget);
+        this.children = Lists.newArrayList(new GuiEventListener[]{this.widget});
         this.children.addAll(entries);
     }
-    
+
     public String getCategoryName() {
-        return categoryName;
+        return this.categoryName;
     }
-    
+
     public List<AbstractConfigListEntry> getEntries() {
-        return entries;
+        return this.entries;
     }
-    
-    @Override
+
     public Object getValue() {
-        return entries;
+        return this.entries;
     }
-    
-    @Override
+
     public Optional<Object> getDefaultValue() {
         return Optional.empty();
     }
-    
-    @Override
+
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-        widget.rectangle.x = x - 19;
-        widget.rectangle.y = y;
-        widget.rectangle.width = entryWidth + 19;
-        widget.rectangle.height = 24;
-        Minecraft.INSTANCE.textureManager.load(CONFIG_TEX);
-        // Lighting.turnOff(); // Not available in 1.13
-        GlStateManager.color4f(1, 1, 1, 1);
-        drawTexture(x - 15, y + 4, 24, expended ? 9 : 0, 9, 9); //blit?
-        Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(categoryName), x, y + 5, -1);
-        for(AbstractConfigListEntry entry : entries) {
-            entry.setParent(getParent());
-            entry.setScreen(getScreen());
+        this.widget.rectangle.x = x - 19;
+        this.widget.rectangle.y = y;
+        this.widget.rectangle.width = entryWidth + 19;
+        this.widget.rectangle.height = 24;
+        Minecraft.INSTANCE.textureManager.getTextureId("textures/gui/cloth_config.png");
+        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        this.drawTexture(x - 15, y + 4, 24, this.expended ? 9 : 0, 9, 9);
+        Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.getTranslation(this.categoryName), x, y + 5, -1);
+        Iterator var10 = this.entries.iterator();
+
+        while(var10.hasNext()) {
+            AbstractConfigListEntry entry = (AbstractConfigListEntry)var10.next();
+            entry.setParent(this.getParent());
+            entry.setScreen(this.getScreen());
         }
-        if (expended) {
+
+        if (this.expended) {
             int yy = y + 24;
-            for(AbstractConfigListEntry entry : entries) {
+
+            AbstractConfigListEntry entry;
+            for(Iterator var14 = this.entries.iterator(); var14.hasNext(); yy += entry.getItemHeight()) {
+                entry = (AbstractConfigListEntry)var14.next();
                 entry.render(-1, yy, x + 14, entryWidth - 14, entry.getItemHeight(), mouseX, mouseY, isSelected, delta);
-                yy += entry.getItemHeight();
             }
         }
+
     }
-    
-    @Override
+
     public boolean isMouseInside(int mouseX, int mouseY, int x, int y, int entryWidth, int entryHeight) {
-        widget.rectangle.x = x - 15;
-        widget.rectangle.y = y;
-        widget.rectangle.width = entryWidth + 15;
-        widget.rectangle.height = 24;
-        return widget.rectangle.contains(mouseX, mouseY) && getParent().isMouseOver(mouseX, mouseY);
+        this.widget.rectangle.x = x - 15;
+        this.widget.rectangle.y = y;
+        this.widget.rectangle.width = entryWidth + 15;
+        this.widget.rectangle.height = 24;
+        return this.widget.rectangle.contains(mouseX, mouseY) && this.getParent().isMouseOver((double)mouseX, (double)mouseY);
     }
-    
-    @Override
+
     public int getItemHeight() {
-        if (expended) {
+        if (!this.expended) {
+            return 24;
+        } else {
             int i = 24;
-            for(AbstractConfigListEntry entry : entries)
-                i += entry.getItemHeight();
+
+            AbstractConfigListEntry entry;
+            for(Iterator var2 = this.entries.iterator(); var2.hasNext(); i += entry.getItemHeight()) {
+                entry = (AbstractConfigListEntry)var2.next();
+            }
+
             return i;
         }
-        return 24;
     }
-    
-    @Override
+
     public List<? extends GuiEventListener> children() {
-        return children;
+        return this.children;
     }
-    
-    @Override
+
     public void save() {
-        entries.forEach(AbstractConfigListEntry::save);
+        this.entries.forEach(AbstractConfigEntry::save);
     }
-    
-    @Override
+
     public Optional<String> getError() {
         String error = null;
-        for(AbstractConfigListEntry entry : entries)
-            if (entry.getError().isPresent()) {
-                if (error != null)
-                    return Optional.ofNullable(I18n.translate("text.cloth-config.multi_error"));
-                return entry.getError();
+        Iterator var2 = this.entries.iterator();
+
+        AbstractConfigListEntry entry;
+        do {
+            if (!var2.hasNext()) {
+                return Optional.ofNullable(error);
             }
-        return Optional.ofNullable(error);
-    }
-    
-    public class CategoryLabelWidget implements GuiEventListener {
-        private Rectangle rectangle = new Rectangle();
-        
-        @Override
-        public boolean mouseClicked(double double_1, double double_2, int int_1) {
-            if (rectangle.contains(double_1, double_2)) {
-                expended = !expended;
-                Minecraft.INSTANCE.soundEngine.play((SoundEvents.UI_BUTTON_CLICK), 1.0F, 1);
-                return true;
-            }
-            return false;
+
+            entry = (AbstractConfigListEntry)var2.next();
+        } while(!entry.getError().isPresent());
+
+        if (error != null) {
+            return Optional.ofNullable(I18n.getTranslation("text.cloth-config.multi_error"));
+        } else {
+            return entry.getError();
         }
     }
-    
+
+    public class CategoryLabelWidget implements GuiEventListener {
+        private Rectangle rectangle = new Rectangle();
+
+        public CategoryLabelWidget() {
+        }
+
+        public boolean mouseClicked(double double_1, double double_2, int int_1) {
+            if (this.rectangle.contains(double_1, double_2)) {
+                SubCategoryListEntry.this.expended = !SubCategoryListEntry.this.expended;
+                Minecraft.INSTANCE.soundManager.playSound("gui.button.press", 1.0F, 1.0F);
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
 }

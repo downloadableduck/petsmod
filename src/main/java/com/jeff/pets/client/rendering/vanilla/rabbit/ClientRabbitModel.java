@@ -1,12 +1,18 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client.rendering.vanilla.rabbit;
 
 import com.google.common.collect.ImmutableList;
-import com.jeff.pets.mob.vanilla.passive.ClientRabbit;
-import com.jeff.pets.client.rendering.PetModel;
-import com.jeff.pets.compat.render.model.ModelPart;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
-
-import static com.jeff.pets.client.Central.CONFIG;
+import com.jeff.pets.client.Central;
+import com.jeff.pets.client.rendering.PetModel;
+import com.jeff.pets.compat.GlStateManager;
+import com.jeff.pets.compat.render.model.ModelPart;
+import com.jeff.pets.mob.vanilla.passive.ClientRabbit;
 
 public class ClientRabbitModel extends PetModel {
     public final ModelPart head;
@@ -91,47 +97,52 @@ public class ClientRabbitModel extends PetModel {
         ModelPart.rotationZ = h;
     }
 
-    @Override
-    public void render(net.minecraft.entity.Entity entity, float i, float j, float f, float g, float h, float k) {
-        if (CONFIG.isBaby) {
+    public void render(Entity entity, float i, float j, float f, float g, float h, float k) {
+        if (Central.CONFIG.isBaby) {
             float l = 1.5F;
-            com.jeff.pets.compat.GlStateManager.pushMatrix();
-            com.jeff.pets.compat.GlStateManager.scalef(0.56666666F, 0.56666666F, 0.56666666F);
-            com.jeff.pets.compat.GlStateManager.translatef(0.0F, 1.375F, 0.125F);
-            ImmutableList.of(this.head, this.earLeft, this.earRight, this.nose).forEach((ModelPart) -> ModelPart.render(k));
-            com.jeff.pets.compat.GlStateManager.popMatrix();
-            com.jeff.pets.compat.GlStateManager.pushMatrix();
-            com.jeff.pets.compat.GlStateManager.scalef(0.4F, 0.4F, 0.4F);
-            com.jeff.pets.compat.GlStateManager.translatef(0.0F, 2.25F, 0.0F);
-            ImmutableList.of(this.rearFootLeft, this.rearFootRight, this.haunchLeft, this.haunchRight, this.body, this.frontLegLeft, this.frontLegRight, this.tail).forEach((ModelPart) -> ModelPart.render(k));
-            com.jeff.pets.compat.GlStateManager.popMatrix();
+            GlStateManager.pushMatrix();
+            GlStateManager.scalef(0.56666666F, 0.56666666F, 0.56666666F);
+            GlStateManager.translatef(0.0F, 1.375F, 0.125F);
+            ImmutableList.of(this.head, this.earLeft, this.earRight, this.nose).forEach((ModelPart) -> {
+                ModelPart.render(k);
+            });
+            GlStateManager.popMatrix();
+            GlStateManager.pushMatrix();
+            GlStateManager.scalef(0.4F, 0.4F, 0.4F);
+            GlStateManager.translatef(0.0F, 2.25F, 0.0F);
+            ImmutableList.of(this.rearFootLeft, this.rearFootRight, this.haunchLeft, this.haunchRight, this.body, this.frontLegLeft, this.frontLegRight, this.tail).forEach((ModelPart) -> {
+                ModelPart.render(k);
+            });
+            GlStateManager.popMatrix();
         } else {
-            com.jeff.pets.compat.GlStateManager.pushMatrix();
-            com.jeff.pets.compat.GlStateManager.scalef(0.6F, 0.6F, 0.6F);
-            com.jeff.pets.compat.GlStateManager.translatef(0.0F, 1.0F, 0.0F);
-            ImmutableList.of(this.rearFootLeft, this.rearFootRight, this.haunchLeft, this.haunchRight, this.body, this.frontLegLeft, this.frontLegRight, this.head, this.earRight, this.earLeft, this.tail, this.nose, new ModelPart[0]).forEach((ModelPart) -> ModelPart.render(k));
-            com.jeff.pets.compat.GlStateManager.popMatrix();
+            GlStateManager.pushMatrix();
+            GlStateManager.scalef(0.6F, 0.6F, 0.6F);
+            GlStateManager.translatef(0.0F, 1.0F, 0.0F);
+            ImmutableList.of(this.rearFootLeft, this.rearFootRight, this.haunchLeft, this.haunchRight, this.body, this.frontLegLeft, this.frontLegRight, this.head, this.earRight, this.earLeft, this.tail, this.nose, new ModelPart[0]).forEach((ModelPart) -> {
+                ModelPart.render(k);
+            });
+            GlStateManager.popMatrix();
         }
 
     }
 
-    public void setupAnimation(float f, float g, float h, float i, float j, float s, net.minecraft.entity.Entity entity) {
-        ClientRabbit rabbit = (ClientRabbit) entity;
-        float k = h - (float) rabbit.ticks;
-        this.nose.rotationX = j * ((float) Math.PI / 180F);
-        this.head.rotationX = j * ((float) Math.PI / 180F);
-        this.earRight.rotationX = j * ((float) Math.PI / 180F);
-        this.earLeft.rotationX = j * ((float) Math.PI / 180F);
-        this.nose.rotationY = i * ((float) Math.PI / 180F);
-        this.head.rotationY = i * ((float) Math.PI / 180F);
+    public void setupAnimation(float f, float g, float h, float i, float j, float s, Entity entity) {
+        ClientRabbit rabbit = (ClientRabbit)entity;
+        float var10000 = h - (float)rabbit.age;
+        this.nose.rotationX = j * 0.017453292F;
+        this.head.rotationX = j * 0.017453292F;
+        this.earRight.rotationX = j * 0.017453292F;
+        this.earLeft.rotationX = j * 0.017453292F;
+        this.nose.rotationY = i * 0.017453292F;
+        this.head.rotationY = i * 0.017453292F;
         this.earRight.rotationY = this.nose.rotationY - 0.2617994F;
         this.earLeft.rotationY = this.nose.rotationY + 0.2617994F;
-        this.jumpRotation = MathHelper.sin((float) Math.PI);
-        this.haunchLeft.rotationX = (this.jumpRotation * 50.0F - 21.0F) * ((float) Math.PI / 180F);
-        this.haunchRight.rotationX = (this.jumpRotation * 50.0F - 21.0F) * ((float) Math.PI / 180F);
-        this.rearFootLeft.rotationX = this.jumpRotation * 50.0F * ((float) Math.PI / 180F);
-        this.rearFootRight.rotationX = this.jumpRotation * 50.0F * ((float) Math.PI / 180F);
-        this.frontLegLeft.rotationX = (this.jumpRotation * -40.0F - 11.0F) * ((float) Math.PI / 180F);
-        this.frontLegRight.rotationX = (this.jumpRotation * -40.0F - 11.0F) * ((float) Math.PI / 180F);
+        this.jumpRotation = MathHelper.sin(3.1415927F);
+        this.haunchLeft.rotationX = (this.jumpRotation * 50.0F - 21.0F) * 0.017453292F;
+        this.haunchRight.rotationX = (this.jumpRotation * 50.0F - 21.0F) * 0.017453292F;
+        this.rearFootLeft.rotationX = this.jumpRotation * 50.0F * 0.017453292F;
+        this.rearFootRight.rotationX = this.jumpRotation * 50.0F * 0.017453292F;
+        this.frontLegLeft.rotationX = (this.jumpRotation * -40.0F - 11.0F) * 0.017453292F;
+        this.frontLegRight.rotationX = (this.jumpRotation * -40.0F - 11.0F) * 0.017453292F;
     }
 }

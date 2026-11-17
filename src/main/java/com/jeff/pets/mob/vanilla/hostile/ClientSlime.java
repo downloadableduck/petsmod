@@ -1,26 +1,29 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.mob.vanilla.hostile;
 
+import net.minecraft.world.World;
 import com.jeff.pets.mob.SlimeLikePet;
 
 public class ClientSlime extends SlimeLikePet {
-    public ClientSlime(net.minecraft.world.World level) {
+    public ClientSlime(World level) {
         super(level);
-        this.setSize(2f, 2f);
+        this.setBoundingBoxSpacing(2.0F, 2.0F);
         this.texture = "/mob/slime.png";
     }
 
-    @Override
     protected int stopDistance() {
         return 4;
     }
 
-    @Override
     protected float heartHeight() {
-        return 2;
+        return 2.0F;
     }
 
-    @Override
-    protected String getAmbientSound() {
+    protected String getRandomSound() {
         return "mob.slime.small";
     }
 }

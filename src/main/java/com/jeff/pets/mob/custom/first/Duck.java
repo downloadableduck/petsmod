@@ -1,274 +1,253 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.mob.custom.first;
 
-import com.jeff.pets.client.Utils;
-import com.jeff.pets.mob.AbstractPet;
-import net.minecraft.block.Block;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.animal.AnimalEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.entity.mob.player.ServerPlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import com.jeff.pets.client.Central;
+import com.jeff.pets.client.Utils;
+import com.jeff.pets.mob.AbstractPet;
 
 import java.util.Objects;
 
-import static com.jeff.pets.client.Central.CONFIG;
-
 public class Duck extends AbstractPet {
-   public static final int IS_SERVER_ENTITY = 20;
-   public static final int DUCK_SKIN = 21;
-   private final float flyDist = 0.0F;
-   public float flap;
-   public float flapSpeed;
-   public float oFlapSpeed;
-   public float oFlap;
-   public float flapping = 1.0F;
-   public boolean isOnHead;
-   public ServerPlayerEntity owner = (ServerPlayerEntity)this.getOwner();
-   private float nextFlap = 1.0F;
+    public static final int IS_SERVER_ENTITY = 20;
+    public static final int DUCK_SKIN = 21;
+    private final float flyDist = 0.0F;
+    public float flap;
+    public float flapSpeed;
+    public float oFlapSpeed;
+    public float oFlap;
+    public float flapping = 1.0F;
+    public boolean isOnHead;
+    public ServerPlayerEntity owner = (ServerPlayerEntity)this.getOwner();
+    private float nextFlap = 1.0F;
 
-   public Duck(World level) {
-      super(level);
-      this.setSize(0.5F, 0.5F);
-   }
+    public Duck(World level) {
+        super(level);
+        this.setBoundingBoxSpacing(0.5F, 0.5F);
+    }
 
-   public static float rotlerp(float start, float end) {
-      float f = Utils.wrapDegrees(end - start);
-      if (f > 10.0F) {
-         f = 10.0F;
-      }
+    public static float rotlerp(float start, float end) {
+        float f = Utils.wrapDegrees(end - start);
+        if (f > 10.0F) {
+            f = 10.0F;
+        }
 
-      if (f < -10.0F) {
-         f = -10.0F;
-      }
+        if (f < -10.0F) {
+            f = -10.0F;
+        }
 
-      return start + f;
-   }
+        return start + f;
+    }
 
-   protected void registerSyncedData() {
-      super.registerSyncedData();
-      this.syncedData.register(21, 1);
-      this.syncedData.register(20, (byte)0);
-   }
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(21, 1);
+        this.dataTracker.startTracking(20, (byte)0);
+    }
 
-   public boolean isServerEntity() {
-      return this.syncedData.getByte(10) == 1;
-   }
+    public boolean isServerEntity() {
+        return this.dataTracker.getByte(10) == 1;
+    }
 
-   public void setServerEntity(Boolean value) {
-      this.syncedData.update(10, (byte)(value ? 1 : 0));
-   }
+    public void setServerEntity(Boolean value) {
+        this.dataTracker.set(10, (byte)(value ? 1 : 0));
+    }
 
-   public void mobTick() {
-      super.mobTick();
-      this.oFlap = this.flap;
-      this.oFlapSpeed = this.flapSpeed;
-      this.flapSpeed = this.flapSpeed + (this.onGround ? -1.0F : 4.0F) * 0.3F;
-      this.flapSpeed = Math.max(0.0F, Math.min(1.0F, this.flapSpeed));
-      if (!this.onGround && this.flapping < 1.0F) {
-         this.flapping = 1.0F;
-      }
+    public void tickMovement() {
+        super.tickMovement();
+        this.oFlap = this.flap;
+        this.oFlapSpeed = this.flapSpeed;
+        this.flapSpeed += (this.onGround ? -1.0F : 4.0F) * 0.3F;
+        this.flapSpeed = Math.max(0.0F, Math.min(1.0F, this.flapSpeed));
+        if (!this.onGround && this.flapping < 1.0F) {
+            this.flapping = 1.0F;
+        }
 
-      this.flapping *= 0.9F;
-      Vec3d movement = this.getVelocity();
-      if (!this.onGround && movement.y < 0.0) {
-         this.lerpVelocity(this.velocityX, this.velocityY, this.velocityZ);
-      }
+        this.flapping *= 0.9F;
+        Vec3d movement = this.getVelocity();
+        if (!this.onGround && movement.y < 0.0) {
+            this.setVelocityClient(this.velocityX, this.velocityY, this.velocityZ);
+        }
 
-      this.flap = this.flap + this.flapping * 2.0F;
-   }
+        this.flap += this.flapping * 2.0F;
+    }
 
-   protected boolean isFlapping() {
-      return 0.0F > this.nextFlap;
-   }
+    protected boolean isFlapping() {
+        return 0.0F > this.nextFlap;
+    }
 
-   protected void onFlap() {
-      this.nextFlap = 0.0F + this.flapSpeed / 2.0F;
-   }
+    protected void onFlap() {
+        this.nextFlap = 0.0F + this.flapSpeed / 2.0F;
+    }
 
-   @Override
-   protected int stopDistance() {
-      return 2;
-   }
+    protected int stopDistance() {
+        return 2;
+    }
 
-   @Override
-   protected float heartHeight() {
-      return 0.5F;
-   }
+    protected float heartHeight() {
+        return 0.5F;
+    }
 
-   @Override
-   protected String getAmbientSound() {
-      return "duck_ambient";
-   }
+    protected String getRandomSound() {
+        return "duck_ambient";
+    }
 
-   protected String getHurtSound() {
-      return "duck_ambient";
-   }
+    protected String getHurtSound() {
+        return "duck_ambient";
+    }
 
-   protected String getDeathSound() {
-      return "duck_ambient";
-   }
+    protected String getDeathSound() {
+        return "duck_ambient";
+    }
 
-   @Nullable
-   public Duck makeChild(@NotNull AnimalEntity partner) {
-      Duck duck = new Duck(this.world);
-      duck.setServerEntity(true);
-      return duck;
-   }
+    public @Nullable Duck makeChild(@NotNull AnimalEntity partner) {
+        Duck duck = new Duck(this.world);
+        duck.setServerEntity(true);
+        return duck;
+    }
 
-   /*public Duck initialize(Difficulty difficulty, @Nullable EntityData groupData) {
-      this.setServerEntity(true);
-      this.syncedData.update(11, this.random.nextInt(2));
-      return this;
-   }*/
+    public boolean isBreedingItem(@NotNull ItemStack itemStack) {
+        return itemStack.isItemEqual(new ItemStack(Item.RAW_FISH, 1, 0)) || itemStack.isItemEqual(new ItemStack(Item.RAW_FISH, 1, 1)) || itemStack.isItemEqual(new ItemStack(Item.RAW_FISH, 1, 2));
+    }
 
-   @Override
-   public boolean isBreedingItem(@NotNull ItemStack itemStack) {
-      return itemStack.matchesItem(new ItemStack(Item.FISH, 1, 0))
-         || itemStack.matchesItem(new ItemStack(Item.FISH, 1, 1))
-         || itemStack.matchesItem(new ItemStack(Item.FISH, 1, 2));
-   }
+    public void tick() {
+        super.tick();
+        this.oFlap = this.flap;
+        this.oFlapSpeed = this.flapSpeed;
+        this.flapSpeed += (this.onGround ? -1.0F : 4.0F) * 0.3F;
+        this.flapSpeed = Math.max(0.0F, Math.min(1.0F, this.flapSpeed));
+        if (!this.onGround && this.flapping < 1.0F) {
+            this.flapping = 1.0F;
+        }
 
-   @Override
-   public void tick() {
-      super.tick();
-      this.oFlap = this.flap;
-      this.oFlapSpeed = this.flapSpeed;
-      this.flapSpeed = this.flapSpeed + (this.onGround ? -1.0F : 4.0F) * 0.3F;
-      this.flapSpeed = Math.max(0.0F, Math.min(1.0F, this.flapSpeed));
-      if (!this.onGround && this.flapping < 1.0F) {
-         this.flapping = 1.0F;
-      }
+        this.flapping *= 0.9F;
+        Vec3d movement = Vec3d.create(this.velocityX, this.velocityY, this.velocityZ);
+        if (!this.onGround && movement.y < 0.0) {
+            this.setVelocityClient(movement.x * 1.0, movement.y * 0.6, movement.z * 1.0);
+        }
 
-      this.flapping *= 0.9F;
-      Vec3d movement = Vec3d.of(this.velocityX, this.velocityY, this.velocityZ);
-      if (!this.onGround && movement.y < 0.0) {
-         this.lerpVelocity(movement.x * 1.0, movement.y * 0.6, movement.z * 1.0);
-      }
+        this.flap += this.flapping * 2.0F;
+        LivingEntity owner = this.getOwner();
+        if (owner != null) {
+            this.yaw = this.getOwner().yaw + 180.0F;
+            if (this.vehicle == owner) {
+                if (owner.isSneaking() && owner.jumping) {
+                    this.dismountFromVehicle();
+                    this.lerpVelocity(this.getVelocity().add(0.0, -0.04, 0.0));
+                    this.isOnHead = false;
+                } else {
+                    this.setSitting(true);
+                }
+            }
 
-      this.flap = this.flap + this.flapping * 2.0F;
-      MobEntity owner = this.getOwner();
-      if (owner != null) {
-         this.yaw = this.getOwner().yaw + 180;
-         if (this.vehicle == owner) {
-            if (owner.isSneaking() && owner.jumping) {
-               this.dismountFromVehicle();
-               this.lerpVelocity(this.getVelocity().add(0.0, -0.04, 0.0));
-               this.isOnHead = false;
+            double dx = owner.x - this.x;
+            double dz = owner.z - this.z;
+            double targetYaw = Math.atan2(dz, dx) * 57.29577951308232 - 90.0;
+            double distance = (double)this.getDistance(owner);
+            float rotation = -this.pitch;
+            float rotationToOwner = rotation + -this.getOwner().pitch;
+            float bodyYawDiff = Utils.wrapDegrees(this.yaw - this.bodyYaw);
+            if (rotationToOwner >= 50.0F) {
+                this.bodyYaw = this.yaw - Math.signum(bodyYawDiff) * 50.0F;
+            }
+
+            if (distance > 2.0) {
+                this.walkAnimationSpeed = 0.5F;
+                Vec3d targetPos = Vec3d.create(owner.x, owner.y, owner.z);
+                Vec3d dir = targetPos.relativize(this.getPosVec()).normalize();
+                this.setYRot(rotlerp(this.getYRot(), (float)targetYaw));
+                this.bodyYaw += Math.max(-50.0F, Math.min(50.0F, this.yaw - this.bodyYaw));
+                double speed = Math.min(0.23, 0.2);
+                double var10001 = -dir.x * speed;
+                double var10003 = -dir.z;
+                this.lerpVelocity(Vec3d.create(var10001, this.getVelocity().y, var10003 * speed));
             } else {
-               this.setSitting(true);
+                this.lookAt(this.getOwner(), 5.0F, 0.0F);
+                this.setVelocityClient(this.velocityX * 0.8, this.velocityY * 1.0, this.velocityZ * 0.8);
             }
-         }
 
-         double dx = owner.x - this.x;
-         double dz = owner.z - this.z;
-         double targetYaw = Math.atan2(dz, dx) * (180.0 / Math.PI) - 90.0;
-         double distance = this.distanceTo(owner);
-         float rotation = -this.pitch;
-         float rotationToOwner = rotation + -this.getOwner().pitch;
-         float bodyYawDiff = Utils.wrapDegrees(this.yaw - this.bodyYaw);
-         if (rotationToOwner >= 50.0F) {
-            this.bodyYaw = this.yaw - Math.signum(bodyYawDiff) * 50.0F;
-         }
+            int yHeightToOwner = (int)(owner.y - this.y);
+            if (this.horizontalCollision && this.onGround) {
+                this.jump();
+            }
 
-         if (distance > 2.0) {
-            this.walkAnimationSpeed = 0.5F;
-            Vec3d targetPos = Vec3d.of(owner.x, owner.y, owner.z);
-            Vec3d dir = targetPos.subtractFrom(this.getPosVec()).normalize();
+            if (yHeightToOwner > -1) {
+            }
+
+            if (!this.onGround) {
+            }
+
+            if (Utils.squaredDistanceToOrigin(Vec3d.create(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
+                ++this.waitingTime;
+                if (this.waitingTime > 30) {
+                    this.wander();
+                }
+            } else {
+                this.waitingTime = 0;
+            }
+
             this.setYRot(rotlerp(this.getYRot(), (float)targetYaw));
-            this.bodyYaw = this.bodyYaw + Math.max(-50.0F, Math.min(50.0F, this.yaw - this.bodyYaw));
-            double speed = Math.min(0.23D, 0.1D* 1.2D + 0.08D);
-            this.lerpVelocity(Vec3d.of(-dir.x * speed, this.getVelocity().y, -dir.z * speed));
-         } else {
-            this.lookAt(this.getOwner(), 5.0F, 0.0F);
-            this.lerpVelocity(this.velocityX * 0.8, this.velocityY * 1.0, this.velocityZ * 0.8);
-         }
-
-         int yHeightToOwner = (int)(owner.y - this.y);
-         if (this.collidingHorizontally && this.onGround) {
-            this.jump();
-         }
-
-         if (yHeightToOwner > -1) {
-            //this.lerpVelocity(this.getVelocity().add(0.0, -0.01, 0.0));
-         }
-
-         if (!this.onGround) {
-         }
-
-         if (Utils.squaredDistanceToOrigin(Vec3d.of(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
-            this.waitingTime++;
-            if (this.waitingTime > 30) {
-               this.wander();
+            if (Math.abs(bodyYawDiff) > 50.0F) {
+                this.bodyYaw = this.yaw - Math.signum(bodyYawDiff) * 50.0F;
+            } else {
+                this.bodyYaw += Math.max(-10.0F, Math.min(10.0F, this.yaw - this.bodyYaw));
             }
-         } else {
-            this.waitingTime = 0;
-         }
 
-         this.setYRot(rotlerp(this.getYRot(), (float)targetYaw));
-         if (Math.abs(bodyYawDiff) > 50.0F) {
-            this.bodyYaw = this.yaw - Math.signum(bodyYawDiff) * 50.0F;
-         } else {
-            this.bodyYaw = this.bodyYaw + Math.max(-10.0F, Math.min(10.0F, this.yaw - this.bodyYaw));
-         }
-
-             // No manual move() here: LivingEntity.mobTick() already calls moveRelative() ->
-             // move(this.velocityX, ...) on the client, so calling move() again moved the pet
-             // twice per tick and doubled its apparent speed.
-             if (!this.onGround) {
+            if (!this.onGround) {
                 this.lerpVelocity(this.getVelocity().add(0.0, -0.04, 0.0));
-             }
-      }
+            }
+        }
 
-      if (owner != null && this.distanceTo(owner) >= 10.0F) {
-         this.setPosition(owner.x, owner.y, owner.z);
-      }
+        if (owner != null && this.getDistance(owner) >= 10.0F) {
+            this.setPosition(owner.x, owner.y, owner.z);
+        }
 
-      int ambient = (int)(Math.random() * 1200.0);
-      if (ambient == 1) {
-         this.world.playSound(this.x, this.y, this.z, "duck_ambient", 1.0F, 1.0F);
-      }
-   }
+        int ambient = (int)(Math.random() * 1200.0);
+        if (ambient == 1) {
+            this.world.playSound(this.x, this.y, this.z, "duck_ambient", 1.0F, 1.0F);
+        }
 
-   public void writeCustomNbt(@NotNull NbtCompound output) {
-      super.writeCustomNbt(output);
-      output.putBoolean("isServerEntity", true);
-      output.putInt("variant", this.syncedData.getInt(11));
-   }
+    }
 
-   public void readCustomNbt(@NotNull NbtCompound input) {
-      super.readCustomNbt(input);
-      this.setServerEntity(input.getBoolean("isServerEntity"));
-      this.syncedData.update(11, input.getInt("variant"));
-   }
+    public void writeNbt(@NotNull NbtCompound output) {
+        super.writeNbt(output);
+        output.putBoolean("isServerEntity", true);
+        output.putInt("variant", this.dataTracker.getInt(11));
+    }
 
-   /*@Override
-   public void onDataValueChanged(int key) {
-      if (!(this.world instanceof World)) {
-         super.onDataValueChanged(key);
-      }
-   }*/
+    public void readNbt(@NotNull NbtCompound input) {
+        super.readNbt(input);
+        this.setServerEntity(input.getBoolean("isServerEntity"));
+        this.dataTracker.set(11, input.getInt("variant"));
+    }
 
-    @Override
     public String getTexture() {
         String duckTexturePath;
-        if (Objects.equals(CONFIG.duckSkin, "pekin")) {
+        if (Objects.equals(Central.CONFIG.duckSkin, "pekin")) {
             duckTexturePath = "/mob/duck/pekin.png";
-        } else if (Objects.equals(CONFIG.duckSkin, "mallard")) {
+        } else if (Objects.equals(Central.CONFIG.duckSkin, "mallard")) {
             duckTexturePath = "/mob/duck/mallard_male.png";
-        } else if (Objects.equals(CONFIG.duckSkin, "rubber")) {
+        } else if (Objects.equals(Central.CONFIG.duckSkin, "rubber")) {
             duckTexturePath = "/mob/duck/rubber.png";
-        } else if (CONFIG.duckSkin.equals("bronze")) {
+        } else if (Central.CONFIG.duckSkin.equals("bronze")) {
             duckTexturePath = "/mob/duck/bronze.png";
         } else {
             duckTexturePath = "/mob/duck/mallard_male.png";
         }
+
         return duckTexturePath;
     }
 }

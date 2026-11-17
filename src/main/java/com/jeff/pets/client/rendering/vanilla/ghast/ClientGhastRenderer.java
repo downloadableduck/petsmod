@@ -1,24 +1,29 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client.rendering.vanilla.ghast;
 
-import com.jeff.pets.client.rendering.PetRenderer;
-import net.minecraft.client.render.model.entity.GhastModel;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.client.render.entity.model.GhastEntityModel;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
+import com.jeff.pets.client.PetsClientInitializer;
+import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.compat.GlStateManager;
 
 public class ClientGhastRenderer extends PetRenderer {
-
-    public ClientGhastRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new GhastModel(), 0.75f);
+    public ClientGhastRenderer(EntityRenderDispatcher context, PetsClientInitializer.Context context2) {
+        super(context, new GhastEntityModel(), 0.75F);
     }
 
-    @Override
     public @NotNull String getTexture(Entity livingEntityRenderState) {
-        return ("textures/mob/ghast/ghast.png");
+        return "textures/mob/ghast/ghast.png";
     }
 
-    @Override
-    public void applyScale(MobEntity ghast, float f) {
-        com.jeff.pets.compat.GlStateManager.scalef(4.5F, 4.5F, 4.5F);
+    public void applyScale(LivingEntity ghast, float f) {
+        GlStateManager.scalef(4.5F, 4.5F, 4.5F);
     }
 }

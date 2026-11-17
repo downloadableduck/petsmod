@@ -5,6 +5,12 @@ pluginManagement {
             url = 'https://maven.fabricmc.net/'
         }
         maven {
+            name = 'Babric'
+            url = 'https://maven.glass-launcher.net/babric'
+        }
+        mavenCentral()
+        gradlePluginPortal()
+        maven {
             name = 'Ornithe Releases'
             url = 'https://maven.ornithemc.net/releases'
         }

@@ -1,37 +1,36 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client.rendering.vanilla.wither;
 
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.entity.Entity;
+import org.jetbrains.annotations.NotNull;
+import com.jeff.pets.client.Central;
+import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.boss.ClientWither;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static com.jeff.pets.client.Central.CONFIG;
-
 public class ClientWitherRenderer extends PetRenderer<ClientWither> {
-
-    public ClientWitherRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientWitherModel(0), 0.75f);
-
+    public ClientWitherRenderer(EntityRenderDispatcher context, PetsClientInitializer.Context context2) {
+        super(context, new ClientWitherModel(0.0F), 0.75F);
     }
 
-    @Override
-    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
-        ClientWither livingEntityRenderState = (ClientWither) entity;
+    public @NotNull String getTexture(Entity entity) {
+        ClientWither livingEntityRenderState = (ClientWither)entity;
         String witherTexturePath;
-        if (Objects.equals(CONFIG.witherSkin, "normal")) {
+        if (Objects.equals(Central.CONFIG.witherSkin, "normal")) {
             witherTexturePath = "textures/mob/wither/wither.png";
-        } else if (Objects.equals(CONFIG.witherSkin, "invulnerable")) {
+        } else if (Objects.equals(Central.CONFIG.witherSkin, "invulnerable")) {
             witherTexturePath = "textures/mob/wither/wither_invulnerable.png";
         } else {
             witherTexturePath = "textures/mob/wither/wither.png";
         }
-        return (witherTexturePath);
-    }
 
-    /*@Override
-    public void extractRenderState(ClientWither wither, WitherRenderState state, float f) {
-        super.extractRenderState(wither, state, f);
-        state.yHeadRots = new float[]{wither.getYHeadRot(), wither.getYHeadRot(), wither.getYHeadRot()};
-    }*/
+        return witherTexturePath;
+    }
 }

@@ -1,21 +1,24 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.mob.vanilla.passive;
 
+import net.minecraft.world.World;
+import com.jeff.pets.client.Central;
 import com.jeff.pets.mob.GroundPet;
 
-import static com.jeff.pets.client.Central.CONFIG;
-
 public class ClientCat extends GroundPet {
-
     public boolean isOnHead;
 
-    public ClientCat(net.minecraft.world.World level) {
+    public ClientCat(World level) {
         super(level);
-        this.setSize(0.6f, 0.7f);
+        this.setBoundingBoxSpacing(0.6F, 0.7F);
     }
 
-    @Override
     public String getTexture() {
-        switch (CONFIG.catSkin) {
+        switch (Central.CONFIG.catSkin) {
             case "black":
                 return "textures/mob/cat/all_black.png";
             case "tuxedo":
@@ -45,18 +48,15 @@ public class ClientCat extends GroundPet {
         }
     }
 
-    @Override
     protected int stopDistance() {
         return 2;
     }
 
-    @Override
     protected float heartHeight() {
-        return 0.5f;
+        return 0.5F;
     }
 
-    @Override
-    protected String getAmbientSound() {
+    protected String getRandomSound() {
         return "mob.cat.meow";
     }
 }

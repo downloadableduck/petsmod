@@ -1,92 +1,96 @@
 plugins {
+    id("fabric-loom") version "1.17.20"
+    id("babric-loom-extension") version "1.17.5"
     id 'maven-publish'
-    id 'fabric-loom' version '1.17-SNAPSHOT'
-    id 'ploceus' version '1.17-SNAPSHOT'
 }
+
+version = "${project.mod_version}-${project.minecraft_version}-babric${project.build}"
+group = project.maven_group
 
 base {
     archivesName = project.archives_base_name
 }
-version = "${project.mod_version}-${project.minecraft_version}-ornithe${project.build}"
-group = project.maven_group
-
-ploceus {
-    setIntermediaryGeneration(2)
-}
 
 loom {
-    accessWidenerPath = file('src/main/resources/pets.accessWidener')
-
-    runs {
-        client {
-            client()
-            programArgs "--userProperties", "{}"
-        }
-    }
+    customMinecraftManifest.set("https://babric.github.io/manifest-polyfill/${minecraft_version}.json")
+    intermediaryUrl.set("https://maven.glass-launcher.net/babric/babric/intermediary/%1\$s/intermediary-%1\$s-v2.jar")
+    accessWidenerPath = file("src/main/resources/pets.accessWidener")
+    //sharedCwJar = true
 }
 
 repositories {
-    maven { url "https://maven.shedaniel.me/" }
-    maven { url "https://api.modrinth.com/maven"}
-    maven {url "https://maven.legacyfabric.net"}
-    // Add repositories to retrieve artifacts from in here.
-    // You should only use this when depending on other mods because
-    // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-    // See https://docs.gradle.org/current/userguide/declaring_repositories.html
-    // for more information about repositories.
+    mavenCentral()
+    maven { url ="https://maven.glass-launcher.net/snapshots/" }
+    maven { url ="https://maven.glass-launcher.net/releases/" }
+    maven { url ="https://maven.glass-launcher.net/babric" }
+    maven { url ="https://maven.minecraftforge.net/" }
+    maven { url ="https://jitpack.io/" }
+    maven { url ="https://maven.fabricmc.net/" }
+    maven { url = "https://maven.glass-launcher.net/babric" }
+    mavenCentral()
+    exclusiveContent {
+        forRepository {
+            maven { url ="https://api.modrinth.com/maven" }
+        }
+        filter {
+            includeGroup("maven.modrinth")
+        }
+    }
+    maven {
+        name = 'Babric'
+        url = 'https://maven.glass-launcher.net/babric'
+    }
+    maven { url "https://maven.glass-launcher.net/releases" }
+    maven { url "https://maven.ornithemc.net/releases/" }
+}
+
+configurations.configureEach {
+    exclude group: "org.ow2.asm", module: "asm-all"
 }
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    mappings "net.glasslauncher:biny:b1.7.3+e0778a3:v2"
+    modImplementation "babric:fabric-loader:${project.loader_version}"
 
-    //exceptions ploceus.raven(project.raven_build)
-    //signatures ploceus.sparrow(project.sparrow_build)
-    //nests ploceus.nests(project.nests_build)
-    mappings ploceus.featherMappings(project.feather_build)
+    implementation "org.slf4j:slf4j-api:1.8.0-beta4"
+    implementation "org.apache.logging.log4j:log4j-slf4j18-impl:2.16.0"
 
+    compileOnly "org.jetbrains:annotations:24.1.0"
+    implementation "blue.endless:jankson:${project.jankson_version}"
+    implementation "com.moandjiezana.toml:toml4j:${project.toml4j_version}"
+    modImplementation "maven.modrinth:472oW63Q:YsQonigP"
+    modImplementation("net.modificationstation:StationAPI:${project.stationapi_version}")
+    modImplementation("net.danygames2014:modmenu:${project.modmenu_version}")
 
-    ploceus.dependOsl(project.osl_version)
-
-    implementation("blue.endless:jankson:${rootProject.jankson_version}")
-    implementation("com.moandjiezana.toml:toml4j:${rootProject.toml4j_version}")
-    modCompileOnly("maven.modrinth:LIGlLgiL:71EHHNXc")
+    // Dependencies required by bundled/decompiled Cloth Config, AutoConfig, and math utilities.
+    implementation "com.google.guava:guava:21.0"
+    implementation "org.apache.commons:commons-lang3:3.5"
+    implementation "commons-io:commons-io:2.5"
 }
+
 processResources {
-    inputs.property 'version', project.mod_version + project.build
+    inputs.property "version", project.version
 
-    filesMatching('fabric.mod.json') {
-        expand 'version': project.mod_version + project.build
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
     }
-}
-
-tasks.withType(JavaCompile).configureEach {
-    it.options.encoding = 'UTF-8'
-    it.options.release = 8
 }
 
 java {
-    // Still required by IDEs such as Eclipse and Visual Studio Code
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-
-    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task if it is present.
+    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+    // if it is present.
     // If you remove this line, sources will not be generated.
     withSourcesJar()
-
-    // If this mod is going to be a library, then it should also generate Javadocs in order to aid with development.
-    // Uncomment this line to generate them.
-    // withJavadocJar()
 }
 
-// If you plan to use a different file for the license, don't forget to change the file name here!
 jar {
-    from('LICENSE') {
-        rename { "${it}_${base.archivesName.get()}" }
+    from("LICENSE") {
+        rename { "${it}_${project.findProperty('archives_base_name') ?: project.name}" }
     }
 }
 
-// Configure the maven publication
+// configure the maven publication
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -103,12 +107,13 @@ publishing {
     }
 }
 
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs << "-Xmaxerrs" << "5000"
+}
+
+
 tasks.named('jar') {
     archiveBaseName = project.archives_base_name
     archiveVersion = project.mod_version
     archiveClassifier = project.minecraft_version
-}
-
-tasks.withType(JavaCompile).configureEach {
-    options.compilerArgs << "-Xmaxerrs" << "5000"
 }

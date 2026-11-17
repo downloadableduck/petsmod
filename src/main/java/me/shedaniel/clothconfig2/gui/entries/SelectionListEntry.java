@@ -1,3 +1,8 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package me.shedaniel.clothconfig2.gui.entries;
 
 import com.google.common.collect.ImmutableList;
@@ -7,8 +12,8 @@ import me.shedaniel.clothconfig2.ButtonWidget;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import me.shedaniel.clothconfig2.impl.WindowUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.locale.I18n;
-import org.jetbrains.annotations.ApiStatus;
+import net.minecraft.client.resource.language.I18n;
+import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -18,115 +23,119 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-
 public class SelectionListEntry<T> extends TooltipListEntry<T> {
-    
     private ImmutableList<T> values;
     private AtomicInteger index;
-    private ButtonWidget buttonWidget, resetButton;
+    private ButtonWidget buttonWidget;
+    private ButtonWidget resetButton;
     private Consumer<T> saveConsumer;
     private Supplier<T> defaultValue;
     private List<GuiEventListener> widgets;
     private Function<T, String> nameProvider;
-    
-    @ApiStatus.Internal
+
+    /** @deprecated */
     @Deprecated
+    @Internal
     public SelectionListEntry(String fieldName, T[] valuesArray, T value, Consumer<T> saveConsumer) {
-        this(fieldName, valuesArray, value, "text.cloth-config.reset_value", null, saveConsumer);
+        this(fieldName, valuesArray, value, "text.cloth-config.reset_value", (Supplier)null, saveConsumer);
     }
-    
-    @ApiStatus.Internal
+
+    /** @deprecated */
     @Deprecated
+    @Internal
     public SelectionListEntry(String fieldName, T[] valuesArray, T value, String resetButtonKey, Supplier<T> defaultValue, Consumer<T> saveConsumer) {
-        this(fieldName, valuesArray, value, resetButtonKey, defaultValue, saveConsumer, null);
+        this(fieldName, valuesArray, value, resetButtonKey, defaultValue, saveConsumer, (Function)null);
     }
-    
-    @ApiStatus.Internal
+
+    /** @deprecated */
     @Deprecated
+    @Internal
     public SelectionListEntry(String fieldName, T[] valuesArray, T value, String resetButtonKey, Supplier<T> defaultValue, Consumer<T> saveConsumer, Function<T, String> nameProvider) {
-        this(fieldName, valuesArray, value, resetButtonKey, defaultValue, saveConsumer, nameProvider, null);
+        this(fieldName, valuesArray, value, resetButtonKey, defaultValue, saveConsumer, nameProvider, (Supplier)null);
     }
-    
-    @ApiStatus.Internal
+
+    /** @deprecated */
     @Deprecated
+    @Internal
     public SelectionListEntry(String fieldName, T[] valuesArray, T value, String resetButtonKey, Supplier<T> defaultValue, Consumer<T> saveConsumer, Function<T, String> nameProvider, Supplier<Optional<String[]>> tooltipSupplier) {
         this(fieldName, valuesArray, value, resetButtonKey, defaultValue, saveConsumer, nameProvider, tooltipSupplier, false);
     }
-    
-    @ApiStatus.Internal
+
+    /** @deprecated */
     @Deprecated
+    @Internal
     public SelectionListEntry(String fieldName, T[] valuesArray, T value, String resetButtonKey, Supplier<T> defaultValue, Consumer<T> saveConsumer, Function<T, String> nameProvider, Supplier<Optional<String[]>> tooltipSupplier, boolean requiresRestart) {
         super(fieldName, tooltipSupplier, requiresRestart);
-        if (valuesArray != null)
+        if (valuesArray != null) {
             this.values = ImmutableList.copyOf(valuesArray);
-        else
+        } else {
             this.values = ImmutableList.of(value);
+        }
+
         this.defaultValue = defaultValue;
         this.index = new AtomicInteger(this.values.indexOf(value));
         this.index.compareAndSet(-1, 0);
-        this.buttonWidget = new ButtonWidget(0, 0, 150, 20, "", widget -> {
-            SelectionListEntry.this.index.incrementAndGet();
-            SelectionListEntry.this.index.compareAndSet(SelectionListEntry.this.values.size(), 0);
-            getScreen().setEdited(true, isRequiresRestart());
+        this.buttonWidget = new ButtonWidget(0, 0, 150, 20, "", (widget) -> {
+            this.index.incrementAndGet();
+            this.index.compareAndSet(this.values.size(), 0);
+            this.getScreen().setEdited(true, this.isRequiresRestart());
         });
-        this.resetButton = new ButtonWidget(0, 0, Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey), widget -> {
-            SelectionListEntry.this.index.set(getDefaultIndex());
-            getScreen().setEdited(true, isRequiresRestart());
+        this.resetButton = new ButtonWidget(0, 0, Minecraft.INSTANCE.textRenderer.getWidth(I18n.getTranslation(resetButtonKey)) + 6, 20, I18n.getTranslation(resetButtonKey), (widget) -> {
+            this.index.set(this.getDefaultIndex());
+            this.getScreen().setEdited(true, this.isRequiresRestart());
         });
         this.saveConsumer = saveConsumer;
-        this.widgets = Lists.newArrayList(buttonWidget, resetButton);
-        this.nameProvider = nameProvider == null ? (t -> I18n.translate(t instanceof Translatable ? ((Translatable) t).getKey() : t.toString())) : nameProvider;
+        this.widgets = Lists.newArrayList(new GuiEventListener[]{this.buttonWidget, this.resetButton});
+        this.nameProvider = nameProvider == null ? (t) -> {
+            return I18n.getTranslation(t instanceof Translatable ? ((Translatable)t).getKey() : t.toString());
+        } : nameProvider;
     }
-    
-    @Override
+
     public void save() {
-        if (saveConsumer != null)
-            saveConsumer.accept(getValue());
+        if (this.saveConsumer != null) {
+            this.saveConsumer.accept(this.getValue());
+        }
+
     }
-    
-    @Override
+
     public T getValue() {
         return this.values.get(this.index.get());
     }
-    
-    @Override
+
     public Optional<T> getDefaultValue() {
-        return defaultValue == null ? Optional.empty() : Optional.ofNullable(defaultValue.get());
+        return this.defaultValue == null ? Optional.empty() : Optional.ofNullable(this.defaultValue.get());
     }
-    
-    @Override
+
     public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
         super.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
-        this.resetButton.active = isEditable() && getDefaultValue().isPresent() && getDefaultIndex() != this.index.get();
+        this.resetButton.active = this.isEditable() && this.getDefaultValue().isPresent() && this.getDefaultIndex() != this.index.get();
         this.resetButton.y = y;
-        this.buttonWidget.active = isEditable();
+        this.buttonWidget.active = this.isEditable();
         this.buttonWidget.y = y;
-        this.buttonWidget.message = nameProvider.apply(getValue());
+        this.buttonWidget.text = (String)this.nameProvider.apply(this.getValue());
         if (Utils.isBidirectional()) {
-            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, getPreferredTextColor());
+            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.getTranslation(this.getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.INSTANCE.textRenderer.getWidth(I18n.getTranslation(this.getFieldName())), y + 5, this.getPreferredTextColor());
             this.resetButton.x = x;
-            this.buttonWidget.x = x + resetButton.width + 2;
+            this.buttonWidget.x = x + this.resetButton.width + 2;
         } else {
-            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(getFieldName()), x, y + 5, getPreferredTextColor());
-            this.resetButton.x = x + entryWidth - resetButton.width;
+            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.getTranslation(this.getFieldName()), x, y + 5, this.getPreferredTextColor());
+            this.resetButton.x = x + entryWidth - this.resetButton.width;
             this.buttonWidget.x = x + entryWidth - 150;
         }
-        // this.buttonWidget.setWidth(150 - resetButton.getWidth() - 2); // Not available in 1.13
-        resetButton.render(mouseX, mouseY, delta);
-        buttonWidget.render(mouseX, mouseY, delta);
+
+        this.resetButton.render(mouseX, mouseY, delta);
+        this.buttonWidget.render(mouseX, mouseY, delta);
     }
-    
+
     private int getDefaultIndex() {
         return Math.max(0, this.values.indexOf(this.defaultValue.get()));
     }
-    
-    @Override
+
     public List<? extends GuiEventListener> children() {
-        return widgets;
+        return this.widgets;
     }
-    
+
     public interface Translatable {
         @NotNull String getKey();
     }
-    
 }

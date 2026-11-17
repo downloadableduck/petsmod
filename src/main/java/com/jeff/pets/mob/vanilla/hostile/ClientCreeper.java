@@ -1,29 +1,31 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.mob.vanilla.hostile;
 
+import net.minecraft.world.World;
 import com.jeff.pets.mob.GroundPet;
 
 public class ClientCreeper extends GroundPet {
-
     public boolean isPowered = false;
 
-    public ClientCreeper(net.minecraft.world.World level) {
+    public ClientCreeper(World level) {
         super(level);
-        this.setSize(0.6f, 1.7f);
+        this.setBoundingBoxSpacing(0.6F, 1.7F);
         this.texture = "/mob/creeper.png";
     }
 
-    @Override
     protected int stopDistance() {
         return 2;
     }
 
-    @Override
     protected float heartHeight() {
-        return 1.5f;
+        return 1.5F;
     }
 
-    @Override
-    protected String getAmbientSound() {
+    protected String getRandomSound() {
         return "creeper.primed";
     }
 }

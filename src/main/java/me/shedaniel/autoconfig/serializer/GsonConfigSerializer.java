@@ -1,21 +1,7 @@
-/*
- * This file is part of Cloth Config.
- * Copyright (C) 2020 - 2021 shedaniel
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
 
 package me.shedaniel.autoconfig.serializer;
 
@@ -30,19 +16,14 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 
-/**
- * This serializer serializes configs into Json files using Gson.
- */
-@SuppressWarnings({"unused", "FieldMayBeFinal"})
 public class GsonConfigSerializer<T extends ConfigData> implements ConfigSerializer<T> {
-
     private Config definition;
     private Class<T> configClass;
     private Gson gson;
 
-    @SuppressWarnings("WeakerAccess")
     public GsonConfigSerializer(Config definition, Class<T> configClass, Gson gson) {
         this.definition = definition;
         this.configClass = configClass;
@@ -50,45 +31,45 @@ public class GsonConfigSerializer<T extends ConfigData> implements ConfigSeriali
     }
 
     public GsonConfigSerializer(Config definition, Class<T> configClass) {
-        this(definition, configClass, new GsonBuilder().setPrettyPrinting().create());
+        this(definition, configClass, (new GsonBuilder()).setPrettyPrinting().create());
     }
 
     private Path getConfigPath() {
-        return Utils.getConfigFolder().resolve(definition.name() + ".json");
+        return Utils.getConfigFolder().resolve(this.definition.name() + ".json");
     }
 
-    @Override
-    public void serialize(T config) throws SerializationException {
-        Path configPath = getConfigPath();
+    public void serialize(T config) throws ConfigSerializer.SerializationException {
+        Path configPath = this.getConfigPath();
+
         try {
             Files.createDirectories(configPath.getParent());
             BufferedWriter writer = Files.newBufferedWriter(configPath);
-            gson.toJson(config, writer);
+            this.gson.toJson(config, writer);
             writer.close();
-        } catch (IOException e) {
-            throw new SerializationException(e);
+        } catch (IOException var4) {
+            IOException e = var4;
+            throw new ConfigSerializer.SerializationException(e);
         }
     }
 
-    @Override
-    public T deserialize() throws SerializationException {
-        Path configPath = getConfigPath();
-        if (Files.exists(configPath)) {
+    public T deserialize() throws ConfigSerializer.SerializationException {
+        Path configPath = this.getConfigPath();
+        if (Files.exists(configPath, new LinkOption[0])) {
             try {
                 BufferedReader reader = Files.newBufferedReader(configPath);
-                T ret = gson.fromJson(reader, configClass);
+                T ret = (T)(Object)this.gson.fromJson(reader, this.configClass);
                 reader.close();
                 return ret;
-            } catch (IOException | JsonParseException e) {
-                throw new SerializationException(e);
+            } catch (JsonParseException | IOException var4) {
+                Exception e = var4;
+                throw new ConfigSerializer.SerializationException(e);
             }
         } else {
-            return createDefault();
+            return this.createDefault();
         }
     }
 
-    @Override
     public T createDefault() {
-        return Utils.constructUnsafely(configClass);
+        return (T)(Object)Utils.constructUnsafely(this.configClass);
     }
 }

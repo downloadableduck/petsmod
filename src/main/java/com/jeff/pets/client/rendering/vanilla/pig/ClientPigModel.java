@@ -1,24 +1,27 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client.rendering.vanilla.pig;
 
-import net.minecraft.client.render.model.entity.PigModel;
+import net.minecraft.client.render.entity.model.PigEntityModel;
+import com.jeff.pets.client.Central;
+import com.jeff.pets.compat.GlStateManager;
 
-import static com.jeff.pets.client.Central.CONFIG;
-
-public class ClientPigModel extends PigModel {
-
+public class ClientPigModel extends PigEntityModel {
     public ClientPigModel() {
-        super();
     }
 
-    @Override
     public void render(float i, float j, float f, float g, float h, float k) {
         super.render(i, j, f, g, h, k);
-        com.jeff.pets.compat.GlStateManager.pushMatrix();
-        if (CONFIG.isBaby) {
-            com.jeff.pets.compat.GlStateManager.scalef(1.5f, 1.5f, 1.5f);
+        GlStateManager.pushMatrix();
+        if (Central.CONFIG.isBaby) {
+            GlStateManager.scalef(1.5F, 1.5F, 1.5F);
         } else {
-            com.jeff.pets.compat.GlStateManager.scalef(1, 1, 1);
+            GlStateManager.scalef(1.0F, 1.0F, 1.0F);
         }
-        com.jeff.pets.compat.GlStateManager.popMatrix();
+
+        GlStateManager.popMatrix();
     }
 }

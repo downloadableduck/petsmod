@@ -1,3 +1,8 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package me.shedaniel.clothconfig2.api;
 
 import me.shedaniel.clothconfig2.impl.ScissorsHandlerImpl;
@@ -5,17 +10,16 @@ import me.shedaniel.math.Rectangle;
 
 import java.util.List;
 
-
 public interface ScissorsHandler {
     ScissorsHandler INSTANCE = ScissorsHandlerImpl.INSTANCE;
-    
+
     void clearScissors();
-    
+
     List<Rectangle> getScissorsAreas();
-    
-    void scissor(Rectangle rectangle);
-    
+
+    void scissor(Rectangle var1);
+
     void removeLastScissor();
-    
+
     void applyScissors();
 }

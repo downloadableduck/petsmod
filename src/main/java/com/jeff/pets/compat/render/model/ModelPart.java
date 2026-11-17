@@ -1,21 +1,20 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.compat.render.model;
 
+import org.lwjgl.opengl.GL11;
 import com.jeff.pets.compat.GlStateManager;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-/**
- * b1.8-compatible ModelPart shim supporting hierarchy, multiple boxes, and newer API used by this mod.
- *
- * <p>The box/UV layout here intentionally mirrors b1.8's
- * {@code net.minecraft.client.render.model.ModelPart} + {@code Polygon} so that models authored
- * against the newer model format (1.9+) render identically on b1.7.3. b1.7.3 itself hardcodes a
- * 64x32 texture for box UVs and has no part hierarchy, so its own ModelPart cannot be reused.</p>
- */
 public class ModelPart {
-    public float textureWidth = 64.0F;
-    public float textureHeight = 32.0F;
+    public float textureWidth;
+    public float textureHeight;
     private int u;
     private int v;
     public float x;
@@ -25,17 +24,22 @@ public class ModelPart {
     public float rotationY;
     public float rotationZ;
     public boolean flipped;
-    public boolean visible = true;
+    public boolean visible;
     public boolean invisible;
-
-    public final List<ModelPart> children = new ArrayList<>();
-    private final List<Box> boxes = new ArrayList<>();
+    public final List<ModelPart> children;
+    private final List<Box> boxes;
 
     public ModelPart(Model model) {
+        this.textureWidth = 64.0F;
+        this.textureHeight = 32.0F;
+        this.visible = true;
+        this.children = new ArrayList();
+        this.boxes = new ArrayList();
         if (model != null) {
-            this.textureWidth = model.textureWidth;
-            this.textureHeight = model.textureHeight;
+            this.textureWidth = (float)model.textureWidth;
+            this.textureHeight = (float)model.textureHeight;
         }
+
     }
 
     public ModelPart(Model model, String name) {
@@ -52,6 +56,7 @@ public class ModelPart {
         if (child != null && !this.children.contains(child)) {
             this.children.add(child);
         }
+
     }
 
     public ModelPart setTextureCoords(int u, int v) {
@@ -60,7 +65,6 @@ public class ModelPart {
         return this;
     }
 
-    // named box (used by some newer models); name is irrelevant for rendering
     public ModelPart addBox(String name, float x, float y, float z, int w, int h, int d) {
         return this.addBox(x, y, z, w, h, d);
     }
@@ -86,33 +90,44 @@ public class ModelPart {
     }
 
     public void render(float scale) {
-        if (!this.visible) return;
-        if (this.invisible) return;
+        if (this.visible) {
+            if (!this.invisible) {
+                GlStateManager.pushMatrix();
+                GlStateManager.translatef(this.x * scale, this.y * scale, this.z * scale);
+                if (this.rotationZ != 0.0F) {
+                    GlStateManager.rotatef(this.rotationZ * 57.295776F, 0.0F, 0.0F, 1.0F);
+                }
 
-        GlStateManager.pushMatrix();
-        GlStateManager.translatef(this.x * scale, this.y * scale, this.z * scale);
-        if (this.rotationZ != 0.0F) {
-            GlStateManager.rotatef(this.rotationZ * (180F / (float) Math.PI), 0.0F, 0.0F, 1.0F);
-        }
-        if (this.rotationY != 0.0F) {
-            GlStateManager.rotatef(this.rotationY * (180F / (float) Math.PI), 0.0F, 1.0F, 0.0F);
-        }
-        if (this.rotationX != 0.0F) {
-            GlStateManager.rotatef(this.rotationX * (180F / (float) Math.PI), 1.0F, 0.0F, 0.0F);
-        }
+                if (this.rotationY != 0.0F) {
+                    GlStateManager.rotatef(this.rotationY * 57.295776F, 0.0F, 1.0F, 0.0F);
+                }
 
-        for (Box box : this.boxes) {
-            box.render(scale);
+                if (this.rotationX != 0.0F) {
+                    GlStateManager.rotatef(this.rotationX * 57.295776F, 1.0F, 0.0F, 0.0F);
+                }
+
+                Iterator var2 = this.boxes.iterator();
+
+                while(var2.hasNext()) {
+                    Box box = (Box)var2.next();
+                    box.render(scale);
+                }
+
+                var2 = this.children.iterator();
+
+                while(var2.hasNext()) {
+                    ModelPart child = (ModelPart)var2.next();
+                    child.render(scale);
+                }
+
+                GlStateManager.popMatrix();
+            }
         }
-        for (ModelPart child : this.children) {
-            child.render(scale);
-        }
-        GlStateManager.popMatrix();
     }
 
     public ModelPart setTextureSize(int w, int h) {
-        this.textureWidth = (float) w;
-        this.textureHeight = (float) h;
+        this.textureWidth = (float)w;
+        this.textureHeight = (float)h;
         return this;
     }
 
@@ -125,14 +140,20 @@ public class ModelPart {
         this.rotationZ = other.rotationZ;
     }
 
-    /**
-     * Single cuboid. The vertex ordering and UV regions are a direct copy of b1.8's
-     * {@code ModelPart.addBox} + {@code Polygon} implementation.
-     */
     private static class Box {
-        final float x1, y1, z1, x2, y2, z2;
-        final int u, v, w, h, d;
-        final float tw, th;
+        final float x1;
+        final float y1;
+        final float z1;
+        final float x2;
+        final float y2;
+        final float z2;
+        final int u;
+        final int v;
+        final int w;
+        final int h;
+        final int d;
+        final float tw;
+        final float th;
         final boolean flipped;
 
         Box(int u, int v, float x, float y, float z, int w, int h, int d, float inflate, float tw, float th, boolean flipped) {
@@ -144,15 +165,12 @@ public class ModelPart {
             this.tw = tw;
             this.th = th;
             this.flipped = flipped;
-
             float minX = x - inflate;
             float minY = y - inflate;
             float minZ = z - inflate;
-            float maxX = x + w + inflate;
-            float maxY = y + h + inflate;
-            float maxZ = z + d + inflate;
-
-            // b1.8 mirrors the cuboid on the X axis before building its vertices.
+            float maxX = x + (float)w + inflate;
+            float maxY = y + (float)h + inflate;
+            float maxZ = z + (float)d + inflate;
             if (flipped) {
                 float tmp = minX;
                 minX = maxX;
@@ -174,68 +192,43 @@ public class ModelPart {
             float x2 = this.x2 * scale;
             float y2 = this.y2 * scale;
             float z2 = this.z2 * scale;
-
-            float U = this.u;
-            float V = this.v;
-            float W = this.w;
-            float H = this.h;
-            float D = this.d;
-
-            org.lwjgl.opengl.GL11.glBegin(org.lwjgl.opengl.GL11.GL_QUADS);
-
-            // +X (east)
-            quad(x2, y1, z2, x2, y1, z1, x2, y2, z1, x2, y2, z2,
-                    U + D + W, V + D, U + D + W + D, V + D + H, 1.0F, 0.0F, 0.0F);
-            // -X (west)
-            quad(x1, y1, z1, x1, y1, z2, x1, y2, z2, x1, y2, z1,
-                    U, V + D, U + D, V + D + H, -1.0F, 0.0F, 0.0F);
-            // -Y (top)
-            quad(x2, y1, z2, x1, y1, z2, x1, y1, z1, x2, y1, z1,
-                    U + D, V, U + D + W, V + D, 0.0F, -1.0F, 0.0F);
-            // +Y (bottom)
-            quad(x2, y2, z1, x1, y2, z1, x1, y2, z2, x2, y2, z2,
-                    U + D + W, V, U + D + W + W, V + D, 0.0F, 1.0F, 0.0F);
-            // -Z (north/front)
-            quad(x2, y1, z1, x1, y1, z1, x1, y2, z1, x2, y2, z1,
-                    U + D, V + D, U + D + W, V + D + H, 0.0F, 0.0F, -1.0F);
-            // +Z (south/back)
-            quad(x1, y1, z2, x2, y1, z2, x2, y2, z2, x1, y2, z2,
-                    U + D + W + D, V + D, U + D + W + D + W, V + D + H, 0.0F, 0.0F, 1.0F);
-
-            org.lwjgl.opengl.GL11.glEnd();
+            float U = (float)this.u;
+            float V = (float)this.v;
+            float W = (float)this.w;
+            float H = (float)this.h;
+            float D = (float)this.d;
+            GL11.glBegin(7);
+            this.quad(x2, y1, z2, x2, y1, z1, x2, y2, z1, x2, y2, z2, U + D + W, V + D, U + D + W + D, V + D + H, 1.0F, 0.0F, 0.0F);
+            this.quad(x1, y1, z1, x1, y1, z2, x1, y2, z2, x1, y2, z1, U, V + D, U + D, V + D + H, -1.0F, 0.0F, 0.0F);
+            this.quad(x2, y1, z2, x1, y1, z2, x1, y1, z1, x2, y1, z1, U + D, V, U + D + W, V + D, 0.0F, -1.0F, 0.0F);
+            this.quad(x2, y2, z1, x1, y2, z1, x1, y2, z2, x2, y2, z2, U + D + W, V, U + D + W + W, V + D, 0.0F, 1.0F, 0.0F);
+            this.quad(x2, y1, z1, x1, y1, z1, x1, y2, z1, x2, y2, z1, U + D, V + D, U + D + W, V + D + H, 0.0F, 0.0F, -1.0F);
+            this.quad(x1, y1, z2, x2, y1, z2, x2, y2, z2, x1, y2, z2, U + D + W + D, V + D, U + D + W + D + W, V + D + H, 0.0F, 0.0F, 1.0F);
+            GL11.glEnd();
         }
 
-        /**
-         * Emits one quad exactly like b1.8's {@code Polygon}: UVs are attached to vertices in the
-         * order (u2,v1), (u1,v1), (u1,v2), (u2,v2); a flipped part reverses the vertex order.
-         */
-        private void quad(float ax, float ay, float az,
-                          float bx, float by, float bz,
-                          float cx, float cy, float cz,
-                          float dx, float dy, float dz,
-                          float u1, float v1, float u2, float v2,
-                          float nx, float ny, float nz) {
+        private void quad(float ax, float ay, float az, float bx, float by, float bz, float cx, float cy, float cz, float dx, float dy, float dz, float u1, float v1, float u2, float v2, float nx, float ny, float nz) {
             float insetU = 0.1F / this.tw;
             float insetV = 0.1F / this.th;
-
-            float[] uu = {u2 / this.tw - insetU, u1 / this.tw + insetU, u1 / this.tw + insetU, u2 / this.tw - insetU};
-            float[] vv = {v1 / this.th + insetV, v1 / this.th + insetV, v2 / this.th - insetV, v2 / this.th - insetV};
-            float[] px = {ax, bx, cx, dx};
-            float[] py = {ay, by, cy, dy};
-            float[] pz = {az, bz, cz, dz};
-
-            org.lwjgl.opengl.GL11.glNormal3f(nx, ny, nz);
+            float[] uu = new float[]{u2 / this.tw - insetU, u1 / this.tw + insetU, u1 / this.tw + insetU, u2 / this.tw - insetU};
+            float[] vv = new float[]{v1 / this.th + insetV, v1 / this.th + insetV, v2 / this.th - insetV, v2 / this.th - insetV};
+            float[] px = new float[]{ax, bx, cx, dx};
+            float[] py = new float[]{ay, by, cy, dy};
+            float[] pz = new float[]{az, bz, cz, dz};
+            GL11.glNormal3f(nx, ny, nz);
+            int i;
             if (!this.flipped) {
-                for (int i = 0; i < 4; i++) {
-                    org.lwjgl.opengl.GL11.glTexCoord2f(uu[i], vv[i]);
-                    org.lwjgl.opengl.GL11.glVertex3f(px[i], py[i], pz[i]);
+                for(i = 0; i < 4; ++i) {
+                    GL11.glTexCoord2f(uu[i], vv[i]);
+                    GL11.glVertex3f(px[i], py[i], pz[i]);
                 }
             } else {
-                for (int i = 3; i >= 0; i--) {
-                    org.lwjgl.opengl.GL11.glTexCoord2f(uu[i], vv[i]);
-                    org.lwjgl.opengl.GL11.glVertex3f(px[i], py[i], pz[i]);
+                for(i = 3; i >= 0; --i) {
+                    GL11.glTexCoord2f(uu[i], vv[i]);
+                    GL11.glVertex3f(px[i], py[i], pz[i]);
                 }
             }
+
         }
     }
 }

@@ -1,10 +1,17 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client.rendering.vanilla.enderdragon;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import com.jeff.pets.client.Math2;
-import com.jeff.pets.compat.GlStateManager;
-import com.jeff.pets.mob.vanilla.boss.ClientEnderDragon;
 import com.jeff.pets.client.rendering.PetModel;
+import com.jeff.pets.compat.GlStateManager;
 import com.jeff.pets.compat.render.model.ModelPart;
+import com.jeff.pets.mob.vanilla.boss.ClientEnderDragon;
 
 public class ClientEnderDragonModel extends PetModel {
     private final ModelPart head;
@@ -85,18 +92,16 @@ public class ClientEnderDragonModel extends PetModel {
         part.addBox(x, y, z, w, h, d, scale);
     }
 
-    @Override
-    public void prepare(net.minecraft.entity.mob.MobEntity entity, float f, float g, float h) {
+    public void animateModel(LivingEntity entity, float f, float g, float h) {
         this.delta = h;
     }
 
-    @Override
-    public void render(net.minecraft.entity.Entity entity, float f, float g, float h, float i, float j, float k) {
-        ClientEnderDragon enderDragonEntity = (ClientEnderDragon) entity;
+    public void render(Entity entity, float f, float g, float h, float i, float j, float k) {
+        ClientEnderDragon enderDragonEntity = (ClientEnderDragon)entity;
         GlStateManager.pushMatrix();
-        float l = (float) Math2.lerp(this.delta, enderDragonEntity.oFlapTime, enderDragonEntity.flapTime);
-        this.jaw.rotationX = (float) (Math.sin(l * ((float) Math.PI * 2F)) + (double) 1.0F) * 0.2F;
-        float m = (float) (Math.sin(l * ((float) Math.PI * 2F) - 1.0F) + (double) 1.0F);
+        float l = Math2.lerp(this.delta, enderDragonEntity.oFlapTime, enderDragonEntity.flapTime);
+        this.jaw.rotationX = (float)(Math.sin((double)(l * 6.2831855F)) + 1.0) * 0.2F;
+        float m = (float)(Math.sin((double)(l * 6.2831855F - 1.0F)) + 1.0);
         m = (m * m + m * 2.0F) * 0.05F;
         GlStateManager.translatef(0.0F, m - 2.0F, -3.0F);
         GlStateManager.rotatef(m * 2.0F, 1.0F, 0.0F, 0.0F);
@@ -106,21 +111,22 @@ public class ClientEnderDragonModel extends PetModel {
         float q = 1.5F;
         double[] ds = enderDragonEntity.getLatencyPos(6, this.delta);
         float r = this.updateRotations(enderDragonEntity.getLatencyPos(5, this.delta)[0] - enderDragonEntity.getLatencyPos(10, this.delta)[0]);
-        float s = this.updateRotations(enderDragonEntity.getLatencyPos(5, this.delta)[0] + (double) (r / 2.0F));
-        float t = l * ((float) Math.PI * 2F);
+        float s = this.updateRotations(enderDragonEntity.getLatencyPos(5, this.delta)[0] + (double)(r / 2.0F));
+        float t = l * 6.2831855F;
 
-        for (int u = 0; u < 5; ++u) {
+        float v;
+        for(int u = 0; u < 5; ++u) {
             double[] es = enderDragonEntity.getLatencyPos(5 - u, this.delta);
-            float v = (float) Math.cos((float) u * 0.45F + t) * 0.15F;
-            this.neck.rotationY = this.updateRotations(es[0] - ds[0]) * ((float) Math.PI / 180F) * 1.5F;
-            this.neck.rotationX = v + enderDragonEntity.getHeadPartYOffset(u, ds, es) * ((float) Math.PI / 180F) * 1.5F * 5.0F;
-            this.neck.rotationZ = -this.updateRotations(es[0] - (double) s) * ((float) Math.PI / 180F) * 1.5F;
+            v = (float)Math.cos((double)((float)u * 0.45F + t)) * 0.15F;
+            this.neck.rotationY = this.updateRotations(es[0] - ds[0]) * 0.017453292F * 1.5F;
+            this.neck.rotationX = v + enderDragonEntity.getHeadPartYOffset(u, ds, es) * 0.017453292F * 1.5F * 5.0F;
+            this.neck.rotationZ = -this.updateRotations(es[0] - (double)s) * 0.017453292F * 1.5F;
             this.neck.y = o;
             this.neck.z = p;
             this.neck.x = n;
-            o = (float) ((double) o + Math.sin(this.neck.rotationX) * (double) 10.0F);
-            p = (float) ((double) p - Math.cos(this.neck.rotationY) * Math.cos(this.neck.rotationX) * (double) 10.0F);
-            n = (float) ((double) n - Math.sin(this.neck.rotationY) * Math.cos(this.neck.rotationX) * (double) 10.0F);
+            o = (float)((double)o + Math.sin((double)this.neck.rotationX) * 10.0);
+            p = (float)((double)p - Math.cos((double)this.neck.rotationY) * Math.cos((double)this.neck.rotationX) * 10.0);
+            n = (float)((double)n - Math.sin((double)this.neck.rotationY) * Math.cos((double)this.neck.rotationX) * 10.0);
             this.neck.render(k);
         }
 
@@ -128,9 +134,9 @@ public class ClientEnderDragonModel extends PetModel {
         this.head.z = p;
         this.head.x = n;
         double[] fs = enderDragonEntity.getLatencyPos(0, this.delta);
-        this.head.rotationY = this.updateRotations(fs[0] - ds[0]) * ((float) Math.PI / 180F);
-        this.head.rotationX = this.updateRotations(enderDragonEntity.getHeadPartYOffset(6, ds, fs)) * ((float) Math.PI / 180F) * 1.5F * 5.0F;
-        this.head.rotationZ = -this.updateRotations(fs[0] - (double) s) * ((float) Math.PI / 180F);
+        this.head.rotationY = this.updateRotations(fs[0] - ds[0]) * 0.017453292F;
+        this.head.rotationX = this.updateRotations((double)enderDragonEntity.getHeadPartYOffset(6, ds, fs)) * 0.017453292F * 1.5F * 5.0F;
+        this.head.rotationZ = -this.updateRotations(fs[0] - (double)s) * 0.017453292F;
         this.head.render(k);
         GlStateManager.pushMatrix();
         GlStateManager.translatef(0.0F, 1.0F, 0.0F);
@@ -139,13 +145,13 @@ public class ClientEnderDragonModel extends PetModel {
         this.body.rotationZ = 0.0F;
         this.body.render(k);
 
-        for (int w = 0; w < 2; ++w) {
+        for(int w = 0; w < 2; ++w) {
             GlStateManager.enableCull();
-            float v = l * ((float) Math.PI * 2F);
-            this.wing.rotationX = 0.125F - (float) Math.cos(v) * 0.2F;
+            v = l * 6.2831855F;
+            this.wing.rotationX = 0.125F - (float)Math.cos((double)v) * 0.2F;
             this.wing.rotationY = 0.25F;
-            this.wing.rotationZ = (float) (Math.sin(v) + (double) 0.125F) * 0.8F;
-            this.wingTip.rotationZ = -((float) (Math.sin(v + 2.0F) + (double) 0.5F)) * 0.75F;
+            this.wing.rotationZ = (float)(Math.sin((double)v) + 0.125) * 0.8F;
+            this.wingTip.rotationZ = -((float)(Math.sin((double)(v + 2.0F)) + 0.5)) * 0.75F;
             this.rearLeg.rotationX = 1.0F + m * 0.1F;
             this.rearLegTip.rotationX = 0.5F + m * 0.1F;
             this.rearFoot.rotationX = 0.75F + m * 0.1F;
@@ -164,25 +170,25 @@ public class ClientEnderDragonModel extends PetModel {
         GlStateManager.popMatrix();
         GlStateManager.cullFace(1028);
         GlStateManager.disableCull();
-        float x = -((float) Math.sin(l * ((float) Math.PI * 2F))) * 0.0F;
-        t = l * ((float) Math.PI * 2F);
+        float x = -((float)Math.sin((double)(l * 6.2831855F))) * 0.0F;
+        t = l * 6.2831855F;
         o = 10.0F;
         p = 60.0F;
         n = 0.0F;
         ds = enderDragonEntity.getLatencyPos(11, this.delta);
 
-        for (int y = 0; y < 12; ++y) {
+        for(int y = 0; y < 12; ++y) {
             fs = enderDragonEntity.getLatencyPos(12 + y, this.delta);
-            x = (float) ((double) x + Math.sin((float) y * 0.45F + t) * (double) 0.05F);
-            this.neck.rotationY = (this.updateRotations(fs[0] - ds[0]) * 1.5F + 180.0F) * ((float) Math.PI / 180F);
-            this.neck.rotationX = x + (float) (fs[1] - ds[1]) * ((float) Math.PI / 180F) * 1.5F * 5.0F;
-            this.neck.rotationZ = this.updateRotations(fs[0] - (double) s) * ((float) Math.PI / 180F) * 1.5F;
+            x = (float)((double)x + Math.sin((double)((float)y * 0.45F + t)) * 0.05000000074505806);
+            this.neck.rotationY = (this.updateRotations(fs[0] - ds[0]) * 1.5F + 180.0F) * 0.017453292F;
+            this.neck.rotationX = x + (float)(fs[1] - ds[1]) * 0.017453292F * 1.5F * 5.0F;
+            this.neck.rotationZ = this.updateRotations(fs[0] - (double)s) * 0.017453292F * 1.5F;
             this.neck.y = o;
             this.neck.z = p;
             this.neck.x = n;
-            o = (float) ((double) o + Math.sin(this.neck.rotationX) * (double) 10.0F);
-            p = (float) ((double) p - Math.cos(this.neck.rotationY) * Math.cos(this.neck.rotationX) * (double) 10.0F);
-            n = (float) ((double) n - Math.sin(this.neck.rotationY) * Math.cos(this.neck.rotationX) * (double) 10.0F);
+            o = (float)((double)o + Math.sin((double)this.neck.rotationX) * 10.0);
+            p = (float)((double)p - Math.cos((double)this.neck.rotationY) * Math.cos((double)this.neck.rotationX) * 10.0);
+            n = (float)((double)n - Math.sin((double)this.neck.rotationY) * Math.cos((double)this.neck.rotationX) * 10.0);
             this.neck.render(k);
         }
 
@@ -190,14 +196,14 @@ public class ClientEnderDragonModel extends PetModel {
     }
 
     private float updateRotations(double d) {
-        while (d >= (double) 180.0F) {
-            d -= 360.0F;
+        while(d >= 180.0) {
+            d -= 360.0;
         }
 
-        while (d < (double) -180.0F) {
-            d += 360.0F;
+        while(d < -180.0) {
+            d += 360.0;
         }
 
-        return (float) d;
+        return (float)d;
     }
 }

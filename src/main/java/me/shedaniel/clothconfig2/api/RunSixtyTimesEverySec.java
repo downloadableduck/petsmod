@@ -1,23 +1,29 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package me.shedaniel.clothconfig2.api;
 
 import me.shedaniel.clothconfig2.impl.RunSixtyTimesEverySecImpl;
 
+/** @deprecated */
 @Deprecated
 public interface RunSixtyTimesEverySec {
-    
     void run();
-    
+
     default boolean isRegistered() {
         return RunSixtyTimesEverySecImpl.TICKS_LIST.contains(this);
     }
-    
+
     default void registerTick() {
-        RunSixtyTimesEverySecImpl.TICKS_LIST.removeIf(runSixtyTimesEverySec -> runSixtyTimesEverySec == this);
+        RunSixtyTimesEverySecImpl.TICKS_LIST.removeIf((runSixtyTimesEverySec) -> {
+            return runSixtyTimesEverySec == this;
+        });
         RunSixtyTimesEverySecImpl.TICKS_LIST.add(this);
     }
-    
+
     default void unregisterTick() {
         RunSixtyTimesEverySecImpl.TICKS_LIST.remove(this);
     }
-    
 }

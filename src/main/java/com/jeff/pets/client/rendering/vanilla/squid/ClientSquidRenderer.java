@@ -1,41 +1,48 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client.rendering.vanilla.squid;
 
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.client.render.entity.model.SquidEntityModel;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import org.jetbrains.annotations.NotNull;
+import com.jeff.pets.client.Central;
 import com.jeff.pets.client.Math2;
+import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.compat.GlStateManager;
 import com.jeff.pets.mob.vanilla.passive.ClientSquid;
-import net.minecraft.client.render.model.entity.SquidModel;
-import org.jetbrains.annotations.NotNull;
-
-import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientSquidRenderer extends PetRenderer<ClientSquid> {
     String squidTexturePath;
 
-    public ClientSquidRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new SquidModel(), 0.7F);
+    public ClientSquidRenderer(EntityRenderDispatcher context, PetsClientInitializer.Context context2) {
+        super(context, new SquidEntityModel(), 0.7F);
     }
 
-    @Override
-    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
-        ClientSquid squidRenderState = (ClientSquid) entity;
-        squidTexturePath = "textures/mob/squid.png";
-        return (squidTexturePath);
+    public @NotNull String getTexture(Entity entity) {
+        ClientSquid squidRenderState = (ClientSquid)entity;
+        this.squidTexturePath = "textures/mob/squid.png";
+        return this.squidTexturePath;
     }
 
-    @Override
-    protected void applyScale(net.minecraft.entity.mob.MobEntity entity, float f) {
-        ClientSquid livingEntityRenderState = (ClientSquid) entity;
-        if (CONFIG.isBaby) {
-            GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+    protected void applyScale(LivingEntity entity, float f) {
+        ClientSquid livingEntityRenderState = (ClientSquid)entity;
+        if (Central.CONFIG.isBaby) {
+            GlStateManager.scalef(0.5F, 0.5F, 0.5F);
         }
+
     }
 
-    protected void applyRotation(net.minecraft.entity.mob.MobEntity entity, float f, float g, float h) {
-        ClientSquid squidEntity = (ClientSquid) entity;
-        super.applyRotation(squidEntity, f, g, h);
-        float i = (float) Math2.lerp(h, squidEntity.xBodyRotO, squidEntity.xBodyRot);
-        float j = (float) Math2.lerp(h, squidEntity.zBodyRotO, squidEntity.zBodyRot);
+    protected void applyHandSwingRotation(LivingEntity entity, float f, float g, float h) {
+        ClientSquid squidEntity = (ClientSquid)entity;
+        super.applyHandSwingRotation(squidEntity, f, g, h);
+        float i = Math2.lerp(h, squidEntity.xBodyRotO, squidEntity.xBodyRot);
+        float j = Math2.lerp(h, squidEntity.zBodyRotO, squidEntity.zBodyRot);
         GlStateManager.translatef(0.0F, 0.5F, 0.0F);
         GlStateManager.rotatef(180.0F - g, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotatef(i, 1.0F, 0.0F, 0.0F);

@@ -1,12 +1,18 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client.rendering.vanilla.horse;
 
-import com.jeff.pets.client.Math2;
-import com.jeff.pets.compat.GlStateManager;
-import com.jeff.pets.mob.AbstractPet;
-import com.jeff.pets.client.rendering.PetModel;
-import com.jeff.pets.compat.render.model.ModelPart;
-import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
+import com.jeff.pets.client.Math2;
+import com.jeff.pets.client.rendering.PetModel;
+import com.jeff.pets.compat.GlStateManager;
+import com.jeff.pets.compat.render.model.ModelPart;
+import com.jeff.pets.mob.AbstractPet;
 
 public class ClientHorseModel extends PetModel {
     protected final ModelPart field_3305;
@@ -20,14 +26,14 @@ public class ClientHorseModel extends PetModel {
     private final ModelPart[] field_3301;
 
     public ClientHorseModel(float f) {
-        this.textureWidth /*textureWidth*/ = 64;
-        this.textureHeight /*textureHeight*/ = 64;
+        this.textureWidth = 64;
+        this.textureHeight = 64;
         this.field_3305 = new ModelPart(this, 0, 32);
         this.field_3305.addBox(-5.0F, -8.0F, -17.0F, 10, 10, 22, 0.05F);
         this.field_3305.setPos(0.0F, 11.0F, 5.0F);
         this.field_3307 = new ModelPart(this, 0, 35);
         this.field_3307.addBox(-2.05F, -6.0F, -2.0F, 4, 12, 7);
-        this.field_3307.rotationX = ((float) Math.PI / 6F);
+        this.field_3307.rotationX = 0.5235988F;
         ModelPart ModelPart = new ModelPart(this, 0, 13);
         ModelPart.addBox(-3.0F, -11.0F, -2.0F, 6, 5, 7, f);
         ModelPart ModelPart2 = new ModelPart(this, 56, 36);
@@ -55,7 +61,7 @@ public class ClientHorseModel extends PetModel {
         this.field_3300 = new ModelPart(this, 42, 36);
         this.field_3300.addBox(-1.5F, 0.0F, 0.0F, 3, 14, 4, f);
         this.field_3300.setPos(0.0F, -5.0F, 2.0F);
-        this.field_3300.rotationX = ((float) Math.PI / 6F);
+        this.field_3300.rotationX = 0.5235988F;
         this.field_3305.addChild(this.field_3300);
         ModelPart ModelPart4 = new ModelPart(this, 26, 0);
         ModelPart4.addBox(-5.0F, -8.0F, -9.0F, 10, 9, 9, 0.5F);
@@ -68,11 +74,11 @@ public class ClientHorseModel extends PetModel {
         this.field_3307.addChild(ModelPart6);
         ModelPart ModelPart7 = new ModelPart(this, 32, 2);
         ModelPart7.addBox(3.1F, -6.0F, -8.0F, 0, 3, 16, f);
-        ModelPart7.rotationX = (-(float) Math.PI / 6F);
+        ModelPart7.rotationX = -0.5235988F;
         this.field_3307.addChild(ModelPart7);
         ModelPart ModelPart8 = new ModelPart(this, 32, 2);
         ModelPart8.addBox(-3.1F, -6.0F, -8.0F, 0, 3, 16, f);
-        ModelPart8.rotationX = (-(float) Math.PI / 6F);
+        ModelPart8.rotationX = -0.5235988F;
         this.field_3307.addChild(ModelPart8);
         ModelPart ModelPart9 = new ModelPart(this, 1, 1);
         ModelPart9.addBox(-3.0F, -11.0F, -1.9F, 6, 5, 6, 0.2F);
@@ -93,18 +99,26 @@ public class ClientHorseModel extends PetModel {
         ModelPart.addChild(ModelPart3);
     }
 
-    @Override
-    public void render(net.minecraft.entity.Entity entity, float f, float g, float h, float i, float j, float k) {
+    public void render(Entity entity, float f, float g, float h, float i, float j, float k) {
         boolean bl = false;
-        float l = 1;
+        float l = 1.0F;
         boolean bl2 = false;
-        boolean bl3 = entity.rider != null;
+        boolean bl3 = entity.passenger != null;
+        ModelPart[] var12 = this.field_3304;
+        int var13 = var12.length;
 
-        for (ModelPart ModelPart : this.field_3304) {
+        int var14;
+        ModelPart ModelPart;
+        for(var14 = 0; var14 < var13; ++var14) {
+            ModelPart = var12[var14];
             ModelPart.visible = bl2;
         }
 
-        for (ModelPart ModelPart : this.field_3301) {
+        var12 = this.field_3301;
+        var13 = var12.length;
+
+        for(var14 = 0; var14 < var13; ++var14) {
+            ModelPart = var12[var14];
             ModelPart.visible = bl3 && bl2;
         }
 
@@ -141,15 +155,14 @@ public class ClientHorseModel extends PetModel {
 
     }
 
-    @Override
-    public void prepare(MobEntity entity, float f, float g, float h) {
-        super.prepare(entity, f, g, h);
-        AbstractPet horseBaseEntity = (AbstractPet) entity;
+    public void animateModel(LivingEntity entity, float f, float g, float h) {
+        super.animateModel(entity, f, g, h);
+        AbstractPet horseBaseEntity = (AbstractPet)entity;
         float i = this.method_2790(horseBaseEntity.lastBodyYaw, horseBaseEntity.bodyYaw, h);
-        float j = this.method_2790(horseBaseEntity.lastYaw, horseBaseEntity.yaw, h);
-        float k = (float) Math2.lerp(h, horseBaseEntity.lastPitch, horseBaseEntity.pitch);
+        float j = this.method_2790(horseBaseEntity.prevYaw, horseBaseEntity.yaw, h);
+        float k = Math2.lerp(h, horseBaseEntity.prevPitch, horseBaseEntity.pitch);
         float l = j - i;
-        float m = k * ((float) Math.PI / 180F);
+        float m = k * 0.017453292F;
         if (l > 20.0F) {
             l = 20.0F;
         }
@@ -162,39 +175,39 @@ public class ClientHorseModel extends PetModel {
             m += MathHelper.cos(f * 0.4F) * 0.15F * g;
         }
 
-        float n = 0;
-        float o = 0;
+        float n = 0.0F;
+        float o = 0.0F;
         float p = 1.0F - o;
-        float q = 0;
+        float q = 0.0F;
         boolean bl = true;
-        float r = (float) horseBaseEntity.ticks + h;
+        float r = (float)horseBaseEntity.age + h;
         this.field_3307.y = 4.0F;
         this.field_3307.z = -12.0F;
         this.field_3305.rotationX = 0.0F;
-        this.field_3307.rotationX = ((float) Math.PI / 6F) + m;
-        this.field_3307.rotationY = l * ((float) Math.PI / 180F);
-        float s = horseBaseEntity.isInWater() ? 0.2F : 1.0F;
-        float t = MathHelper.cos(s * f * 0.6662F + (float) Math.PI);
+        this.field_3307.rotationX = 0.5235988F + m;
+        this.field_3307.rotationY = l * 0.017453292F;
+        float s = horseBaseEntity.isSubmergedInWater() ? 0.2F : 1.0F;
+        float t = MathHelper.cos(s * f * 0.6662F + 3.1415927F);
         float u = t * 0.8F * g;
-        float v = (1.0F - Math.max(o, n)) * (((float) Math.PI / 6F) + m + q * MathHelper.sin(r) * 0.05F);
+        float v = (1.0F - Math.max(o, n)) * (0.5235988F + m + q * MathHelper.sin(r) * 0.05F);
         this.field_3307.rotationX = o * (0.2617994F + m) + n * (2.1816616F + MathHelper.sin(r) * 0.05F) + v;
-        this.field_3307.rotationY = o * l * ((float) Math.PI / 180F) + (1.0F - Math.max(o, n)) * this.field_3307.rotationY;
+        this.field_3307.rotationY = o * l * 0.017453292F + (1.0F - Math.max(o, n)) * this.field_3307.rotationY;
         this.field_3307.y = o * -4.0F + n * 11.0F + (1.0F - Math.max(o, n)) * this.field_3307.y;
         this.field_3307.z = o * -4.0F + n * -12.0F + (1.0F - Math.max(o, n)) * this.field_3307.z;
-        this.field_3305.rotationX = o * (-(float) Math.PI / 4F) + p * this.field_3305.rotationX;
+        this.field_3305.rotationX = o * -0.7853982F + p * this.field_3305.rotationX;
         float w = 0.2617994F * o;
-        float x = MathHelper.cos(r * 0.6F + (float) Math.PI);
+        float x = MathHelper.cos(r * 0.6F + 3.1415927F);
         this.field_3302.y = 2.0F * o + 14.0F * p;
         this.field_3302.z = -6.0F * o - 10.0F * p;
         this.field_3308.y = this.field_3302.y;
         this.field_3308.z = this.field_3302.z;
-        float y = ((-(float) Math.PI / 3F) + x) * o + u * p;
-        float z = ((-(float) Math.PI / 3F) - x) * o - u * p;
+        float y = (-1.0471976F + x) * o + u * p;
+        float z = (-1.0471976F - x) * o - u * p;
         this.field_3306.rotationX = w - t * 0.5F * g * p;
         this.field_3303.rotationX = w + t * 0.5F * g * p;
         this.field_3302.rotationX = y;
         this.field_3308.rotationX = z;
-        this.field_3300.rotationX = ((float) Math.PI / 6F) + g * 0.75F;
+        this.field_3300.rotationX = 0.5235988F + g * 0.75F;
         this.field_3300.y = -5.0F + g;
         this.field_3300.z = 2.0F + g * 2.0F;
         if (bl) {
@@ -207,10 +220,10 @@ public class ClientHorseModel extends PetModel {
 
     private float method_2790(float f, float g, float h) {
         float i;
-        for (i = g - f; i < -180.0F; i += 360.0F) {
+        for(i = g - f; i < -180.0F; i += 360.0F) {
         }
 
-        while (i >= 180.0F) {
+        while(i >= 180.0F) {
             i -= 360.0F;
         }
 

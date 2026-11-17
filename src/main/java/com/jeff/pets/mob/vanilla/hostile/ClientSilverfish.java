@@ -1,26 +1,29 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.mob.vanilla.hostile;
 
+import net.minecraft.world.World;
 import com.jeff.pets.mob.GroundPet;
 
 public class ClientSilverfish extends GroundPet {
-    public ClientSilverfish(net.minecraft.world.World level) {
+    public ClientSilverfish(World level) {
         super(level);
-        this.setSize(0.4f, 0.3f);
+        this.setBoundingBoxSpacing(0.4F, 0.3F);
         this.texture = "/mob/silverfish.png";
     }
 
-    @Override
     protected int stopDistance() {
         return 2;
     }
 
-    @Override
     protected float heartHeight() {
-        return 1.5f;
+        return 1.5F;
     }
 
-    @Override
-    protected String getAmbientSound() {
+    protected String getRandomSound() {
         return "mob.silverfish.say";
     }
 }

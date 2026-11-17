@@ -1,27 +1,29 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.mob.vanilla.passive;
 
+import net.minecraft.world.World;
 import com.jeff.pets.mob.GroundPet;
 
 public class ClientMooshroom extends GroundPet {
-
-    public ClientMooshroom(net.minecraft.world.World level) {
+    public ClientMooshroom(World level) {
         super(level);
-        this.setSize(0.9f, 1.4f);
+        this.setBoundingBoxSpacing(0.9F, 1.4F);
         this.texture = "/mob/redcow.png";
     }
 
-    @Override
     protected int stopDistance() {
         return 2;
     }
 
-    @Override
     protected float heartHeight() {
-        return 1.5f;
+        return 1.5F;
     }
 
-    @Override
-    protected String getAmbientSound() {
+    protected String getRandomSound() {
         return "mob.cow.say";
     }
 }

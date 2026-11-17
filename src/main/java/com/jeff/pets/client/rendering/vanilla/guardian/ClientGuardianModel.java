@@ -1,14 +1,18 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client.rendering.vanilla.guardian;
 
-import com.jeff.pets.client.rendering.PetModel;
-import com.jeff.pets.compat.EntityCompat;
-import com.jeff.pets.mob.AbstractPet;
 import net.minecraft.client.Minecraft;
-import com.jeff.pets.client.rendering.PetModel;
-import com.jeff.pets.compat.render.model.ModelPart;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import com.jeff.pets.client.rendering.PetModel;
+import com.jeff.pets.compat.EntityCompat;
+import com.jeff.pets.compat.render.model.ModelPart;
+import com.jeff.pets.mob.AbstractPet;
 
 public class ClientGuardianModel extends PetModel {
     private static final float[] field_17131 = new float[]{1.75F, 0.25F, 0.0F, 0.0F, 0.5F, 0.5F, 0.5F, 0.5F, 1.25F, 0.75F, 0.0F, 0.0F};
@@ -23,8 +27,8 @@ public class ClientGuardianModel extends PetModel {
     private final ModelPart[] field_3378;
 
     public ClientGuardianModel() {
-        this.textureWidth /*textureWidth*/ = 64;
-        this.textureHeight /*textureHeight*/ = 64;
+        this.textureWidth = 64;
+        this.textureHeight = 64;
         this.field_3380 = new ModelPart[12];
         this.field_3379 = new ModelPart(this);
         this.field_3379.setTextureCoords(0, 0).addBox(-6.0F, 10.0F, -8.0F, 12, 12, 16);
@@ -33,7 +37,7 @@ public class ClientGuardianModel extends PetModel {
         this.field_3379.setTextureCoords(16, 40).addBox(-6.0F, 8.0F, -6.0F, 12, 2, 12);
         this.field_3379.setTextureCoords(16, 40).addBox(-6.0F, 22.0F, -6.0F, 12, 2, 12);
 
-        for (int i = 0; i < this.field_3380.length; ++i) {
+        for(int i = 0; i < this.field_3380.length; ++i) {
             this.field_3380[i] = new ModelPart(this, 0, 0);
             this.field_3380[i].addBox(-1.0F, -4.5F, -1.0F, 2, 9, 2);
             this.field_3379.addChild(this.field_3380[i]);
@@ -55,58 +59,55 @@ public class ClientGuardianModel extends PetModel {
         this.field_3378[1].addChild(this.field_3378[2]);
     }
 
-    @Override
     public void render(Entity entity, float f, float g, float h, float i, float j, float k) {
         this.setupAnimation(f, g, h, i, j, k, entity);
         this.field_3379.render(k);
     }
 
-    @Override
     public void setupAnimation(float f, float g, float h, float i, float j, float k, Entity entity) {
-        AbstractPet guardianEntity = (AbstractPet) entity;
-        float l = h - (float) guardianEntity.ticks;
-        this.field_3379.rotationY = i * ((float) Math.PI / 180F);
-        this.field_3379.rotationX = j * ((float) Math.PI / 180F);
-        float m = (1.0F - 2 * 0.55F);
+        AbstractPet guardianEntity = (AbstractPet)entity;
+        float var10000 = h - (float)guardianEntity.age;
+        this.field_3379.rotationY = i * 0.017453292F;
+        this.field_3379.rotationX = j * 0.017453292F;
+        float m = -0.100000024F;
 
-        for (int n = 0; n < 12; ++n) {
-            this.field_3380[n].rotationX = (float) Math.PI * field_17131[n];
-            this.field_3380[n].rotationY = (float) Math.PI * field_17132[n];
-            this.field_3380[n].rotationZ = (float) Math.PI * field_17133[n];
-            this.field_3380[n].x = field_17134[n] * (1.0F + MathHelper.cos(h * 1.5F + (float) n) * 0.01F - m);
-            this.field_3380[n].y = 16.0F + field_17135[n] * (1.0F + MathHelper.cos(h * 1.5F + (float) n) * 0.01F - m);
-            this.field_3380[n].z = field_17136[n] * (1.0F + MathHelper.cos(h * 1.5F + (float) n) * 0.01F - m);
+        for(int n = 0; n < 12; ++n) {
+            this.field_3380[n].rotationX = 3.1415927F * field_17131[n];
+            this.field_3380[n].rotationY = 3.1415927F * field_17132[n];
+            this.field_3380[n].rotationZ = 3.1415927F * field_17133[n];
+            this.field_3380[n].x = field_17134[n] * (1.0F + MathHelper.cos(h * 1.5F + (float)n) * 0.01F - m);
+            this.field_3380[n].y = 16.0F + field_17135[n] * (1.0F + MathHelper.cos(h * 1.5F + (float)n) * 0.01F - m);
+            this.field_3380[n].z = field_17136[n] * (1.0F + MathHelper.cos(h * 1.5F + (float)n) * 0.01F - m);
         }
 
         this.field_3381.z = -8.25F;
         Entity cameraEntity = Minecraft.INSTANCE.camera;
-
         if (cameraEntity != null) {
             Vec3d vec3d = EntityCompat.eyePosition(cameraEntity, 0.0F);
             Vec3d vec3d2 = EntityCompat.eyePosition(guardianEntity, 0.0F);
             double d = vec3d.y - vec3d2.y;
-            if (d > (double) 0.0F) {
+            if (d > 0.0) {
                 this.field_3381.y = 0.0F;
             } else {
                 this.field_3381.y = 1.0F;
             }
 
             Vec3d vec3d3 = EntityCompat.lookVector(guardianEntity, 0.0F);
-            vec3d3 = Vec3d.of(vec3d3.x, 0.0F, vec3d3.z);
-            Vec3d vec3d4 = (Vec3d.of(vec3d2.x - vec3d.x, 0.0F, vec3d2.z - vec3d.z)).normalize();
-            vec3d4.rotateY((float) Math.PI / 2F);
+            vec3d3 = Vec3d.create(vec3d3.x, 0.0, vec3d3.z);
+            Vec3d vec3d4 = Vec3d.create(vec3d2.x - vec3d.x, 0.0, vec3d2.z - vec3d.z).normalize();
+            vec3d4.rotateY(1.5707964F);
             double e = vec3d3.x * vec3d4.x + vec3d3.y * vec3d4.y + vec3d3.z * vec3d4.z;
-            this.field_3381.x = MathHelper.sqrt((float) Math.abs(e)) * 2.0F * (float) Math.signum(e);
+            this.field_3381.x = MathHelper.sqrt((float)Math.abs(e)) * 2.0F * (float)Math.signum(e);
         }
 
         this.field_3381.visible = true;
-        float o = 10;
-        this.field_3378[0].rotationY = MathHelper.sin(o) * (float) Math.PI * 0.05F;
-        this.field_3378[1].rotationY = MathHelper.sin(o) * (float) Math.PI * 0.1F;
+        float o = 10.0F;
+        this.field_3378[0].rotationY = MathHelper.sin(o) * 3.1415927F * 0.05F;
+        this.field_3378[1].rotationY = MathHelper.sin(o) * 3.1415927F * 0.1F;
         this.field_3378[1].x = -1.5F;
         this.field_3378[1].y = 0.5F;
         this.field_3378[1].z = 14.0F;
-        this.field_3378[2].rotationY = MathHelper.sin(o) * (float) Math.PI * 0.15F;
+        this.field_3378[2].rotationY = MathHelper.sin(o) * 3.1415927F * 0.15F;
         this.field_3378[2].x = 0.5F;
         this.field_3378[2].y = 0.5F;
         this.field_3378[2].z = 6.0F;

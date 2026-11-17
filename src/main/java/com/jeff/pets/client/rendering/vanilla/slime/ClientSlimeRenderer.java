@@ -1,24 +1,31 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client.rendering.vanilla.slime;
 
-import com.jeff.pets.client.rendering.PetRenderer;
-import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
-import net.minecraft.client.render.model.entity.SlimeModel;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.client.render.entity.model.SlimeEntityModel;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
-
-import static com.jeff.pets.client.Central.CONFIG;
+import com.jeff.pets.client.Central;
+import com.jeff.pets.client.PetsClientInitializer;
+import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.compat.GlStateManager;
+import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
 
 public class ClientSlimeRenderer extends PetRenderer<ClientSlime> {
-
-    public ClientSlimeRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new SlimeModel(16), 0.75f);
+    public ClientSlimeRenderer(EntityRenderDispatcher context, PetsClientInitializer.Context context2) {
+        super(context, new SlimeEntityModel(16), 0.75F);
         this.addLayer(new SlimeOuterLayer(this));
     }
 
-    @Override
-    protected void applyScale(net.minecraft.entity.mob.MobEntity entity, float f) {
-        ClientSlime slimeRenderState = (ClientSlime) entity;
-        int slimeapplyScale;
-        switch (CONFIG.slimeSkin) {
+    protected void applyScale(LivingEntity entity, float f) {
+        ClientSlime slimeRenderState = (ClientSlime)entity;
+        byte slimeapplyScale;
+        switch (Central.CONFIG.slimeSkin) {
             case "small":
                 slimeapplyScale = 1;
                 break;
@@ -30,14 +37,13 @@ public class ClientSlimeRenderer extends PetRenderer<ClientSlime> {
                 break;
             default:
                 slimeapplyScale = 1;
-                break;
         }
-        com.jeff.pets.compat.GlStateManager.scalef(slimeapplyScale, slimeapplyScale, slimeapplyScale);
+
+        GlStateManager.scalef((float)slimeapplyScale, (float)slimeapplyScale, (float)slimeapplyScale);
     }
 
-    @Override
-    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
-        ClientSlime livingEntityRenderState = (ClientSlime) entity;
-        return ("textures/mob/slime/slime.png");
+    public @NotNull String getTexture(Entity entity) {
+        ClientSlime livingEntityRenderState = (ClientSlime)entity;
+        return "textures/mob/slime/slime.png";
     }
 }

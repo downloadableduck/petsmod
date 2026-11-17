@@ -1,33 +1,40 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client.rendering.vanilla.mooshroom;
 
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import org.jetbrains.annotations.NotNull;
+import com.jeff.pets.client.Central;
+import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.cow.ClientCowModel;
+import com.jeff.pets.compat.GlStateManager;
 import com.jeff.pets.mob.vanilla.passive.ClientMooshroom;
-import org.jetbrains.annotations.NotNull;
-
-import static com.jeff.pets.client.Central.CONFIG;
 
 public class ClientMooshroomRenderer extends PetRenderer<ClientMooshroom> {
-
     String mooshroomTexturePath;
 
-    public ClientMooshroomRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+    public ClientMooshroomRenderer(EntityRenderDispatcher context, PetsClientInitializer.Context context2) {
         super(context, new ClientCowModel(), 0.7F);
         this.addLayer(new ClientMushroomCowMushroomLayer(this, this.getBlockRenderer()));
     }
 
-    @Override
-    protected void applyScale(net.minecraft.entity.mob.MobEntity entity, float f) {
-        ClientMooshroom state = (ClientMooshroom) entity;
-        if (CONFIG.isBaby) {
-            com.jeff.pets.compat.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+    protected void applyScale(LivingEntity entity, float f) {
+        ClientMooshroom state = (ClientMooshroom)entity;
+        if (Central.CONFIG.isBaby) {
+            GlStateManager.scalef(0.5F, 0.5F, 0.5F);
         }
+
     }
 
-    @Override
-    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
-        ClientMooshroom cowRenderState = (ClientMooshroom) entity;
-            mooshroomTexturePath = "textures/mob/cow/mooshroom.png";
-        return (mooshroomTexturePath);
+    public @NotNull String getTexture(Entity entity) {
+        ClientMooshroom cowRenderState = (ClientMooshroom)entity;
+        this.mooshroomTexturePath = "textures/mob/cow/mooshroom.png";
+        return this.mooshroomTexturePath;
     }
 }

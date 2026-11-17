@@ -1,11 +1,11 @@
 # The Pets Project
 
-The pets project is bringing you your own client-sided pets into your game! From squids to iron golems to even penguins,
+The com.jeff.pets project is bringing you your own client-sided com.jeff.pets into your game! From squids to iron golems to even penguins,
 PetsMod offers nearly every mob from vanilla Minecraft, and more! And it will work no matter whether you are on a
 multiplayer server or your own singleplayer world.
 
-PetsMod comes with its own configuration screen **and** custom commands to easily toggle between pets, change whether
-the mod is enabled at all, and switch up the appearance of your pets with **skins** and **names**.
+PetsMod comes with its own configuration screen **and** custom commands to easily toggle between com.jeff.pets, change whether
+the mod is enabled at all, and switch up the appearance of your com.jeff.pets with **skins** and **names**.
 
 ## Features
 
@@ -18,13 +18,13 @@ the mod is enabled at all, and switch up the appearance of your pets with **skin
 
 ## Customization
 
-Make your pets your own with **skins** and **names**! You can access these in two ways: by using our configuration menu
+Make your com.jeff.pets your own with **skins** and **names**! You can access these in two ways: by using our configuration menu
 or using `/petskin` and `/petname`. Both of these will switch up your pet's appearance in real time and make it yours!
 
 There is no need to do this multiple times - all of this information is stored in a config file locatated in
 `.minecraft/config` and will be read every time you enter a new world.
 
-To switch between pets, simply run `/petspecies <pet>`.
+To switch between com.jeff.pets, simply run `/petspecies <pet>`.
 
 ![Our easily configurable configuration menu.](https://cdn.modrinth.com/data/cached_images/73aeb6d8ba89fe52d1ac49eec1dbc7c3dd3d579e_0.webp)
 

@@ -1,26 +1,28 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.mob.vanilla.passive;
 
-import com.jeff.pets.mob.FlyingPet;
 import net.minecraft.world.World;
+import com.jeff.pets.mob.FlyingPet;
 
 public class ClientTropicalFish extends FlyingPet {
-   public ClientTropicalFish(World world) {
-      super(world);
-        this.setSize(0.5f, 0.4f);
-   }
+    public ClientTropicalFish(World world) {
+        super(world);
+        this.setBoundingBoxSpacing(0.5F, 0.4F);
+    }
 
-   @Override
-   protected int stopDistance() {
-      return 2;
-   }
+    protected int stopDistance() {
+        return 2;
+    }
 
-   @Override
-   protected float heartHeight() {
-      return 1.5F;
-   }
+    protected float heartHeight() {
+        return 1.5F;
+    }
 
-   @Override
-   protected String getAmbientSound() {
-      return "";
-   }
+    protected String getRandomSound() {
+        return "";
+    }
 }

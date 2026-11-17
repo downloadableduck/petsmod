@@ -1,14 +1,18 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client.rendering.vanilla.cat;
 
-import com.jeff.pets.compat.GlStateManager;
-import com.jeff.pets.mob.vanilla.passive.ClientCat;
-import com.jeff.pets.compat.render.model.ModelPart;
-import com.jeff.pets.client.rendering.PetModel;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
+import com.jeff.pets.client.rendering.PetModel;
+import com.jeff.pets.compat.GlStateManager;
+import com.jeff.pets.compat.render.model.ModelPart;
+import com.jeff.pets.mob.vanilla.passive.ClientCat;
 
-//if the tail isn't animating correctly, swap lowerTail and upperTail
 public class ClientCatModel extends PetModel {
     private final ModelPart backLeftLeg;
     private final ModelPart backRightLeg;
@@ -89,23 +93,23 @@ public class ClientCatModel extends PetModel {
     }
 
     public void setupAnimation(float walkAnimationProgress, float walkAnimationSpeed, float bob, float yaw, float pitch, float scale, Entity entity) {
-        this.head.rotationX = pitch * ((float)Math.PI / 180F);
-        this.head.rotationY = yaw * ((float)Math.PI / 180F);
+        this.head.rotationX = pitch * 0.017453292F;
+        this.head.rotationY = yaw * 0.017453292F;
         if (this.state != 3) {
-            this.body.rotationX = ((float)Math.PI / 2F);
+            this.body.rotationX = 1.5707964F;
             if (this.state == 2) {
                 this.backLeftLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F) * walkAnimationSpeed;
                 this.backRightLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F + 0.3F) * walkAnimationSpeed;
-                this.frontLeftLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F + (float)Math.PI + 0.3F) * walkAnimationSpeed;
-                this.frontrightLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F + (float)Math.PI) * walkAnimationSpeed;
-                this.lowerTail.rotationX = 1.7278761F + ((float)Math.PI / 10F) * MathHelper.cos(walkAnimationProgress) * walkAnimationSpeed;
+                this.frontLeftLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F + 3.1415927F + 0.3F) * walkAnimationSpeed;
+                this.frontrightLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F + 3.1415927F) * walkAnimationSpeed;
+                this.lowerTail.rotationX = 1.7278761F + 0.31415927F * MathHelper.cos(walkAnimationProgress) * walkAnimationSpeed;
             } else {
                 this.backLeftLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F) * walkAnimationSpeed;
-                this.backRightLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F + (float)Math.PI) * walkAnimationSpeed;
-                this.frontLeftLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F + (float)Math.PI) * walkAnimationSpeed;
+                this.backRightLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F + 3.1415927F) * walkAnimationSpeed;
+                this.frontLeftLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F + 3.1415927F) * walkAnimationSpeed;
                 this.frontrightLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F) * walkAnimationSpeed;
                 if (this.state == 1) {
-                    this.lowerTail.rotationX = 1.7278761F + ((float)Math.PI / 4F) * MathHelper.cos(walkAnimationProgress) * walkAnimationSpeed;
+                    this.lowerTail.rotationX = 1.7278761F + 0.7853982F * MathHelper.cos(walkAnimationProgress) * walkAnimationSpeed;
                 } else {
                     this.lowerTail.rotationX = 1.7278761F + 0.47123894F * MathHelper.cos(walkAnimationProgress) * walkAnimationSpeed;
                 }
@@ -114,8 +118,8 @@ public class ClientCatModel extends PetModel {
 
     }
 
-    public void prepare(MobEntity mob, float walkAnimationProgress, float walkAnimationSpeed, float tickDelta) {
-        ClientCat ocelotEntity = (ClientCat) mob;
+    public void animateModel(LivingEntity mob, float walkAnimationProgress, float walkAnimationSpeed, float tickDelta) {
+        ClientCat ocelotEntity = (ClientCat)mob;
         this.body.y = 12.0F;
         this.body.z = -10.0F;
         this.head.y = 15.0F;
@@ -133,28 +137,22 @@ public class ClientCatModel extends PetModel {
         this.backRightLeg.y = 18.0F;
         this.backRightLeg.z = 5.0F;
         this.upperTail.rotationX = 0.9F;
+        ModelPart var9;
         if (ocelotEntity.isSneaking()) {
             ++this.body.y;
-            ModelPart var10000 = this.head;
-            var10000.y += 2.0F;
+            var9 = this.head;
+            var9.y += 2.0F;
             ++this.upperTail.y;
-            var10000 = this.lowerTail;
-            var10000.y += -4.0F;
-            var10000 = this.lowerTail;
-            var10000.z += 2.0F;
-            this.upperTail.rotationX = ((float)Math.PI / 2F);
-            this.lowerTail.rotationX = ((float)Math.PI / 2F);
+            var9 = this.lowerTail;
+            var9.y += -4.0F;
+            var9 = this.lowerTail;
+            var9.z += 2.0F;
+            this.upperTail.rotationX = 1.5707964F;
+            this.lowerTail.rotationX = 1.5707964F;
             this.state = 0;
-        } else if (false /* b1.7.3: isSprinting unavailable */) {
-            this.lowerTail.y = this.upperTail.y;
-            ModelPart var8 = this.lowerTail;
-            var8.z += 2.0F;
-            this.upperTail.rotationX = ((float)Math.PI / 2F);
-            this.lowerTail.rotationX = ((float)Math.PI / 2F);
-            this.state = 2;
         } else if (ocelotEntity.isSitting()) {
-            this.body.rotationX = ((float)Math.PI / 4F);
-            ModelPart var9 = this.body;
+            this.body.rotationX = 0.7853982F;
+            var9 = this.body;
             var9.y += -4.0F;
             var9 = this.body;
             var9.z += 5.0F;
@@ -177,10 +175,10 @@ public class ClientCatModel extends PetModel {
             this.frontrightLeg.rotationX = -0.15707964F;
             this.frontrightLeg.y = 15.8F;
             this.frontrightLeg.z = -7.0F;
-            this.backLeftLeg.rotationX = (-(float)Math.PI / 2F);
+            this.backLeftLeg.rotationX = -1.5707964F;
             this.backLeftLeg.y = 21.0F;
             this.backLeftLeg.z = 1.0F;
-            this.backRightLeg.rotationX = (-(float)Math.PI / 2F);
+            this.backRightLeg.rotationX = -1.5707964F;
             this.backRightLeg.y = 21.0F;
             this.backRightLeg.z = 1.0F;
             this.state = 3;

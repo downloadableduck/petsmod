@@ -1,21 +1,7 @@
-/*
- * This file is part of Cloth Config.
- * Copyright (C) 2020 - 2021 shedaniel
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
 
 package me.shedaniel.autoconfig.gui;
 
@@ -29,134 +15,121 @@ import me.shedaniel.clothconfig2.api.ConfigCategory;
 import net.minecraft.client.gui.screen.Screen;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
-
-import static java.util.stream.Collectors.*;
-
+import java.util.stream.Collectors;
 
 public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Screen> {
-
-    private static final String TRANSPARENT_BACKGROUND = (Config.Gui.Background.TRANSPARENT);
-
+    private static final String TRANSPARENT_BACKGROUND = "cloth-config2:transparent";
     private final ConfigManager<T> manager;
     private final GuiRegistryAccess registry;
     private final Screen parent;
-    private Function<ConfigManager<T>, String> i18nFunction = manager -> String.format("text.autoconfig.%s", manager.getDefinition().name());
+    private Function<ConfigManager<T>, String> i18nFunction = (managerx) -> {
+        return String.format("text.autoconfig.%s", managerx.getDefinition().name());
+    };
     private Function<ConfigBuilder, Screen> buildFunction = ConfigBuilder::build;
-    private BiFunction<String, Field, String> optionFunction = (baseI13n, field) -> String.format("%s.option.%s", baseI13n, field.getName());
-    private BiFunction<String, String, String> categoryFunction = (baseI13n, categoryName) -> String.format("%s.category.%s", baseI13n, categoryName);
+    private BiFunction<String, Field, String> optionFunction = (baseI13n, field) -> {
+        return String.format("%s.option.%s", baseI13n, field.getName());
+    };
+    private BiFunction<String, String, String> categoryFunction = (baseI13n, categoryName) -> {
+        return String.format("%s.category.%s", baseI13n, categoryName);
+    };
 
-    public ConfigScreenProvider(
-            ConfigManager<T> manager,
-            GuiRegistryAccess registry,
-            Screen parent
-    ) {
+    public ConfigScreenProvider(ConfigManager<T> manager, GuiRegistryAccess registry, Screen parent) {
         this.manager = manager;
         this.registry = registry;
         this.parent = parent;
     }
 
+    /** @deprecated */
     @Deprecated
     public void setI13nFunction(Function<ConfigManager<T>, String> i18nFunction) {
         this.i18nFunction = i18nFunction;
     }
 
+    /** @deprecated */
     @Deprecated
     public void setBuildFunction(Function<ConfigBuilder, Screen> buildFunction) {
         this.buildFunction = buildFunction;
     }
 
+    /** @deprecated */
     @Deprecated
     public void setCategoryFunction(BiFunction<String, String, String> categoryFunction) {
         this.categoryFunction = categoryFunction;
     }
 
+    /** @deprecated */
     @Deprecated
     public void setOptionFunction(BiFunction<String, Field, String> optionFunction) {
         this.optionFunction = optionFunction;
     }
 
-    @Override
     public Screen get() {
-        T config = manager.getConfig();
-        T defaults = manager.getSerializer().createDefault();
-
-        String i18n = i18nFunction.apply(manager);
-
-        ConfigBuilder builder = ConfigBuilder.create().setParentScreen(parent).setTitle(String.format("%s.title", i18n)).setSavingRunnable(manager::save);
-
-        Class<T> configClass = manager.getConfigClass();
-
+        T config = this.manager.getConfig();
+        T defaults = this.manager.getSerializer().createDefault();
+        String i18n = (String)this.i18nFunction.apply(this.manager);
+        ConfigBuilder var10000 = ConfigBuilder.create().setParentScreen(this.parent).setTitle(String.format("%s.title", i18n));
+        ConfigManager var10001 = this.manager;
+        Objects.requireNonNull(var10001);
+        ConfigBuilder builder = var10000.setSavingRunnable(var10001::save);
+        Class<T> configClass = this.manager.getConfigClass();
         if (configClass.isAnnotationPresent(Config.Gui.Background.class)) {
-            String bg = configClass.getAnnotation(Config.Gui.Background.class).value();
+            String bg = ((Config.Gui.Background)configClass.getAnnotation(Config.Gui.Background.class)).value();
             String bgId = null;
+
             try {
-                bgId = (bg);
-            } catch (Exception e) {
+                bgId = bg;
+            } catch (Exception var9) {
+                Exception e = var9;
                 e.printStackTrace();
             }
-            if (TRANSPARENT_BACKGROUND.equals(bgId))
+
+            if ("cloth-config2:transparent".equals(bgId)) {
                 builder.transparentBackground();
-            else
+            } else {
                 builder.setDefaultBackgroundTexture(bgId);
+            }
         }
 
-        Map<String, String> categoryBackgrounds =
-                Arrays.stream(configClass.getAnnotationsByType(Config.Gui.CategoryBackground.class))
-                        .collect(
-                                toMap(
-                                        Config.Gui.CategoryBackground::category,
-                                        ann -> (ann.background())
-                                )
-                        );
-
-        Arrays.stream(configClass.getDeclaredFields())
-                .collect(
-                        groupingBy(
-                                field -> getOrCreateCategoryForField(field, builder, categoryBackgrounds, i18n),
-                                LinkedHashMap::new,
-                                toList()
-                        )
-                )
-                .forEach(
-                        (key, value) -> value.forEach(
-                                field -> {
-                                    String optionI13n = optionFunction.apply(i18n, field);
-                                    registry.getAndTransform(optionI13n, field, config, defaults, registry)
-                                            .forEach(key::addEntry);
-                                }
-                        )
-                );
-
-        return buildFunction.apply(builder);
+        Map<String, String> categoryBackgrounds = (Map)Arrays.stream((Config.Gui.CategoryBackground[])configClass.getAnnotationsByType(Config.Gui.CategoryBackground.class)).collect(Collectors.toMap(Config.Gui.CategoryBackground::category, (ann) -> {
+            return ann.background();
+        }));
+        Map<ConfigCategory, List<Field>> grouped = Arrays.stream(configClass.getDeclaredFields()).collect(Collectors.groupingBy((field) -> {
+            return this.getOrCreateCategoryForField(field, builder, categoryBackgrounds, i18n);
+        }, LinkedHashMap::new, Collectors.toList()));
+        grouped.forEach((key, value) -> {
+            for (Field field : value) {
+                String optionI13n = (String)this.optionFunction.apply(i18n, field);
+                List entries = this.registry.getAndTransform(optionI13n, field, config, defaults, this.registry);
+                if (entries != null) {
+                    for (Object e : entries) {
+                        key.addEntry((me.shedaniel.clothconfig2.api.AbstractConfigListEntry)e);
+                    }
+                }
+            }
+        });
+        return (Screen)this.buildFunction.apply(builder);
     }
 
-    private ConfigCategory getOrCreateCategoryForField(
-            Field field,
-            ConfigBuilder screenBuilder,
-            Map<String, String> backgroundMap,
-            String baseI13n
-    ) {
+    private ConfigCategory getOrCreateCategoryForField(Field field, ConfigBuilder screenBuilder, Map<String, String> backgroundMap, String baseI13n) {
         String categoryName = "default";
+        if (field.isAnnotationPresent(ConfigEntry.Category.class)) {
+            categoryName = ((ConfigEntry.Category)field.getAnnotation(ConfigEntry.Category.class)).value();
+        }
 
-        if (field.isAnnotationPresent(ConfigEntry.Category.class))
-            categoryName = field.getAnnotation(ConfigEntry.Category.class).value();
-
-        String categoryKey = categoryFunction.apply(baseI13n, categoryName);
-
+        String categoryKey = (String)this.categoryFunction.apply(baseI13n, categoryName);
         if (!screenBuilder.hasCategory(categoryKey)) {
             ConfigCategory category = screenBuilder.getOrCreateCategory(categoryKey);
             if (backgroundMap.containsKey(categoryName)) {
-                category.setCategoryBackground(backgroundMap.get(categoryName));
+                category.setCategoryBackground((String)backgroundMap.get(categoryName));
             }
-            return category;
-        }
 
-        return screenBuilder.getOrCreateCategory(categoryKey);
+            return category;
+        } else {
+            return screenBuilder.getOrCreateCategory(categoryKey);
+        }
     }
 }

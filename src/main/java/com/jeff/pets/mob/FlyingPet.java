@@ -1,44 +1,32 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.mob;
 
-import com.jeff.pets.client.Utils;
-import com.jeff.pets.mob.custom.first.Duck;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import com.jeff.pets.client.Utils;
+import com.jeff.pets.mob.custom.first.Duck;
 
 import java.util.Objects;
 
-/**
- * Abstract class representing any pet tht can fly (ghasts, vexes, etc). Contains custom movement
- * logic that allow the pets to move on the client side.
- *
- * @see AbstractPet
- * @see GroundPet
- */
 public abstract class FlyingPet extends AbstractPet {
-
     protected FlyingPet(World level) {
         super(level);
     }
 
-    /**
-     * Custom ticking logic.
-     *
-     * @see GroundPet#tick()
-     */
-    @Override
     public void tick() {
         super.tick();
-        MobEntity owner = this.getOwner();
+        LivingEntity owner = this.getOwner();
         if (owner != null) {
-
-            this.yaw = this.getOwner().yaw + 180;
-
+            this.yaw = this.getOwner().yaw + 180.0F;
             if (this.vehicle == owner) {
                 if (owner.isSneaking() && owner.jumping) {
                     this.dismountFromVehicle();
-                    this.lerpVelocity(this.getVelocity().add(0, 0.1, 0));
+                    this.lerpVelocity(this.getVelocity().add(0.0, 0.1, 0.0));
                 } else {
                     this.setSitting(true);
                 }
@@ -46,78 +34,61 @@ public abstract class FlyingPet extends AbstractPet {
 
             double dx = owner.x - this.x;
             double dz = owner.z - this.z;
-            Vec3d ownerPos = Vec3d.of(owner.x, owner.y, owner.z).add(0, owner.getEyeHeight() * 0.8, 0);
-            Vec3d vecToOwner = ownerPos.subtractFrom(this.getPosition(1.0f));
-            double targetYaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90f;
-
-            double distance = this.distanceTo(owner);
+            Vec3d ownerPos = Vec3d.create(owner.x, owner.y, owner.z).add(0.0, (double)owner.getEyeHeight() * 0.8, 0.0);
+            Vec3d vecToOwner = ownerPos.relativize(this.getPosition(1.0F));
+            double targetYaw = Math.atan2(dz, dx) * 57.29577951308232 - 90.0;
+            double distance = (double)this.getDistance(owner);
             float rotation = -this.pitch;
-            float rotationToOwner = rotation + (-this.getOwner().pitch);
-            float bodyYawDiff = Utils.wrapDegrees(this.yaw - this.bodyYaw /*bodyYaw*/);
-
-            if (rotationToOwner >= 50) {
-                this.bodyYaw /*bodyYaw*/ = this.yaw - (Math.signum(bodyYawDiff) * 50.0F);
+            float rotationToOwner = rotation + -this.getOwner().pitch;
+            float bodyYawDiff = Utils.wrapDegrees(this.yaw - this.bodyYaw);
+            if (rotationToOwner >= 50.0F) {
+                this.bodyYaw = this.yaw - Math.signum(bodyYawDiff) * 50.0F;
             }
 
-            if (distance > this.stopDistance()) {
-
+            if (distance > (double)this.stopDistance()) {
                 this.walkAnimationSpeed = 0.5F;
-
                 Vec3d dir = vecToOwner.normalize();
                 double speed = 0.2;
                 System.out.println(speed);
-                
-                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + Math.max(-50.0F, Math.min(50.0F, this.yaw - this.bodyYaw /*bodyYaw*/)); //m_82141949
-
-                this.lerpVelocity(Vec3d.of(-dir.x * speed, dir.y * speed, -dir.z * speed));
+                this.bodyYaw += Math.max(-50.0F, Math.min(50.0F, this.yaw - this.bodyYaw));
+                this.lerpVelocity(Vec3d.create(-dir.x * speed, dir.y * speed, -dir.z * speed));
             } else {
-                this.lerpVelocity(Vec3d.of(this.getVelocity().x * 0.8, this.getVelocity().y * 0.8, this.getVelocity().z * 0.8));
+                this.lerpVelocity(Vec3d.create(this.getVelocity().x * 0.8, this.getVelocity().y * 0.8, this.getVelocity().z * 0.8));
             }
 
-            int yHeightToOwner = (int) (owner.y - this.y);
-
-            if (yHeightToOwner > 1 || this.collidingHorizontally) {
+            int yHeightToOwner = (int)(owner.y - this.y);
+            if (yHeightToOwner > 1 || this.horizontalCollision) {
                 this.jump();
             }
 
             if (!this.onGround) {
-                //this.processFlappingMovement();
             }
 
-            if (Utils.squaredDistanceToOrigin(Vec3d.of(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
-                this.waitingTime++;
-                if (this.waitingTime > 30) this.wander();
+            if (Utils.squaredDistanceToOrigin(Vec3d.create(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
+                ++this.waitingTime;
+                if (this.waitingTime > 30) {
+                    this.wander();
+                }
             } else {
                 this.waitingTime = 0;
             }
 
-
-            this.setYRot(Duck.rotlerp(this.getYRot(), (float) targetYaw));
-
-
-            if (Math.abs(bodyYawDiff) > 50) {
-                this.bodyYaw /*bodyYaw*/ = this.yaw - (Math.signum(bodyYawDiff) * 50);
+            this.setYRot(Duck.rotlerp(this.getYRot(), (float)targetYaw));
+            if (Math.abs(bodyYawDiff) > 50.0F) {
+                this.bodyYaw = this.yaw - Math.signum(bodyYawDiff) * 50.0F;
             } else {
-                this.bodyYaw /*bodyYaw*/ = this.bodyYaw /*bodyYaw*/ + Math.max(-10.0F, Math.min(10.0F, this.yaw - this.bodyYaw /*bodyYaw*/));
-            }
-
-            // No manual move() here: LivingEntity.mobTick() already calls moveRelative() ->
-            // move(this.velocityX, ...) on the client, so calling move() again moved the pet
-            // twice per tick and doubled its apparent speed.
-
-            //if (!this.onGround) {
-            //  this.setDeltaMovement(this.getDeltaMovement().add(0, -0.04, 0));
-            //}
-        }
-        if (owner != null) {
-            if (distanceTo(owner) >= 10) {
-                this.setPosition(owner.x, owner.y, owner.z);
+                this.bodyYaw += Math.max(-10.0F, Math.min(10.0F, this.yaw - this.bodyYaw));
             }
         }
 
-        int ambient = (int) (Math.random() * (60 * 20));
+        if (owner != null && this.getDistance(owner) >= 10.0F) {
+            this.setPosition(owner.x, owner.y, owner.z);
+        }
+
+        int ambient = (int)(Math.random() * 1200.0);
         if (ambient == 1) {
-            world.playSound(this.x, this.y, this.z, Objects.requireNonNull(this.getAmbientSound()), 1.0f, 1.0f);
+            this.world.playSound(this.x, this.y, this.z, (String)Objects.requireNonNull(this.getRandomSound()), 1.0F, 1.0F);
         }
+
     }
 }

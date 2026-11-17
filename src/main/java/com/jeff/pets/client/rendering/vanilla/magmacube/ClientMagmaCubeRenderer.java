@@ -1,23 +1,30 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client.rendering.vanilla.magmacube;
 
-import com.jeff.pets.client.rendering.PetRenderer;
-import com.jeff.pets.mob.vanilla.hostile.ClientMagmaCube;
-import net.minecraft.client.render.model.entity.SlimeModel;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.client.render.entity.model.SlimeEntityModel;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
-
-import static com.jeff.pets.client.Central.CONFIG;
+import com.jeff.pets.client.Central;
+import com.jeff.pets.client.PetsClientInitializer;
+import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.compat.GlStateManager;
+import com.jeff.pets.mob.vanilla.hostile.ClientMagmaCube;
 
 public class ClientMagmaCubeRenderer extends PetRenderer<ClientMagmaCube> {
-
-    public ClientMagmaCubeRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new SlimeModel(0), 0.75f);
+    public ClientMagmaCubeRenderer(EntityRenderDispatcher context, PetsClientInitializer.Context context2) {
+        super(context, new SlimeEntityModel(0), 0.75F);
     }
 
-    @Override
-    protected void applyScale(net.minecraft.entity.mob.MobEntity entity, float a) {
-        ClientMagmaCube slimeRenderState = (ClientMagmaCube) entity;
-        int magmaCubeapplyScale;
-        switch (CONFIG.magmaCubeSkin) {
+    protected void applyScale(LivingEntity entity, float a) {
+        ClientMagmaCube slimeRenderState = (ClientMagmaCube)entity;
+        byte magmaCubeapplyScale;
+        switch (Central.CONFIG.magmaCubeSkin) {
             case "small":
                 magmaCubeapplyScale = 1;
                 break;
@@ -29,14 +36,13 @@ public class ClientMagmaCubeRenderer extends PetRenderer<ClientMagmaCube> {
                 break;
             default:
                 magmaCubeapplyScale = 1;
-                break;
         }
-        com.jeff.pets.compat.GlStateManager.scalef(magmaCubeapplyScale, magmaCubeapplyScale, magmaCubeapplyScale);
+
+        GlStateManager.scalef((float)magmaCubeapplyScale, (float)magmaCubeapplyScale, (float)magmaCubeapplyScale);
     }
 
-    @Override
-    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
-        ClientMagmaCube livingEntityRenderState = (ClientMagmaCube) entity;
-        return ("textures/mob/slime/magmacube.png");
+    public @NotNull String getTexture(Entity entity) {
+        ClientMagmaCube livingEntityRenderState = (ClientMagmaCube)entity;
+        return "textures/mob/slime/magmacube.png";
     }
 }

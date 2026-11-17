@@ -1,26 +1,32 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client.rendering.vanilla.cow;
 
-import com.jeff.pets.client.rendering.PetRenderer;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
-
-import static com.jeff.pets.client.Central.CONFIG;
+import com.jeff.pets.client.Central;
+import com.jeff.pets.client.PetsClientInitializer;
+import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.compat.GlStateManager;
 
 public class ClientCowRenderer extends PetRenderer {
-
-    public ClientCowRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+    public ClientCowRenderer(EntityRenderDispatcher context, PetsClientInitializer.Context context2) {
         super(context, new ClientCowModel(), 0.7F);
     }
 
     public @NotNull String getTexture(Entity LivingEntityRenderState) {
-        return ("textures/mob/cow/cow.png");
+        return "textures/mob/cow/cow.png";
     }
 
-    @Override
-    protected void applyScale(MobEntity state, float f) {
-        if (CONFIG.isBaby) {
-            com.jeff.pets.compat.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+    protected void applyScale(LivingEntity state, float f) {
+        if (Central.CONFIG.isBaby) {
+            GlStateManager.scalef(0.5F, 0.5F, 0.5F);
         }
+
     }
 }

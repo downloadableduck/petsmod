@@ -1,26 +1,28 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.mob.vanilla.hostile;
 
+import net.minecraft.world.World;
 import com.jeff.pets.mob.FlyingPet;
 
-
 public class ClientElderGuardian extends FlyingPet {
-    public ClientElderGuardian(net.minecraft.world.World level) {
+    public ClientElderGuardian(World level) {
         super(level);
-        this.setSize(1.9975f, 1.9975f);
+        this.setBoundingBoxSpacing(1.9975F, 1.9975F);
     }
 
-    @Override
     protected int stopDistance() {
         return 4;
     }
 
-    @Override
     protected float heartHeight() {
-        return 4;
+        return 4.0F;
     }
 
-    @Override
-    protected String getAmbientSound() {
+    protected String getRandomSound() {
         return "mob.guardian.elder.idle";
     }
 }

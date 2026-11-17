@@ -9,9 +9,9 @@ Please open an issue on [PetsMod's GitHub](https://github.com/downloadableduck/p
 
 # Creating an Add-On for PetsMod
 
-PetsMod is a Minecraft mod developed by downloadableduck and the pets team. This mod brings custom, client-sided pets
+PetsMod is a Minecraft mod developed by downloadableduck and the com.jeff.pets team. This mod brings custom, client-sided com.jeff.pets
 into your game that will follow you around and interact with you. As of 0.7.4, PetsMod supports user-made addons, which
-allow new custom pets to exist.
+allow new custom com.jeff.pets to exist.
 
 "Add-Ons" refers to a _coded_ project. For creating PetsMod resourcepacks, please see the section on custom
 resourcepacks.
@@ -22,7 +22,7 @@ Your project will need to have PetsMod and all of it's dependencies installed. A
 
 ```groovy
 repositories {
-    maven { url "https://maven.shedaniel.me/" }
+    maven { url "https://maven.me.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/" }
     maven { url "https://maven.isxander.dev/releases" }
     maven { url "https://api.modrinth.com/maven"}
@@ -31,13 +31,13 @@ repositories {
 
 ```groovy
 dependencies {
-    implementation "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}"
+    implementation "me.me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}"
     implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
     implementation("com.terraformersmc:modmenu:${project.modmenu_version}")
     implementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
-    implementation "maven.modrinth:pets-mod:${project.petsmod_version}"
+    implementation "maven.modrinth:com.jeff.pets-mod:${project.petsmod_version}"
     //add the sources jar as well
-    implementation "maven.modrinth:pets-mod:${project.petsmod_version}:sources"
+    implementation "maven.modrinth:com.jeff.pets-mod:${project.petsmod_version}:sources"
 }
 ```
 
@@ -70,7 +70,7 @@ Additionally, make sure to depend on PetsMod `0.7.4` or greater in your `fabric.
 
 ```JSON
 "depends": {
-    "pets-mod": ">=0.7.4"
+    "com.jeff.pets-mod": ">=0.7.4"
 }
 ```
 
@@ -88,11 +88,11 @@ that pet's skin is changed.
 
 Please note that the config is stored in the `client` package, and is thus inaccessible from the `main` package.
 
-The pets inside of PetsMod require custom movement and packet logic in order to function even when on a server. All of
+The com.jeff.pets inside of PetsMod require custom movement and packet logic in order to function even when on a server. All of
 these methods are found in the main pet files: AbstractPet, FlyingPet, and GroundPet. Namely, the `tick()` and
 `getAddEntityPacket()` methods.
 
-Finally, a lot of helper methods for summoning, despawning, and managing pets are available in `Utils.class`. Make sure
+Finally, a lot of helper methods for summoning, despawning, and managing com.jeff.pets are available in `Utils.class`. Make sure
 to check it out for a better understanding of how everything works.
 
 Without further ado, let's get started!
@@ -347,7 +347,7 @@ need a custom helper method to help us summon our mob. Add this to your code:
 - Despawns the currently active pet
 - Re-summons the newly active pet
 
-This method is **reusable**. You can use it multiple times for each of your custom pets - just switch up the `mob`
+This method is **reusable**. You can use it multiple times for each of your custom com.jeff.pets - just switch up the `mob`
 and `activePet` parameters.
 
 After this, we can start injecting. Let's start with, as previously stated, the /petspecies command.
@@ -566,7 +566,7 @@ Finally, we have two last injections to ensure that the naming works correctly.
 ```java
 @Mixin(PetsConfigScreen.class)
 public class ConfigScreenMixin {
-    /**When the user opens the menu, they should see their currently selected pets name. 
+    /**When the user opens the menu, they should see their currently selected com.jeff.pets name. 
      * This ensures that if our custom mob is active, they will see our custom entities 
      * name.*/
     @Inject(at = @At("HEAD"), method = "lambda$getModConfigScreenFactory$6", cancellable = true)

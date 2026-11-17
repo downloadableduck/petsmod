@@ -1,53 +1,57 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package me.shedaniel.clothconfig2.api;
 
 import me.shedaniel.clothconfig2.compat.InputConstants;
+import me.shedaniel.clothconfig2.compat.InputConstants.Type;
 import me.shedaniel.clothconfig2.compat.MouseInput;
 import me.shedaniel.clothconfig2.impl.ModifierKeyCodeImpl;
 
-
-
 public interface ModifierKeyCode {
     static ModifierKeyCode of(InputConstants.Key keyCode, Modifier modifier) {
-        return new ModifierKeyCodeImpl().setKeyCodeAndModifier(keyCode, modifier);
+        return (new ModifierKeyCodeImpl()).setKeyCodeAndModifier(keyCode, modifier);
     }
-    
+
     static ModifierKeyCode copyOf(ModifierKeyCode code) {
         return of(code.getKeyCode(), code.getModifier());
     }
-    
+
     static ModifierKeyCode unknown() {
         return of(InputConstants.UNKNOWN, Modifier.none());
     }
-    
+
     InputConstants.Key getKeyCode();
-    
-    ModifierKeyCode setKeyCode(InputConstants.Key keyCode);
-    
-    default InputConstants.Type getType() {
-        return getKeyCode().getType();
+
+    ModifierKeyCode setKeyCode(InputConstants.Key var1);
+
+    default Type getType() {
+        return this.getKeyCode().getType();
     }
-    
+
     Modifier getModifier();
-    
-    ModifierKeyCode setModifier(Modifier modifier);
-    
+
+    ModifierKeyCode setModifier(Modifier var1);
+
     default boolean matchesMouse(int button) {
-        return !isUnknown() && getType() == InputConstants.Type.MOUSE && getKeyCode().getValue() == button && getModifier().matchesCurrent();
+        return !this.isUnknown() && this.getType() == Type.MOUSE && this.getKeyCode().getValue() == button && this.getModifier().matchesCurrent();
     }
-    
+
     default boolean matchesKey(int keyCode, int scanCode) {
-        if (isUnknown())
+        if (this.isUnknown()) {
             return false;
-        if (keyCode == InputConstants.UNKNOWN.getValue()) {
-            return getType() == InputConstants.Type.SCANCODE && getKeyCode().getValue() == scanCode && getModifier().matchesCurrent();
+        } else if (keyCode == InputConstants.UNKNOWN.getValue()) {
+            return this.getType() == Type.SCANCODE && this.getKeyCode().getValue() == scanCode && this.getModifier().matchesCurrent();
         } else {
-            return getType() == InputConstants.Type.KEYSYM && getKeyCode().getValue() == keyCode && getModifier().matchesCurrent();
+            return this.getType() == Type.KEYSYM && this.getKeyCode().getValue() == keyCode && this.getModifier().matchesCurrent();
         }
     }
-    
+
     default boolean matchesCurrentMouse() {
-        if (!isUnknown() && getType() == InputConstants.Type.MOUSE && getModifier().matchesCurrent()) {
-            switch (getKeyCode().getValue()) {
+        if (!this.isUnknown() && this.getType() == Type.MOUSE && this.getModifier().matchesCurrent()) {
+            switch (this.getKeyCode().getValue()) {
                 case 0:
                     return MouseInput.isLeftPressed();
                 case 1:
@@ -56,30 +60,31 @@ public interface ModifierKeyCode {
                     return MouseInput.isMiddlePressed();
             }
         }
+
         return false;
     }
-    
+
     default boolean matchesCurrentKey() {
-        return !isUnknown() && getType() == InputConstants.Type.KEYSYM && getModifier().matchesCurrent() && InputConstants.getKey(getKeyCode().getValue());
+        return !this.isUnknown() && this.getType() == Type.KEYSYM && this.getModifier().matchesCurrent() && InputConstants.getKey(this.getKeyCode().getValue());
     }
-    
+
     default ModifierKeyCode setKeyCodeAndModifier(InputConstants.Key keyCode, Modifier modifier) {
-        setKeyCode(keyCode);
-        setModifier(modifier);
+        this.setKeyCode(keyCode);
+        this.setModifier(modifier);
         return this;
     }
-    
+
     default ModifierKeyCode clearModifier() {
-        return setModifier(Modifier.none());
+        return this.setModifier(Modifier.none());
     }
-    
+
     String toString();
-    
+
     default String getLocalizedName() {
-        return toString();
+        return this.toString();
     }
-    
+
     default boolean isUnknown() {
-        return getKeyCode().equals(InputConstants.UNKNOWN);
+        return this.getKeyCode().equals(InputConstants.UNKNOWN);
     }
 }

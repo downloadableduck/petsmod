@@ -1,28 +1,35 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client.rendering.vanilla.chicken;
 
-import com.jeff.pets.client.rendering.PetRenderer;
-import com.jeff.pets.mob.vanilla.passive.ClientChicken;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
-
-import static com.jeff.pets.client.Central.CONFIG;
+import com.jeff.pets.client.Central;
+import com.jeff.pets.client.PetsClientInitializer;
+import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.compat.GlStateManager;
+import com.jeff.pets.mob.vanilla.passive.ClientChicken;
 
 public class ClientChickenRenderer extends PetRenderer<ClientChicken> {
-
-    public ClientChickenRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
+    public ClientChickenRenderer(EntityRenderDispatcher context, PetsClientInitializer.Context context2) {
         super(context, new ClientChickenModel(), 0.3F);
     }
 
-    @Override
-    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
-        ClientChicken livingEntityRenderState = (ClientChicken) entity;
-        return ("textures/mob/chicken.png");
+    public @NotNull String getTexture(Entity entity) {
+        ClientChicken livingEntityRenderState = (ClientChicken)entity;
+        return "textures/mob/chicken.png";
     }
 
-    @Override
-    protected void applyScale(net.minecraft.entity.mob.MobEntity entity, float f) {
-        ClientChicken state = (ClientChicken) entity;
-        if (CONFIG.isBaby) {
-            com.jeff.pets.compat.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+    protected void applyScale(LivingEntity entity, float f) {
+        ClientChicken state = (ClientChicken)entity;
+        if (Central.CONFIG.isBaby) {
+            GlStateManager.scalef(0.5F, 0.5F, 0.5F);
         }
+
     }
 }

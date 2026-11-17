@@ -1,11 +1,10 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.sound;
 
-/**
- * 1.8.9 backport shim: 1.9.4+ SoundEvents constants replaced with the plain event-name
- * strings expected by Minecraft 1.8.9's SoundManager. Keys that do not exist in 1.8.9
- * (squid, witch, snow golem, endermite, shulker, bogged) resolve to an empty string so
- * {@code playSound} simply plays nothing.
- */
 public final class SoundEvents {
     public static final String BOGGED_AMBIENT = "";
     public static final String ENTITY_BAT_AMBIENT = "mob.bat.idle";

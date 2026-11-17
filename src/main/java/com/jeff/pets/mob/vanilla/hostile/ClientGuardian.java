@@ -1,26 +1,28 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.mob.vanilla.hostile;
 
+import net.minecraft.world.World;
 import com.jeff.pets.mob.GroundPet;
 
-
 public class ClientGuardian extends GroundPet {
-    public ClientGuardian(net.minecraft.world.World level) {
+    public ClientGuardian(World level) {
         super(level);
-        this.setSize(0.85f, 0.85f);
+        this.setBoundingBoxSpacing(0.85F, 0.85F);
     }
 
-    @Override
     protected int stopDistance() {
         return 2;
     }
 
-    @Override
     protected float heartHeight() {
-        return 2;
+        return 2.0F;
     }
 
-    @Override
-    protected String getAmbientSound() {
+    protected String getRandomSound() {
         return "mob.guardian.ambient";
     }
 }

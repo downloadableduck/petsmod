@@ -1,5 +1,9 @@
-package com.jeff.pets.client.enums;
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
 
+package com.jeff.pets.client.enums;
 
 public enum SheepSkins implements NameableEnum {
     black,
@@ -19,8 +23,9 @@ public enum SheepSkins implements NameableEnum {
     white,
     yellow;
 
+    private SheepSkins() {
+    }
 
-    @Override
     public String getDisplayName() {
         return new String(String.valueOf(this).replace("_", " "));
     }

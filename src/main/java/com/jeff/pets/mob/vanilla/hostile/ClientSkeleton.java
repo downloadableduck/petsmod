@@ -1,28 +1,29 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.mob.vanilla.hostile;
 
+import net.minecraft.world.World;
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.entity.mob.MobEntity;
 
 public class ClientSkeleton extends GroundPet {
-
-    public ClientSkeleton(net.minecraft.world.World level) {
+    public ClientSkeleton(World level) {
         super(level);
-        this.setSize(0.6f, 1.95f);
+        this.setBoundingBoxSpacing(0.6F, 1.95F);
         this.texture = "/mob/skeleton.png";
     }
 
-    @Override
     protected int stopDistance() {
         return 2;
     }
 
-    @Override
     protected float heartHeight() {
-        return 2;
+        return 2.0F;
     }
 
-    @Override
-    protected String getAmbientSound() {
+    protected String getRandomSound() {
         return "mob.skeleton.say";
     }
 }

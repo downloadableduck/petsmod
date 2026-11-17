@@ -1,21 +1,7 @@
-/*
- * This file is part of Cloth Config.
- * Copyright (C) 2020 - 2021 shedaniel
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
 
 package me.shedaniel.autoconfig.gui.registry;
 
@@ -32,122 +18,132 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-
 public final class GuiRegistry implements GuiRegistryAccess {
-
-    private final Map<Priority, List<ProviderEntry>> providers = new HashMap<>();
-    private final List<TransformerEntry> transformers = new ArrayList<>();
+    private final Map<Priority, List<ProviderEntry>> providers = new HashMap();
+    private final List<TransformerEntry> transformers = new ArrayList();
 
     public GuiRegistry() {
-        for (Priority priority : Priority.values()) {
-            providers.put(priority, new ArrayList<>());
+        Priority[] var1 = me.shedaniel.autoconfig.gui.registry.GuiRegistry.Priority.values();
+        int var2 = var1.length;
+
+        for(int var3 = 0; var3 < var2; ++var3) {
+            Priority priority = var1[var3];
+            this.providers.put(priority, new ArrayList());
         }
+
     }
 
     private static <T> Optional<T> firstPresent(Stream<Supplier<Optional<T>>> optionals) {
-        return optionals
-                .map(Supplier::get)
-                .filter(Optional::isPresent)
-                .findFirst()
-                .orElse(Optional.empty());
+        return (Optional)optionals.map(Supplier::get).filter(Optional::isPresent).findFirst().orElse(Optional.empty());
     }
 
-    @Override
-    public List<AbstractConfigListEntry> get(
-            String i18n,
-            Field field,
-            Object config,
-            Object defaults,
-            GuiRegistryAccess registry
-    ) {
-        return firstPresent(
-                Arrays.stream(Priority.values())
-                        .map(priority ->
-                                (Supplier<Optional<ProviderEntry>>) () ->
-                                        providers.get(priority).stream()
-                                                .filter(entry -> entry.predicate.test(field))
-                                                .findFirst()
-                        )
-        )
-                .map(entry -> entry.provider.get(i18n, field, config, defaults, registry))
-                .orElse(null);
+    public List<AbstractConfigListEntry> get(String i18n, Field field, Object config, Object defaults, GuiRegistryAccess registry) {
+        Optional<ProviderEntry> found = Arrays.stream(GuiRegistry.Priority.values())
+            .map(priority -> ((List<ProviderEntry>)this.providers.get(priority)).stream().filter(entry -> entry.predicate.test(field)).findFirst())
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .findFirst();
+        return found.map(entry -> entry.provider.get(i18n, field, config, defaults, registry)).orElse(null);
     }
 
-    @Override
-    public List<AbstractConfigListEntry> transform(
-            List<AbstractConfigListEntry> guis,
-            String i18n,
-            Field field,
-            Object config,
-            Object defaults,
-            GuiRegistryAccess registry
-    ) {
-        List<GuiTransformer> matchedTransformers = this.transformers.stream()
-                .filter(entry -> entry.predicate.test(field))
-                .map(entry -> entry.transformer)
-                .collect(Collectors.toList());
+    public List<AbstractConfigListEntry> transform(List<AbstractConfigListEntry> guis, String i18n, Field field, Object config, Object defaults, GuiRegistryAccess registry) {
+        List<GuiTransformer> matchedTransformers = this.transformers.stream().filter((entry) -> {
+            return entry.predicate.test(field);
+        }).map((entry) -> {
+            return entry.transformer;
+        }).collect(Collectors.toList());
 
-        for (GuiTransformer transformer : matchedTransformers) {
-            guis = transformer.transform(guis, i18n, field, config, defaults, registry);
+        GuiTransformer transformer;
+        for(Iterator var8 = matchedTransformers.iterator(); var8.hasNext(); guis = transformer.transform(guis, i18n, field, config, defaults, registry)) {
+            transformer = (GuiTransformer)var8.next();
         }
 
         return guis;
     }
 
     private void registerProvider(Priority priority, GuiProvider provider, Predicate<Field> predicate) {
-        providers.computeIfAbsent(priority, p -> new ArrayList<>()).add(new ProviderEntry(predicate, provider));
+        ((List)this.providers.computeIfAbsent(priority, (p) -> {
+            return new ArrayList();
+        })).add(new ProviderEntry(predicate, provider));
     }
 
     public void registerTypeProvider(GuiProvider provider, Class... types) {
-        for (Class type : types) {
-            registerProvider(Priority.LAST, provider, field -> type == field.getType());
+        Class[] var3 = types;
+        int var4 = types.length;
+
+        for(int var5 = 0; var5 < var4; ++var5) {
+            Class type = var3[var5];
+            this.registerProvider(me.shedaniel.autoconfig.gui.registry.GuiRegistry.Priority.LAST, provider, (field) -> {
+                return type == field.getType();
+            });
         }
+
     }
 
     public void registerPredicateProvider(GuiProvider provider, Predicate<Field> predicate) {
-        registerProvider(Priority.NORMAL, provider, predicate);
+        this.registerProvider(me.shedaniel.autoconfig.gui.registry.GuiRegistry.Priority.NORMAL, provider, predicate);
     }
 
     @SafeVarargs
     public final void registerAnnotationProvider(GuiProvider provider, Class<? extends Annotation>... types) {
-        for (Class<? extends Annotation> type : types) {
-            registerProvider(Priority.FIRST, provider, field -> field.isAnnotationPresent(type));
+        Class[] var3 = types;
+        int var4 = types.length;
+
+        for(int var5 = 0; var5 < var4; ++var5) {
+            Class<? extends Annotation> type = var3[var5];
+            this.registerProvider(me.shedaniel.autoconfig.gui.registry.GuiRegistry.Priority.FIRST, provider, (field) -> {
+                return field.isAnnotationPresent(type);
+            });
         }
+
     }
 
     @SafeVarargs
     public final void registerAnnotationProvider(GuiProvider provider, Predicate<Field> predicate, Class<? extends Annotation>... types) {
-        for (Class<? extends Annotation> type : types) {
-            registerProvider(
-                    Priority.FIRST,
-                    provider,
-                    field -> predicate.test(field) && field.isAnnotationPresent(type)
-            );
+        Class[] var4 = types;
+        int var5 = types.length;
+
+        for(int var6 = 0; var6 < var5; ++var6) {
+            Class<? extends Annotation> type = var4[var6];
+            this.registerProvider(me.shedaniel.autoconfig.gui.registry.GuiRegistry.Priority.FIRST, provider, (field) -> {
+                return predicate.test(field) && field.isAnnotationPresent(type);
+            });
         }
+
     }
 
-    @SuppressWarnings("WeakerAccess")
     public void registerPredicateTransformer(GuiTransformer transformer, Predicate<Field> predicate) {
-        transformers.add(new TransformerEntry(predicate, transformer));
+        this.transformers.add(new TransformerEntry(predicate, transformer));
     }
 
     @SafeVarargs
     public final void registerAnnotationTransformer(GuiTransformer transformer, Class<? extends Annotation>... types) {
-        registerAnnotationTransformer(transformer, field -> true, types);
+        this.registerAnnotationTransformer(transformer, (field) -> {
+            return true;
+        }, types);
     }
 
-    @SuppressWarnings("WeakerAccess")
     @SafeVarargs
     public final void registerAnnotationTransformer(GuiTransformer transformer, Predicate<Field> predicate, Class<? extends Annotation>... types) {
-        for (Class<? extends Annotation> type : types) {
-            registerPredicateTransformer(transformer, field -> predicate.test(field) && field.isAnnotationPresent(type));
+        Class[] var4 = types;
+        int var5 = types.length;
+
+        for(int var6 = 0; var6 < var5; ++var6) {
+            Class<? extends Annotation> type = var4[var6];
+            this.registerPredicateTransformer(transformer, (field) -> {
+                return predicate.test(field) && field.isAnnotationPresent(type);
+            });
         }
+
     }
 
-    private enum Priority {
+    private static enum Priority {
         FIRST,
         NORMAL,
-        LAST
+        LAST;
+
+        private Priority() {
+        }
     }
 
     private static class ProviderEntry {

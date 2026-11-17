@@ -1,35 +1,39 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client.rendering.custom.first.penguin;
 
-import com.jeff.pets.client.rendering.PetRenderer;
-import com.jeff.pets.mob.custom.first.Penguin;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
-
-import static com.jeff.pets.client.Central.CONFIG;
+import com.jeff.pets.client.Central;
+import com.jeff.pets.client.PetsClientInitializer;
+import com.jeff.pets.client.rendering.PetRenderer;
+import com.jeff.pets.compat.GlStateManager;
+import com.jeff.pets.mob.custom.first.Penguin;
 
 public class PenguinRenderer extends PetRenderer<@NotNull Penguin> {
-
-    public PenguinRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new PenguinModel(), 0.5f);
+    public PenguinRenderer(EntityRenderDispatcher context, PetsClientInitializer.Context context2) {
+        super(context, new PenguinModel(), 0.5F);
     }
 
-    @Override
-    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
-        Penguin livingEntityRenderState = (Penguin) entity;
-        return ("textures/mob/penguin/penguin.png");
+    public @NotNull String getTexture(Entity entity) {
+        Penguin livingEntityRenderState = (Penguin)entity;
+        return "textures/mob/penguin/penguin.png";
     }
 
-    @Override
-    protected void applyScale(net.minecraft.entity.mob.MobEntity entity, float f) {
-        Penguin livingEntityRenderState = (Penguin) entity;
-        if (CONFIG.isBaby) {
-            com.jeff.pets.compat.GlStateManager.scalef(0.5f, 0.5f, 0.5f);
+    protected void applyScale(LivingEntity entity, float f) {
+        Penguin livingEntityRenderState = (Penguin)entity;
+        if (Central.CONFIG.isBaby) {
+            GlStateManager.scalef(0.5F, 0.5F, 0.5F);
         }
+
     }
 
-    public void renderModel(net.minecraft.entity.mob.MobEntity entity, float f, float partialTicks, float h, float i, float j, float k) {
-        Penguin penguin = (Penguin) entity;
-        //penguin.flap = (float) Math2.lerp(partialTicks, penguin.oFlap, penguin.flap);
-        //penguin.flapSpeed = (float) Math2.lerp(partialTicks, penguin.oFlapSpeed, penguin.flapSpeed);
-        // super.renderModel removed for b1.8 compat (render handled by PetRenderer)
+    public void renderModel(LivingEntity entity, float f, float partialTicks, float h, float i, float j, float k) {
+        Penguin penguin = (Penguin)entity;
     }
 }

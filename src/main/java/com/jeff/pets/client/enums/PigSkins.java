@@ -1,12 +1,18 @@
-package com.jeff.pets.client.enums;
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
 
+package com.jeff.pets.client.enums;
 
 public enum PigSkins implements NameableEnum {
     cold,
     temperate,
     warm;
 
-    @Override
+    private PigSkins() {
+    }
+
     public String getDisplayName() {
         return new String(String.valueOf(this).replace("_", " "));
     }

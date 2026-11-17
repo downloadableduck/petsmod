@@ -1,24 +1,29 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client.rendering.custom.aquatic.stingray;
 
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import org.jetbrains.annotations.NotNull;
+import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.custom.aquatic.Stingray;
-import org.jetbrains.annotations.NotNull;
 
 public class StingrayRenderer extends PetRenderer<Stingray> {
-
-    public StingrayRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new StingrayModel(), 0.75f);
+    public StingrayRenderer(EntityRenderDispatcher context, PetsClientInitializer.Context context2) {
+        super(context, new StingrayModel(), 0.75F);
     }
 
-    @Override
-    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
-        Stingray state = (Stingray) entity;
-        return ("textures/mob/stingray/stingray.png");
+    public @NotNull String getTexture(Entity entity) {
+        Stingray state = (Stingray)entity;
+        return "textures/mob/stingray/stingray.png";
     }
 
-    public void renderModel(net.minecraft.entity.mob.MobEntity entity, float f, float partialTick, float g, float h, float i, float j) {
-        Stingray stingray = (Stingray) entity;
-        // super.renderModel removed for b1.8 compat (render handled by PetRenderer)
-        //stingray.flapTime = stingray.flap + state.ageInTicks;
+    public void renderModel(LivingEntity entity, float f, float partialTick, float g, float h, float i, float j) {
+        Stingray stingray = (Stingray)entity;
     }
 }

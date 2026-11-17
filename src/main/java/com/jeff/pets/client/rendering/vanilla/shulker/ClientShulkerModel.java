@@ -1,9 +1,15 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client.rendering.vanilla.shulker;
 
-import com.jeff.pets.mob.vanilla.hostile.ClientShulker;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.compat.render.model.ModelPart;
-import net.minecraft.util.math.MathHelper;
+import com.jeff.pets.mob.vanilla.hostile.ClientShulker;
 
 public class ClientShulkerModel extends PetModel {
     private final ModelPart field_3553;
@@ -11,8 +17,8 @@ public class ClientShulkerModel extends PetModel {
     private final ModelPart field_3554;
 
     public ClientShulkerModel() {
-        this.textureHeight /*textureHeight*/ = 64;
-        this.textureWidth /*textureWidth*/ = 64;
+        this.textureHeight = 64;
+        this.textureWidth = 64;
         this.field_3555 = new ModelPart(this);
         this.field_3553 = new ModelPart(this);
         this.field_3554 = new ModelPart(this);
@@ -24,30 +30,23 @@ public class ClientShulkerModel extends PetModel {
         this.field_3554.setPos(0.0F, 12.0F, 0.0F);
     }
 
-    @Override
-    public void setupAnimation(float f, float g, float h, float i, float j, float k, net.minecraft.entity.Entity entity) {
-        ClientShulker shulkerEntity = (ClientShulker) entity;
-        float l = h - (float) shulkerEntity.ticks;
-        float m = (0.5F + 180 * (float) Math.PI);
+    public void setupAnimation(float f, float g, float h, float i, float j, float k, Entity entity) {
+        ClientShulker shulkerEntity = (ClientShulker)entity;
+        float var10000 = h - (float)shulkerEntity.age;
+        float m = 565.9867F;
         float n = -1.0F + MathHelper.sin(m);
         float o = 0.0F;
-        if (m > (float) Math.PI) {
+        if (m > 3.1415927F) {
             o = MathHelper.sin(h * 0.1F) * 0.7F;
         }
 
         this.field_3555.setPos(0.0F, 16.0F + MathHelper.sin(m) * 8.0F + o, 0.0F);
-        if (180 > 0.3F) {
-            this.field_3555.rotationY = n * n * n * n * (float) Math.PI * 0.125F;
-        } else {
-            this.field_3555.rotationY = 0.0F;
-        }
-
-        this.field_3554.rotationX = j * ((float) Math.PI / 180F);
-        this.field_3554.rotationY = i * ((float) Math.PI / 180F);
+        this.field_3555.rotationY = n * n * n * n * 3.1415927F * 0.125F;
+        this.field_3554.rotationX = j * 0.017453292F;
+        this.field_3554.rotationY = i * 0.017453292F;
     }
 
-    @Override
-    public void render(net.minecraft.entity.Entity entity, float f, float g, float h, float i, float j, float k) {
+    public void render(Entity entity, float f, float g, float h, float i, float j, float k) {
         this.field_3553.render(k);
         this.field_3554.render(k);
         this.field_3555.render(k);

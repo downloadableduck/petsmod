@@ -1,5 +1,9 @@
-package com.jeff.pets.client.enums;
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
 
+package com.jeff.pets.client.enums;
 
 public enum CopperGolemSkins implements NameableEnum {
     exposed,
@@ -7,7 +11,9 @@ public enum CopperGolemSkins implements NameableEnum {
     unoxidized,
     weathered;
 
-    @Override
+    private CopperGolemSkins() {
+    }
+
     public String getDisplayName() {
         return new String(String.valueOf(this).replace("_", " "));
     }

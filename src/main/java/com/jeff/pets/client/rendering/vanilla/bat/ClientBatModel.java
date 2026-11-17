@@ -1,11 +1,16 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client.rendering.vanilla.bat;
 
 import com.google.common.collect.ImmutableList;
-import com.jeff.pets.client.rendering.PetModel;
-import com.jeff.pets.mob.vanilla.passive.ClientBat;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.compat.render.model.ModelPart;
-import net.minecraft.util.math.MathHelper;
+import com.jeff.pets.mob.vanilla.passive.ClientBat;
 
 public class ClientBatModel extends PetModel {
     private final ModelPart head;
@@ -16,8 +21,8 @@ public class ClientBatModel extends PetModel {
     private final ModelPart leftWingTip;
 
     public ClientBatModel() {
-        this.textureWidth /*textureWidth*/ = 64;
-        this.textureHeight /*textureHeight*/ = 64;
+        this.textureWidth = 64;
+        this.textureHeight = 64;
         this.head = new ModelPart(this, 0, 0);
         this.head.addBox(-3.0F, -3.0F, -3.0F, 6, 6, 6);
         ModelPart ModelPart = new ModelPart(this, 24, 0);
@@ -52,17 +57,16 @@ public class ClientBatModel extends PetModel {
         return ImmutableList.of(this.head, this.body);
     }
 
-    @Override
-    public void setupAnimation(float f, float g, float h, float i, float j, float k, net.minecraft.entity.Entity entity) {
-        ClientBat bat = (ClientBat) entity;
+    public void setupAnimation(float f, float g, float h, float i, float j, float k, Entity entity) {
+        ClientBat bat = (ClientBat)entity;
         if (bat.isPassenger()) {
-            this.head.rotationX = j * ((float)Math.PI / 180F);
-            this.head.rotationY = (float)Math.PI - i * ((float)Math.PI / 180F);
-            this.head.rotationZ = (float)Math.PI;
+            this.head.rotationX = j * 0.017453292F;
+            this.head.rotationY = 3.1415927F - i * 0.017453292F;
+            this.head.rotationZ = 3.1415927F;
             this.head.setPos(0.0F, -2.0F, 0.0F);
             this.rightWing.setPos(-3.0F, 0.0F, 3.0F);
             this.leftWing.setPos(3.0F, 0.0F, 3.0F);
-            this.body.rotationX = (float)Math.PI;
+            this.body.rotationX = 3.1415927F;
             this.rightWing.rotationX = -0.15707964F;
             this.rightWing.rotationY = -1.2566371F;
             this.rightWingTip.rotationY = -1.7278761F;
@@ -70,23 +74,23 @@ public class ClientBatModel extends PetModel {
             this.leftWing.rotationY = -this.rightWing.rotationY;
             this.leftWingTip.rotationY = -this.rightWingTip.rotationY;
         } else {
-            this.head.rotationX = j * ((float)Math.PI / 180F);
-            this.head.rotationY = i * ((float)Math.PI / 180F);
+            this.head.rotationX = j * 0.017453292F;
+            this.head.rotationY = i * 0.017453292F;
             this.head.rotationZ = 0.0F;
             this.head.setPos(0.0F, 0.0F, 0.0F);
             this.rightWing.setPos(0.0F, 0.0F, 0.0F);
             this.leftWing.setPos(0.0F, 0.0F, 0.0F);
-            this.body.rotationX = ((float)Math.PI / 4F) + MathHelper.cos(h * 0.1F) * 0.15F;
+            this.body.rotationX = 0.7853982F + MathHelper.cos(h * 0.1F) * 0.15F;
             this.body.rotationY = 0.0F;
-            this.rightWing.rotationY = MathHelper.cos(h * 1.3F) * (float)Math.PI * 0.25F;
+            this.rightWing.rotationY = MathHelper.cos(h * 1.3F) * 3.1415927F * 0.25F;
             this.leftWing.rotationY = -this.rightWing.rotationY;
             this.rightWingTip.rotationY = this.rightWing.rotationY * 0.5F;
             this.leftWingTip.rotationY = -this.rightWing.rotationY * 0.5F;
         }
+
     }
 
-    @Override
-    public void render(net.minecraft.entity.Entity entity, float f, float g, float h, float i, float k, float m) {
+    public void render(Entity entity, float f, float g, float h, float i, float k, float m) {
         this.setupAnimation(f, g, h, i, k, m, entity);
         this.head.render(m);
         this.body.render(m);

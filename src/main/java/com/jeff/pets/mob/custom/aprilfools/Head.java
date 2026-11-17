@@ -1,184 +1,169 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.mob.custom.aprilfools;
 
-import com.jeff.pets.client.Utils;
-import com.jeff.pets.mob.AbstractPet;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.animal.AnimalEntity;
-import net.minecraft.entity.mob.animal.AnimalEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import static com.jeff.pets.mob.custom.first.Duck.rotlerp;
+import com.jeff.pets.client.Utils;
+import com.jeff.pets.mob.AbstractPet;
+import com.jeff.pets.mob.custom.first.Duck;
 
 public class Head extends AbstractPet {
-   public static final int IS_SERVER_ENTITY = 20;
+    public static final int IS_SERVER_ENTITY = 20;
 
-   public Head(World level) {
-      super(level);
-        this.setSize(0.5f, 0.5f);
-   }
+    public Head(World level) {
+        super(level);
+        this.setBoundingBoxSpacing(0.5F, 0.5F);
+    }
 
-   @Nullable
-   @Override
-   public AnimalEntity makeChild(@NotNull AnimalEntity AgableMob) {
-      return new Head(this.world);
-   }
+    public @Nullable AnimalEntity makeChild(@NotNull AnimalEntity AgableMob) {
+        return new Head(this.world);
+    }
 
-   protected void registerSyncedData() {
-      super.registerSyncedData();
-      this.syncedData.register(20, (byte)0);
-   }
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(20, (byte)0);
+    }
 
-   public boolean isServerEntity() {
-      return this.syncedData.getByte(10) == 1;
-   }
+    public boolean isServerEntity() {
+        return this.dataTracker.getByte(10) == 1;
+    }
 
-   public void setServerEntity(Boolean value) {
-      this.syncedData.update(10, (byte)(value ? 1 : 0));
-   }
+    public void setServerEntity(Boolean value) {
+        this.dataTracker.set(10, (byte)(value ? 1 : 0));
+    }
 
-   public void mobTick() {
-      super.mobTick();
-      Vec3d movement = this.getVelocity();
-      if (!this.onGround && movement.y < 0.0) {
-         this.lerpVelocity(this.velocityX * 1.0, this.velocityY * 0.6, this.velocityZ * 1.0);
-      }
-   }
+    public void tickMovement() {
+        super.tickMovement();
+        Vec3d movement = this.getVelocity();
+        if (!this.onGround && movement.y < 0.0) {
+            this.setVelocityClient(this.velocityX * 1.0, this.velocityY * 0.6, this.velocityZ * 1.0);
+        }
 
-   @Override
-   public boolean isBreedingItem(@NotNull ItemStack itemStack) {
-      return itemStack.matchesItem(new ItemStack(Item.APPLE));
-   }
+    }
 
-   /*(public Head initialize(Difficulty difficulty, @Nullable EntityData groupData) {
-      this.setServerEntity(true);
-      return this;
-   }*/
+    public boolean isBreedingItem(@NotNull ItemStack itemStack) {
+        return itemStack.isItemEqual(new ItemStack(Item.APPLE));
+    }
 
-   @Override
-   protected int stopDistance() {
-      return 0;
-   }
+    protected int stopDistance() {
+        return 0;
+    }
 
-   @Override
-   protected float heartHeight() {
-      return 0.0F;
-   }
+    protected float heartHeight() {
+        return 0.0F;
+    }
 
-   @Override
-   protected String getAmbientSound() {
-      return "mob.chicken.step";
-   }
+    protected String getRandomSound() {
+        return "mob.chicken.step";
+    }
 
-   public void tick() {
-       super.tick();
-       Vec3d movement = Vec3d.of(this.velocityX, this.velocityY, this.velocityZ);
-       if (!this.onGround && movement.y < 0.0) {
-           this.lerpVelocity(movement.x * 1.0, movement.y * 0.6, movement.z * 1.0);
-       }
+    public void tick() {
+        super.tick();
+        Vec3d movement = Vec3d.create(this.velocityX, this.velocityY, this.velocityZ);
+        if (!this.onGround && movement.y < 0.0) {
+            this.setVelocityClient(movement.x * 1.0, movement.y * 0.6, movement.z * 1.0);
+        }
 
-       MobEntity owner = this.getOwner();
-       if (owner != null) {
-           this.yaw = this.getOwner().yaw + 180;
-           if (this.vehicle == owner) {
-               if (owner.isSneaking() && owner.jumping) {
-                   this.dismountFromVehicle();
-                   this.lerpVelocity(this.getVelocity().add(0.0, -0.04, 0.0));
-               } else {
-                   this.setSitting(true);
-               }
-           }
+        LivingEntity owner = this.getOwner();
+        if (owner != null) {
+            this.yaw = this.getOwner().yaw + 180.0F;
+            if (this.vehicle == owner) {
+                if (owner.isSneaking() && owner.jumping) {
+                    this.dismountFromVehicle();
+                    this.lerpVelocity(this.getVelocity().add(0.0, -0.04, 0.0));
+                } else {
+                    this.setSitting(true);
+                }
+            }
 
-           double dx = owner.x - this.x;
-           double dz = owner.z - this.z;
-           double targetYaw = Math.atan2(dz, dx) * (180.0 / Math.PI) - 90.0;
-           double distance = this.distanceTo(owner);
-           float rotation = -this.pitch;
-           float rotationToOwner = rotation + -this.getOwner().pitch;
-           float bodyYawDiff = Utils.wrapDegrees(this.yaw - this.bodyYaw);
-           if (rotationToOwner >= 50.0F) {
-               this.bodyYaw = this.yaw - Math.signum(bodyYawDiff) * 50.0F;
-           }
+            double dx = owner.x - this.x;
+            double dz = owner.z - this.z;
+            double targetYaw = Math.atan2(dz, dx) * 57.29577951308232 - 90.0;
+            double distance = (double)this.getDistance(owner);
+            float rotation = -this.pitch;
+            float rotationToOwner = rotation + -this.getOwner().pitch;
+            float bodyYawDiff = Utils.wrapDegrees(this.yaw - this.bodyYaw);
+            if (rotationToOwner >= 50.0F) {
+                this.bodyYaw = this.yaw - Math.signum(bodyYawDiff) * 50.0F;
+            }
 
-           if (distance > 2.0) {
-               this.walkAnimationSpeed = 0.5F;
-               Vec3d targetPos = Vec3d.of(owner.x, owner.y, owner.z);
-               Vec3d dir = targetPos.subtractFrom(this.getPosVec()).normalize();
-               this.setYRot(rotlerp(this.getYRot(), (float)targetYaw));
-               this.bodyYaw = this.bodyYaw + Math.max(-50.0F, Math.min(50.0F, this.yaw - this.bodyYaw));
-               double speed = Math.min(0.23D, 1.2D + 0.08D);
-               this.lerpVelocity(Vec3d.of(-dir.x * speed, this.getVelocity().y, -dir.z * speed));
-           } else {
-               this.lookAt(this.getOwner(), 5.0F, 0.0F);
-               this.lerpVelocity(this.velocityX * 0.8, this.velocityY * 1.0, this.velocityZ * 0.8);
-           }
+            if (distance > 2.0) {
+                this.walkAnimationSpeed = 0.5F;
+                Vec3d targetPos = Vec3d.create(owner.x, owner.y, owner.z);
+                Vec3d dir = targetPos.relativize(this.getPosVec()).normalize();
+                this.setYRot(Duck.rotlerp(this.getYRot(), (float)targetYaw));
+                this.bodyYaw += Math.max(-50.0F, Math.min(50.0F, this.yaw - this.bodyYaw));
+                double speed = Math.min(0.23, 1.28);
+                double var10001 = -dir.x * speed;
+                double var10003 = -dir.z;
+                this.lerpVelocity(Vec3d.create(var10001, this.getVelocity().y, var10003 * speed));
+            } else {
+                this.lookAt(this.getOwner(), 5.0F, 0.0F);
+                this.setVelocityClient(this.velocityX * 0.8, this.velocityY * 1.0, this.velocityZ * 0.8);
+            }
 
-           int yHeightToOwner = (int)(owner.y - this.y);
-           if (this.collidingHorizontally && this.onGround) {
-               this.jump();
-           }
+            int yHeightToOwner = (int)(owner.y - this.y);
+            if (this.horizontalCollision && this.onGround) {
+                this.jump();
+            }
 
-           if (yHeightToOwner > -1) {
-               this.lerpVelocity(this.getVelocity().add(0.0, -0.01, 0.0));
-           }
+            if (yHeightToOwner > -1) {
+                this.lerpVelocity(this.getVelocity().add(0.0, -0.01, 0.0));
+            }
 
-           if (!this.onGround) {
-           }
+            if (!this.onGround) {
+            }
 
-           if (Utils.squaredDistanceToOrigin(Vec3d.of(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
-               this.waitingTime++;
-               if (this.waitingTime > 30) {
-                   this.wander();
-               }
-           } else {
-               this.waitingTime = 0;
-           }
+            if (Utils.squaredDistanceToOrigin(Vec3d.create(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
+                ++this.waitingTime;
+                if (this.waitingTime > 30) {
+                    this.wander();
+                }
+            } else {
+                this.waitingTime = 0;
+            }
 
-           this.setYRot(rotlerp(this.getYRot(), (float)targetYaw));
-           if (Math.abs(bodyYawDiff) > 50.0F) {
-               this.bodyYaw = this.yaw - Math.signum(bodyYawDiff) * 50.0F;
-           } else {
-               this.bodyYaw = this.bodyYaw + Math.max(-10.0F, Math.min(10.0F, this.yaw - this.bodyYaw));
-           }
+            this.setYRot(Duck.rotlerp(this.getYRot(), (float)targetYaw));
+            if (Math.abs(bodyYawDiff) > 50.0F) {
+                this.bodyYaw = this.yaw - Math.signum(bodyYawDiff) * 50.0F;
+            } else {
+                this.bodyYaw += Math.max(-10.0F, Math.min(10.0F, this.yaw - this.bodyYaw));
+            }
 
-           // No manual move() here: LivingEntity.mobTick() already calls moveRelative() ->
-           // move(this.velocityX, ...) on the client, so calling move() again moved the pet
-           // twice per tick and doubled its apparent speed.
-           if (!this.onGround) {
-               this.lerpVelocity(this.getVelocity().add(0.0, -0.04, 0.0));
-           }
-       }
+            if (!this.onGround) {
+                this.lerpVelocity(this.getVelocity().add(0.0, -0.04, 0.0));
+            }
+        }
 
-       if (owner != null && this.distanceTo(owner) >= 10.0F) {
-           this.setPosition(owner.x, owner.y, owner.z);
-       }
+        if (owner != null && this.getDistance(owner) >= 10.0F) {
+            this.setPosition(owner.x, owner.y, owner.z);
+        }
 
-       int ambient = (int)(Math.random() * 1200.0);
-       if (ambient == 1) {
-           this.world.playSound(this.x, this.y, this.z, "duck_ambient", 1.0F, 1.0F);
-       }
-   }
+        int ambient = (int)(Math.random() * 1200.0);
+        if (ambient == 1) {
+            this.world.playSound(this.x, this.y, this.z, "duck_ambient", 1.0F, 1.0F);
+        }
 
-   /*@Override
-   public void onDataValueChanged(int key) {
-      if (!(this.world instanceof World)) {
-         super.onDataValueChanged(key);
-      }
-   }*/
+    }
 
-   public void writeCustomNbt(@NotNull NbtCompound output) {
-      super.writeCustomNbt(output);
-      output.putBoolean("isServerEntity", true);
-   }
+    public void writeNbt(@NotNull NbtCompound output) {
+        super.writeNbt(output);
+        output.putBoolean("isServerEntity", true);
+    }
 
-   public void readCustomNbt(@NotNull NbtCompound input) {
-      super.readCustomNbt(input);
-      this.setServerEntity(input.getBoolean("isServerEntity"));
-   }
+    public void readNbt(@NotNull NbtCompound input) {
+        super.readNbt(input);
+        this.setServerEntity(input.getBoolean("isServerEntity"));
+    }
 }

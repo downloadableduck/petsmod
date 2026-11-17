@@ -1,36 +1,33 @@
 package me.shedaniel.clothconfig2.impl;
 
-import java.util.function.Function;
-
 public interface EasingMethod {
-    
-    double apply(double v);
-    
+    double apply(double var1);
+
     enum EasingMethodImpl implements EasingMethod {
         NONE(v -> 1.0),
         LINEAR(v -> v),
-        EXPO(v -> ((v == 1.0) ? 1 : 1 * (-Math.pow(2, -10 * v) + 1))),
-        QUAD(v -> -1 * (v /= 1) * (v - 2)),
-        QUART(v -> ((v == 1.0) ? 1 : 1 * (-1 * ((v = v - 1) * v * v * v - 1)))),
-        SINE(v -> Math.sin(v * (Math.PI / 2))),
-        CUBIC(v -> ((v = v - 1) * v * v + 1)),
-        QUINTIC(v -> ((v = v - 1) * v * v * v * v + 1)),
-        CIRC(v -> Math.sqrt(1 - (v = v - 1) * v));
-        
-        private final Function<Double, Double> function;
-        
-        EasingMethodImpl(Function<Double, Double> function) {
+        EXPO(v -> v == 0.0 ? 0.0 : (v == 1.0 ? 1.0 : 1.0 - Math.pow(2.0, -10.0 * v))),
+        QUAD(v -> 1.0 - (1.0 - v) * (1.0 - v)),
+        QUART(v -> 1.0 - Math.pow(1.0 - v, 4.0)),
+        SINE(v -> Math.sin(v * (Math.PI / 2.0))),
+        CUBIC(v -> 1.0 - Math.pow(1.0 - v, 3.0)),
+        QUINTIC(v -> 1.0 - Math.pow(1.0 - v, 5.0)),
+        CIRC(v -> Math.sqrt(1.0 - Math.pow(v - 1.0, 2.0)));
+
+        private final java.util.function.DoubleUnaryOperator function;
+
+        EasingMethodImpl(java.util.function.DoubleUnaryOperator function) {
             this.function = function;
         }
-        
+
         @Override
         public double apply(double v) {
-            return function.apply(v);
+            return this.function.applyAsDouble(v);
         }
-        
+
         @Override
         public String toString() {
-            return name();
+            return this.name();
         }
     }
 }

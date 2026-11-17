@@ -1,29 +1,24 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package me.shedaniel.clothconfig2.impl;
 
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.Display;
 
-/**
- * Feather 1.12.2 helper: the named {@code net.minecraft.client.render.Window}
- * class is unreachable in this toolchain and there is no {@code getWindow()}/
- * {@code window} accessor on {@link Minecraft}. These helpers boot the scaled
- * screen dimensions from the LWJGL display and the configured GUI scale factor.
- */
 public final class WindowUtil {
-
     private WindowUtil() {
     }
 
     public static int getGuiScale() {
         Minecraft client = Minecraft.INSTANCE;
+
         try {
-            // Prefer the configured GUI scale, clamping so a valid factor is returned.
             int option = client.options.guiScale;
-            if (option <= 0) {
-                return guessScale(Display.getWidth(), Display.getHeight());
-            }
-            return Math.max(1, option);
-        } catch (Throwable t) {
+            return option <= 0 ? guessScale(Display.getWidth(), Display.getHeight()) : Math.max(1, option);
+        } catch (Throwable var2) {
             return guessScale(Display.getWidth(), Display.getHeight());
         }
     }
@@ -47,6 +42,7 @@ public final class WindowUtil {
         } else if (width >= 800) {
             scale = 2;
         }
+
         return scale;
     }
 }

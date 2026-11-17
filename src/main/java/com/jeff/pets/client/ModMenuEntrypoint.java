@@ -1,13 +1,10 @@
 package com.jeff.pets.client;
 
-import com.terraformersmc.modmenu.api.ConfigScreenFactory;
-import com.terraformersmc.modmenu.api.ModMenuApi;
+import net.danygames2014.modmenu.api.ConfigScreenFactory;
+import net.danygames2014.modmenu.api.ModMenuApi;
 
 public class ModMenuEntrypoint implements ModMenuApi {
-    @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return screen -> {
-            return new PetsConfigScreen<>().getModConfigScreenFactory();
-        };
+        return (screen -> new PetsConfigScreen().getModConfigScreenFactory());
     }
 }

@@ -1,3 +1,8 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client.enums;
 
 public enum PetList implements NameableEnum {
@@ -42,7 +47,9 @@ public enum PetList implements NameableEnum {
     zombie,
     zombie_pigman;
 
-    @Override
+    private PetList() {
+    }
+
     public String getDisplayName() {
         return new String(String.valueOf(this).replace("_", " "));
     }

@@ -1,26 +1,28 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.mob.vanilla.hostile;
 
-import com.jeff.pets.mob.GroundPet;
 import net.minecraft.world.World;
+import com.jeff.pets.mob.GroundPet;
 
 public class ClientShulker extends GroundPet {
-   public ClientShulker(World world) {
-      super(world);
-        this.setSize(1f, 2f);
-   }
+    public ClientShulker(World world) {
+        super(world);
+        this.setBoundingBoxSpacing(1.0F, 2.0F);
+    }
 
-   @Override
-   protected int stopDistance() {
-      return 2;
-   }
+    protected int stopDistance() {
+        return 2;
+    }
 
-   @Override
-   protected float heartHeight() {
-      return 2.0F;
-   }
+    protected float heartHeight() {
+        return 2.0F;
+    }
 
-   @Override
-   protected String getAmbientSound() {
-      return "";
-   }
+    protected String getRandomSound() {
+        return "";
+    }
 }

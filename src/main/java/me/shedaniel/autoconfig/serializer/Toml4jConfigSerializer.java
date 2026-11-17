@@ -1,21 +1,7 @@
-/*
- * This file is part of Cloth Config.
- * Copyright (C) 2020 - 2021 shedaniel
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
 
 package me.shedaniel.autoconfig.serializer;
 
@@ -27,19 +13,14 @@ import me.shedaniel.autoconfig.util.Utils;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 
-/**
- * This serializer serializes configs into Toml files using Toml4j.
- */
-@SuppressWarnings("unused")
 public class Toml4jConfigSerializer<T extends ConfigData> implements ConfigSerializer<T> {
-
     private final Config definition;
     private final Class<T> configClass;
     private final TomlWriter tomlWriter;
 
-    @SuppressWarnings("WeakerAccess")
     public Toml4jConfigSerializer(Config definition, Class<T> configClass, TomlWriter tomlWriter) {
         this.definition = definition;
         this.configClass = configClass;
@@ -51,36 +32,36 @@ public class Toml4jConfigSerializer<T extends ConfigData> implements ConfigSeria
     }
 
     private Path getConfigPath() {
-        return Utils.getConfigFolder().resolve(definition.name() + ".toml");
+        return Utils.getConfigFolder().resolve(this.definition.name() + ".toml");
     }
 
-    @Override
-    public void serialize(T config) throws SerializationException {
-        Path configPath = getConfigPath();
+    public void serialize(T config) throws ConfigSerializer.SerializationException {
+        Path configPath = this.getConfigPath();
+
         try {
             Files.createDirectories(configPath.getParent());
-            tomlWriter.write(config, configPath.toFile());
-        } catch (IOException e) {
-            throw new SerializationException(e);
+            this.tomlWriter.write(config, configPath.toFile());
+        } catch (IOException var4) {
+            IOException e = var4;
+            throw new ConfigSerializer.SerializationException(e);
         }
     }
 
-    @Override
-    public T deserialize() throws SerializationException {
-        Path configPath = getConfigPath();
-        if (Files.exists(configPath)) {
+    public T deserialize() throws ConfigSerializer.SerializationException {
+        Path configPath = this.getConfigPath();
+        if (Files.exists(configPath, new LinkOption[0])) {
             try {
-                return new Toml().read(configPath.toFile()).to(configClass);
-            } catch (IllegalStateException e) {
-                throw new SerializationException(e);
+                return (T)(Object)(new Toml()).read(configPath.toFile()).to(this.configClass);
+            } catch (IllegalStateException var3) {
+                IllegalStateException e = var3;
+                throw new ConfigSerializer.SerializationException(e);
             }
         } else {
-            return createDefault();
+            return this.createDefault();
         }
     }
 
-    @Override
     public T createDefault() {
-        return Utils.constructUnsafely(configClass);
+        return (T)(Object)Utils.constructUnsafely(this.configClass);
     }
 }

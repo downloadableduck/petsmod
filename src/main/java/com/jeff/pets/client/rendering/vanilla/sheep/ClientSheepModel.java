@@ -1,13 +1,18 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client.rendering.vanilla.sheep;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.MathHelper;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.compat.render.model.ModelPart;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.util.math.MathHelper;
 
 public class ClientSheepModel extends PetModel {
-    public ModelPart head;
+    public ModelPart head = new ModelPart(this, 0, 0);
     public ModelPart body;
     public ModelPart backRightLeg;
     public ModelPart backLeftLeg;
@@ -15,7 +20,6 @@ public class ClientSheepModel extends PetModel {
     public ModelPart frontLeftLeg;
 
     public ClientSheepModel() {
-        this.head = new ModelPart(this, 0, 0);
         this.head.addBox(-3.0F, -4.0F, -6.0F, 6, 6, 8, 0.0F);
         this.head.setPos(0.0F, 6.0F, -8.0F);
         this.body = new ModelPart(this, 28, 8);
@@ -35,9 +39,8 @@ public class ClientSheepModel extends PetModel {
         this.frontLeftLeg.setPos(3.0F, 12.0F, -5.0F);
     }
 
-    @Override
     protected void renderModel(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-        this.setupAnimation(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+        this.setAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
         this.head.render(scale);
         this.body.render(scale);
         this.backRightLeg.render(scale);
@@ -46,18 +49,16 @@ public class ClientSheepModel extends PetModel {
         this.frontLeftLeg.render(scale);
     }
 
-    @Override
-    public void setupAnimation(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-        this.head.rotationX = headPitch * ((float)Math.PI / 180F);
-        this.head.rotationY = netHeadYaw * ((float)Math.PI / 180F);
-        this.body.rotationX = (float)Math.PI / 2F;
+    public void setAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+        this.head.rotationX = headPitch * 0.017453292F;
+        this.head.rotationY = netHeadYaw * 0.017453292F;
+        this.body.rotationX = 1.5707964F;
         this.backRightLeg.rotationX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        this.backLeftLeg.rotationX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
-        this.frontRightLeg.rotationX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+        this.backLeftLeg.rotationX = MathHelper.cos(limbSwing * 0.6662F + 3.1415927F) * 1.4F * limbSwingAmount;
+        this.frontRightLeg.rotationX = MathHelper.cos(limbSwing * 0.6662F + 3.1415927F) * 1.4F * limbSwingAmount;
         this.frontLeftLeg.rotationX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
     }
 
-    @Override
-    public void prepare(MobEntity entity, float limbSwing, float limbSwingAmount, float tickDelta) {
+    public void animateModel(LivingEntity entity, float limbSwing, float limbSwingAmount, float tickDelta) {
     }
 }

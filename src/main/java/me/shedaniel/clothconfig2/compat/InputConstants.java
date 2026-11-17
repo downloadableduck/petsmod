@@ -1,21 +1,30 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package me.shedaniel.clothconfig2.compat;
+
+import org.lwjgl.input.Keyboard;
 
 import java.util.Objects;
 
 public final class InputConstants {
-    public static final Key UNKNOWN = new Key(Type.KEYSYM, -1, "key.unknown");
+    public static final Key UNKNOWN;
 
     private InputConstants() {
     }
 
-    public enum Type {
-        KEYSYM,
-        MOUSE,
-        SCANCODE;
+    public static boolean getKey(int keyCode) {
+        return Keyboard.isKeyDown(keyCode);
+    }
 
-        public Key getOrCreate(int code) {
-            return new Key(this, code, "");
-        }
+    public static Key getKey(int keyCode, int scanCode) {
+        return new Key(me.shedaniel.clothconfig2.compat.InputConstants.Type.KEYSYM, keyCode, "");
+    }
+
+    static {
+        UNKNOWN = new Key(me.shedaniel.clothconfig2.compat.InputConstants.Type.KEYSYM, -1, "key.unknown");
     }
 
     public static class Key {
@@ -30,36 +39,43 @@ public final class InputConstants {
         }
 
         public Type getType() {
-            return type;
+            return this.type;
         }
 
         public int getValue() {
-            return code;
+            return this.code;
         }
 
         public String getName() {
-            return name != null && !name.isEmpty() ? name : ("key." + type.name().toLowerCase() + "." + code);
+            return this.name != null && !this.name.isEmpty() ? this.name : "key." + this.type.name().toLowerCase() + "." + this.code;
         }
 
-        @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof Key)) return false;
-            Key key = (Key) o;
-            return code == key.code && type == key.type;
+            if (this == o) {
+                return true;
+            } else if (!(o instanceof Key)) {
+                return false;
+            } else {
+                Key key = (Key)o;
+                return this.code == key.code && this.type == key.type;
+            }
         }
 
-        @Override
         public int hashCode() {
-            return Objects.hash(type, code);
+            return Objects.hash(new Object[]{this.type, this.code});
         }
     }
 
-    public static boolean getKey(int keyCode) {
-        return org.lwjgl.input.Keyboard.isKeyDown(keyCode);
-    }
+    public static enum Type {
+        KEYSYM,
+        MOUSE,
+        SCANCODE;
 
-    public static Key getKey(int keyCode, int scanCode) {
-        return new Key(Type.KEYSYM, keyCode, "");
+        private Type() {
+        }
+
+        public Key getOrCreate(int code) {
+            return new Key(this, code, "");
+        }
     }
 }

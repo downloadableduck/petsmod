@@ -1,6 +1,17 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client;
 
-import com.jeff.pets.PetsInitializer;
+import net.fabricmc.api.ClientModInitializer;
+import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.client.render.entity.EntityRenderer;
+import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.texture.TextureManager;
+import net.minecraft.entity.Entity;
 import com.jeff.pets.client.rendering.custom.aprilfools.head.HeadRenderer;
 import com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus.DumboOctopusRenderer;
 import com.jeff.pets.client.rendering.custom.aquatic.koi.KoiRenderer;
@@ -9,7 +20,6 @@ import com.jeff.pets.client.rendering.custom.first.duck.DuckRenderer;
 import com.jeff.pets.client.rendering.custom.first.penguin.PenguinRenderer;
 import com.jeff.pets.client.rendering.custom.first.racoon.RacoonRenderer;
 import com.jeff.pets.client.rendering.vanilla.bat.ClientBatRenderer;
-// import com.jeff.pets.client.rendering.vanilla.blaze.ClientBlazeRenderer;
 import com.jeff.pets.client.rendering.vanilla.cat.ClientCatRenderer;
 import com.jeff.pets.client.rendering.vanilla.cavespider.ClientCaveSpiderRenderer;
 import com.jeff.pets.client.rendering.vanilla.chicken.ClientChickenRenderer;
@@ -51,51 +61,28 @@ import com.jeff.pets.mob.vanilla.boss.ClientWither;
 import com.jeff.pets.mob.vanilla.hostile.*;
 import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
-import net.fabricmc.api.ClientModInitializer;
-import net.minecraft.client.options.KeyBinding;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.client.render.entity.EntityRenderer;
-import net.minecraft.client.render.entity.ItemRenderer;
-import net.minecraft.client.render.texture.TextureManager;
-import net.minecraft.entity.Entity;
-import org.lwjgl.input.Keyboard;
 
 import java.util.*;
 
-/**
- * Another {@code initializer} class. This class does a couple of things:
- * <p> - Assigns renderers to the entities defined in {@link PetsInitializer}
- * <p> - Bakes models into the layers
- * <p> - Creates the keybind to open the config screen, by default {@code p}
- * <p> Suppresses: Deprecation warnings, as {@link EntityRenderers} is marked as
- * {@code deprecated}. I will likely have to find a suitable replacement sometime, but for now,
- * suppressing the warnings will work.
- *
- * @see PetsInitializer
- * @see Central
- */
-
 public class PetsClientInitializer implements ClientModInitializer {
-
-    public static List<String> ADDONS = new ArrayList<>();
+    public static List<String> ADDONS = new ArrayList();
     public static KeyBinding keyMapping;
     public static final Map<Class<? extends Entity>, Factory> renderSupplierMap = new HashMap();
     public static final Map<EntityRenderDispatcher, Context> renderManagerMap = new WeakHashMap();
-    
+
+    public PetsClientInitializer() {
+    }
+
     private static PetsClientInitializer get() {
         return new PetsClientInitializer();
     }
-    
-    /**
-     * Misc rendering stuff
-     */
-    @Override
+
     public void onInitializeClient() {
-
         this.createKeyBinding();
-
         register(Head.class, HeadRenderer::new);
-        register(Duck.class, (context, context2) -> new DuckRenderer(context, context2));
+        register(Duck.class, (context, context2) -> {
+            return new DuckRenderer(context, context2);
+        });
         register(Racoon.class, RacoonRenderer::new);
         register(Penguin.class, PenguinRenderer::new);
         register(ClientSheep.class, ClientSheepRenderer::new);
@@ -108,14 +95,12 @@ public class PetsClientInitializer implements ClientModInitializer {
         register(ClientMooshroom.class, ClientMooshroomRenderer::new);
         register(ClientPig.class, ClientPigRenderer::new);
         register(ClientRabbit.class, ClientRabbitRenderer::new);
-        // register(ClientSnowGolem.class, ClientSnowGolemRenderer::new); // b1.8: entity class missing
         register(ClientSquid.class, ClientSquidRenderer::new);
         register(ClientCaveSpider.class, ClientCaveSpiderRenderer::new);
         register(ClientEnderman.class, ClientEndermanRenderer::new);
         register(ClientIronGolem.class, ClientIronGolemRenderer::new);
         register(ClientSpider.class, ClientSpiderRenderer::new);
         register(ClientElderGuardian.class, ClientElderGuardianRenderer::new);
-        // register(ClientBlaze.class, ClientBlazeRenderer::new); // b1.8: entity class missing
         register(ClientCreeper.class, ClientCreeperRenderer::new);
         register(ClientEndermite.class, ClientEndermiteRenderer::new);
         register(ClientGhast.class, ClientGhastRenderer::new);
@@ -135,22 +120,26 @@ public class PetsClientInitializer implements ClientModInitializer {
         register(ClientZombiePigman.class, ClientZombiePigmanRenderer::new);
     }
 
-    /**
-     * Registers the key binding and an {@code END_CLIENT_TICK} event to check if the key
-     * is pressed
-     */
     void createKeyBinding() {
-        keyMapping = new KeyBinding("Open Pets Menu", Keyboard.KEY_P);
+        keyMapping = new KeyBinding("Open Pets Menu", 25);
     }
 
     public static void register(Class<? extends Entity> entityClass, Factory factory) {
         synchronized(renderSupplierMap) {
             renderSupplierMap.put(entityClass, factory);
+            Iterator var3 = renderManagerMap.keySet().iterator();
 
-            for(EntityRenderDispatcher manager : renderManagerMap.keySet()) {
-                renderManagerMap.get(manager).rendererMap.put(entityClass, factory.create(manager, renderManagerMap.get(manager)));
+            while(var3.hasNext()) {
+                EntityRenderDispatcher manager = (EntityRenderDispatcher)var3.next();
+                ((Context)renderManagerMap.get(manager)).rendererMap.put(entityClass, factory.create(manager, (Context)renderManagerMap.get(manager)));
             }
+
         }
+    }
+
+    @FunctionalInterface
+    public interface Factory {
+        EntityRenderer create(EntityRenderDispatcher var1, Context var2);
     }
 
     public static final class Context {
@@ -159,7 +148,6 @@ public class PetsClientInitializer implements ClientModInitializer {
         private final Map<Class<? extends Entity>, EntityRenderer> rendererMap;
 
         public Context(TextureManager textureManager, ItemRenderer itemRenderer, Map<Class<? extends Entity>, EntityRenderer> rendererMap) {
-            super();
             this.textureManager = textureManager;
             this.itemRenderer = itemRenderer;
             this.rendererMap = rendererMap;
@@ -169,14 +157,8 @@ public class PetsClientInitializer implements ClientModInitializer {
             return this.textureManager;
         }
 
-
         public ItemRenderer getItemRenderer() {
             return this.itemRenderer;
         }
-    }
-
-    @FunctionalInterface
-    public interface Factory {
-        EntityRenderer create(EntityRenderDispatcher var1, Context var2);
     }
 }

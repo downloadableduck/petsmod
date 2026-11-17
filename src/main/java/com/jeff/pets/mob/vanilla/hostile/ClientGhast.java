@@ -1,28 +1,29 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.mob.vanilla.hostile;
 
-import com.jeff.pets.mob.FlyingPet;
 import net.minecraft.world.World;
-
+import com.jeff.pets.mob.FlyingPet;
 
 public class ClientGhast extends FlyingPet {
     public ClientGhast(World level) {
         super(level);
-        this.setSize(4f, 4f);
+        this.setBoundingBoxSpacing(4.0F, 4.0F);
         this.texture = "/mob/ghast.png";
     }
 
-    @Override
     protected int stopDistance() {
         return 6;
     }
 
-    @Override
     protected float heartHeight() {
-        return 6;
+        return 6.0F;
     }
 
-    @Override
-    protected String getAmbientSound() {
+    protected String getRandomSound() {
         return "mob.ghast.moan";
     }
 }

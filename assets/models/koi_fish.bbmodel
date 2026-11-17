@@ -930,7 +930,7 @@
   "textures": [
     {
       "name": "koi.png",
-      "relative_path": "src/main/resources/assets/pets/textures/entity/koi/koi.png",
+      "relative_path": "src/main/resources/assets/com.jeff.pets/textures/entity/koi/koi.png",
       "folder": "block",
       "namespace": "",
       "id": "1",

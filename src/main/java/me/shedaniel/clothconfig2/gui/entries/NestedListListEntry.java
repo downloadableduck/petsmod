@@ -1,9 +1,13 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package me.shedaniel.clothconfig2.gui.entries;
 
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
-import me.shedaniel.clothconfig2.gui.entries.NestedListListEntry.NestedListCell;
-import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
@@ -13,76 +17,61 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-/**
- * @param <T>     the configuration object type
- * @param <INNER> the type of the inner config entry
- */
-
-public final class NestedListListEntry<T, INNER extends AbstractConfigListEntry<T>> extends AbstractListListEntry<T, NestedListCell<T, INNER>, NestedListListEntry<T, INNER>> {
-    
-    @ApiStatus.Internal
+public final class NestedListListEntry<T, INNER extends AbstractConfigListEntry<T>> extends AbstractListListEntry<T, NestedListListEntry.NestedListCell<T, INNER>, NestedListListEntry<T, INNER>> {
+    /** @deprecated */
     @Deprecated
+    @Internal
     public NestedListListEntry(String fieldName, List<T> value, boolean defaultExpanded, Supplier<Optional<String[]>> tooltipSupplier, Consumer<List<T>> saveConsumer, Supplier<List<T>> defaultValue, String resetButtonKey, boolean deleteButtonEnabled, boolean insertInFront, BiFunction<T, NestedListListEntry<T, INNER>, INNER> createNewCell) {
-        super(fieldName, value, defaultExpanded, null, null, defaultValue, resetButtonKey, false, deleteButtonEnabled, insertInFront, (t, nestedListListEntry) -> new NestedListCell<>(t, nestedListListEntry, createNewCell.apply(t, nestedListListEntry)));
+        super(fieldName, value, defaultExpanded, (Supplier)null, (Consumer)null, defaultValue, resetButtonKey, false, deleteButtonEnabled, insertInFront, (t, nestedListListEntry) -> {
+            return new NestedListCell(t, nestedListListEntry, (AbstractConfigListEntry)createNewCell.apply(t, nestedListListEntry));
+        });
     }
-    
-    @Override
+
     public boolean isRequiresRestart() {
-        return cells.stream().anyMatch(NestedListCell::isRequiresRestart);
+        return this.cells.stream().anyMatch((rec$) -> {
+            return rec$.isRequiresRestart();
+        });
     }
-    
-    @Override
+
     public void setRequiresRestart(boolean requiresRestart) {
     }
-    
-    @Override
+
     public NestedListListEntry<T, INNER> self() {
         return this;
     }
-    
-    /**
-     * @param <T> the configuration object type
-     * @see NestedListListEntry
-     */
+
     public static class NestedListCell<T, INNER extends AbstractConfigListEntry<T>> extends AbstractListCell<T, NestedListCell<T, INNER>, NestedListListEntry<T, INNER>> {
-        
         private final INNER nestedEntry;
-        
-        @ApiStatus.Internal
+
+        @Internal
         public NestedListCell(@Nullable T value, NestedListListEntry<T, INNER> listListEntry, INNER nestedEntry) {
             super(value, listListEntry);
             this.nestedEntry = nestedEntry;
         }
-        
-        @Override
+
         public T getValue() {
-            return nestedEntry.getValue();
+            return this.nestedEntry.getValue();
         }
-        
-        @Override
+
         public Optional<String> getError() {
-            return nestedEntry.getError();
+            return this.nestedEntry.getError();
         }
-        
-        @Override
+
         public int getCellHeight() {
-            return nestedEntry.getItemHeight();
+            return this.nestedEntry.getItemHeight();
         }
-        
-        @Override
+
         public void render(int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isSelected, float delta) {
-            nestedEntry.setScreen(listListEntry.getScreen());
-            nestedEntry.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
+            this.nestedEntry.setScreen(((NestedListListEntry)this.listListEntry).getScreen());
+            this.nestedEntry.render(index, y, x, entryWidth, entryHeight, mouseX, mouseY, isSelected, delta);
         }
-        
-        @Override
+
         public List<? extends GuiEventListener> children() {
-            return Collections.singletonList(nestedEntry);
+            return Collections.singletonList(this.nestedEntry);
         }
-        
+
         private boolean isRequiresRestart() {
-            return nestedEntry.isRequiresRestart();
+            return this.nestedEntry.isRequiresRestart();
         }
     }
-    
 }

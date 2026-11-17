@@ -1,8 +1,12 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package me.shedaniel.clothconfig2.gui.entries;
 
-
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
-import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -11,66 +15,55 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-
 public class StringListListEntry extends AbstractTextFieldListListEntry<String, StringListListEntry.StringListCell, StringListListEntry> {
-    
-    @ApiStatus.Internal
+    /** @deprecated */
     @Deprecated
+    @Internal
     public StringListListEntry(String fieldName, List<String> value, boolean defaultExpanded, Supplier<Optional<String[]>> tooltipSupplier, Consumer<List<String>> saveConsumer, Supplier<List<String>> defaultValue, String resetButtonKey) {
         this(fieldName, value, defaultExpanded, tooltipSupplier, saveConsumer, defaultValue, resetButtonKey, false);
     }
-    
-    @ApiStatus.Internal
+
+    /** @deprecated */
     @Deprecated
+    @Internal
     public StringListListEntry(String fieldName, List<String> value, boolean defaultExpanded, Supplier<Optional<String[]>> tooltipSupplier, Consumer<List<String>> saveConsumer, Supplier<List<String>> defaultValue, String resetButtonKey, boolean requiresRestart) {
         this(fieldName, value, defaultExpanded, tooltipSupplier, saveConsumer, defaultValue, resetButtonKey, requiresRestart, true, true);
     }
-    
-    @ApiStatus.Internal
+
+    /** @deprecated */
     @Deprecated
+    @Internal
     public StringListListEntry(String fieldName, List<String> value, boolean defaultExpanded, Supplier<Optional<String[]>> tooltipSupplier, Consumer<List<String>> saveConsumer, Supplier<List<String>> defaultValue, String resetButtonKey, boolean requiresRestart, boolean deleteButtonEnabled, boolean insertInFront) {
         super(fieldName, value, defaultExpanded, tooltipSupplier, saveConsumer, defaultValue, resetButtonKey, requiresRestart, deleteButtonEnabled, insertInFront, StringListCell::new);
     }
-    
-    @Override
+
     public StringListListEntry self() {
         return this;
     }
-    
-    public static class StringListCell extends AbstractTextFieldListCell<String, StringListCell, StringListListEntry> {
-        
+
+    public static class StringListCell extends AbstractTextFieldListListEntry.AbstractTextFieldListCell<String, StringListCell, StringListListEntry> {
         public StringListCell(String value, StringListListEntry listListEntry) {
             super(value, listListEntry);
         }
-        
-        @Nullable
-        @Override
-        protected String substituteDefault(@Nullable String value) {
-            if (value == null)
-                return "";
-            else
-                return value;
+
+        protected @Nullable String substituteDefault(@Nullable String value) {
+            return value == null ? "" : value;
         }
-        
-        @Override
+
         protected boolean isValidText(@NotNull String text) {
             return true;
         }
-        
-        @Override
+
         public String getValue() {
-            return widget.getText();
+            return this.widget.getText();
         }
-        
-        @Override
+
         public Optional<String> getError() {
             return Optional.empty();
         }
 
-        @Override
         public List<? extends GuiEventListener> children() {
             return super.children();
         }
     }
-    
 }

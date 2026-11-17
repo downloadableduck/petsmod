@@ -1,26 +1,32 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client.rendering.vanilla.elderguardian;
 
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import org.jetbrains.annotations.NotNull;
+import com.jeff.pets.client.PetsClientInitializer;
 import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.client.rendering.vanilla.guardian.ClientGuardianModel;
+import com.jeff.pets.compat.GlStateManager;
 import com.jeff.pets.mob.vanilla.hostile.ClientElderGuardian;
-import org.jetbrains.annotations.NotNull;
 
 public class ClientElderGuardianRenderer extends PetRenderer<ClientElderGuardian> {
-
-    public ClientElderGuardianRenderer(net.minecraft.client.render.entity.EntityRenderDispatcher context, com.jeff.pets.client.PetsClientInitializer.Context context2) {
-        super(context, new ClientGuardianModel(), 0.75f);
+    public ClientElderGuardianRenderer(EntityRenderDispatcher context, PetsClientInitializer.Context context2) {
+        super(context, new ClientGuardianModel(), 0.75F);
     }
 
-    @Override
-    public void applyScale(net.minecraft.entity.mob.MobEntity entity, float f) {
-        ClientElderGuardian elderGuardian = (ClientElderGuardian) entity;
-        com.jeff.pets.compat.GlStateManager.scalef(2.35f, 2.35f, 2.35f);
+    public void applyScale(LivingEntity entity, float f) {
+        ClientElderGuardian elderGuardian = (ClientElderGuardian)entity;
+        GlStateManager.scalef(2.35F, 2.35F, 2.35F);
     }
 
-    @Override
-    public @NotNull String getTexture(net.minecraft.entity.Entity entity) {
-        ClientElderGuardian livingEntityRenderState = (ClientElderGuardian) entity;
-        //livingEntityRenderState.spike = 1;
-        return ("textures/mob/guardian_elder.png");
+    public @NotNull String getTexture(Entity entity) {
+        ClientElderGuardian livingEntityRenderState = (ClientElderGuardian)entity;
+        return "textures/mob/guardian_elder.png";
     }
 }

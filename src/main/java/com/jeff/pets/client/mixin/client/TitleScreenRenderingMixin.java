@@ -1,22 +1,27 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.client.mixin.client;
 
-import com.jeff.pets.client.Central;
-import com.jeff.pets.client.PetsConfig;
 import net.minecraft.client.gui.screen.TitleScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import com.jeff.pets.client.Central;
 
-import static com.jeff.pets.client.Central.CONFIG;
-
-/**
- * Re-assign the title screen and edition locations to custom ones, if {@link PetsConfig#customTitleEnabled} is {@code true}.
- */
-@Mixin(TitleScreen.class)
+@Mixin({TitleScreen.class})
 public class TitleScreenRenderingMixin {
-    @Inject(at = @At("HEAD"), method = "render")
+    public TitleScreenRenderingMixin() {
+    }
+
+    @Inject(
+        at = {@At("HEAD")},
+        method = {"render"}
+    )
     private void init(int i, int j, float f, CallbackInfo ci) {
-        Central.reassignLogo(CONFIG.customTitleEnabled);
+        Central.reassignLogo(Central.CONFIG.customTitleEnabled);
     }
 }

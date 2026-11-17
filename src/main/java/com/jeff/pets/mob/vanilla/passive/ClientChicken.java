@@ -1,38 +1,38 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.mob.vanilla.passive;
 
+import net.minecraft.world.World;
 import com.jeff.pets.mob.GroundPet;
-import net.minecraft.util.math.MathHelper;
 
 public class ClientChicken extends GroundPet {
-
     public float oFlap;
     public float flap;
     public float oFlapSpeed;
     public float flapSpeed;
     public float flapping = 1.0F;
 
-    public ClientChicken(net.minecraft.world.World level) {
+    public ClientChicken(World level) {
         super(level);
-        this.setSize(0.4f, 0.7f);
+        this.setBoundingBoxSpacing(0.4F, 0.7F);
         this.texture = "/mob/chicken.png";
     }
 
-    @Override
     protected int stopDistance() {
         return 2;
     }
 
-    @Override
     protected float heartHeight() {
-        return 0.5f;
+        return 0.5F;
     }
 
-    @Override
-    protected String getAmbientSound() {
+    protected String getRandomSound() {
         return "mob.chicken.say";
     }
 
-    @Override
     public void tick() {
         super.tick();
         this.oFlap = this.flap;

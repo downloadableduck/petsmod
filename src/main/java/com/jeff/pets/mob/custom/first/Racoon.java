@@ -1,168 +1,150 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.mob.custom.first;
 
-import com.jeff.pets.client.Utils;
-import com.jeff.pets.mob.AbstractPet;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.animal.AnimalEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
+import com.jeff.pets.client.Central;
+import com.jeff.pets.client.Utils;
+import com.jeff.pets.mob.AbstractPet;
 
 import java.util.Objects;
 
-import static com.jeff.pets.client.Central.CONFIG;
-
 public class Racoon extends AbstractPet {
-   public static final int IS_SERVER_ENTITY = 20;
-   public boolean isOnHead;
+    public static final int IS_SERVER_ENTITY = 20;
+    public boolean isOnHead;
 
-   public Racoon(World level) {
-      super(level);
-        this.setSize(0.6f, 0.7f);
-   }
+    public Racoon(World level) {
+        super(level);
+        this.setBoundingBoxSpacing(0.6F, 0.7F);
+    }
 
-   @Override
-   protected int stopDistance() {
-      return 2;
-   }
+    protected int stopDistance() {
+        return 2;
+    }
 
-   @Override
-   protected float heartHeight() {
-      return 0.8F;
-   }
+    protected float heartHeight() {
+        return 0.8F;
+    }
 
-   @Override
-   protected String getAmbientSound() {
-      return "mob.chicken.step";
-   }
+    protected String getRandomSound() {
+        return "mob.chicken.step";
+    }
 
-   /*@Nullable
-   public Racoon initialize(Difficulty difficulty, @Nullable EntityData groupData) {
-      this.setServerEntity(true);
-      return this;
-   }*/
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(20, (byte)0);
+    }
 
-   protected void registerSyncedData() {
-      super.registerSyncedData();
-      this.syncedData.register(20, Byte.valueOf((byte) 0));
-   }
+    public boolean isServerEntity() {
+        return this.dataTracker.getByte(20) != 0;
+    }
 
-   public boolean isServerEntity() {
-       return this.syncedData.getByte(IS_SERVER_ENTITY) != 0;
-   }
+    public void setServerEntity(Boolean value) {
+        this.dataTracker.set(20, (byte)(value ? 1 : 0));
+    }
 
-   public void setServerEntity(Boolean value) {
-       this.syncedData.update(IS_SERVER_ENTITY, Byte.valueOf((byte) (value.booleanValue() ? 1 : 0)));
-   }
+    public boolean isBreedingItem(@NotNull ItemStack itemStack) {
+        return false;
+    }
 
-   @Override
-   public boolean isBreedingItem(@NotNull ItemStack itemStack) {
-      return false;
-   }
+    public void tick() {
+        super.tick();
+        LivingEntity owner = this.getOwner();
+        if (owner != null) {
+            this.yaw = this.getOwner().yaw + 180.0F;
+            if (this.vehicle == owner) {
+                if (owner.isSneaking() && owner.jumping) {
+                    this.dismountFromVehicle();
+                    this.lerpVelocity(this.getVelocity().add(0.0, -0.04, 0.0));
+                    this.isOnHead = false;
+                } else {
+                    this.setSitting(true);
+                }
+            }
 
-   public void tick() {
-      super.tick();
-      MobEntity owner = this.getOwner();
-      if (owner != null) {
-         this.yaw = this.getOwner().yaw + 180;
-         if (this.vehicle == owner) {
-            if (owner.isSneaking() && owner.jumping) {
-               this.dismountFromVehicle();
-               this.lerpVelocity(this.getVelocity().add(0.0, -0.04, 0.0));
-               this.isOnHead = false;
+            double dx = owner.x - this.x;
+            double dz = owner.z - this.z;
+            double targetYaw = Math.atan2(dz, dx) * 57.29577951308232 - 90.0;
+            double distance = (double)this.getDistance(owner);
+            float rotation = -this.pitch;
+            float rotationToOwner = rotation + -this.getOwner().pitch;
+            float bodyYawDiff = Utils.wrapDegrees(this.yaw - this.bodyYaw);
+            if (rotationToOwner >= 50.0F) {
+                this.bodyYaw = this.yaw - Math.signum(bodyYawDiff) * 50.0F;
+            }
+
+            if (distance > 2.0) {
+                this.walkAnimationSpeed = 0.5F;
+                Vec3d targetPos = Vec3d.create(owner.x, owner.y, owner.z);
+                Vec3d dir = targetPos.relativize(this.getPosVec()).normalize();
+                this.bodyYaw += Math.max(-50.0F, Math.min(50.0F, this.yaw - this.bodyYaw));
+                double speed = Math.min(0.23, 1.28);
+                double var10001 = -dir.x * speed;
+                double var10003 = -dir.z;
+                this.lerpVelocity(Vec3d.create(var10001, this.getVelocity().y, var10003 * speed));
             } else {
-               this.setSitting(true);
+                this.setVelocityClient(this.velocityX * 0.8, this.velocityY * 1.0, this.velocityZ * 0.8);
             }
-         }
 
-         double dx = owner.x - this.x;
-         double dz = owner.z - this.z;
-         double targetYaw = Math.atan2(dz, dx) * (180.0 / Math.PI) - 90.0;
-         double distance = this.distanceTo(owner);
-         float rotation = -this.pitch;
-         float rotationToOwner = rotation + -this.getOwner().pitch;
-         float bodyYawDiff = Utils.wrapDegrees(this.yaw - this.bodyYaw);
-         if (rotationToOwner >= 50.0F) {
-            this.bodyYaw = this.yaw - Math.signum(bodyYawDiff) * 50.0F;
-         }
-
-         if (distance > 2.0) {
-            this.walkAnimationSpeed = 0.5F;
-            Vec3d targetPos = Vec3d.of(owner.x, owner.y, owner.z);
-            Vec3d dir = targetPos.subtractFrom(this.getPosVec()).normalize();
-            this.bodyYaw = this.bodyYaw + Math.max(-50.0F, Math.min(50.0F, this.yaw - this.bodyYaw));
-            double speed = Math.min(0.23D,  1.2D + 0.08D);
-            this.lerpVelocity(Vec3d.of(-dir.x * speed, this.getVelocity().y, -dir.z * speed));
-         } else {
-             // Z component was reading velocityY - a copy/paste slip that fed vertical velocity
-             // into horizontal motion.
-             this.lerpVelocity(this.velocityX * 0.8, this.velocityY * 1.0, this.velocityZ * 0.8);
-         }
-
-         int yHeightToOwner = (int)(owner.y - this.y);
-         if (this.collidingHorizontally && this.onGround) {
-            this.jump();
-         }
-
-         if (yHeightToOwner > -1) {
-            this.lerpVelocity(this.getVelocity().add(0.0, -0.01, 0.0));
-         }
-
-         if (Utils.squaredDistanceToOrigin(Vec3d.of(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
-            this.waitingTime++;
-            if (this.waitingTime > 30) {
-               this.wander();
+            int yHeightToOwner = (int)(owner.y - this.y);
+            if (this.horizontalCollision && this.onGround) {
+                this.jump();
             }
-         } else {
-            this.waitingTime = 0;
-         }
 
-         if (!this.onGround) {
-         }
+            if (yHeightToOwner > -1) {
+                this.lerpVelocity(this.getVelocity().add(0.0, -0.01, 0.0));
+            }
 
-         this.setYRot(Duck.rotlerp(this.getYRot(), (float)targetYaw));
-         if (Math.abs(bodyYawDiff) > 50.0F) {
-            this.bodyYaw = this.yaw - Math.signum(bodyYawDiff) * 50.0F;
-         } else {
-            this.bodyYaw = this.bodyYaw + Math.max(-10.0F, Math.min(10.0F, this.yaw - this.bodyYaw));
-         }
+            if (Utils.squaredDistanceToOrigin(Vec3d.create(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
+                ++this.waitingTime;
+                if (this.waitingTime > 30) {
+                    this.wander();
+                }
+            } else {
+                this.waitingTime = 0;
+            }
 
-             // No manual move() here: LivingEntity.mobTick() already calls moveRelative() ->
-             // move(this.velocityX, ...) on the client, so calling move() again moved the pet
-             // twice per tick and doubled its apparent speed.
-             if (!this.onGround) {
-             this.lerpVelocity(this.getVelocity().add(0.0, -0.04, 0.0));
-             }
-      }
+            if (!this.onGround) {
+            }
 
-      if (owner != null && this.distanceTo(owner) >= 10.0F) {
-         this.setPosition(owner.x, owner.y, owner.z);
-      }
-   }
+            this.setYRot(Duck.rotlerp(this.getYRot(), (float)targetYaw));
+            if (Math.abs(bodyYawDiff) > 50.0F) {
+                this.bodyYaw = this.yaw - Math.signum(bodyYawDiff) * 50.0F;
+            } else {
+                this.bodyYaw += Math.max(-10.0F, Math.min(10.0F, this.yaw - this.bodyYaw));
+            }
 
-   @Override
-   public AnimalEntity makeChild(@NotNull AnimalEntity AgableMob) {
-      Racoon racoon = new Racoon(this.world);
-      racoon.setServerEntity(false);
-      return racoon;
-   }
+            if (!this.onGround) {
+                this.lerpVelocity(this.getVelocity().add(0.0, -0.04, 0.0));
+            }
+        }
 
-  /*@Override
-   public void onDataValueChanged(int key) {
-      if (!(this.world instanceof World)) {
-         super.onDataValueChanged(key);
-      }
-   }*/
+        if (owner != null && this.getDistance(owner) >= 10.0F) {
+            this.setPosition(owner.x, owner.y, owner.z);
+        }
 
-    @Override
+    }
+
+    public AnimalEntity makeChild(@NotNull AnimalEntity AgableMob) {
+        Racoon racoon = new Racoon(this.world);
+        racoon.setServerEntity(false);
+        return racoon;
+    }
+
     public String getTexture() {
         String racoonTexturePath;
         if (!this.isServerEntity()) {
-            if (Objects.equals(CONFIG.racoonSkin, "normal")) {
+            if (Objects.equals(Central.CONFIG.racoonSkin, "normal")) {
                 racoonTexturePath = "/mob/racoon/racoon.png";
-            } else if (Objects.equals(CONFIG.racoonSkin, "albino")) {
+            } else if (Objects.equals(Central.CONFIG.racoonSkin, "albino")) {
                 racoonTexturePath = "/mob/racoon/albino.png";
             } else {
                 racoonTexturePath = "/mob/racoon/racoon.png";
@@ -170,6 +152,7 @@ public class Racoon extends AbstractPet {
         } else {
             racoonTexturePath = "/mob/racoon/racoon.png";
         }
+
         return racoonTexturePath;
     }
 }

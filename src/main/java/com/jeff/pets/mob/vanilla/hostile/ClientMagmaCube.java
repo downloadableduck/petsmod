@@ -1,27 +1,29 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets.mob.vanilla.hostile;
 
+import net.minecraft.world.World;
 import com.jeff.pets.mob.SlimeLikePet;
 
 public class ClientMagmaCube extends SlimeLikePet {
-
-    public ClientMagmaCube(net.minecraft.world.World level) {
+    public ClientMagmaCube(World level) {
         super(level);
-        this.setSize(2f, 2f);
+        this.setBoundingBoxSpacing(2.0F, 2.0F);
         this.texture = "/mob/lava.png";
     }
 
-    @Override
     protected int stopDistance() {
         return 4;
     }
 
-    @Override
     protected float heartHeight() {
-        return 2;
+        return 2.0F;
     }
 
-    @Override
-    protected String getAmbientSound() {
+    protected String getRandomSound() {
         return "mob.magmacube.small";
     }
 }

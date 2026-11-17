@@ -1,3 +1,8 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package me.shedaniel.math;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
@@ -5,77 +10,74 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 public class FloatingDimension implements Cloneable {
     public double width;
     public double height;
-    
+
     public FloatingDimension() {
-        this(0, 0);
+        this(0.0, 0.0);
     }
-    
+
     public FloatingDimension(Dimension d) {
-        this(d.width, d.height);
+        this((double)d.width, (double)d.height);
     }
-    
+
     public FloatingDimension(FloatingDimension d) {
         this(d.width, d.height);
     }
-    
+
     public FloatingDimension(double width, double height) {
         this.width = width;
         this.height = height;
     }
-    
+
     public double getWidth() {
-        return width;
+        return this.width;
     }
-    
+
     public double getHeight() {
-        return height;
+        return this.height;
     }
-    
+
     public void setSize(double width, double height) {
         this.width = width;
         this.height = height;
     }
-    
+
     public FloatingDimension getFloatingSize() {
-        return new FloatingDimension(width, height);
+        return new FloatingDimension(this.width, this.height);
     }
-    
+
     public Dimension getSize() {
-        return new Dimension(width, height);
+        return new Dimension(this.width, this.height);
     }
-    
+
     public void setSize(FloatingDimension d) {
-        setSize(d.width, d.height);
+        this.setSize(d.width, d.height);
     }
-    
+
     public void setSize(Dimension d) {
-        setSize(d.width, d.height);
+        this.setSize((double)d.width, (double)d.height);
     }
-    
-    @Override
+
     public boolean equals(Object obj) {
-        if (obj instanceof FloatingDimension) {
-            FloatingDimension d = (FloatingDimension) obj;
-            return (width == d.width) && (height == d.height);
+        if (!(obj instanceof FloatingDimension)) {
+            return false;
+        } else {
+            FloatingDimension d = (FloatingDimension)obj;
+            return this.width == d.width && this.height == d.height;
         }
-        return false;
     }
-    
-    @Override
+
     public int hashCode() {
         int result = 1;
-        result = 31 * result + Double.hashCode(width);
-        result = 31 * result + Double.hashCode(height);
+        result = 31 * result + Double.hashCode(this.width);
+        result = 31 * result + Double.hashCode(this.height);
         return result;
     }
-    
-    @Override
+
     public String toString() {
         return ReflectionToStringBuilder.reflectionToString(this);
     }
-    
-    @Override
+
     public FloatingDimension clone() {
-        return getFloatingSize();
+        return this.getFloatingSize();
     }
 }

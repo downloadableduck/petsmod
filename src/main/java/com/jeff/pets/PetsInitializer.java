@@ -1,29 +1,23 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jeff.pets;
 
 import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/**
- * Registers all of the blocks and entities used in this mod, as well as providing the {@link #MOD_ID}.
- */
 public class PetsInitializer implements ModInitializer {
-    public static final String MOD_ID = "pets-mod";
+    public static final String MOD_ID = "com.jeff.pets-mod";
+    public static final Logger LOGGER = LogManager.getLogger("com.jeff.pets-mod");
 
-    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+    public PetsInitializer() {
+    }
 
-    /**
-     * Registers the entities' attributes. Warns about the call to register not working, but it
-     * ends up working fine in-game - likely a mixup in either the Fabric API or IntelliJ.
-     */
-    @Override
     public void onInitialize() {
-
         PetsSounds.initialize();
-
-
-        //DuckSpawns.addDuckSpawn();
-
         LOGGER.info("quack");
     }
 }

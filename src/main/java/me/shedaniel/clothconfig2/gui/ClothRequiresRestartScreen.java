@@ -1,29 +1,30 @@
-package me.shedaniel.clothconfig2.gui;
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
 
+package me.shedaniel.clothconfig2.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.ConfirmScreen;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.locale.I18n;
-
+import net.minecraft.client.resource.language.I18n;
 
 public class ClothRequiresRestartScreen extends ConfirmScreen {
-
     public ClothRequiresRestartScreen(Screen parent) {
-        super(createScreen(parent), I18n.translate("text.cloth-config.restart_required"), I18n.translate("text.cloth-config.restart_required_sub"), "", "", 0);
+        super(createScreen(parent), I18n.getTranslation("text.cloth-config.restart_required"), I18n.getTranslation("text.cloth-config.restart_required_sub"), "", "", 0);
     }
 
-    private static Screen createScreen(Screen parent) {
+    private static Screen createScreen(final Screen parent) {
         return new Screen() {
-            @Override
-            public void confirmResult(boolean bl, int i) {
-                if (bl)
-                    Minecraft.INSTANCE.stop();
-                else
-                    Minecraft.INSTANCE.openScreen(parent);
+            public void confirmed(boolean bl, int i) {
+                if (bl) {
+                    Minecraft.INSTANCE.scheduleStop();
+                } else {
+                    Minecraft.INSTANCE.setScreen(parent);
+                }
 
             }
         };
     }
-    
 }
