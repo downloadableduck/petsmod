@@ -32,13 +32,13 @@ public class ClientMushroomCowMushroomLayer implements PetRenderLayer {
             
             GlStateManager.pushMatrix();
             GlStateManager.translatef(-0.5F, -0.5F, 0.5F);
-            this.blockRenderer.renderAsItem(block, 0, 1.0F);
+            this.blockRenderer.renderAsItem(block, 0);
             GlStateManager.popMatrix();
             GlStateManager.pushMatrix();
             GlStateManager.translatef(0.1F, 0.0F, -0.6F);
             GlStateManager.rotatef(42.0F, 0.0F, 1.0F, 0.0F);
             GlStateManager.translatef(-0.5F, -0.5F, 0.5F);
-            this.blockRenderer.renderAsItem(block, 0, 1.0F);
+            this.blockRenderer.renderAsItem(block, 0);
             GlStateManager.popMatrix();
             GlStateManager.popMatrix();
             GlStateManager.pushMatrix();
@@ -46,7 +46,7 @@ public class ClientMushroomCowMushroomLayer implements PetRenderLayer {
             GlStateManager.translatef(0.0F, 0.7F, -0.2F);
             GlStateManager.rotatef(12.0F, 0.0F, 1.0F, 0.0F);
             GlStateManager.translatef(-0.5F, -0.5F, 0.5F);
-            this.blockRenderer.renderAsItem(block, 0, 1.0F);
+            this.blockRenderer.renderAsItem(block, 0);
             GlStateManager.popMatrix();
             GlStateManager.cullFace(1028);
             GlStateManager.disableCull();
