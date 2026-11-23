@@ -1,14 +1,6 @@
 accessWidener v2 named
 accessible field net/minecraft/entity/mob/MobEntity jumping Z
-accessible field net/minecraft/client/gui/widget/TextFieldWidget x I
-mutable field net/minecraft/client/gui/widget/TextFieldWidget x I
-accessible field net/minecraft/client/gui/widget/TextFieldWidget y I
-mutable field net/minecraft/client/gui/widget/TextFieldWidget y I
-accessible field net/minecraft/client/gui/widget/TextFieldWidget width I
-mutable field net/minecraft/client/gui/widget/TextFieldWidget width I
 accessible field net/minecraft/client/gui/widget/ButtonWidget width I
 mutable field net/minecraft/client/gui/widget/ButtonWidget width I
 accessible field net/minecraft/client/render/entity/EntityRenderer blockRenderer Lnet/minecraft/client/render/block/BlockRenderer;
-accessible field net/minecraft/client/gui/widget/TextFieldWidget editable Z
-accessible field net/minecraft/client/Minecraft INSTANCE Lnet/minecraft/client/Minecraft;
 accessible method net/minecraft/client/Minecraft getOs ()Lnet/minecraft/client/Minecraft__OS;
