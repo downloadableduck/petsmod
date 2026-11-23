@@ -1,9 +1,11 @@
 package me.shedaniel.clothconfig2.compat;
 
-import net.minecraft.SharedConstants;
 import net.minecraft.client.gui.GuiElement;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.TextRenderer;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 /**
  * Feather 1.12.2 adapter: wraps the native {@link TextFieldWidget} so it can be
@@ -104,7 +106,7 @@ public class CompatTextFieldWidget extends GuiElement implements GuiEventListene
                 this.text = this.text.substring(0, this.text.length() - 1);
             }
 
-            if (SharedConstants.VALID_CHAT_CHARACTERS.indexOf(chr) >= 0 && (this.text.length() < this.maxLength || this.maxLength == 0)) {
+            if (getValidChatCharString().indexOf(chr) >= 0 && (this.text.length() < this.maxLength || this.maxLength == 0)) {
                 this.text = this.text + chr;
             }
 
@@ -148,10 +150,30 @@ public class CompatTextFieldWidget extends GuiElement implements GuiEventListene
             }
             return true;
         }
-        if (chr >= 32 && SharedConstants.VALID_CHAT_CHARACTERS.indexOf(chr) >= 0 && (this.text.length() < this.maxLength || this.maxLength == 0)) {
+        if (chr >= 32 && getValidChatCharString().indexOf(chr) >= 0 && (this.text.length() < this.maxLength || this.maxLength == 0)) {
             this.text = this.text + chr;
             return true;
         }
         return false;
+    }
+
+    private static String getValidChatCharString() {
+        String string0 = "";
+
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(CompatTextFieldWidget.class.getResourceAsStream("/font.txt"), "UTF-8"));
+            String string3 = "";
+
+            while((string3 = bufferedReader.readLine()) != null) {
+                if (!string3.startsWith("#")) {
+                    string0 = string0 + string3;
+                }
+            }
+
+            bufferedReader.close();
+        } catch (Exception var3) {
+        }
+
+        return string0;
     }
 }
