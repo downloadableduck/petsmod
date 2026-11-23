@@ -11,7 +11,7 @@ import static com.jeff.pets.client.Central.CONFIG;
 public class ClientCreeperChargeLayer implements PetRenderLayer {
     private static final String SKIN = ("textures/mob/creeper/creeper_armor.png");
     private final PetRenderer renderer;
-    private final CreeperModel model = new CreeperModel(2);
+    private final CreeperModel model = new CreeperModel();
 
     public ClientCreeperChargeLayer(PetRenderer renderer) {
         this.renderer = renderer;

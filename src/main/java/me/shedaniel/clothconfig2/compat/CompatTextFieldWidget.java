@@ -15,7 +15,7 @@ public class CompatTextFieldWidget extends TextFieldWidget implements GuiEventLi
     private final Screen screen;
 
     public CompatTextFieldWidget(Screen screen, int id, TextRenderer textRenderer, int x, int y, int width, int height) {
-        super(screen, textRenderer, x, y, width, height, "");
+        super(textRenderer, x, y, width, height, "");
         this.screen = screen;
     }
 

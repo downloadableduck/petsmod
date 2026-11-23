@@ -64,7 +64,7 @@ public class ClientSquid extends FlyingPet {
             }
         }
 
-        if (this.isInWater()) {
+        if (this.inWater) {
             if (this.tentacleMovement < (float) Math.PI) {
                 float f = this.tentacleMovement / (float) Math.PI;
                 this.tentacleAngle = MathHelper.sin(f * f * (float) Math.PI) * (float) Math.PI * 0.25F;

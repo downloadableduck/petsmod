@@ -244,10 +244,7 @@ public abstract class AbstractPet extends AnimalEntity {
 
     @Override
     public void moveRelative(float strafe, float forward) {
-        // 1.1 moveRelative converts strafe/forward into velocity changes and also updates
-        // walk animation state used by the renderer. Scripted pets set velocity directly, but we
-        // must still update walkAnimationSpeed/Progress or leg animations freeze/jitter/teleport.
-        if (this.isInWater() || this.isInLava()) {
+        if (this.inWater || this.isInLava()) {
             super.moveRelative(strafe, forward);
             return;
         }
@@ -260,5 +257,9 @@ public abstract class AbstractPet extends AnimalEntity {
         if (dist > 1.0F) dist = 1.0F;
         this.walkAnimationSpeed += (dist - this.walkAnimationSpeed) * 0.4F;
         this.walkAnimationProgress += this.walkAnimationSpeed;
+    }
+
+    public boolean isInWater() {
+        return this.inWater;
     }
 }

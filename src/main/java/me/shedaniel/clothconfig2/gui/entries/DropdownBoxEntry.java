@@ -804,7 +804,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             if (mouseX >= lastX && mouseX <= lastX + lastWidth
                     && mouseY >= lastY && mouseY <= lastY + lastHeight) {
                 textFieldWidget.mouseClicked((int) mouseX, (int) mouseY, button);
-                textFieldWidget.setFocused(true);
+                textFieldWidget.focused = (true);
                 this.setFocused(textFieldWidget);
                 return true;
             }

@@ -300,7 +300,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                                 fill(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
                             Minecraft.INSTANCE.textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
                             ItemRenderer itemRenderer = DropdownMenuBuilder.ITEM_RENDERER;
-                            itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
+                            itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack, x + width - 18, y + 2);
                         }
                     };
                 }
@@ -349,7 +349,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                                 fill(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
                             Minecraft.INSTANCE.textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
                             ItemRenderer itemRenderer = DropdownMenuBuilder.ITEM_RENDERER;
-                            itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
+                            itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack, x + width - 18, y + 2);
                         }
                     };
                 }
@@ -398,7 +398,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                                 fill(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
                             Minecraft.INSTANCE.textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
                             ItemRenderer itemRenderer = DropdownMenuBuilder.ITEM_RENDERER;
-                            itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
+                            itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack, x + width - 18, y + 2);
                         }
                     };
                 }
@@ -446,7 +446,7 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                                 fill(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
                             Minecraft.INSTANCE.textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
                             ItemRenderer itemRenderer = DropdownMenuBuilder.ITEM_RENDERER;
-                            itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack.getItem().id, stack.getMetadata(), stack.getSprite(), x + width - 18, y + 2);
+                            itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack, x + width - 18, y + 2);
                         }
                     };
                 }
