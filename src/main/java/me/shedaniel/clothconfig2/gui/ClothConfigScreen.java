@@ -244,7 +244,7 @@ public abstract class ClothConfigScreen extends Screen {
         this.buttons.add(quitButton = new ButtonWidget(width / 2 - buttonWidths / 2 - buttonWidths - 6, height - 26, buttonWidths, 20, edited ? Language.getInstance().translate("text.cloth-config.cancel_discard") : Language.getInstance().translate("gui.cancel"), widget -> {
             if (confirmSave && edited)
                 minecraft.openScreen(new ConfirmScreen(screen,
-                        Language.getInstance().translate("text.cloth-config.quit_config"), Language.getInstance().translate("text.cloth-config.quit_config_sure"), "", "",   0));
+                        Language.getInstance().translate("text.cloth-config.quit_config"), Language.getInstance().translate("text.cloth-config.quit_config_sure"),   0));
             else
                 minecraft.openScreen(parent);
         }));
@@ -669,7 +669,7 @@ public abstract class ClothConfigScreen extends Screen {
                 }
             };
             if (confirmSave && edited)
-                minecraft.openScreen(new ConfirmScreen(screen, Language.getInstance().translate("text.cloth-config.quit_config"), Language.getInstance().translate("text.cloth-config.quit_config_sure"),  "", "", 0));
+                minecraft.openScreen(new ConfirmScreen(screen, Language.getInstance().translate("text.cloth-config.quit_config"), Language.getInstance().translate("text.cloth-config.quit_config_sure"), 0));
             else
                 minecraft.openScreen(parent);
             return;

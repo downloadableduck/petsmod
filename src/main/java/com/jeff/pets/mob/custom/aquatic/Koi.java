@@ -25,19 +25,6 @@ public class Koi extends FlyingPet {
         this.texture = "/mob/koi/koi.png";
    }
 
-   protected void registerSyncedData() {
-      super.registerSyncedData();
-      this.syncedData.register(20, (byte)0);
-   }
-
-   public boolean isServerEntity() {
-      return this.syncedData.getByte(10) == 1;
-   }
-
-   public void setServerEntity(Boolean value) {
-      this.syncedData.update(10, (byte)(value ? 1 : 0));
-   }
-
    public void mobTick() {
       super.mobTick();
    }
@@ -58,7 +45,6 @@ public class Koi extends FlyingPet {
    @Nullable
    public Koi makeChild(@NotNull AnimalEntity partner) {
       Koi koi = new Koi(this.world);
-      koi.setServerEntity(true);
       return koi;
    }
 
@@ -69,9 +55,9 @@ public class Koi extends FlyingPet {
 
    @Override
    public boolean isBreedingItem(@NotNull ItemStack itemStack) {
-      return itemStack.matchesItem(new ItemStack(Item.FISH, 1, 0))
-         || itemStack.matchesItem(new ItemStack(Item.FISH, 1, 1))
-         || itemStack.matchesItem(new ItemStack(Item.FISH, 1, 2));
+      return itemStack.equals(new ItemStack(Item.FISH.id, 1, 0))
+         || itemStack.equals(new ItemStack(Item.FISH.id, 1, 1))
+         || itemStack.equals(new ItemStack(Item.FISH.id, 1, 2));
    }
 
    public void writeCustomNbt(@NotNull NbtCompound output) {
@@ -81,7 +67,6 @@ public class Koi extends FlyingPet {
 
    public void readCustomNbt(@NotNull NbtCompound input) {
       super.readCustomNbt(input);
-      this.setServerEntity(input.getBoolean("isServerEntity"));
    }
 
    @Override

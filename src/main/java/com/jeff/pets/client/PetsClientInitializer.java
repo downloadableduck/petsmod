@@ -34,7 +34,6 @@ import com.jeff.pets.client.rendering.vanilla.silverfish.ClientSilverfishRendere
 import com.jeff.pets.client.rendering.vanilla.skeleton.ClientSkeletonRenderer;
 import com.jeff.pets.client.rendering.vanilla.slime.ClientSlimeRenderer;
 import com.jeff.pets.client.rendering.vanilla.spider.ClientSpiderRenderer;
-import com.jeff.pets.client.rendering.vanilla.squid.ClientSquidRenderer;
 import com.jeff.pets.client.rendering.vanilla.wither.ClientWitherRenderer;
 import com.jeff.pets.client.rendering.vanilla.witherskeleton.ClientWitherSkeletonRenderer;
 import com.jeff.pets.client.rendering.vanilla.zombie.ClientZombieRenderer;
@@ -109,7 +108,6 @@ public class PetsClientInitializer implements ClientModInitializer {
         register(ClientPig.class, ClientPigRenderer::new);
         register(ClientRabbit.class, ClientRabbitRenderer::new);
         // register(ClientSnowGolem.class, ClientSnowGolemRenderer::new); // b1.8: entity class missing
-        register(ClientSquid.class, ClientSquidRenderer::new);
         register(ClientCaveSpider.class, ClientCaveSpiderRenderer::new);
         register(ClientEnderman.class, ClientEndermanRenderer::new);
         register(ClientIronGolem.class, ClientIronGolemRenderer::new);

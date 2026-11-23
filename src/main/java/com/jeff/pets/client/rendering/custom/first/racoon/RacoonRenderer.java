@@ -44,6 +44,5 @@ public class RacoonRenderer extends PetRenderer<@NotNull Racoon> {
     public void renderModel(net.minecraft.entity.mob.MobEntity entity, float g, float f, float u, float h, float m, float i) {
         Racoon racoon = (Racoon) entity;
         // super.renderModel removed for b1.8 compat (render handled by PetRenderer)
-        racoon.setServerEntity(racoon.getSyncedData().getByte(Racoon.IS_SERVER_ENTITY) == 1);
     }
 }

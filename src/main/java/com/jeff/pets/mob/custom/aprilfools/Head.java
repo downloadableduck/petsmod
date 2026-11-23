@@ -29,20 +29,6 @@ public class Head extends AbstractPet {
    public AnimalEntity makeChild(@NotNull AnimalEntity AgableMob) {
       return new Head(this.world);
    }
-
-   protected void registerSyncedData() {
-      super.registerSyncedData();
-      this.syncedData.register(20, (byte)0);
-   }
-
-   public boolean isServerEntity() {
-      return this.syncedData.getByte(10) == 1;
-   }
-
-   public void setServerEntity(Boolean value) {
-      this.syncedData.update(10, (byte)(value ? 1 : 0));
-   }
-
    public void mobTick() {
       super.mobTick();
       Vec3d movement = this.getVelocity();
@@ -53,7 +39,7 @@ public class Head extends AbstractPet {
 
    @Override
    public boolean isBreedingItem(@NotNull ItemStack itemStack) {
-      return itemStack.matchesItem(new ItemStack(Item.APPLE));
+      return itemStack.equals(new ItemStack(Item.APPLE));
    }
 
    /*(public Head initialize(Difficulty difficulty, @Nullable EntityData groupData) {
@@ -179,6 +165,5 @@ public class Head extends AbstractPet {
 
    public void readCustomNbt(@NotNull NbtCompound input) {
       super.readCustomNbt(input);
-      this.setServerEntity(input.getBoolean("isServerEntity"));
    }
 }

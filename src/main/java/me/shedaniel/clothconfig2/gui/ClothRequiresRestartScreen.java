@@ -10,7 +10,7 @@ import net.ornithemc.osl.lifecycle.api.client.MinecraftInstance;
 public class ClothRequiresRestartScreen extends ConfirmScreen {
 
     public ClothRequiresRestartScreen(Screen parent) {
-        super(createScreen(parent), Language.getInstance().translate("text.cloth-config.restart_required"), Language.getInstance().translate("text.cloth-config.restart_required_sub"), "", "",  0);
+        super(createScreen(parent), Language.getInstance().translate("text.cloth-config.restart_required"), Language.getInstance().translate("text.cloth-config.restart_required_sub"),   0);
     }
 
     private static Screen createScreen(Screen parent) {

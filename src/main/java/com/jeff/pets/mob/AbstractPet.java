@@ -273,4 +273,8 @@ public abstract class AbstractPet extends AnimalEntity {
         });
         return playerToReturn.get();
     }
+
+    public boolean isRiding() {
+        return this.hasVehicle;
+    }
 }

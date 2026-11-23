@@ -33,7 +33,6 @@ public enum PetList implements NameableEnum {
     skeleton,
     slime,
     spider,
-    squid,
     stingray,
     wither_skeleton,
     villager,

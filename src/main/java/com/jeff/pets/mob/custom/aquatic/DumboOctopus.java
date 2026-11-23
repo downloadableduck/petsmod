@@ -32,20 +32,6 @@ public class DumboOctopus extends FlyingPet {
        this.setSpeed(0.3f);
    }
 
-   protected void registerSyncedData() {
-      super.registerSyncedData();
-      this.syncedData.register(21, 1);
-      this.syncedData.register(20, (byte)0);
-   }
-
-   public boolean isServerEntity() {
-      return this.syncedData.getByte(10) == 1;
-   }
-
-   public void setServerEntity(Boolean value) {
-      this.syncedData.update(10, (byte)(value ? 1 : 0));
-   }
-
    @Override
    protected int stopDistance() {
       return 2;
@@ -72,7 +58,6 @@ public class DumboOctopus extends FlyingPet {
    @Nullable
    public DumboOctopus makeChild(@NotNull AnimalEntity partner) {
       DumboOctopus octopus = new DumboOctopus(this.world);
-      octopus.setServerEntity(true);
       return octopus;
    }
 
@@ -84,9 +69,9 @@ public class DumboOctopus extends FlyingPet {
 
    @Override
    public boolean isBreedingItem(@NotNull ItemStack itemStack) {
-      return itemStack.matchesItem(new ItemStack(Item.FISH, 1, 0))
-         || itemStack.matchesItem(new ItemStack(Item.FISH, 1, 1))
-         || itemStack.matchesItem(new ItemStack(Item.FISH, 1, 2));
+      return itemStack.equals(new ItemStack(Item.FISH.id, 1, 0))
+         || itemStack.equals(new ItemStack(Item.FISH.id, 1, 1))
+         || itemStack.equals(new ItemStack(Item.FISH.id, 1, 2));
    }
 
    @Override
@@ -175,13 +160,10 @@ public class DumboOctopus extends FlyingPet {
    public void writeCustomNbt(@NotNull NbtCompound output) {
       super.writeCustomNbt(output);
       output.putBoolean("isServerEntity", true);
-      output.putInt("variant", this.syncedData.getByte(11));
    }
 
    public void readCustomNbt(@NotNull NbtCompound input) {
       super.readCustomNbt(input);
-      this.setServerEntity(input.getBoolean("isServerEntity"));
-      this.syncedData.update(21, input.getInt("variant"));
    }
 
    /*@Override

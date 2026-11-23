@@ -43,20 +43,6 @@ public class Penguin extends AbstractPet {
    protected float heartHeight() {
       return 1.3F;
    }
-
-   protected void registerSyncedData() {
-      super.registerSyncedData();
-      this.syncedData.register(20, (byte)0);
-   }
-
-   public boolean isServerEntity() {
-      return this.syncedData.getByte(10) == 1;
-   }
-
-   public void setServerEntity(Boolean value) {
-      this.syncedData.update(10, (byte)(value ? 1 : 0));
-   }
-
    public void mobTick() {
       super.mobTick();
       this.oFlap = this.flap;
@@ -99,7 +85,6 @@ public class Penguin extends AbstractPet {
    @Nullable
    public Penguin makeChild(@NotNull AnimalEntity partner) {
       Penguin penguin = new Penguin(this.world);
-      penguin.setServerEntity(true);
       return penguin;
    }
 
@@ -110,9 +95,9 @@ public class Penguin extends AbstractPet {
 
    @Override
    public boolean isBreedingItem(@NotNull ItemStack itemStack) {
-      return itemStack.matchesItem(new ItemStack(Item.FISH, 1, 0))
-         || itemStack.matchesItem(new ItemStack(Item.FISH, 1, 1))
-         || itemStack.matchesItem(new ItemStack(Item.FISH, 1, 2));
+      return itemStack.equals(new ItemStack(Item.FISH.id, 1, 0))
+         || itemStack.equals(new ItemStack(Item.FISH.id, 1, 1))
+         || itemStack.equals(new ItemStack(Item.FISH.id, 1, 2));
    }
 
    @Override
@@ -216,6 +201,5 @@ public class Penguin extends AbstractPet {
 
    public void readCustomNbt(@NotNull NbtCompound input) {
       super.readCustomNbt(input);
-      this.setServerEntity(input.getBoolean("isServerEntity"));
    }
 }

@@ -51,20 +51,6 @@ public class Duck extends AbstractPet {
       return start + f;
    }
 
-   protected void registerSyncedData() {
-      super.registerSyncedData();
-      this.syncedData.register(21, 1);
-      this.syncedData.register(20, (byte)0);
-   }
-
-   public boolean isServerEntity() {
-      return this.syncedData.getByte(10) == 1;
-   }
-
-   public void setServerEntity(Boolean value) {
-      this.syncedData.update(10, (byte)(value ? 1 : 0));
-   }
-
    public void mobTick() {
       super.mobTick();
       this.oFlap = this.flap;
@@ -118,7 +104,6 @@ public class Duck extends AbstractPet {
    @Nullable
    public Duck makeChild(@NotNull AnimalEntity partner) {
       Duck duck = new Duck(this.world);
-      duck.setServerEntity(true);
       return duck;
    }
 
@@ -130,9 +115,9 @@ public class Duck extends AbstractPet {
 
    @Override
    public boolean isBreedingItem(@NotNull ItemStack itemStack) {
-      return itemStack.matchesItem(new ItemStack(Item.FISH, 1, 0))
-         || itemStack.matchesItem(new ItemStack(Item.FISH, 1, 1))
-         || itemStack.matchesItem(new ItemStack(Item.FISH, 1, 2));
+      return itemStack.equals(new ItemStack(Item.FISH.id, 1, 0))
+         || itemStack.equals(new ItemStack(Item.FISH.id, 1, 1))
+         || itemStack.equals(new ItemStack(Item.FISH.id, 1, 2));
    }
 
    @Override
@@ -239,13 +224,10 @@ public class Duck extends AbstractPet {
    public void writeCustomNbt(@NotNull NbtCompound output) {
       super.writeCustomNbt(output);
       output.putBoolean("isServerEntity", true);
-      output.putInt("variant", this.syncedData.getByte(11));
    }
 
    public void readCustomNbt(@NotNull NbtCompound input) {
       super.readCustomNbt(input);
-      this.setServerEntity(input.getBoolean("isServerEntity"));
-      this.syncedData.update(11, input.getInt("variant"));
    }
 
    /*@Override

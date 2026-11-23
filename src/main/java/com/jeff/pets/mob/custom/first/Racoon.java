@@ -44,17 +44,8 @@ public class Racoon extends AbstractPet {
       return this;
    }*/
 
-   protected void registerSyncedData() {
-      super.registerSyncedData();
-      this.syncedData.register(20, Byte.valueOf((byte) 0));
-   }
-
    public boolean isServerEntity() {
-       return this.syncedData.getByte(IS_SERVER_ENTITY) != 0;
-   }
-
-   public void setServerEntity(Boolean value) {
-       this.syncedData.update(IS_SERVER_ENTITY, Byte.valueOf((byte) (value.booleanValue() ? 1 : 0)));
+       return false;
    }
 
    @Override
@@ -145,7 +136,6 @@ public class Racoon extends AbstractPet {
    @Override
    public AnimalEntity makeChild(@NotNull AnimalEntity AgableMob) {
       Racoon racoon = new Racoon(this.world);
-      racoon.setServerEntity(false);
       return racoon;
    }
 

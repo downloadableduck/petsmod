@@ -47,7 +47,8 @@ public abstract class PetRenderer<D extends AbstractPet> extends MobRenderer {
         GlStateManager.pushMatrix();
         org.lwjgl.opengl.GL11.glDisable(2884);
         this.petModel.attackAnimationProgress = this.getAttackAnimationProgress(entity, partialTicks);
-        this.petModel.riding = entity.isRiding();
+        AbstractPet pet = (AbstractPet) entity;
+        this.petModel.riding = pet.isRiding();
 
         float bodyYaw = entity.lastBodyYaw + (entity.bodyYaw - entity.lastBodyYaw) * partialTicks;
         float headYaw = entity.lastYaw + (entity.yaw - entity.lastYaw) * partialTicks;
@@ -55,7 +56,6 @@ public abstract class PetRenderer<D extends AbstractPet> extends MobRenderer {
 
         //this.applyTranslation(entity, x, y, z);
         float bob = this.getBob(entity, partialTicks);
-        this.applyRotation(entity, bob, bodyYaw, partialTicks);
 
         float scale = 0.0625F;
         org.lwjgl.opengl.GL11.glEnable(32826);

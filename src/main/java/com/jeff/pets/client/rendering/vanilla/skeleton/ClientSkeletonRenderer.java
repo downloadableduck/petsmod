@@ -16,10 +16,8 @@ public class ClientSkeletonRenderer extends PetRenderer<ClientSkeleton> {
         return ("textures/mob/skeleton/skeleton.png");
     }
 
-    @Override
     public void applyRotation(net.minecraft.entity.mob.MobEntity entity, float f, float g, float h) {
         ClientSkeleton state = (ClientSkeleton) entity;
-        super.applyRotation(state, f, g, h);
         if (state.isRiding()) {
             com.jeff.pets.compat.GlStateManager.translatef(0, -0.5f, 0);
         }
