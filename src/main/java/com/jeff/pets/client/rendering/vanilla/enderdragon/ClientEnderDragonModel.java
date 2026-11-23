@@ -5,8 +5,8 @@
 
 package com.jeff.pets.client.rendering.vanilla.enderdragon;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.entity.Mob;
 import com.jeff.pets.client.Math2;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.compat.GlStateManager;
@@ -92,7 +92,7 @@ public class ClientEnderDragonModel extends PetModel {
         part.addBox(x, y, z, w, h, d, scale);
     }
 
-    public void animateModel(LivingEntity entity, float f, float g, float h) {
+    public void animateModel(Mob entity, float f, float g, float h) {
         this.delta = h;
     }
 

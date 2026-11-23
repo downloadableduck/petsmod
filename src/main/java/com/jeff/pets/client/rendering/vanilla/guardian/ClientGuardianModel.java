@@ -6,9 +6,9 @@
 package com.jeff.pets.client.rendering.vanilla.guardian;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.util.helper.MathHelper;
+import net.minecraft.core.util.phys.Vec3;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.compat.EntityCompat;
 import com.jeff.pets.compat.render.model.ModelPart;
@@ -66,7 +66,7 @@ public class ClientGuardianModel extends PetModel {
 
     public void setupAnimation(float f, float g, float h, float i, float j, float k, Entity entity) {
         AbstractPet guardianEntity = (AbstractPet)entity;
-        float var10000 = h - (float)guardianEntity.age;
+        float var10000 = h - (float)guardianEntity.tickCount;
         this.field_3379.rotationY = i * 0.017453292F;
         this.field_3379.rotationX = j * 0.017453292F;
         float m = -0.100000024F;
@@ -81,10 +81,10 @@ public class ClientGuardianModel extends PetModel {
         }
 
         this.field_3381.z = -8.25F;
-        Entity cameraEntity = Minecraft.INSTANCE.camera;
+        Entity cameraEntity = Minecraft.getMinecraft().thePlayer;
         if (cameraEntity != null) {
-            Vec3d vec3d = EntityCompat.eyePosition(cameraEntity, 0.0F);
-            Vec3d vec3d2 = EntityCompat.eyePosition(guardianEntity, 0.0F);
+            Vec3 vec3d = EntityCompat.eyePosition(cameraEntity, 0.0F);
+            Vec3 vec3d2 = EntityCompat.eyePosition(guardianEntity, 0.0F);
             double d = vec3d.y - vec3d2.y;
             if (d > 0.0) {
                 this.field_3381.y = 0.0F;
@@ -92,10 +92,10 @@ public class ClientGuardianModel extends PetModel {
                 this.field_3381.y = 1.0F;
             }
 
-            Vec3d vec3d3 = EntityCompat.lookVector(guardianEntity, 0.0F);
-            vec3d3 = Vec3d.create(vec3d3.x, 0.0, vec3d3.z);
-            Vec3d vec3d4 = Vec3d.create(vec3d2.x - vec3d.x, 0.0, vec3d2.z - vec3d.z).normalize();
-            vec3d4.rotateY(1.5707964F);
+            Vec3 vec3d3 = EntityCompat.lookVector(guardianEntity, 0.0F);
+            vec3d3 = Vec3.getPermanentVec3(vec3d3.x, 0.0, vec3d3.z);
+            Vec3 vec3d4 = Vec3.getPermanentVec3(vec3d2.x - vec3d.x, 0.0, vec3d2.z - vec3d.z).normalize();
+            // vec3d4.rotateY(1.5707964F);
             double e = vec3d3.x * vec3d4.x + vec3d3.y * vec3d4.y + vec3d3.z * vec3d4.z;
             this.field_3381.x = MathHelper.sqrt((float)Math.abs(e)) * 2.0F * (float)Math.signum(e);
         }

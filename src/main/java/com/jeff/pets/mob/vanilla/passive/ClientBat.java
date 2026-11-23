@@ -5,14 +5,14 @@
 
 package com.jeff.pets.mob.vanilla.passive;
 
-import net.minecraft.world.World;
+import net.minecraft.core.world.World;
 import com.jeff.pets.mob.FlyingPet;
 
 public class ClientBat extends FlyingPet {
     public boolean isOnHead;
 
-    public ClientBat(World level) {
-        super(level);
+    public ClientBat(World world) {
+        super(world);
         this.setBoundingBoxSpacing(0.5F, 0.9F);
         this.texture = "/mob/bat.png";
     }

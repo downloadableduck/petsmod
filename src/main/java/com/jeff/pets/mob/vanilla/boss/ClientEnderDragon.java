@@ -5,7 +5,7 @@
 
 package com.jeff.pets.mob.vanilla.boss;
 
-import net.minecraft.world.World;
+import net.minecraft.core.world.World;
 import com.jeff.pets.client.Math2;
 import com.jeff.pets.client.Utils;
 import com.jeff.pets.mob.FlyingPet;
@@ -16,8 +16,8 @@ public class ClientEnderDragon extends FlyingPet {
     public float flapTime;
     public int posPointer = -1;
 
-    public ClientEnderDragon(World level) {
-        super(level);
+    public ClientEnderDragon(World world) {
+        super(world);
         this.setBoundingBoxSpacing(16.0F, 8.0F);
         this.texture = "/mob/enderdragon/ender.png";
     }
@@ -37,13 +37,13 @@ public class ClientEnderDragon extends FlyingPet {
     public void tick() {
         super.tick();
         this.oFlapTime = this.flapTime;
-        float g = 0.2F / ((float)this.velocityY * 10.0F + 1.0F);
-        g *= (float)Math.pow(2.0, this.velocityY);
+        float g = 0.2F / ((float)this.yd * 10.0F + 1.0F);
+        g *= (float)Math.pow(2.0, this.yd);
         this.flapTime += g;
     }
 
     public double[] getLatencyPos(int i, float f) {
-        if (this.killedByOtherEntity) {
+        if (this.dead) {
             f = 0.0F;
         }
 

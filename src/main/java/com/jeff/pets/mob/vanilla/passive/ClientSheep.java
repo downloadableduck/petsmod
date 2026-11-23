@@ -5,12 +5,12 @@
 
 package com.jeff.pets.mob.vanilla.passive;
 
-import net.minecraft.world.World;
+import net.minecraft.core.world.World;
 import com.jeff.pets.mob.GroundPet;
 
 public class ClientSheep extends GroundPet {
-    public ClientSheep(World level) {
-        super(level);
+    public ClientSheep(World world) {
+        super(world);
         this.setBoundingBoxSpacing(0.9F, 1.3F);
         this.texture = "/mob/sheep.png";
     }

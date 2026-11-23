@@ -70,7 +70,7 @@ public abstract class DynamicNewSmoothScrollingEntryListWidget<E extends Dynamic
     public boolean mouseScrolled(double double_1) {
         Iterator var3 = this.children().iterator();
 
-        DynamicEntryListWidget.Entry entry;
+        Entry entry;
         do {
             if (!var3.hasNext()) {
                 if (!this.smoothScrolling) {
@@ -83,7 +83,7 @@ public abstract class DynamicNewSmoothScrollingEntryListWidget<E extends Dynamic
                 return true;
             }
 
-            entry = (DynamicEntryListWidget.Entry)var3.next();
+            entry = (Entry)var3.next();
         } while(!entry.mouseScrolled(double_1));
 
         return true;

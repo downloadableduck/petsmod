@@ -5,7 +5,7 @@
 
 package com.jeff.pets.client.rendering.vanilla.sheep;
 
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.core.entity.Mob;
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.rendering.PetRenderLayer;
 import com.jeff.pets.compat.GlStateManager;
@@ -23,9 +23,9 @@ public class ClientSheepWoolLayer implements PetRenderLayer {
         this.model = new ClientSheepFurModel();
     }
 
-    public void render(LivingEntity entity, float f, float a, float h, float i, float j, float k) {
+    public void render(Mob entity, float f, float a, float h, float i, float j, float k) {
         ClientSheep sheep = (ClientSheep)entity;
-        this.renderer.bindTexture("textures/mob/sheep/sheep_fur.png");
+        this.renderer.bindTexture("/mob/sheep/sheep_fur.png");
         if (Objects.equals(Central.CONFIG.sheepSkin, "white")) {
             this.woolColor = 15132390;
         } else if (Objects.equals(Central.CONFIG.sheepSkin, "orange")) {

@@ -5,10 +5,9 @@
 
 package com.jeff.pets.client.rendering.vanilla.squid;
 
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.client.render.entity.model.SquidEntityModel;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.client.render.EntityRendererDispatcher;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.entity.Mob;
 import org.jetbrains.annotations.NotNull;
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.Math2;
@@ -20,17 +19,17 @@ import com.jeff.pets.mob.vanilla.passive.ClientSquid;
 public class ClientSquidRenderer extends PetRenderer<ClientSquid> {
     String squidTexturePath;
 
-    public ClientSquidRenderer(EntityRenderDispatcher context, PetsClientInitializer.Context context2) {
-        super(context, new SquidEntityModel(), 0.7F);
+    public ClientSquidRenderer(EntityRendererDispatcher context, PetsClientInitializer.Context context2) {
+        super(context, new SquidModel(), 0.7F);
     }
 
     public @NotNull String getTexture(Entity entity) {
         ClientSquid squidRenderState = (ClientSquid)entity;
-        this.squidTexturePath = "textures/mob/squid.png";
+        this.squidTexturePath = "/mob/squid.png";
         return this.squidTexturePath;
     }
 
-    protected void applyScale(LivingEntity entity, float f) {
+    protected void applyScale(Mob entity, float f) {
         ClientSquid livingEntityRenderState = (ClientSquid)entity;
         if (Central.CONFIG.isBaby) {
             GlStateManager.scalef(0.5F, 0.5F, 0.5F);
@@ -38,7 +37,7 @@ public class ClientSquidRenderer extends PetRenderer<ClientSquid> {
 
     }
 
-    protected void applyHandSwingRotation(LivingEntity entity, float f, float g, float h) {
+    protected void applyHandSwingRotation(Mob entity, float f, float g, float h) {
         ClientSquid squidEntity = (ClientSquid)entity;
         super.applyHandSwingRotation(squidEntity, f, g, h);
         float i = Math2.lerp(h, squidEntity.xBodyRotO, squidEntity.xBodyRot);

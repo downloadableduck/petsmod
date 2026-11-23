@@ -4,6 +4,7 @@
 //
 
 package me.shedaniel.clothconfig2.gui.entries;
+import net.minecraft.client.font.TextRenderer;
 
 import com.google.common.collect.Lists;
 import com.jeff.pets.compat.GlStateManager;
@@ -66,10 +67,10 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         this.cells = Lists.newArrayList();
         this.labelWidget = new ListLabelWidget();
         this.widgets = Lists.newArrayList(new GuiEventListener[]{this.labelWidget});
-        this.resetWidget = new ButtonWidget(0, 0, Minecraft.INSTANCE.textRenderer.getWidth(I18n.getTranslation(resetButtonKey)) + 6, 20, I18n.getTranslation(resetButtonKey), (widget) -> {
+        this.resetWidget = new ButtonWidget(0, 0, TextRenderer.of(Minecraft.getMinecraft().font).getWidth(I18n.getTranslation(resetButtonKey)) + 6, 20, I18n.getTranslation(resetButtonKey), (widget) -> {
             this.widgets.removeAll(this.cells);
             this.cells.clear();
-            java.util.stream.Stream<C> var10000 = ((List<T>)defaultValue.get()).stream().map(this::getFromValue);
+            Stream<C> var10000 = ((List<T>)defaultValue.get()).stream().map(this::getFromValue);
             var10000.forEach(this.cells::add);
             this.widgets.addAll(this.cells);
             this.getScreen().setEdited(true, this.isRequiresRestart());
@@ -191,7 +192,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
             }
         }
 
-        Minecraft.INSTANCE.textureManager.getTextureId("textures/gui/cloth_config.png");
+        Minecraft.getMinecraft().textureManager.bindTexture(Minecraft.getMinecraft().textureManager.loadTexture("textures/gui/cloth_config.png"));
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         BaseListCell focused = this.expanded && this.getFocused() != null && this.getFocused() instanceof BaseListCell ? (BaseListCell)this.getFocused() : null;
         boolean insideCreateNew = this.isInsideCreateNew((double)mouseX, (double)mouseY);
@@ -206,7 +207,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         this.resetWidget.y = y;
         this.resetWidget.active = this.isEditable() && this.getDefaultValue().isPresent();
         this.resetWidget.render(mouseX, mouseY, delta);
-        Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.getTranslation(this.getFieldName()), this.isDeleteButtonEnabled() ? x + 24 : x + 24 - 9, y + 5, this.labelWidget.rectangle.contains(mouseX, mouseY) && !this.resetWidget.wrapDegrees((double)mouseX, (double)mouseY) && !insideDelete && !insideCreateNew ? -1638890 : this.getPreferredTextColor());
+        TextRenderer.of(Minecraft.getMinecraft().font).drawWithShadow(I18n.getTranslation(this.getFieldName()), this.isDeleteButtonEnabled() ? x + 24 : x + 24 - 9, y + 5, this.labelWidget.rectangle.contains(mouseX, mouseY) && !this.resetWidget.wrapDegrees((double)mouseX, (double)mouseY) && !insideDelete && !insideCreateNew ? -1638890 : this.getPreferredTextColor());
         if (this.expanded) {
             int yy = y + 24;
 
@@ -254,7 +255,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
                 }
 
                 BaseListEntry.this.getScreen().setEdited(true, BaseListEntry.this.isRequiresRestart());
-                Minecraft.INSTANCE.soundManager.playSound("gui.button.press", 1.0F, 1.0F);
+                Minecraft.getMinecraft().sndManager.playSound("gui.button.press", net.minecraft.core.sound.SoundCategory.GUI_SOUNDS, 1.0F, 1.0F);
                 return true;
             } else if (BaseListEntry.this.isDeleteButtonEnabled() && BaseListEntry.this.isInsideDelete(double_1, double_2)) {
                 GuiEventListener focused = BaseListEntry.this.getFocused();
@@ -262,13 +263,13 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
                     BaseListEntry.this.cells.remove(focused);
                     BaseListEntry.this.widgets.remove(focused);
                     BaseListEntry.this.getScreen().setEdited(true, BaseListEntry.this.isRequiresRestart());
-                    Minecraft.INSTANCE.soundManager.playSound("gui.button.press", 1.0F, 1.0F);
+                    Minecraft.getMinecraft().sndManager.playSound("gui.button.press", net.minecraft.core.sound.SoundCategory.GUI_SOUNDS, 1.0F, 1.0F);
                 }
 
                 return true;
             } else if (this.rectangle.contains(double_1, double_2)) {
                 BaseListEntry.this.expanded = !BaseListEntry.this.expanded;
-                Minecraft.INSTANCE.soundManager.playSound("gui.button.press", 1.0F, 1.0F);
+                Minecraft.getMinecraft().sndManager.playSound("gui.button.press", net.minecraft.core.sound.SoundCategory.GUI_SOUNDS, 1.0F, 1.0F);
                 return true;
             } else {
                 return false;

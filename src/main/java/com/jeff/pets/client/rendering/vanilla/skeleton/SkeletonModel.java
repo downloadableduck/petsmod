@@ -5,12 +5,12 @@
 
 package com.jeff.pets.client.rendering.vanilla.skeleton;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.block.Block;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.entity.Mob;
+import net.minecraft.core.item.Item;
+import net.minecraft.core.item.ItemStack;
+import net.minecraft.core.util.helper.MathHelper;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.compat.render.model.ModelPart;
 
@@ -88,14 +88,14 @@ public class SkeletonModel extends PetModel {
 
     }
 
-    public void animateModel(LivingEntity mob, float walkAnimationProgress, float walkAnimationSpeed, float tickDelta) {
-        super.animateModel(mob, walkAnimationProgress, walkAnimationSpeed, tickDelta);
+    public void animateModel(Mob mob, float walkAnimPos, float walkAnimSpeed, float tickDelta) {
+        super.animateModel(mob, walkAnimPos, walkAnimSpeed, tickDelta);
     }
 
-    public void setAngles(float walkAnimationProgress, float walkAnimationSpeed, float bob, float yaw, float pitch, float scale) {
+    public void setAngles(float walkAnimPos, float walkAnimSpeed, float bob, float yRot, float xRot, float scale) {
         if (this.head != null) {
-            this.head.rotationY = yaw * 0.017453292F;
-            this.head.rotationX = pitch * 0.017453292F;
+            this.head.rotationY = yRot * 0.017453292F;
+            this.head.rotationX = xRot * 0.017453292F;
         }
 
         if (this.hat != null && this.head != null) {
@@ -104,25 +104,25 @@ public class SkeletonModel extends PetModel {
         }
 
         if (this.rightLeg != null) {
-            this.rightLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F) * 1.4F * walkAnimationSpeed;
+            this.rightLeg.rotationX = MathHelper.cos(walkAnimPos * 0.6662F) * 1.4F * walkAnimSpeed;
         }
 
         if (this.leftLeg != null) {
-            this.leftLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F + 3.1415927F) * 1.4F * walkAnimationSpeed;
+            this.leftLeg.rotationX = MathHelper.cos(walkAnimPos * 0.6662F + 3.1415927F) * 1.4F * walkAnimSpeed;
         }
 
         if (this.rightArm != null) {
-            this.rightArm.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F + 3.1415927F) * 2.0F * walkAnimationSpeed * 0.5F;
+            this.rightArm.rotationX = MathHelper.cos(walkAnimPos * 0.6662F + 3.1415927F) * 2.0F * walkAnimSpeed * 0.5F;
         }
 
         if (this.leftArm != null) {
-            this.leftArm.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F) * 2.0F * walkAnimationSpeed * 0.5F;
+            this.leftArm.rotationX = MathHelper.cos(walkAnimPos * 0.6662F) * 2.0F * walkAnimSpeed * 0.5F;
         }
 
-        ItemStack itemStack = new ItemStack(Block.LAPIS_BLOCK);
-        if (itemStack == null || itemStack.getItem() != Item.BOW) {
-            float f = MathHelper.sin(this.handSwingProgress * 3.1415927F);
-            float g = MathHelper.sin((1.0F - (1.0F - this.handSwingProgress) * (1.0F - this.handSwingProgress)) * 3.1415927F);
+        ItemStack itemStack = new ItemStack(net.minecraft.core.block.Blocks.BLOCK_LAPIS);
+        if (itemStack == null || itemStack.getItem() != net.minecraft.core.item.Items.TOOL_BOW) {
+            float f = MathHelper.sin(this.swingProgress * 3.1415927F);
+            float g = MathHelper.sin((1.0F - (1.0F - this.swingProgress) * (1.0F - this.swingProgress)) * 3.1415927F);
             ModelPart var10000;
             if (this.rightArm != null) {
                 var10000 = this.rightArm;

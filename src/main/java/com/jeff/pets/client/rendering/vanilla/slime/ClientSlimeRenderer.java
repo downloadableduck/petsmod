@@ -5,10 +5,10 @@
 
 package com.jeff.pets.client.rendering.vanilla.slime;
 
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.client.render.entity.model.SlimeEntityModel;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
+import com.jeff.pets.client.rendering.vanilla.squid.SquidModel;
+import net.minecraft.client.render.EntityRendererDispatcher;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.entity.Mob;
 import org.jetbrains.annotations.NotNull;
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.PetsClientInitializer;
@@ -17,12 +17,12 @@ import com.jeff.pets.compat.GlStateManager;
 import com.jeff.pets.mob.vanilla.hostile.ClientSlime;
 
 public class ClientSlimeRenderer extends PetRenderer<ClientSlime> {
-    public ClientSlimeRenderer(EntityRenderDispatcher context, PetsClientInitializer.Context context2) {
-        super(context, new SlimeEntityModel(16), 0.75F);
+    public ClientSlimeRenderer(EntityRendererDispatcher context, PetsClientInitializer.Context context2) {
+        super(context, new SlimeModel(16), 0.75F);
         this.addLayer(new SlimeOuterLayer(this));
     }
 
-    protected void applyScale(LivingEntity entity, float f) {
+    protected void applyScale(Mob entity, float f) {
         ClientSlime slimeRenderState = (ClientSlime)entity;
         byte slimeapplyScale;
         switch (Central.CONFIG.slimeSkin) {
@@ -44,6 +44,6 @@ public class ClientSlimeRenderer extends PetRenderer<ClientSlime> {
 
     public @NotNull String getTexture(Entity entity) {
         ClientSlime livingEntityRenderState = (ClientSlime)entity;
-        return "textures/mob/slime/slime.png";
+        return "/mob/slime/slime.png";
     }
 }

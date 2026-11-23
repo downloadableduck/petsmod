@@ -171,7 +171,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
     /** @deprecated */
     @Deprecated
     protected void renderBackBackground(Builder buffer, Tessellator Tesselator) {
-        this.client.textureManager.getTextureId(this.backgroundLocation);
+        this.client.textureManager.bindTexture(this.client.textureManager.loadTexture(this.backgroundLocation));
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         float float_2 = 32.0F;
         buffer.begin(7, GuiVertexCompat.POSITION_COLOR);
@@ -472,7 +472,7 @@ public abstract class DynamicEntryListWidget<E extends DynamicEntryListWidget.En
     protected void renderHoleBackground(int int_1, int int_2, int int_3, int int_4) {
         Tessellator tesselator = Tessellator.INSTANCE;
         Builder buffer = Builder.of(tesselator);
-        this.client.textureManager.getTextureId(this.backgroundLocation);
+        this.client.textureManager.bindTexture(this.client.textureManager.loadTexture(this.backgroundLocation));
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         float float_1 = 32.0F;
         buffer.begin(7, GuiVertexCompat.POSITION_COLOR);

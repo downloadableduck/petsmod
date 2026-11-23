@@ -1,10 +1,26 @@
 package com.jeff.pets.client;
 
-import net.danygames2014.modmenu.api.ConfigScreenFactory;
-import net.danygames2014.modmenu.api.ModMenuApi;
+import io.github.prospector.modmenu.api.ModMenuApi;
+import net.minecraft.client.gui.Screen;
+
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class ModMenuEntrypoint implements ModMenuApi {
-    public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return (screen -> new PetsConfigScreen().getModConfigScreenFactory());
+
+    @Override
+    public String getModId() {
+        return "pets-mod";
+    }
+
+    @Override
+    public Function<Screen, ? extends Screen> getConfigScreenFactory() {
+        return (screenFactory) -> new PetsConfigScreen<>().getModConfigScreenFactory();
+    }
+
+    @Override
+    public Optional<Supplier<Screen>> getConfigScreen(Screen screen) {
+        return Optional.of(() -> new PetsConfigScreen<>().getModConfigScreenFactory());
     }
 }

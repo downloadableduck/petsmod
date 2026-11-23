@@ -5,9 +5,9 @@
 
 package com.jeff.pets.client.rendering.vanilla.sheep;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.entity.Mob;
+import net.minecraft.core.util.helper.MathHelper;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.compat.render.model.ModelPart;
 
@@ -59,6 +59,6 @@ public class ClientSheepModel extends PetModel {
         this.frontLeftLeg.rotationX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
     }
 
-    public void animateModel(LivingEntity entity, float limbSwing, float limbSwingAmount, float tickDelta) {
+    public void animateModel(Mob entity, float limbSwing, float limbSwingAmount, float tickDelta) {
     }
 }

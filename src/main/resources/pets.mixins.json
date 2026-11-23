@@ -3,8 +3,7 @@
   "package": "com.jeff.pets.client.mixin.client",
   "compatibilityLevel": "JAVA_6",
   "mixins": [
-    "ChatAccessor",
-    "TitleScreenRenderingMixin"
+    "LanguagePackMixin"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -16,7 +15,8 @@
     "ClientPlayJoinHandlerMixin",
     "EndClientTickMixin",
     "EntityRenderDispatcherMixin",
+    "GameSettingsMixin",
     "IntermediaryVerifierMixin",
-    "PlayerSendMessageMixin"
+    "TessallatorShaderMixin"
   ]
 }

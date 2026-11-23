@@ -5,8 +5,8 @@
 
 package com.jeff.pets.client.rendering.vanilla.shulker;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.util.helper.MathHelper;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.compat.render.model.ModelPart;
 import com.jeff.pets.mob.vanilla.hostile.ClientShulker;
@@ -32,7 +32,7 @@ public class ClientShulkerModel extends PetModel {
 
     public void setupAnimation(float f, float g, float h, float i, float j, float k, Entity entity) {
         ClientShulker shulkerEntity = (ClientShulker)entity;
-        float var10000 = h - (float)shulkerEntity.age;
+        float var10000 = h - (float)shulkerEntity.tickCount;
         float m = 565.9867F;
         float n = -1.0F + MathHelper.sin(m);
         float o = 0.0F;

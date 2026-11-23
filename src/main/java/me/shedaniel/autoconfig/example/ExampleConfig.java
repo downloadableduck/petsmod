@@ -73,8 +73,8 @@ public class ExampleConfig extends PartitioningSerializer.GlobalData {
         public PairOfInts[] complexArray;
 
         public ModuleA() {
-            this.anEnum = me.shedaniel.autoconfig.example.ExampleConfig.ExampleEnum.FOO;
-            this.anEnumWithButton = me.shedaniel.autoconfig.example.ExampleConfig.ExampleEnum.FOO;
+            this.anEnum = ExampleEnum.FOO;
+            this.anEnumWithButton = ExampleEnum.FOO;
             this.aString = "hello";
             this.anObject = new PairOfIntPairs(new PairOfInts(), new PairOfInts(3, 4));
             this.list = Arrays.asList(1, 2, 3);

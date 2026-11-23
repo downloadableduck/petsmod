@@ -5,8 +5,8 @@
 
 package com.jeff.pets.mob.vanilla.passive;
 
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.core.util.helper.MathHelper;
+import net.minecraft.core.world.World;
 import com.jeff.pets.mob.FlyingPet;
 
 public class ClientSquid extends FlyingPet {
@@ -25,8 +25,8 @@ public class ClientSquid extends FlyingPet {
     private float ty;
     private float tz;
 
-    public ClientSquid(World level) {
-        super(level);
+    public ClientSquid(World world) {
+        super(world);
         this.setBoundingBoxSpacing(0.8F, 0.8F);
         this.texture = "/mob/squid.png";
     }
@@ -51,7 +51,7 @@ public class ClientSquid extends FlyingPet {
         this.oldTentacleAngle = this.tentacleAngle;
         this.tentacleMovement += this.tentacleSpeed;
         if ((double)this.tentacleMovement > 6.283185307179586) {
-            if (this.world.isRemote) {
+            if (this.world.isClientSide) {
                 this.tentacleMovement = 6.2831855F;
             } else {
                 this.tentacleMovement -= 6.2831855F;
@@ -59,12 +59,12 @@ public class ClientSquid extends FlyingPet {
                     this.tentacleSpeed = 1.0F / (this.random.nextFloat() + 1.0F) * 0.2F;
                 }
 
-                this.world.broadcastEntityEvent(this, (byte)19);
+                // world.broadcastEntityEvent(this, (byte)19);
             }
         }
 
         double d;
-        if (this.isSubmergedInWater()) {
+        if (this.isInWater()) {
             if (this.tentacleMovement < 3.1415927F) {
                 float f = this.tentacleMovement / 3.1415927F;
                 this.tentacleAngle = MathHelper.sin(f * f * 3.1415927F) * 3.1415927F * 0.25F;
@@ -80,21 +80,21 @@ public class ClientSquid extends FlyingPet {
                 this.rotateSpeed *= 0.99F;
             }
 
-            if (!this.world.isRemote) {
-                this.setVelocityClient((double)(this.tx * this.speed), (double)(this.ty * this.speed), (double)(this.tz * this.speed));
+            if (!this.world.isClientSide) {
+                this.setVelocity((double)(this.tx * this.speed), (double)(this.ty * this.speed), (double)(this.tz * this.speed));
             }
 
-            d = Math.sqrt(this.velocityX * this.velocityX + this.velocityZ * this.velocityZ);
-            this.yaw += (-((float)Math.atan2(this.velocityX, this.velocityZ)) * 57.295776F - this.yaw) * 0.1F;
-            this.setYRot(this.yaw);
+            d = Math.sqrt(this.xd * this.xd + this.zd * this.zd);
+            this.yRot += (-((float)Math.atan2(this.xd, this.zd)) * 57.295776F - this.yRot) * 0.1F;
+            this.setYRot(this.yRot);
             this.zBodyRot += 3.1415927F * this.rotateSpeed * 1.5F;
-            this.xBodyRot += (-((float)Math.atan2(d, this.velocityY)) * 57.295776F - this.xBodyRot) * 0.1F;
+            this.xBodyRot += (-((float)Math.atan2(d, this.yd)) * 57.295776F - this.xBodyRot) * 0.1F;
         } else {
             this.tentacleAngle = MathHelper.abs(MathHelper.sin(this.tentacleMovement)) * 3.1415927F * 0.25F;
-            if (!this.world.isRemote) {
-                d = this.velocityY;
+            if (!this.world.isClientSide) {
+                d = this.yd;
                 --d;
-                this.setVelocityClient(0.0, d * 0.9800000190734863, 0.0);
+                this.setVelocity(0.0, d * 0.9800000190734863, 0.0);
             }
 
             this.xBodyRot += (-90.0F - this.xBodyRot) * 0.02F;
@@ -102,8 +102,8 @@ public class ClientSquid extends FlyingPet {
 
     }
 
-    public void setVelocityClient(double x, double y, double z) {
-        super.setVelocityClient(x, y, z);
+    public void setVelocity(double x, double y, double z) {
+        super.setVelocity(x, y, z);
         this.tx = (float)x;
         this.ty = (float)y;
         this.tz = (float)z;

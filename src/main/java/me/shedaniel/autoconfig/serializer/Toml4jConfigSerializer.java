@@ -35,7 +35,7 @@ public class Toml4jConfigSerializer<T extends ConfigData> implements ConfigSeria
         return Utils.getConfigFolder().resolve(this.definition.name() + ".toml");
     }
 
-    public void serialize(T config) throws ConfigSerializer.SerializationException {
+    public void serialize(T config) throws SerializationException {
         Path configPath = this.getConfigPath();
 
         try {
@@ -43,18 +43,18 @@ public class Toml4jConfigSerializer<T extends ConfigData> implements ConfigSeria
             this.tomlWriter.write(config, configPath.toFile());
         } catch (IOException var4) {
             IOException e = var4;
-            throw new ConfigSerializer.SerializationException(e);
+            throw new SerializationException(e);
         }
     }
 
-    public T deserialize() throws ConfigSerializer.SerializationException {
+    public T deserialize() throws SerializationException {
         Path configPath = this.getConfigPath();
         if (Files.exists(configPath, new LinkOption[0])) {
             try {
                 return (T)(Object)(new Toml()).read(configPath.toFile()).to(this.configClass);
             } catch (IllegalStateException var3) {
                 IllegalStateException e = var3;
-                throw new ConfigSerializer.SerializationException(e);
+                throw new SerializationException(e);
             }
         } else {
             return this.createDefault();

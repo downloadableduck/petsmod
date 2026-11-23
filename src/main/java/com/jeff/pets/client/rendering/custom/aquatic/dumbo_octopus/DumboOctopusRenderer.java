@@ -5,9 +5,9 @@
 
 package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.client.render.EntityRendererDispatcher;
+import net.minecraft.client.render.tessellator.TessellatorGeneral;
+import net.minecraft.core.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.PetsClientInitializer;
@@ -19,18 +19,18 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus> {
     float direction = 1.0F;
     float speed = 0.5F;
 
-    public DumboOctopusRenderer(EntityRenderDispatcher context, PetsClientInitializer.Context context2) {
+    public DumboOctopusRenderer(EntityRendererDispatcher context, PetsClientInitializer.Context context2) {
         super(context, new DumboOctopusModel(), 0.5F);
     }
 
     public @NotNull String getTexture(Entity entity) {
         DumboOctopus state = (DumboOctopus)entity;
-        String yellow = "textures/mob/dumbo_octopus/yellow.png";
-        String red = "textures/mob/dumbo_octopus/red.png";
-        String blue = "textures/mob/dumbo_octopus/blue.png";
-        String green = "textures/mob/dumbo_octopus/green.png";
-        String orange = "textures/mob/dumbo_octopus/orange.png";
-        String pink = "textures/mob/dumbo_octopus/pink.png";
+        String yellow = "/mob/dumbo_octopus/yellow.png";
+        String red = "/mob/dumbo_octopus/red.png";
+        String blue = "/mob/dumbo_octopus/blue.png";
+        String green = "/mob/dumbo_octopus/green.png";
+        String orange = "/mob/dumbo_octopus/orange.png";
+        String pink = "/mob/dumbo_octopus/pink.png";
         String path;
         if (Central.CONFIG.dumboOctopusSkin.equals("yellow")) {
             path = yellow;
@@ -51,8 +51,9 @@ public class DumboOctopusRenderer extends PetRenderer<DumboOctopus> {
         return path;
     }
 
-    public void render(LivingEntity mobEntity, double f, double g, double h, float j, float i) {
-        super.render(mobEntity, f, g, h, j, i);
+    @Override
+    public void render(@NotNull TessellatorGeneral general, @NotNull DumboOctopus mobEntity, double f, double g, double h, float j, float i) {
+        super.render(general, mobEntity, f, g, h, j, i);
         DumboOctopus octopus = (DumboOctopus)mobEntity;
         float currentSpeed;
         if (i > 67.5F) {

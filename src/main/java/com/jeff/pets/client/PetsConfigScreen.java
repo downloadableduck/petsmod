@@ -7,7 +7,7 @@ import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.clothconfig2.impl.builders.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.Screen;
 
 import java.util.Objects;
 
@@ -77,14 +77,13 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                 .setTitle("Config")
                 .setSavingRunnable(() -> {
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
-                    Minecraft.INSTANCE.setScreen(this.getModConfigScreenFactory());
+                    Minecraft.getMinecraft().displayScreen(this.getModConfigScreenFactory());
                 })
                 .setTransparentBackground(true);
         ConfigCategory general = builder.getOrCreateCategory("Config");
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
         general.addEntry(this.createPetOnOption(entryBuilder, CONFIG).build());
         general.addEntry(this.createPetSpeciesOption(entryBuilder, CONFIG).build());
-        general.addEntry(this.createPetNameOption(entryBuilder, CONFIG).build());
         general.addEntry(this.createPetSkinOption(entryBuilder, CONFIG).build());
         general.addEntry(this.createBabyOption(entryBuilder, CONFIG).build());
 
@@ -102,7 +101,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                 .map(Enum::name)
                 .collect(java.util.stream.Collectors.toList());
         String activePetValue = CONFIG.activePet != null ? CONFIG.activePet : PetList.penguin.name();
-        return builder.startStringDropdownMenu(Minecraft.INSTANCE.currentScreen, ("Pet Species"), activePetValue)
+        return builder.startStringDropdownMenu(Minecraft.getMinecraft().currentScreen, ("Pet Species"), activePetValue)
                 .setSelections(species)
                 .setSaveConsumer((newVal) -> {
                     try {

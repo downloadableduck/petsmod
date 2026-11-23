@@ -5,9 +5,9 @@
 
 package com.jeff.pets.client.rendering.vanilla.cat;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.entity.Mob;
+import net.minecraft.core.util.helper.MathHelper;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.compat.GlStateManager;
 import com.jeff.pets.compat.render.model.ModelPart;
@@ -59,8 +59,8 @@ public class ClientCatModel extends PetModel {
         this.frontrightLeg.setPos(-1.2F, 13.8F, -5.0F);
     }
 
-    public void render(Entity entity, float walkAnimationProgress, float walkAnimationSpeed, float bob, float yaw, float pitch, float scale) {
-        this.setupAnimation(walkAnimationProgress, walkAnimationSpeed, bob, yaw, pitch, scale, entity);
+    public void render(Entity entity, float walkAnimPos, float walkAnimSpeed, float bob, float yRot, float xRot, float scale) {
+        this.setupAnimation(walkAnimPos, walkAnimSpeed, bob, yRot, xRot, scale, entity);
         if (this.isBaby) {
             float f = 2.0F;
             GlStateManager.pushMatrix();
@@ -92,33 +92,33 @@ public class ClientCatModel extends PetModel {
 
     }
 
-    public void setupAnimation(float walkAnimationProgress, float walkAnimationSpeed, float bob, float yaw, float pitch, float scale, Entity entity) {
-        this.head.rotationX = pitch * 0.017453292F;
-        this.head.rotationY = yaw * 0.017453292F;
+    public void setupAnimation(float walkAnimPos, float walkAnimSpeed, float bob, float yRot, float xRot, float scale, Entity entity) {
+        this.head.rotationX = xRot * 0.017453292F;
+        this.head.rotationY = yRot * 0.017453292F;
         if (this.state != 3) {
             this.body.rotationX = 1.5707964F;
             if (this.state == 2) {
-                this.backLeftLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F) * walkAnimationSpeed;
-                this.backRightLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F + 0.3F) * walkAnimationSpeed;
-                this.frontLeftLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F + 3.1415927F + 0.3F) * walkAnimationSpeed;
-                this.frontrightLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F + 3.1415927F) * walkAnimationSpeed;
-                this.lowerTail.rotationX = 1.7278761F + 0.31415927F * MathHelper.cos(walkAnimationProgress) * walkAnimationSpeed;
+                this.backLeftLeg.rotationX = MathHelper.cos(walkAnimPos * 0.6662F) * walkAnimSpeed;
+                this.backRightLeg.rotationX = MathHelper.cos(walkAnimPos * 0.6662F + 0.3F) * walkAnimSpeed;
+                this.frontLeftLeg.rotationX = MathHelper.cos(walkAnimPos * 0.6662F + 3.1415927F + 0.3F) * walkAnimSpeed;
+                this.frontrightLeg.rotationX = MathHelper.cos(walkAnimPos * 0.6662F + 3.1415927F) * walkAnimSpeed;
+                this.lowerTail.rotationX = 1.7278761F + 0.31415927F * MathHelper.cos(walkAnimPos) * walkAnimSpeed;
             } else {
-                this.backLeftLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F) * walkAnimationSpeed;
-                this.backRightLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F + 3.1415927F) * walkAnimationSpeed;
-                this.frontLeftLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F + 3.1415927F) * walkAnimationSpeed;
-                this.frontrightLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F) * walkAnimationSpeed;
+                this.backLeftLeg.rotationX = MathHelper.cos(walkAnimPos * 0.6662F) * walkAnimSpeed;
+                this.backRightLeg.rotationX = MathHelper.cos(walkAnimPos * 0.6662F + 3.1415927F) * walkAnimSpeed;
+                this.frontLeftLeg.rotationX = MathHelper.cos(walkAnimPos * 0.6662F + 3.1415927F) * walkAnimSpeed;
+                this.frontrightLeg.rotationX = MathHelper.cos(walkAnimPos * 0.6662F) * walkAnimSpeed;
                 if (this.state == 1) {
-                    this.lowerTail.rotationX = 1.7278761F + 0.7853982F * MathHelper.cos(walkAnimationProgress) * walkAnimationSpeed;
+                    this.lowerTail.rotationX = 1.7278761F + 0.7853982F * MathHelper.cos(walkAnimPos) * walkAnimSpeed;
                 } else {
-                    this.lowerTail.rotationX = 1.7278761F + 0.47123894F * MathHelper.cos(walkAnimationProgress) * walkAnimationSpeed;
+                    this.lowerTail.rotationX = 1.7278761F + 0.47123894F * MathHelper.cos(walkAnimPos) * walkAnimSpeed;
                 }
             }
         }
 
     }
 
-    public void animateModel(LivingEntity mob, float walkAnimationProgress, float walkAnimationSpeed, float tickDelta) {
+    public void animateModel(Mob mob, float walkAnimPos, float walkAnimSpeed, float tickDelta) {
         ClientCat ocelotEntity = (ClientCat)mob;
         this.body.y = 12.0F;
         this.body.z = -10.0F;

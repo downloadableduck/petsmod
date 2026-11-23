@@ -5,7 +5,8 @@
 
 package com.jeff.pets.compat.render.model;
 
-import org.lwjgl.opengl.GL11;
+import net.minecraft.client.render.renderer.DrawMode;
+import net.minecraft.client.render.tessellator.TessellatorGeneral;
 import com.jeff.pets.compat.GlStateManager;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class ModelPart {
     public boolean invisible;
     public final List<ModelPart> children;
     private final List<Box> boxes;
+    private final Model model;
 
     public ModelPart(Model model) {
         this.textureWidth = 64.0F;
@@ -35,6 +37,7 @@ public class ModelPart {
         this.visible = true;
         this.children = new ArrayList();
         this.boxes = new ArrayList();
+        this.model = model;
         if (model != null) {
             this.textureWidth = (float)model.textureWidth;
             this.textureHeight = (float)model.textureHeight;
@@ -106,11 +109,12 @@ public class ModelPart {
                     GlStateManager.rotatef(this.rotationX * 57.295776F, 1.0F, 0.0F, 0.0F);
                 }
 
+                TessellatorGeneral tessellator = this.model != null ? this.model.getTessellator() : null;
                 Iterator var2 = this.boxes.iterator();
 
                 while(var2.hasNext()) {
                     Box box = (Box)var2.next();
-                    box.render(scale);
+                    box.render(scale, tessellator);
                 }
 
                 var2 = this.children.iterator();
@@ -185,7 +189,10 @@ public class ModelPart {
             this.z2 = maxZ;
         }
 
-        void render(float scale) {
+        void render(float scale, TessellatorGeneral tessellator) {
+            if (tessellator == null) {
+                return;
+            }
             float x1 = this.x1 * scale;
             float y1 = this.y1 * scale;
             float z1 = this.z1 * scale;
@@ -197,17 +204,17 @@ public class ModelPart {
             float W = (float)this.w;
             float H = (float)this.h;
             float D = (float)this.d;
-            GL11.glBegin(7);
-            this.quad(x2, y1, z2, x2, y1, z1, x2, y2, z1, x2, y2, z2, U + D + W, V + D, U + D + W + D, V + D + H, 1.0F, 0.0F, 0.0F);
-            this.quad(x1, y1, z1, x1, y1, z2, x1, y2, z2, x1, y2, z1, U, V + D, U + D, V + D + H, -1.0F, 0.0F, 0.0F);
-            this.quad(x2, y1, z2, x1, y1, z2, x1, y1, z1, x2, y1, z1, U + D, V, U + D + W, V + D, 0.0F, -1.0F, 0.0F);
-            this.quad(x2, y2, z1, x1, y2, z1, x1, y2, z2, x2, y2, z2, U + D + W, V, U + D + W + W, V + D, 0.0F, 1.0F, 0.0F);
-            this.quad(x2, y1, z1, x1, y1, z1, x1, y2, z1, x2, y2, z1, U + D, V + D, U + D + W, V + D + H, 0.0F, 0.0F, -1.0F);
-            this.quad(x1, y1, z2, x2, y1, z2, x2, y2, z2, x1, y2, z2, U + D + W + D, V + D, U + D + W + D + W, V + D + H, 0.0F, 0.0F, 1.0F);
-            GL11.glEnd();
+            tessellator.startDrawing(DrawMode.QUADS);
+            this.quad(tessellator, x2, y1, z2, x2, y1, z1, x2, y2, z1, x2, y2, z2, U + D + W, V + D, U + D + W + D, V + D + H, 1.0F, 0.0F, 0.0F);
+            this.quad(tessellator, x1, y1, z1, x1, y1, z2, x1, y2, z2, x1, y2, z1, U, V + D, U + D, V + D + H, -1.0F, 0.0F, 0.0F);
+            this.quad(tessellator, x2, y1, z2, x1, y1, z2, x1, y1, z1, x2, y1, z1, U + D, V, U + D + W, V + D, 0.0F, -1.0F, 0.0F);
+            this.quad(tessellator, x2, y2, z1, x1, y2, z1, x1, y2, z2, x2, y2, z2, U + D + W, V, U + D + W + W, V + D, 0.0F, 1.0F, 0.0F);
+            this.quad(tessellator, x2, y1, z1, x1, y1, z1, x1, y2, z1, x2, y2, z1, U + D, V + D, U + D + W, V + D + H, 0.0F, 0.0F, -1.0F);
+            this.quad(tessellator, x1, y1, z2, x2, y1, z2, x2, y2, z2, x1, y2, z2, U + D + W + D, V + D, U + D + W + D + W, V + D + H, 0.0F, 0.0F, 1.0F);
+            tessellator.draw();
         }
 
-        private void quad(float ax, float ay, float az, float bx, float by, float bz, float cx, float cy, float cz, float dx, float dy, float dz, float u1, float v1, float u2, float v2, float nx, float ny, float nz) {
+        private void quad(TessellatorGeneral tessellator, float ax, float ay, float az, float bx, float by, float bz, float cx, float cy, float cz, float dx, float dy, float dz, float u1, float v1, float u2, float v2, float nx, float ny, float nz) {
             float insetU = 0.1F / this.tw;
             float insetV = 0.1F / this.th;
             float[] uu = new float[]{u2 / this.tw - insetU, u1 / this.tw + insetU, u1 / this.tw + insetU, u2 / this.tw - insetU};
@@ -215,17 +222,15 @@ public class ModelPart {
             float[] px = new float[]{ax, bx, cx, dx};
             float[] py = new float[]{ay, by, cy, dy};
             float[] pz = new float[]{az, bz, cz, dz};
-            GL11.glNormal3f(nx, ny, nz);
+            tessellator.setNormal(nx, ny, nz);
             int i;
             if (!this.flipped) {
                 for(i = 0; i < 4; ++i) {
-                    GL11.glTexCoord2f(uu[i], vv[i]);
-                    GL11.glVertex3f(px[i], py[i], pz[i]);
+                    tessellator.addVertexWithUV((double)px[i], (double)py[i], (double)pz[i], (double)uu[i], (double)vv[i]);
                 }
             } else {
                 for(i = 3; i >= 0; --i) {
-                    GL11.glTexCoord2f(uu[i], vv[i]);
-                    GL11.glVertex3f(px[i], py[i], pz[i]);
+                    tessellator.addVertexWithUV((double)px[i], (double)py[i], (double)pz[i], (double)uu[i], (double)vv[i]);
                 }
             }
 

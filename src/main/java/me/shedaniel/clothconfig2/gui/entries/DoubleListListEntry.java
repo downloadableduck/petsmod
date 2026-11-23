@@ -61,7 +61,7 @@ public class DoubleListListEntry extends AbstractTextFieldListListEntry<Double, 
         return super.hoveredElement(d, e);
     }
 
-    public static class DoubleListCell extends AbstractTextFieldListListEntry.AbstractTextFieldListCell<Double, DoubleListCell, DoubleListListEntry> {
+    public static class DoubleListCell extends AbstractTextFieldListCell<Double, DoubleListCell, DoubleListListEntry> {
         public DoubleListCell(Double value, DoubleListListEntry listListEntry) {
             super(value, listListEntry);
         }

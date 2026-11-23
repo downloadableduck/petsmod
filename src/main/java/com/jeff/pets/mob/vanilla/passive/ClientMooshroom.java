@@ -5,12 +5,12 @@
 
 package com.jeff.pets.mob.vanilla.passive;
 
-import net.minecraft.world.World;
+import net.minecraft.core.world.World;
 import com.jeff.pets.mob.GroundPet;
 
 public class ClientMooshroom extends GroundPet {
-    public ClientMooshroom(World level) {
-        super(level);
+    public ClientMooshroom(World world) {
+        super(world);
         this.setBoundingBoxSpacing(0.9F, 1.4F);
         this.texture = "/mob/redcow.png";
     }

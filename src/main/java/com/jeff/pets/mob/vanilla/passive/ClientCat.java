@@ -5,15 +5,15 @@
 
 package com.jeff.pets.mob.vanilla.passive;
 
-import net.minecraft.world.World;
+import net.minecraft.core.world.World;
 import com.jeff.pets.client.Central;
 import com.jeff.pets.mob.GroundPet;
 
 public class ClientCat extends GroundPet {
     public boolean isOnHead;
 
-    public ClientCat(World level) {
-        super(level);
+    public ClientCat(World world) {
+        super(world);
         this.setBoundingBoxSpacing(0.6F, 0.7F);
     }
 

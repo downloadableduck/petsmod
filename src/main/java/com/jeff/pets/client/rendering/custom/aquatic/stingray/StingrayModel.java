@@ -5,8 +5,8 @@
 
 package com.jeff.pets.client.rendering.custom.aquatic.stingray;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.util.helper.MathHelper;
 import com.jeff.pets.client.Math2;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.compat.render.model.ModelPart;
@@ -56,7 +56,7 @@ public class StingrayModel extends PetModel {
         Stingray state = (Stingray)entity;
         float partialTick = m;
         float flapTime = Math2.lerp(partialTick, state.oFlap, state.flap);
-        if (state.walkAnimationSpeed > 0.0F) {
+        if (state.walkAnimSpeed > 0.0F) {
             float anim = flapTime * 7.448451F * 0.017453292F;
             this.left_fin.rotationZ = MathHelper.cos(anim) * 16.0F * 0.017453292F;
             this.right_fin.rotationZ = -this.left_fin.rotationZ;

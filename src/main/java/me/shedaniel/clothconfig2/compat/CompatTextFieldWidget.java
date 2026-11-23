@@ -6,10 +6,10 @@
 package me.shedaniel.clothconfig2.compat;
 
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 
-public class CompatTextFieldWidget extends TextFieldWidget implements GuiEventListener {
+public class CompatTextFieldWidget extends TextFieldWidget {
     private final Screen screen;
 
     public CompatTextFieldWidget(Screen screen, int id, TextRenderer textRenderer, int x, int y, int width, int height) {
@@ -24,7 +24,7 @@ public class CompatTextFieldWidget extends TextFieldWidget implements GuiEventLi
     }
 
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        return GuiEventListener.super.mouseClicked((double)((int)mouseX), (double)((int)mouseY), button);
+        return super.mouseClicked(mouseX, mouseY, button);
     }
 
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {

@@ -35,7 +35,7 @@ public class JanksonConfigSerializer<T extends ConfigData> implements ConfigSeri
         return Utils.getConfigFolder().resolve(this.definition.name() + ".json5");
     }
 
-    public void serialize(T config) throws ConfigSerializer.SerializationException {
+    public void serialize(T config) throws SerializationException {
         Path configPath = this.getConfigPath();
 
         try {
@@ -45,18 +45,18 @@ public class JanksonConfigSerializer<T extends ConfigData> implements ConfigSeri
             writer.close();
         } catch (IOException var4) {
             IOException e = var4;
-            throw new ConfigSerializer.SerializationException(e);
+            throw new SerializationException(e);
         }
     }
 
-    public T deserialize() throws ConfigSerializer.SerializationException {
+    public T deserialize() throws SerializationException {
         Path configPath = this.getConfigPath();
         if (Files.exists(configPath, new LinkOption[0])) {
             try {
                 return (T)(Object)this.jankson.fromJson(this.jankson.load(this.getConfigPath().toFile()), this.configClass);
             } catch (Throwable var3) {
                 Throwable e = var3;
-                throw new ConfigSerializer.SerializationException(e);
+                throw new SerializationException(e);
             }
         } else {
             return this.createDefault();

@@ -5,11 +5,12 @@
 
 package com.jeff.pets.client.rendering;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.entity.Mob;
 import com.jeff.pets.compat.render.model.Model;
 
 public abstract class PetModel extends Model {
+
     public PetModel() {
     }
 
@@ -33,7 +34,7 @@ public abstract class PetModel extends Model {
         this.setAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
     }
 
-    public void animateModel(LivingEntity entity, float limbSwing, float limbSwingAmount, float tickDelta) {
+    public void animateModel(Mob entity, float limbSwing, float limbSwingAmount, float tickDelta) {
         super.animateModel(entity, limbSwing, limbSwingAmount, tickDelta);
     }
 }

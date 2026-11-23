@@ -5,9 +5,9 @@
 
 package com.jeff.pets.client.rendering.vanilla.pig;
 
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.client.render.EntityRendererDispatcher;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.entity.Mob;
 import org.jetbrains.annotations.NotNull;
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.PetsClientInitializer;
@@ -17,11 +17,11 @@ import com.jeff.pets.compat.GlStateManager;
 public class ClientPigRenderer extends PetRenderer {
     public String pigTexturePath;
 
-    public ClientPigRenderer(EntityRenderDispatcher context, PetsClientInitializer.Context context2) {
+    public ClientPigRenderer(EntityRendererDispatcher context, PetsClientInitializer.Context context2) {
         super(context, new ClientPigModel(), 0.7F);
     }
 
-    protected void applyScale(LivingEntity livingEntityRenderState, float f) {
+    protected void applyScale(Mob livingEntityRenderState, float f) {
         if (Central.CONFIG.isBaby) {
             GlStateManager.scalef(0.5F, 0.5F, 0.5F);
         }
@@ -29,6 +29,6 @@ public class ClientPigRenderer extends PetRenderer {
     }
 
     public @NotNull String getTexture(Entity pigRenderState) {
-        return "textures/mob/pig/pig.png";
+        return "/mob/pig/pig.png";
     }
 }

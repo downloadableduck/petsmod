@@ -5,8 +5,7 @@
 
 package com.jeff.pets.client.rendering.vanilla.creeper;
 
-import net.minecraft.client.render.entity.model.CreeperEntityModel;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.core.entity.Mob;
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.rendering.PetRenderLayer;
 import com.jeff.pets.client.rendering.PetRenderer;
@@ -14,23 +13,23 @@ import com.jeff.pets.compat.GlStateManager;
 import com.jeff.pets.mob.vanilla.hostile.ClientCreeper;
 
 public class ClientCreeperChargeLayer implements PetRenderLayer {
-    private static final String SKIN = "textures/mob/creeper/creeper_armor.png";
+    private static final String SKIN = "/mob/creeper/creeper_armor.png";
     private final PetRenderer renderer;
-    private final CreeperEntityModel model = new CreeperEntityModel(2.0F);
+    private final CreeperModel model = new CreeperModel(2.0F);
 
     public ClientCreeperChargeLayer(PetRenderer renderer) {
         this.renderer = renderer;
     }
 
-    public void render(LivingEntity entity, float f, float g, float h, float i, float j, float k) {
+    public void render(Mob entity, float f, float g, float h, float i, float j, float k) {
         ClientCreeper creeperEntity = (ClientCreeper)entity;
         if (Central.CONFIG.creeperSkin.equals("charged")) {
             boolean bl = false;
             GlStateManager.depthMask(!bl);
-            this.renderer.bindTexture("textures/mob/creeper/creeper_armor.png");
+            this.renderer.bindTexture("/mob/creeper/creeper_armor.png");
             GlStateManager.matrixMode(5890);
             GlStateManager.loadIdentity();
-            float m = (float)creeperEntity.age + h;
+            float m = (float)creeperEntity.tickCount + h;
             GlStateManager.translatef(m * 0.01F, m * 0.01F, 0.0F);
             GlStateManager.matrixMode(5888);
             GlStateManager.enableBlend();

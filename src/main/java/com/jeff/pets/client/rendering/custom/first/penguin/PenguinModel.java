@@ -5,9 +5,9 @@
 
 package com.jeff.pets.client.rendering.custom.first.penguin;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.entity.Mob;
+import net.minecraft.core.util.helper.MathHelper;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.compat.render.model.ModelPart;
 import com.jeff.pets.mob.custom.first.Penguin;
@@ -101,7 +101,7 @@ public class PenguinModel extends PetModel {
         this.head.rotationZ = MathHelper.cos(limbSwing * 0.6662F) * 0.1F * limbSwingAmount;
     }
 
-    public void animateModel(LivingEntity entity, float f, float g, float h) {
+    public void animateModel(Mob entity, float f, float g, float h) {
         this.right_foot.rotationX = MathHelper.cos(f * 0.6662F + 3.1415927F) * 1.4F * g;
         this.left_foot.rotationX = MathHelper.cos(f * 0.6662F) * 1.4F * g;
     }

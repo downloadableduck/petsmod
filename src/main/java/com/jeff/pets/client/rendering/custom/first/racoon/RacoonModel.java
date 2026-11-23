@@ -5,9 +5,9 @@
 
 package com.jeff.pets.client.rendering.custom.first.racoon;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.entity.Mob;
+import net.minecraft.core.util.helper.MathHelper;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.compat.render.model.ModelPart;
 import com.jeff.pets.mob.custom.first.Racoon;
@@ -74,7 +74,7 @@ public class RacoonModel extends PetModel {
         ModelPart.rotationZ = z;
     }
 
-    public void animateModel(LivingEntity entity, float f, float g, float h) {
+    public void animateModel(Mob entity, float f, float g, float h) {
         Racoon fox = entity instanceof Racoon ? (Racoon)entity : null;
         this.tail.rotationX = -0.05235988F;
         this.right_hind_leg.rotationX = MathHelper.cos(f * 0.6662F) * 1.4F * g;
@@ -86,7 +86,7 @@ public class RacoonModel extends PetModel {
         this.right_front_leg.visible = true;
         this.left_front_leg.visible = true;
         this.tail.rotationX = 2.0F;
-        if (fox.hasVehicle()) {
+        if ((fox.vehicle != null)) {
         }
 
     }

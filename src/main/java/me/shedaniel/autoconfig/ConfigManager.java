@@ -19,7 +19,7 @@ import java.util.List;
 
 @Internal
 public class ConfigManager<T extends ConfigData> implements ConfigHolder<T> {
-    private final Logger logger = LogManager.getLogger();
+    private final Logger logger = LogManager.getLogger(ConfigManager.class);
     private final Config definition;
     private final Class<T> configClass;
     private final ConfigSerializer<T> serializer;

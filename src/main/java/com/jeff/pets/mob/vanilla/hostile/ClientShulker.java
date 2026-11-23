@@ -5,7 +5,7 @@
 
 package com.jeff.pets.mob.vanilla.hostile;
 
-import net.minecraft.world.World;
+import net.minecraft.core.world.World;
 import com.jeff.pets.mob.GroundPet;
 
 public class ClientShulker extends GroundPet {

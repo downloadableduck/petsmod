@@ -18,7 +18,7 @@ public class DefaultGuiRegistryAccess implements GuiRegistryAccess {
     }
 
     public List<AbstractConfigListEntry> get(String i18n, Field field, Object config, Object defaults, GuiRegistryAccess registry) {
-        LogManager.getLogger().error("No GUI provider registered for field '{}'!", field);
+        LogManager.getLogger(DefaultGuiRegistryAccess.class).error("No GUI provider registered for field '{}'!", field);
         return Collections.emptyList();
     }
 

@@ -5,10 +5,10 @@
 
 package com.jeff.pets.client.rendering.vanilla.magmacube;
 
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.client.render.entity.model.SlimeEntityModel;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
+import com.jeff.pets.client.rendering.vanilla.slime.SlimeModel;
+import net.minecraft.client.render.EntityRendererDispatcher;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.entity.Mob;
 import org.jetbrains.annotations.NotNull;
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.PetsClientInitializer;
@@ -17,11 +17,11 @@ import com.jeff.pets.compat.GlStateManager;
 import com.jeff.pets.mob.vanilla.hostile.ClientMagmaCube;
 
 public class ClientMagmaCubeRenderer extends PetRenderer<ClientMagmaCube> {
-    public ClientMagmaCubeRenderer(EntityRenderDispatcher context, PetsClientInitializer.Context context2) {
-        super(context, new SlimeEntityModel(0), 0.75F);
+    public ClientMagmaCubeRenderer(EntityRendererDispatcher context, PetsClientInitializer.Context context2) {
+        super(context, new SlimeModel(0), 0.75F);
     }
 
-    protected void applyScale(LivingEntity entity, float a) {
+    protected void applyScale(Mob entity, float a) {
         ClientMagmaCube slimeRenderState = (ClientMagmaCube)entity;
         byte magmaCubeapplyScale;
         switch (Central.CONFIG.magmaCubeSkin) {
@@ -43,6 +43,6 @@ public class ClientMagmaCubeRenderer extends PetRenderer<ClientMagmaCube> {
 
     public @NotNull String getTexture(Entity entity) {
         ClientMagmaCube livingEntityRenderState = (ClientMagmaCube)entity;
-        return "textures/mob/slime/magmacube.png";
+        return "/mob/slime/magmacube.png";
     }
 }

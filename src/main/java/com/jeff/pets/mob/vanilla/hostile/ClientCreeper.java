@@ -5,14 +5,14 @@
 
 package com.jeff.pets.mob.vanilla.hostile;
 
-import net.minecraft.world.World;
+import net.minecraft.core.world.World;
 import com.jeff.pets.mob.GroundPet;
 
 public class ClientCreeper extends GroundPet {
     public boolean isPowered = false;
 
-    public ClientCreeper(World level) {
-        super(level);
+    public ClientCreeper(World world) {
+        super(world);
         this.setBoundingBoxSpacing(0.6F, 1.7F);
         this.texture = "/mob/creeper.png";
     }

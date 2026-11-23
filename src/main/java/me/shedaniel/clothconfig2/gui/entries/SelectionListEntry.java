@@ -4,6 +4,7 @@
 //
 
 package me.shedaniel.clothconfig2.gui.entries;
+import net.minecraft.client.font.TextRenderer;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -80,7 +81,7 @@ public class SelectionListEntry<T> extends TooltipListEntry<T> {
             this.index.compareAndSet(this.values.size(), 0);
             this.getScreen().setEdited(true, this.isRequiresRestart());
         });
-        this.resetButton = new ButtonWidget(0, 0, Minecraft.INSTANCE.textRenderer.getWidth(I18n.getTranslation(resetButtonKey)) + 6, 20, I18n.getTranslation(resetButtonKey), (widget) -> {
+        this.resetButton = new ButtonWidget(0, 0, TextRenderer.of(Minecraft.getMinecraft().font).getWidth(I18n.getTranslation(resetButtonKey)) + 6, 20, I18n.getTranslation(resetButtonKey), (widget) -> {
             this.index.set(this.getDefaultIndex());
             this.getScreen().setEdited(true, this.isRequiresRestart());
         });
@@ -114,11 +115,11 @@ public class SelectionListEntry<T> extends TooltipListEntry<T> {
         this.buttonWidget.y = y;
         this.buttonWidget.text = (String)this.nameProvider.apply(this.getValue());
         if (Utils.isBidirectional()) {
-            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.getTranslation(this.getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.INSTANCE.textRenderer.getWidth(I18n.getTranslation(this.getFieldName())), y + 5, this.getPreferredTextColor());
+            TextRenderer.of(Minecraft.getMinecraft().font).drawWithShadow(I18n.getTranslation(this.getFieldName()), WindowUtil.getScaledWidth() - x - TextRenderer.of(Minecraft.getMinecraft().font).getWidth(I18n.getTranslation(this.getFieldName())), y + 5, this.getPreferredTextColor());
             this.resetButton.x = x;
             this.buttonWidget.x = x + this.resetButton.width + 2;
         } else {
-            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.getTranslation(this.getFieldName()), x, y + 5, this.getPreferredTextColor());
+            TextRenderer.of(Minecraft.getMinecraft().font).drawWithShadow(I18n.getTranslation(this.getFieldName()), x, y + 5, this.getPreferredTextColor());
             this.resetButton.x = x + entryWidth - this.resetButton.width;
             this.buttonWidget.x = x + entryWidth - 150;
         }

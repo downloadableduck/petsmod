@@ -6,8 +6,8 @@
 package com.jeff.pets.client.rendering.vanilla.rabbit;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.util.helper.MathHelper;
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.compat.GlStateManager;
@@ -128,7 +128,7 @@ public class ClientRabbitModel extends PetModel {
 
     public void setupAnimation(float f, float g, float h, float i, float j, float s, Entity entity) {
         ClientRabbit rabbit = (ClientRabbit)entity;
-        float var10000 = h - (float)rabbit.age;
+        float var10000 = h - (float)rabbit.tickCount;
         this.nose.rotationX = j * 0.017453292F;
         this.head.rotationX = j * 0.017453292F;
         this.earRight.rotationX = j * 0.017453292F;

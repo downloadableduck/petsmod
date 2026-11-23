@@ -5,7 +5,7 @@
 
 package com.jeff.pets.mob.vanilla.passive;
 
-import net.minecraft.world.World;
+import net.minecraft.core.world.World;
 import com.jeff.pets.mob.FlyingPet;
 
 public class ClientTropicalFish extends FlyingPet {

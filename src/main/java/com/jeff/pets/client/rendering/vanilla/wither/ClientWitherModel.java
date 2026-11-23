@@ -7,9 +7,9 @@ package com.jeff.pets.client.rendering.vanilla.wither;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.UnmodifiableIterator;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.entity.Mob;
+import net.minecraft.core.util.helper.MathHelper;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.compat.render.model.ModelPart;
 import com.jeff.pets.mob.vanilla.boss.ClientWither;
@@ -65,12 +65,12 @@ public class ClientWitherModel extends PetModel {
         this.heads[0].rotationX = j * 0.017453292F;
     }
 
-    public void animateModel(LivingEntity entity, float f, float g, float h) {
+    public void animateModel(Mob entity, float f, float g, float h) {
         ClientWither witherBoss = (ClientWither)entity;
 
         for(int i = 1; i < 3; ++i) {
-            this.heads[i].rotationY = (witherBoss.yaw - witherBoss.yaw) * 0.017453292F;
-            this.heads[i].rotationX = witherBoss.pitch * 0.017453292F;
+            this.heads[i].rotationY = (witherBoss.yRot - witherBoss.yRot) * 0.017453292F;
+            this.heads[i].rotationX = witherBoss.xRot * 0.017453292F;
         }
 
     }

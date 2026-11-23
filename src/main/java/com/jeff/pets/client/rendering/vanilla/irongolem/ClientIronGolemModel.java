@@ -5,8 +5,8 @@
 
 package com.jeff.pets.client.rendering.vanilla.irongolem;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.entity.Mob;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.compat.render.model.ModelPart;
 
@@ -71,7 +71,7 @@ public class ClientIronGolemModel extends PetModel {
         this.field_3416.rotationY = 0.0F;
     }
 
-    public void animateModel(LivingEntity entity, float f, float g, float h) {
+    public void animateModel(Mob entity, float f, float g, float h) {
         int i = 0;
         if (i > 0) {
             this.field_3414.rotationX = -2.0F + 1.5F * this.method_2810((float)i - h, 10.0F);

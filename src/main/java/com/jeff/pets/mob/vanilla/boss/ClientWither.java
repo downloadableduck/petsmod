@@ -5,13 +5,13 @@
 
 package com.jeff.pets.mob.vanilla.boss;
 
-import net.minecraft.world.World;
+import net.minecraft.core.world.World;
 import com.jeff.pets.client.Central;
 import com.jeff.pets.mob.FlyingPet;
 
 public class ClientWither extends FlyingPet {
-    public ClientWither(World level) {
-        super(level);
+    public ClientWither(World world) {
+        super(world);
         this.setBoundingBoxSpacing(2.0F, 3.0F);
         this.texture = Central.CONFIG.witherSkin.equals("invulnerable") ? "/mob/wither_invul.png" : "/mob/wither.png";
     }

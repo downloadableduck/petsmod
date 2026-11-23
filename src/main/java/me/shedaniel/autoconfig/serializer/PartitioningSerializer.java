@@ -22,14 +22,14 @@ public final class PartitioningSerializer<T extends PartitioningSerializer.Globa
     private final Class<T> configClass;
     private final Map<Field, ConfigSerializer<M>> serializers;
 
-    private PartitioningSerializer(Config definition, Class<T> configClass, ConfigSerializer.Factory<M> factory) {
+    private PartitioningSerializer(Config definition, Class<T> configClass, Factory<M> factory) {
         this.configClass = configClass;
         this.serializers = (Map)getModuleFields(configClass).stream().collect(Utils.toLinkedMap(Function.identity(), (field) -> {
             return factory.create(createDefinition(String.format("%s/%s", definition.name(), ((Config)field.getType().getAnnotation(Config.class)).name())), (Class<M>)(Class)field.getType());
         }));
     }
 
-    public static <T extends GlobalData, M extends ConfigData> ConfigSerializer.Factory<T> wrap(ConfigSerializer.Factory<M> inner) {
+    public static <T extends GlobalData, M extends ConfigData> Factory<T> wrap(Factory<M> inner) {
         return (definition, configClass) -> {
             return new PartitioningSerializer(definition, configClass, inner);
         };
@@ -63,7 +63,7 @@ public final class PartitioningSerializer<T extends PartitioningSerializer.Globa
         return (List)Arrays.stream(configClass.getDeclaredFields()).filter(PartitioningSerializer::isValidModule).collect(Collectors.toList());
     }
 
-    public void serialize(T config) throws ConfigSerializer.SerializationException {
+    public void serialize(T config) throws SerializationException {
         Iterator var2 = this.serializers.entrySet().iterator();
 
         while(var2.hasNext()) {
@@ -73,7 +73,7 @@ public final class PartitioningSerializer<T extends PartitioningSerializer.Globa
 
     }
 
-    public T deserialize() throws ConfigSerializer.SerializationException {
+    public T deserialize() throws SerializationException {
         T ret = this.createDefault();
         Iterator var2 = this.serializers.entrySet().iterator();
 

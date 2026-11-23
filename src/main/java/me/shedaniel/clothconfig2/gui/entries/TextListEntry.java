@@ -4,6 +4,7 @@
 //
 
 package me.shedaniel.clothconfig2.gui.entries;
+import net.minecraft.client.font.TextRenderer;
 
 import com.jeff.pets.client.Utils;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
@@ -41,7 +42,7 @@ public class TextListEntry extends TooltipListEntry {
         List<String> strings = Utils.split(this.text, this.savedWidth);
 
         for(int i = 0; i < strings.size(); ++i) {
-            Minecraft.INSTANCE.textRenderer.drawWithShadow((String)strings.get(i), x, yy, this.color);
+            TextRenderer.of(Minecraft.getMinecraft().font).drawWithShadow((String)strings.get(i), x, yy, this.color);
             yy += 12;
         }
 

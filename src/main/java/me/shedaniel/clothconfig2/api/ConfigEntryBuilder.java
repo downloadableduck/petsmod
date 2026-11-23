@@ -10,7 +10,7 @@ import me.shedaniel.clothconfig2.gui.entries.DropdownBoxEntry;
 import me.shedaniel.clothconfig2.impl.ConfigEntryBuilderImpl;
 import me.shedaniel.clothconfig2.impl.builders.*;
 import me.shedaniel.clothconfig2.impl.builders.DropdownMenuBuilder.TopCellElementBuilder;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.Screen;
 
 import java.util.List;
 

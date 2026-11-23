@@ -28,7 +28,7 @@ public class ButtonWidget extends net.minecraft.client.gui.widget.ButtonWidget i
     }
 
     public void render(int mouseX, int mouseY, float delta) {
-        super.render(Minecraft.INSTANCE, mouseX, mouseY);
+        super.render(Minecraft.getMinecraft(), mouseX, mouseY);
     }
 
     public boolean wrapDegrees(double mouseX, double mouseY) {

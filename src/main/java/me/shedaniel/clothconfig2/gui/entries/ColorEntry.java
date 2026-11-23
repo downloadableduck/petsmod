@@ -125,11 +125,11 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
             if (str.startsWith("#")) {
                 String stripHexStarter = this.stripHexStarter(str);
                 if (stripHexStarter.length() > 8) {
-                    return me.shedaniel.clothconfig2.gui.entries.ColorEntry.ColorError.INVALID_COLOR.toValue();
+                    return ColorError.INVALID_COLOR.toValue();
                 }
 
                 if (!this.alpha && stripHexStarter.length() > 6) {
-                    return me.shedaniel.clothconfig2.gui.entries.ColorEntry.ColorError.NO_ALPHA_ALLOWED.toValue();
+                    return ColorError.NO_ALPHA_ALLOWED.toValue();
                 }
 
                 color = (int)Long.parseLong(stripHexStarter, 16);
@@ -139,25 +139,25 @@ public class ColorEntry extends TextFieldListEntry<Integer> {
 
             int a = color >> 24 & 255;
             if (!this.alpha && a > 0) {
-                return me.shedaniel.clothconfig2.gui.entries.ColorEntry.ColorError.NO_ALPHA_ALLOWED.toValue();
+                return ColorError.NO_ALPHA_ALLOWED.toValue();
             } else if (a >= 0 && a <= 255) {
                 int r = color >> 16 & 255;
                 if (r >= 0 && r <= 255) {
                     int g = color >> 8 & 255;
                     if (g >= 0 && g <= 255) {
                         int b = color & 255;
-                        return b >= 0 && b <= 255 ? new ColorValue(color) : me.shedaniel.clothconfig2.gui.entries.ColorEntry.ColorError.INVALID_BLUE.toValue();
+                        return b >= 0 && b <= 255 ? new ColorValue(color) : ColorError.INVALID_BLUE.toValue();
                     } else {
-                        return me.shedaniel.clothconfig2.gui.entries.ColorEntry.ColorError.INVALID_GREEN.toValue();
+                        return ColorError.INVALID_GREEN.toValue();
                     }
                 } else {
-                    return me.shedaniel.clothconfig2.gui.entries.ColorEntry.ColorError.INVALID_RED.toValue();
+                    return ColorError.INVALID_RED.toValue();
                 }
             } else {
-                return me.shedaniel.clothconfig2.gui.entries.ColorEntry.ColorError.INVALID_ALPHA.toValue();
+                return ColorError.INVALID_ALPHA.toValue();
             }
         } catch (NumberFormatException var7) {
-            return me.shedaniel.clothconfig2.gui.entries.ColorEntry.ColorError.INVALID_COLOR.toValue();
+            return ColorError.INVALID_COLOR.toValue();
         }
     }
 

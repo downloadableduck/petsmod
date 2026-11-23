@@ -19,9 +19,9 @@ public class ClothRequiresRestartScreen extends ConfirmScreen {
         return new Screen() {
             public void confirmed(boolean bl, int i) {
                 if (bl) {
-                    Minecraft.INSTANCE.scheduleStop();
+                    Minecraft.getMinecraft().shutdown();
                 } else {
-                    Minecraft.INSTANCE.setScreen(parent);
+                    Minecraft.getMinecraft().displayScreen(parent);
                 }
 
             }

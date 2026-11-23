@@ -4,6 +4,7 @@
 //
 
 package me.shedaniel.clothconfig2.gui.entries;
+import net.minecraft.client.font.TextRenderer;
 
 import com.google.common.collect.Lists;
 import com.jeff.pets.compat.GlStateManager;
@@ -59,10 +60,10 @@ public class SubCategoryListEntry extends TooltipListEntry {
         this.widget.rectangle.y = y;
         this.widget.rectangle.width = entryWidth + 19;
         this.widget.rectangle.height = 24;
-        Minecraft.INSTANCE.textureManager.getTextureId("textures/gui/cloth_config.png");
+        Minecraft.getMinecraft().textureManager.bindTexture(Minecraft.getMinecraft().textureManager.loadTexture("textures/gui/cloth_config.png"));
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.drawTexture(x - 15, y + 4, 24, this.expended ? 9 : 0, 9, 9);
-        Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.getTranslation(this.categoryName), x, y + 5, -1);
+        TextRenderer.of(Minecraft.getMinecraft().font).drawWithShadow(I18n.getTranslation(this.categoryName), x, y + 5, -1);
         Iterator var10 = this.entries.iterator();
 
         while(var10.hasNext()) {
@@ -143,7 +144,7 @@ public class SubCategoryListEntry extends TooltipListEntry {
         public boolean mouseClicked(double double_1, double double_2, int int_1) {
             if (this.rectangle.contains(double_1, double_2)) {
                 SubCategoryListEntry.this.expended = !SubCategoryListEntry.this.expended;
-                Minecraft.INSTANCE.soundManager.playSound("gui.button.press", 1.0F, 1.0F);
+                Minecraft.getMinecraft().sndManager.playSound("gui.button.press", net.minecraft.core.sound.SoundCategory.GUI_SOUNDS, 1.0F, 1.0F);
                 return true;
             } else {
                 return false;

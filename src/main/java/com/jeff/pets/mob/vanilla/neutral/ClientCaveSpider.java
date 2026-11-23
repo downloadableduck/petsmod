@@ -5,12 +5,12 @@
 
 package com.jeff.pets.mob.vanilla.neutral;
 
-import net.minecraft.world.World;
+import net.minecraft.core.world.World;
 import com.jeff.pets.mob.GroundPet;
 
 public class ClientCaveSpider extends GroundPet {
-    public ClientCaveSpider(World level) {
-        super(level);
+    public ClientCaveSpider(World world) {
+        super(world);
         this.setBoundingBoxSpacing(0.7F, 0.5F);
         this.texture = "/mob/cavespider.png";
     }

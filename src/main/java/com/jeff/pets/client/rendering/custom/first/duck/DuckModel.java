@@ -5,9 +5,9 @@
 
 package com.jeff.pets.client.rendering.custom.first.duck;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.entity.Mob;
+import net.minecraft.core.util.helper.MathHelper;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.compat.render.model.ModelPart;
 import com.jeff.pets.mob.custom.first.Duck;
@@ -79,7 +79,7 @@ public class DuckModel extends PetModel {
         Duck state = entity instanceof Duck ? (Duck)entity : null;
         float flapSpeed = state != null ? state.flapSpeed : 0.0F;
         boolean onGround = state != null ? state.onGround : true;
-        boolean riding = state != null && state.hasVehicle();
+        boolean riding = state != null && (state.vehicle != null);
         float flapAngle = onGround ? 0.0F : (MathHelper.sin(ageInTicks) + 1.0F) * flapSpeed;
         this.head.rotationX = headPitch * 0.017453292F;
         this.head.rotationY = netyaw * 0.017453292F;
@@ -103,7 +103,7 @@ public class DuckModel extends PetModel {
 
     }
 
-    public void animateModel(LivingEntity entity, float f, float g, float h) {
+    public void animateModel(Mob entity, float f, float g, float h) {
         this.right_leg.rotationX = MathHelper.cos(f * 0.6662F + 3.1415927F) * 1.4F * g;
         this.left_leg.rotationX = MathHelper.cos(f * 0.6662F) * 1.4F * g;
     }

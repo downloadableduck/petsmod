@@ -57,7 +57,7 @@ public class FloatListListEntry extends AbstractTextFieldListListEntry<Float, Fl
         return this;
     }
 
-    public static class FloatListCell extends AbstractTextFieldListListEntry.AbstractTextFieldListCell<Float, FloatListCell, FloatListListEntry> {
+    public static class FloatListCell extends AbstractTextFieldListCell<Float, FloatListCell, FloatListListEntry> {
         public FloatListCell(Float value, FloatListListEntry listListEntry) {
             super(value, listListEntry);
         }

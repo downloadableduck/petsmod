@@ -5,12 +5,12 @@
 
 package com.jeff.pets.mob.vanilla.neutral;
 
-import net.minecraft.world.World;
+import net.minecraft.core.world.World;
 import com.jeff.pets.mob.GroundPet;
 
 public class ClientEnderman extends GroundPet {
-    public ClientEnderman(World level) {
-        super(level);
+    public ClientEnderman(World world) {
+        super(world);
         this.setBoundingBoxSpacing(0.6F, 2.9F);
         this.texture = "/mob/enderman.png";
     }

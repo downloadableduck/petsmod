@@ -5,12 +5,12 @@
 
 package com.jeff.pets.mob.vanilla.neutral;
 
-import net.minecraft.world.World;
+import net.minecraft.core.world.World;
 import com.jeff.pets.mob.GroundPet;
 
 public class ClientIronGolem extends GroundPet {
-    public ClientIronGolem(World level) {
-        super(level);
+    public ClientIronGolem(World world) {
+        super(world);
         this.setBoundingBoxSpacing(1.4F, 2.7F);
         this.texture = "/mob/irongolem.png";
     }

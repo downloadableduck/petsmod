@@ -23,7 +23,7 @@ public final class GuiRegistry implements GuiRegistryAccess {
     private final List<TransformerEntry> transformers = new ArrayList();
 
     public GuiRegistry() {
-        Priority[] var1 = me.shedaniel.autoconfig.gui.registry.GuiRegistry.Priority.values();
+        Priority[] var1 = Priority.values();
         int var2 = var1.length;
 
         for(int var3 = 0; var3 < var2; ++var3) {
@@ -38,7 +38,7 @@ public final class GuiRegistry implements GuiRegistryAccess {
     }
 
     public List<AbstractConfigListEntry> get(String i18n, Field field, Object config, Object defaults, GuiRegistryAccess registry) {
-        Optional<ProviderEntry> found = Arrays.stream(GuiRegistry.Priority.values())
+        Optional<ProviderEntry> found = Arrays.stream(Priority.values())
             .map(priority -> ((List<ProviderEntry>)this.providers.get(priority)).stream().filter(entry -> entry.predicate.test(field)).findFirst())
             .filter(Optional::isPresent)
             .map(Optional::get)
@@ -73,7 +73,7 @@ public final class GuiRegistry implements GuiRegistryAccess {
 
         for(int var5 = 0; var5 < var4; ++var5) {
             Class type = var3[var5];
-            this.registerProvider(me.shedaniel.autoconfig.gui.registry.GuiRegistry.Priority.LAST, provider, (field) -> {
+            this.registerProvider(Priority.LAST, provider, (field) -> {
                 return type == field.getType();
             });
         }
@@ -81,7 +81,7 @@ public final class GuiRegistry implements GuiRegistryAccess {
     }
 
     public void registerPredicateProvider(GuiProvider provider, Predicate<Field> predicate) {
-        this.registerProvider(me.shedaniel.autoconfig.gui.registry.GuiRegistry.Priority.NORMAL, provider, predicate);
+        this.registerProvider(Priority.NORMAL, provider, predicate);
     }
 
     @SafeVarargs
@@ -91,7 +91,7 @@ public final class GuiRegistry implements GuiRegistryAccess {
 
         for(int var5 = 0; var5 < var4; ++var5) {
             Class<? extends Annotation> type = var3[var5];
-            this.registerProvider(me.shedaniel.autoconfig.gui.registry.GuiRegistry.Priority.FIRST, provider, (field) -> {
+            this.registerProvider(Priority.FIRST, provider, (field) -> {
                 return field.isAnnotationPresent(type);
             });
         }
@@ -105,7 +105,7 @@ public final class GuiRegistry implements GuiRegistryAccess {
 
         for(int var6 = 0; var6 < var5; ++var6) {
             Class<? extends Annotation> type = var4[var6];
-            this.registerProvider(me.shedaniel.autoconfig.gui.registry.GuiRegistry.Priority.FIRST, provider, (field) -> {
+            this.registerProvider(Priority.FIRST, provider, (field) -> {
                 return predicate.test(field) && field.isAnnotationPresent(type);
             });
         }

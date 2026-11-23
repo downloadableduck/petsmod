@@ -1,119 +1,110 @@
-plugins {
-    id("fabric-loom") version "1.17.20"
-    id("babric-loom-extension") version "1.17.5"
-    id 'maven-publish'
+buildscript {
+    repositories {
+        maven { url = 'https://maven.fabricmc.net/' }
+        gradlePluginPortal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'net.fabricmc:fabric-loom:1.15-SNAPSHOT'
+    }
 }
-
-version = "${project.mod_version}-${project.minecraft_version}-babric${project.build}"
-group = project.maven_group
+plugins {
+    id 'net.fabricmc.fabric-loom' version '1.15-SNAPSHOT'
+    id 'java'
+}
 
 base {
-    archivesName = project.archives_base_name
+    archivesName = "pets-mod-${project.mod_version}-${project.minecraft_version}-bta";
 }
 
-loom {
-    customMinecraftManifest.set("https://babric.github.io/manifest-polyfill/${minecraft_version}.json")
-    intermediaryUrl.set("https://maven.glass-launcher.net/babric/babric/intermediary/%1\$s/intermediary-%1\$s-v2.jar")
-    accessWidenerPath = file("src/main/resources/pets.accessWidener")
-    //sharedCwJar = true
-}
+group project.maven_group
+version ""
 
 repositories {
     mavenCentral()
-    maven { url ="https://maven.glass-launcher.net/snapshots/" }
-    maven { url ="https://maven.glass-launcher.net/releases/" }
-    maven { url ="https://maven.glass-launcher.net/babric" }
-    maven { url ="https://maven.minecraftforge.net/" }
-    maven { url ="https://jitpack.io/" }
-    maven { url ="https://maven.fabricmc.net/" }
-    maven { url = "https://maven.glass-launcher.net/babric" }
-    mavenCentral()
-    exclusiveContent {
-        forRepository {
-            maven { url ="https://api.modrinth.com/maven" }
+    maven { url 'https://maven.fabricmc.net/' }
+    maven { url 'https://jitpack.io' }
+    ivy {
+        url = 'https://piston-data.mojang.com'
+        patternLayout {
+            artifact 'v1/[organisation]/[revision]/[module].jar'
         }
-        filter {
-            includeGroup("maven.modrinth")
+        metadataSources {
+            artifact()
         }
     }
-    maven {
-        name = 'Babric'
-        url = 'https://maven.glass-launcher.net/babric'
-    }
-    maven { url "https://maven.glass-launcher.net/releases" }
-    maven { url "https://maven.ornithemc.net/releases/" }
+    maven{ url = "https://maven.fabricmc.net/" }
+    maven{ url = "https://maven.danygames2014.net/signalum"}
+    maven{ url = "https://maven.thesignalumproject.net/infrastructure"}
+    maven{ url = "https://maven.thesignalumproject.net/releases" }
+    maven{ url = "https://maven.thesignalumproject.net/nightly" }
+    maven {url = "https://maven.glass-launcher.net/releases/"}
 }
 
-configurations.configureEach {
-    exclude group: "org.ow2.asm", module: "asm-all"
+loom {
+    def btaChannel = libs.versions.btaChannel.get()
+    def btaVersion = "v" + libs.versions.bta.get()
+    customMinecraftMetadata.set("https://downloads.betterthanadventure.net/bta-client/${btaChannel}/$btaVersion/manifest.json")
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.glasslauncher:biny:b1.7.3+e0778a3:v2"
-    modImplementation "babric:fabric-loader:${project.loader_version}"
-
-    implementation "org.slf4j:slf4j-api:1.8.0-beta4"
-    implementation "org.apache.logging.log4j:log4j-slf4j18-impl:2.16.0"
-
-    compileOnly "org.jetbrains:annotations:24.1.0"
-    implementation "blue.endless:jankson:${project.jankson_version}"
-    implementation "com.moandjiezana.toml:toml4j:${project.toml4j_version}"
-    modImplementation "maven.modrinth:472oW63Q:YsQonigP"
-    modImplementation("net.modificationstation:StationAPI:${project.stationapi_version}")
-    modImplementation("net.danygames2014:modmenu:${project.modmenu_version}")
-
-    // Dependencies required by bundled/decompiled Cloth Config, AutoConfig, and math utilities.
-    implementation "com.google.guava:guava:21.0"
-    implementation "org.apache.commons:commons-lang3:3.5"
-    implementation "commons-io:commons-io:2.5"
-}
-
-processResources {
-    inputs.property "version", project.version
-
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version
-    }
+    minecraft("::${libs.versions.bta.get()}")
+    implementation(libs.loader)
+    implementation(libs.modMenu)
+    compileOnly 'org.jetbrains:annotations:24.1.0'
+    implementation 'com.google.guava:guava:33.0.0-jre'
+    implementation 'com.google.code.gson:gson:2.10.1'
+    include 'com.google.guava:guava:33.0.0-jre'
+    implementation 'blue.endless:jankson:1.2.3'
+    implementation 'com.moandjiezana.toml:toml4j:0.7.2'
+    implementation 'org.apache.commons:commons-lang3:3.14.0'
+    implementation 'org.joml:joml:1.10.5'
+    implementation ('it.unimi.dsi:fastutil:8.5.19')
+    runtimeClasspath(libs.clientJar)
 }
 
 java {
-    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-    // if it is present.
-    // If you remove this line, sources will not be generated.
-    withSourcesJar()
-}
-
-jar {
-    from("LICENSE") {
-        rename { "${it}_${project.findProperty('archives_base_name') ?: project.name}" }
-    }
-}
-
-// configure the maven publication
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-    }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        // Add repositories to publish to here.
-        // Notice: This block does NOT have the same function as the block in the top level.
-        // The repositories here will be used for publishing your artifact, not for
-        // retrieving dependencies.
-    }
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.compilerArgs << "-Xmaxerrs" << "5000"
+    options.encoding = 'UTF-8'
+    options.compilerArgs.addAll(['-Xmaxerrs', '5000', '-Xmaxwarns', '1000'])
 }
 
-
-tasks.named('jar') {
-    archiveBaseName = project.archives_base_name
-    archiveVersion = project.mod_version
-    archiveClassifier = project.minecraft_version
+tasks.matching { it.name == 'extractNatives' }.configureEach {
+    doLast {
+        def nativesDir = file(".gradle/loom-cache/natives/8.0.1")
+        if (!nativesDir.exists()) return
+        def cacheRoot = new File(System.getProperty('user.home'), '.gradle/caches/modules-2/files-2.1/org.lwjgl')
+        def patterns = [
+            'lwjgl/3.3.3/*/lwjgl-3.3.3-natives-linux.jar',
+            'lwjgl-glfw/3.3.3/*/lwjgl-glfw-3.3.3-natives-linux.jar',
+            'lwjgl-openal/3.3.3/*/lwjgl-openal-3.3.3-natives-linux.jar',
+            'lwjgl-opengl/3.3.3/*/lwjgl-opengl-3.3.3-natives-linux.jar',
+            'lwjgl-stb/3.3.3/*/lwjgl-stb-3.3.3-natives-linux.jar',
+        ]
+        def jars = patterns.collectMany { p ->
+            fileTree(cacheRoot).matching { include p }.files as List
+        }
+        if (jars.isEmpty()) {
+            logger.warn("LWJGL 3.3.3 Linux native jars not found in Gradle cache; natives not replaced.")
+            return
+        }
+        nativesDir.listFiles()?.each { if (it.isFile()) it.delete() }
+        def tmp = new File(nativesDir, '_tmp_extract')
+        tmp.mkdirs()
+        jars.each { jarFile ->
+            copy {
+                from zipTree(jarFile)
+                into tmp
+                include '**/*.so'
+            }
+        }
+        fileTree(tmp).matching { include '**/*.so' }.files.each { f ->
+            copy { from f; into nativesDir }
+        }
+        tmp.deleteDir()
+    }
 }

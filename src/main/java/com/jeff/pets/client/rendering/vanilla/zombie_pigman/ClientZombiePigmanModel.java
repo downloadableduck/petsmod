@@ -5,8 +5,8 @@
 
 package com.jeff.pets.client.rendering.vanilla.zombie_pigman;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.util.helper.MathHelper;
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.Math2;
 import com.jeff.pets.client.Utils;
@@ -61,7 +61,7 @@ public class ClientZombiePigmanModel extends PetModel {
     public void setupAnimation(float f, float g, float h, float i, float j, float s, Entity entity) {
         ClientZombiePigman state = (ClientZombiePigman)entity;
         boolean bl = false;
-        boolean bl2 = state.isSubmergedInWater();
+        boolean bl2 = state.isInWater();
         this.head.rotationY = i * 0.017453292F;
         if (bl) {
             this.head.rotationX = -0.7853982F;
@@ -151,9 +151,9 @@ public class ClientZombiePigmanModel extends PetModel {
         float p;
         float l;
         float m;
-        if (this.handSwingProgress > 0.0F) {
+        if (this.swingProgress > 0.0F) {
             ModelPart ModelPart = this.right_arm;
-            p = this.handSwingProgress;
+            p = this.swingProgress;
             this.body.rotationY = MathHelper.sin(MathHelper.sqrt(p) * 6.2831855F) * 0.2F;
             this.right_arm.z = MathHelper.sin(this.body.rotationY) * 5.0F;
             this.right_arm.x = -MathHelper.cos(this.body.rotationY) * 5.0F;
@@ -162,15 +162,15 @@ public class ClientZombiePigmanModel extends PetModel {
             this.right_arm.rotationY += this.body.rotationY;
             this.left_arm.rotationY += this.body.rotationY;
             this.left_arm.rotationX += this.body.rotationY;
-            p = 1.0F - this.handSwingProgress;
+            p = 1.0F - this.swingProgress;
             p *= p;
             p *= p;
             p = 1.0F - p;
             l = MathHelper.sin(p * 3.1415927F);
-            m = MathHelper.sin(this.handSwingProgress * 3.1415927F) * -(this.head.rotationX - 0.7F) * 0.75F;
+            m = MathHelper.sin(this.swingProgress * 3.1415927F) * -(this.head.rotationX - 0.7F) * 0.75F;
             ModelPart.rotationX = (float)((double)ModelPart.rotationX - ((double)l * 1.2 + (double)m));
             ModelPart.rotationY += this.body.rotationY * 2.0F;
-            ModelPart.rotationZ += MathHelper.sin(this.handSwingProgress * 3.1415927F) * -0.4F;
+            ModelPart.rotationZ += MathHelper.sin(this.swingProgress * 3.1415927F) * -0.4F;
         }
 
         if (this.crouching) {
@@ -218,7 +218,7 @@ public class ClientZombiePigmanModel extends PetModel {
         float o = 64.0F;
         if (this.swimAmount > 0.0F) {
             p = f % 26.0F;
-            l = this.handSwingProgress > 0.0F ? 0.0F : this.swimAmount;
+            l = this.swingProgress > 0.0F ? 0.0F : this.swimAmount;
             if (p < 14.0F) {
                 this.left_arm.rotationX = this.rotlerpRad(this.left_arm.rotationX, 0.0F, this.swimAmount);
                 this.right_arm.rotationX = Math2.lerp(l, this.right_arm.rotationX, 0.0F);

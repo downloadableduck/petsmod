@@ -6,15 +6,35 @@
 package com.jeff.pets.client;
 
 import com.google.common.collect.ImmutableList;
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.ParseResults;
+import com.mojang.brigadier.arguments.ArgumentTypeString;
+import com.mojang.brigadier.builder.ArgumentBuilder;
+import com.mojang.brigadier.builder.ArgumentBuilderLiteral;
+import com.mojang.brigadier.builder.ArgumentBuilderRequired;
+import com.mojang.brigadier.context.ParsedCommandNode;
+import com.mojang.brigadier.suggestion.SuggestionProvider;
+import com.mojang.brigadier.tree.ArgumentCommandNode;
+import com.mojang.brigadier.tree.CommandNode;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.impl.launch.knot.Knot;
+import net.fabricmc.loader.impl.launch.knot.KnotClient;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.ChatScreen;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.option.GameOptions;
-import net.minecraft.entity.Entity;
-import net.minecraft.world.World;
+import net.minecraft.client.gui.Screen;
+import net.minecraft.client.gui.chat.ScreenChat;
+import net.minecraft.client.gui.options.components.LanguagePackListComponent;
+import net.minecraft.client.net.command.ClientCommandSource;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.lang.Language;
+import net.minecraft.core.net.command.CommandManager;
+import net.minecraft.core.net.command.CommandSource;
+import net.minecraft.core.net.command.commands.CommandHelp;
+import net.minecraft.core.net.command.util.CommandHelper;
+import net.minecraft.core.net.command.util.Iterables;
+import net.minecraft.core.world.World;
 import com.jeff.pets.mob.custom.aprilfools.Head;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
 import com.jeff.pets.mob.custom.aquatic.Koi;
@@ -28,10 +48,7 @@ import com.jeff.pets.mob.vanilla.hostile.*;
 import com.jeff.pets.mob.vanilla.neutral.*;
 import com.jeff.pets.mob.vanilla.passive.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Central implements ClientModInitializer {
@@ -69,6 +86,22 @@ public class Central implements ClientModInitializer {
     private static final List<String> DUMBO_OCTOPUS_SKINS = ImmutableList.of("yellow", "red", "blue", "green", "orange", "pink");
     private static final List<String> EMPTY_LIST = ImmutableList.of();
     public static final List<String> ON_OFF = ImmutableList.of("on", "off");
+    public static final SuggestionProvider<CommandSource> PETS = (context, builder) ->
+            CommandHelper.suggest(PETS_LIST, builder);
+    private static final SuggestionProvider<CommandSource> ON_OFF_SOURCE = (context, builder) -> CommandHelper.suggest(List.of("off", "on"), builder);
+
+    private final SuggestionProvider<CommandSource> SKINS = (context, builder) -> {
+        String remaining = builder.getRemainingLowerCase();
+
+        for (String s : currentSuggestions) {
+            if (s.toLowerCase().startsWith(remaining)) {
+                builder.suggest(s);
+            }
+        }
+
+        return builder.buildFuture();
+    };
+
     public static PetsConfig CONFIG;
     public static int petSkin;
     public static Duck duck;
@@ -154,8 +187,8 @@ public class Central implements ClientModInitializer {
     }
 
     public static void summonPet() {
-        Minecraft minecraft = Minecraft.INSTANCE;
-        World world = minecraft.world;
+        Minecraft minecraft = Minecraft.getMinecraft();
+        World world = minecraft.currentWorld;
         duck = new Duck(world);
         racoon = new Racoon(world);
         penguin = new Penguin(world);
@@ -422,15 +455,14 @@ public class Central implements ClientModInitializer {
 
     public static void refreshChatSuggestor(Minecraft client) {
         Screen screen = client.currentScreen;
-        if (screen instanceof ChatScreen) {
-            ChatScreen var2 = (ChatScreen)screen;
+        if (screen instanceof ScreenChat) {
+            ScreenChat var2 = (ScreenChat) screen;
         }
 
     }
 
     public static void checkForHeadResourcePack() {
-        Minecraft client = Minecraft.INSTANCE;
-        GameOptions options = client.options;
+        Minecraft client = Minecraft.getMinecraft();
     }
 
     public static void reassignLogo(Boolean bl) {
@@ -440,11 +472,11 @@ public class Central implements ClientModInitializer {
     }
 
     public static void createTickWatcher() {
-        Minecraft minecraft = Minecraft.INSTANCE;
-        World world = minecraft.world;
+        Minecraft minecraft = Minecraft.getMinecraft();
+        World world = minecraft.currentWorld;
         //minecraft.execute(() -> {
             petSkin = (int)(Math.random() * 3.0);
-            if (minecraft.player != null && CONFIG.petOn && summonedEntity.isEmpty()) {
+            if (minecraft.thePlayer != null && CONFIG.petOn && summonedEntity.isEmpty()) {
                 summonPet();
             }
 
@@ -462,7 +494,7 @@ public class Central implements ClientModInitializer {
     public static void createJoinHandler() {
         List var10001 = summonedEntity;
         Objects.requireNonNull(var10001);
-        Minecraft var10000 = Minecraft.INSTANCE;
+        Minecraft var10000 = Minecraft.getMinecraft();
         Objects.requireNonNull(var10001);
         var10001.clear();
     }
@@ -474,7 +506,54 @@ public class Central implements ClientModInitializer {
         createJoinHandler();
         createTickWatcher();
         this.createPetsList();
-        updateSuggestions(Minecraft.INSTANCE);
+        updateSuggestions(Minecraft.getMinecraft());
+        registerCommands();
+    }
+
+    public  void registerCommands() {
+        CommandManager.registerCommand(dispatcher -> {
+            dispatcher.register(ArgumentBuilderLiteral.<CommandSource>literal("petspecies")
+                    .then(ArgumentBuilderRequired.<CommandSource, String>argument("species", ArgumentTypeString.greedyString())
+                            .suggests(PETS)
+                            .executes((context) -> {
+                                String species = context.getArgument("species", String.class);
+                                executePetSpeciesCommand(species);
+                                return 1;
+                            })));
+            dispatcher.register(ArgumentBuilderLiteral.<CommandSource>literal("petskin")
+                    .then(ArgumentBuilderRequired.<CommandSource, String>argument("skin", ArgumentTypeString.greedyString())
+                            .suggests(SKINS)
+                            .executes(context -> {
+                                String skin = context.getArgument("skin", String.class);;
+                                executePetSkinCommand(skin);
+                                return 1;
+                            })));
+            /*dispatcher.register(ArgumentBuilderLiteral.<CommandSource>literal("petname")
+                    .then(ArgumentBuilderRequired.<CommandSource, String>argument("name", ArgumentTypeString.greedyString())
+                            .executes(context -> {
+                                String name = context.getArgument("name", String.class);
+                                executePetNameCommand(name);
+                                return 1;
+                            })));*/
+            dispatcher.register(ArgumentBuilderLiteral.<CommandSource>literal("pet")
+                    .then(ArgumentBuilderRequired.<CommandSource, String>argument("toggle", ArgumentTypeString.greedyString())
+                            .suggests(ON_OFF_SOURCE)
+                            .executes(context -> {
+                                String toggle = context.getArgument("toggle", String.class);
+                                executeToggleCommand(toggle);
+                                return 1;
+                            })));
+            dispatcher.register(ArgumentBuilderLiteral.<CommandSource>literal("pethelp")
+                    .executes(context -> {
+                        executePetHelpCommand();
+                        return 1;
+                    }));
+            dispatcher.register(ArgumentBuilderLiteral.<CommandSource>literal("teleportpet")
+                    .executes(context -> {
+                        executePetTeleportCommand();
+                        return 1;
+                    }));
+        });
     }
 
     public void executePetSkinCommand(String skin) {
@@ -999,9 +1078,9 @@ public class Central implements ClientModInitializer {
             }
 
             if (isValid) {
-                Minecraft.INSTANCE.player.sendMessage("§b[PetsMod] §aYour pet's skin has been updated.");
+                Minecraft.getMinecraft().thePlayer.sendMessage("§b[PetsMod] §aYour pet's skin has been updated.");
             } else {
-                Minecraft.INSTANCE.player.sendMessage("§b[PetsMod] §cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else.");
+                Minecraft.getMinecraft().thePlayer.sendMessage("§b[PetsMod] §cEither your currently selected pet doesn't support multiple skins, or that is not a valid skin. Try something else.");
             }
 
             AutoConfig.getConfigHolder(PetsConfig.class).save();
@@ -1143,8 +1222,8 @@ public class Central implements ClientModInitializer {
         CONFIG.smilingCreeperName = Utils.checkNullString(CONFIG.smilingCreeperName);
         CONFIG.toxfinSlabName = Utils.checkNullString(CONFIG.toxfinSlabName);
         CONFIG.potatoHuskName = Utils.checkNullString(CONFIG.potatoHuskName);
-        if (CONFIG.headSkin == null && Minecraft.INSTANCE.player != null) {
-            CONFIG.headSkin = Minecraft.INSTANCE.player.name;
+        if (CONFIG.headSkin == null && Minecraft.getMinecraft().thePlayer != null) {
+            CONFIG.headSkin = Minecraft.getMinecraft().thePlayer.username;
         }
 
         CONFIG.headName = Utils.checkNullString(CONFIG.headName);
@@ -1265,13 +1344,13 @@ public class Central implements ClientModInitializer {
 
             this.checkValidPet(isValid, species);
             AutoConfig.getConfigHolder(PetsConfig.class).save();
-            updateSuggestions(Minecraft.INSTANCE);
+            updateSuggestions(Minecraft.getMinecraft());
         //});
     }
 
     public void executePetHelpCommand() {
         //CompatAccess.runNow(() -> {
-            Minecraft.INSTANCE.player.sendMessage("§b[PetsMod] §aPossible commands: §a/pethelp: §rdisplays a list of commands §a/pet <on/off> §rtoggles whether your pet will appear or not§a/petspecies <species>: §rchanges the species of your pet§a/petskin <skin>: §rchanges the skin of your selected pet§a/teleportpet: §rteleports your pet to you. will not work if you are not on the ground.§a/petname: §rchanges the name of your currently selected pet");
+            Minecraft.getMinecraft().thePlayer.sendMessage("§b[PetsMod] §aPossible commands: §a/pethelp: §rdisplays a list of commands §a/pet <on/off> §rtoggles whether your pet will appear or not§a/petspecies <species>: §rchanges the species of your pet§a/petskin <skin>: §rchanges the skin of your selected pet§a/teleportpet: §rteleports your pet to you. will not work if you are not on the ground.§a/petname: §rchanges the name of your currently selected pet");
         //});
     }
 
@@ -1589,14 +1668,14 @@ public class Central implements ClientModInitializer {
     public void executeToggleCommand(String preference) {
         if (Objects.equals(preference, "off")) {
             CONFIG.petOn = false;
-            Minecraft.INSTANCE.player.sendMessage("§b[PetsMod] §7Pet §coff.");
+            Minecraft.getMinecraft().thePlayer.sendMessage("§b[PetsMod] §7Pet §coff.");
             AutoConfig.getConfigHolder(PetsConfig.class).save();
         } else if (Objects.equals(preference, "on")) {
             CONFIG.petOn = true;
             AutoConfig.getConfigHolder(PetsConfig.class).save();
-            Minecraft.INSTANCE.player.sendMessage("§b[PetsMod] §7Pet §aon.");
+            Minecraft.getMinecraft().thePlayer.sendMessage("§b[PetsMod] §7Pet §aon.");
         } else {
-            Minecraft.INSTANCE.player.sendMessage("§b[PetsMod] §c§lUnknown value " + preference + "! Possible values: §r§aon, §6off");
+            Minecraft.getMinecraft().thePlayer.sendMessage("§b[PetsMod] §c§lUnknown value " + preference + "! Possible values: §r§aon, §6off");
         }
 
     }
@@ -1609,13 +1688,13 @@ public class Central implements ClientModInitializer {
     public void checkValidPet(boolean isValid, String species) {
         //CompatAccess.runNow(() -> {
             if (!isValid) {
-                Minecraft.INSTANCE.player.sendMessage("§b[PetsMod] §cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")");
+                Minecraft.getMinecraft().thePlayer.sendMessage("§b[PetsMod] §cThat's not a pet that's currently supported. Try something else. (Unknown input \"" + species + "\")");
             } else if (isValid && CONFIG.petOn) {
                 despawnPet();
-                Minecraft.INSTANCE.player.sendMessage("§b[PetsMod] §aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + ".");
+                Minecraft.getMinecraft().thePlayer.sendMessage("§b[PetsMod] §aYour active pet has been switched to " + CONFIG.activePet.replace("_", " ") + ".");
                 summonPet();
             } else if (isValid && !CONFIG.petOn) {
-                Minecraft.INSTANCE.player.sendMessage("§b[PetsMod] §cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet enabled. Run §l/pet on§r§c to change this.");
+                Minecraft.getMinecraft().thePlayer.sendMessage("§b[PetsMod] §cYour pet has been switched to " + CONFIG.activePet.replace("_", " ") + ", but you currently do not have your pet enabled. Run §l/pet on§r§c to change this.");
             }
 
         //});

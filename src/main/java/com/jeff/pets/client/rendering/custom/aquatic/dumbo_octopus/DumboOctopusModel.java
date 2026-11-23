@@ -5,7 +5,7 @@
 
 package com.jeff.pets.client.rendering.custom.aquatic.dumbo_octopus;
 
-import net.minecraft.entity.Entity;
+import net.minecraft.core.entity.Entity;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.compat.render.model.ModelPart;
 import com.jeff.pets.mob.custom.aquatic.DumboOctopus;
@@ -95,7 +95,7 @@ public class DumboOctopusModel extends PetModel {
     public void setupAnimation(float f, float g, float h, float i, float k, float s, Entity entity) {
         DumboOctopus state = (DumboOctopus)entity;
         super.setupAnimation(f, g, h, i, k, s, entity);
-        if (state.walkAnimationSpeed > 0.0F) {
+        if (state.walkAnimSpeed > 0.0F) {
             this.leg1.rotationZ = -state.tentacleAngle / 10.0F;
             float rot = this.leg1.rotationZ;
             this.leg2.rotationZ = rot;

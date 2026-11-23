@@ -20,11 +20,11 @@ public final class InputConstants {
     }
 
     public static Key getKey(int keyCode, int scanCode) {
-        return new Key(me.shedaniel.clothconfig2.compat.InputConstants.Type.KEYSYM, keyCode, "");
+        return new Key(Type.KEYSYM, keyCode, "");
     }
 
     static {
-        UNKNOWN = new Key(me.shedaniel.clothconfig2.compat.InputConstants.Type.KEYSYM, -1, "key.unknown");
+        UNKNOWN = new Key(Type.KEYSYM, -1, "key.unknown");
     }
 
     public static class Key {

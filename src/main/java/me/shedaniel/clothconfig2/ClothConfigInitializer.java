@@ -56,7 +56,7 @@ public class ClothConfigInitializer implements ClientModInitializer {
             target[0] = clamp(target[0], maxScroll, 0.0);
         }
 
-        return !me.shedaniel.clothconfig2.ClothConfigInitializer.Precision.almostEquals(scroll, target[0], 0.0010000000474974513) ? expoEase(scroll, target[0], Math.min(((double)System.currentTimeMillis() - start) / duration * (double)delta * 3.0, 1.0)) : target[0];
+        return !Precision.almostEquals(scroll, target[0], 0.0010000000474974513) ? expoEase(scroll, target[0], Math.min(((double)System.currentTimeMillis() - start) / duration * (double)delta * 3.0, 1.0)) : target[0];
     }
 
     public static double expoEase(double start, double end, double amount) {
@@ -164,7 +164,7 @@ public class ClothConfigInitializer implements ClientModInitializer {
                 Method method = clazz.getMethod("addConfigOverride", String.class, Runnable.class);
                 method.invoke((Object)null, "cloth-config2", (Runnable)() -> {
                     try {
-                        Minecraft.INSTANCE.setScreen(getConfigBuilderWithDemo().build());
+                        Minecraft.getMinecraft().displayScreen(getConfigBuilderWithDemo().build());
                     } catch (Throwable var1) {
                         Throwable throwable = var1;
                         throwable.printStackTrace();
@@ -180,7 +180,7 @@ public class ClothConfigInitializer implements ClientModInitializer {
     }
 
     public static ConfigBuilder getConfigBuilder() {
-        ConfigBuilder builder = ConfigBuilder.create().setParentScreen(Minecraft.INSTANCE.currentScreen).setTitle("title.cloth-config.config");
+        ConfigBuilder builder = ConfigBuilder.create().setParentScreen(net.minecraft.client.gui.screen.Screen.wrap(Minecraft.getMinecraft().currentScreen)).setTitle("title.cloth-config.config");
         builder.setDefaultBackgroundTexture("minecraft:textures/block/oak_planks.png");
         ConfigCategory scrolling = builder.getOrCreateCategory("category.cloth-config.scrolling");
         ConfigEntryBuilder entryBuilder = ConfigEntryBuilder.create();

@@ -5,9 +5,9 @@
 
 package com.jeff.pets.client.rendering.vanilla.sheep;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.entity.Mob;
+import net.minecraft.core.util.helper.MathHelper;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.compat.render.model.ModelPart;
 
@@ -50,16 +50,16 @@ public class ClientSheepFurModel extends PetModel {
         this.frontLeftLeg.render(scale);
     }
 
-    public void animateModel(LivingEntity mob, float walkAnimationProgress, float walkAnimationSpeed, float tickDelta) {
+    public void animateModel(Mob mob, float walkAnimPos, float walkAnimSpeed, float tickDelta) {
     }
 
-    public void setAngles(float walkAnimationProgress, float walkAnimationSpeed, float bob, float yaw, float pitch, float scale) {
+    public void setAngles(float walkAnimPos, float walkAnimSpeed, float bob, float yRot, float xRot, float scale) {
         this.head.rotationX = this.headAngle;
-        this.head.rotationY = yaw * 0.017453292F;
+        this.head.rotationY = yRot * 0.017453292F;
         this.body.rotationX = 1.5707964F;
-        this.backRightLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F) * 1.4F * walkAnimationSpeed;
-        this.backLeftLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F + 3.1415927F) * 1.4F * walkAnimationSpeed;
-        this.frontRightLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F + 3.1415927F) * 1.4F * walkAnimationSpeed;
-        this.frontLeftLeg.rotationX = MathHelper.cos(walkAnimationProgress * 0.6662F) * 1.4F * walkAnimationSpeed;
+        this.backRightLeg.rotationX = MathHelper.cos(walkAnimPos * 0.6662F) * 1.4F * walkAnimSpeed;
+        this.backLeftLeg.rotationX = MathHelper.cos(walkAnimPos * 0.6662F + 3.1415927F) * 1.4F * walkAnimSpeed;
+        this.frontRightLeg.rotationX = MathHelper.cos(walkAnimPos * 0.6662F + 3.1415927F) * 1.4F * walkAnimSpeed;
+        this.frontLeftLeg.rotationX = MathHelper.cos(walkAnimPos * 0.6662F) * 1.4F * walkAnimSpeed;
     }
 }

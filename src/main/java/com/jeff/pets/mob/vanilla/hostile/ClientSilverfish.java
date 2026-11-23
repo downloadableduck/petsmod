@@ -5,12 +5,12 @@
 
 package com.jeff.pets.mob.vanilla.hostile;
 
-import net.minecraft.world.World;
+import net.minecraft.core.world.World;
 import com.jeff.pets.mob.GroundPet;
 
 public class ClientSilverfish extends GroundPet {
-    public ClientSilverfish(World level) {
-        super(level);
+    public ClientSilverfish(World world) {
+        super(world);
         this.setBoundingBoxSpacing(0.4F, 0.3F);
         this.texture = "/mob/silverfish.png";
     }

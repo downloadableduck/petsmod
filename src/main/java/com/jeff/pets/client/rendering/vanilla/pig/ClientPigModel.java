@@ -5,12 +5,17 @@
 
 package com.jeff.pets.client.rendering.vanilla.pig;
 
-import net.minecraft.client.render.entity.model.PigEntityModel;
 import com.jeff.pets.client.Central;
+import com.jeff.pets.client.rendering.QuadrupedModel;
 import com.jeff.pets.compat.GlStateManager;
 
-public class ClientPigModel extends PigEntityModel {
+public class ClientPigModel extends QuadrupedModel {
     public ClientPigModel() {
+        super(6, 0.0F);
+    }
+
+    public ClientPigModel(float reduction) {
+        super(6, reduction);
     }
 
     public void render(float i, float j, float f, float g, float h, float k) {

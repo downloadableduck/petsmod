@@ -4,6 +4,7 @@
 //
 
 package me.shedaniel.clothconfig2.gui.entries;
+import net.minecraft.client.font.TextRenderer;
 
 import com.google.common.collect.Lists;
 import com.jeff.pets.client.Utils;
@@ -43,7 +44,7 @@ public class BooleanListEntry extends TooltipListEntry {
             this.bool.set(!this.bool.get());
             this.getScreen().setEdited(true);
         });
-        this.resetButton = new ButtonWidget(0, 0, Minecraft.INSTANCE.textRenderer.getWidth(I18n.getTranslation(resetButtonKey)) + 6, 20, I18n.getTranslation(resetButtonKey), (widget) -> {
+        this.resetButton = new ButtonWidget(0, 0, TextRenderer.of(Minecraft.getMinecraft().font).getWidth(I18n.getTranslation(resetButtonKey)) + 6, 20, I18n.getTranslation(resetButtonKey), (widget) -> {
             this.bool.set((Boolean)defaultValue.get());
             this.getScreen().setEdited(true);
         });
@@ -74,11 +75,11 @@ public class BooleanListEntry extends TooltipListEntry {
         this.buttonWidget.y = y;
         this.buttonWidget.text = this.getYesNoText(this.bool.get());
         if (Utils.isBidirectional()) {
-            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.getTranslation(this.getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.INSTANCE.textRenderer.getWidth(I18n.getTranslation(this.getFieldName())), y + 5, 16777215);
+            TextRenderer.of(Minecraft.getMinecraft().font).drawWithShadow(I18n.getTranslation(this.getFieldName()), WindowUtil.getScaledWidth() - x - TextRenderer.of(Minecraft.getMinecraft().font).getWidth(I18n.getTranslation(this.getFieldName())), y + 5, 16777215);
             this.resetButton.x = x;
             this.buttonWidget.x = x + this.resetButton.width + 2;
         } else {
-            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.getTranslation(this.getFieldName()), x, y + 5, 16777215);
+            TextRenderer.of(Minecraft.getMinecraft().font).drawWithShadow(I18n.getTranslation(this.getFieldName()), x, y + 5, 16777215);
             this.resetButton.x = x + entryWidth - this.resetButton.width;
             this.buttonWidget.x = x + entryWidth - 150;
         }

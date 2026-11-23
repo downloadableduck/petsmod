@@ -5,11 +5,11 @@
 
 package com.jeff.pets.mob.custom.first;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.core.entity.Mob;
+import net.minecraft.core.entity.animal.MobAnimal;
+import net.minecraft.core.item.ItemStack;
+import net.minecraft.core.util.phys.Vec3;
+import net.minecraft.core.world.World;
 import org.jetbrains.annotations.NotNull;
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.Utils;
@@ -21,8 +21,8 @@ public class Racoon extends AbstractPet {
     public static final int IS_SERVER_ENTITY = 20;
     public boolean isOnHead;
 
-    public Racoon(World level) {
-        super(level);
+    public Racoon(World world) {
+        super(world);
         this.setBoundingBoxSpacing(0.6F, 0.7F);
     }
 
@@ -38,7 +38,7 @@ public class Racoon extends AbstractPet {
         return "mob.chicken.step";
     }
 
-    protected void initDataTracker() {
+    public void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(20, (byte)0);
     }
@@ -57,12 +57,12 @@ public class Racoon extends AbstractPet {
 
     public void tick() {
         super.tick();
-        LivingEntity owner = this.getOwner();
+        Mob owner = this.getOwner();
         if (owner != null) {
-            this.yaw = this.getOwner().yaw + 180.0F;
+            this.yRot = this.getOwner().yRot + 180.0F;
             if (this.vehicle == owner) {
-                if (owner.isSneaking() && owner.jumping) {
-                    this.dismountFromVehicle();
+                if (owner.isSneaking() && false) {
+                    this.ejectRider();
                     this.lerpVelocity(this.getVelocity().add(0.0, -0.04, 0.0));
                     this.isOnHead = false;
                 } else {
@@ -73,25 +73,25 @@ public class Racoon extends AbstractPet {
             double dx = owner.x - this.x;
             double dz = owner.z - this.z;
             double targetYaw = Math.atan2(dz, dx) * 57.29577951308232 - 90.0;
-            double distance = (double)this.getDistance(owner);
-            float rotation = -this.pitch;
-            float rotationToOwner = rotation + -this.getOwner().pitch;
-            float bodyYawDiff = Utils.wrapDegrees(this.yaw - this.bodyYaw);
+            double distance = (double)this.distanceTo(owner);
+            float rotation = -this.xRot;
+            float rotationToOwner = rotation + -this.getOwner().xRot;
+            float bodyYawDiff = Utils.wrapDegrees(this.yRot - this.yBodyRot);
             if (rotationToOwner >= 50.0F) {
-                this.bodyYaw = this.yaw - Math.signum(bodyYawDiff) * 50.0F;
+                this.yBodyRot = this.yRot - Math.signum(bodyYawDiff) * 50.0F;
             }
 
             if (distance > 2.0) {
-                this.walkAnimationSpeed = 0.5F;
-                Vec3d targetPos = Vec3d.create(owner.x, owner.y, owner.z);
-                Vec3d dir = targetPos.relativize(this.getPosVec()).normalize();
-                this.bodyYaw += Math.max(-50.0F, Math.min(50.0F, this.yaw - this.bodyYaw));
+                this.walkAnimSpeed = 0.5F;
+                Vec3 targetPos = Vec3.getPermanentVec3(owner.x, owner.y, owner.z);
+                Vec3 dir = targetPos.vectorTo(this.getPosVec()).normalize();
+                this.yBodyRot += Math.max(-50.0F, Math.min(50.0F, this.yRot - this.yBodyRot));
                 double speed = Math.min(0.23, 1.28);
                 double var10001 = -dir.x * speed;
                 double var10003 = -dir.z;
-                this.lerpVelocity(Vec3d.create(var10001, this.getVelocity().y, var10003 * speed));
+                this.lerpVelocity(Vec3.getPermanentVec3(var10001, this.getVelocity().y, var10003 * speed));
             } else {
-                this.setVelocityClient(this.velocityX * 0.8, this.velocityY * 1.0, this.velocityZ * 0.8);
+                this.setVelocity(this.xd * 0.8, this.yd * 1.0, this.zd * 0.8);
             }
 
             int yHeightToOwner = (int)(owner.y - this.y);
@@ -103,7 +103,7 @@ public class Racoon extends AbstractPet {
                 this.lerpVelocity(this.getVelocity().add(0.0, -0.01, 0.0));
             }
 
-            if (Utils.squaredDistanceToOrigin(Vec3d.create(owner.velocityX, owner.velocityY, owner.velocityZ)) < 0.01) {
+            if (Utils.squaredDistanceToOrigin(Vec3.getPermanentVec3(owner.xd, owner.yd, owner.zd)) < 0.01) {
                 ++this.waitingTime;
                 if (this.waitingTime > 30) {
                     this.wander();
@@ -117,9 +117,9 @@ public class Racoon extends AbstractPet {
 
             this.setYRot(Duck.rotlerp(this.getYRot(), (float)targetYaw));
             if (Math.abs(bodyYawDiff) > 50.0F) {
-                this.bodyYaw = this.yaw - Math.signum(bodyYawDiff) * 50.0F;
+                this.yBodyRot = this.yRot - Math.signum(bodyYawDiff) * 50.0F;
             } else {
-                this.bodyYaw += Math.max(-10.0F, Math.min(10.0F, this.yaw - this.bodyYaw));
+                this.yBodyRot += Math.max(-10.0F, Math.min(10.0F, this.yRot - this.yBodyRot));
             }
 
             if (!this.onGround) {
@@ -127,13 +127,13 @@ public class Racoon extends AbstractPet {
             }
         }
 
-        if (owner != null && this.getDistance(owner) >= 10.0F) {
-            this.setPosition(owner.x, owner.y, owner.z);
+        if (owner != null && this.distanceTo(owner) >= 10.0F) {
+            this.setPos(owner.x, owner.y, owner.z);
         }
 
     }
 
-    public AnimalEntity makeChild(@NotNull AnimalEntity AgableMob) {
+    public MobAnimal makeChild(@NotNull MobAnimal AgableMob) {
         Racoon racoon = new Racoon(this.world);
         racoon.setServerEntity(false);
         return racoon;

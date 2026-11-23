@@ -5,9 +5,9 @@
 
 package com.jeff.pets.client.rendering.vanilla.shulker;
 
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.client.render.EntityRendererDispatcher;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.entity.Mob;
 import org.jetbrains.annotations.NotNull;
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.PetsClientInitializer;
@@ -15,13 +15,13 @@ import com.jeff.pets.client.rendering.PetRenderer;
 import com.jeff.pets.mob.vanilla.hostile.ClientShulker;
 
 public class ClientShulkerRenderer extends PetRenderer<ClientShulker> {
-    public ClientShulkerRenderer(EntityRenderDispatcher context, PetsClientInitializer.Context context2) {
+    public ClientShulkerRenderer(EntityRendererDispatcher context, PetsClientInitializer.Context context2) {
         super(context, new ClientShulkerModel(), 0.75F);
     }
 
     public @NotNull String getTexture(Entity entity) {
         ClientShulker state = (ClientShulker)entity;
-        String folderPath = "textures/mob/shulker/";
+        String folderPath = "/mob/shulker/";
         String shulkerFile;
         if (Central.CONFIG.shulkerSkin.equals("normal")) {
             shulkerFile = "shulker.png";
@@ -58,7 +58,7 @@ public class ClientShulkerRenderer extends PetRenderer<ClientShulker> {
         return folderPath + shulkerFile;
     }
 
-    public void renderModel(LivingEntity entity, float f, float g, float h, float i, float j, float k) {
+    public void renderModel(Mob entity, float f, float g, float h, float i, float j, float k) {
         ClientShulker shulker = (ClientShulker)entity;
     }
 }

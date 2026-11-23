@@ -5,28 +5,28 @@
 
 package com.jeff.pets.compat;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.util.helper.MathHelper;
+import net.minecraft.core.util.phys.Vec3;
 
 public final class EntityCompat {
     private EntityCompat() {
     }
 
-    public static Vec3d eyePosition(Entity entity, float partialTick) {
-        double x = entity.lastTickX + (entity.x - entity.lastTickX) * (double)partialTick;
-        double y = entity.lastTickY + (entity.y - entity.lastTickY) * (double)partialTick;
-        double z = entity.lastTickZ + (entity.z - entity.lastTickZ) * (double)partialTick;
-        return Vec3d.create(x, y + (double)entity.getEyeHeight(), z);
+    public static Vec3 eyePosition(Entity entity, float partialTick) {
+        double x = entity.xo + (entity.x - entity.xo) * (double)partialTick;
+        double y = entity.yo + (entity.y - entity.yo) * (double)partialTick;
+        double z = entity.zo + (entity.z - entity.zo) * (double)partialTick;
+        return Vec3.getPermanentVec3(x, y + (double)entity.getHeadHeight(), z);
     }
 
-    public static Vec3d lookVector(Entity entity, float partialTick) {
-        float pitch = entity.prevPitch + (entity.pitch - entity.prevPitch) * partialTick;
-        float yaw = entity.prevYaw + (entity.yaw - entity.prevYaw) * partialTick;
-        float cosPitch = MathHelper.cos(pitch * 0.017453292F);
-        float sinPitch = MathHelper.sin(pitch * 0.017453292F);
-        float cosYaw = MathHelper.cos(yaw * 0.017453292F);
-        float sinYaw = MathHelper.sin(yaw * 0.017453292F);
-        return Vec3d.create((double)(cosYaw * sinPitch), (double)cosPitch, (double)(sinYaw * sinPitch));
+    public static Vec3 lookVector(Entity entity, float partialTick) {
+        float xRot = entity.xRotO + (entity.xRot - entity.xRotO) * partialTick;
+        float yRot = entity.yRotO + (entity.yRot - entity.yRotO) * partialTick;
+        float cosPitch = MathHelper.cos(xRot * 0.017453292F);
+        float sinPitch = MathHelper.sin(xRot * 0.017453292F);
+        float cosYaw = MathHelper.cos(yRot * 0.017453292F);
+        float sinYaw = MathHelper.sin(yRot * 0.017453292F);
+        return Vec3.getPermanentVec3((double)(cosYaw * sinPitch), (double)cosPitch, (double)(sinYaw * sinPitch));
     }
 }

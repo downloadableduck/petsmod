@@ -4,6 +4,7 @@
 //
 
 package me.shedaniel.clothconfig2.gui.entries;
+import net.minecraft.client.font.TextRenderer;
 
 import com.google.common.collect.Lists;
 import com.jeff.pets.client.Utils;
@@ -33,7 +34,7 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
         super(fieldName, tooltipSupplier, false);
         this.defaultValue = defaultValue;
         this.original = original;
-        this.textFieldWidget = new CompatTextFieldWidget(this.getScreen(), 0, Minecraft.INSTANCE.textRenderer, 0, 0, 148, 18) {
+        this.textFieldWidget = new CompatTextFieldWidget(this.getScreen(), 0, TextRenderer.of(Minecraft.getMinecraft().font), 0, 0, 148, 18) {
             public void render() {
                 TextFieldListEntry.this.textFieldPreRender(this);
                 super.render();
@@ -41,7 +42,7 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
         };
         this.textFieldWidget.setMaxLength(999999);
         this.textFieldWidget.setText(String.valueOf(original));
-        this.resetButton = new ButtonWidget(0, 0, Minecraft.INSTANCE.textRenderer.getWidth(I18n.getTranslation(resetButtonKey)) + 6, 20, I18n.getTranslation(resetButtonKey), (widget) -> {
+        this.resetButton = new ButtonWidget(0, 0, TextRenderer.of(Minecraft.getMinecraft().font).getWidth(I18n.getTranslation(resetButtonKey)) + 6, 20, I18n.getTranslation(resetButtonKey), (widget) -> {
             this.textFieldWidget.setText(String.valueOf(defaultValue.get()));
             this.getScreen().setEdited(true);
         });
@@ -49,6 +50,7 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
     }
 
     protected static void setTextFieldWidth(CompatTextFieldWidget widget, int width) {
+        widget.width = Math.max(10, width);
     }
 
     protected String stripAddText(String s) {
@@ -65,12 +67,12 @@ public abstract class TextFieldListEntry<T> extends TooltipListEntry<T> {
         this.textFieldWidget.enabled = this.isEditable();
         this.textFieldWidget.y = y + 1;
         if (Utils.isBidirectional()) {
-            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.getTranslation(this.getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.INSTANCE.textRenderer.getWidth(I18n.getTranslation(this.getFieldName())), y + 5, 16777215);
+            TextRenderer.of(Minecraft.getMinecraft().font).drawWithShadow(I18n.getTranslation(this.getFieldName()), WindowUtil.getScaledWidth() - x - TextRenderer.of(Minecraft.getMinecraft().font).getWidth(I18n.getTranslation(this.getFieldName())), y + 5, 16777215);
             this.resetButton.x = x;
             this.textFieldWidget.x = x + this.resetButton.width;
             setTextFieldWidth(this.textFieldWidget, 148 - this.resetButton.width - 4);
         } else {
-            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.getTranslation(this.getFieldName()), x, y + 5, 16777215);
+            TextRenderer.of(Minecraft.getMinecraft().font).drawWithShadow(I18n.getTranslation(this.getFieldName()), x, y + 5, 16777215);
             this.resetButton.x = x + entryWidth - this.resetButton.width;
             this.textFieldWidget.x = x + entryWidth - 148;
             setTextFieldWidth(this.textFieldWidget, 148 - this.resetButton.width - 4);

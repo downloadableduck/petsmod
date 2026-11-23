@@ -21,7 +21,7 @@ public class ConfigEntry {
         @Retention(RetentionPolicy.RUNTIME)
         @Target({ElementType.FIELD})
         public @interface EnumHandler {
-            EnumDisplayOption option() default me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.EnumHandler.EnumDisplayOption.DROPDOWN;
+            EnumDisplayOption option() default EnumDisplayOption.DROPDOWN;
 
             public static enum EnumDisplayOption {
                 DROPDOWN,

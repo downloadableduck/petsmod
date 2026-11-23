@@ -57,7 +57,7 @@ public class LongListListEntry extends AbstractTextFieldListListEntry<Long, Long
         return this;
     }
 
-    public static class LongListCell extends AbstractTextFieldListListEntry.AbstractTextFieldListCell<Long, LongListCell, LongListListEntry> {
+    public static class LongListCell extends AbstractTextFieldListCell<Long, LongListCell, LongListListEntry> {
         public LongListCell(Long value, LongListListEntry listListEntry) {
             super(value, listListEntry);
         }

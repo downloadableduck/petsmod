@@ -5,9 +5,9 @@
 
 package com.jeff.pets.client.rendering.vanilla.horse;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.entity.Mob;
+import net.minecraft.core.util.helper.MathHelper;
 import com.jeff.pets.client.Math2;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.compat.GlStateManager;
@@ -155,12 +155,12 @@ public class ClientHorseModel extends PetModel {
 
     }
 
-    public void animateModel(LivingEntity entity, float f, float g, float h) {
+    public void animateModel(Mob entity, float f, float g, float h) {
         super.animateModel(entity, f, g, h);
         AbstractPet horseBaseEntity = (AbstractPet)entity;
-        float i = this.method_2790(horseBaseEntity.lastBodyYaw, horseBaseEntity.bodyYaw, h);
-        float j = this.method_2790(horseBaseEntity.prevYaw, horseBaseEntity.yaw, h);
-        float k = Math2.lerp(h, horseBaseEntity.prevPitch, horseBaseEntity.pitch);
+        float i = this.method_2790(horseBaseEntity.yBodyRotO, horseBaseEntity.yBodyRot, h);
+        float j = this.method_2790(horseBaseEntity.yRotO, horseBaseEntity.yRot, h);
+        float k = Math2.lerp(h, horseBaseEntity.xRotO, horseBaseEntity.xRot);
         float l = j - i;
         float m = k * 0.017453292F;
         if (l > 20.0F) {
@@ -180,13 +180,13 @@ public class ClientHorseModel extends PetModel {
         float p = 1.0F - o;
         float q = 0.0F;
         boolean bl = true;
-        float r = (float)horseBaseEntity.age + h;
+        float r = (float)horseBaseEntity.tickCount + h;
         this.field_3307.y = 4.0F;
         this.field_3307.z = -12.0F;
         this.field_3305.rotationX = 0.0F;
         this.field_3307.rotationX = 0.5235988F + m;
         this.field_3307.rotationY = l * 0.017453292F;
-        float s = horseBaseEntity.isSubmergedInWater() ? 0.2F : 1.0F;
+        float s = horseBaseEntity.isInWater() ? 0.2F : 1.0F;
         float t = MathHelper.cos(s * f * 0.6662F + 3.1415927F);
         float u = t * 0.8F * g;
         float v = (1.0F - Math.max(o, n)) * (0.5235988F + m + q * MathHelper.sin(r) * 0.05F);

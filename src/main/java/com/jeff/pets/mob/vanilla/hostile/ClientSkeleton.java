@@ -5,12 +5,12 @@
 
 package com.jeff.pets.mob.vanilla.hostile;
 
-import net.minecraft.world.World;
+import net.minecraft.core.world.World;
 import com.jeff.pets.mob.GroundPet;
 
 public class ClientSkeleton extends GroundPet {
-    public ClientSkeleton(World level) {
-        super(level);
+    public ClientSkeleton(World world) {
+        super(world);
         this.setBoundingBoxSpacing(0.6F, 1.95F);
         this.texture = "/mob/skeleton.png";
     }

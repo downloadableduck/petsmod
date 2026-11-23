@@ -5,9 +5,9 @@
 
 package com.jeff.pets.client.rendering.custom.first.duck;
 
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.client.render.EntityRendererDispatcher;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.entity.Mob;
 import org.jetbrains.annotations.NotNull;
 import com.jeff.pets.client.Central;
 import com.jeff.pets.client.PetsClientInitializer;
@@ -18,11 +18,11 @@ import com.jeff.pets.mob.custom.first.Duck;
 import java.util.Objects;
 
 public class DuckRenderer extends PetRenderer<@NotNull Duck> {
-    public DuckRenderer(EntityRenderDispatcher context, PetsClientInitializer.Context context2) {
+    public DuckRenderer(EntityRendererDispatcher context, PetsClientInitializer.Context context2) {
         super(context, new DuckModel(), 0.3F);
     }
 
-    protected void applyScale(LivingEntity entity, float f) {
+    protected void applyScale(Mob entity, float f) {
         if (Central.CONFIG != null && Central.CONFIG.isBaby) {
             GlStateManager.scalef(0.6F, 0.6F, 0.6F);
         }

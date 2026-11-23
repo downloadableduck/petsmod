@@ -5,7 +5,7 @@
 
 package com.jeff.pets.client.rendering.custom.aprilfools.head;
 
-import net.minecraft.entity.Entity;
+import net.minecraft.core.entity.Entity;
 import com.jeff.pets.client.rendering.PetModel;
 import com.jeff.pets.compat.render.model.ModelPart;
 

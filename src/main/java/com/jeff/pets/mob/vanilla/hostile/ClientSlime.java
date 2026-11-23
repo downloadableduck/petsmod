@@ -5,12 +5,12 @@
 
 package com.jeff.pets.mob.vanilla.hostile;
 
-import net.minecraft.world.World;
+import net.minecraft.core.world.World;
 import com.jeff.pets.mob.SlimeLikePet;
 
 public class ClientSlime extends SlimeLikePet {
-    public ClientSlime(World level) {
-        super(level);
+    public ClientSlime(World world) {
+        super(world);
         this.setBoundingBoxSpacing(2.0F, 2.0F);
         this.texture = "/mob/slime.png";
     }

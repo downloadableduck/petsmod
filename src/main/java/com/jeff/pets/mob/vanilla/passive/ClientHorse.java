@@ -5,12 +5,12 @@
 
 package com.jeff.pets.mob.vanilla.passive;
 
-import net.minecraft.world.World;
+import net.minecraft.core.world.World;
 import com.jeff.pets.mob.GroundPet;
 
 public class ClientHorse extends GroundPet {
-    public ClientHorse(World level) {
-        super(level);
+    public ClientHorse(World world) {
+        super(world);
         this.setBoundingBoxSpacing(1.3965F, 1.6F);
     }
 

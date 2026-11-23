@@ -21,7 +21,7 @@ public abstract class DynamicElementListWidget<E extends DynamicElementListWidge
         return false;
     }
 
-    public abstract static class ElementEntry<E extends ElementEntry<E>> extends DynamicEntryListWidget.Entry<E> implements ParentElement {
+    public abstract static class ElementEntry<E extends ElementEntry<E>> extends Entry<E> implements ParentElement {
         private GuiEventListener focused;
         private boolean dragging;
 

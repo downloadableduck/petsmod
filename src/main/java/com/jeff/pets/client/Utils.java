@@ -5,12 +5,17 @@
 
 package com.jeff.pets.client;
 
-import net.minecraft.block.Block;
+import com.mojang.brigadier.arguments.ArgumentType;
+import com.mojang.brigadier.builder.ArgumentBuilder;
+import com.mojang.brigadier.suggestion.SuggestionProvider;
+import com.mojang.brigadier.tree.ArgumentCommandNode;
+import com.mojang.brigadier.tree.CommandNode;
+import net.minecraft.core.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.core.entity.Entity;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.util.phys.Vec3;
+import net.minecraft.core.world.World;
 import com.jeff.pets.mob.AbstractPet;
 
 import java.lang.reflect.Field;
@@ -24,17 +29,18 @@ public class Utils {
     }
 
     public static void summonPet(AbstractPet entity, String entityName) {
-        Minecraft minecraft = Minecraft.INSTANCE;
-        PlayerEntity player = minecraft.player;
-        World world = minecraft.world;
+        Minecraft minecraft = Minecraft.getMinecraft();
+        Player player = minecraft.thePlayer;
+        World world = minecraft.currentWorld;
         if (entity != null && world != null && player != null) {
-            Vec3d lookAngle = player.getLookVector(1.0F);
+            float yaw = (float)Math.toRadians(player.yRot); float pitch = (float)Math.toRadians(player.xRot);
+            Vec3 lookAngle = Vec3.getPermanentVec3(-Math.sin(yaw)*Math.cos(pitch), -Math.sin(pitch), Math.cos(yaw)*Math.cos(pitch));
             double x = player.x - lookAngle.x * 0.5;
             double y = player.y + 0.5;
             double z = player.z - lookAngle.z * 0.5;
             entity.setPosition(x, y, z);
-            world.loadChunksNearEntity(entity);
-            entity.setOwnerName(player.name);
+            world.entityJoinedWorld(entity);
+            entity.setOwnerName(player.username);
             Central.summonedEntity.add(entity);
         }
     }
@@ -60,7 +66,7 @@ public class Utils {
 
     public static void despawnEntity(Entity e) {
         if (e != null) {
-            e.markDead();
+            e.remove();
         }
 
     }
@@ -94,14 +100,14 @@ public class Utils {
             e.printStackTrace();
         }
 
-        return Block.BED;
+        return net.minecraft.core.block.Blocks.BED;
     }
 
     public static float triangleWave(float p_78172_1_, float p_78172_2_) {
         return (Math.abs(p_78172_1_ % p_78172_2_ - p_78172_2_ * 0.5F) - p_78172_2_ * 0.25F) / (p_78172_2_ * 0.25F);
     }
 
-    public static double squaredDistanceToOrigin(Vec3d vec3d) {
+    public static double squaredDistanceToOrigin(Vec3 vec3d) {
         return vec3d.x * vec3d.x + vec3d.y * vec3d.y + vec3d.z * vec3d.z;
     }
 
@@ -146,7 +152,7 @@ public class Utils {
                 case ' ':
                     l = k;
                 default:
-                    j += Minecraft.INSTANCE.textRenderer.getWidth(String.valueOf(n));
+                    j += Minecraft.getMinecraft().font.stringWidth(String.valueOf(n));
                     if (m) {
                         ++j;
                     }
