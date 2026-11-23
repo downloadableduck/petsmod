@@ -1,7 +1,7 @@
 package me.shedaniel.clothconfig2.impl.builders;
 
 import me.shedaniel.clothconfig2.gui.entries.StringListListEntry;
-import net.minecraft.locale.I18n;
+import net.minecraft.locale.Language;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,7 +20,7 @@ public class StringListBuilder extends FieldBuilder<List<String>, StringListList
     private final List<String> value;
     private boolean expanded = false;
     private Function<StringListListEntry, StringListListEntry.StringListCell> createNewInstance;
-    private String addTooltip = I18n.translate("text.cloth-config.list.add"), removeTooltip = I18n.translate("text.cloth-config.list.remove");
+    private String addTooltip = Language.getInstance().translate("text.cloth-config.list.add"), removeTooltip = Language.getInstance().translate("text.cloth-config.list.remove");
     private boolean deleteButtonEnabled = true, insertInFront = true;
     
     public StringListBuilder(String resetButtonKey, String fieldNameKey, List<String> value) {

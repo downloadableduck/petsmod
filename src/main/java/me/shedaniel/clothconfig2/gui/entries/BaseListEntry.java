@@ -9,7 +9,8 @@ import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import net.minecraft.client.Minecraft;
-import net.minecraft.locale.I18n;
+import net.minecraft.locale.Language;
+import net.ornithemc.osl.lifecycle.api.client.MinecraftInstance;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -42,7 +43,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
     protected ButtonWidget resetWidget;
     @NotNull protected Function<SELF, C> createNewInstance;
     @NotNull protected Supplier<List<T>> defaultValue;
-    @Nullable protected String addTooltip = I18n.translate("text.cloth-config.list.add"), removeTooltip = I18n.translate("text.cloth-config.list.remove");
+    @Nullable protected String addTooltip = Language.getInstance().translate("text.cloth-config.list.add"), removeTooltip = Language.getInstance().translate("text.cloth-config.list.remove");
     
     @ApiStatus.Internal
     @Deprecated
@@ -65,7 +66,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         this.cells = Lists.newArrayList();
         this.labelWidget = new ListLabelWidget();
         this.widgets = Lists.newArrayList(labelWidget);
-        this.resetWidget = new ButtonWidget(0, 0, Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey), widget -> {
+        this.resetWidget = new ButtonWidget(0, 0, MinecraftInstance.get().textRenderer.getWidth(Language.getInstance().translate(resetButtonKey)) + 6, 20, Language.getInstance().translate(resetButtonKey), widget -> {
             widgets.removeAll(cells);
             cells.clear();
             defaultValue.get().stream().map(this::getFromValue).forEach(cells::add);
@@ -144,7 +145,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         List<String> errors = cells.stream().map(C::getConfigError).filter(Optional::isPresent).map(Optional::get).collect(Collectors.toList());
         
         if (errors.size() > 1)
-            return Optional.of(I18n.translate("text.cloth-config.multi_error"));
+            return Optional.of(Language.getInstance().translate("text.cloth-config.multi_error"));
         else
             return errors.stream().findFirst();
     }
@@ -193,7 +194,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
             if (tooltip.isPresent() && tooltip.get().length > 0)
                 getScreen().queueTooltip(QueuedTooltip.create(new Point(mouseX, mouseY), tooltip.get()));
         }
-        Minecraft.INSTANCE.textureManager.load(CONFIG_TEX);
+        MinecraftInstance.get().textureManager.load(CONFIG_TEX);
         // Lighting.turnOff(); // Not available in 1.13
         GlStateManager.color4f(1, 1, 1, 1);
         BaseListCell focused = !expanded || getFocused() == null || !(getFocused() instanceof BaseListCell) ? null : (BaseListCell) getFocused();
@@ -207,7 +208,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
         resetWidget.y = y;
         resetWidget.active = isEditable() && getDefaultValue().isPresent();
         resetWidget.render(mouseX, mouseY, delta);
-        Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(getFieldName()), isDeleteButtonEnabled() ? x + 24 : x + 24 - 9, y + 5, labelWidget.rectangle.contains(mouseX, mouseY) && !resetWidget.wrapDegrees(mouseX, mouseY) && !insideDelete && !insideCreateNew ? 0xffe6fe16 : getPreferredTextColor());
+        MinecraftInstance.get().textRenderer.drawWithShadow(Language.getInstance().translate(getFieldName()), isDeleteButtonEnabled() ? x + 24 : x + 24 - 9, y + 5, labelWidget.rectangle.contains(mouseX, mouseY) && !resetWidget.wrapDegrees(mouseX, mouseY) && !insideDelete && !insideCreateNew ? 0xffe6fe16 : getPreferredTextColor());
         if (expanded) {
             int yy = y + 24;
             for (BaseListCell cell : cells) {
@@ -246,7 +247,7 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
                     widgets.add(cell);
                 }
                 getScreen().setEdited(true, isRequiresRestart());
-                Minecraft.INSTANCE.soundEngine.play((SoundEvents.UI_BUTTON_CLICK), 1.0F, 1);
+                MinecraftInstance.get().soundEngine.play((SoundEvents.UI_BUTTON_CLICK), 1.0F, 1);
                 return true;
             } else if (isDeleteButtonEnabled() && isInsideDelete(double_1, double_2)) {
                 GuiEventListener focused = getFocused();
@@ -255,12 +256,12 @@ public abstract class BaseListEntry<T, C extends BaseListCell, SELF extends Base
                     cells.remove(focused);
                     widgets.remove(focused);
                     getScreen().setEdited(true, isRequiresRestart());
-                    Minecraft.INSTANCE.soundEngine.play((SoundEvents.UI_BUTTON_CLICK), 1.0F, 1);
+                    MinecraftInstance.get().soundEngine.play((SoundEvents.UI_BUTTON_CLICK), 1.0F, 1);
                 }
                 return true;
             } else if (rectangle.contains(double_1, double_2)) {
                 expanded = !expanded;
-                Minecraft.INSTANCE.soundEngine.play((SoundEvents.UI_BUTTON_CLICK), 1.0F, 1);
+                MinecraftInstance.get().soundEngine.play((SoundEvents.UI_BUTTON_CLICK), 1.0F, 1);
                 return true;
             }
             return false;

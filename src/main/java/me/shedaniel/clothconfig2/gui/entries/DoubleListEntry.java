@@ -1,7 +1,7 @@
 package me.shedaniel.clothconfig2.gui.entries;
 
 import me.shedaniel.clothconfig2.compat.CompatTextFieldWidget;
-import net.minecraft.locale.I18n;
+import net.minecraft.locale.Language;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -86,11 +86,11 @@ public class DoubleListEntry extends TextFieldListEntry<Double> {
         try {
             double i = Double.valueOf(textFieldWidget.getText());
             if (i > maximum)
-                return Optional.of(I18n.translate("text.cloth-config.error.too_large", maximum));
+                return Optional.of(Language.getInstance().translate("text.cloth-config.error.too_large", maximum));
             else if (i < minimum)
-                return Optional.of(I18n.translate("text.cloth-config.error.too_small", minimum));
+                return Optional.of(Language.getInstance().translate("text.cloth-config.error.too_small", minimum));
         } catch (NumberFormatException ex) {
-            return Optional.of(I18n.translate("text.cloth-config.error.not_valid_number_double"));
+            return Optional.of(Language.getInstance().translate("text.cloth-config.error.not_valid_number_double"));
         }
         return super.getError();
     }

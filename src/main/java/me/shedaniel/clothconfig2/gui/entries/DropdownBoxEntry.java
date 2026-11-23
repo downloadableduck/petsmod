@@ -20,8 +20,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.TextRenderer;
 import net.minecraft.client.render.vertex.Tesselator;
-import net.minecraft.locale.I18n;
+import net.minecraft.locale.Language;
 import net.minecraft.util.math.MathHelper;
+import net.ornithemc.osl.lifecycle.api.client.MinecraftInstance;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -46,12 +47,14 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
     @ApiStatus.Internal
     @Deprecated
     public DropdownBoxEntry(String fieldName, @NotNull String resetButtonKey, @Nullable Supplier<Optional<String[]>> tooltipSupplier, boolean requiresRestart, @Nullable Supplier<T> defaultValue, @Nullable Consumer<T> saveConsumer, @Nullable Iterable<T> selections, @NotNull SelectionTopCellElement<T> topRenderer, @NotNull SelectionCellCreator<T> cellCreator) {
-        super(I18n.translate(fieldName), tooltipSupplier, requiresRestart);
+        super(Language.getInstance().translate(fieldName), tooltipSupplier, requiresRestart);
         this.defaultValue = defaultValue;
         this.saveConsumer = saveConsumer;
-        this.resetButton = new ButtonWidget(0, 0, Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey), w -> {
-            selectionElement.topRenderer.setValue(defaultValue.get());
-            getScreen().setEdited(true, requiresRestart);
+        this.resetButton = new ButtonWidget(0, 0, MinecraftInstance.get().textRenderer.getWidth(Language.getInstance().translate(resetButtonKey)) + 6, 20, Language.getInstance().translate(resetButtonKey), w -> {
+            if (defaultValue != null) {
+                selectionElement.topRenderer.setValue(defaultValue.get());
+                getScreen().setEdited(true, requiresRestart);
+            }
         });
         this.selectionElement = new SelectionElement<>(this, new Rectangle(0, 0, 150, 20), new DefaultDropdownMenuElement<>(this.getScreen(), selections == null ? ImmutableList.of() : ImmutableList.copyOf(selections)), topRenderer, cellCreator);
     }
@@ -64,11 +67,11 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
         this.selectionElement.active = isEditable();
         this.selectionElement.bounds.y = y;
         if (Utils.isBidirectional()) {
-            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, getPreferredTextColor());
+            MinecraftInstance.get().textRenderer.drawWithShadow(Language.getInstance().translate(getFieldName()), WindowUtil.getScaledWidth() - x - MinecraftInstance.get().textRenderer.getWidth(Language.getInstance().translate(getFieldName())), y + 5, getPreferredTextColor());
             this.resetButton.x = x;
             this.selectionElement.bounds.x = x + resetButton.width + 1;
         } else {
-            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(getFieldName()), x, y + 5, getPreferredTextColor());
+            MinecraftInstance.get().textRenderer.drawWithShadow(Language.getInstance().translate(getFieldName()), x, y + 5, getPreferredTextColor());
             this.resetButton.x = x + entryWidth - resetButton.width;
             this.selectionElement.bounds.x = x + entryWidth - 150 + 1;
         }
@@ -430,8 +433,8 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             ScissorsHandler.INSTANCE.removeLastScissor();
             
             if (currentElements.isEmpty()) {
-                TextRenderer textRenderer = Minecraft.INSTANCE.textRenderer;
-                String s = I18n.translate("text.cloth-config.dropdown.value.unknown");
+                TextRenderer textRenderer = MinecraftInstance.get().textRenderer;
+                String s = Language.getInstance().translate("text.cloth-config.dropdown.value.unknown");
                 textRenderer.drawWithShadow(s, (int)(lastRectangle.x + getCellCreator().getCellWidth() / 2f - textRenderer.getWidth(s) / 2f), lastRectangle.y + lastRectangle.height + 3, -1);
             }
             
@@ -632,7 +635,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             boolean b = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
             if (b)
                 fill(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
-            Minecraft.INSTANCE.textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6, y + 3, b ? 16777215 : 8947848);
+            MinecraftInstance.get().textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6, y + 3, b ? 16777215 : 8947848);
         }
         
         @Override
@@ -731,7 +734,7 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
             this.value = Objects.requireNonNull(value);
             this.toObjectFunction = Objects.requireNonNull(toObjectFunction);
             this.toStringFunction = Objects.requireNonNull(toStringFunction);
-            textFieldWidget = new CompatTextFieldWidget(screen, 0, Minecraft.INSTANCE.textRenderer, 0, 0, 148, 18) {
+            textFieldWidget = new CompatTextFieldWidget(screen, 0, MinecraftInstance.get().textRenderer, 0, 0, 148, 18) {
                 @Override
                 public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
                     if (keyCode == 257 || keyCode == 335) {
@@ -752,7 +755,6 @@ public class DropdownBoxEntry<T> extends TooltipListEntry<T> {
                 }
             };
            // textFieldWidget.setHasBorder(false);
-            textFieldWidget.setMaxLength(999999);
             textFieldWidget.setText(toStringFunction.apply(value));
             // textFieldWidget.setResponder(s -> { // Not compatible in 1.13
             //     if (getParent() != null && getParent().getScreen() != null && !toStringFunction.apply(value).equals(s))

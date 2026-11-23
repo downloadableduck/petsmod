@@ -12,6 +12,7 @@ import net.minecraft.client.render.entity.ItemRenderer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.ornithemc.osl.core.impl.util.NamespacedIdentifierImpl;
+import net.ornithemc.osl.lifecycle.api.client.MinecraftInstance;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -298,9 +299,9 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                             boolean b = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
                             if (b)
                                 fill(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
-                            Minecraft.INSTANCE.textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
+                            MinecraftInstance.get().textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
                             ItemRenderer itemRenderer = DropdownMenuBuilder.ITEM_RENDERER;
-                            itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack, x + width - 18, y + 2);
+                            itemRenderer.renderGuiItem(MinecraftInstance.get().textRenderer, MinecraftInstance.get().textureManager, stack, x + width - 18, y + 2);
                         }
                     };
                 }
@@ -347,9 +348,9 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                             boolean b = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
                             if (b)
                                 fill(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
-                            Minecraft.INSTANCE.textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
+                            MinecraftInstance.get().textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
                             ItemRenderer itemRenderer = DropdownMenuBuilder.ITEM_RENDERER;
-                            itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack, x + width - 18, y + 2);
+                            itemRenderer.renderGuiItem(MinecraftInstance.get().textRenderer, MinecraftInstance.get().textureManager, stack, x + width - 18, y + 2);
                         }
                     };
                 }
@@ -396,9 +397,9 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                             boolean b = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
                             if (b)
                                 fill(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
-                            Minecraft.INSTANCE.textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
+                            MinecraftInstance.get().textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
                             ItemRenderer itemRenderer = DropdownMenuBuilder.ITEM_RENDERER;
-                            itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack, x + width - 18, y + 2);
+                            itemRenderer.renderGuiItem(MinecraftInstance.get().textRenderer, MinecraftInstance.get().textureManager, stack, x + width - 18, y + 2);
                         }
                     };
                 }
@@ -444,9 +445,9 @@ public class DropdownMenuBuilder<T> extends FieldBuilder<T, DropdownBoxEntry<T>>
                             boolean b = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
                             if (b)
                                 fill(x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
-                            Minecraft.INSTANCE.textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
+                            MinecraftInstance.get().textRenderer.drawWithShadow(toStringFunction.apply(r), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
                             ItemRenderer itemRenderer = DropdownMenuBuilder.ITEM_RENDERER;
-                            itemRenderer.renderGuiItem(Minecraft.INSTANCE.textRenderer, Minecraft.INSTANCE.textureManager, stack, x + width - 18, y + 2);
+                            itemRenderer.renderGuiItem(MinecraftInstance.get().textRenderer, MinecraftInstance.get().textureManager, stack, x + width - 18, y + 2);
                         }
                     };
                 }

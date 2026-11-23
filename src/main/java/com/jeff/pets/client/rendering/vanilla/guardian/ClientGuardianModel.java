@@ -9,6 +9,7 @@ import com.jeff.pets.compat.render.model.ModelPart;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.ornithemc.osl.lifecycle.api.client.MinecraftInstance;
 
 public class ClientGuardianModel extends PetModel {
     private static final float[] field_17131 = new float[]{1.75F, 0.25F, 0.0F, 0.0F, 0.5F, 0.5F, 0.5F, 0.5F, 1.25F, 0.75F, 0.0F, 0.0F};
@@ -79,7 +80,7 @@ public class ClientGuardianModel extends PetModel {
         }
 
         this.field_3381.z = -8.25F;
-        Entity cameraEntity = Minecraft.INSTANCE.camera;
+        Entity cameraEntity = MinecraftInstance.get().player;
 
         if (cameraEntity != null) {
             Vec3d vec3d = EntityCompat.eyePosition(cameraEntity, 0.0F);

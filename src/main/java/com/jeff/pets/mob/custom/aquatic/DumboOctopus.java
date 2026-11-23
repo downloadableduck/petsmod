@@ -175,7 +175,7 @@ public class DumboOctopus extends FlyingPet {
    public void writeCustomNbt(@NotNull NbtCompound output) {
       super.writeCustomNbt(output);
       output.putBoolean("isServerEntity", true);
-      output.putInt("variant", this.syncedData.getInt(11));
+      output.putInt("variant", this.syncedData.getByte(11));
    }
 
    public void readCustomNbt(@NotNull NbtCompound input) {

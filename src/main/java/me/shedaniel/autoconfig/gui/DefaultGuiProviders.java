@@ -31,7 +31,7 @@ import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import me.shedaniel.clothconfig2.gui.entries.SelectionListEntry;
 import me.shedaniel.clothconfig2.impl.builders.DropdownMenuBuilder;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.locale.I18n;
+import net.minecraft.locale.Language;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.lang.reflect.Array;
@@ -60,18 +60,18 @@ public class DefaultGuiProviders {
 
     public static GuiRegistry apply(GuiRegistry registry, Screen parent) {
         registry.registerAnnotationProvider(
-                (i18n, field, config, defaults, guiProvider) -> Collections.emptyList(),
+                (Language, field, config, defaults, guiProvider) -> Collections.emptyList(),
                 ConfigEntry.Gui.Excluded.class
         );
 
         registry.registerAnnotationProvider(
-                (i18n, field, config, defaults, guiProvider) -> {
+                (Language, field, config, defaults, guiProvider) -> {
                     ConfigEntry.BoundedDiscrete bounds
                             = field.getAnnotation(ConfigEntry.BoundedDiscrete.class);
 
                     return Collections.singletonList(
                             ENTRY_BUILDER.startIntSlider(
-                                            i18n,
+                                            Language,
                                             getUnsafely(field, config, 0),
                                             (int) bounds.min(),
                                             (int) bounds.max()
@@ -86,13 +86,13 @@ public class DefaultGuiProviders {
         );
 
         registry.registerAnnotationProvider(
-                (i18n, field, config, defaults, guiProvider) -> {
+                (Language, field, config, defaults, guiProvider) -> {
                     ConfigEntry.BoundedDiscrete bounds
                             = field.getAnnotation(ConfigEntry.BoundedDiscrete.class);
 
                     return Collections.singletonList(
                             ENTRY_BUILDER.startLongSlider(
-                                            (i18n),
+                                            (Language),
                                             getUnsafely(field, config, 0L),
                                             bounds.min(),
                                             bounds.max()
@@ -107,13 +107,13 @@ public class DefaultGuiProviders {
         );
 
         registry.registerAnnotationProvider(
-                (i18n, field, config, defaults, guiProvider) -> {
+                (Language, field, config, defaults, guiProvider) -> {
                     ConfigEntry.ColorPicker colorPicker
                             = field.getAnnotation(ConfigEntry.ColorPicker.class);
 
                     return Collections.singletonList(
                             ENTRY_BUILDER.startTextDescription(
-                                            (i18n)
+                                            (Language)
                                     )
                                     .build()
                     );
@@ -129,10 +129,10 @@ public class DefaultGuiProviders {
         );
 
         registry.registerAnnotationProvider(
-                (i18n, field, config, defaults, guiProvider) -> Collections.singletonList(
+                (Language, field, config, defaults, guiProvider) -> Collections.singletonList(
                         ENTRY_BUILDER.startSubCategory(
-                                        (i18n),
-                                        getChildren(i18n, field, config, defaults, guiProvider)
+                                        (Language),
+                                        getChildren(Language, field, config, defaults, guiProvider)
                                 )
                                 .setExpended(field.getAnnotation(ConfigEntry.Gui.CollapsibleObject.class).startExpanded())
                                 .build()
@@ -142,7 +142,7 @@ public class DefaultGuiProviders {
         );
 
         registry.registerPredicateProvider(
-                (i18n, field, config, defaults, guiProvider) -> {
+                (Language, field, config, defaults, guiProvider) -> {
                     Object[] enumConstants = field.getType().getEnumConstants();
                     Enum[] enums = new Enum[enumConstants.length];
                     for (int i = 0; i < enumConstants.length; i++) {
@@ -150,7 +150,7 @@ public class DefaultGuiProviders {
                     }
                     return Collections.singletonList(
                             ENTRY_BUILDER.startSelector(
-                                            (i18n),
+                                            (Language),
                                             enums,
                                             getUnsafely(field, config, getUnsafely(field, defaults))
                                     )
@@ -164,11 +164,11 @@ public class DefaultGuiProviders {
 
         //noinspection unchecked
         registry.registerPredicateProvider(
-                (i18n, field, config, defaults, guiProvider) -> {
+                (Language, field, config, defaults, guiProvider) -> {
                     List<Enum<?>> enums = Arrays.asList(((Class<? extends Enum<?>>) field.getType()).getEnumConstants());
                     return Collections.singletonList(
                             ENTRY_BUILDER.startDropdownMenu(
-                                            (i18n),
+                                            (Language),
                                             DropdownMenuBuilder.TopCellElementBuilder.of(parent,
                                                     getUnsafely(field, config, getUnsafely(field, defaults)),
                                                     str -> {
@@ -193,49 +193,49 @@ public class DefaultGuiProviders {
                 field -> field.getType().isEnum()
         );
 
-        registry.registerPredicateProvider((i18n, field, config, defaults, registry1) -> Collections.singletonList(
-                ENTRY_BUILDER.startIntList((i18n), getUnsafely(field, config))
+        registry.registerPredicateProvider((Language, field, config, defaults, registry1) -> Collections.singletonList(
+                ENTRY_BUILDER.startIntList((Language), getUnsafely(field, config))
                         .setDefaultValue(() -> getUnsafely(field, defaults))
                         .setSaveConsumer(newValue -> setUnsafely(field, config, newValue))
                         .build()
         ), isListOfType(Integer.class));
 
-        registry.registerPredicateProvider((i18n, field, config, defaults, registry1) -> Collections.singletonList(
-                ENTRY_BUILDER.startLongList((i18n), getUnsafely(field, config))
+        registry.registerPredicateProvider((Language, field, config, defaults, registry1) -> Collections.singletonList(
+                ENTRY_BUILDER.startLongList((Language), getUnsafely(field, config))
                         .setDefaultValue(() -> getUnsafely(field, defaults))
                         .setSaveConsumer(newValue -> setUnsafely(field, config, newValue))
                         .build()
         ), isListOfType(Long.class));
 
-        registry.registerPredicateProvider((i18n, field, config, defaults, registry1) -> Collections.singletonList(
-                ENTRY_BUILDER.startFloatList((i18n), getUnsafely(field, config))
+        registry.registerPredicateProvider((Language, field, config, defaults, registry1) -> Collections.singletonList(
+                ENTRY_BUILDER.startFloatList((Language), getUnsafely(field, config))
                         .setDefaultValue(() -> getUnsafely(field, defaults))
                         .setSaveConsumer(newValue -> setUnsafely(field, config, newValue))
                         .build()
         ), isListOfType(Float.class));
 
-        registry.registerPredicateProvider((i18n, field, config, defaults, registry1) -> Collections.singletonList(
-                ENTRY_BUILDER.startDoubleList((i18n), getUnsafely(field, config))
+        registry.registerPredicateProvider((Language, field, config, defaults, registry1) -> Collections.singletonList(
+                ENTRY_BUILDER.startDoubleList((Language), getUnsafely(field, config))
                         .setDefaultValue(() -> getUnsafely(field, defaults))
                         .setSaveConsumer(newValue -> setUnsafely(field, config, newValue))
                         .build()
         ), isListOfType(Double.class));
 
-        registry.registerPredicateProvider((i18n, field, config, defaults, registry1) -> Collections.singletonList(
-                ENTRY_BUILDER.startStrList((i18n), getUnsafely(field, config))
+        registry.registerPredicateProvider((Language, field, config, defaults, registry1) -> Collections.singletonList(
+                ENTRY_BUILDER.startStrList((Language), getUnsafely(field, config))
                         .setDefaultValue(() -> getUnsafely(field, defaults))
                         .setSaveConsumer(newValue -> setUnsafely(field, config, newValue))
                         .build()
         ), isListOfType(String.class));
 
-        registry.registerPredicateProvider((i18n, field, config, defaults, registry1) -> {
+        registry.registerPredicateProvider((Language, field, config, defaults, registry1) -> {
             List<Object> configValue = getUnsafely(field, config);
 
             Class<?> fieldTypeParam = (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0];
 
             Object defaultElemValue = Utils.constructUnsafely(fieldTypeParam);
 
-            String remainingI13n = i18n.substring(0, i18n.indexOf(".option") + ".option".length());
+            String remainingI13n = Language.substring(0, Language.indexOf(".option") + ".option".length());
             String classI13n = String.format("%s.%s", remainingI13n, fieldTypeParam.getSimpleName());
 
             return Collections.singletonList(
@@ -266,7 +266,7 @@ public class DefaultGuiProviders {
                         }
                     }
                     /*new NestedListListEntry<Object, MultiElementListEntry<Object>>(
-                            (i18n),
+                            (Language),
                             configValue,
                             false,
                             null,
@@ -286,16 +286,16 @@ public class DefaultGuiProviders {
         }, isNotListOfType(Integer.class, Long.class, Float.class, Double.class, String.class));
 
         registry.registerTypeProvider(
-                (i18n, field, config, defaults, guiProvider) -> Collections.singletonList(
+                (language, field, config, defaults, guiProvider) -> Collections.singletonList(
                         ENTRY_BUILDER.startBooleanToggle(
-                                        (i18n),
+                                        (language),
                                         getUnsafely(field, config, false)
                                 )
                                 .setDefaultValue(() -> getUnsafely(field, defaults))
                                 .setSaveConsumer(newValue -> setUnsafely(field, config, newValue))
                                 .setYesNoTextSupplier(bool -> {
-                                    String key = i18n + ".boolean." + bool;
-                                    String translate = I18n.translate(key);
+                                    String key = language + ".boolean." + bool;
+                                    String translate = Language.getInstance().translate(key);
                                     if (translate.equals(key))
                                         return ("text.cloth-config.boolean.value." + bool);
                                     return translate;
@@ -306,9 +306,9 @@ public class DefaultGuiProviders {
         );
 
         registry.registerTypeProvider(
-                (i18n, field, config, defaults, guiProvider) -> Collections.singletonList(
+                (Language, field, config, defaults, guiProvider) -> Collections.singletonList(
                         ENTRY_BUILDER.startIntField(
-                                        (i18n),
+                                        (Language),
                                         getUnsafely(field, config, 0)
                                 )
                                 .setDefaultValue(() -> getUnsafely(field, defaults))
@@ -319,9 +319,9 @@ public class DefaultGuiProviders {
         );
 
         registry.registerTypeProvider(
-                (i18n, field, config, defaults, guiProvider) -> Collections.singletonList(
+                (Language, field, config, defaults, guiProvider) -> Collections.singletonList(
                         ENTRY_BUILDER.startIntList(
-                                        (i18n),
+                                        (Language),
                                         Lists.newArrayList(getUnsafely(field, config, new Integer[0]))
                                 )
                                 .setDefaultValue(() -> defaults == null ? null : Lists.newArrayList((Integer[]) getUnsafely(field, defaults)))
@@ -332,9 +332,9 @@ public class DefaultGuiProviders {
         );
 
         registry.registerTypeProvider(
-                (i18n, field, config, defaults, guiProvider) -> Collections.singletonList(
+                (Language, field, config, defaults, guiProvider) -> Collections.singletonList(
                         ENTRY_BUILDER.startIntList(
-                                        (i18n),
+                                        (Language),
                                         Lists.newArrayList(IntStream.of(getUnsafely(field, config, new int[0])).boxed().collect(Collectors.toList()))
                                 )
                                 .setDefaultValue(() -> defaults == null ? null : Lists.newArrayList(Arrays.asList(ArrayUtils.toObject((int[]) getUnsafely(field, defaults)))))
@@ -345,9 +345,9 @@ public class DefaultGuiProviders {
         );
 
         registry.registerTypeProvider(
-                (i18n, field, config, defaults, guiProvider) -> Collections.singletonList(
+                (Language, field, config, defaults, guiProvider) -> Collections.singletonList(
                         ENTRY_BUILDER.startLongField(
-                                        (i18n),
+                                        (Language),
                                         getUnsafely(field, config, 0L)
                                 )
                                 .setDefaultValue(() -> getUnsafely(field, defaults))
@@ -358,9 +358,9 @@ public class DefaultGuiProviders {
         );
 
         registry.registerTypeProvider(
-                (i18n, field, config, defaults, guiProvider) -> Collections.singletonList(
+                (Language, field, config, defaults, guiProvider) -> Collections.singletonList(
                         ENTRY_BUILDER.startLongList(
-                                        (i18n),
+                                        (Language),
                                         Lists.newArrayList(getUnsafely(field, config, new Long[0]))
                                 )
                                 .setDefaultValue(() -> defaults == null ? null : Lists.newArrayList((Long[]) getUnsafely(field, defaults)))
@@ -371,9 +371,9 @@ public class DefaultGuiProviders {
         );
 
         registry.registerTypeProvider(
-                (i18n, field, config, defaults, guiProvider) -> Collections.singletonList(
+                (Language, field, config, defaults, guiProvider) -> Collections.singletonList(
                         ENTRY_BUILDER.startLongList(
-                                        (i18n),
+                                        (Language),
                                         Lists.newArrayList(LongStream.of(getUnsafely(field, config, new long[0])).boxed().collect(Collectors.toList()))
                                 )
                                 .setDefaultValue(() -> defaults == null ? null : Lists.newArrayList(Arrays.asList(ArrayUtils.toObject((long[]) getUnsafely(field, defaults)))))
@@ -384,9 +384,9 @@ public class DefaultGuiProviders {
         );
 
         registry.registerTypeProvider(
-                (i18n, field, config, defaults, guiProvider) -> Collections.singletonList(
+                (Language, field, config, defaults, guiProvider) -> Collections.singletonList(
                         ENTRY_BUILDER.startFloatField(
-                                        (i18n),
+                                        (Language),
                                         getUnsafely(field, config, 0f)
                                 )
                                 .setDefaultValue(() -> getUnsafely(field, defaults))
@@ -397,9 +397,9 @@ public class DefaultGuiProviders {
         );
 
         registry.registerTypeProvider(
-                (i18n, field, config, defaults, guiProvider) -> Collections.singletonList(
+                (Language, field, config, defaults, guiProvider) -> Collections.singletonList(
                         ENTRY_BUILDER.startFloatList(
-                                        (i18n),
+                                        (Language),
                                         Lists.newArrayList(getUnsafely(field, config, new Float[0]))
                                 )
                                 .setDefaultValue(() -> defaults == null ? null : Lists.newArrayList((Float[]) getUnsafely(field, defaults)))
@@ -410,9 +410,9 @@ public class DefaultGuiProviders {
         );
 
         registry.registerTypeProvider(
-                (i18n, field, config, defaults, guiProvider) -> Collections.singletonList(
+                (Language, field, config, defaults, guiProvider) -> Collections.singletonList(
                         ENTRY_BUILDER.startFloatList(
-                                        (i18n),
+                                        (Language),
                                         Lists.newArrayList(Arrays.asList(ArrayUtils.toObject(getUnsafely(field, config, new float[0]))))
                                 )
                                 .setDefaultValue(() -> defaults == null ? null : Lists.newArrayList(Arrays.asList(ArrayUtils.toObject((float[]) getUnsafely(field, defaults)))))
@@ -423,9 +423,9 @@ public class DefaultGuiProviders {
         );
 
         registry.registerTypeProvider(
-                (i18n, field, config, defaults, guiProvider) -> Collections.singletonList(
+                (Language, field, config, defaults, guiProvider) -> Collections.singletonList(
                         ENTRY_BUILDER.startDoubleField(
-                                        (i18n),
+                                        (Language),
                                         getUnsafely(field, config, 0.0)
                                 )
                                 .setDefaultValue(() -> getUnsafely(field, defaults))
@@ -436,9 +436,9 @@ public class DefaultGuiProviders {
         );
 
         registry.registerTypeProvider(
-                (i18n, field, config, defaults, guiProvider) -> Collections.singletonList(
+                (Language, field, config, defaults, guiProvider) -> Collections.singletonList(
                         ENTRY_BUILDER.startDoubleList(
-                                        (i18n),
+                                        (Language),
                                         Lists.newArrayList(getUnsafely(field, config, new Double[0]))
                                 )
                                 .setDefaultValue(() -> defaults == null ? null : Lists.newArrayList((Double[]) getUnsafely(field, defaults)))
@@ -449,9 +449,9 @@ public class DefaultGuiProviders {
         );
 
         registry.registerTypeProvider(
-                (i18n, field, config, defaults, guiProvider) -> Collections.singletonList(
+                (Language, field, config, defaults, guiProvider) -> Collections.singletonList(
                         ENTRY_BUILDER.startDoubleList(
-                                        (i18n),
+                                        (Language),
                                         Lists.newArrayList(Arrays.asList(ArrayUtils.toObject(getUnsafely(field, config, new double[0]))))
                                 )
                                 .setDefaultValue(() -> defaults == null ? null : Lists.newArrayList(Arrays.asList(ArrayUtils.toObject((double[]) getUnsafely(field, defaults)))))
@@ -462,9 +462,9 @@ public class DefaultGuiProviders {
         );
 
         registry.registerTypeProvider(
-                (i18n, field, config, defaults, guiProvider) -> Collections.singletonList(
+                (Language, field, config, defaults, guiProvider) -> Collections.singletonList(
                         ENTRY_BUILDER.startStrField(
-                                        (i18n),
+                                        (Language),
                                         getUnsafely(field, config, "")
                                 )
                                 .setDefaultValue(() -> getUnsafely(field, defaults))
@@ -475,9 +475,9 @@ public class DefaultGuiProviders {
         );
 
         registry.registerTypeProvider(
-                (i18n, field, config, defaults, guiProvider) -> Collections.singletonList(
+                (Language, field, config, defaults, guiProvider) -> Collections.singletonList(
                         ENTRY_BUILDER.startStrList(
-                                        (i18n),
+                                        (Language),
                                         Lists.newArrayList(getUnsafely(field, config, new String[0]))
                                 )
                                 .setDefaultValue(() -> defaults == null ? null : Lists.newArrayList((String[]) getUnsafely(field, defaults)))
@@ -487,7 +487,7 @@ public class DefaultGuiProviders {
                 String[].class
         );
 
-        registry.registerPredicateProvider((i18n, field, config, defaults, registry1) -> {
+        registry.registerPredicateProvider((Language, field, config, defaults, registry1) -> {
             Object configValue = getUnsafely(field, config);
             List<Object> configValueAsList = new ArrayList<>(Array.getLength(configValue));
             for (int i = 0; i < Array.getLength(configValue); i++) {
@@ -498,7 +498,7 @@ public class DefaultGuiProviders {
 
             Object defaultElemValue = Utils.constructUnsafely(fieldTypeParam);
 
-            String remainingI13n = i18n.substring(0, i18n.indexOf(".option") + ".option".length());
+            String remainingI13n = Language.substring(0, Language.indexOf(".option") + ".option".length());
             String classI13n = String.format("%s.%s", remainingI13n, fieldTypeParam.getSimpleName());
 
             return Collections.singletonList(
@@ -529,7 +529,7 @@ public class DefaultGuiProviders {
                         }
                     }
                     /*new NestedListListEntry<Object, MultiElementListEntry<Object>>(
-                            (i18n),
+                            (Language),
                             configValueAsList,
                             false,
                             null,
@@ -571,15 +571,15 @@ public class DefaultGuiProviders {
         return registry;
     }
 
-    private static List<AbstractConfigListEntry> getChildren(String i18n, Field field, Object config, Object defaults, GuiRegistryAccess guiProvider) {
-        return getChildren(i18n, field.getType(), getUnsafely(field, config), getUnsafely(field, defaults), guiProvider);
+    private static List<AbstractConfigListEntry> getChildren(String Language, Field field, Object config, Object defaults, GuiRegistryAccess guiProvider) {
+        return getChildren(Language, field.getType(), getUnsafely(field, config), getUnsafely(field, defaults), guiProvider);
     }
 
-    private static List<AbstractConfigListEntry> getChildren(String i18n, Class<?> fieldType, Object iConfig, Object iDefaults, GuiRegistryAccess guiProvider) {
+    private static List<AbstractConfigListEntry> getChildren(String Language, Class<?> fieldType, Object iConfig, Object iDefaults, GuiRegistryAccess guiProvider) {
         return Arrays.stream(fieldType.getDeclaredFields())
                 .map(
                         iField -> {
-                            String iI13n = String.format("%s.%s", i18n, iField.getName());
+                            String iI13n = String.format("%s.%s", Language, iField.getName());
                             return guiProvider.getAndTransform(iI13n, iField, iConfig, iDefaults, guiProvider);
                         }
                 )

@@ -7,7 +7,8 @@ import me.shedaniel.clothconfig2.ButtonWidget;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import me.shedaniel.clothconfig2.impl.WindowUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.locale.I18n;
+import net.minecraft.locale.Language;
+import net.ornithemc.osl.lifecycle.api.client.MinecraftInstance;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +19,7 @@ import java.util.function.Supplier;
 
 public class EnumListEntry<T extends Enum<?>> extends TooltipListEntry {
     
-    public static final Function<Enum, String> DEFAULT_NAME_PROVIDER = t -> I18n.translate(t instanceof Translatable ? ((Translatable) t).getKey() : t.toString());
+    public static final Function<Enum, String> DEFAULT_NAME_PROVIDER = t -> Language.getInstance().translate(t instanceof Translatable ? ((Translatable) t).getKey() : t.toString());
     private ImmutableList<T> values;
     private AtomicInteger index;
     private ButtonWidget buttonWidget, resetButton;
@@ -54,7 +55,7 @@ public class EnumListEntry<T extends Enum<?>> extends TooltipListEntry {
             EnumListEntry.this.index.compareAndSet(EnumListEntry.this.values.size(), 0);
             getScreen().setEdited(true);
         });
-        this.resetButton = new ButtonWidget(0, 0, Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey), widget -> {
+        this.resetButton = new ButtonWidget(0, 0, MinecraftInstance.get().textRenderer.getWidth(Language.getInstance().translate(resetButtonKey)) + 6, 20, Language.getInstance().translate(resetButtonKey), widget -> {
             EnumListEntry.this.index.set(getDefaultIndex());
             getScreen().setEdited(true);
         });
@@ -88,12 +89,12 @@ public class EnumListEntry<T extends Enum<?>> extends TooltipListEntry {
         this.buttonWidget.y = y;
         this.buttonWidget.message = enumNameProvider.apply(getValue());
         if (Utils.isBidirectional()) {
-            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, 16777215);
+            MinecraftInstance.get().textRenderer.drawWithShadow(Language.getInstance().translate(getFieldName()), WindowUtil.getScaledWidth() - x - MinecraftInstance.get().textRenderer.getWidth(Language.getInstance().translate(getFieldName())), y + 5, 16777215);
             this.resetButton.x = x;
             this.buttonWidget.x = x + resetButton.width + 2;
             // this.buttonWidget.setWidth(150 - resetButton.getWidth() - 2); // Not available in 1.13
         } else {
-            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(getFieldName()), x, y + 5, 16777215);
+            MinecraftInstance.get().textRenderer.drawWithShadow(Language.getInstance().translate(getFieldName()), x, y + 5, 16777215);
             this.resetButton.x = x + entryWidth - resetButton.width;
             this.buttonWidget.x = x + entryWidth - 150;
             // this.buttonWidget.setWidth(150 - resetButton.getWidth() - 2); // Not available in 1.13

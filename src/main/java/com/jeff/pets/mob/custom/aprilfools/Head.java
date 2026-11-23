@@ -115,7 +115,7 @@ public class Head extends AbstractPet {
                double speed = Math.min(0.23D, 1.2D + 0.08D);
                this.lerpVelocity(Vec3d.of(-dir.x * speed, this.getVelocity().y, -dir.z * speed));
            } else {
-               this.lookAt(this.getOwner(), 5.0F, 0.0F);
+               this.lookAt(this.getOwner(), 5.0F);
                this.lerpVelocity(this.velocityX * 0.8, this.velocityY * 1.0, this.velocityZ * 0.8);
            }
 

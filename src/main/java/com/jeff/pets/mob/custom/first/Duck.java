@@ -186,7 +186,7 @@ public class Duck extends AbstractPet {
             double speed = Math.min(0.23D, 0.1D* 1.2D + 0.08D);
             this.lerpVelocity(Vec3d.of(-dir.x * speed, this.getVelocity().y, -dir.z * speed));
          } else {
-            this.lookAt(this.getOwner(), 5.0F, 0.0F);
+            this.lookAt(this.getOwner(), 5.0F);
             this.lerpVelocity(this.velocityX * 0.8, this.velocityY * 1.0, this.velocityZ * 0.8);
          }
 
@@ -239,7 +239,7 @@ public class Duck extends AbstractPet {
    public void writeCustomNbt(@NotNull NbtCompound output) {
       super.writeCustomNbt(output);
       output.putBoolean("isServerEntity", true);
-      output.putInt("variant", this.syncedData.getInt(11));
+      output.putInt("variant", this.syncedData.getByte(11));
    }
 
    public void readCustomNbt(@NotNull NbtCompound input) {

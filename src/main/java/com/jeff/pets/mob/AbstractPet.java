@@ -9,6 +9,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 /**
  * Abstract base for client-side pets, adapted for 1.1's entity hierarchy.
  * <p> 1.1 has no {@code TameableEntity}; taming/owner/sitting/speed helpers that existed
@@ -66,7 +68,7 @@ public abstract class AbstractPet extends AnimalEntity {
         if (this.isTamed() && itemStack == null && player.isSneaking()) {
             if (!this.isRiding()) {
                 this.startRiding(player);
-                this.lookAt(player, 1f, 1f);
+                this.lookAt(player, 1f);
                 return true;
             } else {
                 this.dismountFromVehicle();
@@ -210,7 +212,7 @@ public abstract class AbstractPet extends AnimalEntity {
         if (this.ownerName == null || this.world == null) {
             return null;
         }
-        return this.world.getPlayer(this.ownerName);
+        return getPlayerByName(world, this.ownerName);
     }
 
     public void setSpeed(float speed) {
@@ -261,5 +263,14 @@ public abstract class AbstractPet extends AnimalEntity {
 
     public boolean isInWater() {
         return this.inWater;
+    }
+
+    public static PlayerEntity getPlayerByName(World world, String string) {
+        AtomicReference<PlayerEntity> playerToReturn = new AtomicReference<>(null);
+        world.players.forEach(obj -> {
+            PlayerEntity player = (PlayerEntity) obj;
+            if (player.name.equals(string)) playerToReturn.set(player);
+        });
+        return playerToReturn.get();
     }
 }

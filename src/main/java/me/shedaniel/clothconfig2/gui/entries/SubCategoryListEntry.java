@@ -6,7 +6,8 @@ import com.jeff.pets.sound.SoundEvents;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.Minecraft;
-import net.minecraft.locale.I18n;
+import net.minecraft.locale.Language;
+import net.ornithemc.osl.lifecycle.api.client.MinecraftInstance;
 
 import java.awt.*;
 import java.util.List;
@@ -56,11 +57,11 @@ public class SubCategoryListEntry extends TooltipListEntry {
         widget.rectangle.y = y;
         widget.rectangle.width = entryWidth + 19;
         widget.rectangle.height = 24;
-        Minecraft.INSTANCE.textureManager.load(CONFIG_TEX);
+        MinecraftInstance.get().textureManager.load(CONFIG_TEX);
         // Lighting.turnOff(); // Not available in 1.13
         GlStateManager.color4f(1, 1, 1, 1);
         drawTexture(x - 15, y + 4, 24, expended ? 9 : 0, 9, 9); //blit?
-        Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(categoryName), x, y + 5, -1);
+        MinecraftInstance.get().textRenderer.drawWithShadow(Language.getInstance().translate(categoryName), x, y + 5, -1);
         for(AbstractConfigListEntry entry : entries) {
             entry.setParent(getParent());
             entry.setScreen(getScreen());
@@ -110,7 +111,7 @@ public class SubCategoryListEntry extends TooltipListEntry {
         for(AbstractConfigListEntry entry : entries)
             if (entry.getError().isPresent()) {
                 if (error != null)
-                    return Optional.ofNullable(I18n.translate("text.cloth-config.multi_error"));
+                    return Optional.ofNullable(Language.getInstance().translate("text.cloth-config.multi_error"));
                 return entry.getError();
             }
         return Optional.ofNullable(error);
@@ -123,7 +124,7 @@ public class SubCategoryListEntry extends TooltipListEntry {
         public boolean mouseClicked(double double_1, double double_2, int int_1) {
             if (rectangle.contains(double_1, double_2)) {
                 expended = !expended;
-                Minecraft.INSTANCE.soundEngine.play((SoundEvents.UI_BUTTON_CLICK), 1.0F, 1);
+                MinecraftInstance.get().soundEngine.play((SoundEvents.UI_BUTTON_CLICK), 1.0F, 1);
                 return true;
             }
             return false;

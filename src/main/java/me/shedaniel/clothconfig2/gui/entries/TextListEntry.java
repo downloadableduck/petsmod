@@ -3,6 +3,7 @@ package me.shedaniel.clothconfig2.gui.entries;
 import com.jeff.pets.client.Utils;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.Minecraft;
+import net.ornithemc.osl.lifecycle.api.client.MinecraftInstance;
 
 import java.util.Collections;
 import java.util.List;
@@ -36,7 +37,7 @@ public class TextListEntry extends TooltipListEntry {
         int yy = y + 4;
         List<String> strings = Utils.split(text, savedWidth);
         for(int i = 0; i < strings.size(); i++) {
-            Minecraft.INSTANCE.textRenderer.drawWithShadow(strings.get(i), x, yy, color);
+            MinecraftInstance.get().textRenderer.drawWithShadow(strings.get(i), x, yy, color);
             yy += 9 + 3;
         }
     }

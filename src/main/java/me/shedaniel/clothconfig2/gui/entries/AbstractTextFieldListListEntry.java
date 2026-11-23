@@ -4,6 +4,7 @@ package me.shedaniel.clothconfig2.gui.entries;
 import me.shedaniel.clothconfig2.compat.CompatTextFieldWidget;
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
 import net.minecraft.client.Minecraft;
+import net.ornithemc.osl.lifecycle.api.client.MinecraftInstance;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -49,7 +50,7 @@ public abstract class AbstractTextFieldListListEntry<T, C extends AbstractTextFi
             
             final T finalValue = substituteDefault(value);
             
-            widget = new CompatTextFieldWidget(this.listListEntry.getScreen(), 0, Minecraft.INSTANCE.textRenderer, 0, 0, 100, 18) {
+            widget = new CompatTextFieldWidget(this.listListEntry.getScreen(), 0, MinecraftInstance.get().textRenderer, 0, 0, 100, 18) {
                 @Override
                 public void render() {
                     super.render();

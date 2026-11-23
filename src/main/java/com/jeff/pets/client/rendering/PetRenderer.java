@@ -53,7 +53,7 @@ public abstract class PetRenderer<D extends AbstractPet> extends MobRenderer {
         float headYaw = entity.lastYaw + (entity.yaw - entity.lastYaw) * partialTicks;
         float headPitch = entity.lastPitch + (entity.pitch - entity.lastPitch) * partialTicks;
 
-        this.applyTranslation(entity, x, y, z);
+        //this.applyTranslation(entity, x, y, z);
         float bob = this.getBob(entity, partialTicks);
         this.applyRotation(entity, bob, bodyYaw, partialTicks);
 
@@ -68,7 +68,9 @@ public abstract class PetRenderer<D extends AbstractPet> extends MobRenderer {
         if (walkAmount > 1.0F) walkAmount = 1.0F;
 
         this.bindTexture(this.getTexture(entity));
-        this.petModel.prepare(entity, walkPos, walkAmount, partialTicks);
+        if (this.petModel instanceof PetModel) {
+            ((PetModel) this.petModel).prepare(entity, walkPos, walkAmount, partialTicks);
+        }
         this.petModel.render(walkPos, walkAmount, bob, headYaw - bodyYaw, headPitch, scale);
 
         for (PetRenderLayer layer : this.petLayers) {
@@ -79,7 +81,7 @@ public abstract class PetRenderer<D extends AbstractPet> extends MobRenderer {
         org.lwjgl.opengl.GL11.glEnable(2884);
         GlStateManager.popMatrix();
 
-        this.renderNameTag(entity, x, y, z);
+        //this.renderNameTag(entity, x, y, z);
     }
 
     @Override

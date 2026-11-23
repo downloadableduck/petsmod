@@ -8,6 +8,7 @@ import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.clothconfig2.impl.builders.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
+import net.ornithemc.osl.lifecycle.api.client.MinecraftInstance;
 
 import java.util.Objects;
 
@@ -77,7 +78,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
                 .setTitle("Config")
                 .setSavingRunnable(() -> {
                     AutoConfig.getConfigHolder(PetsConfig.class).save();
-                    Minecraft.INSTANCE.openScreen(this.getModConfigScreenFactory());
+                    MinecraftInstance.get().openScreen(this.getModConfigScreenFactory());
                 })
                 .setTransparentBackground(true);
         ConfigCategory general = builder.getOrCreateCategory("Config");
@@ -101,7 +102,7 @@ public class PetsConfigScreen<T extends Enum & NameableEnum> {
         java.util.List<String> species = java.util.Arrays.stream(PetList.values())
                 .map(Enum::name)
                 .collect(java.util.stream.Collectors.toList());
-        return builder.startStringDropdownMenu(Minecraft.INSTANCE.screen, ("Pet Species"), CONFIG.activePet)
+        return builder.startStringDropdownMenu(MinecraftInstance.get().screen, ("Pet Species"), CONFIG.activePet)
                 .setSelections(species)
                 .setSaveConsumer((newVal) -> {
                     try {

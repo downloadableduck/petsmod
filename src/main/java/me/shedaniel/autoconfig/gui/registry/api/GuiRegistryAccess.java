@@ -27,12 +27,12 @@ import java.util.List;
 
 public interface GuiRegistryAccess extends GuiProvider, GuiTransformer {
     default List<AbstractConfigListEntry> getAndTransform(
-            String i18n,
+            String Language,
             Field field,
             Object config,
             Object defaults,
             GuiRegistryAccess registry
     ) {
-        return transform(get(i18n, field, config, defaults, registry), i18n, field, config, defaults, registry);
+        return transform(get(Language, field, config, defaults, registry), Language, field, config, defaults, registry);
     }
 }

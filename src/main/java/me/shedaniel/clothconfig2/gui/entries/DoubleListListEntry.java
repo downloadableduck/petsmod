@@ -2,7 +2,7 @@ package me.shedaniel.clothconfig2.gui.entries;
 
 
 import me.shedaniel.clothconfig2.compat.GuiEventListener;
-import net.minecraft.locale.I18n;
+import net.minecraft.locale.Language;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -90,11 +90,11 @@ public class DoubleListListEntry extends AbstractTextFieldListListEntry<Double, 
             try {
                 double i = Double.parseDouble(widget.getText());
                 if (i > listListEntry.maximum)
-                    return Optional.of(I18n.translate("text.cloth-config.error.too_large", listListEntry.maximum));
+                    return Optional.of(Language.getInstance().translate("text.cloth-config.error.too_large", listListEntry.maximum));
                 else if (i < listListEntry.minimum)
-                    return Optional.of(I18n.translate("text.cloth-config.error.too_small", listListEntry.minimum));
+                    return Optional.of(Language.getInstance().translate("text.cloth-config.error.too_small", listListEntry.minimum));
             } catch (NumberFormatException ex) {
-                return Optional.of(I18n.translate("text.cloth-config.error.not_valid_number_double"));
+                return Optional.of(Language.getInstance().translate("text.cloth-config.error.not_valid_number_double"));
             }
             return Optional.empty();
         }

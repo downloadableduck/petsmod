@@ -8,8 +8,9 @@ import me.shedaniel.clothconfig2.impl.WindowUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.OptionSliderWidget;
 import net.minecraft.client.options.GameOptions__Option;
-import net.minecraft.locale.I18n;
+import net.minecraft.locale.Language;
 import net.minecraft.util.math.MathHelper;
+import net.ornithemc.osl.lifecycle.api.client.MinecraftInstance;
 
 import java.util.List;
 import java.util.Optional;
@@ -45,7 +46,7 @@ public class IntegerSliderEntry extends TooltipListEntry {
         this.maximum = maximum;
         this.minimum = minimum;
         this.sliderWidget = new Slider(0, 0, 152, 20, ((double) this.value.get() - minimum) / Math.abs(maximum - minimum));
-        this.resetButton = new ButtonWidget(0, 0, Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(resetButtonKey)) + 6, 20, I18n.translate(resetButtonKey), widget -> {
+        this.resetButton = new ButtonWidget(0, 0, MinecraftInstance.get().textRenderer.getWidth(Language.getInstance().translate(resetButtonKey)) + 6, 20, Language.getInstance().translate(resetButtonKey), widget -> {
             sliderWidget.setProgress((Math.max(minimum, Math.min(maximum, this.defaultValue.get())) - minimum) / (double) Math.abs(maximum - minimum));
             this.value.set(Math.max(minimum, Math.min(maximum, this.defaultValue.get())));
             sliderWidget.update();
@@ -103,12 +104,12 @@ public class IntegerSliderEntry extends TooltipListEntry {
         this.sliderWidget.active = isEditable();
         this.sliderWidget.y = y;
         if (Utils.isBidirectional()) {
-            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(getFieldName()), WindowUtil.getScaledWidth() - x - Minecraft.INSTANCE.textRenderer.getWidth(I18n.translate(getFieldName())), y + 5, 16777215);
+            MinecraftInstance.get().textRenderer.drawWithShadow(Language.getInstance().translate(getFieldName()), WindowUtil.getScaledWidth() - x - MinecraftInstance.get().textRenderer.getWidth(Language.getInstance().translate(getFieldName())), y + 5, 16777215);
             this.resetButton.x = x;
             this.sliderWidget.x = x + resetButton.width + 1;
             // this.sliderWidget.setWidth(150 - resetButton.getWidth() - 2); // Not available in 1.13
         } else {
-            Minecraft.INSTANCE.textRenderer.drawWithShadow(I18n.translate(getFieldName()), x, y + 5, 16777215);
+            MinecraftInstance.get().textRenderer.drawWithShadow(Language.getInstance().translate(getFieldName()), x, y + 5, 16777215);
             this.resetButton.x = x + entryWidth - resetButton.width;
             this.sliderWidget.x = x + entryWidth - 150;
             // this.sliderWidget.setWidth(150 - resetButton.getWidth() - 2); // Not available in 1.13
@@ -121,7 +122,7 @@ public class IntegerSliderEntry extends TooltipListEntry {
         private double progress;
         
         protected Slider(int int_1, int int_2, int int_3, int int_4, double double_1) {
-            super(0, int_2, int_3, GameOptions__Option.AMBIENT_OCCLUSION, "hi", maximum);
+            super(0, int_2, int_3, GameOptions__Option.ANAGLYPH, "hi", maximum);
             this.progress = double_1;
         }
         
@@ -132,7 +133,7 @@ public class IntegerSliderEntry extends TooltipListEntry {
         }
     
         public void render(int mouseX, int mouseY, float delta) {
-            super.render(Minecraft.INSTANCE, mouseX, mouseY);
+            super.render(MinecraftInstance.get(), mouseX, mouseY);
         }
     
         public double getProgress() {

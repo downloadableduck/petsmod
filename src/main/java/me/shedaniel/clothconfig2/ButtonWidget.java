@@ -1,6 +1,7 @@
 package me.shedaniel.clothconfig2;
 
 import net.minecraft.client.Minecraft;
+import net.ornithemc.osl.lifecycle.api.client.MinecraftInstance;
 
 import java.util.function.Consumer;
 
@@ -14,7 +15,7 @@ public class ButtonWidget extends net.minecraft.client.gui.widget.ButtonWidget i
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (this.pressAction != null && mouseX >= this.x && mouseX <= this.x + this.width && mouseY >= this.y && mouseY <= this.y + this.height) {
+        if (this.active && this.pressAction != null && mouseX >= this.x && mouseX <= this.x + this.width && mouseY >= this.y && mouseY <= this.y + this.height) {
             this.pressAction.accept(this);
             return true;
         }
@@ -22,7 +23,7 @@ public class ButtonWidget extends net.minecraft.client.gui.widget.ButtonWidget i
     }
 
     public void render(int mouseX, int mouseY, float delta) {
-        super.render(Minecraft.INSTANCE, mouseX, mouseY);
+        super.render(MinecraftInstance.get(), mouseX, mouseY);
     }
 
     public boolean wrapDegrees(double mouseX, double mouseY) {

@@ -46,7 +46,7 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
     private final ConfigManager<T> manager;
     private final GuiRegistryAccess registry;
     private final Screen parent;
-    private Function<ConfigManager<T>, String> i18nFunction = manager -> String.format("text.autoconfig.%s", manager.getDefinition().name());
+    private Function<ConfigManager<T>, String> LanguageFunction = manager -> String.format("text.autoconfig.%s", manager.getDefinition().name());
     private Function<ConfigBuilder, Screen> buildFunction = ConfigBuilder::build;
     private BiFunction<String, Field, String> optionFunction = (baseI13n, field) -> String.format("%s.option.%s", baseI13n, field.getName());
     private BiFunction<String, String, String> categoryFunction = (baseI13n, categoryName) -> String.format("%s.category.%s", baseI13n, categoryName);
@@ -62,8 +62,8 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
     }
 
     @Deprecated
-    public void setI13nFunction(Function<ConfigManager<T>, String> i18nFunction) {
-        this.i18nFunction = i18nFunction;
+    public void setI13nFunction(Function<ConfigManager<T>, String> LanguageFunction) {
+        this.LanguageFunction = LanguageFunction;
     }
 
     @Deprecated
@@ -86,9 +86,9 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
         T config = manager.getConfig();
         T defaults = manager.getSerializer().createDefault();
 
-        String i18n = i18nFunction.apply(manager);
+        String Language = LanguageFunction.apply(manager);
 
-        ConfigBuilder builder = ConfigBuilder.create().setParentScreen(parent).setTitle(String.format("%s.title", i18n)).setSavingRunnable(manager::save);
+        ConfigBuilder builder = ConfigBuilder.create().setParentScreen(parent).setTitle(String.format("%s.title", Language)).setSavingRunnable(manager::save);
 
         Class<T> configClass = manager.getConfigClass();
 
@@ -118,7 +118,7 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
         Arrays.stream(configClass.getDeclaredFields())
                 .collect(
                         groupingBy(
-                                field -> getOrCreateCategoryForField(field, builder, categoryBackgrounds, i18n),
+                                field -> getOrCreateCategoryForField(field, builder, categoryBackgrounds, Language),
                                 LinkedHashMap::new,
                                 toList()
                         )
@@ -126,7 +126,7 @@ public class ConfigScreenProvider<T extends ConfigData> implements Supplier<Scre
                 .forEach(
                         (key, value) -> value.forEach(
                                 field -> {
-                                    String optionI13n = optionFunction.apply(i18n, field);
+                                    String optionI13n = optionFunction.apply(Language, field);
                                     registry.getAndTransform(optionI13n, field, config, defaults, registry)
                                             .forEach(key::addEntry);
                                 }

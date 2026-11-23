@@ -8,6 +8,7 @@ import net.minecraft.world.World;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
+import net.ornithemc.osl.lifecycle.api.client.MinecraftInstance;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -36,7 +37,7 @@ public class Utils {
      * @return If the {@code mob}, {@code player}, or {@code world} is {@code null}
      */
     public static void summonPet(AbstractPet entity, String entityName) {
-        Minecraft minecraft = Minecraft.INSTANCE;
+        Minecraft minecraft = MinecraftInstance.get();
         PlayerEntity player = minecraft.player;
         World world = minecraft.world;
 
@@ -225,7 +226,7 @@ public class Utils {
                 case 32:
                     l = k;
                 default:
-                    j += Minecraft.INSTANCE.textRenderer.getWidth(String.valueOf(n));
+                    j += MinecraftInstance.get().textRenderer.getWidth(String.valueOf(n));
                     if (m != 0) {
                         ++j;
                     }

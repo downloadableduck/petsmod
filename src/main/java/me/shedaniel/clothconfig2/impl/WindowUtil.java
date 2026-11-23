@@ -1,52 +1,48 @@
 package me.shedaniel.clothconfig2.impl;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.render.Window;
+import net.ornithemc.osl.lifecycle.api.client.MinecraftInstance;
 import org.lwjgl.opengl.Display;
 
 /**
- * Feather 1.12.2 helper: the named {@code net.minecraft.client.render.Window}
- * class is unreachable in this toolchain and there is no {@code getWindow()}/
- * {@code window} accessor on {@link Minecraft}. These helpers boot the scaled
- * screen dimensions from the LWJGL display and the configured GUI scale factor.
+ * b1.2 helper for the scaled GUI viewport.
+ *
+ * <p>b1.2 has no {@code getWindow()} accessor and no configurable GUI scale. Both
+ * {@code Minecraft.resize} and {@code GameRenderer} derive the scaled screen from a
+ * fresh {@link Window} built from the physical display size, so this helper uses the
+ * same calculation. Otherwise the scissor rectangle is converted with the wrong
+ * scale and lands outside the config list in fullscreen.
  */
 public final class WindowUtil {
 
     private WindowUtil() {
     }
 
-    public static int getGuiScale() {
-        Minecraft client = Minecraft.INSTANCE;
+    private static Window currentWindow() {
+        int width = Display.getWidth();
+        int height = Display.getHeight();
         try {
-            // Prefer the configured GUI scale, clamping so a valid factor is returned.
-            int option = client.options.guiScale;
-            if (option <= 0) {
-                return guessScale(Display.getWidth(), Display.getHeight());
+            Minecraft client = MinecraftInstance.get();
+            if (client != null && client.width > 0 && client.height > 0) {
+                width = client.width;
+                height = client.height;
             }
-            return Math.max(1, option);
-        } catch (Throwable t) {
-            return guessScale(Display.getWidth(), Display.getHeight());
+        } catch (Throwable ignored) {
+            // Fall back to the LWJGL display size if the client is not available yet.
         }
+        return new Window(Math.max(1, width), Math.max(1, height));
+    }
+
+    public static int getGuiScale() {
+        return Math.max(1, currentWindow().scale);
     }
 
     public static int getScaledWidth() {
-        int scale = Math.max(1, getGuiScale());
-        return Math.max(1, Display.getWidth() / scale);
+        return currentWindow().getWidth();
     }
 
     public static int getScaledHeight() {
-        int scale = Math.max(1, getGuiScale());
-        return Math.max(1, Display.getHeight() / scale);
-    }
-
-    private static int guessScale(int width, int height) {
-        int scale = 1;
-        if (width >= 3200) {
-            scale = 4;
-        } else if (width >= 1600) {
-            scale = 3;
-        } else if (width >= 800) {
-            scale = 2;
-        }
-        return scale;
+        return currentWindow().getHeight();
     }
 }

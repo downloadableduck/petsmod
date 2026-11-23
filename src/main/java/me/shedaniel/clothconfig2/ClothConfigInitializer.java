@@ -18,8 +18,9 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.locale.I18n;
+import net.minecraft.locale.Language;
 import net.minecraft.util.math.MathHelper;
+import net.ornithemc.osl.lifecycle.api.client.MinecraftInstance;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -152,7 +153,7 @@ public class ClothConfigInitializer implements ClientModInitializer {
                 Method method = clazz.getMethod("addConfigOverride", String.class, Runnable.class);
                 method.invoke(null, "cloth-config2", (Runnable) () -> {
                     try {
-                        Minecraft.INSTANCE.openScreen(getConfigBuilderWithDemo().build());
+                        MinecraftInstance.get().openScreen(getConfigBuilderWithDemo().build());
                     } catch (Throwable throwable) {
                         throwable.printStackTrace();
                     }
@@ -165,7 +166,7 @@ public class ClothConfigInitializer implements ClientModInitializer {
     
     @SuppressWarnings("deprecation")
     public static ConfigBuilder getConfigBuilder() {
-        ConfigBuilder builder = ConfigBuilder.create().setParentScreen(Minecraft.INSTANCE.screen).setTitle("title.cloth-config.config");
+        ConfigBuilder builder = ConfigBuilder.create().setParentScreen(MinecraftInstance.get().screen).setTitle("title.cloth-config.config");
         builder.setDefaultBackgroundTexture(("minecraft:textures/block/oak_planks.png"));
         ConfigCategory scrolling = builder.getOrCreateCategory("category.cloth-config.scrolling");
         ConfigEntryBuilder entryBuilder = ConfigEntryBuilder.create();
@@ -179,7 +180,7 @@ public class ClothConfigInitializer implements ClientModInitializer {
         DoubleListEntry scrollStepEntry = entryBuilder.startDoubleField("option.cloth-config.scrollStep", scrollStep).setDefaultValue(19).setSaveConsumer(i -> scrollStep = i).build();
         LongSliderEntry bounceMultiplierEntry = entryBuilder.startLongSlider("option.cloth-config.bounceBackMultiplier", (long) (bounceBackMultiplier * 1000), -10, 750).setTextGetter(integer -> integer < 0 ? "Value: Disabled" : String.format("Value: %s", integer / 1000d)).setDefaultValue(240).setSaveConsumer(i -> bounceBackMultiplier = i / 1000d).build();
     
-        scrolling.addEntry(new TooltipListEntry<Object>(I18n.translate("option.cloth-config.setDefaultSmoothScroll"), null, false) {
+        scrolling.addEntry(new TooltipListEntry<Object>(Language.getInstance().translate("option.cloth-config.setDefaultSmoothScroll"), null, false) {
             final int width = 220;
             private final ButtonWidget buttonWidget = new AbstractPressableButtonWidget(0, 0, 0, 20, getFieldName()) {
                 @Override
@@ -223,7 +224,7 @@ public class ClothConfigInitializer implements ClientModInitializer {
             }
         });
     
-        scrolling.addEntry(new TooltipListEntry<Object>(I18n.translate("option.cloth-config.disableSmoothScroll"), null, false) {
+        scrolling.addEntry(new TooltipListEntry<Object>(Language.getInstance().translate("option.cloth-config.disableSmoothScroll"), null, false) {
             final int width = 220;
             private final ButtonWidget buttonWidget = new AbstractPressableButtonWidget(0, 0, 0, 20, getFieldName()) {
                 @Override

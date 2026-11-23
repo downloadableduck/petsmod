@@ -28,7 +28,7 @@ import java.util.List;
 
 public interface GuiProvider {
     List<AbstractConfigListEntry> get(
-            String i18n,
+            String Language,
             Field field,
             Object config,
             Object defaults,

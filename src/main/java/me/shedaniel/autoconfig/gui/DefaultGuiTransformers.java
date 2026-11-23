@@ -26,7 +26,7 @@ import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.clothconfig2.gui.entries.TextListEntry;
 import me.shedaniel.clothconfig2.gui.entries.TooltipListEntry;
-import net.minecraft.locale.I18n;
+import net.minecraft.locale.Language;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,7 +46,7 @@ public class DefaultGuiTransformers {
     public static GuiRegistry apply(GuiRegistry registry) {
 
         registry.registerAnnotationTransformer(
-                (guis, i18n, field, config, defaults, guiProvider) -> guis.stream()
+                (guis, language, field, config, defaults, guiProvider) -> guis.stream()
                         .peek(gui -> {
                             if (!(gui instanceof TextListEntry)) {
                                 ConfigEntry.Gui.Tooltip tooltip = field.getAnnotation(ConfigEntry.Gui.Tooltip.class);
@@ -56,14 +56,14 @@ public class DefaultGuiTransformers {
                                     tryApplyTooltip(
                                             gui,
                                             new String[]{
-                                                    I18n.translate(String.format("%s.%s", i18n, "@Tooltip"))
+                                                    Language.getInstance().translate(String.format("%s.%s", language, "@Tooltip"))
                                             }
                                     );
                                 } else {
                                     tryApplyTooltip(
                                             gui, IntStream.range(0, tooltip.count()).boxed()
-                                                    .map(i -> String.format("%s.%s[%d]", i18n, "@Tooltip", i))
-                                                    .map(I18n::translate)
+                                                    .map(i -> String.format("%s.%s[%d]", language, "@Tooltip", i))
+                                                    .map(Language.getInstance()::translate)
                                                     .toArray(String[]::new)
                                     );
                                 }
@@ -74,11 +74,11 @@ public class DefaultGuiTransformers {
         );
 
         registry.registerAnnotationTransformer(
-                (guis, i18n, field, config, defaults, guiProvider) -> guis.stream()
+                (guis, language, field, config, defaults, guiProvider) -> guis.stream()
                         .peek(gui -> {
                             if (!(gui instanceof TextListEntry)) {
                                 Comment tooltip = field.getAnnotation(Comment.class);
-                                String[] text = new String[]{I18n.translate(tooltip.value())};
+                                String[] text = new String[]{Language.getInstance().translate(tooltip.value())};
                                 tryApplyTooltip(gui, text);
                             }
                         })
@@ -88,7 +88,7 @@ public class DefaultGuiTransformers {
         );
 
         registry.registerAnnotationTransformer(
-                (guis, i18n, field, config, defaults, guiProvider) -> guis.stream()
+                (guis, Language, field, config, defaults, guiProvider) -> guis.stream()
                         .peek(gui -> {
                             if (!(gui instanceof TextListEntry)) {
                                 tryRemoveTooltip(gui);
@@ -99,11 +99,11 @@ public class DefaultGuiTransformers {
         );
 
         registry.registerAnnotationTransformer(
-                (guis, i18n, field, config, defaults, guiProvider) -> {
+                (guis, language, field, config, defaults, guiProvider) -> {
                     ArrayList<AbstractConfigListEntry> ret = new ArrayList<>(guis);
-                    String text = String.format("%s.%s", i18n, "@PrefixText");
+                    String text = String.format("%s.%s", language, "@PrefixText");
                     TextListEntry element = ENTRY_BUILDER.startTextDescription(text).build();
-                    String s = I18n.translate(i18n).toLowerCase(Locale.ROOT);
+                    String s = Language.getInstance().translate(language).toLowerCase(Locale.ROOT);
                     if (!s.isEmpty()) {
                         //element.appendSearchTags(Lists.newArrayList(s.split(" ")));
                     }
@@ -114,7 +114,7 @@ public class DefaultGuiTransformers {
         );
 
         registry.registerAnnotationTransformer(
-                (guis, i18n, field, config, defaults, guiProvider) -> {
+                (guis, Language, field, config, defaults, guiProvider) -> {
                     for (AbstractConfigListEntry gui : guis) {
                         gui.setRequiresRestart(field.getAnnotation(ConfigEntry.Gui.RequiresRestart.class).value());
                     }

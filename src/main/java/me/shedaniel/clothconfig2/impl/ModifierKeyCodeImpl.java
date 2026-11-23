@@ -3,7 +3,7 @@ package me.shedaniel.clothconfig2.impl;
 import me.shedaniel.clothconfig2.api.Modifier;
 import me.shedaniel.clothconfig2.api.ModifierKeyCode;
 import me.shedaniel.clothconfig2.compat.InputConstants;
-import net.minecraft.locale.I18n;
+import net.minecraft.locale.Language;
 
 import java.util.Objects;
 
@@ -52,16 +52,16 @@ public class ModifierKeyCodeImpl implements ModifierKeyCode {
                 string_2 = string_1;
                 break;
             case MOUSE:
-                String string_3 = I18n.translate(string_1);
-                string_2 = Objects.equals(string_3, string_1) ? I18n.translate("key.mouse", int_1 + 1) : string_3;
+                String string_3 = Language.getInstance().translate(string_1);
+                string_2 = Objects.equals(string_3, string_1) ? Language.getInstance().translate("key.mouse", int_1 + 1) : string_3;
         }
-        String base = string_2 == null ? I18n.translate(string_1) : string_2;
+        String base = string_2 == null ? Language.getInstance().translate(string_1) : string_2;
         if (modifier.hasShift())
-            base = I18n.translate("modifier.cloth-config.shift", base);
+            base = Language.getInstance().translate("modifier.cloth-config.shift", base);
         if (modifier.hasControl())
-            base = I18n.translate("modifier.cloth-config.ctrl", base);
+            base = Language.getInstance().translate("modifier.cloth-config.ctrl", base);
         if (modifier.hasAlt())
-            base = I18n.translate("modifier.cloth-config.alt", base);
+            base = Language.getInstance().translate("modifier.cloth-config.alt", base);
         return base;
     }
     

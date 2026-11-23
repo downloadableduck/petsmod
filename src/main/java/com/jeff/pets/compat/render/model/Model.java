@@ -25,7 +25,6 @@ public abstract class Model extends net.minecraft.client.render.model.Model {
     public void setupAnimation(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
     }
 
-    @Override
     public void prepare(MobEntity entity, float limbSwing, float limbSwingAmount, float tickDelta) {
         this.currentEntity = entity;
     }
